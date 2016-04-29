@@ -1,15 +1,11 @@
 
 *.class
-<<<<<<< HEAD
+
 /target/
 WebContent/
-=======
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
-# Package Files #
->>>>>>> 64e03f644db77f12e75f0afd0c908ce7d4951fa9
+
 *.jar
 *.war
 *.ear
