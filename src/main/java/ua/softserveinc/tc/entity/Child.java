@@ -7,10 +7,11 @@ import java.sql.Date;
  * Created by Demian on 29.04.2016.
  */
 @Entity
+@Table(name = "children")
 public class Child
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
     private String firstName;
     private String lastName;
