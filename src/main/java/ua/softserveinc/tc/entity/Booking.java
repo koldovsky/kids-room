@@ -11,8 +11,8 @@ import java.util.Date;
 public class Booking {
 
     @Id
-    @Column(name = "id_book", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_book", nullable = false)
     private long idBook;
 
     @Column(name = "id_child", nullable = false)

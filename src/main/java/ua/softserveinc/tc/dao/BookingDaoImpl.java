@@ -5,5 +5,5 @@ import ua.softserveinc.tc.entity.Booking;
 /**
  * Created by TARAS on 01.05.2016.
  */
-public class BookingDaoImpl extends BaseDaoImpl<Booking> {
+public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao{
 }
