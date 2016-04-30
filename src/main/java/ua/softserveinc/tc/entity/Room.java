@@ -14,7 +14,7 @@ public class Room {
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
     @Column(name = "room_id", unique = true, nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -33,11 +33,11 @@ public class Room {
     private City city;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
