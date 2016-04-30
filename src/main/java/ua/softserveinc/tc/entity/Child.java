@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Demian on 29.04.2016.
