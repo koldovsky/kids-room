@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+    <tiles-definitions>
+    <definition name="default" template="/WEB-INF/template/default/template.jsp">
+        <put-attribute name="title" value="Kid's Room" />
+        <put-attribute name="header" value="/WEB-INF/template/default/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/template/default/footer.jsp" />
+    </definition>
+
+    <definition name="index" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
+    </definition>
+</tiles-definitions>
