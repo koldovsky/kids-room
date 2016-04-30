@@ -1,5 +1,5 @@
 
-*.class
+Configuration edit s*.class
 
 /target/
 WebContent/
