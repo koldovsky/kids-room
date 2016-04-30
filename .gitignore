@@ -5,12 +5,12 @@
 WebContent/
 
 
-
+.idea
 *.jar
 *.war
 *.ear
 .classpath
 .project
 .settings/
-
-
+hibernate.properties
+KidsRoom.iml

@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.softserveinc.tc</groupId>
-    <artifactId>KidsRoom</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>SpringMVC</groupId>
+    <artifactId>SpringMVC</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-
     <build>
         <plugins>
             <plugin>
@@ -31,16 +27,18 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
+                <configuration>
+                    <path>/home</path>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
     <properties>
         <java-version>1.8</java-version>
         <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
         <org.hibernate-version>5.1.0.Final</org.hibernate-version>
-    </properties>
 
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -52,6 +50,7 @@
             <artifactId>spring-web</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
@@ -86,11 +85,13 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
             <version>2.3.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
