@@ -1,6 +1,7 @@
 # lv-181java
 ! tomcat7 idea integration !
 use this link as a manual: https://dzone.com/articles/headless-setup-java-project
+pom.xml file is already configured!
 
 on Runner tab in set VM Options: -Xms128m -Xmx8192m -XX:PermSize=128m -XX:MaxPermSize=256m
 
