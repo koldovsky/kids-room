@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by Nestor on 30.04.2016.
@@ -11,7 +13,10 @@ import java.sql.Date;
 @Table(name = "events")
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    //@GenericGenerator(name = "gen", strategy = "increment")
+    //@GeneratedValue(generator = "gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "event_id", unique = true, nullable = false)
     private Long id;
 
     private String name;
@@ -19,7 +24,10 @@ public class Event {
     private Date endTime;
     private Integer ageLow;
     private Integer ageHigh;
-    private Integer RoomID;
+
+    @ManyToOne @JoinColumn(name = "room_id")
+    private Room room;
+
     private String description;
 
     public Long getId() {
@@ -70,13 +78,13 @@ public class Event {
         this.ageHigh = ageHigh;
     }
 
-    public Integer getRoomID() {
-        return RoomID;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomID(Integer roomID) {
-        RoomID = roomID;
-    }
+    public void setRoom(Room room) {
+       this.room = room;
+   }
 
     public String getDescription() {
         return description;
