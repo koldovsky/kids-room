@@ -12,7 +12,7 @@ import java.sql.Date;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Integer id;
+    private Long id;
 
     private String name;
     private Date startTime;
@@ -22,11 +22,11 @@ public class Event {
     private Integer RoomID;
     private String description;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
