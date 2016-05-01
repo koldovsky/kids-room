@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,13 +8,10 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "events")
 public class Event {
     @Id
-    //@GenericGenerator(name = "gen", strategy = "increment")
-    //@GeneratedValue(generator = "gen")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private Long id;
 
     private String name;
