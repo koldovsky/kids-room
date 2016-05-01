@@ -13,16 +13,16 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_book", nullable = false)
-    private long idBook;
+    private Long idBook;
 
     @Column(name = "id_child", nullable = false)
-    private long idChild;
+    private Long idChild;
 
     @Column(name = "id_room", nullable = false)
-    private long idRoom;
+    private Long idRoom;
 
     @Column(name = "id_user", nullable = false)
-    private long idUser;
+    private Long idUser;
 
     @Column(name = "booking_start_time", nullable = false)
     private Date bookingStartTime;
@@ -40,7 +40,7 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(long idChild, long idRoom, long idUser, Date bookingStartTime, Date bookingEndTime,
+    public Booking(Long idChild, Long idRoom, Long idUser, Date bookingStartTime, Date bookingEndTime,
                    String comment, boolean isCanceled) {
         this.idChild = idChild;
         this.idRoom = idRoom;
@@ -52,35 +52,35 @@ public class Booking {
     }
 
 
-    public long getIdBook() {
+    public Long getIdBook() {
         return idBook;
     }
 
-    public void setIdBook(long idBook) {
+    public void setIdBook(Long idBook) {
         this.idBook = idBook;
     }
 
-    public long getIdChild() {
+    public Long getIdChild() {
         return idChild;
     }
 
-    public void setIdChild(long idChild) {
+    public void setIdChild(Long idChild) {
         this.idChild = idChild;
     }
 
-    public long getIdRoom() {
+    public Long getIdRoom() {
         return idRoom;
     }
 
-    public void setIdRoom(long idRoom) {
+    public void setIdRoom(Long idRoom) {
         this.idRoom = idRoom;
     }
 
-    public long getIdUser() {
+    public Long getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(long idUser) {
+    public void setIdUser(Long idUser) {
         this.idUser = idUser;
     }
 
