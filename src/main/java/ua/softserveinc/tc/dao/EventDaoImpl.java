@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.entity.Event;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,7 +17,7 @@ import java.util.List;
  * Created by Nestor on 30.04.2016.
  */
 
-@Repository
+@Repository("eventDao")
 public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao{
     public List<Event> getAllEventsByDay(Date searchDate){
         EntityManager entityManager = getEntityManager();
