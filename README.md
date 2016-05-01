@@ -5,7 +5,7 @@ use [this](https://dzone.com/articles/headless-setup-java-project) link as a man
 
 pom.xml file is already configured!
 
-on Runner tab in set VM Options: 
+on Runner tab set VM Options: 
 ```
 -Xms128m -Xmx8192m -XX:PermSize=128m -XX:MaxPermSize=256m
 ```
