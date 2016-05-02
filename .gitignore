@@ -12,6 +12,5 @@ WebContent/
 .classpath
 .project
 .settings/
-hibernate.properties
 KidsRoom.iml
 SpringMVC.iml

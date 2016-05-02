@@ -20,7 +20,7 @@ public class Event {
     private Integer ageLow;
     private Integer ageHigh;
 
-    @ManyToOne @JoinColumn(name = "room_id")
+    @OneToOne(fetch = FetchType.LAZY)
     private Room room;
 
     private String description;
