@@ -5,6 +5,8 @@ package ua.softserveinc.tc.entity.ColumnConstants;
  */
 public interface UserConst {
 
+    String TABLE_NAME_USER = "users";
+
     String ID_USER = "id_user";
 
     String FIRST_NAME = "first_name";

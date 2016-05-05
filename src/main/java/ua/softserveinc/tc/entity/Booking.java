@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by TARAS on 30.04.2016.
  */
 @Entity
-@Table(name = "booking")
+@Table(name = BookingConst.TABLE_NAME_BOOKING)
 public class Booking {
 
     @Id
@@ -17,23 +17,23 @@ public class Booking {
     @Column(name = BookingConst.ID_BOOK, nullable = false)
     private Long idBook;
 
-    @ManyToOne
-    @JoinColumn//(name = "id_child")
+    //@ManyToOne
+    //@JoinColumn(name = "id")
     @Column(name = BookingConst.ID_CHILD, nullable = false)
-    private Child idChild;
-    //private Long idChild;
+    //private Child idChild;
+    private Long idChild;
 
-    @ManyToOne
-    @JoinColumn//(name = "id_room")
+    //@ManyToOne
+    //@JoinColumn(name = "room_id")
     @Column(name = BookingConst.ID_ROOM, nullable = false)
-    private Room idRoom;
-    //private Long idRoom;
+    //private Room idRoom;
+    private Long idRoom;
 
-    @ManyToOne
-    @JoinColumn//(name = "id_user")
+    //@ManyToOne
+    //@JoinColumn(name = "id_user")
     @Column(name = BookingConst.ID_USER, nullable = false)
-    private User idUser;
-    //private Long idUser
+    //private User idUser;
+    private Long idUser;
 
     @Column(name = BookingConst.BOOKING_START_TIME, nullable = false)
     private Date bookingStartTime;
@@ -51,16 +51,16 @@ public class Booking {
     public Booking() {
     }
 
-    public Booking(Child idChild, Room idRoom, User idUser, Date bookingStartTime, Date bookingEndTime,
-                   String comment, boolean isCanceled) {
-        this.idChild = idChild;
-        this.idRoom = idRoom;
-        this.idUser = idUser;
-        this.bookingStartTime = bookingStartTime;
-        this.bookingEndTime = bookingEndTime;
-        this.comment = comment;
-        this.isCanceled = isCanceled;
-    }
+//    public Booking(Child idChild, Room idRoom, User idUser, Date bookingStartTime, Date bookingEndTime,
+//                   String comment, boolean isCanceled) {
+//        this.idChild = idChild;
+//        this.idRoom = idRoom;
+//        this.idUser = idUser;
+//        this.bookingStartTime = bookingStartTime;
+//        this.bookingEndTime = bookingEndTime;
+//        this.comment = comment;
+//        this.isCanceled = isCanceled;
+//    }
 
     public Date getBookingEndTime() {
         return bookingEndTime;
@@ -94,29 +94,29 @@ public class Booking {
         this.idBook = idBook;
     }
 
-    public Child getIdChild() {
-        return idChild;
-    }
-
-    public void setIdChild(Child idChild) {
-        this.idChild = idChild;
-    }
-
-    public Room getIdRoom() {
-        return idRoom;
-    }
-
-    public void setIdRoom(Room idRoom) {
-        this.idRoom = idRoom;
-    }
-
-    public User getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
-    }
+//    public Child getIdChild() {
+//        return idChild;
+//    }
+//
+//    public void setIdChild(Child idChild) {
+//        this.idChild = idChild;
+//    }
+//
+//    public Room getIdRoom() {
+//        return idRoom;
+//    }
+//
+//    public void setIdRoom(Room idRoom) {
+//        this.idRoom = idRoom;
+//    }
+//
+//    public User getIdUser() {
+//        return idUser;
+//    }
+//
+//    public void setIdUser(User idUser) {
+//        this.idUser = idUser;
+//    }
 
     public boolean isCanceled() {
         return isCanceled;
