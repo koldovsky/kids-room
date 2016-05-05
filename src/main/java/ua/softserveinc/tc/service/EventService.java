@@ -10,6 +10,4 @@ import java.util.List;
  */
 public interface EventService extends BaseService<Event> {
     List<Event> getAllEventsByDay(Date searchDate);
-
-    void deleteOutdated();
 }

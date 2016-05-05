@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.entity;
 
+import ua.softserveinc.tc.entity.ColumnConstants.EventConst;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,21 +10,33 @@ import java.util.Date;
  */
 
 @Entity
+@Table(name = EventConst.TABLENAME)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
+    @Column(name = EventConst.ID, unique = true, nullable = false)
     private Long id;
 
+    @Column(name = EventConst.NAME, nullable = false)
     private String name;
+
+    @Column(name = EventConst.START_TIME, nullable = false)
     private Date startTime;
+
+    @Column(name = EventConst.END_TIME, nullable = false)
     private Date endTime;
+
+    @Column(name = EventConst.AGE_LOW)
     private Integer ageLow;
+
+    @Column(name = EventConst.AGE_HIGH)
     private Integer ageHigh;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = EventConst.ROOM, nullable = false)
     private Room room;
 
+    @Column(name = EventConst.DESCRIPTION)
     private String description;
 
     public Long getId() {

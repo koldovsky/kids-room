@@ -2,6 +2,7 @@ package ua.softserveinc.tc.dao;
 
 import ua.softserveinc.tc.entity.Event;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,4 @@ import java.util.List;
  */
 
 public interface EventDao extends BaseDao<Event>{
-    List<Event> getAllEventsByDay(Date searchDate);
-
-    void deleteOutdated();
 }

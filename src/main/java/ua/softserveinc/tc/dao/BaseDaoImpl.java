@@ -17,7 +17,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         entityClass = getEntityClass();
     }
 
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return entityManager;
     }
 
