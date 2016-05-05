@@ -14,24 +14,24 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_book", nullable = false)
+    @Column(name = BookingConst.ID_BOOK, nullable = false)
     private Long idBook;
 
    // @ManyToOne
    // @JoinColumn//(name = "id_child")
-    @Column(name = "id_child", nullable = false)
+    @Column(name = BookingConst.ID_CHILD, nullable = false)
     //private Child idChild;
     private Long idChild;
 
    // @ManyToOne
    // @JoinColumn//(name = "id_room")
-    @Column(name = "id_room", nullable = false)
+    @Column(name = BookingConst.ID_ROOM, nullable = false)
     //private Room idRoom;
     private Long idRoom;
 
     //@ManyToOne
     //@JoinColumn//(name = "id_user")
-    @Column(name = "id_user", nullable = false)
+    @Column(name = BookingConst.ID_USER, nullable = false)
     //private User idUser;
     private Long idUser;
 

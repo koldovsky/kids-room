@@ -1,16 +1,24 @@
 package ua.softserveinc.tc.entity.ColumnConstants;
 
 /**
- * Created by Taras on 05.05.2016.
+ * Created by TARAS on 05.05.2016.
  */
 public interface BookingConst {
-    public final static String ID_BOOK = "id_book";
 
-    public final static String BOOKING_END_TIME = "booking_end_time";
+    String ID_BOOK = "id_book";
 
-    public final static String BOOKING_START_TIME = "booking_start_time";
+    String ID_CHILD = "id_child";
 
-    public final static String COMMENT = "comment";
+    String ID_ROOM = "id_room";
 
-    public final static String IS_CANCELED = "is_canceled";
+    String ID_USER = "id_user";
+
+    String BOOKING_START_TIME = "booking_start_time";
+
+    String BOOKING_END_TIME = "booking_end_time";
+
+    String COMMENT = "comment";
+
+    String IS_CANCELED = "is_canceled";
+
 }
