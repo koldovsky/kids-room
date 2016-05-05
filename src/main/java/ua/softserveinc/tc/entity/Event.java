@@ -92,8 +92,8 @@ public class Event {
     }
 
     public void setRoom(Room room) {
-       this.room = room;
-   }
+        this.room = room;
+    }
 
     public String getDescription() {
         return description;
