@@ -19,6 +19,7 @@ import java.util.List;
 
 @Repository("eventDao")
 public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao{
+
     public List<Event> getAllEventsByDay(Date searchDate){
         EntityManager entityManager = getEntityManager();
 
