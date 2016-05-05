@@ -29,8 +29,6 @@ public class AppConfig {
     @Autowired
     private Environment environment;
 
-
-
     @Bean
     public TilesViewResolver viewResolver() {
         return new TilesViewResolver();

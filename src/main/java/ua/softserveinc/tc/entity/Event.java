@@ -20,7 +20,7 @@ public class Event {
     private Integer ageLow;
     private Integer ageHigh;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
     private String description;
