@@ -12,10 +12,13 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import ua.softserveinc.tc.service.UserDetailsServiceImpl;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -82,5 +85,10 @@ public class AppConfig {
         properties.setProperty("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
         return properties;
+    }
+
+    @Bean
+    public UserDetailsService getUserDetailsService(){
+        return new UserDetailsServiceImpl();
     }
 }

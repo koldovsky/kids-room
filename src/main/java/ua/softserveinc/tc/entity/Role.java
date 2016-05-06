@@ -1,13 +1,22 @@
 package ua.softserveinc.tc.entity;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
 
-    ANONYMOUS,
-    USER,
-    MANAGER,
-    ADMINISTRATOR;
+public enum Role implements GrantedAuthority {
 
-    Role(){
+    ANONYMOUS("ANONYMOUS"),
+    USER("USER"),
+    MANAGER("MANAGER"),
+    ADMINISTRATOR("ADMINISTRATOR");
+    String name;
+
+
+    Role(final String name){
+        this.name=name;
     }
 
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + name;
+    }
 }

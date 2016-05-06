@@ -38,6 +38,7 @@
         <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
         <org.hibernate-version>5.1.0.Final</org.hibernate-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
+        <spring.securiry>4.0.4.RELEASE</spring.securiry>
     </properties>
     <dependencies>
         <dependency>
@@ -124,5 +125,29 @@
             <artifactId>tiles-el</artifactId>
             <version>${org.apache.tiles-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.securiry}</version>
+        </dependency>
+
     </dependencies>
 </project>

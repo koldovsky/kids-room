@@ -1,11 +1,10 @@
 package ua.softserveinc.tc.dao;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
@@ -21,7 +20,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return entityManager;
     }
 
-    @SuppressWarnings("unchecked")
+
     public List<T> findAll() {
         return entityManager.createQuery("From " + entityClass.getSimpleName() + " order by id").getResultList();
     }
