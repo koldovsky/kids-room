@@ -1,15 +1,17 @@
 package ua.softserveinc.tc.entity;
 
+import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
+
 import javax.persistence.*;
 
 import static ua.softserveinc.tc.entity.ColumnConstants.UserConst.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = UserConst.TABLE_NAME_USER)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name=ID_USER)
+    @Column(name=ID_USER, nullable = false)
     private Long id;
 
     @Column(name=FIRST_NAME)

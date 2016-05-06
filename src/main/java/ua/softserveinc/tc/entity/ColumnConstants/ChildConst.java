@@ -11,8 +11,6 @@ public interface ChildConst {
 
     String LAST_NAME_CHILD = "last_name_child";
 
-    String ID_PARENT = "id_parent";
-
     String DATE_OF_BIRTH = "date_of_birth_child";
 
     String COMMENT = "comment";
