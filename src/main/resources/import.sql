@@ -1,0 +1,3 @@
+INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role) VALUES (1, 'user@gmail.com', 'vasil','kobin', 'user', '0987654321', 0);
+INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role) VALUES (2, 'manager@gmail.com', 'vasil','kobin', 'manager', '0987654321', 1);
+INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role) VALUES (3, 'admin@gmail.com', 'vasil','kobin', 'admin', '0987654321', 2);

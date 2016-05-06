@@ -33,7 +33,7 @@ public class User {
     private String phoneNumber;
 
     @Column(name = UserConst.ROLE)
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private Role role;
 
 

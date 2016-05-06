@@ -15,12 +15,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User getUserByEmail(String email) {
-//        User u = new User();
-//        u.setEmail(email);
-//        u.setPassword("1234");
-//        u.setRole(Role.USER);
-//        return u;
-
         return userDao.getUserByEmail(email);
     }
 }
