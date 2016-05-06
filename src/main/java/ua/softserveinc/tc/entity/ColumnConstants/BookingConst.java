@@ -5,13 +5,9 @@ package ua.softserveinc.tc.entity.ColumnConstants;
  */
 public interface BookingConst {
 
+    String TABLE_NAME_BOOKING = "booking";
+
     String ID_BOOK = "id_book";
-
-    String ID_CHILD = "id_child";
-
-    String ID_ROOM = "id_room";
-
-    String ID_USER = "id_user";
 
     String BOOKING_START_TIME = "booking_start_time";
 
@@ -20,5 +16,12 @@ public interface BookingConst {
     String COMMENT = "comment";
 
     String IS_CANCELED = "is_canceled";
+
+    // Don't need ID_MANAGER & ID_CITY.
+    // Becose we will get this constants from appropriate tables from relationship.
+
+    //String ID_CHILD = "id_child";
+    //String ID_ROOM = "id_room";
+    //String ID_USER = "id_user";
 
 }

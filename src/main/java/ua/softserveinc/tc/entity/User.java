@@ -1,25 +1,35 @@
 package ua.softserveinc.tc.entity;
 
+import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
+
 import javax.persistence.*;
 
+import static ua.softserveinc.tc.entity.ColumnConstants.UserConst.*;
+
 @Entity
-@Table(name = "users")
+@Table(name = UserConst.TABLE_NAME_USER)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-
+    @Column(name=ID_USER, nullable = false)
     private Long id;
 
+    @Column(name=FIRST_NAME)
     private String firstName;
 
+    @Column(name=LAST_NAME)
     private String lastName;
 
+    @Column(name=EMAIL)
     private String email;
 
+    @Column(name=PASSWORD)
     private String password;
 
+    @Column(name=PHONE)
     private String phoneNumber;
 
+    @Column(name = ROLE)
     @Enumerated(EnumType.STRING)
     private Role role;
 

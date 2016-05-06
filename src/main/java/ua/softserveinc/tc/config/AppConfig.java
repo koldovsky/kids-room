@@ -34,6 +34,7 @@ public class AppConfig {
 
     @Bean
     public TilesViewResolver viewResolver() {
+
         return new TilesViewResolver();
     }
 

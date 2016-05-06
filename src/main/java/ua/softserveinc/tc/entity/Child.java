@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.entity;
 
+import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ public class Child
 {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = ChildConst.ID_CHILD, nullable = false)
     private Long id;
     private String firstName;
     private String lastName;

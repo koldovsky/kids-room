@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.entity.ColumnConstants.RoomConst;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ public class Room {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = "room_id", unique = true, nullable = false)
+    @Column(name = RoomConst.ID_ROOM, unique = true, nullable = false)
     private Long id;
 
     @Column(name = "name")

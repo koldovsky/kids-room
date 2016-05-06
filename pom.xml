@@ -41,14 +41,11 @@
         <spring.securiry>4.0.4.RELEASE</spring.securiry>
     </properties>
     <dependencies>
+
+        <!-- SPRING CORE -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${org.springframework-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
 
@@ -57,11 +54,8 @@
             <artifactId>spring-context-support</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${org.springframework-version}</version>
-        </dependency>
+
+        <!-- SPRING WEB MVC ORM -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -70,9 +64,36 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
+
+        <!-- SPRING SECURITY -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.2.4.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>3.2.4.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>3.2.4.RELEASE</version>
+        </dependency>
+
+        <!-- HIBERNATE -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -88,6 +109,8 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.3.2.Final</version>
         </dependency>
+
+        <!-- SERVLET JSP JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -106,10 +129,20 @@
             <version>1.2</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-jstlel</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+
+        <!-- MYSQL CONNECTOR -->
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.0.8</version>
         </dependency>
+
+        <!-- APACHE TILES -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-jsp</artifactId>
@@ -125,6 +158,7 @@
             <artifactId>tiles-el</artifactId>
             <version>${org.apache.tiles-version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -148,6 +182,7 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.securiry}</version>
         </dependency>
+
 
     </dependencies>
 </project>
