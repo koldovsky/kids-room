@@ -21,7 +21,6 @@
              <p> I am ADMINISTRATOR</p>
         </sec:authorize>
 
-    </div>
 
 
 </div>
