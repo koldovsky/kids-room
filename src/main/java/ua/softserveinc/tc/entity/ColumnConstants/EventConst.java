@@ -7,7 +7,7 @@ public interface EventConst {
     String NAME = "name";
     String START_TIME = "start_time";
     String END_TIME = "end_time";
-    String ROOM = "id_room";
+    //String ROOM = "id_room";
     String AGE_LOW = "age_low";
     String AGE_HIGH = "age_high";
     String DESCRIPTION = "description";
