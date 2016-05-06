@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.entity.ColumnConstants.BookingConst;
 import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.entity.ColumnConstants.RoomConst;
@@ -16,7 +17,8 @@ import java.util.Date;
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @GeneratedValue(generator = "generator")
     @Column(name = BookingConst.ID_BOOK, nullable = false)
     private Long idBook;
 

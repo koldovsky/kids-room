@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.entity.ColumnConstants.EventConst;
 import ua.softserveinc.tc.entity.ColumnConstants.RoomConst;
 
@@ -14,7 +15,8 @@ import java.util.Date;
 @Table(name = EventConst.TABLENAME)
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @GeneratedValue(generator = "generator")
     @Column(name = EventConst.ID, unique = true, nullable = false)
     private Long id;
 

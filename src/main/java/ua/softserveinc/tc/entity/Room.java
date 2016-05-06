@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.entity.ColumnConstants.CityConst;
 import ua.softserveinc.tc.entity.ColumnConstants.RoomConst;
+import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 
@@ -9,7 +11,7 @@ import javax.persistence.*;
  * Created by Chak on 30.04.2016.
  */
 @Entity
-@Table(name = "rooms")
+@Table(name = RoomConst.TABLE_NAME_ROOMS)
 public class Room {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -17,20 +19,20 @@ public class Room {
     @Column(name = RoomConst.ID_ROOM, unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = RoomConst.NAME_ROOM)
     private String name;
 
-    @Column(name = "address")
+    @Column(name = RoomConst.ADDRESS_ROOM)
     private String address;
-    @Column(name = "phone")
+    @Column(name = RoomConst.PHONE_ROOM)
     private String phoneNumber;
-    @Column(name = "capacity")
+    @Column(name = RoomConst.CAPACITY_ROOM)
     private Integer capacity;
     @OneToOne
-    @JoinColumn(name = "manager_id")
+    @JoinColumn(name = UserConst.ID_USER)
     private User manager;
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = CityConst.ID_CITY)
     private City city;
 
 

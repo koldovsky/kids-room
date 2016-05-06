@@ -78,19 +78,19 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring.securiry}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring.securiry}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>3.2.4.RELEASE</version>
+            <version>${spring.securiry}</version>
         </dependency>
 
         <!-- HIBERNATE -->
@@ -141,6 +141,8 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.0.8</version>
         </dependency>
+
+
 
         <!-- APACHE TILES -->
         <dependency>

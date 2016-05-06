@@ -17,7 +17,7 @@ public interface UserConst {
 
     String PASSWORD = "password";
 
-    String PHONE = "phone-number";
+    String PHONE = "phone_number";
 
     String ROLE = "role";
 }

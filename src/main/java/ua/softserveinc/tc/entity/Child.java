@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.entity;
 
+import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
+import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,13 +15,14 @@ import java.util.Date;
 public class Child
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @GeneratedValue(generator = "generator")
     @Column(name = ChildConst.ID_CHILD, nullable = false)
     private Long id;
     private String firstName;
     private String lastName;
     @ManyToOne
-    @JoinColumn(name = "parentId")
+    @JoinColumn(name = UserConst.ID_USER)
     private User parentId;
     private Date dateOfBirth;
     private String comment;

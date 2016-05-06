@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.entity.ColumnConstants.CityConst;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,10 +16,10 @@ public class City {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = "city_id", unique = true, nullable = false)
+    @Column(name = CityConst.ID_CITY, unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = CityConst.NAME_CITY)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
