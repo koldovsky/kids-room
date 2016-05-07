@@ -5,12 +5,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <header class="bg-primary">
     <div class="container">
-            <div class="col-md-9">
-                <h1>
-                    KIDS ROOM
-                </h1>
+    	<div class="row">
+            <div class="col-md-6">
+                 <h1 class = "col-sm-6">Kids Room</h1>
             </div>
-            <div class="col-md-3 text-right user-control-wrapper">
+
                 <sec:authorize access="!isAuthenticated()">
                     <a href="<c:url value="/login" />">
                         <span class="glyphicon glyphicon-log-in" ></span>
@@ -22,14 +21,18 @@
                     </a>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
-                    <span>
-                        Hello,
-                    </span>
+
+
+                    <nav class="col-sm-6">
                     <sec:authentication
                             property="principal.username" />
-                    </a>
+                     <sec:authorize access="hasRole('USER')">
+                                 <a href="mykids">My Kids</a>
+                                 <a href="logout">Log out</a>
+                      </sec:authorize>
+                      </nav>
 
                 </sec:authorize>
-            </div>
+
     </div>
-    </header>
+</header>

@@ -4,9 +4,9 @@
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
 
 <div>
-<h2>Here are your kids:</h2>
+<h2 class="list">Here are your kids:</h2>
 <c:forEach var="kid" items="${kids}">
-    <p>${kid.getFirstName()}</p>
+    <h3 class="list">${kid.getFirstName()}</h3>
 </c:forEach>
 
 </div>
