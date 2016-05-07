@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(getShaPasswordEncoder());
+                .passwordEncoder(getBCryptPasswordEncoder());
     }
 
     @Override
@@ -51,11 +51,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .invalidateHttpSession(true);
+        http.rememberMe().
+                key("rem-me-key").
+                rememberMeParameter("remember-me").
+                rememberMeCookieName("my-remember-me").
+                tokenValiditySeconds(86400);
+
+
 
     }
 
     @Bean
-    public PasswordEncoder getShaPasswordEncoder(){
+    public PasswordEncoder getBCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

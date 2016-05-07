@@ -6,22 +6,22 @@
 <div class="col-xs-6">
         <form class="form-horizontal" action="${loginUrl}" method="post">
           <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+            <label for="email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <input type="email" name="j_username" class="form-control" id="inputEmail3" placeholder="Email" required autofocus value="user@gmail.com">
+              <input type="email" name="j_username" class="form-control" id="email" required autofocus value="user@gmail.com">
             </div>
           </div>
           <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <label for="password" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-              <input type="password" name="j_password" class="form-control" id="inputPassword3" placeholder="Password" required value="user">
+              <input type="password" name="j_password" class="form-control" id="password" required value="user">
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox"> Remember me
+                  <input type="checkbox" name="remember-me"> Remember me
                 </label>
               </div>
             </div>
