@@ -18,4 +18,8 @@
     <definition name="login" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
     </definition>
+
+    <definition name="mykids" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/mykids.jsp" />
+    </definition>
 </tiles-definitions>

@@ -15,6 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import ua.softserveinc.tc.service.UserDetailsServiceImpl;
@@ -34,8 +35,8 @@ public class AppConfig {
 
     @Bean
     public TilesViewResolver viewResolver() {
-
-        return new TilesViewResolver();
+        TilesViewResolver viewResolver = new TilesViewResolver();
+        return viewResolver;
     }
 
     @Bean
