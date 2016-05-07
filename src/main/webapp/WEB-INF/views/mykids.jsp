@@ -9,4 +9,8 @@
     <h3 class="list">${kid.getFirstName()}</h3>
 </c:forEach>
 
+<form action="registerkid" class="list">
+    <input class="btn-primary" type="submit" value="Add">
+</form>
+
 </div>

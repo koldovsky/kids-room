@@ -38,3 +38,57 @@ header{
 .list{
     text-align: center;
 }
+
+.btn-primary{
+    width: 150px;
+    height: 45px;
+    font-size: 24;
+    margin: 25px;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: white;
+    text-shadow: black;
+}
+form.registerkid {
+				padding: 60px;
+				background-color: white;
+				border: 2px solid grey;
+				margin: 40 auto;
+				width: 20%;
+				min-width: 400px;
+				border-radius: 10px;
+				text-align: center;
+			}
+
+form.registerkid h2{
+			margin-top: 0;
+			margin-bottom: 25px;
+			text-align: center;
+		}
+form.registerkid label {
+  			display: block;
+ 			margin-bottom: 8px;
+			}
+
+form.registerkid .required:after {
+				content:" *";
+				color: red;
+			}
+
+
+form.registerkid input, textarea{
+    text-align: center;
+    width:100%;
+}
+
+#submit{
+                text-align: center;
+				width:20%;
+				min-height: 40px;
+				margin: 0 auto;
+			}
+
+#foot{text-align: center;
+				font-style:italic;}
+	}
+
