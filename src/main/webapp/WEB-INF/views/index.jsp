@@ -13,6 +13,7 @@
 
         <sec:authorize access="hasRole('USER')">
             <p> I am USER</p>
+            <h2><a href="mykids">My Kids</a></h2>
         </sec:authorize>
         <sec:authorize access="hasRole('MANAGER')">
             <p> I am MANAGER</p>

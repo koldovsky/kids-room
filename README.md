@@ -23,3 +23,10 @@ hibernate.show_sql = true
 hibernate.format_sql = true
 hibernate.hbm2ddl.auto = create
 ```
+
+```
+Login                  Password 
+user@gmail.com         user
+admin@gmail.com        admin
+manager@gmail.com      manager
+```

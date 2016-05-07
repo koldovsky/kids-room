@@ -15,4 +15,5 @@ WebContent/
 KidsRoom.iml
 SpringMVC.iml
 main.iml
+hibernate.properties
 .gitignore
