@@ -1,10 +1,15 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Set;
+>>>>>>> 0903cd278790dc48e0c61d5b289dd41c6620a011
 
 @NamedQueries({
         @NamedQuery(name = User.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
@@ -38,6 +43,7 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
+<<<<<<< HEAD
     @OneToMany( mappedBy = "parentId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Child> children;
 
@@ -46,6 +52,17 @@ public class User {
     }
 
     public void setChildren(List<Child> children) {
+=======
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "parentId")
+    @Column
+    private Set<Child> children;
+
+    public Set<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Child> children) {
+>>>>>>> 0903cd278790dc48e0c61d5b289dd41c6620a011
         this.children = children;
     }
 

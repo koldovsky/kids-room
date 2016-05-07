@@ -3,8 +3,6 @@
 <c:url value="/j_spring_security_check" var="loginUrl" />
 
 
-
-
 <div class="col-xs-6">
         <form class="form-horizontal" action="${loginUrl}" method="post">
           <div class="form-group">
