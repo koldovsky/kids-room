@@ -24,7 +24,12 @@
         <put-attribute name="body" value="/WEB-INF/views/mykids.jsp" />
     </definition>
 
+
     <definition name="registration" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/registration.jsp" />
+    </definition>
+
+    <definition name="registerkid" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/registerkid.jsp" />
     </definition>
 </tiles-definitions>
