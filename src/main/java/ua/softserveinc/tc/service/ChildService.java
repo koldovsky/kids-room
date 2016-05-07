@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.entity.User;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 
 public interface ChildService extends BaseService<Child> {
-    List<Child> getChildrenByUserId(Long UserId);
+    List<Child> getChildrenByUserId(User user);
 }

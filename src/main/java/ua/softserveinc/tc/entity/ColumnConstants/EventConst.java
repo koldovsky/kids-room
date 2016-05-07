@@ -11,6 +11,7 @@ public interface EventConst {
     String AGE_LOW = "age_low";
     String AGE_HIGH = "age_high";
     String DESCRIPTION = "description";
+    String ID_ROOM = RoomConst.ID_ROOM;
 
     String REPOSITORY = "eventDao";
 }
