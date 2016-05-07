@@ -24,8 +24,9 @@ hibernate.format_sql = true
 hibernate.hbm2ddl.auto = create
 ```
 
-
-Login   Password for users
-user@gmail.com  user
-admin@gmail.com  admin
-manager@gmail.com  manager
+```
+Login                  Password 
+user@gmail.com         user
+admin@gmail.com        admin
+manager@gmail.com      manager
+```
