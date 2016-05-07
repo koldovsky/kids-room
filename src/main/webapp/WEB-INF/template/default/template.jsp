@@ -13,14 +13,23 @@
 html,
 body {
   height: 100%;
+
 }
 .wrapper {
   display: table;
   height: 100%;
+  width:100%
 }
 .content {
   display: table-row;
   height: 100%;
+}
+.footer{
+  display: table-row;
+}
+a{
+  color: white;
+  text-decoration: none;
 }
 
 
@@ -33,7 +42,6 @@ body {
   <div class="content"><tiles:insertAttribute name="body" /></div>
 
   <div class="footer"><tiles:insertAttribute name="footer" /></div>
-
 </div>
 
 </body>
