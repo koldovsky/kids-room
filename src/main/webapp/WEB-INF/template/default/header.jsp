@@ -16,7 +16,7 @@
                         Login
                     </a>
                     <a  href="<c:url value="/registration" />">
-                        <span class="glyphicon glyphicon-log-out"></span>
+                        <span class="glyphicon glyphicon-pencil"></span>
                         Registration
                     </a>
                 </sec:authorize>
@@ -24,12 +24,12 @@
 
 
                     <nav class="col-sm-6">
-                    <sec:authentication
-                            property="principal.username" />
+
                      <sec:authorize access="hasRole('USER')">
                                  <a href="mykids">My Kids</a>
-                                 <a href="logout">Log out</a>
+
                       </sec:authorize>
+                      <a href="logout">    Logout   </a>
                       </nav>
 
                 </sec:authorize>
