@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+import java.util.List;
+
 @NamedQueries({
         @NamedQuery(name = User.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
 })
@@ -36,9 +38,15 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
+    @OneToMany( mappedBy = "parentId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Child> children;
 
-    public User() {
+    public List<Child> getChildren() {
+        return children;
+    }
 
+    public void setChildren(List<Child> children) {
+        this.children = children;
     }
 
     public String getPassword() {

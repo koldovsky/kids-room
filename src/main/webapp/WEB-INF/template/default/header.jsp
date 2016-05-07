@@ -28,6 +28,7 @@
                     <sec:authentication
                             property="principal.username" />
                     </a>
+
                 </sec:authorize>
             </div>
     </div>

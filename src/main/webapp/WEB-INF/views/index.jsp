@@ -7,7 +7,7 @@
         </sec:authorize>
 
         <sec:authorize access="isAuthenticated()">
-            <p>Welcome</p>
+            Your email <sec:authentication property="principal.username" /></p>
             <p><a href="logout" />Log out</a></p>
         </sec:authorize>
 
