@@ -19,7 +19,22 @@ body {
 .footer{
   display: table-row;
 }
-a{
-  color: white;
-  text-decoration: none;
+
+header h1 {
+	font-weight: 600;
+	margin: 0;
+}
+
+header a {
+    margin: 20px;
+	color: white;
+}
+
+header{
+	padding: 20px;
+	margin-bottom: 40px;
+}
+
+.list{
+    text-align: center;
 }
