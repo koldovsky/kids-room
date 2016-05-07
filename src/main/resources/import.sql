@@ -4,3 +4,4 @@ INSERT INTO users (id_user, email, first_name, last_name, password, phone_number
 
 INSERT INTO children (id_child, comment, dateOfBirth, firstName, lastName, id_user) VALUES (1, "no comments", "12.02.2011", "Adam", "First", 1);
 INSERT INTO children (id_child, comment, dateOfBirth, firstName, lastName, id_user) VALUES (2, "no comments", "12.02.2011", "Eva", "First", 1);
+
