@@ -2,7 +2,6 @@ package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.entity.ColumnConstants.EventConst;
-import ua.softserveinc.tc.entity.ColumnConstants.RoomConst;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -36,7 +35,7 @@ public class Event {
     private Integer ageHigh;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = RoomConst.ID_ROOM, nullable = false)
+    @JoinColumn(name = EventConst.ID_ROOM, nullable = false)
     private Room room;
 
     @Column(name = EventConst.DESCRIPTION)
