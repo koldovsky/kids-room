@@ -15,4 +15,6 @@ public interface ChildConst {
 
     String COMMENT = "comment";
 
+    String ID_PARENT = UserConst.ID_USER;
+
 }

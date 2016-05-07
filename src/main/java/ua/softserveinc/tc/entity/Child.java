@@ -21,6 +21,7 @@ public class Child
     private Long id;
     private String firstName;
     private String lastName;
+
     @ManyToOne
     @JoinColumn(name = UserConst.ID_USER)
     private User parentId;

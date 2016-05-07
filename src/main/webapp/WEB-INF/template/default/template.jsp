@@ -28,7 +28,7 @@ body {
   display: table-row;
 }
 a{
-  color: white;
+  color: black;
   text-decoration: none;
 }
 
