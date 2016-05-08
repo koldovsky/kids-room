@@ -2,13 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="col-sm-2">
     <form:form action="registration" method="post" modelAttribute="user">
-
-      <form:hidden path="id" />
-
-      <!-- От це недобре, юзер може в хтмл поміняти собі роль при реєстрації -->
       <form:input path="role" type="hidden" value="USER" />
       <div class="form-group">
         <label for="email">Email address</label>
+        <c:forEach var="a" items="${users}">
+            ${a.email}
+        </c:forEach>
         <form:input path="email" type="email" id="email" class="form-control" style="text-transform: lowercase" required="required" />
       </div>
       <div class="form-group">

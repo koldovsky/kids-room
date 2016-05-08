@@ -29,6 +29,7 @@ public class UserController {
 
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public String registration(Model model){
+        model.addAttribute("users", userService.findAll());
         model.addAttribute("roleList", Role.values());
         model.addAttribute("user", new User());
         return "registration";
@@ -36,6 +37,7 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute User user) {
+        user.setRole(Role.USER);
         userService.create(user);
         return "registration";
     }
