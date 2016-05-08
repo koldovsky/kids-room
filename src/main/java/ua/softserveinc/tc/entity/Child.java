@@ -1,37 +1,39 @@
 package ua.softserveinc.tc.entity;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
-import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import java.util.Date;
-
-import static java.util.Calendar.DATE;
 
 /**
  * Created by Demian on 29.04.2016.
  */
 @Entity
-@Table(name = "children")
+@Table(name = ChildConst.TABLE_NAME)
 public class Child
 {
     @Id
-    @GenericGenerator(name = "generator", strategy = "increment")
-    @GeneratedValue(generator = "generator")
-    @Column(name = ChildConst.ID_CHILD, nullable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = ChildConst.ID, nullable = false)
     private Long id;
+
+    @Column(name = ChildConst.FIRST_NAME, nullable = false)
     private String firstName;
+
+    @Column(name = ChildConst.LAST_NAME, nullable = false)
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = UserConst.ID_USER)
+    @JoinColumn(name = ChildConst.PARENT_ID)
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)
     @DateTimeFormat(pattern="dd.MM.yyyy")
+    @Column(name = ChildConst.DATE_OF_BIRTH, nullable = false)
     private Date dateOfBirth;
+
+    @Column(name = ChildConst.COMMENT, nullable = false)
     private String comment;
 
     public Long getId() {
@@ -80,5 +82,11 @@ public class Child
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString()
+    {
+        return firstName;
     }
 }

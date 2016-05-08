@@ -1,20 +1,19 @@
 package ua.softserveinc.tc.entity.ColumnConstants;
 
 
-public interface ChildConst {
+public interface ChildConst
+{
+    String TABLE_NAME = "children";
 
-    String TABLE_NAME_CHILD = "children";
+    String ID = "id";
 
-    String ID_CHILD = "id_child";
+    String FIRST_NAME = "firstName";
 
-    String FIRST_NAME_CHILD = "first_name_child";
+    String LAST_NAME = "lastName";
 
-    String LAST_NAME_CHILD = "last_name_child";
-
-    String DATE_OF_BIRTH = "date_of_birth_child";
+    String DATE_OF_BIRTH = "dateOfBirth";
 
     String COMMENT = "comment";
 
-    String ID_PARENT = UserConst.ID_USER;
-
+    String PARENT_ID = UserConst.ID_USER;
 }

@@ -24,8 +24,8 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
     public List<Child> getChildrenByUser(User user){
         return childDao
                 .getEntityManager()
-                .createQuery("SELECT * FROM " + ChildConst.TABLE_NAME_CHILD +
-                        " WHERE " + ChildConst.ID_PARENT + " = " + user.getId() + ";")
+                .createQuery("from Child" +
+                        " where parentId = " + user.getId())
                 .getResultList();
     }
 }

@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/mykids").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/registerkid").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/report").hasRole("MANAGER")
+                .antMatchers(HttpMethod.GET, "/parentbookings").hasRole("MANAGER")
                 .and()
 
             .formLogin()
