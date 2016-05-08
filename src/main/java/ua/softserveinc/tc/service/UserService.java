@@ -2,6 +2,10 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.entity.User;
 
-public interface UserService extends BaseService<User> {
-User getUserByEmail(String email);
+import java.util.List;
+
+public interface UserService extends BaseService<User>
+{
+    User getUserByEmail(String email);
+    List<User> getAllParents();
 }
