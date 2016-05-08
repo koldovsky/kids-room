@@ -4,6 +4,8 @@
     <form:form action="registration" method="post" modelAttribute="user">
 
       <form:hidden path="id" />
+
+      <!-- От це недобре, юзер може в хтмл поміняти собі роль при реєстрації -->
       <form:input path="role" type="hidden" value="USER" />
       <div class="form-group">
         <label for="email">Email address</label>

@@ -1,30 +1,19 @@
-<%@ page isELIgnored="false" %>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:url value="/j_spring_security_check" var="registerKidsUrl" />
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<div class="col-sm-2">
+    <form:form action="registerkid" method="post" modelAttribute="child">
 
-<div>
-<form class="registerkid">
-<h2 align="center">Registration Form</h2>
+      <form:hidden path="id" />
+      <div class="form-group">
 
-<label class="required">First name</label>
-<label> <input type="text" required> </label>
+      <div class="form-group">
+             <label for="firstname" class="required">First Name</label>
+              <form:input path="firstName" id="firstname" class="form-control" required="required"/>
+      </div>
+      <div class="form-group">
+              <label for="lastname" class="required">Last Name</label>
+              <form:input path="lastName" id="lastname" class="form-control" required="required" />
+      </div>
 
-<label class="required">Last name</label>
-<label> <input type="text" required> </label>
-
-<label class="required">Date of birth</label>
-<label> <input type="date" required></label>
-
-<label>Comments</label>
-<textarea rows="7" cols="50">
-</textarea>
-</div>
-<div style="text-align:center;">
-<input id="submit" type="submit" value="Submit"></input>
-</div>
-<div id="foot">
-   <p>* - mandatory fields</p>
-</div>
-</form>
+      <button type="submit" class="btn btn-default">Submit</button>
+</form:form>
 </div>
