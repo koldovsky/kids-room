@@ -4,13 +4,18 @@
 <c:url value="/j_spring_security_check" var="reportUrl" />
 
 <h2>All parents:</h2>
-<table id="parents">
+<form action="">
 <c:forEach var="parent" items="${parents}">
-    <tr>
-    <td>${parent.getFirstName()}</td>
-    <td>${parent.getLastName()}</td>
-    <td>${parent.getEmail()}</td>
-    <td>${parent.getPhoneNumber()}</td>
-    </tr>
+    <div id="${parent.getEmail()}"">
+        <input type="text" value="${parent.getFirstName()}" disabled>
+        <input type="text" value="${parent.getLastName()}" disabled>
+        <input type="text" value="${parent.getEmail()}" disabled>
+        <input type="text" value="${parent.getPhoneNumber()}" disabled>
+        <input type="checkbox" checked></br>
+    </div>
 </c:forEach>
-</table>
+
+<label><p>Choose start time: <input type="date" value="${dateThen}"></label></p>
+<label><p>Choose end time: <input type="date" value="${dateNow}"></label></p>
+<input type="submit" value="Generate!">
+</form>

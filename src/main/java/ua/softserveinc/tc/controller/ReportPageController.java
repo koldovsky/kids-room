@@ -9,28 +9,43 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.entity.User;
 
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.service.UserServiceImpl;
 
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Demian on 08.05.2016.
  */
 @Controller
-public class ReportPageController {
+public class ReportPageController
+{
     @Autowired
     UserService userService;
 
     @RequestMapping(value = "/report**", method = RequestMethod.GET)
-    public ModelAndView myKids(Principal principal) {
+    public ModelAndView report(Principal principal)
+    {
         ModelAndView model = new ModelAndView();
         model.setViewName("report");
+        ModelMap modelMap = model.getModelMap();
 
         List<User> parentsList = userService.getAllParents();
-
-        ModelMap modelMap = model.getModelMap();
         modelMap.addAttribute("parents", parentsList);
+
+        Calendar calendar = Calendar.getInstance();
+        String dateNow = calendar.get(Calendar.YEAR) + "-";
+        dateNow += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        dateNow += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        modelMap.addAttribute("dateNow", dateNow);
+
+        calendar.add(Calendar.MONTH, -1);
+        String dateThen = calendar.get(Calendar.YEAR) + "-";
+        dateThen += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        dateThen += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        modelMap.addAttribute("dateThen", dateThen);
+
         return model;
     }
 }
