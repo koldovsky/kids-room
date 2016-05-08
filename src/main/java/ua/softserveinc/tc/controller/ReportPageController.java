@@ -24,7 +24,7 @@ public class ReportPageController
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/report**", method = RequestMethod.GET)
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ModelAndView report(Principal principal)
     {
         ModelAndView model = new ModelAndView();
