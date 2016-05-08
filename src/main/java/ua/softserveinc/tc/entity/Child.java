@@ -1,11 +1,14 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import java.util.Date;
+
+import static java.util.Calendar.DATE;
 
 /**
  * Created by Demian on 29.04.2016.
@@ -25,6 +28,9 @@ public class Child
     @ManyToOne
     @JoinColumn(name = UserConst.ID_USER)
     private User parentId;
+
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern="dd.MM.yyyy")
     private Date dateOfBirth;
     private String comment;
 

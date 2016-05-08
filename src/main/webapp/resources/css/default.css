@@ -50,10 +50,9 @@ header{
     text-shadow: black;
 }
 form.registerkid {
-				padding: 60px;
-				background-color: white;
+				padding: 30px;
 				border: 2px solid grey;
-				margin: 40 auto;
+				margin: 20 auto;
 				width: 20%;
 				min-width: 400px;
 				border-radius: 10px;
@@ -91,4 +90,9 @@ form.registerkid input, textarea{
 #foot{text-align: center;
 				font-style:italic;}
 	}
+
+.col-sm-4{
+margin: 0 auto;
+}
+
 

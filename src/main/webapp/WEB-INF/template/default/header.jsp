@@ -29,6 +29,10 @@
                                  <a href="mykids">My Kids</a>
 
                       </sec:authorize>
+                       <sec:authorize access="hasRole('MANAGER')">
+                                  <a href="report">Generate a report</a>
+
+                      </sec:authorize>
                       <a href="logout">    Logout   </a>
                       </nav>
 

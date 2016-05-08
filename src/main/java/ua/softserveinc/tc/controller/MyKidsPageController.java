@@ -25,7 +25,7 @@ public class MyKidsPageController {
     @Autowired
     UserService us;
 
-    @RequestMapping(value = "/mykids**", method = RequestMethod.GET)
+    @RequestMapping(value = "/mykids", method = RequestMethod.GET)
     public ModelAndView myKids(Principal principal) {
 
         ModelAndView model = new ModelAndView();

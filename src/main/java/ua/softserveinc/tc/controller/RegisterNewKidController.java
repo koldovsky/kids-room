@@ -32,7 +32,9 @@ public class RegisterNewKidController {
 
     @RequestMapping(value="/registerkid**", method = RequestMethod.POST)
     public String submit(@ModelAttribute Child child, Principal principal){
-        child.setParentId(userService.getUserByEmail(principal.getName()));
+        child.setParentId(
+                userService.getUserByEmail(
+                        principal.getName()));
         childService.create(child);
         return "registerkid";
     }
