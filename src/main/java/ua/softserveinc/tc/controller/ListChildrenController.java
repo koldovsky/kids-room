@@ -32,8 +32,7 @@ public class ListChildrenController {
         ModelMap modelMap = modelAndView.getModelMap();
 
 
-
-        List<Booking>  listBooking = bookingService.getBookingsByToDay();
+        List<Booking> listBooking = bookingService.getBookingsByToDay();
         List<Child> listBookedChild = new ArrayList<>();
 
         for (Booking childBooking: listBooking) {
@@ -41,6 +40,7 @@ public class ListChildrenController {
             listBookedChild.add(childBookedId);
         }
         modelMap.addAttribute("listChildren", listBookedChild);
+        modelMap.addAttribute("listBooking", listBooking);
         return modelAndView;
     }
 
