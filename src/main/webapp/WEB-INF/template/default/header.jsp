@@ -7,9 +7,9 @@
     <div class="container">
     	<div class="row">
             <div class="col-md-6">
-                 <h1 class = "col-sm-6"><a href="/home">Kid&#39;s Room</a></h1>
+                 <h1><a href="/home">Kid&#39;s Room</a></h1>
             </div>
-
+            <div class="col-md-6">
                 <sec:authorize access="!isAuthenticated()">
                     <a href="<c:url value="/login" />">
                         <span class="glyphicon glyphicon-log-in" ></span>
@@ -38,6 +38,6 @@
                       </nav>
 
                 </sec:authorize>
-
+            </div>
     </div>
 </header>

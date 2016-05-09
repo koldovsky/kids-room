@@ -2,10 +2,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <div>
-        <sec:authorize access="!isAuthenticated()">
-            <p><a href="login" /> Enter</a></p>
-        </sec:authorize>
-
         <sec:authorize access="isAuthenticated()">
             Your email <sec:authentication property="principal.username" /></p>
         </sec:authorize>

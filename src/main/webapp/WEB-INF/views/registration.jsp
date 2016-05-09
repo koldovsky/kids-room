@@ -1,7 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script type="text/javascript" src="resources/js/userRegistration.js"></script>
-<div class="col-sm-2">
+<script type="text/javascript" src="resources/js/registration.js"></script>
+<div class="col-sm-4">
+</div>
+<div class="col-sm-3">
     <form:form id="userform" action="registration" method="post" modelAttribute="user">
       <form:input path="role" type="hidden" value="USER" />
 
@@ -34,9 +36,14 @@
       </div>
       <div class="form-group">
               <label for="phonenumber" class="required">Phone number</label>
-              <form:input path="phoneNumber"  id="phonenumber" type="number" class="form-control"  required="required"/>
+              <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"  required="required"/>
               <form:errors path="phoneNumber" cssClass="error"  />
+              <span id="validPhone"></span>
       </div>
-      <button type="submit" id="button" class="btn btn-default">Submit</button>
+      <div class="form-group">
+              <p>By clicking "Register" you accept and agree with the <a href="">rules</a></p>
+              <button type="submit" id="button" class="btn btn-default">Register</button>
+
+      </div>
     </form:form>
 </div>

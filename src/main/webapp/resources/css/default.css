@@ -136,6 +136,11 @@ caption {
 cursor: pointer;
 }
 
-#validPassword, #validEmail, .error{
+#validPassword, #validEmail, #validPhone, .error{
     color:red;
+}
+
+.required:after {
+	content:" *";
+	color: red;
 }

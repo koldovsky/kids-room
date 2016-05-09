@@ -7,6 +7,7 @@ import ua.softserveinc.tc.validator.UniqueEmail;
 import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @NamedQueries({
@@ -42,6 +43,7 @@ public class User {
     private String password;
 
     @NotEmpty
+    @Size(min = 10, max=13)
     @Column(name=UserConst.PHONE)
     private String phoneNumber;
 
