@@ -12,15 +12,15 @@
                 <th>Surname</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Bookings</th>
+                <th>Booking</th>
             </tr>
             <c:forEach var="parent" items="${parents}">
-            <tr id="${parent.getEmail()}" class="parentRow">
+            <tr>
                 <td>${parent.getFirstName()}</td>
                 <td>${parent.getLastName()}</td>
                 <td>${parent.getEmail()}</td>
                 <td>${parent.getPhoneNumber()}</td>
-                <td><a>See details</a></td>
+                <td id="${parent.getEmail()}" class="parentRow"><a>See details</a></td>
             </tr>
             </c:forEach>
         </table>
