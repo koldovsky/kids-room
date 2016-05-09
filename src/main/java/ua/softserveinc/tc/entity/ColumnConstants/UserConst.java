@@ -20,4 +20,6 @@ public interface UserConst {
     String PHONE = "phone_number";
 
     String ROLE = "role";
+
+    String NQ_FIND_USER_BY_EMAIL = "findUserByEmail";
 }

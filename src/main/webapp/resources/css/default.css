@@ -132,4 +132,6 @@ caption {
 	padding: 20px;
 }
 
-
+#validPassword, #validEmail, .error{
+    color:red;
+}

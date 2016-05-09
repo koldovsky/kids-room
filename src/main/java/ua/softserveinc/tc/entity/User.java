@@ -1,38 +1,50 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+import ua.softserveinc.tc.validator.UniqueEmail;
 import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @NamedQueries({
-        @NamedQuery(name = User.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
+        @NamedQuery(name = UserConst.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
 })
 @Entity
 @Table(name = UserConst.TABLE_NAME_USER)
 public class User {
-    public static final String NQ_FIND_USER_BY_EMAIL = "findUserByEmail";
+
+
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
     @Column(name=UserConst.ID_USER, nullable = false)
     private Long id;
 
+    @NotEmpty
     @Column(name=UserConst.FIRST_NAME)
     private String firstName;
 
+    @NotEmpty
     @Column(name=UserConst.LAST_NAME)
     private String lastName;
 
-    @Column(name=UserConst.EMAIL)
+    @NotEmpty
+    @Email
+    @Column(name=UserConst.EMAIL, unique = true)
+    @UniqueEmail
     private String email;
 
+    @NotEmpty
     @Column(name=UserConst.PASSWORD)
     private String password;
 
+    @NotEmpty
     @Column(name=UserConst.PHONE)
     private String phoneNumber;
+
 
     @Column(name = UserConst.ROLE)
     @Enumerated(EnumType.ORDINAL)
