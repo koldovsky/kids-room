@@ -35,7 +35,7 @@ public class RegisterNewKidController {
         child.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));
-                            childService.create(child);
+        childService.create(child);
         return "registerkid";
     }
 }

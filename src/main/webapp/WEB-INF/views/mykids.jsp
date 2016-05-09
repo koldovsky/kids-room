@@ -5,7 +5,9 @@
 
 <div>
 <h2 class="list">Here are your kids:</h2>
-
+<c:forEach var="kid" items="${kids}">
+    <h3 class="list">${kid.getFirstName()}</h3>
+</c:forEach>
 
 <form action="registerkid" class="list">
     <input class="btn-primary" type="submit" value="Add">

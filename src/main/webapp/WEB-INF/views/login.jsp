@@ -8,13 +8,13 @@
           <div class="form-group">
             <label for="email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <input type="email" name="j_username" class="form-control" id="email" required autofocus value="manager@gmail.com">
+              <input type="email" name="j_username" class="form-control" id="email" required autofocus value="user@gmail.com">
             </div>
           </div>
           <div class="form-group">
             <label for="password" class="col-sm-2 control-label">Password</label>
             <div class="col-sm-10">
-              <input type="password" name="j_password" class="form-control" id="password" required value="manager">
+              <input type="password" name="j_password" class="form-control" id="password" required value="user">
             </div>
           </div>
           <div class="form-group">

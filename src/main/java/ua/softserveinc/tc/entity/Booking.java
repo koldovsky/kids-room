@@ -23,7 +23,7 @@ public class Booking {
     private Long idBook;
 
     @ManyToOne(optional = false)//(cascade = CascadeType.ALL)
-    @JoinColumn(name = ChildConst.ID)
+    @JoinColumn(name = ChildConst.ID_CHILD)
     private Child idChild;
 
     @ManyToOne(optional = false)//(fetch = FetchType.LAZY)
