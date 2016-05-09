@@ -132,6 +132,10 @@ caption {
 	padding: 20px;
 }
 
+.parentRow:hover {
+cursor: pointer;
+}
+
 #validPassword, #validEmail, .error{
     color:red;
 }
