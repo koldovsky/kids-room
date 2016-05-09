@@ -14,7 +14,7 @@ import static java.util.Calendar.DATE;
  * Created by Demian on 29.04.2016.
  */
 @Entity
-@Table(name = "children")
+@Table(name = ChildConst.TABLE_NAME)
 public class Child
 {
     @Id
@@ -26,12 +26,14 @@ public class Child
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = UserConst.ID_USER)
+    @JoinColumn(name = ChildConst.ID_PARENT)
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)
     @DateTimeFormat(pattern="dd.MM.yyyy")
+    @Column(name = ChildConst.DATE_OF_BIRTH, nullable = false)
     private Date dateOfBirth;
+    @Column(name = ChildConst.COMMENT, nullable = false)
     private String comment;
 
     public Long getId() {
@@ -80,5 +82,10 @@ public class Child
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return firstName;
     }
 }
