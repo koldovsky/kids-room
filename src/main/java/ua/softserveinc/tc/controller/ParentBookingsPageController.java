@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
@@ -25,22 +27,15 @@ public class ParentBookingsPageController
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/parentbookings", method = RequestMethod.GET)
-    public ModelAndView parentBookings(Principal principal)
+    @RequestMapping(value = "/parentbookings", method = RequestMethod.GET, params = {"parentEmail"})
+    public @ResponseBody ModelAndView parentBookings(Principal principal,
+                                                     @RequestParam(value = "parentEmail") String parentEmail)
     {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("parentbookings");
         ModelMap modelMap = modelAndView.getModelMap();
 
-        /*TODO:
-        *
-        * implement getting User's email from report.jsp page
-        * on that page every div has got its own email
-        * this email has to be sent on this page
-        *
-        */
-        String userEmail = "user@gmail.com";
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByEmail(parentEmail);
         List<Booking> bookingList = bookingService.getBookingsByUser(user);
         modelMap.addAttribute("bookings", bookingList);
         return modelAndView;
