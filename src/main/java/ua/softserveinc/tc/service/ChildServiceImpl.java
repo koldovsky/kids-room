@@ -28,4 +28,12 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
                         " where parentId = " + user.getId())
                 .getResultList();
     }
+
+  /*  @Override
+    public List<Child> getAllChildren() {
+        return childDao
+                .getEntityManager()
+                .createQuery("SELECT * FROM " + ChildConst.TABLE_NAME_CHILD + ";")
+                .getResultList();
+    }*/
 }

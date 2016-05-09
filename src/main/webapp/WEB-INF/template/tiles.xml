@@ -40,4 +40,13 @@
     <definition name="registerkid" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/registerkid.jsp" />
     </definition>
+
+    <definition name="listChildren" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/listChildren.jsp" />
+    </definition>
+
+    <definition name="some" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/some.jsp" />
+    </definition>
+
 </tiles-definitions>

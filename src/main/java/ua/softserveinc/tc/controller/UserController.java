@@ -41,4 +41,22 @@ public class UserController {
         userService.create(user);
         return "registration";
     }
+  /*  @RequestMapping("/some")
+    public String some(){
+        return "listChildren";
+    }*/
 }
+/*
+ @RequestMapping(value = "/report**", method = RequestMethod.GET)
+    public ModelAndView myKids(Principal principal) {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("report");
+
+        List<User> parentsList = userService.getAllParents();
+
+        ModelMap modelMap = model.getModelMap();
+        modelMap.addAttribute("parents", parentsList);
+        return model;
+    }
+}
+*/

@@ -31,8 +31,10 @@
                       </sec:authorize>
                        <sec:authorize access="hasRole('MANAGER')">
                                   <a href="report">Generate a report</a>
+                                  <a href="listChildren">List of Kids</a>
 
                       </sec:authorize>
+
                       <a href="logout">    Logout   </a>
                       </nav>
 
