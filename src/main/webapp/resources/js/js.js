@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#confirm').blur(function(){
-        var p1 = $('#password').val();
-        var p2 = $('#confirm').val();
+        var p1 = $('#uPassword').val();
+        var p2 = $('#uConfirm').val();
         if(p1!=p2){
             $('#validPassword').text('This password does not match with the password in "Password" field. Please enter the same password');
             $('button').prop('disabled', true);
@@ -11,7 +11,7 @@ $(document).ready(function() {
     }});
 
     $('#email').blur(function(){
-        var p = $('#email').val();
+        var p = $('#uEmail').val();
         if(p.indexOf('@softserveinc.com') ==-1) {
             $('#validEmail').text('Please enter your email with "softserveinc.com" domain');
             $('button').prop('disabled', true);

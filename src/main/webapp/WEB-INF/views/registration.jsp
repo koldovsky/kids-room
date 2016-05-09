@@ -17,19 +17,19 @@
       </div>
       <div class="form-group">
                   <label for="email" class="required">Email address</label>
-                  <form:input path="email" type="email" id="email" class="form-control" style="text-transform: lowercase" required="required" />
+                  <form:input path="email" type="email" id="uEmail" class="form-control" style="text-transform: lowercase" required="required" />
                   <form:errors path="email" cssClass="error"  />
                   <span id="validEmail"></span>
       </div>
 
       <div class="form-group" >
                 <label for="password" class="required">Password</label>
-                <form:password path="password" id="password" class="form-control" required="required" />
+                <form:password path="password" id="uPassword" class="form-control" required="required" />
                 <form:errors path="password" cssClass="error" />
       </div>
       <div class="form-group">
               <label for="confirm" class="required">Confirm password</label>
-              <form:password path="" id="confirm" class="form-control" required="required" />
+              <form:password path="" id="uConfirm" class="form-control" required="required" />
               <span id="validPassword"></span>
       </div>
       <div class="form-group">
