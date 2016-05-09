@@ -12,7 +12,7 @@
                 <th>Surname</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Booking</th>
+                <th>Bookings</th>
             </tr>
             <c:forEach var="parent" items="${parents}">
             <tr>
