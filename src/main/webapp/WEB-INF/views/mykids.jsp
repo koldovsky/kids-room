@@ -3,13 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
 
-<div>
-<h2 class="list">Here are your kids:</h2>
+<script src="resources/js/mykidslist.js">
+</script>
+
+<div class="list">
+<h2 class="list">Here are Your kids:</h2>
 <c:forEach var="kid" items="${kids}">
-    <h3 class="list">${kid.getFirstName()}</h3>
+    <div class="kidslistitem">
+    <h3>${kid.getFullName()}</h3>
+    </div>
+    <div class="kidinfo">
+        <p>Date of birth: ${kid.getDateOfBirth()}</p>
+        <p>Comment: ${kid.getComment()}</p>
+    </div>
 </c:forEach>
 
-<form action="registerkid" class="list">
+<form action="registerkid">
     <input class="btn-primary" type="submit" value="Add">
 </form>
 

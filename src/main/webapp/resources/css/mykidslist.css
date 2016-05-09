@@ -1,0 +1,11 @@
+.kidslistitem{
+    cursor: pointer;
+}
+
+.kidinfo {
+   display: none;
+}
+
+.list{
+    text-align: center;
+}
