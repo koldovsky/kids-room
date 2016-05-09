@@ -65,6 +65,7 @@
     <definition name="adm-add-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-add-manager.jsp" />
     </definition>
+    <!-- /Admin -->
 
 
 </tiles-definitions>
