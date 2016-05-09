@@ -24,18 +24,18 @@ public class RegisterNewKidController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/registerkid**", method = RequestMethod.GET)
+    @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
     public String registerKid(Model model){
         model.addAttribute("child", new Child());
         return "registerkid";
     }
 
-    @RequestMapping(value="/registerkid**", method = RequestMethod.POST)
+    @RequestMapping(value="/registerkid", method = RequestMethod.POST)
     public String submit(@ModelAttribute Child child, Principal principal){
         child.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));
-        childService.create(child);
+                            childService.create(child);
         return "registerkid";
     }
 }
