@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<script type="text/javascript" src="resources/js/userRegistration.js"></script>
 <div class="col-sm-2">
     <form:form id="userform" action="registration" method="post" modelAttribute="user">
       <form:input path="role" type="hidden" value="USER" />
@@ -17,19 +17,19 @@
       </div>
       <div class="form-group">
                   <label for="email" class="required">Email address</label>
-                  <form:input path="email" type="email" id="uEmail" class="form-control" style="text-transform: lowercase" required="required" />
+                  <form:input path="email" type="email" id="userEmail" class="form-control" style="text-transform: lowercase" required="required" />
                   <form:errors path="email" cssClass="error"  />
                   <span id="validEmail"></span>
       </div>
 
       <div class="form-group" >
                 <label for="password" class="required">Password</label>
-                <form:password path="password" id="uPassword" class="form-control" required="required" />
+                <form:password path="password" id="userPassword" class="form-control" required="required" />
                 <form:errors path="password" cssClass="error" />
       </div>
       <div class="form-group">
               <label for="confirm" class="required">Confirm password</label>
-              <form:password path="" id="uConfirm" class="form-control" required="required" />
+              <form:password path="" id="userConfirm" class="form-control" required="required" />
               <span id="validPassword"></span>
       </div>
       <div class="form-group">
