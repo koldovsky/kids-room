@@ -10,8 +10,8 @@ INSERT INTO children  VALUES (2, "no comments", "12.02.2011", "Eva", "First", 1)
 
 insert into cities values (1, "Lviv");
 insert into rooms values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 2);
-insert into booking values (13, '2017-04-04', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
+insert into booking values (13, '2017-04-04', '2015-04-04', "The whole world of comments", false, 1, 1, 2);
 insert into booking values (1, '2017-04-04', '2011-04-04', "The whole world of comments", false, 2, 1, 1);
 insert into booking values (5, '2017-04-04', '2014-04-04', "The whole world of comments", false, 2, 1, 1);
 insert into booking values (7, '2017-04-04', '2013-04-04', "The whole world of comments", false, 1, 1, 1);
-insert into booking values (10, '2017-04-04', '2016-04-04', "The whole world of comments", false, 1, 1, 1);
+insert into booking values (15, '2015-04-04', '2015-04-04', "The whole world of comments", false, 1, 1, 1);

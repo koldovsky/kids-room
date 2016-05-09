@@ -23,7 +23,7 @@
                 <sec:authorize access="isAuthenticated()">
 
 
-                    <nav class="col-sm-6">
+                    <div class="col-sm-6">
 
                      <sec:authorize access="hasRole('USER')">
                                  <a href="mykids">My Kids</a>

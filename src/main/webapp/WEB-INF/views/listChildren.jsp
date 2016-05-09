@@ -7,25 +7,24 @@
             <table class="listChild">
                 <caption><h2>List of kids</h2></caption>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
+                    <th>Kids name</th>
                 </tr>
-            <c:forEach var="kids" items="${AllChildren}">
+            <c:forEach var="kids" items="${listChildren}">
                 <tr>
-                    <td><c:out value="${kids.getId()}" /></td>
-                    <td><c:out value="${kids.getFirstName()} " /></td>
+                    <td><a href="dfdfsf">
+                    <c:out value="${kids.getFirstName()} ${kids.getLastName()}" /></a></td>
                 </tr>
             </c:forEach>
         </table>
     </div>
 
-    <div>
+    <div class="reportingTime">
         <table class="reportTime">
             <tr>
-                <td colspan="2">
+                <th colspan="2">
                     <input class="buttons2" type="submit" value="Arrival time"/>
                     <input class="buttons2" type="submit" value="Departure time"/>
-                </td>
+                </th>
           </tr>
           <tr>
             <th class="odd">Booking time</th>
