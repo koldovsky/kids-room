@@ -88,4 +88,8 @@ public class Child
     public String toString() {
         return firstName;
     }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 }
