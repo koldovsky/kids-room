@@ -38,7 +38,10 @@ public class MyKidsPageController {
         Set<Child> myKids = user.getChildren();
 
         ModelMap modelMap = model.getModelMap();
-        modelMap.addAttribute("kids", myKids);
+
+        if(!modelMap.containsAttribute("kids")) {
+            modelMap.addAttribute("kids", myKids);
+        }
 
         return model;
     }
