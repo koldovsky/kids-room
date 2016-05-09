@@ -9,6 +9,9 @@ import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Date;
+
+import static ua.softserveinc.tc.entity.ColumnConstants.BookingConst.BOOKING_START_TIME;
 
 /**
  * Created by TARAS on 01.05.2016.
@@ -29,5 +32,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         " order by bookingStartTime desc")
                 .getResultList();
         return bookings;
+    }
+    @Override
+    public List<Booking> getBookingsByToDay( )
+    {
+        //Date date = new Date();
+        EntityManager entityManager = bookingDao.getEntityManager();
+        List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
+                "from Booking where " + BOOKING_START_TIME + " = '2015-04-04 00:00:00'")
+                .getResultList();
+        return bookingsDay;
     }
 }

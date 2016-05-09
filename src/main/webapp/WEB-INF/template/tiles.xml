@@ -49,8 +49,6 @@
         <put-attribute name="body" value="/WEB-INF/views/listChildren.jsp" />
     </definition>
 
-    <definition name="some" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/some.jsp" />
-    </definition>
+
 
 </tiles-definitions>

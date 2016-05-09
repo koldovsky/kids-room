@@ -3,6 +3,7 @@ package ua.softserveinc.tc.service;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,4 +12,5 @@ import java.util.List;
 public interface BookingService extends BaseService<Booking>
 {
     List<Booking> getBookingsByUser(User user);
+    List<Booking> getBookingsByToDay();
 }

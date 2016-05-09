@@ -6,9 +6,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +20,8 @@ import java.util.List;
  */
 @Controller
 public class ListChildrenController {
-
+    @Autowired
+    private BookingService bookingService;
     @Autowired
     ChildService childService;
 
@@ -27,8 +32,16 @@ public class ListChildrenController {
         ModelMap modelMap = modelAndView.getModelMap();
 
 
-        List<Child> listChildren = childService.getAllChildren();
-        modelMap.addAttribute("AllChildren", listChildren);
+
+        List<Booking>  listBooking = bookingService.getBookingsByToDay();
+        List<Child> listBookedChild = new ArrayList<>();
+
+        for (Booking childBooking: listBooking) {
+            Child childBookedId = childBooking.getIdChild();
+            listBookedChild.add(childBookedId);
+        }
+        modelMap.addAttribute("listChildren", listBookedChild);
         return modelAndView;
     }
+
 }

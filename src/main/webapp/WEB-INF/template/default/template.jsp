@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">
 <link rel='stylesheet' href='resources/css/default.css'>
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
+<link rel='stylesheet' href='resources/css/listBookedChildren.css'>
 
 </head>
 <body>

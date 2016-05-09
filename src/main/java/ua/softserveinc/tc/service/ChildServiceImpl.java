@@ -5,11 +5,15 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.ChildDao;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.entity.User;
 
+import java.util.Date;
 import java.util.List;
+
+import static ua.softserveinc.tc.entity.ColumnConstants.BookingConst.BOOKING_START_TIME;
 
 /**
  * Created by Nestor on 07.05.2016.
@@ -36,4 +40,12 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
                 .createQuery("from Child")
                 .getResultList();
     }
+
+  /*  @Override
+    public List<Child> getBookedChildren() {
+        return childDao
+                .getEntityManager()
+                .createQuery("from Booking" + " where " + BOOKING_START_TIME + " = " + new Date())
+                .getResultList();
+    }*/
 }
