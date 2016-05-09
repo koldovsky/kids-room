@@ -7,12 +7,12 @@
 
       <div class="form-group">
               <label for="firstname" class="required">First Name</label>
-              <form:input path="firstName"  id="firstname" class="form-control" required="required"/>
+              <form:input path="firstName"  id="firstname" class="form-control" style="text-transform: capitalize" required="required"/>
               <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
               <label for="lastname" class="required">Last Name</label>
-              <form:input path="lastName"  id="lastname" class="form-control" required="required" />
+              <form:input path="lastName"  id="lastname" class="form-control" style="text-transform: capitalize" required="required" />
               <form:errors path="lastName" cssClass="error" />
       </div>
       <div class="form-group">
