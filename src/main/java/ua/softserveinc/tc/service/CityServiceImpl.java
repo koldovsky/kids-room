@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ua.softserveinc.tc.dao.CityDao;
 import ua.softserveinc.tc.entity.City;
 
 /**
@@ -10,4 +12,17 @@ import ua.softserveinc.tc.entity.City;
 
 @Service
 public class CityServiceImpl extends BaseServiceImpl<City> implements CityService{
+
+    @Autowired
+    private CityDao cityDao;
+
+//    @Override
+//    public City getCityByName(String name) {
+//        return cityDao.getCityByName(name);
+//    }
+
+    @Override
+    public void create(City city) {
+        cityDao.create(city);
+    }
 }

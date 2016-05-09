@@ -34,6 +34,11 @@
                                   <a href="listChildren">List of Kids</a>
                       </sec:authorize>
 
+                     <sec:authorize access="hasRole('ADMINISTRATOR')">
+                         <a href="adm-edit-location">Edit Locations</a>
+                         <a href="adm-edit-manager">Edit Manager</a>
+                     </sec:authorize>
+
                       <a href="logout">    Logout   </a>
                       </nav>
 

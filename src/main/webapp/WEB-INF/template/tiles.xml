@@ -49,6 +49,22 @@
         <put-attribute name="body" value="/WEB-INF/views/listChildren.jsp" />
     </definition>
 
+    <!-- Admin -->
+    <definition name="adm-edit-location" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-edit-location.jsp" />
+    </definition>
+
+    <definition name="adm-edit-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-edit-manager.jsp" />
+    </definition>
+
+    <definition name="adm-add-location" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-add-location.jsp" />
+    </definition>
+
+    <definition name="adm-add-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-add-manager.jsp" />
+    </definition>
 
 
 </tiles-definitions>
