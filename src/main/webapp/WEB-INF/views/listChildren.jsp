@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
- <div class="kidslist">
+ <div class="table">
             <table>
             <caption><h2>List of kids</h2></caption>
                 <tr>

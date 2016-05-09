@@ -35,9 +35,10 @@ public class ParentBookingsPageController
         modelAndView.setViewName("parentbookings");
         ModelMap modelMap = modelAndView.getModelMap();
 
-        User user = userService.getUserByEmail(parentEmail);
-        List<Booking> bookingList = bookingService.getBookingsByUser(user);
+        User parent = userService.getUserByEmail(parentEmail);
+        List<Booking> bookingList = bookingService.getBookingsByUser(parent);
         modelMap.addAttribute("bookings", bookingList);
+        modelMap.addAttribute("parent", parent);
         return modelAndView;
     }
 }

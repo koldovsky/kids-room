@@ -7,7 +7,7 @@
     <div class="container">
     	<div class="row">
             <div class="col-md-6">
-                 <h1 class = "col-sm-6"><a href="/home">Kids Room</a></h1>
+                 <h1 class = "col-sm-6"><a href="/home">Kid&#39;s Room</a></h1>
             </div>
 
                 <sec:authorize access="!isAuthenticated()">

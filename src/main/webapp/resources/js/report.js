@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", function ()
 {
-	var divs = document.getElementsByTagName("div");
-	var divsCount = divs.length;
-	for (var i = 0; i < divsCount; i++)
+	var rows = document.getElementsByClassName("parentRow");
+	var rowsCount = rows.length;
+	for (var i = 0; i < rowsCount; i++)
 	{
-		divs[i].onclick = function(e)
+		rows[i].onclick = function(e)
 		{
 			document.getElementById("hiddenField").value = this.id;
-			e.stopPropagation();
 			document.getElementById("parentBookings").submit();
 		};
 	}
