@@ -7,8 +7,9 @@
 <script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
-
+<link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">
 <link rel='stylesheet' href='resources/css/default.css'>
+<link rel='stylesheet' href='resources/css/allkidslist.css'>
 
 </head>
 <body>

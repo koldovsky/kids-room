@@ -1,0 +1,26 @@
+.thead, .th, .td {
+	text-align: center;
+    padding: 10px;
+    margin-left: 50 px;
+}
+
+.thead {
+    background-color: #6495ED;
+    color: white;
+}
+
+.tr:hover {
+    background-color:  #D8BFD8;
+}
+
+.tr:nth-of-type(odd) {
+    background-color: #f2f2f2;
+}
+
+.table {
+    padding: 40px;
+}
+
+.table_even_element {
+    background-color: #f2f2f2;
+}
