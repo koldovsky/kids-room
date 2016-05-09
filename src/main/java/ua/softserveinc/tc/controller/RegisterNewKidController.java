@@ -26,7 +26,9 @@ public class RegisterNewKidController {
 
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
     public String registerKid(Model model){
-        model.addAttribute("child", new Child());
+        if(!model.containsAttribute("child")) {
+            model.addAttribute("child", new Child());
+        }
         return "registerkid";
     }
 
@@ -36,6 +38,6 @@ public class RegisterNewKidController {
                 userService.getUserByEmail(
                         principal.getName()));
         childService.create(child);
-        return "registerkid";
+        return "redirect:/mykids";
     }
 }

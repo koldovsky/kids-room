@@ -11,7 +11,7 @@
         <input type="text" value="${parent.getLastName()}" disabled>
         <input type="text" value="${parent.getEmail()}" disabled>
         <input type="text" value="${parent.getPhoneNumber()}" disabled>
-        <input type="checkbox" checked></br>
+        <a>See details</a>
     </div>
 </c:forEach>
 
@@ -19,3 +19,9 @@
 <label><p>Choose end time: <input type="date" value="${dateNow}"></label></p>
 <input type="submit" value="Generate!">
 </form>
+
+<form action="parentbookings" id="parentBookings">
+<input type="hidden" id="hiddenField" name="parentEmail"/>
+</form>
+
+<script src="resources/js/report.js"></script>

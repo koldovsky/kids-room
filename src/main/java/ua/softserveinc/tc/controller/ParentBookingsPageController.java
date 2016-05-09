@@ -39,7 +39,8 @@ public class ParentBookingsPageController
         * this email has to be sent on this page
         *
         */
-        User user = userService.getUserByEmail("user@gmail.com");
+        String userEmail = "user@gmail.com";
+        User user = userService.getUserByEmail(userEmail);
         List<Booking> bookingList = bookingService.getBookingsByUser(user);
         modelMap.addAttribute("bookings", bookingList);
         return modelAndView;
