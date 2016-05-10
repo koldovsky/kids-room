@@ -13,17 +13,15 @@
                 <sec:authorize access="!isAuthenticated()">
                     <a href="<c:url value="/login" />">
                         <span class="glyphicon glyphicon-log-in" ></span>
-                        Login
+                         <spring:message code="user.login" />
                     </a>
                     <a  href="<c:url value="/registration" />">
                         <span class="glyphicon glyphicon-pencil"></span>
-                        Registration
+                         <spring:message code="user.registration" />
                     </a>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
-
-
-                    <div class="col-sm-8">
+                <div class="col-sm-8">
 
                      <sec:authorize access="hasRole('USER')">
                                  <a href="mykids">My Kids</a>
@@ -39,10 +37,11 @@
                          <a href="adm-edit-manager">Edit Manager</a>
                      </sec:authorize>
 
-                      <a href="logout">    Logout   </a>
+                      <a href="logout">     <spring:message code="user.logout" />   </a>
                       </nav>
 
                 </sec:authorize>
+                <a href="?language=en">EN</a>|<a href="?language=ua">UA</a>
             </div>
     </div>
 </header>

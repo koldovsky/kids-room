@@ -9,7 +9,7 @@
 <div class="col-sm-3">
     <form:form id="userform" action="registration" method="post" modelAttribute="user">
       <form:input path="role" type="hidden" value="USER" />
-Language : <a href="?language=en">English</a>|<a href="?language=ua">UA</a>
+
       <div class="form-group">
               <label for="firstname" class="required"><spring:message code="user.firstname" /></label>
               <form:input path="firstName"   class="form-control" style="text-transform: capitalize" required="required"/>
@@ -44,7 +44,7 @@ Language : <a href="?language=en">English</a>|<a href="?language=ua">UA</a>
               <span id="validPhone"></span>
       </div>
       <div class="form-group">
-              <spring:message code="user.prerules" /><a href""> <spring:message code="user.rules" /></a>
+              <spring:message code="user.prerules" /><a href=""> <spring:message code="user.rules" /></a>
               <div class="col-sm-offset-4 col-sm-8">
                 <button type="submit" id="button" class="btn btn-default"><spring:message code="user.register" /></button>
               </div>
