@@ -24,17 +24,17 @@
                 <div class="col-sm-8">
 
                      <sec:authorize access="hasRole('USER')">
-                                 <a href="mykids">My Kids</a>
+                                 <a href="mykids"><spring:message code="user.myKids" /></a>
 
                       </sec:authorize>
                        <sec:authorize access="hasRole('MANAGER')">
-                                  <a href="report">Generate a report</a>
-                                  <a href="listChildren">List of Kids</a>
+                                  <a href="report"><spring:message code="manager.report" /></a>
+                                  <a href="listChildren"><spring:message code="manager.listOfKids" /></a>
                       </sec:authorize>
 
                      <sec:authorize access="hasRole('ADMINISTRATOR')">
-                         <a href="adm-edit-location">Edit Locations</a>
-                         <a href="adm-edit-manager">Edit Manager</a>
+                         <a href="adm-edit-location"><spring:message code="administrator.editLocations" /></a>
+                         <a href="adm-edit-manager"><spring:message code="administrator.editManagers" /></a>
                      </sec:authorize>
 
                       <a href="logout">     <spring:message code="user.logout" />   </a>
