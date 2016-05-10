@@ -94,3 +94,7 @@ cursor: pointer;
     color: white;
     text-shadow: black;
 }
+
+caption h2{
+    text-align: center;
+}
