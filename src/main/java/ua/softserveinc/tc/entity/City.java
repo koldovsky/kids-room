@@ -27,18 +27,6 @@ public class City {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
     private List<Room> rooms;
 
-    @Column(name = CityConst.CAPACITY_ROOM)
-    private Long capacityRoom;
-
-    @Column(name = CityConst.PRICE_ROOM)
-    private Long priceRoom;
-
-    @Column(name = CityConst.PHONE_NUMBER_ROOM)
-    private Long phoneNumberRoom;
-
-    @Column(name = CityConst.EMAIL_ROOM)
-    private Long emailRoom;
-
     public Long getIdRoom() {
         return idRoom;
     }
@@ -63,39 +51,6 @@ public class City {
         this.rooms = rooms;
     }
 
-    public Long getCapacityRoom() {
-        return capacityRoom;
-    }
-
-    public void setCapacityRoom(Long capacityRoom) {
-        this.capacityRoom = capacityRoom;
-    }
-
-    public Long getPriceRoom() {
-        return priceRoom;
-    }
-
-    public void setPriceRoom(Long priceRoom) {
-        this.priceRoom = priceRoom;
-    }
-
-    public Long getPhoneNumberRoom() {
-        return phoneNumberRoom;
-    }
-
-    public void setPhoneNumberRoom(Long phoneNumberRoom) {
-        this.phoneNumberRoom = phoneNumberRoom;
-    }
-
-    public Long getEmailRoom() {
-        return emailRoom;
-    }
-
-    public void setEmailRoom(Long emailRoom) {
-        this.emailRoom = emailRoom;
-    }
-
-    public City(){}
 
 //    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = CityConst.ID_CITY)
 //    @Column
