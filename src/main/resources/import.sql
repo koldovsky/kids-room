@@ -7,19 +7,11 @@ INSERT INTO users (id_user, email, first_name, last_name, password, phone_number
 
 INSERT INTO children  VALUES (1, "no comments", "12.02.2011", "Adam", "First", 1);
 INSERT INTO children  VALUES (2, "no comments", "12.02.2011", "Eva", "First", 1);
-INSERT INTO children  VALUES (4, "no comments", "12.02.2011", "Sem", "Sec", 4);
-
-
-INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role) VALUES  (4, 'm@m.m', 'vasil','kobin', '$2a$08$B.5vcvm4BiBF9DdPgyKH4.1Z9wOGL9Rv9Iy1sDsniHMOOGXCZ11Je', '0987654321', 1);
-
-INSERT INTO city (id_city, name_city) VALUES  (4,"sasa");
 
 insert into cities values (1, "Lviv");
-insert into rooms values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 2);
+insert into rooms values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 1);
 insert into booking values (13, '2017-04-04', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
 insert into booking values (1, '2017-04-04', '2011-04-04', "The whole world of comments", false, 2, 1, 1);
 insert into booking values (5, '2017-04-04', '2014-04-04', "The whole world of comments", false, 2, 1, 1);
 insert into booking values (7, '2017-04-04', '2013-04-04', "The whole world of comments", false, 1, 1, 1);
 insert into booking values (10, '2017-04-04', '2016-04-04', "The whole world of comments", false, 1, 1, 1);
-insert into booking values (12, '2017-04-04', '2015-04-04', "The whole world of comments", false, 2, 1, 1);
-insert into booking values (15, '2017-04-04', '2015-04-04', "The whole world of comments", false, 4, 1, 4);

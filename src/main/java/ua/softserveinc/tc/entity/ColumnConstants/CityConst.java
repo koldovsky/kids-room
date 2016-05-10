@@ -3,7 +3,7 @@ package ua.softserveinc.tc.entity.ColumnConstants;
 
 public interface CityConst {
 
-    String TABLE_NAME_CITY = "city";
+    String TABLE_NAME_CITY = "cities";
 
     String ID_CITY = "id_city";
 
