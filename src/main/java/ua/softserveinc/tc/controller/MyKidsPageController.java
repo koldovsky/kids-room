@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.controller;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,7 +12,8 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -35,7 +35,15 @@ public class MyKidsPageController {
 
         User user = us.getUserByEmail(username);
 
-        Set<Child> myKids = user.getChildren();
+        List<Child> myKids = new ArrayList<>(user.getChildren());
+        myKids.sort(
+                (o1, o2)->{
+                    if(o1.getId()>o2.getId())
+                        return 1;
+                    else if(o1.getId()<o2.getId())
+                        return -1;
+                    return 0;
+            });
 
         ModelMap modelMap = model.getModelMap();
 

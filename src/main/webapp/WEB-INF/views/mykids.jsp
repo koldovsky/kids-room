@@ -16,6 +16,7 @@
     <div class="kidslistitem">
     <h3>${kid.getFullName()}</h3>
     </div>
+
     <button class="btn glyphicon glyphicon-pencil">&nbsp;Edit</button>
     <div class="kidinfo">
             <p>Date of birth: ${kid.getDateOfBirth()}</p>

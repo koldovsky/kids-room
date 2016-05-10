@@ -33,6 +33,7 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
                 .getResultList();
     }
 
+    //для чого це тут? в базовому севісі є метод findAll()
     @Override
     public List<Child> getAllChildren() {
         return childDao

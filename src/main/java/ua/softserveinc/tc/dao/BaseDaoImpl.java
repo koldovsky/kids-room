@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.dao;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
@@ -21,6 +23,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
 
+    @SuppressWarnings("unchecked")
     public List<T> findAll() {
         return entityManager.createQuery("From " + entityClass.getSimpleName() + " order by id").getResultList();
     }
@@ -41,6 +44,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         entityManager.createQuery("DELETE FROM " + entityClass.getSimpleName()).executeUpdate();
     }
 
+    @Transactional
     public T update(T entity) {
         return entityManager.merge(entity);
     }

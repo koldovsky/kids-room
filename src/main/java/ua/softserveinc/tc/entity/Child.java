@@ -26,14 +26,15 @@ public class Child
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = ChildConst.ID_PARENT)
+    @JoinColumn(name = ChildConst.ID_PARENT,
+    nullable = false)
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)
     @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = ChildConst.DATE_OF_BIRTH, nullable = false)
     private Date dateOfBirth;
-    @Column(name = ChildConst.COMMENT, nullable = false)
+    @Column(name = ChildConst.COMMENT)
     private String comment;
 
     public Long getId() {
