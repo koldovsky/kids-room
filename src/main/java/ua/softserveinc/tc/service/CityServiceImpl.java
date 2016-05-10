@@ -16,10 +16,10 @@ public class CityServiceImpl extends BaseServiceImpl<City> implements CityServic
     @Autowired
     private CityDao cityDao;
 
-//    @Override
-//    public City getCityByName(String name) {
-//        return cityDao.getCityByName(name);
-//    }
+    @Override
+    public City getCityByName(String name) {
+        return cityDao.getCityByName(name);
+    }
 
     @Override
     public void create(City city) {
