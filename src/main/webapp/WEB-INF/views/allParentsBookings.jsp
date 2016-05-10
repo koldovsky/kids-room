@@ -7,18 +7,18 @@
         <table>
             <caption><h2>Bookings for a month</h2></caption>
             <tr>
+                <th>Parent</th>
                 <th>Kid&#39;s name</th>
                 <th>Booking began</th>
                 <th>Booking ended</th>
             </tr>
             <c:forEach var="booking" items="${bookings}">
             <tr>
+                <td>${booking.getIdUser()}</td>
                 <td>${booking.getIdChild()}</td>
                 <td>${booking.getBookingStartTime()}</td>
                 <td>${booking.getBookingEndTime()}</td>
             </tr>
             </c:forEach>
         </table>
-        The most important thing is: ${dateThen}
-        The most important thing is: ${dateNow}
     </div>

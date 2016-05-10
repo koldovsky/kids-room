@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.service.BookingService;
+
+import java.util.List;
 
 /**
  * Created by Demian on 10.05.2016.
@@ -27,8 +30,8 @@ public class AllParentsBookingsPageController
         modelAndView.setViewName("allParentsBookings");
         ModelMap modelMap = modelAndView.getModelMap();
 
-        modelMap.addAttribute("dateThen", dateThen);
-        modelMap.addAttribute("dateNow", dateNow);
+        List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
+        modelMap.addAttribute("bookings", bookings);
         return modelAndView;
     }
 }

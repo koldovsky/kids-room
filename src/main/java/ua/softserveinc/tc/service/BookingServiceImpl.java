@@ -33,6 +33,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .getResultList();
         return bookings;
     }
+
+    @Override
+    public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
+    {
+        EntityManager entityManager = bookingDao.getEntityManager();
+        List<Booking> bookings = entityManager.createQuery(
+                "from Booking where bookingStartTime" +
+                        " between '" + startDate +  "' and '" + endDate + "'" +
+                        " order by bookingStartTime")
+                .getResultList();
+        return bookings;
+    }
+
     @Override
     public List<Booking> getBookingsByToDay()
     {

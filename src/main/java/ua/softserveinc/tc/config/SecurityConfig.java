@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/report").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/allkidslist").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/parentbookings").hasRole("MANAGER")
-                .antMatchers(HttpMethod.GET, "allParentsBookings").hasRole("MANAGER")
+                .antMatchers(HttpMethod.GET, "/allParentsBookings").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/listChildren").hasRole("MANAGER")
                 .and()
 
