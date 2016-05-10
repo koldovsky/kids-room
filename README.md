@@ -24,9 +24,25 @@ hibernate.format_sql = true
 hibernate.hbm2ddl.auto = create
 ```
 
+` src/main/resources/messages_ua.properties`:
 ```
 Login                  Password 
 user@gmail.com         user
 admin@gmail.com        admin
 manager@gmail.com      manager
+```
+```properties
+user.firstname = Ім'я
+user.lastname = Прізвище
+user.email = Поштова скринька
+user.password = Пароль
+user.confirm = Підтвердження паролю
+user.phone = Номер телефону
+user.register = Зареєструвати
+user.prerules = Натиснувши "Зареєструвати" ви погоджуєтеся з
+user.rules = правилами
+user.registration = Реєстрація
+user.login = Увійти
+user.remember = Запам'ятати мене
+user.logout = Вийти
 ```
