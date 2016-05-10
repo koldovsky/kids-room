@@ -1,22 +1,69 @@
 .kidslistitem{
     cursor: pointer;
+    padding: 0;
+    margin: 0;
+     font-family: 'Original Surfer', cursive;
+     font-size: 18px;
+     line-height: 28px;
+}
+
+.kidslistblock{
+    background-color: CornflowerBlue;
+    border:  1px solid grey;
+    width: 40%;
+    min-width: 200px;
+    margin: 25 auto;
+    padding-bottom: 25;
+    padding-top: 0;
+    border-radius: 10px;
+    text-align:center;
 }
 
 .kidinfo {
    display: none;
+   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+   font-size: 15px;
+   line-height: 1.428571429;
+   border: 1px solid grey;
+   width: 80%;
+   margin: 20 auto;
+   background-color: rgb(220,220,220);
+   border-radius: 10px;
 }
 
 .list{
     text-align: center;
+    border:  1px solid grey;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 15px;
 }
 
 .btn-primary{
     width: 150px;
     height: 45px;
     font-size: 24;
-    margin: 25px;
-    border-radius: 5px;
+    margin: 25 auto;
+    border-radius: 10px;
     border: 1px solid black;
     color: white;
     text-shadow: black;
+}
+
+.btn.glyphicon {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    line-height: 1.428571429;
+    border: 1px solid grey;
+    border-radius: 25px;
+}
+.btn.glyphicon::first-letter {
+    font-family: 'Glyphicons Halflings';
+    line-height: 1;
+}
+
+.btn:hover{
+    background-color: grey;
+    color: white;
+    border: 1px solid black;
 }
