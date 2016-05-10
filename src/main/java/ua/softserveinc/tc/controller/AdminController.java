@@ -22,7 +22,7 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-    @Autowired(required = false)
+    @Autowired
     CityService cityService;
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.GET)
