@@ -9,6 +9,8 @@
 <link rel='stylesheet' href='webjars/bootstrap/3.3.6/css/bootstrap.min.css'>
 
 <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <link rel='stylesheet' href='resources/css/default.css'>
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
 <link rel='stylesheet' href='resources/css/listBookedChildren.css'>

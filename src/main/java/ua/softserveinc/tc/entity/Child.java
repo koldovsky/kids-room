@@ -6,6 +6,8 @@ import ua.softserveinc.tc.entity.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+
+import java.util.Calendar;
 import java.util.Date;
 
 import static java.util.Calendar.DATE;
@@ -92,5 +94,16 @@ public class Child
 
     public String getFullName(){
         return firstName + " " + lastName;
+    }
+
+    public int getAge() {
+        Calendar today = Calendar.getInstance();
+        Calendar dob = Calendar.getInstance();
+        dob.setTime(dateOfBirth);
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_YEAR) <= dob.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
+        return age;
     }
 }
