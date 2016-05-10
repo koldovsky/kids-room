@@ -25,14 +25,13 @@
             </c:forEach>
         </table>
     </div>
-<form action="">
 
-<label><h2>Choose start time: <input type="date" value="${dateThen}"></label></h2>
-<label><h2>Choose end .time: <input type="date" value="${dateNow}"></label></h2>
-<input class="btn-primary" type="submit" value="Generate">
-</form>
+    <form action="allParentsBookings">
+        <label><h2>Choose start time: <input type="date" value="${dateThen}" name="dateThen"></label></h2>
+        <label><h2>Choose end .time: <input type="date" value="${dateNow}" name="dateNow"></label></h2>
+        <input class="btn-primary" type="submit" value="Generate">
+    </form>
 
-<form action="parentbookings" id="parentBookings">
-<input type="hidden" id="hiddenField" name="parentEmail"/>
-</form>
-
+    <form action="parentbookings" id="parentBookings">
+        <input type="hidden" id="hiddenField" name="parentEmail"/>
+    </form>

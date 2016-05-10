@@ -36,6 +36,10 @@
         <put-attribute name="body" value="/WEB-INF/views/parentbookings.jsp" />
     </definition>
 
+    <definition name="allParentsBookings" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/allParentsBookings.jsp" />
+    </definition>
+
 
     <definition name="registration" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/registration.jsp" />
