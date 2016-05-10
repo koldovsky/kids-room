@@ -20,3 +20,7 @@ insert into bookings values (7, '2017-04-04', '2013-04-04', "The whole world of 
 insert into bookings values (10, '2017-04-04', '2016-04-04', "The whole world of comments", false, 1, 1, 1);
 insert into bookings values (12, '2017-04-04', '2015-04-04', "The whole world of comments", false, 2, 1, 1);
 insert into bookings values (15, '2017-04-04', '2015-04-04', "The whole world of comments", false, 4, 1, 4);
+
+
+insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT', '2016-05-10 15:00:00', 1);
+insert into events VALUES (2, 3, 5, 'NO', '2016-05-11', 'EVENT', '2016-05-11', 1);

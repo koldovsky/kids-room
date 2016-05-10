@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.entity.ColumnConstants.EventConst;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -103,5 +105,12 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        return " " + name + " " + df.format(startTime) +
+                " " + df.format(endTime) + " ";
     }
 }

@@ -20,10 +20,6 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
     UserService userService;
-    @RequestMapping(value="/", method = RequestMethod.GET)
-    public String start(Model model){
-        return "index";
-    }
 
     @RequestMapping(value="/login ", method = RequestMethod.GET)
     public String login(Model model){

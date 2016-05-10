@@ -143,6 +143,11 @@
             <version>5.0.8</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.4</version>
+        </dependency>
 
 
         <!-- APACHE TILES -->
@@ -156,6 +161,12 @@
             <artifactId>tiles-template</artifactId>
             <version>${org.apache.tiles-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>4.1.0.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-el</artifactId>
@@ -189,6 +200,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>3.3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160212</version>
         </dependency>
 
 
