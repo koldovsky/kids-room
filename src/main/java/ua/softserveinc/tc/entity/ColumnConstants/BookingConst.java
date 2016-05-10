@@ -18,7 +18,7 @@ public interface BookingConst {
     String IS_CANCELED = "is_canceled";
 
     // Don't need ID_MANAGER & ID_CITY.
-    // Becose we will get this constants from appropriate tables from relationship.
+    // Because we will get this constants from appropriate tables from relationship.
 
     //String ID_CHILD = "id_child";
     //String ID_ROOM = "id_room";
