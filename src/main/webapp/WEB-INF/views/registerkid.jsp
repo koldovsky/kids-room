@@ -1,6 +1,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<link rel='stylesheet' href='resources/css/registerkid.css'>
+
 <form:form class = "registerkid" enctype="application/x-www-form-urlencoded" action="registerkid" method="post" modelAttribute="child">
 
       <h2>Child Registration</h2>

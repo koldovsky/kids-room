@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
 
+<link rel='stylesheet' href='resources/css/mykidslist.css'>
+
 <script src="resources/js/mykidslist.js">
 </script>
 
@@ -10,11 +12,13 @@
 <h2 class="list">Here are Your kids:</h2>
 <c:forEach var="kid" items="${kids}">
     <div class="kidslistitem">
+    <div>
     <h3>${kid.getFullName()}</h3>
     </div>
     <div class="kidinfo">
         <p>Date of birth: ${kid.getDateOfBirth()}</p>
         <p>Comment: ${kid.getComment()}</p>
+    </div>
     </div>
 </c:forEach>
 

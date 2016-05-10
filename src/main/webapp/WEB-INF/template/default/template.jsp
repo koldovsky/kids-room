@@ -13,8 +13,6 @@
 <link rel='stylesheet' href='resources/css/default.css'>
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
 <link rel='stylesheet' href='resources/css/listBookedChildren.css'>
-<link rel='stylesheet' href='resources/css/registerkid.css'>
-<link rel='stylesheet' href='resources/css/mykidslist.css'>
 
 </head>
 <body>

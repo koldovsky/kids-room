@@ -9,3 +9,14 @@
 .list{
     text-align: center;
 }
+
+.btn-primary{
+    width: 150px;
+    height: 45px;
+    font-size: 24;
+    margin: 25px;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: white;
+    text-shadow: black;
+}
