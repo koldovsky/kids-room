@@ -34,6 +34,7 @@
         </plugins>
     </build>
     <properties>
+
         <java-version>1.8</java-version>
         <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
         <org.hibernate-version>5.1.0.Final</org.hibernate-version>
@@ -178,22 +179,23 @@
             <artifactId>spring-security-config</artifactId>
             <version>${spring.securiry-version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.securiry-version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>2.1.1</version>
-        </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.2.0</version>
+            <version>3.3.6</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.6</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.webjars</groupId>
@@ -201,6 +203,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+
 
     </dependencies>
 </project>
