@@ -83,3 +83,14 @@ cursor: pointer;
 	content:" *";
 	color: red;
 }
+
+.btn-primary{
+    width: 150px;
+    height: 45px;
+    font-size: 24;
+    margin: 25 auto;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: white;
+    text-shadow: black;
+}
