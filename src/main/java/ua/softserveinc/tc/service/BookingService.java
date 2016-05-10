@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface BookingService extends BaseService<Booking>
 {
-    List<Booking> getBookingsByToDay();
+    List<Booking> getBookingsOfThisDay();
     List<Booking> getBookingsByUser(User user);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
 }

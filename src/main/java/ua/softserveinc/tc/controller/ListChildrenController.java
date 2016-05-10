@@ -6,7 +6,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.BookingService;
@@ -32,7 +31,7 @@ public class ListChildrenController {
         ModelMap modelMap = modelAndView.getModelMap();
 
 
-        List<Booking> listBooking = bookingService.getBookingsByToDay();
+        List<Booking> listBooking = bookingService.getBookingsOfThisDay();
         List<Child> listBookedChild = new ArrayList<>();
 
         for (Booking childBooking: listBooking) {

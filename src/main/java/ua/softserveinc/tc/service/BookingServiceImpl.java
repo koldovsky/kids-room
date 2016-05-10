@@ -47,7 +47,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getBookingsByToDay()
+    public List<Booking> getBookingsOfThisDay()
     {
         //Date date = new Date();
         EntityManager entityManager = bookingDao.getEntityManager();
