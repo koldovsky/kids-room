@@ -5,7 +5,7 @@ package ua.softserveinc.tc.entity.ColumnConstants;
  */
 public interface BookingConst {
 
-    String TABLE_NAME_BOOKING = "booking";
+    String TABLE_NAME_BOOKING = "bookings";
 
     String ID_BOOK = "id_book";
 
