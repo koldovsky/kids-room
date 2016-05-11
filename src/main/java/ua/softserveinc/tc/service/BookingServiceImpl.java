@@ -28,7 +28,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         EntityManager entityManager = bookingDao.getEntityManager();
         List<Booking> bookings = (List<Booking>) entityManager.createQuery(
                 "from Booking where idUser = " + user.getId() +
-                        " order by bookingStartTime desc")
+                        " order by bookingStartTime")
                 .getResultList();
         return bookings;
     }

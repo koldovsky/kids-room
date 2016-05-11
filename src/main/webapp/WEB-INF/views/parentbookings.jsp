@@ -9,15 +9,19 @@
             <tr>
                 <th>Date</th>
                 <th>Kid&#39;s name</th>
+                <th>Place</th>
                 <th>Start time</th>
                 <th>End time</th>
+                <th>Difference</th>
             </tr>
             <c:forEach var="booking" items="${bookings}">
             <tr>
                 <td>${booking.extractMonthAndDay()}</td>
                 <td>${booking.getIdChild()}</td>
+                <td>${booking.getIdRoom()}</td>
                 <td>${booking.extractHourAndMinuteFromStartTime()}</td>
                 <td>${booking.extractHourAndMinuteFromEndTime()}</td>
+                <td>${booking.getDifference()}</td>
             </tr>
             </c:forEach>
         </table>

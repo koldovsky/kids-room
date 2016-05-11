@@ -102,4 +102,9 @@ public class Room {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

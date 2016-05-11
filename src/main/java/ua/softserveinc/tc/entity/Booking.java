@@ -186,4 +186,25 @@ public class Booking {
         hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
         return hourAndMinute;
     }
+
+    public String getDifference()
+    {
+        String difference = "";
+
+        Calendar calendar = DateToCalendar(bookingStartTime);
+        int startHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int startMinute = calendar.get(Calendar.MINUTE);
+
+        calendar.setTime(bookingEndTime);
+        int endHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int endMinute = calendar.get(Calendar.MINUTE);
+
+        int differenceHour = endHour - startHour;
+        int differenceMinute = endMinute - startMinute;
+        if (differenceMinute < 0) {differenceHour--; differenceMinute += 60;}
+
+        difference += String.format("%02d", differenceHour) + ":";
+        difference += String.format("%02d", differenceMinute);
+        return difference;
+    }
 }
