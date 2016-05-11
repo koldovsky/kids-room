@@ -3,7 +3,7 @@ package ua.softserveinc.tc.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +13,7 @@ import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,7 +42,7 @@ public class EditMyKidPageController {
 
         Child kidToEdit = childService
                 .findById(Long.parseLong(kidId));
-        model.getModelMap().addAttribute("kidToEdit", kidToEdit);
+        model.getModelMap().addAttribute(MyKidsConst.KID_ATTRIBUTE, kidToEdit);
         return model;
     }
 

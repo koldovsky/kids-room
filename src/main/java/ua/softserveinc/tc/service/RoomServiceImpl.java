@@ -8,6 +8,10 @@ import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Service
@@ -28,10 +32,15 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @SuppressWarnings("unchecked")
     public List<Event> getAllEventsInRoom(Room room){
-        return roomDao
-                .getEntityManager()
-                .createQuery("SELECT * FROM " + EventConst.TABLENAME +
-                        "WHERE " + EventConst.ID_ROOM + " = " + room.getId() + ";")
+        EntityManager entityManager = roomDao.getEntityManager();
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Event> query = builder.createQuery(Event.class);
+        Root<Event> root = query.from(Event.class);
+        query.select(root).where(builder.equal(root.get(EventConst.ID_ROOM), room.getId()));
+
+        return entityManager
+                .createQuery(query)
                 .getResultList();
     }
 }

@@ -1,9 +1,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<% page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
 
-<form:form class = "registerkid"  enctype="application/x-www-form-urlencoded"  modelAttribute="kidToEdit" action="editmykid" method="post">
+<form:form class = "registerkid"  enctype="application/x-www-form-urlencoded"  modelAttribute="${MyKidsConst.KID_ATTRIBUTE}" action="editmykid" method="post">
 
       <h2>Edit Your kid&#39;s info</h2>
 
