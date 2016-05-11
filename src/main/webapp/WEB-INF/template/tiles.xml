@@ -75,5 +75,9 @@
     </definition>
     <!-- /Admin -->
 
+    <definition name="result" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/result.jsp" />
+    </definition>
+
 
 </tiles-definitions>

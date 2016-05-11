@@ -1,51 +1,54 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link rel='stylesheet' href='resources/css/list-of-booked-kids.css'>
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
-<div class="kidslist">
-	<table class="listChild">
+<script src="resources/js/bookedkids.js"></script>
+
+<div class="col-md-4">
+	<table class="col-md-11">
 		<caption><h2>List of kids</h2></caption>
 		<tr>
-			<th>Kids name</th>
+			<th class="odd">Kids name</th>
 		</tr>
 		<c:forEach var="kids" items="${listChildren}">
 		<tr>
-			<td><c:out value="${kids.getFirstName()} ${kids.getLastName()}" /></td>
+
+			<td class="hideTable"><c:out value="${kids.getFirstName()} ${kids.getLastName()}" /></td>
 		</tr>
-        </c:forEach>
+	</c:forEach>
 </table>
 </div>
 
-<div>
-<form>
-	<table class="reportTime">
-		<tr>
-			<td colspan="2">
-				<input class="buttons2" type="submit" value="Arrival time"/>
-				<input class="buttons2" type="submit" value="Departure time"/>
-			</td>
-		</tr>
+<div id="reportTime">
+	<input class="buttons2" type="submit" value="Arrival time"/>
+	<table >
+		<form:form action="result" modelAttribute="bookedJSP" method="POST">
+
 		<tr>
 			<th class="odd">Booking time</th>
 			<th class="odd">Real time</th>
 		</tr>
+
 		<c:forEach var="booked" items="${listBooking}">
 		<tr>
 
 			<td><c:out value="${booked.getBookingStartTime()}"/></td>
-			<td ><input type="time" value="00:00" class="timeCell"/></td>
-
+			<td> <form:input path="bookingStartTime" /></td>
 		</tr>
-	    </c:forEach>
+	</c:forEach>
 	<tr>
 		<td  colspan="2">
-			<input class="buttons" type="submit" value="Apply"/>
-			<input class="buttons" type="submit" value="Cancel"/>
-			<input class="buttons" type="submit" value="Ok"/>
+
+			<form:button class="buttons"> Apply Booking </form:button>
+
 		</td>
 	</tr>
+</form:form>
 </table>
-</form>
+
 </div>
+
 
