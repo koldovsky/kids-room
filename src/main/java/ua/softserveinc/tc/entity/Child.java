@@ -17,7 +17,7 @@ import static java.util.Calendar.DATE;
  */
 @Entity
 @Table(name = ChildConst.TABLE_NAME)
-public class Child
+public class Child implements Comparable<Child>
 {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -105,5 +105,14 @@ public class Child
             age--;
         }
         return age;
+    }
+
+    @Override
+    public int compareTo(Child o) {
+        if(this.getId()>o.getId())
+            return 1;
+        else if(this.getId()<o.getId())
+            return -1;
+        return 0;
     }
 }

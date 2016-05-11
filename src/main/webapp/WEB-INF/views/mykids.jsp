@@ -18,7 +18,7 @@
     </div>
 
     <button class="btn glyphicon glyphicon-pencil">&nbsp;Edit</button>
-    <div class="kidinfo">
+    <div class="kidinfo" data-id="${kid.getId()}">
             <p>Date of birth: ${kid.getDateOfBirth()}</p>
             <p>Comment: ${kid.getComment()}</p>
     </div>
@@ -28,7 +28,6 @@
 </c:forEach>
 
 </div>
-
 <form action="registerkid">
     <input class="btn-primary" type="submit" value="Add">
 </form>
