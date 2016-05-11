@@ -7,6 +7,8 @@ import ua.softserveinc.tc.service.CalendarServiceImpl;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by dima- on 07.05.2016.
  */
@@ -21,16 +23,33 @@ public class ViewEventController {
         return "index";
     }
 
+    @RequestMapping(value = "getCompanies", method = RequestMethod.GET)
+    public @ResponseBody
+    String getEvents() {
+        return calendarServiceImpl.eventsToString(2);
+    }
+}
+
+
+
+
+/*
     @RequestMapping(value = "getCompanies",  method = RequestMethod.GET)
     public @ResponseBody
-    String getRaandom() {
-        return calendarServiceImpl.findByRoomId(2).toString().substring(1,calendarServiceImpl.findByRoomId(2).toString().length()-1);
+    String getRaandom(@RequestBody Info id) {
+
+        return calendarServiceImpl.findByRoomId(Integer.valueOf(id.getId())).toString().substring(1,calendarServiceImpl.findByRoomId(2).toString().length()-1);
+    }
+}
+
+class Info{
+    String id;
+
+    public String getId() {
+        return id;
     }
 
-   /* @RequestMapping(value = "/{address}",  method = RequestMethod.GET)
-    public @ResponseBody
-    String getRandom(@PathVariable final long address) {
-        return calendarServiceImpl.findByRoomId(address).toString();
-    }*/
-
-}
+    public void setId(String id) {
+        this.id = id;
+    }
+*/

@@ -4,6 +4,22 @@ $(document).ready(function() {
      var startPosition = document.location.href.indexOf('')+''.length;
      var id = document.location.href.substring(startPosition, document.location.href.length);
      */
+ /*   var search = {
+        "id" : "2"
+    }
+    $.ajax({
+
+        type: "GET",
+        contentType : 'application/json; charset=utf-8',
+        dataType : 'json',
+        url: "getCompanies",
+        data: JSON.stringify({
+            "id" : "2"
+        }), // Note it is important
+        success : function(result) {
+            alert(result);
+        }
+    });*/
 
     $.ajax({url: "getCompanies", success: function(result){
 
@@ -21,8 +37,6 @@ $(document).ready(function() {
             start : stringToArray[2],
             end : stringToArray[3]
         }
-
-
 
         for(var i = 1; i < result.length; i++) {
             var string = result[i];

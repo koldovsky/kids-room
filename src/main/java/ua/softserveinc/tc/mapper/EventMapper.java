@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.mapper;
 
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dto.EventDTO;
 import ua.softserveinc.tc.entity.Event;
 import java.text.DateFormat;
@@ -20,15 +21,13 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         event.setAgeHigh(eventDto.getAgeHigh());
 
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
             Date startDate = df.parse(eventDto.getStartTime());
             Date endDate = df.parse(eventDto.getEndTime());
 
             event.setStartTime(startDate);
             event.setEndTime(endDate);
-        } catch (Exception e) {
-            System.out.println("Data is bad!!!");
-        }
+        } catch (Exception e) {}
 
         return event;
     }
@@ -41,7 +40,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         eventDTO.setName(event.getName());
         eventDTO.setDescription(event.getDescription());
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
 
         eventDTO.setStartTime(df.format(event.getStartTime()));
         eventDTO.setEndTime(df.format(event.getEndTime()));
