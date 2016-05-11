@@ -6,10 +6,10 @@
 <header class="bg-primary">
     <div class="container">
     	<div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                  <h1><a href="/home">Kid&#39;s Room</a></h1>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <sec:authorize access="!isAuthenticated()">
                     <a href="<c:url value="/login" />">
                         <span class="glyphicon glyphicon-log-in" ></span>
@@ -21,7 +21,7 @@
                     </a>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
 
                      <sec:authorize access="hasRole('USER')">
                                  <a href="mykids"><spring:message code="user.myKids" /></a>
