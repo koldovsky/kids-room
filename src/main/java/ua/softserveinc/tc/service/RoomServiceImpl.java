@@ -21,6 +21,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private RoomDao roomDao;
 
     @Override
+    public Room findById(Object id) {
+        return roomDao.findById(new Long(1));
+    }
+
+    @Override
     public Room getRoomByName(String name) {
         return roomDao.getRoomByName(name);
     }
@@ -28,6 +33,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Override
     public void create(Room room) {
         roomDao.create(room);
+    }
+
+    @Override
+    public Room update(Room entity) {
+        return roomDao.update(entity);
     }
 
     @SuppressWarnings("unchecked")
