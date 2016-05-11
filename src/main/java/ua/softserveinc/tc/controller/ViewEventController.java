@@ -36,35 +36,35 @@ public class ViewEventController {
     public final String viewHome() {
         return "index";
     }
+    /*
+        @ResponseBody
+        @RequestMapping(value = "/", produces = "application/json", method = RequestMethod.GET)
+        public final List<User> getUser(final Principal principal) {
+            return uService.findAll();
+                    //calendarService.findByRoomId(Integer.valueOf(principal.getName()));
+        }
+    /*
+        @ResponseBody
+            @RequestMapping(value = "/search/api/getSearchResult")
+        public List<User> getSearchResultViaAjax() {
 
-    @ResponseBody
-    @RequestMapping(value = "/", produces = "application/json", method = RequestMethod.GET)
-    public final List<User> getUser(final Principal principal) {
-        return uService.findAll();
-                //calendarService.findByRoomId(Integer.valueOf(principal.getName()));
-    }
-/*
-    @ResponseBody
+            //AjaxResponseBody result = new AjaxResponseBody();
+            //logic
+            return uService.findAll();
+
+        }
+
+
+        @ResponseBody
         @RequestMapping(value = "/search/api/getSearchResult")
-    public List<User> getSearchResultViaAjax() {
+        public String getSearchResultViaAjax() {
 
-        //AjaxResponseBody result = new AjaxResponseBody();
-        //logic
-        return uService.findAll();
+            //AjaxResponseBody result = new AjaxResponseBody();
+            //logic
+            return uService.findAll().toString();
 
-    }
-
-
-    @ResponseBody
-    @RequestMapping(value = "/search/api/getSearchResult")
-    public String getSearchResultViaAjax() {
-
-        //AjaxResponseBody result = new AjaxResponseBody();
-        //logic
-        return uService.findAll().toString();
-
-    }
-*/
+        }
+    */
     @RequestMapping(value = "getCompanies",  method = RequestMethod.GET)
     public @ResponseBody
     String getRaandom() {
