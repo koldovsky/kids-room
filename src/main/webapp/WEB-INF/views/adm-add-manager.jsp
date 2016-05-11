@@ -1,8 +1,6 @@
-
-
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <html lang="en">
 <head>
@@ -41,7 +39,7 @@
 
 			<label >
              	Phone number
-                input type="number" name="phoneNumber" required></input>
+                <input type="number" name="phoneNumber" required></input>
             </label>
 
             <button type="submit" name="submit">Submit</button>

@@ -15,11 +15,41 @@
     <div class="rightsidebar" >
         <form action="adm-add-location" method="post" modelAttribute="city">
             <fieldset >
-                <legend>General</legend>
+                <legend><strong>General</strong></legend>
                 <label>
                     Room name
                     <input type="text" name="name" required ></input>
                 </label>
+                <label>
+                    Address
+                    <input type="text" name="address" required ></input>
+                </label>
+                <label>
+                    City
+                    <select name="locations" required>
+                        <option value="none">none</option>
+                         <option value="Lviv">Lviv</option>
+                         <option value="Kyiv">Kyiv</option>
+                         <option value="Rivne">Rivne</option>
+                    </select>
+                <label>
+                    Room capacity
+                    <input type="number" name="capacity" required ></input>
+                </label>
+                <label>
+                    Room phone number
+                    <input type="number" name="phoneNumber" required ></input>
+                </label>
+                <form action="adm-edit-manager" method="get" >
+                <label>
+                    Chose room-manager
+                    <select name="managers" required>
+                        <c:forEach var="movie" items="${managerList}" >
+                            <option value="${movie}">${movie}</option>
+                        </c:forEach>
+                    </select>
+                </label>
+                </form>
 
                 <button type="submit" name="submit">Submit</button>
                 <button type="reset" name="reset" >Cancel</button>

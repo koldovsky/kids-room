@@ -14,7 +14,9 @@
 <body>
 
 <a href="adm-add-location"><button name="add-location">Add</button></a>
+
 <button name="delete-location">Delete</button>
+</form>
 
 
     <form action="adm-edit-location" method="get" modelAttribute="city">
@@ -25,8 +27,10 @@
                         <fieldset class="possition">
                             <label>
                                 <legend>Locations</legend>
-                                <select name="locations" required id="mySelect">
-                                    <option value="none">none</option>
+                                <select name="locations" required>
+                                    <c:forEach var="movie" items="${roomList}" >
+                                        <option value="${movie.name}">${movie.name}</option>
+                                    </c:forEach>
                                 </select>
                             </label>
                         </fieldset>

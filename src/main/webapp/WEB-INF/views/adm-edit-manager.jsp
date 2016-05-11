@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -10,9 +13,11 @@
 
 <body>
     <a href="adm-add-manager"><button name="add-location">Add</button></a>
+    <form action="adm-edit-manager" method="post" value="movie">
     <button name="delete-manager">Delete</button>
+    </form>
 
-    <form action="adm-edit-manager" method="get" modelAttribute="user">
+    <form action="adm-edit-manager" method="get" modelAttribute="managers">
         <div class="rightback">
             <div class="contentback">
                 <div class="leftback">
@@ -21,7 +26,9 @@
                             <label>
                                 <legend>Manager list</legend>
                                 <select name="managers" required>
-                                    <option value="none">none</option>
+                                    <c:forEach var="movie" items="${managerList}" >
+                                        <option value="${movie}">${movie}</option>
+                                    </c:forEach>
                                 </select>
                             </label>
                         </fieldset>
