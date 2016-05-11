@@ -10,10 +10,6 @@ import ua.softserveinc.tc.entity.Room;
 
 import java.util.List;
 
-/**
- * Created by Nestor on 07.05.2016.
- */
-
 @Service
 public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService{
 
