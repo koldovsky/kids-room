@@ -69,6 +69,10 @@ caption {
 	padding: 20px;
 }
 
+table tr:nth-child(even){
+    background-color: #f2f2f2
+}
+
 .parentRow:hover {
 cursor: pointer;
 }
