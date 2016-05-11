@@ -1,12 +1,11 @@
 package ua.softserveinc.tc.dao;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import ua.softserveinc.tc.entity.City;
-import ua.softserveinc.tc.entity.ColumnConstants.RoomConst;
+import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 

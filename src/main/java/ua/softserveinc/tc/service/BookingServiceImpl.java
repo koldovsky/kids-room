@@ -9,9 +9,8 @@ import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Date;
 
-import static ua.softserveinc.tc.entity.ColumnConstants.BookingConst.BOOKING_START_TIME;
+import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_START_TIME;
 
 /**
  * Created by TARAS on 01.05.2016.

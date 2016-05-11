@@ -4,7 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.validator.UniqueEmail;
-import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

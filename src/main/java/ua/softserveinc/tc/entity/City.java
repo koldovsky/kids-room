@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.entity.ColumnConstants.CityConst;
+import ua.softserveinc.tc.constants.ColumnConstants.CityConst;
 
 import javax.persistence.*;
 import java.util.List;

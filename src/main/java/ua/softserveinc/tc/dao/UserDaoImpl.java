@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
-import ua.softserveinc.tc.entity.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.NoResultException;

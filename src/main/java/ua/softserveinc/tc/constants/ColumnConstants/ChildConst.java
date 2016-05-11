@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.entity.ColumnConstants;
+package ua.softserveinc.tc.constants.ColumnConstants;
 
 
 public interface ChildConst {

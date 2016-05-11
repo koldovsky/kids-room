@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
@@ -35,7 +36,7 @@ public class EditMyKidPageController {
                                   Principal principal)
     {
         ModelAndView model = new ModelAndView();
-        model.setViewName("editmykid");
+        model.setViewName(MyKidsConst.KID_EDITING_VIEW);
 
         Child kidToEdit = childService
                 .findById(Long.parseLong(kidId));
@@ -50,7 +51,7 @@ public class EditMyKidPageController {
                 userService.getUserByEmail(
                         principal.getName()));
         childService.update(kidToEdit);
-        return "redirect:/mykids";
+        return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }
 
 }

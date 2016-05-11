@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
@@ -29,7 +30,7 @@ public class RegisterNewKidController {
         if(!model.containsAttribute("child")) {
             model.addAttribute("child", new Child());
         }
-        return "registerkid";
+        return MyKidsConst.KID_REGISTRATION_VIEW;
     }
 
     @RequestMapping(value="/registerkid", method = RequestMethod.POST)
@@ -38,6 +39,6 @@ public class RegisterNewKidController {
                 userService.getUserByEmail(
                         principal.getName()));
         childService.create(child);
-        return "redirect:/mykids";
+        return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }
 }

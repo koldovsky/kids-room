@@ -3,7 +3,7 @@ package ua.softserveinc.tc.dao;
 import org.springframework.stereotype.Repository;
 
 import ua.softserveinc.tc.entity.City;
-import ua.softserveinc.tc.entity.ColumnConstants.CityConst;
+import ua.softserveinc.tc.constants.ColumnConstants.CityConst;
 
 import javax.persistence.TypedQuery;
 
