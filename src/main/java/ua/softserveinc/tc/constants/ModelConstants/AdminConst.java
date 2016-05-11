@@ -5,11 +5,25 @@ package ua.softserveinc.tc.constants.ModelConstants;
  */
 public interface AdminConst {
 
-    String EDIT_MANAGER_VIEW = "adm-edit-manager";
+    //Name of *.jsp files of ADMINISTRATOR
 
-    String EDIT_LOCATION_VIEW = "adm-edit-location";
+    String EDIT_MANAGER = "adm-edit-manager";
 
-    String ADD_LOCATION_VIEW = "adm-add-manager";
+    String EDIT_LOCATION = "adm-edit-location";
 
-    String ADD_MANAGER_VIEW = "adm-add-location";
+    String ADD_LOCATION = "adm-add-manager";
+
+    String ADD_MANAGER = "adm-add-location";
+
+    ///////////////////////////////////////
+
+
+    //Used for mark a different Collections of objects
+
+    String MANAGER_LIST = "managerList";
+
+    String ROOM_LIST = "roomList";
+
+    ///////////////////////////////////////
+
 }
