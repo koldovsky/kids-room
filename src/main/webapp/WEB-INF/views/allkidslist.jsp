@@ -1,10 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<button id="enable" class="btn btn-default" style="float: right">Edit</button>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<button id="enable" class="btn btn-default" style="float: right"><spring:message code="button.edit" /></button>
 <div class="table" id="allkidstable">
     <div class="thead row-fluid">
-        <div class="th span3">Kid's Parents Name</div>
-        <div class="th span3">Kid Name</div>
-        <div class="th span3">Age</div>
+        <div class="th span3"><spring:message code="kids.parentsName" /></div>
+        <div class="th span3"><spring:message code="kids.name" /></div>
+        <div class="th span3"><spring:message code="kids.age" /></div>
     </div>
     <c:forEach var="kid" items="${kids}" varStatus="loop">
         <div class="tr row-fluid accordion-toggle ${(loop.index + 1) % 2 == 1 ?
@@ -26,12 +27,12 @@
             <div class="span1"></div>
             <div class="span9">
                 <div class="span4">
-                    <h4>Phone Number</h4>
+                    <h4><spring:message code="kids.phone" /></h4>
                     <p style="float: right">
                         <a href="#" id="kidphone${loop.index}">${kid.getParentId().getPhoneNumber()}</a>
                     </p>
                     <br>
-                    <h4>Comment</h4>
+                    <h4><spring:message code="kids.comment" /></h4>
                     <p style="float: right">
                         <a href="#" id="kidcomment${loop.index}">${kid.getComment()}</a>
                     </p>
