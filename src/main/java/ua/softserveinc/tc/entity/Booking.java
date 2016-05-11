@@ -118,33 +118,72 @@ public class Booking {
         return calendar;
     }
 
-    public int extractYearFromDate(Date date)
+    public int extractYear()
     {
-        int year = DateToCalendar(date).get(Calendar.YEAR);
+        int year = DateToCalendar(bookingStartTime).get(Calendar.YEAR);
         return year;
     }
 
-    public int extractMonthFromDate(Date date)
+    public int extractMonth()
     {
-        int month = DateToCalendar(date).get(Calendar.MONTH) + 1;
+        int month = DateToCalendar(bookingStartTime).get(Calendar.MONTH) + 1;
         return month;
     }
 
-    public int extractDayFromDate(Date date)
+    public int extractDay()
     {
-        int day = DateToCalendar(date).get(Calendar.DAY_OF_MONTH);
+        int day = DateToCalendar(bookingStartTime).get(Calendar.DAY_OF_MONTH);
         return day;
     }
 
-    public int extractHourFromDate(Date date)
+    public int extractHourFromStartTime()
     {
-        int hour = DateToCalendar(date).get(Calendar.HOUR_OF_DAY);
+        int hour = DateToCalendar(bookingStartTime).get(Calendar.HOUR_OF_DAY);
         return hour;
     }
 
-    public int extractMinuteFromDate(Date date)
+    public int extractHourFromEndTime()
     {
-        int minute = DateToCalendar(date).get(Calendar.MINUTE);
+        int hour = DateToCalendar(bookingEndTime).get(Calendar.HOUR_OF_DAY);
+        return hour;
+    }
+
+    public int extractMinuteFromStartTime()
+    {
+        int minute = DateToCalendar(bookingStartTime).get(Calendar.MINUTE);
         return minute;
+    }
+
+    public int extractMinuteFromEndTime()
+    {
+        int minute = DateToCalendar(bookingEndTime).get(Calendar.MINUTE);
+        return minute;
+    }
+
+    public String extractMonthAndDay()
+    {
+        Calendar calendar = DateToCalendar(bookingStartTime);
+        String monthAndDay = "";
+        monthAndDay += (calendar.get(Calendar.MONTH) + 1) + ".";
+        monthAndDay += calendar.get(Calendar.DAY_OF_MONTH);
+        return monthAndDay;
+    }
+
+    public String extractHourAndMinuteFromStartTime()
+    {
+        Calendar calendar = DateToCalendar(bookingStartTime);
+        String hourAndMinute = "";
+        hourAndMinute += calendar.get(Calendar.HOUR_OF_DAY) + ":";
+        hourAndMinute += calendar.get(Calendar.MINUTE);
+        return hourAndMinute;
+    }
+
+    public String extractHourAndMinuteFromEndTime()
+    {
+        Calendar calendar = DateToCalendar(bookingEndTime);
+        String hourAndMinute = "";
+        hourAndMinute += calendar.get(Calendar.HOUR_OF_DAY) + ":";
+        hourAndMinute += calendar.get(Calendar.MINUTE);
+        return hourAndMinute;
     }
 }

@@ -7,15 +7,17 @@
         <table>
             <caption><h2>Bookings of ${parent}</h2></caption>
             <tr>
+                <th>Date</th>
                 <th>Kid&#39;s name</th>
-                <th>Booking began</th>
-                <th>Booking ended</th>
+                <th>Start time</th>
+                <th>End time</th>
             </tr>
             <c:forEach var="booking" items="${bookings}">
             <tr>
+                <td>${booking.extractMonthAndDay()}</td>
                 <td>${booking.getIdChild()}</td>
-                <td>${booking.getBookingStartTime()}</td>
-                <td>${booking.getBookingEndTime()}</td>
+                <td>${booking.extractHourAndMinuteFromStartTime()}</td>
+                <td>${booking.extractHourAndMinuteFromEndTime()}</td>
             </tr>
             </c:forEach>
         </table>
