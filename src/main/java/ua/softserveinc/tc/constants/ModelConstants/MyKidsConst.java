@@ -7,4 +7,6 @@ public interface MyKidsConst {
     String MY_KIDS_VIEW = "mykids";
     String KID_REGISTRATION_VIEW = "registerkid";
     String KID_EDITING_VIEW = "editmykid";
+
+    String KID_ATTRIBUTE = "kid";
 }

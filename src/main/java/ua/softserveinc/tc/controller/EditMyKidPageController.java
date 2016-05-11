@@ -1,8 +1,10 @@
 package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
@@ -11,9 +13,9 @@ import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -46,12 +48,22 @@ public class EditMyKidPageController {
 
     @RequestMapping(value="/editmykid",
             method = RequestMethod.POST)
-    public String submit(@ModelAttribute Child kidToEdit, Principal principal){
+    public String submit(
+            @ModelAttribute Child kidToEdit,
+            Principal principal){
         kidToEdit.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));
+
         childService.update(kidToEdit);
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(true);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
     }
 
 }
