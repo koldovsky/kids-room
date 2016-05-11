@@ -13,6 +13,7 @@
                 <th>Start time</th>
                 <th>End time</th>
                 <th>Difference</th>
+                <th>Price</th>
             </tr>
             <c:forEach var="booking" items="${bookings}">
             <tr>
@@ -22,7 +23,11 @@
                 <td>${booking.extractHourAndMinuteFromStartTime()}</td>
                 <td>${booking.extractHourAndMinuteFromEndTime()}</td>
                 <td>${booking.getDifference()}</td>
+                <td>${booking.getPrice(booking.getDifference())}</td>
             </tr>
             </c:forEach>
+            <caption class="captionBottom">
+                <p>Total sum: ${sum}</p>
+            </caption>
         </table>
     </div>

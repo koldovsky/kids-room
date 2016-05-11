@@ -86,7 +86,7 @@ cursor: pointer;
 	color: red;
 }
 
-.btn-primary{
+.btn-primary {
     width: 150px;
     height: 45px;
     font-size: 24;
@@ -97,6 +97,10 @@ cursor: pointer;
     text-shadow: black;
 }
 
-caption h2{
+caption h2  {
     text-align: center;
+}
+
+.captionBottom {
+     caption-side: bottom;
 }

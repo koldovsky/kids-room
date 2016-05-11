@@ -7,8 +7,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by TARAS on 30.04.2016.
@@ -206,5 +205,40 @@ public class Booking {
         difference += String.format("%02d", differenceHour) + ":";
         difference += String.format("%02d", differenceMinute);
         return difference;
+    }
+
+    public int getPrice(String hoursAndMinutes)
+    {
+        /*
+        * this method uses getDifference() from class Booking
+        * getDifference() returns string in which first two characters represent hour
+        * so we have to substring first two characters in order to parse
+        */
+        int time = Integer.parseInt(hoursAndMinutes.substring(0, 2));
+
+        // later we create list and sort it in order to choose appropriate hour
+        ArrayList<Integer> listOfKeys = new ArrayList<>();
+        for (Integer key : getIdRoom().getPricing().keySet()) {listOfKeys.add(key);}
+        Collections.sort(listOfKeys);
+
+        // in case manager inputed value that is bigger than max value from list
+        int count = 0;
+        while (true)
+        {
+            if (listOfKeys.contains(time)) return getIdRoom().getPricing().get(time);
+            time++;
+            count++;
+            if (count > 10) return getIdRoom().getPricing().get(listOfKeys.get(listOfKeys.size() - 1));
+        }
+    }
+
+    public static int getSum(List<Booking> bookings)
+    {
+        int sum = 0;
+        for (Booking booking : bookings)
+        {
+            sum += booking.getPrice(booking.getDifference());
+        }
+        return sum;
     }
 }

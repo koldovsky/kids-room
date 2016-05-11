@@ -37,8 +37,11 @@ public class ParentBookingsPageController
 
         User parent = userService.getUserByEmail(parentEmail);
         List<Booking> bookingList = bookingService.getBookingsByUser(parent);
+        int sum = Booking.getSum(bookingList);
+
         modelMap.addAttribute("bookings", bookingList);
         modelMap.addAttribute("parent", parent);
+        modelMap.addAttribute("sum", sum);
         return modelAndView;
     }
 }
