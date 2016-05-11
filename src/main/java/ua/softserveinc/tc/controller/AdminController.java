@@ -75,8 +75,14 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/adm-add-location", method = RequestMethod.GET)
-    public String showCreateLocation() {
-        return "adm-add-location";
+    public ModelAndView showCreateLocationForm() {
+        List<User> managers = userService.findAll().stream().filter(user -> Role.MANAGER == user.getRole())
+                .collect(Collectors.toList());
+
+        ModelAndView mav = new ModelAndView("adm-add-location");
+        mav.addObject("managerList", managers);
+
+        return mav;
     }
 
     @RequestMapping(value = "/adm-add-location", method = RequestMethod.POST)
