@@ -49,7 +49,7 @@ public class EditMyKidPageController {
     @RequestMapping(value="/editmykid",
             method = RequestMethod.POST)
     public String submit(
-            @ModelAttribute Child kidToEdit,
+            @ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child kidToEdit,
             Principal principal){
         kidToEdit.setParentId(
                 userService.getUserByEmail(
