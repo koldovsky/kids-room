@@ -17,6 +17,8 @@ public interface RoomConst {
 
     String CAPACITY_ROOM = "capacity_room";
 
+    String PRICING = "pricing";
+
     // Don't need ID_MANAGER & ID_CITY.
     // Becose we will get this constants from appropriate tables from relationship.
 

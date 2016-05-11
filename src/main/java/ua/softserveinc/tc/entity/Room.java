@@ -6,6 +6,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,6 +39,9 @@ public class Room {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
+
+    @Column(name = RoomConst.PRICING)
+    private HashMap<Integer, Integer> pricing;
 
     public Long getId() {
         return id;
@@ -101,6 +105,14 @@ public class Room {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public HashMap<Integer, Integer> getPricing() {
+        return pricing;
+    }
+
+    public void setPricing(HashMap<Integer, Integer> pricing) {
+        this.pricing = pricing;
     }
 
     @Override
