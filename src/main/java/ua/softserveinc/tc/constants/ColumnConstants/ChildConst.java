@@ -17,4 +17,6 @@ public interface ChildConst {
 
     String ID_PARENT = UserConst.ID_USER;
 
+    String ENABLED = "enabled";
+
 }

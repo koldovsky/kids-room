@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
@@ -21,7 +22,11 @@ public class Child implements Comparable<Child>
     @GeneratedValue(generator = "generator")
     @Column(name = ChildConst.ID_CHILD, nullable = false)
     private Long id;
+
+    @Column(name = ChildConst.FIRST_NAME)
     private String firstName;
+
+    @Column(name = ChildConst.LAST_NAME)
     private String lastName;
 
     @ManyToOne
@@ -33,8 +38,19 @@ public class Child implements Comparable<Child>
     @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = ChildConst.DATE_OF_BIRTH, nullable = false)
     private Date dateOfBirth;
+
     @Column(name = ChildConst.COMMENT)
     private String comment;
+
+    @Column(name = ChildConst.ENABLED,
+            nullable = false,
+            columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean enabled;
+
+    @PrePersist
+    public void onCreate() {
+        enabled = true;
+    }
 
     public Long getId() {
         return id;
@@ -82,6 +98,14 @@ public class Child implements Comparable<Child>
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

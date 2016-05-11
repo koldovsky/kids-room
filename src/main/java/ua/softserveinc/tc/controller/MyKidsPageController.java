@@ -36,7 +36,7 @@ public class MyKidsPageController {
 
         User user = us.getUserByEmail(username);
 
-        List<Child> myKids = new ArrayList<>(user.getChildren());
+        List<Child> myKids = user.getEnabledChildren();
         ModelMap modelMap = model.getModelMap();
 
         if(!modelMap.containsAttribute("kids")) {

@@ -8,6 +8,8 @@ import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -128,5 +130,14 @@ public class User {
     @Override
     public String toString() {
         return firstName + " " + lastName;
+    }
+
+    public List<Child> getEnabledChildren(){
+        List<Child> li = new ArrayList<>(this.getChildren());
+        li.forEach(child -> {
+            if(!child.isEnabled())
+                li.remove(child);
+        });
+        return li;
     }
 }

@@ -54,6 +54,7 @@ public class EditMyKidPageController {
         kidToEdit.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));
+        kidToEdit.setEnabled(true);
 
         childService.update(kidToEdit);
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
