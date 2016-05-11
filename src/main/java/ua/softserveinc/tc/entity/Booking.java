@@ -7,6 +7,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -45,20 +46,6 @@ public class Booking {
 
     @Column(name = BookingConst.IS_CANCELED, nullable = false)
     private boolean isCanceled;
-
-
-    public Booking() {}
-
-    public Booking(Child idChild, Room idRoom, User idUser, Date bookingStartTime, Date bookingEndTime,
-                   String comment, boolean isCanceled) {
-        this.idChild = idChild;
-        this.idRoom = idRoom;
-        this.idUser = idUser;
-        this.bookingStartTime = bookingStartTime;
-        this.bookingEndTime = bookingEndTime;
-        this.comment = comment;
-        this.isCanceled = isCanceled;
-    }
 
     public Date getBookingEndTime() {
         return bookingEndTime;
@@ -122,5 +109,42 @@ public class Booking {
 
     public void setCanceled(boolean canceled) {
         isCanceled = canceled;
+    }
+
+    public static Calendar DateToCalendar(Date date)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
+    public int extractYearFromDate(Date date)
+    {
+        int year = DateToCalendar(date).get(Calendar.YEAR);
+        return year;
+    }
+
+    public int extractMonthFromDate(Date date)
+    {
+        int month = DateToCalendar(date).get(Calendar.MONTH) + 1;
+        return month;
+    }
+
+    public int extractDayFromDate(Date date)
+    {
+        int day = DateToCalendar(date).get(Calendar.DAY_OF_MONTH);
+        return day;
+    }
+
+    public int extractHourFromDate(Date date)
+    {
+        int hour = DateToCalendar(date).get(Calendar.HOUR_OF_DAY);
+        return hour;
+    }
+
+    public int extractMinuteFromDate(Date date)
+    {
+        int minute = DateToCalendar(date).get(Calendar.MINUTE);
+        return minute;
     }
 }
