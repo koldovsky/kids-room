@@ -2,20 +2,10 @@ package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.dto.EventDTO;
-import ua.softserveinc.tc.entity.Event;
-import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.service.CalendarService;
+import ua.softserveinc.tc.service.CalendarServiceImpl;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.UserService;
-
-import java.security.Principal;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by dima- on 07.05.2016.
@@ -25,9 +15,10 @@ import java.util.List;
 public class ViewEventController {
 
     @Autowired
-    private CalendarService calendarService;
+    private CalendarServiceImpl calendarServiceImpl;
     @Autowired
     private EventService eService;
+
     @Autowired
     private UserService uService;
 
@@ -68,8 +59,7 @@ public class ViewEventController {
     @RequestMapping(value = "getCompanies",  method = RequestMethod.GET)
     public @ResponseBody
     String getRaandom() {
-        System.out.println(eService.findAll().toString());
-        return eService.findAll().toString();
+        return calendarServiceImpl.findByRoomId(2).toString();
     }
 
 

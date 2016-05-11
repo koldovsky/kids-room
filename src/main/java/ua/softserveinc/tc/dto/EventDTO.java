@@ -1,11 +1,12 @@
 package ua.softserveinc.tc.dto;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * Created by dima- on 07.05.2016.
  */
 public class EventDTO implements BaseDTO{
-
-
     private String name;
 
     private String startTime;
@@ -75,5 +76,11 @@ public class EventDTO implements BaseDTO{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return " " + name + " " + startTime +
+                " " + endTime + " ";
     }
 }

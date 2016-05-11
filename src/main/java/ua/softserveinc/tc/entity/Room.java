@@ -6,6 +6,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Chak on 30.04.2016.
@@ -35,6 +36,8 @@ public class Room {
     @JoinColumn(name = CityConst.ID_CITY)
     private City city;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<Event> events;
 
     public Long getId() {
         return id;
@@ -90,5 +93,13 @@ public class Room {
 
     public void setManager(User manager) {
         this.manager = manager;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }

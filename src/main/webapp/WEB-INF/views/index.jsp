@@ -27,6 +27,11 @@
         </sec:authorize>
         <sec:authorize access="hasRole('MANAGER')">
             <p> I am MANAGER</p>
+
+            <select id = "roomAddress">
+
+            </select>
+
             <div id='calendar'></div>
         </sec:authorize>
         <sec:authorize access="hasRole('ADMINISTRATOR')">

@@ -2,13 +2,11 @@ $(document).ready(function() {
 
     $.ajax({url: "getCompanies", success: function(result){
 
-     //   alert(result);
         var objects = [];
         result = result.split(',');
-        for(var i = 0; i < result.length; i++ ) {
+        for(var i = 0; i < result.length; i++) {
             var string = result[i];
             var stringToArray = string.split(' ');
-      //      alert(string);
 
             objects[i] = {
                 title : stringToArray[1],
@@ -16,6 +14,17 @@ $(document).ready(function() {
                 end : stringToArray[3]
             }
         }
+
+        var myOptions = {
+            val1 : 'text1',
+            val2 : 'text2'
+        };
+        var mySelect = $('#roomAddress');
+        $.each(myOptions, function(val, text) {
+            mySelect.append(
+                $('<option></option>').val(val).html(text)
+            );
+        });
 
 
 

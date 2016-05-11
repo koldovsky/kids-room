@@ -90,6 +90,7 @@ public class AppConfig {
         properties.setProperty("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
         properties.setProperty("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+        properties.setProperty("hibernate.enable_lazy_load_no_trans", environment.getProperty("hibernate.enable_lazy_load_no_trans"));
         return properties;
     }
 
