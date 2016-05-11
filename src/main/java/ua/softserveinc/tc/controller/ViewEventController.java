@@ -32,7 +32,7 @@ public class ViewEventController {
     private UserService uService;
 
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome() {
         return "index";
     }
