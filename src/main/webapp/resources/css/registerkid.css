@@ -43,3 +43,7 @@ form.registerkid input, textarea{
 .col-sm-4{
 margin: 0 auto;
 }
+
+.removekidmsg{
+    margin-top: 15px;
+}

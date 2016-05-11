@@ -26,10 +26,10 @@ import java.util.Date;
 public class EditMyKidPageController {
 
     @Autowired
-    ChildService childService;
+    private ChildService childService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value="/editmykid",
             method = RequestMethod.GET)
@@ -57,6 +57,15 @@ public class EditMyKidPageController {
         kidToEdit.setEnabled(true);
 
         childService.update(kidToEdit);
+        return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
+    }
+
+    @RequestMapping(value = "/removemykid",
+    method = RequestMethod.GET)
+    public String removeKid(@RequestParam("id") String id){
+        Child kidToRemove= childService.findById(Long.parseLong(id));
+        kidToRemove.setEnabled(false);
+        childService.update(kidToRemove);
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }
 

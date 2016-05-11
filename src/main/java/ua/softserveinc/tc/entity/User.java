@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @NamedQueries({
         @NamedQuery(name = UserConst.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
@@ -134,10 +135,9 @@ public class User {
 
     public List<Child> getEnabledChildren(){
         List<Child> li = new ArrayList<>(this.getChildren());
-        li.forEach(child -> {
-            if(!child.isEnabled())
-                li.remove(child);
-        });
-        return li;
+
+        return li.stream()
+                .filter(Child::isEnabled)
+                .collect(Collectors.toList());
     }
 }

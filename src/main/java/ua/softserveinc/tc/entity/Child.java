@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.entity;
 
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
