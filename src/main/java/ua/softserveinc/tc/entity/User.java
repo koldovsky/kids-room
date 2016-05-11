@@ -9,6 +9,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Set;
+import java.util.TreeSet;
 
 @NamedQueries({
         @NamedQuery(name = UserConst.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
@@ -56,8 +57,12 @@ public class User {
     @Column
     private Set<Child> children;
 
+    public void setChildren(Set<Child> children) {
+        this.children = children;
+    }
+
     public Set<Child> getChildren() {
-        return children;
+        return new TreeSet<>(children);
     }
 
     public String getPassword() {

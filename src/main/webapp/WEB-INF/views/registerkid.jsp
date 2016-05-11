@@ -19,7 +19,7 @@
 
       <div class="form-group">
                     <label for="date" class="required">Date of birth</label>
-                    <form:input path="dateOfBirth" id="date" name="date" class="form-control" required="required" />
+                    <form:input path="dateOfBirth" type="date" id="date" name="date" class="form-control" required="required" />
       </div>
 
       <div class="form-group">
