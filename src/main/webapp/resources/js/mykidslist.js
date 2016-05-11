@@ -8,18 +8,8 @@ $(document).ready(function(){
 
 
     $(".btn.glyphicon").click(function(){
-         var id = $(".btn.glyphicon").index(this).toString();
-
-         /*$.ajax({
-            url:"editmykid",
-            data: {
-                kidPosition: id
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                alert("Status: " + textStatus);
-                                alert("Error: " + errorThrown);
-                   }
-         });*/
-         window.location.href = "editmykid?kidPosition=" + id;
+         var position = $(".btn.glyphicon").index(this).toString();
+         var id = $(".kidinfo:eq("+position+")").data("id");
+         window.location.href = "editmykid?kidId=" + id;
     });
 });

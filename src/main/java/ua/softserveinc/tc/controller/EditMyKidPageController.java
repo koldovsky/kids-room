@@ -12,6 +12,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 
 /**
@@ -30,24 +31,14 @@ public class EditMyKidPageController {
     @RequestMapping(value="/editmykid",
             method = RequestMethod.GET)
     public ModelAndView selectKid(
-                                  @RequestParam("kidPosition") String kidPosition,
-                                  Principal principal){
-        System.out.println(kidPosition);
+                                  @RequestParam("kidId") String kidId,
+                                  Principal principal)
+    {
         ModelAndView model = new ModelAndView();
         model.setViewName("editmykid");
-        List<Child> kids = new ArrayList<>(
-                userService.getUserByEmail(
-                        principal.getName())
-                                .getChildren());
-        kids.sort((o1, o2)->{
-            if(o1.getId()>o2.getId())
-                return 1;
-            else if(o1.getId()<o2.getId())
-                return -1;
-            return 0;
-        });
 
-        Child kidToEdit = kids.get(Integer.parseInt(kidPosition));
+        Child kidToEdit = childService
+                .findById(Long.parseLong(kidId));
         model.getModelMap().addAttribute("kidToEdit", kidToEdit);
         return model;
     }
