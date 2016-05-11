@@ -11,5 +11,8 @@ import java.util.List;
  */
 @Component
 public interface RoomService extends BaseService<Room> {
+
+    public Room getRoomByName(String name);
+
     List<Event> getAllEventsInRoom(Room room);
 }

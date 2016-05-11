@@ -16,8 +16,19 @@ import java.util.List;
 
 @Service
 public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService{
+
     @Autowired
     private RoomDao roomDao;
+
+    @Override
+    public Room getRoomByName(String name) {
+        return roomDao.getRoomByName(name);
+    }
+
+    @Override
+    public void create(Room room) {
+        roomDao.create(room);
+    }
 
     @SuppressWarnings("unchecked")
     public List<Event> getAllEventsInRoom(Room room){
