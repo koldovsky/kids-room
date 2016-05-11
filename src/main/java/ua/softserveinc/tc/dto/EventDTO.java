@@ -19,7 +19,6 @@ public class EventDTO implements BaseDTO{
 
     private long roomId;
 
-
     private String description;
 
     public String getName() {
@@ -80,7 +79,7 @@ public class EventDTO implements BaseDTO{
 
     @Override
     public String toString() {
-        return " " + name + " " + startTime +
-                " " + endTime + " ";
+        return name + " " + startTime +
+                " " + endTime;
     }
 }

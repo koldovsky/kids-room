@@ -27,3 +27,5 @@ insert into bookings values (15, '2016-05-10 16:39', '2016-05-10 15:47', "The wh
 
 insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT', '2016-05-10 15:00:00', 1);
 insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT', '2016-05-15 15:00:00', 2);
+insert into events VALUES (3, 3, 5, 'NO', '2016-05-16 16:00:00', 'EVENT', '2016-05-16 15:00:00', 2);
+insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT', '2016-05-26 10:00:00', 2);

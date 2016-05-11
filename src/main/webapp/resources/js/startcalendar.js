@@ -1,10 +1,30 @@
 $(document).ready(function() {
 
+/*
+     var startPosition = document.location.href.indexOf('')+''.length;
+     var id = document.location.href.substring(startPosition, document.location.href.length);
+     */
+
     $.ajax({url: "getCompanies", success: function(result){
 
         var objects = [];
         result = result.split(',');
-        for(var i = 0; i < result.length; i++) {
+
+        var string = result[0];
+
+        string = " " + string;
+
+        var stringToArray = string.split(' ');
+
+        objects[0] = {
+            title : stringToArray[1],
+            start : stringToArray[2],
+            end : stringToArray[3]
+        }
+
+
+
+        for(var i = 1; i < result.length; i++) {
             var string = result[i];
             var stringToArray = string.split(' ');
 
@@ -79,27 +99,6 @@ $(document).ready(function() {
              start: '2016-05-16T16:00:00'
              },
              {
-             title: 'Meeting',
-             start: '2016-05-12T10:30:00',
-             end: '2016-05-12T12:30:00'
-             },
-             {
-             title: 'Lunch',
-             start: '2016-05-12T12:00:00'
-             },
-             {
-             title: 'Meeting',
-             start: '2016-05-12T14:30:00'
-             },
-             {
-             title: 'Happy Hour',
-             start: '2016-05-12T17:30:00'
-             },
-             {
-             title: 'Dinner',
-             start: '2016-05-12T20:00:00'
-             },
-             {
              title: 'Birthday Party',
              start: '2016-05-13T07:00:00'
              },
@@ -116,54 +115,4 @@ $(document).ready(function() {
 
     }
     });
-
-
-/*
-    var events = $('events').val();
-    console.log(events);
-
-
-        var data = {}
-        data["query"] = $("#query").val();
-
-        $.ajax({
-            type : "GET",
-            contentType : "application/json",
-            url : "/",
-            data : JSON.stringify(data),
-            dataType : 'json',
-            timeout : 100000,
-            success : function(data) {
-                alert("SUCCESS:");
-                display(data);
-            },
-            error : function(e) {
-                alert("ERROR: ");
-                display(e);
-            },
-            done : function(e) {
-                console.log("DONE");
-            }
-        });
-
-/*
-    $.ajax({
-        type: 'GET',
-        url: '/',
-        dataType: 'json',
-        contentType: 'application/json',
-        success: function (response) {
-
-
-            //    events = Object.keys(response).map(function(k) { return response[k]});
-
-
-        },
-        error: function(data,status,er) {
-            alert("ERRROR");
-        }
-    });
-*/
-
-
 });

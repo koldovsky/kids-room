@@ -44,7 +44,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         eventDTO.setStartTime(df.format(event.getStartTime()));
-        eventDTO.setStartTime(df.format(event.getEndTime()));
+        eventDTO.setEndTime(df.format(event.getEndTime()));
 
         return eventDTO;
     }
