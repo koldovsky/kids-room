@@ -164,8 +164,8 @@ public class Booking {
     {
         Calendar calendar = DateToCalendar(bookingStartTime);
         String monthAndDay = "";
-        monthAndDay += (calendar.get(Calendar.MONTH) + 1) + ".";
-        monthAndDay += calendar.get(Calendar.DAY_OF_MONTH);
+        monthAndDay += String.format("%02d", (calendar.get(Calendar.MONTH)) + 1) + ".";
+        monthAndDay += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
         return monthAndDay;
     }
 
@@ -173,8 +173,8 @@ public class Booking {
     {
         Calendar calendar = DateToCalendar(bookingStartTime);
         String hourAndMinute = "";
-        hourAndMinute += calendar.get(Calendar.HOUR_OF_DAY) + ":";
-        hourAndMinute += calendar.get(Calendar.MINUTE);
+        hourAndMinute += String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":";
+        hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
         return hourAndMinute;
     }
 
@@ -182,8 +182,8 @@ public class Booking {
     {
         Calendar calendar = DateToCalendar(bookingEndTime);
         String hourAndMinute = "";
-        hourAndMinute += calendar.get(Calendar.HOUR_OF_DAY) + ":";
-        hourAndMinute += calendar.get(Calendar.MINUTE);
+        hourAndMinute += String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":";
+        hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
         return hourAndMinute;
     }
 }
