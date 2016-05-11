@@ -40,7 +40,7 @@
                     Room phone number
                     <input type="number" name="phoneNumber" required ></input>
                 </label>
-                <form action="adm-edit-manager" method="get" >
+                <form action="adm-add-location" method="get" >
                 <label>
                     Chose room-manager
                     <select name="managers" required>
