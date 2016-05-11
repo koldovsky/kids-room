@@ -39,7 +39,7 @@
         <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
         <org.hibernate-version>5.1.0.Final</org.hibernate-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
-        <spring.securiry-version>4.0.4.RELEASE</spring.securiry-version>
+        <org.spring.securiry-version>4.0.4.RELEASE</org.spring.securiry-version>
     </properties>
     <dependencies>
 
@@ -79,21 +79,25 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>${spring.securiry-version}</version>
+            <version>${org.spring.securiry-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring.securiry-version}</version>
+            <version>${org.spring.securiry-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring.securiry-version}</version>
+            <version>${org.spring.securiry-version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${org.spring.securiry-version}</version>
+        </dependency>
         <!-- HIBERNATE -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -161,11 +165,7 @@
             <artifactId>tiles-template</artifactId>
             <version>${org.apache.tiles-version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>4.1.0.RELEASE</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.apache.tiles</groupId>
@@ -173,34 +173,6 @@
             <version>${org.apache.tiles-version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${spring.securiry-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>${spring.securiry-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${spring.securiry-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring.securiry-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.3.6</version>
-        </dependency>
 
         <dependency>
             <groupId>org.json</groupId>
@@ -227,9 +199,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>2.2.3</version>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mail</artifactId>
+            <version>${org.springframework-version}</version>
         </dependency>
 
 

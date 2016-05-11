@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
 
 import javax.validation.Valid;
@@ -20,6 +21,8 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    MailService mailService;
 
     @RequestMapping(value="/login ", method = RequestMethod.GET)
     public String login(Model model){
@@ -39,6 +42,7 @@ public class UserController {
         }
         user.setRole(Role.USER);
         userService.create(user);
+        mailService.sendMessage(user,"sub","text");
         return "login";
     }
   /*  @RequestMapping("/some")

@@ -10,6 +10,8 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -28,7 +30,8 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("ua.softserveinc.tc")
-@PropertySource(value = "classpath:hibernate.properties")
+@PropertySource(value = { "classpath:mail.properties",
+                          "classpath:hibernate.properties" })
 public class AppConfig {
 
     @Autowired
@@ -101,6 +104,24 @@ public class AppConfig {
         messageSource.setBasename("messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setDefaultEncoding("UTF-8");
+        mailSender.setHost(environment.getProperty("mail.host"));
+        mailSender.setPort(Integer.valueOf(environment.getProperty("mail.port")));
+        mailSender.setUsername(environment.getProperty("mail.username"));
+        mailSender.setPassword(environment.getProperty("mail.password"));
+
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.transport.protocol", environment.getProperty("mail.transport.protocol"));
+        javaMailProperties.put("mail.smtp.auth", environment.getProperty("mail.smtp.auth"));
+        javaMailProperties.put("mail.smtp.starttls.enable", environment.getProperty("mail.smtp.starttls.enable"));
+        javaMailProperties.put("mail.smtp.quitwait", environment.getProperty("mail.smtp.quitwait"));
+        mailSender.setJavaMailProperties(javaMailProperties);
+        return mailSender;
     }
 
 }
