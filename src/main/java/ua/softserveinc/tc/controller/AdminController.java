@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -39,29 +40,29 @@ public class AdminController {
         List<User> managers = userService.findAll().stream().filter(user -> Role.MANAGER == user.getRole())
                 .collect(Collectors.toList());
 
-        ModelAndView mav = new ModelAndView("adm-edit-manager");
-        mav.addObject("managerList", managers);
+        ModelAndView mav = new ModelAndView(AdminConst.EDIT_MANAGER);
+        mav.addObject(AdminConst.MANAGER_LIST, managers);
 
         return mav;
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public String showCreateManagerForm() {
-        return "adm-add-manager";
+        return AdminConst.ADD_MANAGER;
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute User user) {
         user.setRole(Role.MANAGER);
         userService.create(user);
-        return "adm-add-manager";
+        return AdminConst.ADD_MANAGER;
     }
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
     public String deleteManager(@RequestParam Long id) {
         User user = userService.findById(id);
         userService.delete(user);
-        return "adm-edit-manager";
+        return AdminConst.EDIT_MANAGER;
     }
 
 
@@ -69,8 +70,8 @@ public class AdminController {
     public ModelAndView getLocationMenu() {
         List<Room> rooms = roomService.findAll();
 
-        ModelAndView mav = new ModelAndView("adm-edit-location");
-        mav.addObject("roomList", rooms);
+        ModelAndView mav = new ModelAndView(AdminConst.EDIT_LOCATION);
+        mav.addObject(AdminConst.ROOM_LIST, rooms);
         return mav;
     }
 
@@ -79,8 +80,8 @@ public class AdminController {
         List<User> managers = userService.findAll().stream().filter(user -> Role.MANAGER == user.getRole())
                 .collect(Collectors.toList());
 
-        ModelAndView mav = new ModelAndView("adm-add-location");
-        mav.addObject("managerList", managers);
+        ModelAndView mav = new ModelAndView(AdminConst.ADD_LOCATION);
+        mav.addObject(AdminConst.MANAGER_LIST, managers);
 
         return mav;
     }
@@ -88,6 +89,6 @@ public class AdminController {
     @RequestMapping(value = "/adm-add-location", method = RequestMethod.POST)
     public String saveLocation(@ModelAttribute Room room) {
         roomService.create(room);
-        return "adm-add-location";
+        return AdminConst.ADD_LOCATION;
     }
 }
