@@ -5,7 +5,9 @@
 
     <div class="table">
         <table>
-            <caption><h2>Bookings of ${parent}</h2></caption>
+            <caption>
+            <h2>Bookings of ${parent} <span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
+            </caption>
             <tr>
                 <th>Date</th>
                 <th>Kid&#39;s name</th>

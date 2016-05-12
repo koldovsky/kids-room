@@ -5,19 +5,29 @@
 
     <div class="table">
         <table>
-            <caption><h2>Bookings for a month</h2></caption>
+            <caption>
+            <h2>All bookings <span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
+            </caption>
             <tr>
                 <th>Parent</th>
+                <th>Date</th>
                 <th>Kid&#39;s name</th>
-                <th>Booking began</th>
-                <th>Booking ended</th>
+                <th>Place</th>
+                <th>Start time</th>
+                <th>End time</th>
+                <th>Difference</th>
+                <th>Price</th>
             </tr>
             <c:forEach var="booking" items="${bookings}">
             <tr>
                 <td>${booking.getIdUser()}</td>
+                <td>${booking.extractMonthAndDay()}</td>
                 <td>${booking.getIdChild()}</td>
-                <td>${booking.getBookingStartTime()}</td>
-                <td>${booking.getBookingEndTime()}</td>
+                <td>${booking.getIdRoom()}</td>
+                <td>${booking.extractHourAndMinuteFromStartTime()}</td>
+                <td>${booking.extractHourAndMinuteFromEndTime()}</td>
+                <td>${booking.getDifference()}</td>
+                <td>${booking.getPrice(booking.getDifference())}</td>
             </tr>
             </c:forEach>
         </table>

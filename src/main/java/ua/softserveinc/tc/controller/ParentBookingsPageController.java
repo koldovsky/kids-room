@@ -42,9 +42,12 @@ public class ParentBookingsPageController
         List<Booking> bookingList = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
         int sum = Booking.getSum(bookingList);
 
-        modelMap.addAttribute("bookings", bookingList);
-        modelMap.addAttribute("parent", parent);
         modelMap.addAttribute("sum", sum);
+        modelMap.addAttribute("parent", parent);
+        modelMap.addAttribute("dateNow", dateNow);
+        modelMap.addAttribute("dateThen", dateThen);
+        modelMap.addAttribute("bookings", bookingList);
+
         return modelAndView;
     }
 }

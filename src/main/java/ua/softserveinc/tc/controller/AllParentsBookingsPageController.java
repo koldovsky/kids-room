@@ -33,6 +33,9 @@ public class AllParentsBookingsPageController
         ModelMap modelMap = modelAndView.getModelMap();
 
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
+
+        modelMap.addAttribute("dateNow", dateNow);
+        modelMap.addAttribute("dateThen", dateThen);
         modelMap.addAttribute("bookings", bookings);
         return modelAndView;
     }
