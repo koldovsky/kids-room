@@ -6,7 +6,9 @@
 
     <div class="table">
         <table>
-            <caption><h2>List of parents</h2></caption>
+            <caption>
+            <h2>List of active parents <span class="smallText">(${dateThen} - ${dateNow})</span></h2>
+            </caption>
             <tr>
                 <th>Name</th>
                 <th>Surname</th>
@@ -14,13 +16,13 @@
                 <th>Phone</th>
                 <th>Bookings</th>
             </tr>
-            <c:forEach var="parent" items="${parents}">
+            <c:forEach var="booking" items="${bookings}">
             <tr>
-                <td>${parent.getFirstName()}</td>
-                <td>${parent.getLastName()}</td>
-                <td>${parent.getEmail()}</td>
-                <td>${parent.getPhoneNumber()}</td>
-                <td id="${parent.getEmail()}" class="parentRow"><a>See details</a></td>
+                <td>${booking.getIdUser().getFirstName()}</td>
+                <td>${booking.getIdUser().getLastName()}</td>
+                <td>${booking.getIdUser().getEmail()}</td>
+                <td>${booking.getIdUser().getPhoneNumber()}</td>
+                <td id="${booking.getIdUser().getEmail()}" class="parentRow"><a>See details</a></td>
             </tr>
             </c:forEach>
         </table>

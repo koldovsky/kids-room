@@ -17,6 +17,7 @@ insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, 
 insert into bookings values (1, '2016-05-02 16:56', '2016-05-02 14:57', "The whole world of comments", false, 2, 1, 1);
 insert into bookings values (2, '2016-04-30 17:58', '2016-04-30 14:03', "The whole world of comments", false, 2, 1, 1);
 insert into bookings values (3, '2016-04-30 19:32', '2016-04-30 17:37', "The whole world of comments", false, 2, 1, 1);
+insert into bookings values (4, '2016-04-06 19:32', '2016-04-06 17:37', "The whole world of comments", false, 4, 1, 5);
 insert into bookings values (5, '2016-05-04 16:58', '2016-05-04 14:57', "The whole world of comments", false, 2, 1, 1);
 insert into bookings values (7, '2016-05-05 18:36', '2016-05-05 17:25', "The whole world of comments", false, 1, 1, 1);
 insert into bookings values (10, '2016-05-06 15:20', '2016-05-06 15:05', "The whole world of comments", false, 1, 1, 1);

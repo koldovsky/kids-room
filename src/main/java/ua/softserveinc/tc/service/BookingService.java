@@ -3,7 +3,6 @@ package ua.softserveinc.tc.service;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,5 +15,6 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsOfThisDay();
     List<Booking> getBookingsByUser(User user);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    List<Booking> getBookingsByUserByRangeOfTime(User parent, String startDate, String endDate);
+    List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate);
+    List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

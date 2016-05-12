@@ -101,10 +101,14 @@ cursor: pointer;
     text-shadow: black;
 }
 
-caption h2  {
+caption h2 {
     text-align: center;
 }
 
 .captionBottom {
      caption-side: bottom;
+}
+
+.smallText {
+    font-size: 18px;
 }
