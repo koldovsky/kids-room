@@ -22,7 +22,8 @@ public class AllParentsBookingsPageController
     @Autowired
     BookingService bookingService;
 
-    @RequestMapping(value = "allParentsBookings", method = RequestMethod.GET, params = {"dateThen"})
+    @RequestMapping(value = "allParentsBookings", method = RequestMethod.GET,
+            params = {"dateThen", "dateNow"})
     public @ResponseBody ModelAndView allParentsBookings(@RequestParam(value = "dateThen") String dateThen,
                                                          @RequestParam(value = "dateNow") String dateNow)
     {
