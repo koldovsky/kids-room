@@ -11,9 +11,9 @@ public interface AdminConst {
 
     String EDIT_LOCATION = "adm-edit-location";
 
-    String ADD_LOCATION = "adm-add-manager";
+    String ADD_LOCATION = "adm-add-location";
 
-    String ADD_MANAGER = "adm-add-location";
+    String ADD_MANAGER = "adm-add-manager";
 
     ///////////////////////////////////////
 
