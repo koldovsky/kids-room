@@ -24,6 +24,8 @@ public interface AdminConst {
 
     String ROOM_LIST = "roomList";
 
+    String CITY_LIST = "cityList";
+
     ///////////////////////////////////////
 
 }

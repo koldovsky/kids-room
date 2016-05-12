@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
+import ua.softserveinc.tc.entity.City;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -37,8 +38,7 @@ public class AdminController {
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.GET)
     public ModelAndView getManagerMenu() {
-        List<User> managers = userService.findAll().stream().filter(user -> Role.MANAGER == user.getRole())
-                .collect(Collectors.toList());
+        List<User> managers = userService.findAllManagers();
 
         ModelAndView mav = new ModelAndView(AdminConst.EDIT_MANAGER);
         mav.addObject(AdminConst.MANAGER_LIST, managers);
@@ -77,11 +77,12 @@ public class AdminController {
 
     @RequestMapping(value = "/adm-add-location", method = RequestMethod.GET)
     public ModelAndView showCreateLocationForm() {
-        List<User> managers = userService.findAll().stream().filter(user -> Role.MANAGER == user.getRole())
-                .collect(Collectors.toList());
+        List<User> managers = userService.findAllManagers();
+        List<City> cities = cityService.findAll();
 
         ModelAndView mav = new ModelAndView(AdminConst.ADD_LOCATION);
         mav.addObject(AdminConst.MANAGER_LIST, managers);
+        mav.addObject(AdminConst.CITY_LIST, cities);
 
         return mav;
     }
