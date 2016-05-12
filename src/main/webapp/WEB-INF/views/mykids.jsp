@@ -1,6 +1,7 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
@@ -10,17 +11,25 @@
 
 <div style="text-align:center;">
 <div class="list">
-<h2>Here are Your kids:</h2>
+<h2>
+    <spring:message code="kid.list" />
+</h2>
 <c:forEach var="kid" items="${kids}">
 <div class="kidslistblock">
     <div class="kidslistitem">
     <h3>${kid.getFullName()}</h3>
     </div>
 
-    <button class="btn glyphicon glyphicon-pencil">&nbsp;Edit</button>
+    <button class="btn glyphicon glyphicon-pencil">
+        &nbsp;<spring:message code="button.edit" />
+    </button>
     <div class="kidinfo" data-id="${kid.getId()}">
-            <p>Date of birth: ${kid.getDateOfBirth()}</p>
-            <p>Comment: ${kid.getComment()}</p>
+            <p>
+                <spring:message code="kid.date" />: ${kid.getDateOfBirth()}
+            </p>
+            <p>
+                <spring:message code="kid.comment" />: ${kid.getComment()}
+            </p>
     </div>
 </div>
 
@@ -29,6 +38,8 @@
 
 </div>
 <form action="registerkid">
-    <input class="btn-primary" type="submit" value="Add">
+    <button class="btn-primary" type="submit">
+        <spring:message code="button.add" />
+    </button>
 </form>
 </div>
