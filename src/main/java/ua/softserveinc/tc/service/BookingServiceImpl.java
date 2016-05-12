@@ -11,6 +11,7 @@ import ua.softserveinc.tc.entity.User;
 import javax.persistence.EntityManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -58,5 +59,26 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 "from Booking where " + BOOKING_START_TIME + " = '2015-04-04 00:00:00'")
                 .getResultList();
         return bookingsDay;
+    }
+
+    @Override
+    public String getCurrentDate()
+    {
+        Calendar calendar = Calendar.getInstance();
+        String dateNow = calendar.get(Calendar.YEAR) + "-";
+        dateNow += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        dateNow += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        return dateNow;
+    }
+
+    @Override
+    public String getDateMonthAgo()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        String dateThen = calendar.get(Calendar.YEAR) + "-";
+        dateThen += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        dateThen += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        return dateThen;
     }
 }

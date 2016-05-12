@@ -9,12 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
+import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,12 +29,23 @@ public class ReportPageController
     @Autowired
     RoomService roomService;
 
+    @Autowired
+    BookingService bookingService;
+
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ModelAndView report(Principal principal)
     {
         ModelAndView model = new ModelAndView();
         model.setViewName("report");
         ModelMap modelMap = model.getModelMap();
+
+        String dateNow = bookingService.getCurrentDate();
+        String dateThen = bookingService.getDateMonthAgo();
+        List<User> parents = userService.getAllParents();
+
+        modelMap.addAttribute("dateNow", dateNow);
+        modelMap.addAttribute("dateThen", dateThen);
+        modelMap.addAttribute("parents", parents);
 
         //TODO:Забрати звідси цей костиль
         //Початок:
@@ -47,22 +57,6 @@ public class ReportPageController
         room.setPricing(map);
         roomService.update(room);
         //Кінець
-
-
-        List<User> parentsList = userService.getAllParents();
-        modelMap.addAttribute("parents", parentsList);
-
-        Calendar calendar = Calendar.getInstance();
-        String dateNow = calendar.get(Calendar.YEAR) + "-";
-        dateNow += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
-        dateNow += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        modelMap.addAttribute("dateNow", dateNow);
-
-        calendar.add(Calendar.MONTH, -1);
-        String dateThen = calendar.get(Calendar.YEAR) + "-";
-        dateThen += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
-        dateThen += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        modelMap.addAttribute("dateThen", dateThen);
 
         return model;
     }
