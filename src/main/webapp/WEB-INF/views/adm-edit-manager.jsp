@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <a href="adm-add-manager"><button name="add-location">Add</button></a>
+    <a href="adm-add-manager"><button name="add-manager">Add</button></a>
     <form action="adm-edit-manager" method="post" value="movie">
     <button name="delete-manager">Delete</button>
     </form>
@@ -26,8 +26,8 @@
                             <label>
                                 <legend>Manager list</legend>
                                 <select name="managers" required>
-                                    <c:forEach var="movie" items="${managerList}" >
-                                        <option value="${movie}">${movie}</option>
+                                    <c:forEach var="manager" items="${managerList}" >
+                                        <option value="${manager}">${movie}</option>
                                     </c:forEach>
                                 </select>
                             </label>
