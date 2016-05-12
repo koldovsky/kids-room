@@ -8,7 +8,6 @@
 	<meta charset="UTF-8">
 	<title>Edit location</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-	<link rel='stylesheet' href='resources/css/default.css'>
 </head>
 
 <body>

@@ -9,14 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 </head>
 
-
-
 <body>
-
-<a href="adm-add-location"><button name="add-location">Add</button></a>
-
-<button name="delete-location">Delete</button>
-</form>
+    <a href="adm-add-location"><button name="add-location">Add</button></a>
+    <button name="delete-location">Delete</button>
 
 
     <form action="adm-edit-location" method="get" modelAttribute="city">
@@ -39,11 +34,9 @@
                     <div class="rightsidebar">
 
                     </div>
-
                 </div>
             </div>
         </div>
-
 	</form>
 </body>
 </html>

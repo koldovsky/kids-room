@@ -37,7 +37,6 @@
                     <div class="rightsidebar">
 
                     </div>
-
                 </div>
             </div>
         </div>
