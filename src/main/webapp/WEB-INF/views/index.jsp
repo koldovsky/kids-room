@@ -6,12 +6,9 @@
 <script src='resources/js/moment.min.js'></script>
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.min.js'></script>
-<script src='resources/js/startcalendar.js'></script>
-<link href='resources/css/calendarstyle.css' rel='stylesheet' />
 
-<script>$(':button').click(function(){
-    5
-    $("#sendajax").val("close");}); </script>
+<link href='resources/css/calendarstyle.css' rel='stylesheet' />
+<script src='resources/js/rendercalendar.js'></script>
 
 <div>
         <sec:authorize access="isAuthenticated()">
@@ -28,8 +25,16 @@
         <sec:authorize access="hasRole('MANAGER')">
             <p> I am MANAGER</p>
 
-            <select id = "roomAddress">
 
+            <select id="selectBox" onchange="changeFunc(value);">
+
+                <option value=" " > </option>
+
+                <c:forEach items="${rooms}" var="r">
+
+                        <option value="${r.id}" >${r.address}</option>
+
+                </c:forEach>
             </select>
 
             <div id='calendar'></div>

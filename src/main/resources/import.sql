@@ -11,8 +11,8 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 
 
 insert into cities values (1, "Lviv");
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "Roomy", "+380974074537", 1, 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (1, "Pasternaka 8", 40, "Roomy 1", "+380974074537", 1, 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "Roomy 2", "+380974074537", 1, 2);
 
 insert into bookings values (1, '2016-05-02 16:56', '2016-05-02 14:57', "The whole world of comments", false, 2, 1, 1);
 insert into bookings values (2, '2016-04-30 17:58', '2016-04-30 14:03', "The whole world of comments", false, 2, 1, 1);
@@ -28,8 +28,10 @@ insert into bookings values (16, '2016-05-10 16:39', '2015-04-04', "The whole wo
 insert into bookings values (17, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
 insert into bookings values (18, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 1);
 
+insert into bookings values (19, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 4);
 
-insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT', '2016-05-10 15:00:00', 1);
-insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT', '2016-05-15 15:00:00', 2);
-insert into events VALUES (3, 3, 5, 'NO', '2016-05-16 16:00:00', 'EVENT', '2016-05-16 15:00:00', 2);
-insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT', '2016-05-26 10:00:00', 2);
+
+insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT1', '2016-05-10 15:00:00', 1);
+insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT2', '2016-05-15 15:00:00', 2);
+insert into events VALUES (3, 3, 5, 'NO', '2016-05-16 16:00:00', 'EVENT3', '2016-05-16 15:00:00', 2);
+insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT4', '2016-05-26 10:00:00', 2);

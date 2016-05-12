@@ -1,27 +1,35 @@
-$(document).ready(function() {
-
 /*
+$(document).ready(function() {
+    var startPosition = document.location.href.indexOf('/')+'/'.length;
+    var id = document.location.href.substring(startPosition, document.location.href.length);
+/!*
      var startPosition = document.location.href.indexOf('')+''.length;
      var id = document.location.href.substring(startPosition, document.location.href.length);
-     */
- /*   var search = {
+     *!/
+ /!*  var info = {
         "id" : "2"
+    }*!/
+
+    function changeFunc(value) {
+
+        alert(value);
     }
+
     $.ajax({
 
-        type: "GET",
+        type: "POST",
         contentType : 'application/json; charset=utf-8',
         dataType : 'json',
-        url: "getCompanies",
-        data: JSON.stringify({
-            "id" : "2"
-        }), // Note it is important
+        url: "/" + id,
+       data: ({"id": "[id]"}), // Note it is important
         success : function(result) {
             alert(result);
         }
-    });*/
+    });
 
-    $.ajax({url: "getCompanies", success: function(result){
+
+    var st = "getCompanies/"+id;
+    $.ajax({url: st, success: function(result){
 
         var objects = [];
         result = result.split(',');
@@ -50,8 +58,8 @@ $(document).ready(function() {
         }
 
         var myOptions = {
-            val1 : 'text1',
-            val2 : 'text2'
+            val1 : '1',
+            val2 : '2'
         };
         var mySelect = $('#roomAddress');
         $.each(myOptions, function(val, text) {
@@ -90,7 +98,7 @@ $(document).ready(function() {
             editable: true,
             eventLimit: true, // allow "more" link when too many events
             events : objects
-            /*
+            /!*
              events: [
              {
              title: 'All Day Event',
@@ -122,7 +130,7 @@ $(document).ready(function() {
              start: '2016-05-10T10:15:00'
              }
              ]
-             */
+             *!/
 
         });
 
@@ -130,3 +138,4 @@ $(document).ready(function() {
     }
     });
 });
+*/
