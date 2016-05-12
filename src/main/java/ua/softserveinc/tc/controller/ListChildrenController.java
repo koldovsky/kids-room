@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,21 +37,17 @@ public class ListChildrenController {
         modelAndView.addObject("bookedJSP", new Booking());
 
         List<Booking> listBooking = bookingService.getBookingsOfThisDay();
-        List<Child> listBookedChild = new ArrayList<>();
-
-        for (Booking childBooking: listBooking) {
-            Child childBookedId = childBooking.getIdChild();
-            listBookedChild.add(childBookedId);
-        }
-        modelMap.addAttribute("listChildren", listBookedChild);
         modelMap.addAttribute("listBooking", listBooking);
         return modelAndView;
     }
     @RequestMapping(value = "/result")
-    public ModelAndView setingBookings(@ModelAttribute("bookedJSP") Booking booking) {
+    public ModelAndView setingBookings(@ModelAttribute Booking booking) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("result");
-
+        System.out.println(booking.getIdBook() + ""+ booking.getBookingStartTime());
+        Booking b = bookingService.findById(booking.getIdBook());
+        b.setBookingStartTime(booking.getBookingStartTime());
+        bookingService.update(b);
         modelAndView.addObject("bookedJSP", booking);
         return modelAndView;
     }

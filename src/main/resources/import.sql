@@ -24,8 +24,8 @@ insert into bookings values (12, '2016-05-07 19:38', '2016-05-07 14:37', "The wh
 insert into bookings values (13, '2016-05-01 15:47', '2016-05-01 12:30', "The whole world of comments", false, 1, 1, 1);
 insert into bookings values (15, '2016-05-10 16:39', '2016-05-10 15:47', "The whole world of comments", false, 4, 1, 4);
 insert into bookings values (16, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
-insert into bookings values (17, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 2, 1, 1);
-insert into bookings values (18, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 4);
+insert into bookings values (17, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
+insert into bookings values (18, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 1);
 
 
 insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT', '2016-05-10 15:00:00', 1);

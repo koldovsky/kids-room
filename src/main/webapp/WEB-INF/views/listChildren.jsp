@@ -13,10 +13,10 @@
 		<tr>
 			<th class="odd">Kids name</th>
 		</tr>
-		<c:forEach var="kids" items="${listChildren}">
+		<c:forEach var="kids" items="${listBooking}">
 		<tr>
 
-			<td class="hideTable"><c:out value="${kids.getFirstName()} ${kids.getLastName()}" /></td>
+			<td class="hideTable"><c:out value="${kids.getIdChild().getFullName()}" /></td>
 		</tr>
 	</c:forEach>
 </table>
@@ -34,7 +34,7 @@
 
 		<c:forEach var="booked" items="${listBooking}">
 		<tr>
-
+<form:input path="idBook" type="hidden" value="${booked.idBook}"/>
 			<td><c:out value="${booked.getBookingStartTime()}"/></td>
 			<td> <form:input path="bookingStartTime" /></td>
 		</tr>
