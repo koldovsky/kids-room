@@ -22,6 +22,7 @@ hibernate.dialect = org.hibernate.dialect.MySQLDialect
 hibernate.show_sql = true
 hibernate.format_sql = true
 hibernate.hbm2ddl.auto = create
+hibernate.enable_lazy_load_no_trans = true
 ```
 ```
 Login                  Password 
