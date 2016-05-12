@@ -1,3 +1,12 @@
+#allkidstable .btn-primary {
+    margin: 0px;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    height: 25px;
+    width: 40px;
+}
+
 .thead, .th, .td {
 	text-align: center;
     padding: 10px;
