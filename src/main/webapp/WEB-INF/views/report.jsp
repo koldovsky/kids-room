@@ -7,7 +7,7 @@
     <div class="table">
         <table>
             <caption>
-            <h2>List of active parents <span class="smallText">(${dateThen} - ${dateNow})</span></h2>
+            <h2>List of active parents <span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
             </caption>
             <tr>
                 <th>Name</th>
@@ -29,11 +29,13 @@
     </div>
 
     <form action="allParentsBookings">
-        <label><h2>Choose start time: <input type="date" value="${dateThen}" name="dateThen"></label></h2>
-        <label><h2>Choose end .time: <input type="date" value="${dateNow}" name="dateNow"></label></h2>
+        <label><h2>Choose start time: <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></label></h2>
+        <label><h2>Choose end .time: <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></label></h2>
         <input class="btn-primary" type="submit" value="Generate">
     </form>
 
-    <form action="parentbookings" id="parentBookings">
-        <input type="hidden" id="hiddenField" name="parentEmail"/>
+    <form action="parentbookings" id="parentBookingsForm">
+        <input type="hidden" id="parentEmailField" name="parentEmail"/>
+        <input type="hidden" id="dateThenField" name="dateThen"/>
+        <input type="hidden" id="dateNowField" name="dateNow"/>
     </form>

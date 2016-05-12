@@ -27,18 +27,18 @@ public class ParentBookingsPageController
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/parentbookings", method = RequestMethod.GET, params = {"parentEmail"})
-    public @ResponseBody ModelAndView parentBookings(Principal principal,
-                                                     @RequestParam(value = "parentEmail") String parentEmail)
+    @RequestMapping(value = "/parentbookings", method = RequestMethod.GET,
+            params = {"parentEmail", "dateThen", "dateNow"})
+
+    public @ResponseBody ModelAndView parentBookings(@RequestParam(value = "parentEmail") String parentEmail,
+                                                     @RequestParam(value = "dateThen") String dateThen,
+                                                     @RequestParam(value = "dateNow") String dateNow)
     {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("parentbookings");
         ModelMap modelMap = modelAndView.getModelMap();
 
-        String dateNow = bookingService.getCurrentDate();
-        String dateThen = bookingService.getDateMonthAgo();
         User parent = userService.getUserByEmail(parentEmail);
-
         List<Booking> bookingList = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
         int sum = Booking.getSum(bookingList);
 

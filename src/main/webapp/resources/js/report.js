@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", function ()
 	{
 		rows[i].onclick = function(e)
 		{
-			document.getElementById("hiddenField").value = this.id;
-			document.getElementById("parentBookings").submit();
+			document.getElementById("parentEmailField").value = this.id;
+			document.getElementById("dateThenField").value = document.getElementById("dateThenInput").value;
+			document.getElementById("dateNowField").value = document.getElementById("dateNowInput").value;
+			document.getElementById("parentBookingsForm").submit();
 		};
 	}
 });
