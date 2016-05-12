@@ -24,19 +24,18 @@ import java.util.List;
 @Controller
 public class MyKidsPageController {
     @Autowired
-    UserService us;
+    private UserService userService;
 
     @RequestMapping(value = "/mykids", method = RequestMethod.GET)
     public ModelAndView myKids(Principal principal) {
 
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.MY_KIDS_VIEW);
-        String username = principal.getName();
-        System.out.println(username);
 
-        User user = us.getUserByEmail(username);
+        List<Child> myKids = userService.getUserByEmail(
+                principal.getName())
+                .getEnabledChildren();
 
-        List<Child> myKids = user.getEnabledChildren();
         ModelMap modelMap = model.getModelMap();
 
         if(!modelMap.containsAttribute("kids")) {

@@ -19,4 +19,6 @@ public interface ChildConst {
 
     String ENABLED = "enabled";
 
+    String DATE_FORMAT = "dd.MM.yyyy";
+
 }
