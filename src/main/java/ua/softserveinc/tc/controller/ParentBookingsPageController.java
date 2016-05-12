@@ -35,8 +35,11 @@ public class ParentBookingsPageController
         modelAndView.setViewName("parentbookings");
         ModelMap modelMap = modelAndView.getModelMap();
 
+        String dateNow = bookingService.getCurrentDate();
+        String dateThen = bookingService.getDateMonthAgo();
         User parent = userService.getUserByEmail(parentEmail);
-        List<Booking> bookingList = bookingService.getBookingsByUser(parent);
+
+        List<Booking> bookingList = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
         int sum = Booking.getSum(bookingList);
 
         modelMap.addAttribute("bookings", bookingList);

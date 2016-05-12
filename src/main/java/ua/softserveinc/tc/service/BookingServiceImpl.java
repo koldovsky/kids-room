@@ -24,6 +24,7 @@ import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
+    //TODO: FOR DEMIAN: Change all methods from HQL to Criterias
     @Autowired
     private BookingDao bookingDao;
 
@@ -46,6 +47,17 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 "from Booking where bookingStartTime" +
                         " between '" + startDate +  "' and '" + endDate + "'" +
                         " order by bookingStartTime")
+                .getResultList();
+        return bookings;
+    }
+
+    public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate)
+    {
+        EntityManager entityManager = bookingDao.getEntityManager();
+        List<Booking> bookings = entityManager.createQuery(
+                "from Booking where bookingStartTime" +
+                        " between '" + startDate +  "' and '" + endDate + "'" +
+                        " and where idUser = " + user.getId())
                 .getResultList();
         return bookings;
     }
