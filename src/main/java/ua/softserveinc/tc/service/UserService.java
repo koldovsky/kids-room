@@ -4,8 +4,11 @@ import ua.softserveinc.tc.entity.User;
 
 import java.util.List;
 
-public interface UserService extends BaseService<User>
-{
+public interface UserService extends BaseService<User> {
+
+    List<User> findAllManagers();
+
     User getUserByEmail(String email);
+
     List<User> getAllParents();
 }
