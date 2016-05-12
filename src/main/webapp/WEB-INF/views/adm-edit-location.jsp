@@ -14,7 +14,7 @@
     <button name="delete-location">Delete</button>
 
 
-    <form action="adm-edit-location" method="get" modelAttribute="city">
+    <form action="adm-edit-location" method="get">
         <div class="rightback">
             <div class="contentback">
                 <div class="leftback">
@@ -23,8 +23,9 @@
                             <label>
                                 <legend>Locations</legend>
                                 <select name="locations" required>
-                                    <c:forEach var="movie" items="${roomList}" >
-                                        <option value="${movie.name}">${movie.name}</option>
+
+                                    <c:forEach var="room" items="${roomList}" >
+                                        <option value="${room.name}">${room.name}</option>
                                     </c:forEach>
                                 </select>
                             </label>
