@@ -43,8 +43,8 @@
                 <label>
                     Chose room-manager
                     <select name="managers" required>
-                        <c:forEach var="movie" items="${managerList}" >
-                            <option value="${movie}">${movie}</option>
+                        <c:forEach var="manager" items="${managerList}" >
+                            <option value="${manager}">${manager}</option>
                         </c:forEach>
                     </select>
                 </label>
