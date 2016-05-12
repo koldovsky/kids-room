@@ -30,5 +30,5 @@
 
       <button type="submit" class="btn btn-default">Submit</button>
 
-      <p class="removekidmsg">You can also <a href="removemykid?id=${kid.getId()}">remove</a> your kid&#39;s page from the list</p>
+      <p class="removekidmsg">You can also <a href="removemykid?id=${kid.getId()}">take your kid&#39;s page off the list</a></p>
 </form:form>
