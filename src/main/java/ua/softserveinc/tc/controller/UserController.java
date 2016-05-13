@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
@@ -31,13 +32,13 @@ public class UserController {
 
     @RequestMapping(value="/login ", method = RequestMethod.GET)
     public String login(Model model){
-        return "login";
+        return UsersConst.LOGIN_VIEW;
     }
 
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public String registration(Model model){
-        model.addAttribute("user", new User());
-        return "registration";
+        model.addAttribute(UsersConst.USER, new User());
+        return UsersConst.REGISTRATION_VIEW;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -46,17 +47,17 @@ public class UserController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return UsersConst.REGISTRATION_VIEW;
         }
         user.setRole(Role.USER);
         userService.create(user);
-        mailService.sendMessage(user,"Confirmation registration",mailService.buildRegisterMessage(user,"text"));
-        return "success";
+        mailService.sendMessage(user, UsersConst.CONFIRM_REGISTRATION, mailService.buildRegisterMessage(user,"text"));
+        return UsersConst.SUCCESS_VIEW;
     }
 
     @RequestMapping(value="/rules ", method = RequestMethod.GET)
     public String getRules(Model model){
-        return "rules";
+        return UsersConst.RULES_VIEW;
     }
 
 

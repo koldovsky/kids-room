@@ -8,7 +8,7 @@
           <div class="form-group">
             <label for="email" class="col-sm-2 control-label"><spring:message code="user.email" /></label>
             <div class="col-sm-10">
-              <input type="email" name="j_username" class="form-control" id="email" required autofocus value="manager@gmail.com">
+              <input type="email" name="j_username" class="form-control" id="email" required autofocus value="manager@softserveinc.com">
             </div>
           </div>
           <div class="form-group">
@@ -30,7 +30,7 @@
 
             <div class="col-sm-offset-2 col-sm-10">
                   <c:if test="${param.error != null}">
-                          <div class    ="error">
+                          <div class ="error">
                               <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
                           </div>
                   </c:if>
@@ -38,6 +38,5 @@
             </div>
           </div>
         </form>
-
 
 </div>
