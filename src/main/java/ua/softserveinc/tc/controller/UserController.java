@@ -42,7 +42,7 @@ public class UserController {
         }
         user.setRole(Role.USER);
         userService.create(user);
-        mailService.sendMessage(user,"sub","text");
+        mailService.sendMessage(user,"Confirmation registration",mailService.buildRegisterMessage(user,"text"));
         return "login";
     }
   /*  @RequestMapping("/some")
