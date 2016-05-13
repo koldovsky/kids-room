@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.UserService;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -28,25 +28,25 @@ public class ParentBookingsPageController
     UserService userService;
 
     @RequestMapping(value = "/parentbookings", method = RequestMethod.GET,
-            params = {"parentEmail", "dateThen", "dateNow"})
+            params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
-    public @ResponseBody ModelAndView parentBookings(@RequestParam(value = "parentEmail") String parentEmail,
-                                                     @RequestParam(value = "dateThen") String dateThen,
-                                                     @RequestParam(value = "dateNow") String dateNow)
+    public @ResponseBody ModelAndView parentBookings(@RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
+                                                     @RequestParam(value = ReportConst.DATE_THEN) String dateThen,
+                                                     @RequestParam(value = ReportConst.DATE_NOW) String dateNow)
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("parentbookings");
+        modelAndView.setViewName(ReportConst.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         User parent = userService.getUserByEmail(parentEmail);
-        List<Booking> bookingList = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
-        int sum = Booking.getSum(bookingList);
+        List<Booking> bookings = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
+        int sum = Booking.getSum(bookings);
 
-        modelMap.addAttribute("sum", sum);
-        modelMap.addAttribute("parent", parent);
-        modelMap.addAttribute("dateNow", dateNow);
-        modelMap.addAttribute("dateThen", dateThen);
-        modelMap.addAttribute("bookings", bookingList);
+        modelMap.addAttribute(ReportConst.SUM, sum);
+        modelMap.addAttribute(ReportConst.PARENT, parent);
+        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConst.BOOKINGS, bookings);
+        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
 
         return modelAndView;
     }

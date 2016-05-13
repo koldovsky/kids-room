@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.service.BookingService;
 
@@ -22,21 +23,22 @@ public class AllParentsBookingsPageController
     @Autowired
     BookingService bookingService;
 
-    @RequestMapping(value = "allParentsBookings", method = RequestMethod.GET,
-            params = {"dateThen", "dateNow"})
+    @RequestMapping(value = "/allParentsBookings", method = RequestMethod.GET,
+            params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
-    public @ResponseBody ModelAndView allParentsBookings(@RequestParam(value = "dateThen") String dateThen,
-                                                         @RequestParam(value = "dateNow") String dateNow)
+    public @ResponseBody ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
+                                                         @RequestParam(value = ReportConst.DATE_NOW) String dateNow)
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("allParentsBookings");
+        modelAndView.setViewName(ReportConst.ALL_PARENTS_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
 
-        modelMap.addAttribute("dateNow", dateNow);
-        modelMap.addAttribute("dateThen", dateThen);
-        modelMap.addAttribute("bookings", bookings);
+        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConst.BOOKINGS, bookings);
+        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
+
         return modelAndView;
     }
 }
