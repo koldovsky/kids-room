@@ -8,7 +8,7 @@
 <script src='resources/js/fullcalendar.min.js'></script>
 
 <link href='resources/css/calendarstyle.css' rel='stylesheet' />
-<script src='resources/js/rendercalendar.js'></script>
+<script src='resources/js/renderCalendar.js'></script>
 
 <div>
         <sec:authorize access="isAuthenticated()">
