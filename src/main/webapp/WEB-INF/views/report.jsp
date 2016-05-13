@@ -1,20 +1,21 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <c:url value="/j_spring_security_check" var="reportUrl" />
 <script src="resources/js/report.js"></script>
 
     <div class="table">
         <table>
             <caption>
-            <h2>List of active parents <span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
+            <h2><spring:message code="report.activeParents" /><span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
             </caption>
             <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Bookings</th>
+                <th><spring:message code="report.name" /></th>
+                <th><spring:message code="report.surname" /></th>
+                <th><spring:message code="report.email" /></th>
+                <th><spring:message code="report.phone" /></th>
+                <th><spring:message code="report.bookings" /></th>
             </tr>
             <c:forEach var="booking" items="${bookings}">
             <tr>
@@ -22,7 +23,7 @@
                 <td>${booking.getIdUser().getLastName()}</td>
                 <td>${booking.getIdUser().getEmail()}</td>
                 <td>${booking.getIdUser().getPhoneNumber()}</td>
-                <td id="${booking.getIdUser().getEmail()}" class="parentRow"><a>See details</a></td>
+                <td id="${booking.getIdUser().getEmail()}" class="parentRow"><a><spring:message code="report.details" /></a></td>
             </tr>
             </c:forEach>
         </table>

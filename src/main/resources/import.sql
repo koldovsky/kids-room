@@ -11,7 +11,7 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 
 
 insert into cities values (1, "Lviv");
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (1, "Pasternaka 8", 40, "Roomy 1", "+380974074537", 1, 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 2);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "Roomy 2", "+380974074537", 1, 2);
 
 insert into bookings values (1, '2016-05-02 16:56', '2016-05-02 14:57', "The whole world of comments", false, 2, 1, 1);
