@@ -22,30 +22,35 @@ public class User {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name=UserConst.ID_USER, nullable = false)
+    @Column(name = UserConst.ID_USER, nullable = false)
     private Long id;
 
     @NotEmpty
-    @Column(name=UserConst.FIRST_NAME)
+    @Column(name = UserConst.FIRST_NAME)
     private String firstName;
 
     @NotEmpty
-    @Column(name=UserConst.LAST_NAME)
+    @Column(name = UserConst.LAST_NAME)
     private String lastName;
 
     @NotEmpty
     @Email
-    @Column(name=UserConst.EMAIL, unique = true)
+    @Column(name = UserConst.EMAIL, unique = true)
     @UniqueEmail
     private String email;
 
     @NotEmpty
-    @Column(name=UserConst.PASSWORD)
+    @Size(min = 8)
+    @Column(name = UserConst.PASSWORD)
     private String password;
 
     @NotEmpty
-    @Size(min = 10, max=13)
-    @Column(name=UserConst.PHONE)
+    @Column(name = UserConst.ENABLED)
+    private boolean enabled;
+
+    @NotEmpty
+    @Size(min = 10)
+    @Column(name = UserConst.PHONE)
     private String phoneNumber;
 
 
@@ -53,7 +58,7 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "parentId")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
     @Column
     private Set<Child> children;
 
@@ -121,8 +126,16 @@ public class User {
         this.role = role;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
@@ -130,7 +143,7 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    public List<Child> getEnabledChildren(){
+    public List<Child> getEnabledChildren() {
         List<Child> li = new ArrayList<>(this.getChildren());
 
         return li.stream()
@@ -139,14 +152,12 @@ public class User {
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return 13 * Objects.hashCode(email);
     }
 
     @Override
-    public boolean equals(Object that)
-    {
+    public boolean equals(Object that) {
         if (that == null) return false;
         if (this == that) return true;
         if (!(that instanceof User)) return false;

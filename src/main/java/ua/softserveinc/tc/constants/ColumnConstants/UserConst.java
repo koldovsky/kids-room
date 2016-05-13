@@ -22,4 +22,6 @@ public interface UserConst {
     String ROLE = "role";
 
     String NQ_FIND_USER_BY_EMAIL = "findUserByEmail";
+
+    String ENABLED = "enabled";
 }
