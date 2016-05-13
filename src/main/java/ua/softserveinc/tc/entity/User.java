@@ -8,10 +8,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @NamedQueries({
@@ -144,16 +141,16 @@ public class User {
     @Override
     public int hashCode()
     {
-        return super.hashCode();
+        return 13 * Objects.hashCode(email);
     }
 
     @Override
     public boolean equals(Object that)
     {
         if (that == null) return false;
-        if (that == this) return true;
-        if (!(that instanceof User))return false;
-        if (this.getEmail().equals(((User) that).getEmail())) return true;
-        return false;
+        if (this == that) return true;
+        if (!(that instanceof User)) return false;
+        User other = (User) that;
+        return email.equals(other.email);
     }
 }
