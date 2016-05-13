@@ -114,5 +114,16 @@ caption h2  {
 }
 
 .smallText {
-font-size: 18px;
+    font-size: 18px;
+}
+
+#dateThenDiv {
+    float:left;
+    width: 280px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+#dateNowDiv {
+    margin-left: 288px;
 }

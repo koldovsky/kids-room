@@ -6,8 +6,14 @@
 <script src="resources/js/report.js"></script>
 
     <form id="generateAReport" action="allParentsBookings">
-        <label><h2>Choose start time: <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></label></h2>
-        <label><h2>Choose end .time: <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></label></h2>
+        <div id="dateThenDiv">
+            <h2>Choose start time</br>
+            <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></h2>
+        </div>
+        <div id="dateNowDiv">
+            <h2>Choose end time</br>
+            <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
+        </div>
     </form>
 
     <div class="table">

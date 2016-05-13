@@ -17,7 +17,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <link rel='stylesheet' href='resources/css/default.css'>
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
-<link rel='stylesheet' href='resources/css/listBookedChildren.css'>
 
 </head>
 <body>

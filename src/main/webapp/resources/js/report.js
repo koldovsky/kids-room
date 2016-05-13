@@ -7,9 +7,17 @@ document.addEventListener("DOMContentLoaded", function ()
 		rows[i].onclick = function(e)
 		{
 			document.getElementById("parentEmailField").value = this.id;
-			document.getElementById("dateThenField").value = document.getElementById("dateThenInput").value;
 			document.getElementById("dateNowField").value = document.getElementById("dateNowInput").value;
+			document.getElementById("dateThenField").value = document.getElementById("dateThenInput").value;
 			document.getElementById("parentBookingsForm").submit();
 		};
+	}
+
+	document.getElementById("dateNowInput").onchange = refreshView;
+	document.getElementById("dateThenInput").onchange = refreshView;
+
+	function refreshView()
+	{
+	    alert("Yeap, you changed it");
 	}
 });
