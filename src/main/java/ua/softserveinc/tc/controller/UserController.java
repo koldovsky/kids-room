@@ -50,6 +50,7 @@ public class UserController {
             return UsersConst.REGISTRATION_VIEW;
         }
         user.setRole(Role.USER);
+        user.setEnabled(false);
         userService.create(user);
         mailService.sendMessage(user, UsersConst.CONFIRM_REGISTRATION, mailService.buildRegisterMessage(user,"text"));
         return UsersConst.SUCCESS_VIEW;
