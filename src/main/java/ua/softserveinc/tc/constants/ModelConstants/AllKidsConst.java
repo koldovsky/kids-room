@@ -5,7 +5,7 @@ package ua.softserveinc.tc.constants.ModelConstants;
  */
 public interface AllKidsConst {
 
-    String ALL_KIDS_URL = "/allkidslis";
+    String ALL_KIDS_URL = "/allkidslist";
 
     String ALL_KIDS_VIEW = "allkidslist";
 
