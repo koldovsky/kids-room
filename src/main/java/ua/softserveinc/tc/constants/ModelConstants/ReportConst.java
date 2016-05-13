@@ -6,6 +6,7 @@ package ua.softserveinc.tc.constants.ModelConstants;
 public interface ReportConst
 {
     String SUM = "sum";
+    String USERS = "users";
     String PARENT = "parent";
     String DATE_NOW = "dateNow";
     String DATE_THEN = "dateThen";

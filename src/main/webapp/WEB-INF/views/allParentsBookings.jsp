@@ -11,25 +11,16 @@
             </caption>
             <tr>
                 <th><spring:message code="report.parent" /></th>
-                <th><spring:message code="report.date" /></th>
-                <th><spring:message code="report.kid" /></th>
-                <th><spring:message code="report.place" /></th>
-                <th><spring:message code="report.startTime" /></th>
-                <th><spring:message code="report.endTime" /></th>
-                <th><spring:message code="report.difference" /></th>
+                <th><spring:message code="report.email" /></th>
                 <th><spring:message code="report.price" /></th>
             </tr>
-            <c:forEach var="booking" items="${bookings}">
+            <c:forEach var="user" items="${users.keySet()}">
             <tr>
-                <td>${booking.getIdUser()}</td>
-                <td>${booking.extractMonthAndDay()}</td>
-                <td>${booking.getIdChild()}</td>
-                <td>${booking.getIdRoom()}</td>
-                <td>${booking.extractHourAndMinuteFromStartTime()}</td>
-                <td>${booking.extractHourAndMinuteFromEndTime()}</td>
-                <td>${booking.getDifference()}</td>
-                <td>${booking.getPrice(booking.getDifference())}</td>
+                <td>${user}</td>
+                <td>${user.getEmail()}</td>
+                <td>${users.get(user)}</td>
             </tr>
             </c:forEach>
+            ${user}
         </table>
     </div>

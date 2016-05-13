@@ -3,17 +3,12 @@ package ua.softserveinc.tc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_START_TIME;
 
@@ -105,5 +100,30 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         dateThen += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
         dateThen += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
         return dateThen;
+    }
+
+    @Override
+    public HashMap<User, Integer> generateAReport(List<Booking> bookings)
+    {
+        HashMap<User, Integer> result = new HashMap<>();
+
+        // get set of unique users
+        HashSet<User> users = new HashSet<>();
+        bookings.forEach(booking -> users.add(booking.getIdUser()));
+
+        // get total sum for each user
+        for(User user : users)
+        {
+            Integer sum = 0;
+            for (Booking booking : bookings)
+            {
+                if (booking.getIdUser().equals(user))
+                {
+                    sum += booking.getPrice(booking.getDifference());
+                }
+            }
+            result.put(user, sum);
+        }
+        return result;
     }
 }
