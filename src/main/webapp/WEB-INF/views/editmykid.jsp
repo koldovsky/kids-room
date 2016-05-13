@@ -31,5 +31,6 @@
 
       <button type="submit" class="btn btn-default"><spring:message code="user.submit" /></button>
 
-      <p class="removekidmsg"> <spring:message code="editkid.footmsg1" /> <a href="removemykid?id=${kid.getId()}"> <spring:message code="editkid.footmsg2" /></p>
+      <p class="removekidmsg"> <spring:message code="editkid.footmsg1" /> <a href="removemykid?id=${kid.getId()}"> <spring:message code="editkid.footmsg2" /></a></p>
+
 </form:form>

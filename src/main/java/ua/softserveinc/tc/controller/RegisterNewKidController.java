@@ -34,7 +34,7 @@ public class RegisterNewKidController {
     private UserService userService;
 
     @Autowired
-    private ChildValidator validator;
+    private ChildValidator childValidator;
 
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
     public String registerKid(Model model){
@@ -45,17 +45,17 @@ public class RegisterNewKidController {
     }
 
     @RequestMapping(value="/registerkid", method = RequestMethod.POST)
-    public String submit(@ModelAttribute Child child,
-                         Principal principal,
-                         BindingResult bindingResult){
+    public String submit(@ModelAttribute Child child, Principal principal, BindingResult bindingResult){
         child.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));
 
-        validator.validate(child, bindingResult);
+        childValidator.validate(child, bindingResult);
+
         if(bindingResult.hasErrors()) {
             return MyKidsConst.KID_REGISTRATION_VIEW;
         }
+
         childService.create(child);
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }

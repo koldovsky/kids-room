@@ -11,6 +11,7 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.validation.Valid;
 
@@ -20,9 +21,13 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
+
     @Autowired
-    MailService mailService;
+    private MailService mailService;
+
+    @Autowired
+    private UserValidator userValidator;
 
     @RequestMapping(value="/login ", method = RequestMethod.GET)
     public String login(Model model){
@@ -37,6 +42,9 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute User user, @Valid User u, BindingResult bindingResult) {
+
+        userValidator.validate(user, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "registration";
         }

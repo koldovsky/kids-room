@@ -37,6 +37,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userDao.create(user);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<User> getAllParents()
     {
