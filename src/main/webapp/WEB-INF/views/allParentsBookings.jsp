@@ -7,20 +7,25 @@
     <div class="table">
         <table>
             <caption>
-            <h2><spring:message code="report.allBookings" /><span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
+                <h2>
+                    <spring:message code="report.allBookings" /></br>
+                    <span class="smallText">(${dateThen} - ${dateNow})</span>
+                </h2>
             </caption>
+
             <tr>
                 <th><spring:message code="report.parent" /></th>
                 <th><spring:message code="report.email" /></th>
-                <th><spring:message code="report.price" /></th>
+                <th><spring:message code="report.sum" /></th>
             </tr>
-            <c:forEach var="user" items="${users.keySet()}">
+
+            <c:forEach var="user" items="${report.keySet()}">
             <tr>
                 <td>${user}</td>
                 <td>${user.getEmail()}</td>
-                <td>${users.get(user)}</td>
+                <td>${report.get(user)}</td>
             </tr>
             </c:forEach>
-            ${user}
+
         </table>
     </div>

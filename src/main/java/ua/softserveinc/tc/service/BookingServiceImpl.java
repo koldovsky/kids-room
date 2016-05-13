@@ -24,17 +24,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private BookingDao bookingDao;
 
     @Override
-    public List<Booking> getBookingsByUser(User user)
-    {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        List<Booking> bookings = (List<Booking>) entityManager.createQuery(
-                "from Booking where idUser = " + user.getId() +
-                        " order by bookingStartTime")
-                .getResultList();
-        return bookings;
-    }
-
-    @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
@@ -111,15 +100,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         HashSet<User> users = new HashSet<>();
         bookings.forEach(booking -> users.add(booking.getIdUser()));
 
-        // get total sum for each user
-        for(User user : users)
+        // get sum total for each user
+        for (User user : users)
         {
             Integer sum = 0;
             for (Booking booking : bookings)
             {
                 if (booking.getIdUser().equals(user))
                 {
-                    sum += booking.getPrice(booking.getDifference());
+                    sum += booking.getSum(booking.getDuration());
                 }
             }
             result.put(user, sum);

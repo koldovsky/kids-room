@@ -14,7 +14,6 @@ public interface BookingService extends BaseService<Booking>
     String getCurrentDate();
     String getDateMonthAgo();
     List<Booking> getBookingsOfThisDay();
-    List<Booking> getBookingsByUser(User user);
     HashMap<User, Integer> generateAReport(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate);

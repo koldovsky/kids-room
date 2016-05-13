@@ -186,9 +186,9 @@ public class Booking {
         return hourAndMinute;
     }
 
-    public String getDifference()
+    public String getDuration()
     {
-        String difference = "";
+        String duration = "";
 
         Calendar calendar = DateToCalendar(bookingStartTime);
         int startHour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -202,16 +202,16 @@ public class Booking {
         int differenceMinute = endMinute - startMinute;
         if (differenceMinute < 0) {differenceHour--; differenceMinute += 60;}
 
-        difference += String.format("%02d", differenceHour) + ":";
-        difference += String.format("%02d", differenceMinute);
-        return difference;
+        duration += String.format("%02d", differenceHour) + ":";
+        duration += String.format("%02d", differenceMinute);
+        return duration;
     }
 
-    public int getPrice(String hoursAndMinutes)
+    public int getSum(String hoursAndMinutes)
     {
         /*
-        * this method uses getDifference() from class Booking
-        * getDifference() returns string in which first two characters represent hour
+        * this method uses getDuration() from class Booking
+        * getDuration() returns string in which first two characters represent hour
         * so we have to substring first two characters in order to parse
         */
         int time = Integer.parseInt(hoursAndMinutes.substring(0, 2));
@@ -219,7 +219,7 @@ public class Booking {
 
         // later we create list and sort it in order to choose appropriate hour
         ArrayList<Integer> listOfKeys = new ArrayList<>();
-        for (Integer key : pricing.keySet()) {listOfKeys.add(key);}
+        listOfKeys.addAll(pricing.keySet());
         Collections.sort(listOfKeys);
 
         while (true)
@@ -232,13 +232,14 @@ public class Booking {
         }
     }
 
-    public static int getSum(List<Booking> bookings)
+    public static int getSumTotal(List<Booking> bookings)
     {
-        int sum = 0;
+        int sumTotal = 0;
         for (Booking booking : bookings)
         {
-            sum += booking.getPrice(booking.getDifference());
+            sumTotal += booking.getSum(booking.getDuration());
         }
-        return sum;
+
+        return sumTotal;
     }
 }

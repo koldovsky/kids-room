@@ -40,13 +40,13 @@ public class ParentBookingsPageController
 
         User parent = userService.getUserByEmail(parentEmail);
         List<Booking> bookings = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
-        int sum = Booking.getSum(bookings);
+        int sumTotal = Booking.getSumTotal(bookings);
 
-        modelMap.addAttribute(ReportConst.SUM, sum);
         modelMap.addAttribute(ReportConst.PARENT, parent);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.BOOKINGS, bookings);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConst.SUM_TOTAL, sumTotal);
 
         return modelAndView;
     }

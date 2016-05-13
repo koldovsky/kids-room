@@ -7,17 +7,22 @@
     <div class="table">
         <table>
             <caption>
-            <h2><spring:message code="report.parentBookings" /> ${parent}<span class="smallText"></br>(${dateThen} - ${dateNow})</span></h2>
+                <h2>
+                    <spring:message code="report.parentBookings" /> ${parent}</br>
+                    <span class="smallText">(${dateThen} - ${dateNow})</span>
+                </h2>
             </caption>
+
             <tr>
                 <th><spring:message code="report.date" /></th>
                 <th><spring:message code="report.kid" /></th>
                 <th><spring:message code="report.place" /></th>
                 <th><spring:message code="report.startTime" /></th>
                 <th><spring:message code="report.endTime" /></th>
-                <th><spring:message code="report.difference" /></th>
-                <th><spring:message code="report.price" /></th>
+                <th><spring:message code="report.duration" /></th>
+                <th><spring:message code="report.sum" /></th>
             </tr>
+
             <c:forEach var="booking" items="${bookings}">
             <tr>
                 <td>${booking.extractMonthAndDay()}</td>
@@ -25,12 +30,16 @@
                 <td>${booking.getIdRoom()}</td>
                 <td>${booking.extractHourAndMinuteFromStartTime()}</td>
                 <td>${booking.extractHourAndMinuteFromEndTime()}</td>
-                <td>${booking.getDifference()}</td>
-                <td>${booking.getPrice(booking.getDifference())}</td>
+                <td>${booking.getDuration()}</td>
+                <td>${booking.getSum(booking.getDuration())}</td>
             </tr>
             </c:forEach>
+
             <caption class="captionBottom">
-                <p><spring:message code="report.sum" /> ${sum}</p>
+                <p>
+                    <spring:message code="report.sumTotal" /> ${sumTotal}
+                </p>
             </caption>
+
         </table>
     </div>

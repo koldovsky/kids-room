@@ -140,4 +140,20 @@ public class User {
                 .filter(Child::isEnabled)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that)
+    {
+        if (that == null) return false;
+        if (that == this) return true;
+        if (!(that instanceof User))return false;
+        if (this.getEmail().equals(((User) that).getEmail())) return true;
+        return false;
+    }
 }

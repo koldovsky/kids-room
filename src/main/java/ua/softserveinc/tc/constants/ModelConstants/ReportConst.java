@@ -5,12 +5,12 @@ package ua.softserveinc.tc.constants.ModelConstants;
  */
 public interface ReportConst
 {
-    String SUM = "sum";
-    String USERS = "users";
     String PARENT = "parent";
+    String REPORT = "report";
     String DATE_NOW = "dateNow";
-    String DATE_THEN = "dateThen";
     String BOOKINGS = "bookings";
+    String DATE_THEN = "dateThen";
+    String SUM_TOTAL = "sumTotal";
     String PARENT_EMAIL = "parentEmail";
 
     String REPORT_VIEW = "report";
