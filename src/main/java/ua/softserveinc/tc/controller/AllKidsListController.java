@@ -2,12 +2,14 @@ package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+import ua.softserveinc.tc.constants.ModelConstants.AllKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
 
@@ -20,14 +22,15 @@ public class AllKidsListController {
     @Autowired
     ChildService childService;
 
-    @RequestMapping(value = "/allkidslist", method = RequestMethod.GET)
-    public ModelAndView kidsList() {
+    @RequestMapping(value = AllKidsConst.ALL_KIDS_URL, method = RequestMethod.GET)
+    public ModelAndView getKidsList() {
         ModelAndView model = new ModelAndView();
-        model.setViewName("allkidslist");
+        model.setViewName(AllKidsConst.ALL_KIDS_VIEW);
 
         List<Child> childList = childService.findAll();
-        model.addObject("kids", childList);
+        model.addObject(AllKidsConst.KIDS_ATTRIBUTE, childList);
 
         return model;
     }
+
 }
