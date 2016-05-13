@@ -30,6 +30,7 @@
                        <sec:authorize access="hasRole('MANAGER')">
                                   <a href="report"><spring:message code="manager.report" /></a>
                                   <a href="listChildren"><spring:message code="manager.listOfKids" /></a>
+                                  <a href="allkidslist"><spring:message code="manager.allkidslist" /></a>
                       </sec:authorize>
 
                      <sec:authorize access="hasRole('ADMINISTRATOR')">
