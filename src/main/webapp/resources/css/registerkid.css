@@ -47,3 +47,8 @@ margin: 0 auto;
 .removekidmsg{
     margin-top: 15px;
 }
+
+.explanation:before{
+    content: "* ";
+    color: red;
+}

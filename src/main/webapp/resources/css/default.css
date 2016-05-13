@@ -101,7 +101,7 @@ cursor: pointer;
     text-shadow: black;
 }
 
-caption h2 {
+caption h2  {
     text-align: center;
 }
 
@@ -109,6 +109,6 @@ caption h2 {
      caption-side: bottom;
 }
 
-.smallText {
-    font-size: 18px;
+.bottom-msg{
+    margin-top: 20px;
 }

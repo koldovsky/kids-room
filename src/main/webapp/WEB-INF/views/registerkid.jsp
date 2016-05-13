@@ -15,7 +15,7 @@
              <label for="firstname" class="required">
              	<spring:message code="kid.firstname" />
              </label>
-              <form:input path="firstName" id="firstname" class="form-control" required="required"/>
+              <form:input path="firstName" id="firstname" class="form-control" required="required" pattern="^[A-Z].*"/>
       </div>
       <div class="form-group">
               <label for="lastname" class="required">
@@ -39,4 +39,8 @@
       </div>
 
       <button type="submit" class="btn btn-default"><spring:message code="user.submit" /></button>
+
+      <footer class="bottom-msg">
+      <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
+      </footer>
 </form:form>
