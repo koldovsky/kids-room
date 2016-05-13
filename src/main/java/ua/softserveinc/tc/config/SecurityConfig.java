@@ -72,9 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
                 tokenValiditySeconds(86400);
-
-
-
     }
 
     @Bean

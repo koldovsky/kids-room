@@ -57,6 +57,14 @@
         <put-attribute name="body" value="/WEB-INF/views/listChildren.jsp" />
     </definition>
 
+    <definition name="rules" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/rules.jsp" />
+    </definition>
+
+    <definition name="success" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/success.jsp" />
+    </definition>
+
     <!-- Admin -->
     <definition name="adm-edit-location" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-edit-location.jsp" />

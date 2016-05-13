@@ -43,24 +43,15 @@ public class UserController {
         user.setRole(Role.USER);
         userService.create(user);
         mailService.sendMessage(user,"Confirmation registration",mailService.buildRegisterMessage(user,"text"));
-        return "login";
+        return "success";
     }
-  /*  @RequestMapping("/some")
-    public String some(){
-        return "listChildren";
-    }*/
-}
-/*
- @RequestMapping(value = "/report**", method = RequestMethod.GET)
-    public ModelAndView myKids(Principal principal) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("report");
 
-        List<User> parentsList = userService.getAllParents();
-
-        ModelMap modelMap = model.getModelMap();
-        modelMap.addAttribute("parents", parentsList);
-        return model;
+    @RequestMapping(value="/rules ", method = RequestMethod.GET)
+    public String getRules(Model model){
+        return "rules";
     }
+
+
 }
-*/
+
+

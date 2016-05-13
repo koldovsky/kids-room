@@ -43,7 +43,7 @@
               <span id="validPhone"></span>
       </div>
       <div class="form-group">
-              <spring:message code="user.prerules" /><a href=""> <spring:message code="user.rules" /></a>
+              <spring:message code="user.prerules" /><a href="<c:url value="/rules" />"> <spring:message code="user.rules" /></a>
               <div class="col-sm-offset-4 col-sm-8">
                 <button type="submit" id="button" class="btn btn-default"><spring:message code="user.register" /></button>
               </div>
