@@ -202,26 +202,26 @@ public class Booking {
 
     public int getSum(String hoursAndMinutes)
     {
-        /*
-        * this method uses getDuration() from class Booking
-        * getDuration() returns string in which first two characters represent hour
-        * so we have to substring first two characters in order to parse
-        */
-        int time = Integer.parseInt(hoursAndMinutes.substring(0, 2));
-        Map<Integer, Integer> prices = idRoom.getPrices();
+        // extract hour and minute from passed String
+        int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
+        int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
 
-        // later we create list and sort it in order to choose appropriate hour
+        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
+        if (minutes > 0) hours++;
+
+        // get prices for particular room and sort them in order to choose appropriate one
+        Map<Integer, Integer> prices = idRoom.getPrices();
         ArrayList<Integer> listOfKeys = new ArrayList<>();
         listOfKeys.addAll(prices.keySet());
         Collections.sort(listOfKeys);
 
         while (true)
         {
-            if (listOfKeys.contains(time)) return prices.get(time);
-            time++;
-            // if manager enters value that is bigger than max value in list
+            if (listOfKeys.contains(hours)) return prices.get(hours);
+            hours++;
+            // if manager enters value that is bigger than max value in the list
             // we return price for max value
-            if (time > 10) return prices.get(listOfKeys.get(listOfKeys.size() - 1));
+            if (hours > 10) return prices.get(listOfKeys.get(listOfKeys.size() - 1));
         }
     }
 

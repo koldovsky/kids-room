@@ -7,6 +7,7 @@ INSERT INTO users (id_user, email, first_name, last_name, password, phone_number
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (1, "he likes to play poker", "12.02.2011", "Adam", "First", 1);
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (2, "likes music", "12.02.2011", "Eva", "First", 1);
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (4, "drink only whiskey", "12.02.2011", "Sem", "Sec", 4);
+INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (5, "drink only whiskey", "2014-02-13", "Jimbo", "Third", 5);
 
 
 insert into cities values (1, "Lviv");
@@ -14,21 +15,38 @@ insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, 
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", 1, 2);
 insert into prices (id_room, prices_KEY, price) values (1, 2, 300), (1, 4, 500), (1, 6, 600), (2, 2, 80), (2, 4, 90), (2, 6, 100);
 
-insert into bookings values (1, '2016-05-02 16:56', '2016-05-02 14:57', "The whole world of comments", false, 2, 1, 1);
-insert into bookings values (2, '2016-04-30 17:58', '2016-04-30 14:03', "The whole world of comments", false, 2, 1, 1);
-insert into bookings values (3, '2016-04-30 19:32', '2016-04-30 17:37', "The whole world of comments", false, 2, 1, 1);
-insert into bookings values (4, '2016-04-06 19:32', '2016-04-06 17:37', "The whole world of comments", false, 4, 1, 5);
-insert into bookings values (5, '2016-05-04 16:58', '2016-05-04 14:57', "The whole world of comments", false, 2, 1, 1);
-insert into bookings values (7, '2016-05-05 18:36', '2016-05-05 17:25', "The whole world of comments", false, 1, 1, 1);
-insert into bookings values (10, '2016-05-06 15:20', '2016-05-06 15:05', "The whole world of comments", false, 1, 1, 1);
-insert into bookings values (12, '2016-05-07 19:38', '2016-05-07 14:37', "The whole world of comments", false, 2, 1, 1);
-insert into bookings values (13, '2016-05-01 15:47', '2016-05-01 12:30', "The whole world of comments", false, 1, 1, 1);
-insert into bookings values (15, '2016-05-10 16:39', '2016-05-10 15:47', "The whole world of comments", false, 4, 1, 4);
-insert into bookings values (16, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
-insert into bookings values (18, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 4);
-
-
 insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT1', '2016-05-10 15:00:00', 1);
 insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT2', '2016-05-15 15:00:00', 2);
 insert into events VALUES (3, 3, 5, 'NO', '2016-05-16 16:00:00', 'EVENT3', '2016-05-16 15:00:00', 2);
 insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT4', '2016-05-26 10:00:00', 2);
+
+-- DEMIAN DEMO START
+-- user@softserveinc.com bookings for month start
+insert into bookings values (1, '2016-05-01 17:58', '2016-05-01 14:03', "The whole world of comments", false, 1, 1, 1);
+insert into bookings values (2, '2016-05-02 19:32', '2016-05-02 17:37', "The whole world of comments", false, 2, 1, 1);
+insert into bookings values (3, '2016-05-03 19:38', '2016-05-03 14:37', "The whole world of comments", false, 1, 1, 1);
+insert into bookings values (4, '2016-05-04 16:56', '2016-05-04 14:57', "The whole world of comments", false, 2, 1, 1);
+insert into bookings values (5, '2016-05-05 16:58', '2016-05-05 14:57', "The whole world of comments", false, 1, 1, 1);
+insert into bookings values (6, '2016-05-06 16:57', '2016-05-06 14:57', "The whole world of comments", false, 2, 1, 1);
+insert into bookings values (7, '2016-05-07 15:20', '2016-05-07 15:05', "The whole world of comments", false, 1, 2, 1);
+insert into bookings values (8, '2016-05-08 19:36', '2016-05-08 17:25', "The whole world of comments", false, 2, 2, 1);
+insert into bookings values (9, '2016-05-09 19:47', '2016-05-09 12:30', "The whole world of comments", false, 1, 2, 1);
+-- user@softserveinc.com bookings for month end
+-- user@softserveinc.com bookings for other period start
+insert into bookings values (11, '2016-04-01 18:15', '2016-04-01 15:24', "The whole world of comments", false, 1, 1, 1);
+insert into bookings values (12, '2016-04-02 14:21', '2016-04-02 10:38', "The whole world of comments", false, 2, 1, 1);
+insert into bookings values (13, '2016-04-03 15:48', '2016-04-03 15:32', "The whole world of comments", false, 1, 2, 1);
+insert into bookings values (14, '2016-04-04 16:34', '2016-04-04 13:15', "The whole world of comments", false, 2, 1, 1);
+-- user@softserveinc.com bookings for other period end
+-- another parents start
+insert into bookings values (21, '2016-05-01 16:27', '2016-05-01 13:15', "The whole world of comments", false, 4, 1, 4);
+insert into bookings values (22, '2016-05-02 18:26', '2016-05-02 14:27', "The whole world of comments", false, 4, 2, 4);
+insert into bookings values (23, '2016-05-03 17:18', '2016-05-03 16:27', "The whole world of comments", false, 4, 1, 4);
+insert into bookings values (24, '2016-04-01 16:34', '2016-04-01 13:15', "The whole world of comments", false, 5, 1, 5);
+-- another parents end
+-- DEMIAN DEMO END
+
+-- VASYL DEMO START
+insert into bookings values (31, '2015-04-04 16:39', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
+insert into bookings values (32, '2015-04-04 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 4);
+-- VASYL DEMO END
