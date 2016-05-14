@@ -1,0 +1,8 @@
+<html>
+    <body>
+        <h3>Hello, ${user.firstName}, welcome to the KidsRoom service!</h3>
+        <div>
+            To confirm your email address click this <a href="${link}"> link</a>
+        </div>
+    </body>
+</html>
