@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
+import ua.softserveinc.tc.entity.City;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,6 +30,16 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Override
     public Room getRoomByName(String name) {
         return roomDao.getRoomByName(name);
+    }
+
+    @Override
+    public List<Room> findByCity(City city) {
+        return roomDao.findByCity(city);
+    }
+
+    @Override
+    public List<Room> findByManger(User manager) {
+        return roomDao.findByManager(manager);
     }
 
     @Override
