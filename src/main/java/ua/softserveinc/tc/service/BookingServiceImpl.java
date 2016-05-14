@@ -23,6 +23,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Autowired
     private BookingDao bookingDao;
 
+
+    @SuppressWarnings("unchecked")
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
     {
@@ -35,6 +37,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return bookings;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate)
     {
@@ -47,6 +50,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return bookings;
     }
 
+    @SuppressWarnings("unchecked")
     public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
@@ -59,6 +63,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return bookings;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Booking> getBookingsOfThisDay()
     {
@@ -70,6 +75,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return bookingsDay;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public String getCurrentDate()
     {

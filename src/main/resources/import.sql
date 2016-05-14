@@ -4,7 +4,7 @@ INSERT INTO users (id_user, email, first_name, last_name, password, phone_number
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (4, 'parent1@softserveinc.com', 'Mario','Kara', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 1);
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (5, 'parent2@softserveinc.com', 'Miron','Tereh', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 0);
 
-INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (1, "he likes play poker", "12.02.2011", "Adam", "First", 1);
+INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (1, "he likes to play poker", "12.02.2011", "Adam", "First", 1);
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (2, "likes music", "12.02.2011", "Eva", "First", 1);
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (4, "drink only whiskey", "12.02.2011", "Sem", "Sec", 4);
 
