@@ -101,6 +101,17 @@ cursor: pointer;
     text-shadow: black;
 }
 
+.myButton {
+    width: 200px;
+    height: 45px;
+    font-size: 24;
+    margin: 25 auto;
+    border-radius: 10px;
+    border: 1px solid black;
+    color: white;
+    text-shadow: black;
+}
+
 caption h2  {
     text-align: center;
 }
@@ -126,4 +137,8 @@ caption h2  {
 
 #dateNowDiv {
     margin-left: 288px;
+}
+
+#tableToExport {
+    padding: 20px;
 }

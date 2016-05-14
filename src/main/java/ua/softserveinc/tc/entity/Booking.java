@@ -163,8 +163,8 @@ public class Booking {
     {
         Calendar calendar = DateToCalendar(bookingStartTime);
         String monthAndDay = "";
-        monthAndDay += String.format("%02d", (calendar.get(Calendar.MONTH)) + 1) + ".";
-        monthAndDay += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        monthAndDay += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)) + "/";
+        monthAndDay += String.format("%02d", (calendar.get(Calendar.MONTH)) + 1);
         return monthAndDay;
     }
 

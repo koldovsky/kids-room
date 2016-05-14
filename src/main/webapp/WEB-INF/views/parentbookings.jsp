@@ -3,13 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:url value="/j_spring_security_check" var="parentBookingsURL" />
+<script src="resources/js/exportIntoExcel.js"></script>
 
-    <div class="table">
+    <div id="tableToExport">
         <table>
             <caption>
                 <h2>
-                    <spring:message code="report.parentBookings" /> ${parent}</br>
-                    <span class="smallText">(${dateThen} - ${dateNow})</span>
+                    <spring:message code="report.parentBookings" /> ${parent}</br>
+                    <span class="smallText">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
@@ -43,3 +44,5 @@
 
         </table>
     </div>
+
+    <input type="button" id="exportButton" value="Export into Excel" class="myButton">
