@@ -215,20 +215,20 @@ public class Booking {
         * so we have to substring first two characters in order to parse
         */
         int time = Integer.parseInt(hoursAndMinutes.substring(0, 2));
-        HashMap<Integer, Integer> pricing = getIdRoom().getPricing();
+        Map<Integer, Integer> prices = getIdRoom().getPrices();
 
         // later we create list and sort it in order to choose appropriate hour
         ArrayList<Integer> listOfKeys = new ArrayList<>();
-        listOfKeys.addAll(pricing.keySet());
+        listOfKeys.addAll(prices.keySet());
         Collections.sort(listOfKeys);
 
         while (true)
         {
-            if (listOfKeys.contains(time)) return pricing.get(time);
+            if (listOfKeys.contains(time)) return prices.get(time);
             time++;
-            // if manager inputed value that is bigger than max value in list
+            // if manager enters value that is bigger than max value in list
             // we return price for max value
-            if (time > 10) return pricing.get(listOfKeys.get(listOfKeys.size() - 1));
+            if (time > 10) return prices.get(listOfKeys.get(listOfKeys.size() - 1));
         }
     }
 

@@ -43,17 +43,6 @@ public class ReportPageController
         modelMap.addAttribute(ReportConst.BOOKINGS, bookings);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
 
-        //TODO:Забрати звідси цей костиль
-        //Початок:
-        Room room = roomService.findById(new Long(1));
-        HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(2, 300);
-        map.put(4, 500);
-        map.put(6, 600);
-        room.setPricing(map);
-        roomService.update(room);
-        //Кінець
-
         return model;
     }
 }
