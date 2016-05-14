@@ -5,23 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,47 +41,22 @@ public class MyBookingsController {
 
         ModelAndView model = new ModelAndView();
         model.setViewName(UsersConst.MY_BOOKINGS_VIEW);
-
         ModelMap modelMap = model.getModelMap();
 
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar builder = Calendar.getInstance();
-        Date now = builder.getTime();
-        builder.add(Calendar.MONTH, -1);
-        Date startDate = builder.getTime();
-
-        String nowStr = formatter.format(now);
-        String startDateStr = formatter.format(startDate);
+        String dateNow = bookingService.getCurrentDate();
+        String dateThen = bookingService.getDateMonthAgo();
 
         User currentUser = userService
                 .getUserByEmail(principal.getName());
 
         List<Booking> myBookings = bookingService
-                .getBookingsByUserByRangeOfTime(currentUser, startDateStr, nowStr);
+                .getBookingsByUserByRangeOfTime(currentUser, dateThen, dateNow);
 
-       int sumTotal;
-        try {
-            sumTotal = Booking.getSumTotal(myBookings);
-        }
-        catch (NullPointerException nul){
-            //поки немає налагоджених прайсінгів
-            Room room = roomService.findById(new Long(1));
-            HashMap<Integer, Integer> map = new HashMap<>();
-            map.put(2, 300);
-            map.put(4, 500);
-            map.put(6, 600);
-            room.setPricing(map);
-            roomService.update(room);
-        }
-        finally {
-            myBookings = bookingService
-                    .getBookingsByUserByRangeOfTime(currentUser, startDateStr, nowStr);
-            sumTotal = Booking.getSumTotal(myBookings);
-        }
+        int sumTotal = Booking.getSumTotal(myBookings);
 
         modelMap.addAttribute(ReportConst.PARENT, currentUser);
-        modelMap.addAttribute(ReportConst.DATE_NOW, nowStr);
-        modelMap.addAttribute(ReportConst.DATE_THEN, startDateStr);
+        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
         modelMap.addAttribute(ReportConst.BOOKINGS, myBookings);
         modelMap.addAttribute(ReportConst.SUM_TOTAL, sumTotal);
 

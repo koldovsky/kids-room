@@ -11,10 +11,8 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 
 insert into cities values (1, "Lviv");
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "Roomy 2", "+380974074537", 1, 2);
-insert into prices (id_room, prices_KEY, price) values (1, 2, 300)
-insert into prices (id_room, prices_KEY, price) values (1, 4, 500)
-insert into prices (id_room, prices_KEY, price) values (1, 6, 600)
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", 1, 2);
+insert into prices (id_room, prices_KEY, price) values (1, 2, 300), (1, 4, 500), (1, 6, 600), (2, 2, 80), (2, 4, 90), (2, 6, 100);
 
 insert into bookings values (1, '2016-05-02 16:56', '2016-05-02 14:57', "The whole world of comments", false, 2, 1, 1);
 insert into bookings values (2, '2016-04-30 17:58', '2016-04-30 14:03', "The whole world of comments", false, 2, 1, 1);
@@ -27,7 +25,7 @@ insert into bookings values (12, '2016-05-07 19:38', '2016-05-07 14:37', "The wh
 insert into bookings values (13, '2016-05-01 15:47', '2016-05-01 12:30', "The whole world of comments", false, 1, 1, 1);
 insert into bookings values (15, '2016-05-10 16:39', '2016-05-10 15:47', "The whole world of comments", false, 4, 1, 4);
 insert into bookings values (16, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 1, 1, 1);
-insert into bookings values (18, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 1);
+insert into bookings values (18, '2016-05-10 16:39', '2015-04-04', "The whole world of comments", false, 4, 1, 4);
 
 
 insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT1', '2016-05-10 15:00:00', 1);

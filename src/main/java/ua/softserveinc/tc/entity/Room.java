@@ -41,9 +41,6 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
 
-    @Column(name = RoomConst.PRICING)
-    private HashMap<Integer, Integer> pricing;// TODO: DELETE THIS FILED WHEN UNUSED
-
     @ElementCollection
     @JoinTable(name = RoomConst.TABLE_NAME_PRICES,
             joinColumns = @JoinColumn(name = RoomConst.ID_ROOM))
@@ -114,15 +111,7 @@ public class Room {
         this.events = events;
     }
 
-    public HashMap<Integer, Integer> getPricing() {
-        return pricing;
-    }
-
-    public void setPricing(HashMap<Integer, Integer> pricing) {
-        this.pricing = pricing;
-    }
-
-    public Map<Integer, Integer> getPrices() {
+    Map<Integer, Integer> getPrices() {
         return prices;
     }
 
