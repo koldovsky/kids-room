@@ -27,11 +27,6 @@ public class UserSearch {
     @Transactional
     public List<User> search(String text) {
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-        try {
-            fullTextEntityManager.createIndexer().startAndWait();
-        } catch (Exception e) {
-
-        }
 
         QueryBuilder queryBuilder =
                 fullTextEntityManager.getSearchFactory()
