@@ -1,6 +1,9 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.validator.UniqueEmail;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
         @NamedQuery(name = UserConst.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
 })
 @Entity
+@Indexed
 @Table(name = UserConst.TABLE_NAME_USER)
 public class User {
 
@@ -27,16 +31,19 @@ public class User {
 
     @NotEmpty
     @Column(name = UserConst.FIRST_NAME)
+    @Field
     private String firstName;
 
     @NotEmpty
     @Column(name = UserConst.LAST_NAME)
+    @Field
     private String lastName;
 
     @NotEmpty
     @Email
     @Column(name = UserConst.EMAIL, unique = true)
     @UniqueEmail
+    @Field(store = Store.NO)
     private String email;
 
     @NotEmpty
@@ -51,6 +58,7 @@ public class User {
     @NotEmpty
     @Size(min = 10)
     @Column(name = UserConst.PHONE)
+    @Field(store = Store.NO)
     private String phoneNumber;
 
 
