@@ -29,7 +29,7 @@ hibernate.search.indexing_strategy = event
 ```
 ```
 Login                  Password 
-user@gmail.com         user
-admin@gmail.com        admin
-manager@gmail.com      manager
+user@softserveinc.com         user
+admin@softserveinc.com        admin
+manager@softserveinc.com      manager
 ```
