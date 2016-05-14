@@ -29,10 +29,12 @@ public class User {
 
     @NotEmpty
     @Column(name = UserConst.FIRST_NAME)
+    @Field
     private String firstName;
 
     @NotEmpty
     @Column(name = UserConst.LAST_NAME)
+    @Field
     private String lastName;
 
     @NotEmpty
