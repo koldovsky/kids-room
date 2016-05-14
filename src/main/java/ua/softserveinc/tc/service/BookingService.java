@@ -6,9 +6,6 @@ import ua.softserveinc.tc.entity.User;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by TARAS on 01.05.2016.
- */
 public interface BookingService extends BaseService<Booking>
 {
     String getCurrentDate();
@@ -18,5 +15,4 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
-
 }

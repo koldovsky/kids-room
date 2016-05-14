@@ -14,6 +14,6 @@ public interface ReportConst
     String PARENT_EMAIL = "parentEmail";
 
     String REPORT_VIEW = "report";
-    String PARENT_VIEW = "parentbookings";
-    String ALL_PARENTS_VIEW = "allParentsBookings";
+    String ALL_BOOKINGS_VIEW = "allBookings";
+    String ALL_BOOKINGS_PER_PARENT_VIEW = "allBookingsPerParent";
 }

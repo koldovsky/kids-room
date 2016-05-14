@@ -3,64 +3,94 @@ package ua.softserveinc.tc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_START_TIME;
-
-/**
- * Created by TARAS on 01.05.2016.
- */
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
-    //TODO: FOR DEMIAN: Change all methods from HQL to Criterias
     @Autowired
     private BookingDao bookingDao;
 
-
-    @SuppressWarnings("unchecked")
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
-        List<Booking> bookings = entityManager.createQuery(
-                "from Booking where bookingStartTime" +
-                        " between '" + startDate +  "' and '" + endDate + "'" +
-                        " order by bookingStartTime")
-                .getResultList();
-        return bookings;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+
+        Root<Booking> root = query.from(Booking.class);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try
+        {
+            query.where(builder.between(root.get("bookingStartTime"),
+                    dateFormat.parse(startDate), dateFormat.parse(endDate)));
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Wrong format of date " + e.getMessage());
+        }
+
+        return entityManager.createQuery(query).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
-        List<Booking> bookings = entityManager.createQuery(
-                "from Booking where bookingStartTime" +
-                        " between '" + startDate +  "' and '" + endDate + "'" +
-                        " group by idUser")
-                .getResultList();
-        return bookings;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+
+        Root<Booking> root = query.from(Booking.class);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try
+        {
+            query.where(builder.between(root.get("bookingStartTime"),
+                    dateFormat.parse(startDate), dateFormat.parse(endDate)))
+                    .groupBy(root.get("idUser"));
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Wrong format of date " + e.getMessage());
+        }
+
+        return entityManager.createQuery(query).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
-        List<Booking> bookings = entityManager.createQuery(
-                "from Booking where bookingStartTime" +
-                        " between '" + startDate +  "' and '" + endDate + "'" +
-                        " and idUser = " + user.getId() +
-                        " order by bookingStartTime")
-                .getResultList();
-        return bookings;
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+
+        Root<Booking> root = query.from(Booking.class);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try
+        {
+            query.where(builder.between(root.get("bookingStartTime"),
+                    dateFormat.parse(startDate), dateFormat.parse(endDate)),
+                    builder.equal(root.get("idUser"), user))
+                    .orderBy(builder.asc(root.get("bookingStartTime")));
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Wrong format of date " + e.getMessage());
+        }
+
+        return entityManager.createQuery(query).getResultList();
     }
 
     @SuppressWarnings("unchecked")
@@ -70,12 +100,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         //Date date = new Date();
         EntityManager entityManager = bookingDao.getEntityManager();
         List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
-                "from Booking where " + BOOKING_START_TIME + " = '2015-04-04 00:00:00'")
+                "from Booking where " + BookingConst.BOOKING_START_TIME + " = '2015-04-04 00:00:00'")
                 .getResultList();
         return bookingsDay;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public String getCurrentDate()
     {

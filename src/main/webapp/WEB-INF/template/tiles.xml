@@ -40,14 +40,13 @@
         <put-attribute name="body" value="/WEB-INF/views/report.jsp" />
     </definition>
 
-    <definition name="parentbookings" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/parentbookings.jsp" />
+    <definition name="allBookings" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/allBookings.jsp" />
     </definition>
 
-    <definition name="allParentsBookings" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/allParentsBookings.jsp" />
+    <definition name="allBookingsPerParent" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/allBookingsPerParent.jsp" />
     </definition>
-
 
     <definition name="registration" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/registration.jsp" />

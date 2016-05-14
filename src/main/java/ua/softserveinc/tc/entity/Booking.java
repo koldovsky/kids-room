@@ -46,30 +46,6 @@ public class Booking {
     @Column(name = BookingConst.IS_CANCELED, nullable = false)
     private boolean isCanceled;
 
-    public Date getBookingEndTime() {
-        return bookingEndTime;
-    }
-
-    public void setBookingEndTime(Date bookingEndTime) {
-        this.bookingEndTime = bookingEndTime;
-    }
-
-    public Date getBookingStartTime() {
-        return bookingStartTime;
-    }
-
-    public void setBookingStartTime(Date bookingStartTime) {
-        this.bookingStartTime = bookingStartTime;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public Long getIdBook() {
         return idBook;
     }
@@ -102,6 +78,30 @@ public class Booking {
         this.idUser = idUser;
     }
 
+    public Date getBookingStartTime() {
+        return bookingStartTime;
+    }
+
+    public void setBookingStartTime(Date bookingStartTime) {
+        this.bookingStartTime = bookingStartTime;
+    }
+
+    public Date getBookingEndTime() {
+        return bookingEndTime;
+    }
+
+    public void setBookingEndTime(Date bookingEndTime) {
+        this.bookingEndTime = bookingEndTime;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public boolean isCanceled() {
         return isCanceled;
     }
@@ -110,7 +110,7 @@ public class Booking {
         isCanceled = canceled;
     }
 
-    public static Calendar DateToCalendar(Date date)
+    private static Calendar DateToCalendar(Date date)
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -119,44 +119,37 @@ public class Booking {
 
     public int extractYear()
     {
-        int year = DateToCalendar(bookingStartTime).get(Calendar.YEAR);
-        return year;
+        return DateToCalendar(bookingStartTime).get(Calendar.YEAR);
     }
 
     public int extractMonth()
     {
-        int month = DateToCalendar(bookingStartTime).get(Calendar.MONTH) + 1;
-        return month;
+        return DateToCalendar(bookingStartTime).get(Calendar.MONTH) + 1;
     }
 
     public int extractDay()
     {
-        int day = DateToCalendar(bookingStartTime).get(Calendar.DAY_OF_MONTH);
-        return day;
+        return DateToCalendar(bookingStartTime).get(Calendar.DAY_OF_MONTH);
     }
 
     public int extractHourFromStartTime()
     {
-        int hour = DateToCalendar(bookingStartTime).get(Calendar.HOUR_OF_DAY);
-        return hour;
+        return DateToCalendar(bookingStartTime).get(Calendar.HOUR_OF_DAY);
     }
 
     public int extractHourFromEndTime()
     {
-        int hour = DateToCalendar(bookingEndTime).get(Calendar.HOUR_OF_DAY);
-        return hour;
+        return DateToCalendar(bookingEndTime).get(Calendar.HOUR_OF_DAY);
     }
 
     public int extractMinuteFromStartTime()
     {
-        int minute = DateToCalendar(bookingStartTime).get(Calendar.MINUTE);
-        return minute;
+        return DateToCalendar(bookingStartTime).get(Calendar.MINUTE);
     }
 
     public int extractMinuteFromEndTime()
     {
-        int minute = DateToCalendar(bookingEndTime).get(Calendar.MINUTE);
-        return minute;
+        return DateToCalendar(bookingEndTime).get(Calendar.MINUTE);
     }
 
     public String extractMonthAndDay()
@@ -215,7 +208,7 @@ public class Booking {
         * so we have to substring first two characters in order to parse
         */
         int time = Integer.parseInt(hoursAndMinutes.substring(0, 2));
-        Map<Integer, Integer> prices = getIdRoom().getPrices();
+        Map<Integer, Integer> prices = idRoom.getPrices();
 
         // later we create list and sort it in order to choose appropriate hour
         ArrayList<Integer> listOfKeys = new ArrayList<>();

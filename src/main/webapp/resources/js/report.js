@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function ()
 			document.getElementById("parentEmailField").value = this.id;
 			document.getElementById("dateNowField").value = document.getElementById("dateNowInput").value;
 			document.getElementById("dateThenField").value = document.getElementById("dateThenInput").value;
-			document.getElementById("parentBookingsForm").submit();
+			document.getElementById("allBookingsPerParentForm").submit();
 		};
 	}
 

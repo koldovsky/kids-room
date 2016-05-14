@@ -20,14 +20,14 @@ import java.util.List;
  * Created by Demian on 08.05.2016.
  */
 @Controller
-public class ParentBookingsPageController
+public class AllBookingsPerParentController
 {
     @Autowired
     BookingService bookingService;
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/parentbookings", method = RequestMethod.GET,
+    @RequestMapping(value = "/allBookingsPerParent", method = RequestMethod.GET,
             params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
     public @ResponseBody ModelAndView parentBookings(@RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
@@ -35,7 +35,7 @@ public class ParentBookingsPageController
                                                      @RequestParam(value = ReportConst.DATE_NOW) String dateNow)
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(ReportConst.PARENT_VIEW);
+        modelAndView.setViewName(ReportConst.ALL_BOOKINGS_PER_PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         User parent = userService.getUserByEmail(parentEmail);
