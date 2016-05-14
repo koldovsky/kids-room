@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/registration").anonymous()
                 .antMatchers(HttpMethod.GET, "/mykids").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/registerkid").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/registerkid").hasRole("USER")

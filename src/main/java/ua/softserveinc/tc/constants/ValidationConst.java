@@ -10,12 +10,8 @@ public interface ValidationConst {
     String EMPTY_FIELD_OR_SPACE = "Required field is empty or contains a whitespace";
     String ACCOUNT_REMOVED = "Child's account was deactivated";
     String PARENT_NOT_SET = "Failed to fetch parent's ID";
-    String NAME_ERROR = "Error in name";
-
-    String PASSWORD_INVALID = "Password is invalid";
-    String PHONE_NUMBER_INVALID = "Phone number is invalid";
 
     String PASSWORD_REGEX = "^(\\S){8,24}$";
-    String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*$";
+    String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
 }
