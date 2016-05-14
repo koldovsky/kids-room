@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
@@ -42,11 +42,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute User user, @Valid User u, BindingResult bindingResult) {
-
+    public String saveUser(@Valid User user, BindingResult bindingResult, @RequestParam(value = "confirm") String confirm) {
         userValidator.validate(user, bindingResult);
-
-        if (bindingResult.hasErrors()) {
+        if ((bindingResult.hasErrors())||(!user.getPassword().equals(confirm))){
             return UsersConst.REGISTRATION_VIEW;
         }
         user.setRole(Role.USER);

@@ -6,11 +6,9 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import ua.softserveinc.tc.validator.UniqueEmail;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,32 +29,26 @@ public class User {
 
     @NotEmpty
     @Column(name = UserConst.FIRST_NAME)
-    @Field
     private String firstName;
 
     @NotEmpty
     @Column(name = UserConst.LAST_NAME)
-    @Field
     private String lastName;
 
     @NotEmpty
     @Email
     @Column(name = UserConst.EMAIL, unique = true)
-    @UniqueEmail
     @Field(store = Store.NO)
     private String email;
 
     @NotEmpty
-    @Size(min = 8)
     @Column(name = UserConst.PASSWORD)
     private String password;
 
-    @NotEmpty
     @Column(name = UserConst.ENABLED)
     private boolean enabled;
 
     @NotEmpty
-    @Size(min = 10)
     @Column(name = UserConst.PHONE)
     @Field(store = Store.NO)
     private String phoneNumber;

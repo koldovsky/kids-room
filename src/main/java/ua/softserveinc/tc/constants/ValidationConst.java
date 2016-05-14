@@ -15,6 +15,7 @@ public interface ValidationConst {
     String PASSWORD_INVALID = "Password is invalid";
     String PHONE_NUMBER_INVALID = "Phone number is invalid";
 
-    String PASSWORD_REGEX = "/^[a-zA-Z0-9]{8,24}$/";
-    String PHONE_NUMBER_REGEX = "/^[0-9]{10,13}$/";
+    String PASSWORD_REGEX = "^(\\S){8,24}$";
+    String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*\\d\\W*$";
+    String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
 }

@@ -33,7 +33,7 @@
       </div>
       <div class="form-group">
               <label for="confirm" class="required"><spring:message code="user.confirm" /></label>
-              <form:password path="" id="userConfirm" class="form-control" required="required" />
+              <input type="password" name="confirm" id="userConfirm" class="form-control" required="required" />
               <span id="validPassword"></span>
       </div>
       <div class="form-group">

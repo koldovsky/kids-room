@@ -7,9 +7,8 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ua.softserveinc.tc.constants.ValidationConst;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.service.UserService;
 
-import javax.validation.Valid;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -18,6 +17,9 @@ import java.util.regex.Pattern;
 
 @Component
 public class UserValidator implements Validator{
+
+    @Autowired
+    private UserService userService;
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);
@@ -25,29 +27,33 @@ public class UserValidator implements Validator{
     }
 
     @Override
-    public void validate(Object o, Errors errors) {
+    public void validate(Object o,  Errors errors) {
         User user = (User) o;
-        ValidationUtils.rejectIfEmpty(errors, "firstName",  ValidationConst.EMPTY_FIELD_OR_SPACE);
-
-        if(!Character.isUpperCase(user.getFirstName().charAt(0))){
-            errors.rejectValue("firstName",  ValidationConst.NAME_ERROR);
-        }
-
-        ValidationUtils.rejectIfEmpty(errors, "lastName",  ValidationConst.EMPTY_FIELD_OR_SPACE);
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", ValidationConst.EMPTY_FIELD_OR_SPACE);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName",  "registration.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName",  "registration.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email",  "registration.empty");
 
         if(!Pattern.compile(ValidationConst.PASSWORD_REGEX)
                 .matcher(user.getPassword())
                 .matches()){
-            errors.rejectValue("password", ValidationConst.PASSWORD_INVALID);
+            errors.rejectValue("password", "registration.password");
         }
 
         if(!Pattern.compile(ValidationConst.PHONE_NUMBER_REGEX)
-                .matcher(user.getPhoneNumber())
-                .matches()){
-            errors.rejectValue("phoneNumber", ValidationConst.PHONE_NUMBER_INVALID);
+                    .matcher(user.getPhoneNumber())
+                    .matches()){
+                errors.rejectValue("phoneNumber", "registration.phone");
         }
 
+        if(!Pattern.compile(ValidationConst.EMAIL_REGEX)
+                .matcher(user.getEmail())
+                .matches()){
+            errors.rejectValue("email", "registration.email");
+        }
 
+        if(userService.getUserByEmail(user.getEmail())!=null){
+            errors.rejectValue("email", "registration.emailExist");
+        }
     }
+
 }
