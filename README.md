@@ -23,6 +23,9 @@ hibernate.show_sql = true
 hibernate.format_sql = true
 hibernate.hbm2ddl.auto = create
 hibernate.enable_lazy_load_no_trans = true
+hibernate.search.default.directory_provider = ram
+hibernate.search.default.indexBase = com.acme.hibernate.CustomDirectoryProvider
+hibernate.search.indexing_strategy = event
 ```
 ```
 Login                  Password 
