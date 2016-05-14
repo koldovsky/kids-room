@@ -7,6 +7,8 @@ public interface RoomConst {
 
     String TABLE_NAME_ROOMS = "rooms";
 
+    String TABLE_NAME_PRICES = "prices";
+
     String ID_ROOM = "id_room";
 
     String NAME_ROOM = "name_room";
@@ -17,9 +19,9 @@ public interface RoomConst {
 
     String CAPACITY_ROOM = "capacity_room";
 
-    String PRICING = "pricing";
+    String HOUR = "hour";
 
-    // Don't need ID_MANAGER & ID_CITY.
-    // Becose we will get this constants from appropriate tables from relationship.
+    String PRICE = "price";
 
+    String PRICING = "pricing"; // TODO: DELETE THIS FILED WHEN UNUSED
 }

@@ -8,6 +8,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Chak on 30.04.2016.
@@ -41,7 +42,13 @@ public class Room {
     private List<Event> events;
 
     @Column(name = RoomConst.PRICING)
-    private HashMap<Integer, Integer> pricing;
+    private HashMap<Integer, Integer> pricing;// TODO: DELETE THIS FILED WHEN UNUSED
+
+    @ElementCollection
+    @JoinTable(name = RoomConst.TABLE_NAME_PRICES,
+            joinColumns = @JoinColumn(name = RoomConst.ID_ROOM))
+    @Column(name = RoomConst.PRICE)
+    private Map<Integer, Integer> prices = new HashMap<>();
 
     public Long getId() {
         return id;
@@ -113,6 +120,14 @@ public class Room {
 
     public void setPricing(HashMap<Integer, Integer> pricing) {
         this.pricing = pricing;
+    }
+
+    public Map<Integer, Integer> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(Map<Integer, Integer> prices) {
+        this.prices = prices;
     }
 
     @Override
