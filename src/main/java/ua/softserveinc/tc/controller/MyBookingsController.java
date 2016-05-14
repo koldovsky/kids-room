@@ -10,8 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
@@ -19,6 +21,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,6 +35,9 @@ public class MyBookingsController {
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private RoomService roomService;
 
     @RequestMapping(value = "/mybookings", method = RequestMethod.GET)
     public ModelAndView getMyBookings(Principal principal){
@@ -59,7 +65,26 @@ public class MyBookingsController {
 
         List<Booking> myBookings = bookingService
                 .getBookingsByUserByRangeOfTime(currentUser, startDateStr, nowStr);
-        int sumTotal = Booking.getSumTotal(myBookings);
+
+       int sumTotal;
+        try {
+            sumTotal = Booking.getSumTotal(myBookings);
+        }
+        catch (NullPointerException nul){
+            //поки немає налагоджених прайсінгів
+            Room room = roomService.findById(new Long(1));
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(2, 300);
+            map.put(4, 500);
+            map.put(6, 600);
+            room.setPricing(map);
+            roomService.update(room);
+        }
+        finally {
+            myBookings = bookingService
+                    .getBookingsByUserByRangeOfTime(currentUser, startDateStr, nowStr);
+            sumTotal = Booking.getSumTotal(myBookings);
+        }
 
         modelMap.addAttribute(ReportConst.PARENT, currentUser);
         modelMap.addAttribute(ReportConst.DATE_NOW, nowStr);

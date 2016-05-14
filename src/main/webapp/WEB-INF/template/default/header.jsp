@@ -24,7 +24,8 @@
                 <div class="col-sm-12">
 
                      <sec:authorize access="hasRole('USER')">
-                                 <a href="mykids"><spring:message code="user.myKids" /></a>
+                                 <a href="mykids"><spring:message code="user.myKids" />
+                                 <a href="mybookings"><spring:message code="user.myBookings" />
 
                       </sec:authorize>
                        <sec:authorize access="hasRole('MANAGER')">
