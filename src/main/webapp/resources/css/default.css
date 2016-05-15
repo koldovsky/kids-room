@@ -23,10 +23,6 @@
     background-color:  #D8BFD8
 }
 
-.parentRow:hover {
-cursor: pointer;
-}
-
 #validPassword, #validEmail, #validPhone, .error{
     color:red;
 }
@@ -47,46 +43,8 @@ cursor: pointer;
     text-shadow: black;
 }
 
-.myButton {
-    width: 200px;
-    height: 45px;
-    font-size: 24;
-    margin: 25 auto;
-    border-radius: 10px;
-    border: 1px solid black;
-    color: white;
-    text-shadow: black;
-}
-
-caption h2  {
-    text-align: center;
-}
-
-.captionBottom {
-     caption-side: bottom;
-}
-
 .bottom-msg{
     margin-top: 20px;
-}
-
-.smallText {
-    font-size: 18px;
-}
-
-#dateThenDiv {
-    float:left;
-    width: 280px;
-    height: 20px;
-    margin-right: 8px;
-}
-
-#dateNowDiv {
-    margin-left: 288px;
-}
-
-#tableToExport {
-    padding: 20px;
 }
 
 .navbar-brand{
@@ -112,10 +70,7 @@ header h1 {
    padding: 20px;
    margin-bottom: 40px;
  }
- 
- body{
- 
- }
+
  table, th, td {
  text-align: center;
      border: 2px solid #ddd;

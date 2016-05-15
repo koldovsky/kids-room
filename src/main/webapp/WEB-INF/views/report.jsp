@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:url value="/j_spring_security_check" var="reportURL" />
+<link rel='stylesheet' href='resources/css/report.css'>
 <script src="resources/js/report.js"></script>
 
     <form id="generateAReport" action="allBookings">
@@ -16,7 +17,7 @@
         </div>
     </form>
 
-    <div class="table">
+    <div class="tableDiv">
         <table>
             <caption>
                 <h2>
@@ -48,7 +49,9 @@
         </table>
     </div>
 
+    <div id="generateButton">
     <input type="submit" form="generateAReport" value=<spring:message code="report.generate" /> class="btn-primary">
+    </div>
 
     <form action="allBookingsPerParent" id="allBookingsPerParentForm">
         <input type="hidden" id="parentEmailField" name="parentEmail"/>

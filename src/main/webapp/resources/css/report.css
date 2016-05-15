@@ -1,0 +1,31 @@
+#dateThenDiv, #dateNowDiv, .tableDiv, #generateButton, .exportButton {
+    margin-left: 25px;
+}
+
+.exportButton {
+    width: 200px;
+}
+
+.tableDiv tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.tableDiv tr:hover {
+    background-color: #D8BFD8
+}
+
+.parentRow:hover {
+    cursor: pointer;
+}
+
+.captionBottom {
+     caption-side: bottom;
+}
+
+caption h2  {
+    text-align: center;
+}
+
+.smallText {
+    font-size: 18px;
+}

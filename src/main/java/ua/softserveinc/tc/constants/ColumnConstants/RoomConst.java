@@ -22,6 +22,4 @@ public interface RoomConst {
     String HOUR = "hour";
 
     String PRICE = "price";
-
-    String PRICING = "pricing"; // TODO: DELETE THIS FILED WHEN UNUSED
 }

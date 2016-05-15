@@ -44,6 +44,7 @@ public class Room {
     @ElementCollection
     @JoinTable(name = RoomConst.TABLE_NAME_PRICES,
             joinColumns = @JoinColumn(name = RoomConst.ID_ROOM))
+    @MapKeyColumn(name = RoomConst.HOUR)
     @Column(name = RoomConst.PRICE)
     private Map<Integer, Integer> prices = new HashMap<>();
 

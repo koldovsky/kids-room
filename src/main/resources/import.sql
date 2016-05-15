@@ -1,7 +1,7 @@
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (1, 'user@softserveinc.com', 'Alan','Bom', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 1);
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (2, 'manager@softserveinc.com', 'Jackson','Bim', '$2a$08$B.5vcvm4BiBF9DdPgyKH4.1Z9wOGL9Rv9Iy1sDsniHMOOGXCZ11Je', '0987654321', 1, 1);
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (3, 'admin@softserveinc.com', 'Tony','West', '$2a$08$FSd5VkorwWVS7V8XQFl1y..ULY5fcUAASc/.6mH5wFj/ppopK0Cl2', '0987654321', 2, 1);
-INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (4, 'parent1@softserveinc.com', 'Mario','Kara', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 1);
+INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (4, 'parent1@softserveinc.com', 'Marionetttalong','Kara', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 1);
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (5, 'parent2@softserveinc.com', 'Miron','Tereh', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 0);
 
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (1, "he likes to play poker", "12.02.2011", "Adam", "First", 1);
@@ -13,7 +13,7 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 insert into cities values (1, "Lviv");
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 1, 2);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, id_city, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", 1, 2);
-insert into prices (id_room, prices_KEY, price) values (1, 2, 300), (1, 4, 500), (1, 6, 600), (2, 2, 80), (2, 4, 90), (2, 6, 100);
+insert into prices (id_room, hour, price) values (1, 2, 300), (1, 4, 500), (1, 6, 600), (2, 2, 80), (2, 4, 90), (2, 6, 100);
 
 insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT1', '2016-05-10 15:00:00', 1);
 insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT2', '2016-05-15 15:00:00', 2);

@@ -3,9 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
+<link rel='stylesheet' href='resources/css/report.css'>
 <script src="resources/js/exportIntoExcel.js"></script>
 
-    <div id="tableToExport">
+    <div class="tableDiv">
         <table>
             <caption>
                 <h2>
@@ -45,4 +46,6 @@
         </table>
     </div>
 
-    <input type="button" id="exportButton" value="Export into Excel" class="myButton">
+    <div id="exportButton">
+        <input type="button" value="Export into Excel" class="btn-primary exportButton">
+    </div>
