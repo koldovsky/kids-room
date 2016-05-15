@@ -1,70 +1,40 @@
-.rightback {
-	width: 100%;
-	float:left;
-	position:relative;
+.for-table{
+	margin: auto;
+	width: 80%;
 }
-.contentback {
-	float:left;
-	width: 100%;
-	position:relative;
-	right: 300px;
-}
-.leftback {
-	width: 100%;
-	position:relative;
-	right: 400px;
-	float:left;
-}
-.container {
-	width: 900px;
-	margin-left: auto;
-	margin-right:auto;
-}
-.leftsidebar {
-	float:left;
-	width: 600px;
-	position:relative;
-	left: 700px;
-}
-.rightsidebar {
-	float:left;
-	width: 300px;
-	position:relative;
-	left: 700px;
-}
-select, input, label, button{
-	display: block;
-	font-size: 14px;
+
+td{
+    width: auto;
+    border-collapse: collapse;
 }
 legend{
-	font-size: 20px;
-	font-weight: bold;
-	margin-top: 30px;
+    border: none;
 }
-select, input{
-	height: 25px;
-	width: 350px;
+
+.hide-border{
+    border: hidden;
 }
-fieldset{
-	margin-left: 5%;
-	border: none;
+
+body{
+    margin:auto;
 }
-label, fieldset{
-	margin-top: 10px;
-}
-button{
-	display: inline-block;
-	height: 35px;
-	width: 90px;
-	margin: 10px;
-	margin-top: 20px;
-	margin-bottom: 30px;
-}
+
 .for-button{
+    margin: 5px;
     display: inline-block;
-	height: 35px;
-	width: 90px;
-	margin: 10px;
-	margin-top: 20px;
-	margin-bottom: 10px;
+    height: 40px;
+    width: 80px;
+    align-items: center;
+    color: black;
+}
+
+.for-main-block{
+    align-items: center;
+}
+
+.for-field{
+    height: 30px;
+    width: 350px;
+    margin: auto;
+    margin-bottom: 20px;
 }
