@@ -47,7 +47,7 @@ public class ReportPageController
     public @ResponseBody String refreshView(@PathVariable String startDate, @PathVariable String endDate)
     {
         List<User> users = bookingService.getActiveUsersForRangeOfTime(startDate, endDate);
-        JSONBooking jsonBooking = new JSONBooking(users);
+        JSONBooking jsonBooking = new JSONBooking(users, startDate, endDate);
         Gson gson = new Gson();
         return gson.toJson(jsonBooking);
     }
@@ -55,10 +55,14 @@ public class ReportPageController
     private class JSONBooking
     {
         List<User> users;
+        String startDate;
+        String endDate;
 
-        JSONBooking(List<User> users)
+        public JSONBooking(List<User> users, String startDate, String endDate)
         {
             this.users = users;
+            this.startDate = startDate;
+            this.endDate = endDate;
         }
     }
 }

@@ -11,7 +11,7 @@
             <caption>
                 <h2>
                     <spring:message code="report.parentBookings" /> ${parent}</br>
-                    <span class="smallText">(${dateThen} - ${dateNow})</span>
+                    <span id="date">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
