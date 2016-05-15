@@ -18,11 +18,11 @@
     </form>
 
     <div class="tableDiv">
-        <table>
+        <table id="activeUsers">
             <caption>
                 <h2>
                     <spring:message code="report.activeParents" /></br>
-                    <span class="smallText">(${dateThen} - ${dateNow})</span>
+                    <span id="date">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
@@ -40,7 +40,7 @@
                 <td>${user.getLastName()}</td>
                 <td>${user.getEmail()}</td>
                 <td>${user.getPhoneNumber()}</td>
-                <td id="${user.getEmail()}" class="parentRow">
+                <td class="parentRow" id="${user.getEmail()}">
                     <a><spring:message code="report.details" /></a>
                 </td>
             </tr>

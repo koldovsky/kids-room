@@ -5,6 +5,8 @@ package ua.softserveinc.tc.constants.ModelConstants;
  */
 public interface DateConst {
     String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+
     String SHORT_DATE_FORMAT = "yyyy-MM-dd";
 
 }

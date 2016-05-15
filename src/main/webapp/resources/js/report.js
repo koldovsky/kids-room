@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", function ()
 {
+    addListener();
+	document.getElementById("dateNowInput").onchange = refreshView;
+	document.getElementById("dateThenInput").onchange = refreshView;
+});
+
+function addListener()
+{
 	var rows = document.getElementsByClassName("parentRow");
 	var rowsCount = rows.length;
 	for (var i = 0; i < rowsCount; i++)
@@ -12,23 +19,38 @@ document.addEventListener("DOMContentLoaded", function ()
 			document.getElementById("allBookingsPerParentForm").submit();
 		};
 	}
+};
 
-	document.getElementById("dateNowInput").onchange = refreshView;
-	document.getElementById("dateThenInput").onchange = refreshView;
+function refreshView()
+{
+	var request = "refreshParents/";
+    request += $("#dateThenInput").val() + "/" + $("#dateNowInput").val();
 
-	function refreshView()
-	{
-	    var request = "refreshParents/";
-	    request += $("#dateThenInput").val() + "/" + $("#dateNowInput").val();
-	    $.ajax({url: request, success: function(result)
-	        {
-	            var obj = JSON.parse(result);
+    $.ajax({url: request, success: function(result)
+    {
+        var obj = JSON.parse(result);
 
-	            for(var i = 0; i < obj.users.length; i++)
-	            {
-	                alert(obj.users[i].email);
-	            }
-	        }
-	    });
-    }
-});
+        $('#date').remove();
+        var caption = $('caption h2').html();
+        caption += '<span id="date">(' + obj.startDate + ' - ' + obj.endDate + ')</span>';
+        $( 'caption h2' ).html(caption);
+
+        var tr = '<tr>';
+
+        $.each(obj.users, function(i, user)
+        {
+            tr += '<td>' + user.firstName + '</td>'
+            + '<td>' + user.lastName + '</td>'
+            + '<td>' + user.email + '</td>'
+            + '<td>' + user.phoneNumber + '</td>'
+            + '<td class="parentRow" id="'
+            + user.email + '"><a>See details</a></tr>';
+        });
+
+        $('tr').remove();
+
+        $('#activeUsers').append(tr);
+
+        addListener();
+    }});
+}

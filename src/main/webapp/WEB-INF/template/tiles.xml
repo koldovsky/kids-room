@@ -89,6 +89,9 @@
     <definition name="result" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/result.jsp" />
     </definition>
+    <definition name="json" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/json.jsp" />
+    </definition>
 
 
 </tiles-definitions>
