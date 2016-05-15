@@ -1,30 +1,31 @@
-form.registerkid {
-				padding: 30px;
-				border: 2px solid grey;
-				margin: 20px auto;
-				width: 20%;
-				min-width: 400px;
+form {
+				padding: 50px;
+				border: 10px solid #4285F4;
 				border-radius: 10px;
+				margin: 20px auto;
+				width: 40%;
+				min-width: 400px;
 				text-align: center;
 			}
 
-form.registerkid h2{
+form h2{
 			margin-top: 0;
 			margin-bottom: 25px;
 			text-align: center;
 		}
-form.registerkid label {
+form label:content {
   			display: block;
  			margin-bottom: 8px;
+ 			color: black;
 			}
 
-form.registerkid .required:after {
+form .required:after {
 				content:" *";
 				color: red;
 			}
 
 
-form.registerkid input, textarea{
+input, textarea, label{
     text-align: center;
     width:100%;
 }

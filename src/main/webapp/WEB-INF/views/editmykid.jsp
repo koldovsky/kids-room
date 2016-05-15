@@ -29,7 +29,7 @@
                     <form:textarea path="comment" id="comment" value="${kid.getComment()}" rows="7" cols="50" class="form-control"/>
       </div>
 
-      <button type="submit" class="btn btn-default"><spring:message code="user.submit" /></button>
+      <button class="btn btn-raised btn-success" type="submit" name="action"><spring:message code="user.submit" /></button>
 
       <p class="removekidmsg"> <spring:message code="editkid.footmsg1" /> <a href="removemykid?id=${kid.getId()}"> <spring:message code="editkid.footmsg2" /></a></p>
 
