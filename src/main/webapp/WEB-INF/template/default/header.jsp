@@ -37,6 +37,7 @@
                       </sec:authorize>
 
                      <sec:authorize access="hasRole('ADMINISTRATOR')">
+                         <a href="adm-edit-city"><spring:message code="administrator.editCities" /></a>
                          <a href="adm-edit-location"><spring:message code="administrator.editLocations" /></a>
                          <a href="adm-edit-manager"><spring:message code="administrator.editManagers" /></a>
                      </sec:authorize>
