@@ -27,9 +27,9 @@ hibernate.search.default.directory_provider = ram
 hibernate.search.default.indexBase = com.acme.hibernate.CustomDirectoryProvider
 hibernate.search.indexing_strategy = event
 ```
-```
-Login                  Password 
-user@softserveinc.com         user
-admin@softserveinc.com        admin
-manager@softserveinc.com      manager
-```
+
+|Login|Password|
+|-----|--------|
+|user@softserveinc.com|user|
+|admin@softserveinc.com|admin|
+|manager@softserveinc.com|manager|
