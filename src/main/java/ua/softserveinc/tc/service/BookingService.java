@@ -13,6 +13,6 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsOfThisDay();
     HashMap<User, Integer> generateAReport(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate);
+    List<User> getActiveUsersForRangeOfTime(String startDate, String endDate);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

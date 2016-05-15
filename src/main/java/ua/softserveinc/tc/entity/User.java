@@ -60,8 +60,8 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
+    @Transient
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
-    @Column
     private Set<Child> children;
 
     public void setChildren(Set<Child> children) {

@@ -9,6 +9,7 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -45,27 +46,30 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getActiveUsersForRangeOfTime(String startDate, String endDate)
+    public List<User> getActiveUsersForRangeOfTime(String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        CriteriaQuery<User> query = builder.createQuery(User.class);
 
         Root<Booking> root = query.from(Booking.class);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try
         {
-            query.where(builder.between(root.get("bookingStartTime"),
-                    dateFormat.parse(startDate), dateFormat.parse(endDate)))
-                    .groupBy(root.get("idUser"));
+            query.select(root.get("idUser"))
+                    .where(builder.between(root.get("bookingStartTime"),
+                dateFormat.parse(startDate), dateFormat.parse(endDate)))
+                .groupBy(root.get("idUser"));
         }
-        catch (ParseException e)
+        catch (Exception e)
         {
             System.out.println("Wrong format of date " + e.getMessage());
         }
 
-        return entityManager.createQuery(query).getResultList();
+        TypedQuery<User> typedQuery = entityManager.createQuery(query);
+
+        return typedQuery.getResultList();
     }
 
     @Override

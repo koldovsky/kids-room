@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function ()
 	{
 		rows[i].onclick = function(e)
 		{
-			document.getElementById("parentEmailField").value = this.id;
-			document.getElementById("dateNowField").value = document.getElementById("dateNowInput").value;
-			document.getElementById("dateThenField").value = document.getElementById("dateThenInput").value;
+			document.getElementById("parentEmailHidden").value = this.id;
+			document.getElementById("dateNowHidden").value = document.getElementById("dateNowInput").value;
+			document.getElementById("dateThenHidden").value = document.getElementById("dateThenInput").value;
 			document.getElementById("allBookingsPerParentForm").submit();
 		};
 	}
@@ -18,6 +18,17 @@ document.addEventListener("DOMContentLoaded", function ()
 
 	function refreshView()
 	{
-	    alert("Yeap, you changed it");
-	}
+	    var request = "refreshParents/";
+	    request += $("#dateThenInput").val() + "/" + $("#dateNowInput").val();
+	    $.ajax({url: request, success: function(result)
+	        {
+	            var obj = JSON.parse(result);
+
+	            for(var i = 0; i < obj.users.length; i++)
+	            {
+	                alert(obj.users[i].email);
+	            }
+	        }
+	    });
+    }
 });

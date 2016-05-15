@@ -34,13 +34,13 @@
                 <th><spring:message code="report.bookings" /></th>
             </tr>
 
-            <c:forEach var="booking" items="${bookings}">
+            <c:forEach var="user" items="${activeUsers}">
             <tr>
-                <td>${booking.getIdUser().getFirstName()}</td>
-                <td>${booking.getIdUser().getLastName()}</td>
-                <td>${booking.getIdUser().getEmail()}</td>
-                <td>${booking.getIdUser().getPhoneNumber()}</td>
-                <td id="${booking.getIdUser().getEmail()}" class="parentRow">
+                <td>${user.getFirstName()}</td>
+                <td>${user.getLastName()}</td>
+                <td>${user.getEmail()}</td>
+                <td>${user.getPhoneNumber()}</td>
+                <td id="${user.getEmail()}" class="parentRow">
                     <a><spring:message code="report.details" /></a>
                 </td>
             </tr>
@@ -54,7 +54,7 @@
     </div>
 
     <form action="allBookingsPerParent" id="allBookingsPerParentForm">
-        <input type="hidden" id="parentEmailField" name="parentEmail"/>
-        <input type="hidden" id="dateThenField" name="dateThen"/>
-        <input type="hidden" id="dateNowField" name="dateNow"/>
+        <input type="hidden" id="parentEmailHidden" name="parentEmail"/>
+        <input type="hidden" id="dateThenHidden" name="dateThen"/>
+        <input type="hidden" id="dateNowHidden" name="dateNow"/>
     </form>

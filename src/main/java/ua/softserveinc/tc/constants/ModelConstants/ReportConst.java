@@ -11,6 +11,7 @@ public interface ReportConst
     String BOOKINGS = "bookings";
     String DATE_THEN = "dateThen";
     String SUM_TOTAL = "sumTotal";
+    String ACTIVE_USERS = "activeUsers";
     String PARENT_EMAIL = "parentEmail";
 
     String REPORT_VIEW = "report";

@@ -1,19 +1,19 @@
 package ua.softserveinc.tc.controller;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.Room;
 
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
-import ua.softserveinc.tc.service.RoomService;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,9 +22,6 @@ import java.util.List;
 @Controller
 public class ReportPageController
 {
-    @Autowired
-    RoomService roomService;
-
     @Autowired
     BookingService bookingService;
 
@@ -37,12 +34,31 @@ public class ReportPageController
 
         String dateNow = bookingService.getCurrentDate();
         String dateThen = bookingService.getDateMonthAgo();
-        List<Booking> bookings = bookingService.getActiveUsersForRangeOfTime(dateThen, dateNow);
+        List<User> users = bookingService.getActiveUsersForRangeOfTime(dateThen, dateNow);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConst.BOOKINGS, bookings);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConst.ACTIVE_USERS, users);
 
         return model;
+    }
+
+    @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
+    public @ResponseBody String refreshView(@PathVariable String startDate, @PathVariable String endDate)
+    {
+        List<User> users = bookingService.getActiveUsersForRangeOfTime(startDate, endDate);
+        JSONBooking jsonBooking = new JSONBooking(users);
+        Gson gson = new Gson();
+        return gson.toJson(jsonBooking);
+    }
+
+    private class JSONBooking
+    {
+        List<User> users;
+
+        JSONBooking(List<User> users)
+        {
+            this.users = users;
+        }
     }
 }
