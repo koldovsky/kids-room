@@ -30,6 +30,8 @@ public interface AdminConst {
 
     String CITY_LIST = "cityList";
 
+    String ATR_MANAGER = "manager";
+
     ///////////////////////////////////////
 
 }
