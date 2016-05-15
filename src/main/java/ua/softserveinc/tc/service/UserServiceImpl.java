@@ -21,9 +21,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> findAllManagers() {
-        return userDao.findAll().stream().filter(user -> Role.MANAGER == user.getRole())
-                .collect(Collectors.toList());
+    public List<User> findAllUsersByRole(Role role) {
+        return userDao.findAllUsersByRole(role);
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userDao.deleteUserById(id);
     }
 
     @Override

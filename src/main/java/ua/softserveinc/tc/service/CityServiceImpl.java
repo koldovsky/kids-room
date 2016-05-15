@@ -17,6 +17,11 @@ public class CityServiceImpl extends BaseServiceImpl<City> implements CityServic
     private CityDao cityDao;
 
     @Override
+    public void deleteCityById(Long id){
+        cityDao.deleteCityById(id);
+    }
+
+    @Override
     public City getCityByName(String name) {
         return cityDao.getCityByName(name);
     }
