@@ -33,43 +33,54 @@ public class ViewEventController {
     @RequestMapping(value = "getCompanies/{id}", method = RequestMethod.GET)
     public @ResponseBody
     String getEvents(@PathVariable int id) {
-        System.out.println(id);
-
-
         return calendarServiceImpl.eventsToString(id);
     }
 
-   @RequestMapping(value = "getCompanies", method = RequestMethod.POST)
-    public @ResponseBody
-    String getEvents(@ModelAttribute Integer id) {
-       System.out.println(id);
-       return calendarServiceImpl.eventsToString(1);
-   }
-  @RequestMapping(value="/{ids}", method = RequestMethod.GET)
-  public @ResponseBody String getEventJSON(@PathVariable String ids) {
-
-      return calendarServiceImpl.eventsToString(Integer.valueOf(ids));
-  }
-}
-
-/*
-    @RequestMapping(value = "getCompanies",  method = RequestMethod.GET)
-    public @ResponseBody
-    String getRaandom(@RequestBody Info id) {
-
-        return calendarServiceImpl.findByRoomId(Integer.valueOf(id.getId())).toString()
-        .substring(1,calendarServiceImpl.findByRoomId(id.getId()).toString().length()-1);
+    @RequestMapping(value = "getnewevent", method = RequestMethod.POST)
+    public String getAjax(@RequestBody NewEvent newEvent) {
+        System.out.println(newEvent.toString());
+        return "index";
     }
 }
 
-class Info{
-    String id;
+class NewEvent{
+    String title;
 
-    public String getId() {
-        return id;
+    String startTime;
+
+    String endTime;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTitle(String title) {
+        this.title = title;
     }
-*/
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "NewEvent{" +
+                "title='" + title + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                '}';
+    }
+}
+

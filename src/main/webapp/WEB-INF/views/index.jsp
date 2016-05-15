@@ -8,6 +8,8 @@
 <script src='resources/js/moment.min.js'></script>
 
 <script src='resources/js/fullcalendar.min.js'></script>
+<script src='resources/js/jquery.min.js'></script>
+<script src='resources/js/fullcalendar.js'></script>
 
 
 <!--
@@ -15,6 +17,14 @@
 -->
 
 <script src='resources/js/renderCalendar.js'></script>
+<script type='text/javascript' src='resources/js/uk.js'></script>
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
 
 
 <body>
@@ -35,16 +45,45 @@
 
             <select id="selectBox" onchange="changeFunc(value);">
 
-                <option value=" " > </option>
+                <option value= " " > </option>
 
                 <c:forEach items="${rooms}" var="r">
 
                         <option value="${r.id}" >${r.address}</option>
 
                 </c:forEach>
+
             </select>
 
+
+
+        <div id = "dialog" hidden>
+            <form id="form">
+                <div class = "form-group">
+                    <label for="startDate">Event title</label>
+                    <input type = "text" class = "form-control" id="startDate" placeholder="title">
+                </div>
+
+
+                <div class = "form-group">
+                    <label for="title">Start date</label>
+                    <input type = "text" class = "form-control" id="title" placeholder="startDate">
+                </div>
+
+                <div class = "form-group">
+                    <label for="endDate">End date</label>
+                    <input type = "text" class = "form-control" id="endDate" placeholder="endDate">
+                </div>
+                <div class = "form-group">
+                    <label for="Description">Description</label>
+                    <textarea type = "text" class = "form-control" id="description" placeholder="description"></textarea>
+                </div>
+                <button type="button" class="btn btn-success" id="creating">Create</button>
+            </form>
+        </div>
+
             <div id='calendar'></div>
+
         </sec:authorize>
         <sec:authorize access="hasRole('ADMINISTRATOR')">
              <p> I am ADMINISTRATOR</p>
