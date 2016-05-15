@@ -69,20 +69,37 @@
     </definition>
 
     <!-- Admin -->
-    <definition name="adm-edit-location" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-edit-location.jsp" />
-    </definition>
 
     <definition name="adm-edit-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-edit-manager.jsp" />
     </definition>
 
-    <definition name="adm-add-location" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-add-location.jsp" />
-    </definition>
-
     <definition name="adm-add-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-add-manager.jsp" />
+    </definition>
+
+    <definition name="adm-update-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-update-manager.jsp" />
+    </definition>
+
+    <definition name="adm-edit-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-edit-room.jsp" />
+    </definition>
+
+    <definition name="adm-add-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-add-room.jsp" />
+    </definition>
+
+    <definition name="adm-update-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-update-room.jsp" />
+    </definition>
+
+    <definition name="adm-edit-city" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-edit-city.jsp" />
+    </definition>
+
+    <definition name="adm-add-city" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-add-city.jsp" />
     </definition>
     <!-- /Admin -->
 
