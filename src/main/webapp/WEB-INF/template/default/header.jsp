@@ -3,6 +3,8 @@
 <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<!--
 <header class="bg-primary">
     <div class="container">
     	<div class="row">
@@ -47,3 +49,62 @@
             </div>
     </div>
 </header>
+-->
+
+<nav class="navbar navbar-default navbar-static-top primary-color" id="topnavbar">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/home" class="navbar-brand">Kids Room</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top_navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="top_navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><sec:authorize access="!isAuthenticated()">
+                                <li> <a href="<c:url value="/login" />">
+                                <span class="glyphicon glyphicon-log-in" ></span>
+                                <spring:message code="user.login" />
+                                   </a>
+                                   </li>
+                                
+                                <li><a  href="<c:url value="/registration" />">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <spring:message code="user.registration" />
+                                  </a></li>
+                        </sec:authorize>
+                        <sec:authorize access="isAuthenticated()">
+                            <sec:authorize access="hasRole('USER')">
+                                 <li><a href="mykids"><spring:message code="user.myKids" /></a></li>
+                                 <li><a href="mybookings"><spring:message code="user.myBookings" /></a></li>
+                            </sec:authorize>
+                            <sec:authorize access="hasRole('MANAGER')">
+                                  <li><a href="report"><spring:message code="manager.report" /></a></li>
+                                  <li><a href="listChildren"><spring:message code="manager.listOfKids" /></a></li>
+                                  <li><a href="allkidslist"><spring:message code="manager.allkidslist" /></a></li>
+                              </sec:authorize>
+
+                            <sec:authorize access="hasRole('ADMINISTRATOR')">
+                                <li><a href="adm-edit-location"><spring:message code="administrator.editLocations" /></a></li>
+                                <li><a href="adm-edit-manager"><spring:message code="administrator.editManagers" /></a></li>
+                            </sec:authorize>
+
+                                <li><a href="logout">     <spring:message code="user.logout" />   </a></li>
+                        </sec:authorize>
+
+                
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+          <li><a href="?language=en">EN</a></li>
+          <li> <a>|</a> </li>
+          <li><a href="?language=ua">UA</a></li>
+          </ul>
+          
+        </div>
+    </div>
+</nav>
+

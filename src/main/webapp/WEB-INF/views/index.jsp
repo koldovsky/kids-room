@@ -3,14 +3,21 @@
 
 <link href='resources/css/fullcalendar.css' rel='stylesheet' />
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+
+
 <script src='resources/js/moment.min.js'></script>
-<script src='resources/js/jquery.min.js'></script>
+
 <script src='resources/js/fullcalendar.min.js'></script>
 
+
+<!--
 <link href='resources/css/calendarstyle.css' rel='stylesheet' />
+-->
+
 <script src='resources/js/renderCalendar.js'></script>
 
-<div>
+
+<body>
         <sec:authorize access="isAuthenticated()">
             Your email <sec:authentication property="principal.username" /></p>
         </sec:authorize>
@@ -43,4 +50,4 @@
              <p> I am ADMINISTRATOR</p>
         </sec:authorize>
 
-</div>
+</body>
