@@ -1,16 +1,35 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
+public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
-public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao
-{
+    @PersistenceContext
+    EntityManager entityManager;
+
+
+    @Override
+    public List<User> findAllUsersByRole(Role role) {
+        List<User> result = (List<User>) entityManager.createQuery("from User where role = " + role.ordinal()).getResultList();
+
+        return result;
+    }
+
+    @Override
+    public void deleteUserById(Long id){
+        entityManager.createQuery("DELETE FROM User where id = " + id).executeUpdate();
+    }
 
     @Override
     public User getUserByEmail(String email) {
