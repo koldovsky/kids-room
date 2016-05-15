@@ -5,43 +5,42 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Edit location</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+	<title>Add manager</title>
+
+	<link rel="stylesheet" type="text/css" href="resources/css/admin-new-style.css">
 </head>
 
 <body>
-    <div class="rightsidebar">
+    <div class="for-table">
         <form action="adm-add-manager" method="post" modelAttribute="user">
-            <fieldset >
-                <legend>General</legend>
-                <label >
-                    E-mail
-                    <input type="email" name="email" required ></input>
-                </label>
 
-                <label >
-                    Password
-                    <input type="password" name="password" required></input>
-                </label>
+                <legend class="for-field"><strong>Add manager</strong></legend>
 
-                <label>
-                    First Name
-                    <input type="text" name="firstName" required></input>
-                </label>
+                <div class="form-group">
+                    <label class="for-field"> E-mail <input type="email" name="email" required class="form-control"/></label>
+                </div>
 
-                <label >
-                    Last Name
-                    <input type="text" name="lastName" required></input>
-                </label>
+                <div class="form-group">
+                    <label class="for-field"> Password <input type="password" name="password" required class="form-control"/></label>
+                </div>
 
-                <label >
-                    Phone number
-                    <input type="number" name="phoneNumber" required></input>
-                </label>
+                <div class="form-group">
+                    <label class="for-field"> First Name <input type="text" name="firstName" required class="form-control"/></label>
+                </div>
 
-                <button type="submit" name="submit">Submit</button>
-                <button type="reset" name="reset" >Cancel</button>
-            </fieldset>
+                <div class="form-group">
+                    <label class="for-field"> Last Name <input type="text" name="lastName" required class="form-control"/></label>
+                </div>
+
+                <div class="form-group">
+                    <label class="for-field"> Phone number <input type="number" name="phoneNumber" pattern="^[\d]{10,13}$" required class="form-control"/></label>
+                </div>
+
+                <div class="form-group">
+                    <button class="for-button" type="submit" name="submit">Submit</button>
+                    <button class="for-button" type="reset" name="reset" >Cancel</button>
+                </div>
+
         </form>
     </div>
 </body>

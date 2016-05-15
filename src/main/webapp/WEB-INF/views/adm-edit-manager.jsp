@@ -1,45 +1,51 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Edit location</title>
-	<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<meta charset="UTF-8">
+<title>Edit location</title>
+<link rel="stylesheet" type="text/css" href="resources/css/admin-new-style.css">
+
 </head>
 
 <body>
-    <a href="adm-add-manager"><button name="add-manager">Add</button></a>
-    <form action="adm-edit-manager" method="post" value="movie">
-    <button name="delete-manager">Delete</button>
-    </form>
+    <div>
+        <script src="resources/js/adm-edit-loc.js"></script>
 
-    <form action="adm-edit-manager" method="get" modelAttribute="managers">
-        <div class="rightback">
-            <div class="contentback">
-                <div class="leftback">
-                    <div class="leftsidebar">
-                        <fieldset class="possition">
-                            <label>
-                                <legend>Manager list</legend>
-                                <select name="managers" required>
-                                    <c:forEach var="manager" items="${managerList}" >
-                                        <option value="${manager}">${movie}</option>
-                                    </c:forEach>
-                                </select>
-                            </label>
-                        </fieldset>
-                    </div>
+        <legend class="for-table"><strong>Manager list</strong></legend>
 
-                    <div class="rightsidebar">
+        <table class="for-table">
+            <tr>
+                <td><strong>Manager email</strong></td>
+                <td><strong>Manager First Name</strong></td>
+                <td><strong>Manager Last Name</strong></td>
+                <td><strong>Manager Phone number</strong></td>
+            </tr>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+            <c:forEach var="manager" items="${managerList}">
+            <tr>
+                <td>${manager.email}</td>
+                <td>${manager.firstName}</td>
+                <td>${manager.lastName}</td>
+                <td>${manager.phoneNumber}</td>
+                <td><a href="adm-update-manager?id=${manager.id}"><input type="button" value="Edit" class="for-button"/></a>
+
+                    <c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
+                    <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
+                          <input id="manager" name="manager" type="hidden" value="${manager.id}" />
+                          <input type="submit" value="Delete" onClick="return confirm('sure?')" class="for-button"/>
+                    </form:form>
+                    </td>
+            </tr>
+            </c:forEach>
+        </table>
+
+            <a href="adm-add-manager"><input type="button" value="Add" class="for-button"/></a>
+
+    </div>
 </body>
 </html>
