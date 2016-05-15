@@ -1,13 +1,13 @@
 package ua.softserveinc.tc.controller;
 
+import com.google.gson.Gson;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -24,10 +24,11 @@ public class SearchController {
     private UserSearch userSearch;
 
     @RequestMapping(value = "/user/search", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> searchUser(@RequestParam("field") String field) {
+    public @ResponseBody String searchUser(@RequestParam("field") String field) {
         List<User> result = userSearch.search(field);
 
-        return new ResponseEntity<List<User>>(result, HttpStatus.OK);
+        Gson gson = new Gson();
+        return gson.toJson(result);
     }
 
 }
