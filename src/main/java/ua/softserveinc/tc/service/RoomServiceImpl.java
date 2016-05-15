@@ -24,7 +24,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public Room findById(Object id) {
-        return roomDao.findById(new Long(1));
+        return roomDao.findById(id);
     }
 
     @Override

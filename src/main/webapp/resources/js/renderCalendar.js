@@ -127,7 +127,7 @@ function forSendingToServer(event){
         url:'getnewevent',
         dataType: "json",
     data: JSON.stringify({
-        title : event.title,
+        name : event.title,
         startTime : event.start,
         endTime: event.end
     })

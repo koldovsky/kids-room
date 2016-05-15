@@ -33,7 +33,18 @@ public class CalendarServiceImpl implements CalendarService{
     public final void create(final EventDTO eventDTO) {
         Event event = new Event();
         event = eventMapper.toEntity(eventDTO);
-        event.setRoom(roomDao.findById(eventDTO.getRoomId()));
+       // event.setRoom(roomDao.findById(eventDTO.getRoomId()));
+
+
+        List<Room> rooms = roomDao.findAll();
+        Room room = null;
+
+        for(int i = 0; i < rooms.size(); i++) {
+            if(rooms.get(i).getId() == 1) {
+                room = rooms.get(i);
+            }
+        }
+        event.setRoom(room);
         eventDao.create(event);
     }
 

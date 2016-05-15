@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.softserveinc.tc.dto.EventDTO;
 import ua.softserveinc.tc.service.CalendarServiceImpl;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
@@ -37,50 +38,12 @@ public class ViewEventController {
     }
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST)
-    public String getAjax(@RequestBody NewEvent newEvent) {
-        System.out.println(newEvent.toString());
+    public String getAjax(@RequestBody EventDTO eventDTO) {
+        System.out.println(eventDTO.toString());
+        calendarServiceImpl.create(eventDTO);
+
         return "index";
     }
 }
 
-class NewEvent{
-    String title;
-
-    String startTime;
-
-    String endTime;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    @Override
-    public String toString() {
-        return "NewEvent{" +
-                "title='" + title + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                '}';
-    }
-}
 

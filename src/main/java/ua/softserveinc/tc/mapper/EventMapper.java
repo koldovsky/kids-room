@@ -5,6 +5,7 @@ import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dto.EventDTO;
 import ua.softserveinc.tc.entity.Event;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
@@ -17,18 +18,33 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         Event event = new Event();
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
-        event.setAgeLow(eventDto.getAgeLow());
-        event.setAgeHigh(eventDto.getAgeHigh());
 
-        try {
+        Date startDate = null;
+        Date endDate = null;
+        try{
             DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
-            Date startDate = df.parse(eventDto.getStartTime());
-            Date endDate = df.parse(eventDto.getEndTime());
+            startDate = df.parse(eventDto.getStartTime());
+        } catch (ParseException pe) {
+            try {
+                DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+                startDate = df.parse(eventDto.getStartTime());
+            }catch (Exception e){
 
-            event.setStartTime(startDate);
-            event.setEndTime(endDate);
-        } catch (Exception e) {}
+            }
+        }
 
+        try{
+            DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
+            endDate = df.parse(eventDto.getEndTime());
+        } catch (ParseException pe) {
+            try {
+                DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+                endDate = df.parse(eventDto.getEndTime());
+            }catch (Exception e){}
+        }
+
+        event.setStartTime(startDate);
+        event.setEndTime(endDate);
         return event;
     }
 
