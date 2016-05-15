@@ -97,3 +97,49 @@ caption h2  {
 #topnavbar{
   background-color: #4285F4;
 }
+
+header h1 {
+   font-weight: 600;
+   margin: 0;
+ }
+ 
+ header a {
+     margin: 20px;
+   color: white;
+ }
+ 
+ header{
+   padding: 20px;
+   margin-bottom: 40px;
+ }
+ 
+ body{
+ 
+ }
+ table, th, td {
+ text-align: center;
+     border: 2px solid #ddd;
+     border-collapse: collapse;
+     width: 40%;
+     padding: 10px;
+     margin-left: 50 px;
+ 
+ }
+ tr{
+   border-collapse: collapse;
+   border: 2px solid #ddd;
+ }
+ 
+ 
+ th {
+    border: 2px solid #ddd;
+     height: 50px;
+ }
+ th {
+     background-color: #6495ED;
+     color: white;
+ }
+ caption {
+   background-color: #6495ED;
+   color: white;
+ }
