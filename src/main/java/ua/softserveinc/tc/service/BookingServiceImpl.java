@@ -3,12 +3,14 @@ package ua.softserveinc.tc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
+import java.text.SimpleDateFormat;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.text.DateFormat;
@@ -16,9 +18,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_START_TIME;
+
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
+
     @Autowired
     private BookingDao bookingDao;
 
@@ -101,11 +106,24 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<Booking> getBookingsOfThisDay()
     {
-        //Date date = new Date();
+        Date day = new Date("2015/04/04");
+        SimpleDateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        String currentDay = df.format(day);
+
+        EntityManager entityManager = bookingDao.getEntityManager();
+
+        List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
+                "from Booking where " + BOOKING_START_TIME + " like " + "'"+currentDay+"%'")
+                .getResultList();
+        return bookingsDay;
+    }
+    @Override
+    public List<Booking> getBookingsByDay(String data){
         EntityManager entityManager = bookingDao.getEntityManager();
         List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
-                "from Booking where " + BookingConst.BOOKING_START_TIME + " = '2015-04-04 00:00:00'")
+                "from Booking where " + BOOKING_START_TIME + " like " + "'"+data+"%'")
                 .getResultList();
+
         return bookingsDay;
     }
 
