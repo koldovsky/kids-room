@@ -97,14 +97,17 @@
 
                 
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
-          <li><a href="?language=en">EN</a></li>
-          <li> <a>|</a> </li>
-          <li><a href="?language=ua">UA</a></li>
-          </ul>
-          
+           <li class="dropdown menu-item">       
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language</a>
+                <ul class="dropdown-menu">
+                    <li><a href="?language=en">EN</a></li>
+                    <li><a href="?language=ua">UA</a></li>
+                   </ul>
+                 </li>
+            </ul>
         </div>
     </div>
+    
 </nav>
 
