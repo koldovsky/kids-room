@@ -9,7 +9,7 @@
 <script src="resources/js/mykidslist.js">
 </script>
 
-<div style="text-align:center;">
+
 <div class="list">
 <h2>
     <spring:message code="kid.list" />
@@ -20,7 +20,7 @@
     <h3>${kid.getFullName()}</h3>
     </div>
 
-    <button class="btn glyphicon glyphicon-pencil">
+    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
         &nbsp;<spring:message code="button.edit" />
     </button>
     <div class="kidinfo" data-id="${kid.getId()}">
@@ -33,13 +33,11 @@
     </div>
 </div>
 
-
 </c:forEach>
-
-</div>
 <form action="registerkid">
-    <button class="btn-primary" type="submit">
+    <button class="btn btn-raised btn-primary waves-effect waves-light" type="submit">
         <spring:message code="button.add" />
     </button>
 </form>
 </div>
+

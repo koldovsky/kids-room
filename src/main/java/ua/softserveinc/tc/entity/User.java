@@ -6,7 +6,10 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.service.UserService;
 
 import javax.persistence.*;
 import java.util.*;
@@ -18,9 +21,7 @@ import java.util.stream.Collectors;
 @Entity
 @Indexed
 @Table(name = UserConst.TABLE_NAME_USER)
-public class User {
-
-
+public class User{
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -60,8 +61,8 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
-    @Transient
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
+    @Column
     private Set<Child> children;
 
     public void setChildren(Set<Child> children) {
@@ -69,7 +70,7 @@ public class User {
     }
 
     public Set<Child> getChildren() {
-        return new TreeSet<>(children);
+        return children;
     }
 
     public String getPassword() {
@@ -146,8 +147,7 @@ public class User {
     }
 
     public List<Child> getEnabledChildren() {
-        List<Child> li = new ArrayList<>(this.getChildren());
-
+        List<Child> li = new ArrayList<>(children);
         return li.stream()
                 .filter(Child::isEnabled)
                 .collect(Collectors.toList());

@@ -1,11 +1,14 @@
 form {
 				padding: 50px;
-				border: 10px solid #4285F4;
-				border-radius: 10px;
-				margin: 20px auto;
-				width: 40%;
+				border-left: 5px solid #4285F4;
+				border-right: 5px solid #4285F4;
+				border-bottom: 5px solid #4285F4;
+				margin: 0px auto;
+				width: 30%;
+				height: 100%;
 				min-width: 400px;
 				text-align: center;
+				background-color: white;
 			}
 
 form h2{
@@ -27,7 +30,7 @@ form .required:after {
 
 input, textarea, label{
     text-align: center;
-    width:100%;
+    width:80%;
 }
 
 #submit{
@@ -53,3 +56,12 @@ margin: 0 auto;
     content: "* ";
     color: red;
 }
+
+.dark-primary-color    { background: #0288D1; }
+.default-primary-color { background: #03A9F4; }
+.light-primary-color   { background: #B3E5FC; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #8BC34A; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }

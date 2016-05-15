@@ -12,7 +12,7 @@
 
       <div class="form-group">
              <label for="firstname" class="required"><spring:message code="kid.firstname" /></label>
-              <form:input path="firstName" id="firstname" value="${kid.getFirstName()}" class="form-control" required="required"/>
+              <form:input path="firstName" id="firstname" value="${kid.getFirstName()}" class="primary-color form-control" required="required"/>
       </div>
       <div class="form-group">
               <label for="lastname" class="required"><spring:message code="kid.lastname" /></label>

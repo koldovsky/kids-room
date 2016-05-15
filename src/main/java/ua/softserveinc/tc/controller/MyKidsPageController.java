@@ -32,9 +32,9 @@ public class MyKidsPageController {
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.MY_KIDS_VIEW);
 
-        List<Child> myKids = userService.getUserByEmail(
-                principal.getName())
-                .getEnabledChildren();
+            List<Child> myKids = userService.getUserByEmail(
+                    principal.getName())
+                    .getEnabledChildren();
 
         ModelMap modelMap = model.getModelMap();
 
