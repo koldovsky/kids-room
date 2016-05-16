@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 
+import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.json.UserJSON;
 import ua.softserveinc.tc.service.BookingService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,22 +50,10 @@ public class ReportPageController
     public @ResponseBody String refreshView(@PathVariable String startDate, @PathVariable String endDate)
     {
         List<User> users = bookingService.getActiveUsersForRangeOfTime(startDate, endDate);
-        JSONBooking jsonBooking = new JSONBooking(users, startDate, endDate);
+        List<UserDTO> userDTOs = new ArrayList<>();
+        users.forEach(user -> userDTOs.add(new UserDTO(user)));
+        UserJSON userJSON = new UserJSON(userDTOs, startDate, endDate);
         Gson gson = new Gson();
-        return gson.toJson(jsonBooking);
-    }
-
-    private class JSONBooking
-    {
-        List<User> users;
-        String startDate;
-        String endDate;
-
-        public JSONBooking(List<User> users, String startDate, String endDate)
-        {
-            this.users = users;
-            this.startDate = startDate;
-            this.endDate = endDate;
-        }
+        return gson.toJson(userJSON);
     }
 }
