@@ -56,13 +56,11 @@ public class User{
     @Field(store = Store.NO)
     private String phoneNumber;
 
-
     @Column(name = UserConst.ROLE)
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
-    @Column
     private Set<Child> children;
 
     public void setChildren(Set<Child> children) {
