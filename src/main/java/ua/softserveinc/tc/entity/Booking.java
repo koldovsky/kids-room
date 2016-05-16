@@ -46,7 +46,7 @@ public class Booking {
     @Column(name = BookingConst.IS_CANCELLED, nullable = false)
     private boolean isCancelled;
 
-    @Column(name = BookingConst.SUM, columnDefinition = "int default 13")
+    @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
     private int sum;
 
     public Long getIdBook() {
