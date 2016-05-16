@@ -19,28 +19,28 @@ public class City {
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
     @Column(name = CityConst.ID_CITY, nullable = false)
-    private Long idRoom;
+    private Long idCity;
 
     @Column(name = CityConst.NAME_CITY)
-    private String nameRoom;
+    private String nameCity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
     private List<Room> rooms;
 
-    public Long getIdRoom() {
-        return idRoom;
+    public Long getIdCity() {
+        return idCity;
     }
 
-    public void setIdRoom(Long idRoom) {
-        this.idRoom = idRoom;
+    public void setIdCity(Long idCity) {
+        this.idCity = idCity;
     }
 
-    public String getNameRoom() {
-        return nameRoom;
+    public String getNameCity() {
+        return nameCity;
     }
 
-    public void setNameRoom(String nameRoom) {
-        this.nameRoom = nameRoom;
+    public void setNameCity(String nameCity) {
+        this.nameCity = nameCity;
     }
 
     public List<Room> getRooms() {

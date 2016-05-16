@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Update manager</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/admin-new-style.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 </head>
 
 <div class="for-table">

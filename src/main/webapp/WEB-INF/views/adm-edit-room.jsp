@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Edit room</title>
-<link rel="stylesheet" type="text/css" href="resources/css/admin-new-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 
 </head>
 
