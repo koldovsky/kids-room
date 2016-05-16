@@ -11,6 +11,7 @@
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.js'></script>
 
+<script src='resources/js/userCalendar.js'></script>
 
 <!--
 <link href='resources/css/calendarstyle.css' rel='stylesheet' />
@@ -37,10 +38,38 @@
             <h2><a href="mykids">My Kids</a></h2>
 
 
+            <c:forEach items="${managersRoom}" var="r">
+
+                ${r.id}
+
+            </c:forEach>
+
+
+            <select id="selectBox" onchange="selectRoomForUser(value);">
+
+                <option value= " " > </option>
+
+                <c:forEach items="${rooms}" var="r">
+
+                    <option value="${r.id}" >${r.address}</option>
+
+                </c:forEach>
+
+            </select>
+
+            <div id='calendar'></div>
+
+
 
         </sec:authorize>
         <sec:authorize access="hasRole('MANAGER')">
             <p> I am MANAGER</p>
+
+            <c:forEach items="${managersRoom}" var="r">
+
+                ${r.id}
+
+            </c:forEach>
 
 
             <select id="selectBox" onchange="changeFunc(value);">

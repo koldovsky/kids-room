@@ -3,27 +3,15 @@
  */
 
 
-function changeFunc(id) {
-
-    var maxId = 0;
+function selectRoomForUser(id) {
 
     $('#calendar').fullCalendar('destroy');
-    $('#dialog').dialog({
-        autoOpen: false,
-        show: {
-            effect: 'drop',
-            duration: 500
-        },
-        hide: {
-            effect: 'clip',
-            duration: 500
-        }
-    })
 
     var path = "getCompanies/" + id;
 
     $.ajax({
-        url: path, success: function (result) {
+        url: path,
+        success: function (result) {
 
             if (result.length != 0) {
                 var objects = [];
@@ -39,7 +27,8 @@ function changeFunc(id) {
                         id: parseInt(stringToArray[4]),
                         title: stringToArray[1],
                         start: stringToArray[2],
-                        end: stringToArray[3]
+                        end: stringToArray[3],
+                        editable: false
                     }
                 }
 
@@ -51,7 +40,8 @@ function changeFunc(id) {
                 var objects = [{
                     title: "1",
                     start: "1",
-                    end: "1"
+                    end: "1",
+                    editable: false
                 }]
                 rendering(objects);
 
@@ -64,33 +54,6 @@ function rendering(objects) {
 
     $('#calendar').fullCalendar({
 
-        dayClick: function f(date, jsEvent, view) {
-
-            var clickDate = date.format();
-
-            $('#startDate').val("");
-            $('#endDate').val(clickDate);
-            $('#title').val(clickDate);
-
-            $("#dialog").dialog('open');
-
-            $('#creating').click(function () {
-
-                var ev = {
-                    title: $('#startDate').val(),
-                    start: $('#title').val(),
-                    end: $('#endDate').val()
-                }
-
-                $('#calendar').fullCalendar('renderEvent', ev, true);
-                forSendingToServer(ev);
-
-                $('#title').val("");
-                $('#dialog').dialog('close');
-            })
-        },
-
-
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -98,8 +61,6 @@ function rendering(objects) {
         },
         defaultDate: $('#calendar').fullCalendar('getDate'),
 
-        //selectable: true,
-        selectHelper: true,
         select: function (start, end) {
             var title = prompt('Event Title:');
             var eventData;
@@ -107,31 +68,15 @@ function rendering(objects) {
                 eventData = {
                     title: title,
                     start: start,
-                    end: end
+                    end: end,
                 };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                $('#calendar').fullCalendar('renderEvent', eventData, false); // stick? = true
             }
             $('#calendar').fullCalendar('unselect');
         },
-        editable: true,
+        editable: false,
         eventLimit: true, // allow "more" link when too many events
         events: objects
     });
-}
-
-
-function forSendingToServer(event) {
-
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'getnewevent',
-        dataType: "json",
-        data: JSON.stringify({
-            name: event.title,
-            startTime: event.start,
-            endTime: event.end
-        })
-    })
 }
 

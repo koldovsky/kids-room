@@ -27,7 +27,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     public List<T> findAll() {
         return entityManager.createQuery("From " + entityClass.getSimpleName() + " order by id").getResultList();
     }
-
+    @Transactional
     public void create(T entity) {
         entityManager.persist(entity);
     }

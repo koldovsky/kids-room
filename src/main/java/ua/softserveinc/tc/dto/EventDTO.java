@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
  * Created by dima- on 07.05.2016.
  */
 public class EventDTO implements BaseDTO{
+
+    private long id;
+
     private String name;
 
     private String startTime;
@@ -77,9 +80,17 @@ public class EventDTO implements BaseDTO{
         this.description = description;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return name + " " + startTime +
-                " " + endTime;
+                " " + endTime + " " + id;
     }
 }

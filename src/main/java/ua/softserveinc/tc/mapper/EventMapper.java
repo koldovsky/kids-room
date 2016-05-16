@@ -55,6 +55,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         eventDTO.setAgeLow(event.getAgeLow());
         eventDTO.setName(event.getName());
         eventDTO.setDescription(event.getDescription());
+        eventDTO.setId(event.getId());
 
         DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
 

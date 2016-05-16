@@ -138,4 +138,40 @@ $(document).ready(function() {
     }
     });
 });
+
+
+
+ removeEvents
+
+ Removes events from the calendar.
+
+ .fullCalendar( 'removeEvents' [, idOrFilter ] )
+ If idOrFilter is omitted, all events are removed.
+
+ If idOrFilter is an ID, all events with the same ID will be removed.
+
+ idOrFilter may also be a filter function that accepts one Event Object argument and returns true if it should be removed.
+
+
+Клік на події
+ $('#calendar').fullCalendar({
+ events: [
+ {
+ title: 'My Event',
+ start: '2010-01-01',
+ url: 'http://google.com/'
+ }
+ // other events here
+ ],
+ eventClick: function(event) {
+ if (event.url) {
+ window.open(event.url);
+ return false;
+ }
+ }
+ });
+
+
+
+
 */
