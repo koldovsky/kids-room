@@ -43,8 +43,11 @@ public class Booking {
     @Column(name = BookingConst.COMMENT)
     private String comment;
 
-    @Column(name = BookingConst.IS_CANCELED, nullable = false)
-    private boolean isCanceled;
+    @Column(name = BookingConst.IS_CANCELLED, nullable = false)
+    private boolean isCancelled;
+
+    @Column(name = BookingConst.SUM)
+    private int sum;
 
     public Long getIdBook() {
         return idBook;
@@ -102,12 +105,20 @@ public class Booking {
         this.comment = comment;
     }
 
-    public boolean isCanceled() {
-        return isCanceled;
+    public boolean isCancelled() {
+        return isCancelled;
     }
 
-    public void setCanceled(boolean canceled) {
-        isCanceled = canceled;
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
+    }
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 
     private static Calendar DateToCalendar(Date date)
@@ -122,44 +133,6 @@ public class Booking {
         return DateToCalendar(bookingStartTime).get(Calendar.YEAR);
     }
 
-    public int extractMonth()
-    {
-        return DateToCalendar(bookingStartTime).get(Calendar.MONTH) + 1;
-    }
-
-    public int extractDay()
-    {
-        return DateToCalendar(bookingStartTime).get(Calendar.DAY_OF_MONTH);
-    }
-
-    public int extractHourFromStartTime()
-    {
-        return DateToCalendar(bookingStartTime).get(Calendar.HOUR_OF_DAY);
-    }
-
-    public int extractHourFromEndTime()
-    {
-        return DateToCalendar(bookingEndTime).get(Calendar.HOUR_OF_DAY);
-    }
-
-    public int extractMinuteFromStartTime()
-    {
-        return DateToCalendar(bookingStartTime).get(Calendar.MINUTE);
-    }
-
-    public int extractMinuteFromEndTime()
-    {
-        return DateToCalendar(bookingEndTime).get(Calendar.MINUTE);
-    }
-
-    public String extractMonthAndDay()
-    {
-        Calendar calendar = DateToCalendar(bookingStartTime);
-        String monthAndDay = "";
-        monthAndDay += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)) + "/";
-        monthAndDay += String.format("%02d", (calendar.get(Calendar.MONTH)) + 1);
-        return monthAndDay;
-    }
     public String extractMonthDayAndYear()
     {
         Calendar calendar = DateToCalendar(bookingStartTime);
@@ -170,20 +143,9 @@ public class Booking {
         return monthAndDay;
     }
 
-
-
     public String extractHourAndMinuteFromStartTime()
     {
         Calendar calendar = DateToCalendar(bookingStartTime);
-        String hourAndMinute = "";
-        hourAndMinute += String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":";
-        hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
-        return hourAndMinute;
-    }
-
-    public String extractHourAndMinuteFromEndTime()
-    {
-        Calendar calendar = DateToCalendar(bookingEndTime);
         String hourAndMinute = "";
         hourAndMinute += String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":";
         hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
@@ -234,16 +196,5 @@ public class Booking {
             // we return price for max value
             if (hours > 10) return prices.get(listOfKeys.get(listOfKeys.size() - 1));
         }
-    }
-
-    public static int getSumTotal(List<Booking> bookings)
-    {
-        int sumTotal = 0;
-        for (Booking booking : bookings)
-        {
-            sumTotal += booking.getSum(booking.getDuration());
-        }
-
-        return sumTotal;
     }
 }

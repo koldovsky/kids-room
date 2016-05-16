@@ -15,7 +15,9 @@ public interface BookingConst {
 
     String COMMENT = "comment";
 
-    String IS_CANCELED = "is_canceled";
+    String IS_CANCELLED = "is_cancelled";
+
+    String SUM = "sum";
 
     // Don't need ID_MANAGER & ID_CITY.
     // Because we will get this constants from appropriate tables from relationship.

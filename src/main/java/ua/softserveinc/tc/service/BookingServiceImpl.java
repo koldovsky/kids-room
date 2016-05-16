@@ -117,7 +117,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .getResultList();
         return bookingsDay;
     }
+
     @Override
+    public int getSumTotal(List<Booking> bookings)
+    {
+        int sumTotal = 0;
+        for (Booking booking : bookings)
+        {
+            sumTotal += booking.getSum();
+        }
+
+        return sumTotal;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Booking> getBookingsByDay(String data){
         EntityManager entityManager = bookingDao.getEntityManager();
         List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(

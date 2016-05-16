@@ -52,7 +52,7 @@ public class MyBookingsController {
         List<Booking> myBookings = bookingService
                 .getBookingsByUserByRangeOfTime(currentUser, dateThen, dateNow);
 
-        int sumTotal = Booking.getSumTotal(myBookings);
+        int sumTotal = bookingService.getSumTotal(myBookings);
 
         modelMap.addAttribute(ReportConst.PARENT, currentUser);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
