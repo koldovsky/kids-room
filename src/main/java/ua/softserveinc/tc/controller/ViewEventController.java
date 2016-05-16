@@ -38,8 +38,7 @@ public class ViewEventController {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
 
-            System.out.println(user.getEmail());
-            if(userService.getUserByEmail(email).getRole().toString() == Role.USER.toString()) {
+            if(userService.getUserByEmail(email).getRole() == Role.USER) {
                 model.addAttribute("rooms",roomServiceImpl.findAll());
             } else {
                 model.addAttribute("rooms", roomServiceImpl.findByManger(user));
