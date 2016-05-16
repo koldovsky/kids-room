@@ -34,7 +34,6 @@
 
 <sec:authorize access="hasRole('USER')">
     <p> I am USER</p>
-    <h2><a href="mykids">My Kids</a></h2>
 
 
     <c:forEach items="${managersRoom}" var="r">

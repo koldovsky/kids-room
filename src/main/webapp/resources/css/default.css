@@ -1,3 +1,8 @@
+#main-footer{
+    padding-top: 30px;
+    border-top: 1px solid grey;
+}
+
 .wrapper {
   display: table;
   height: 100%;
@@ -46,23 +51,9 @@
   margin: 0;
 }
 
-header h1 {
-   font-weight: 600;
-   margin: 0;
- }
- 
- header a {
-     margin: 20px;
-   color: white;
- }
- 
- header{
-   padding: 20px;
-   margin-bottom: 40px;
- }
 
  table, th, td {
- text-align: center;
+    text-align: center;
      border: 2px solid #ddd;
      border-collapse: collapse;
      width: 40%;

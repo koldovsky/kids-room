@@ -16,9 +16,6 @@ import java.util.Date;
 @Table(name = ChildConst.TABLE_NAME)
 public class Child implements Comparable<Child>
 {
-    public static int MIN_AGE = 3;
-    public static int MAX_AGE = 8;
-
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -48,11 +45,6 @@ public class Child implements Comparable<Child>
             nullable = false,
             columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled = true;
-
-    @PrePersist
-    public void onCreate() {
-        enabled = true;
-    }
 
     public Long getId() {
         return id;

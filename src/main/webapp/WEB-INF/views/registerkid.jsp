@@ -17,12 +17,14 @@
              </label>
 
               <form:input path="firstName" id="firstname" class="form-control" required="required" pattern="^[A-Z].*"/>
+              <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
               <label for="lastname" class="required">
               	<spring:message code="kid.lastname" />
               </label>
               <form:input path="lastName" id="lastname" class="form-control" required="required" />
+              <form:errors path="lastName" cssClass="error" />
       </div>
 
       <div class="form-group">
@@ -30,6 +32,7 @@
                         <spring:message code="kid.date" />
                     </label>
                     <form:input path="dateOfBirth" type="date" id="date" name="date" class="form-control" required="required" />
+                    <form:errors path="dateOfBirth" cssClass="error" />
       </div>
 
       <div class="form-group">

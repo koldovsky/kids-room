@@ -1,8 +1,6 @@
 form {
-				padding: 50px;
-				border-left: 5px solid #4285F4;
-				border-right: 5px solid #4285F4;
-				border-bottom: 5px solid #4285F4;
+				padding-left: 50px;
+				padding-right: 50px;
 				margin: 0px auto;
 				width: 30%;
 				height: 100%;
@@ -12,6 +10,7 @@ form {
 			}
 
 form h2{
+			padding-top: 50px;
 			margin-top: 0;
 			margin-bottom: 25px;
 			text-align: center;

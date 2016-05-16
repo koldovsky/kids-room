@@ -15,6 +15,26 @@ import java.util.List;
 
 @Service
 public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildService {
+    //TODO: Адміну дати можливість конфіжити ці поля
+    private static int MIN_AGE = 3;
+    private static int MAX_AGE = 8;
+
+    public static int getMinAge() {
+        return MIN_AGE;
+    }
+
+    public static void setMinAge(int minAge) {
+        MIN_AGE = minAge;
+    }
+
+    public static int getMaxAge() {
+        return MAX_AGE;
+    }
+
+    public static void setMaxAge(int maxAge) {
+        MAX_AGE = maxAge;
+    }
+
     @Autowired
     private ChildDao childDao;
 
@@ -29,6 +49,7 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
 
     //для чого це тут? в базовому севісі є метод findAll()
     @Override
+    @SuppressWarnings("unchecked")
     public List<Child> getAllChildren() {
         return childDao
                 .getEntityManager()

@@ -36,9 +36,7 @@ public class MyBookingsController {
     public ModelAndView getMyBookings(Principal principal){
 
         //TODO: тут треба доробити, бо показувати буде тільки рівно на проміжку -1 місяць від сьогодні
-        //TODO: напевно, менеджеру треба якусь кнопку, де він буде скидати букінги юзерів в своїй кімнаті
-        //TODO: або треба щоб менеджер встановлював, коли це має скидатись
-
+        //TODO: юзеру дати можливість вибрати дату
         ModelAndView model = new ModelAndView();
         model.setViewName(UsersConst.MY_BOOKINGS_VIEW);
         ModelMap modelMap = model.getModelMap();
@@ -54,7 +52,6 @@ public class MyBookingsController {
 
         int sumTotal = bookingService.getSumTotal(myBookings);
 
-        modelMap.addAttribute(ReportConst.PARENT, currentUser);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
         modelMap.addAttribute(ReportConst.BOOKINGS, myBookings);

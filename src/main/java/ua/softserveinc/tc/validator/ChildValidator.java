@@ -8,8 +8,10 @@ import org.springframework.validation.Validator;
 import ua.softserveinc.tc.constants.ValidationConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
+import ua.softserveinc.tc.service.ChildServiceImpl;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * Created by Nestor on 12.05.2016.
@@ -17,9 +19,6 @@ import java.util.Date;
 
 @Component
 public class ChildValidator implements Validator{
-
-
-
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -30,32 +29,26 @@ public class ChildValidator implements Validator{
     public void validate(Object o, Errors errors) {
         Child kidToValidate = (Child) o;
 
-        //TODO: ці штуки чомусь не працюють
-        ValidationUtils.rejectIfEmpty(errors, "firstName", ValidationConst.EMPTY_FIELD_OR_SPACE);
-        ValidationUtils.rejectIfEmpty(errors, "lastName", ValidationConst.EMPTY_FIELD_OR_SPACE);
+        ValidationUtils.rejectIfEmpty(errors, "firstName", "registration.empty");
+        ValidationUtils.rejectIfEmpty(errors, "lastName", "registration.empty");
+        ValidationUtils.rejectIfEmpty(errors, "dateOfBirth", "registration.empty");
 
-        Date birth = kidToValidate.getDateOfBirth();
+        if(!Pattern.compile(ValidationConst.NAME_REGEX)
+                .matcher(kidToValidate.getFirstName())
+                .matches()){
+            errors.rejectValue("firstName",  "registration.kid.name");
+        }
 
-        if(birth == null){
-            errors.rejectValue("dateOfBirth",  ValidationConst.EMPTY_FIELD_OR_SPACE);
+        if(!Pattern.compile(ValidationConst.NAME_REGEX)
+                .matcher(kidToValidate.getLastName())
+                .matches()){
+            errors.rejectValue("lastName",  "registration.kid.name");
         }
 
         int age = kidToValidate.getAge();
-        if(age<Child.MIN_AGE || age>Child.MAX_AGE){
-            errors.rejectValue("dateOfBirth",  ValidationConst.INAPPROPRIATE_AGE);
-        }
 
-        if(!kidToValidate.isEnabled()){
-            errors.rejectValue("enabled",  ValidationConst.ACCOUNT_REMOVED);
+        if(age < ChildServiceImpl.getMinAge() || age> ChildServiceImpl.getMaxAge()){
+            errors.rejectValue("dateOfBirth",  "registration.kid.date");
         }
-
-        if(kidToValidate.getParentId() == null){
-            errors.rejectValue("parentId",  ValidationConst.PARENT_NOT_SET);
-        }
-
-        if(!Character.isUpperCase(kidToValidate.getFirstName().charAt(0))){
-            errors.rejectValue("firstName",  ValidationConst.NAME_ERROR);
-        }
-
     }
 }

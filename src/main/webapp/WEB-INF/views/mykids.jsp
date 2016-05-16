@@ -19,18 +19,18 @@
     <div class="kidslistitem">
     <h3>${kid.getFullName()}</h3>
     </div>
+    <div class="kidinfo" data-id="${kid.getId()}">
+            <h4>
+                <spring:message code="kid.date" />: ${kid.getDateOfBirth()}
+            </h4>
+            <p>
+                ${kid.getComment()}
+            </p>
+    </div>
 
     <button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
         &nbsp;<spring:message code="button.edit" />
     </button>
-    <div class="kidinfo" data-id="${kid.getId()}">
-            <p>
-                <spring:message code="kid.date" />: ${kid.getDateOfBirth()}
-            </p>
-            <p>
-                <spring:message code="kid.comment" />: ${kid.getComment()}
-            </p>
-    </div>
 </div>
 
 </c:forEach>

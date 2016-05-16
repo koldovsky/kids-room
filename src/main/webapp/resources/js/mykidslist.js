@@ -1,8 +1,8 @@
 $(document).ready(function(){
-    $(".kidslistitem").click(function(){
-        var id = $(".kidslistitem").index(this);
+    $(".kidslistblock").click(function(){
+        var id = $(".kidslistblock").index(this);
         $(".kidinfo:eq("+id+")")
-            .slideToggle(400, function(){
+            .slideToggle("slow", function(){
         });
     });
 
