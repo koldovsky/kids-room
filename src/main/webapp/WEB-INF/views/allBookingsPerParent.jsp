@@ -28,13 +28,13 @@
 
             <c:forEach var="booking" items="${bookings}">
             <tr>
-                <td><fmt:formatDate pattern="dd/MM" value="${booking.getBookingStartTime()}" /></td>
-                <td>${booking.getIdChild()}</td>
-                <td>${booking.getIdRoom()}</td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.getBookingStartTime()}" /></td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.getBookingEndTime()}" /></td>
-                <td>${booking.getDuration()}</td>
-                <td>${booking.getSum(booking.getDuration())}</td>
+                <td><fmt:formatDate pattern="dd/MM" value="${booking.bookingStartTime}" /></td>
+                <td>${booking.idChild}</td>
+                <td>${booking.idRoom}</td>
+                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
+                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
+                <td>${booking}</td>
+                <td>${booking.sum}</td>
             </tr>
             </c:forEach>
 

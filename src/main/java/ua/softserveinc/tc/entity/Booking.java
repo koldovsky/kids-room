@@ -121,80 +121,23 @@ public class Booking {
         this.sum = sum;
     }
 
-    private static Calendar DateToCalendar(Date date)
+    public String extractMonthDayAndYear() //TODO for Vasyl: Remove when unused
     {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
-    }
-
-    public int extractYear()
-    {
-        return DateToCalendar(bookingStartTime).get(Calendar.YEAR);
-    }
-
-    public String extractMonthDayAndYear()
-    {
-        Calendar calendar = DateToCalendar(bookingStartTime);
-        String monthAndDay = "";
-        monthAndDay += this.extractYear()+"-";
+        calendar.setTime(bookingStartTime);
+        String monthAndDay = calendar.get(Calendar.YEAR)+ "-";
         monthAndDay += String.format("%02d", (calendar.get(Calendar.MONTH)) + 1) + "-";
         monthAndDay += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
         return monthAndDay;
     }
 
-    public String extractHourAndMinuteFromStartTime()
+    public String extractHourAndMinuteFromStartTime()//TODO for Vasyl: Remove when unused
     {
-        Calendar calendar = DateToCalendar(bookingStartTime);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(bookingStartTime);
         String hourAndMinute = "";
         hourAndMinute += String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":";
         hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
         return hourAndMinute;
-    }
-
-    public String getDuration()
-    {
-        String duration = "";
-
-        Calendar calendar = DateToCalendar(bookingStartTime);
-        int startHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int startMinute = calendar.get(Calendar.MINUTE);
-
-        calendar.setTime(bookingEndTime);
-        int endHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int endMinute = calendar.get(Calendar.MINUTE);
-
-        int differenceHour = endHour - startHour;
-        int differenceMinute = endMinute - startMinute;
-        if (differenceMinute < 0) {differenceHour--; differenceMinute += 60;}
-
-        duration += String.format("%02d", differenceHour) + ":";
-        duration += String.format("%02d", differenceMinute);
-        return duration;
-    }
-
-    public int getSum(String hoursAndMinutes)
-    {
-        // extract hour and minute from passed String
-        int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
-        int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
-
-        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
-        if (minutes > 0) hours++;
-
-        // get prices for particular room and sort them in order to choose appropriate one
-        Map<Integer, Integer> prices = idRoom.getPrices();
-        ArrayList<Integer> listOfKeys = new ArrayList<>();
-        listOfKeys.addAll(prices.keySet());
-        Collections.sort(listOfKeys);
-
-        while (true)
-        {
-            if (listOfKeys.contains(hours)) return prices.get(hours);
-            hours++;
-            // if manager enters value that is bigger than max value in the list
-            // we return price for max value
-            if (hours > 10) return prices.get(listOfKeys.get(listOfKeys.size() - 1));
-        }
     }
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
-import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
@@ -15,7 +14,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_START_TIME;
@@ -23,7 +21,6 @@ import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
-
     @Autowired
     private BookingDao bookingDao;
 
@@ -44,7 +41,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         catch (ParseException e)
         {
-            System.out.println("Wrong format of date " + e.getMessage());
+            System.out.println("Wrong format of date. " + e.getMessage());
         }
 
         return entityManager.createQuery(query).getResultList();
@@ -69,7 +66,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         catch (Exception e)
         {
-            System.out.println("Wrong format of date " + e.getMessage());
+            System.out.println("Wrong format of date. " + e.getMessage());
         }
 
         TypedQuery<User> typedQuery = entityManager.createQuery(query);
@@ -96,14 +93,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         catch (ParseException e)
         {
-            System.out.println("Wrong format of date " + e.getMessage());
+            System.out.println("Wrong format of date. " + e.getMessage());
         }
 
         return entityManager.createQuery(query).getResultList();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public List<Booking> getBookingsOfThisDay()
     {
         Date day = new Date("2015/04/04");
@@ -179,11 +176,34 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             {
                 if (booking.getIdUser().equals(user))
                 {
-                    sum += booking.getSum(booking.getDuration());
+                    sum += booking.getSum();
                 }
             }
             result.put(user, sum);
         }
         return result;
+    }
+
+    @Override
+    public String getDuration(Booking booking)
+    {
+        String duration = "";
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(booking.getBookingStartTime());
+        int startHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int startMinute = calendar.get(Calendar.MINUTE);
+
+        calendar.setTime(booking.getBookingEndTime());
+        int endHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int endMinute = calendar.get(Calendar.MINUTE);
+
+        int differenceHour = endHour - startHour;
+        int differenceMinute = endMinute - startMinute;
+        if (differenceMinute < 0) {differenceHour--; differenceMinute += 60;}
+
+        duration += String.format("%02d", differenceHour) + ":";
+        duration += String.format("%02d", differenceMinute);
+        return duration;
     }
 }
