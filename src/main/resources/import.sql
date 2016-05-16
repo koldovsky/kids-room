@@ -26,31 +26,31 @@ insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT4', '2016
 
 -- DEMIAN DEMO START
 -- user@softserveinc.com bookings for month start
-insert into bookings values (1, '2016-05-01 17:58', '2016-05-01 14:03', "The whole world of comments", false, 0, 1, 1, 1);
-insert into bookings values (2, '2016-05-02 19:32', '2016-05-02 17:37', "The whole world of comments", false, 0, 2, 1, 1);
-insert into bookings values (3, '2016-05-03 19:38', '2016-05-03 14:37', "The whole world of comments", false, 0, 1, 1, 1);
-insert into bookings values (4, '2016-05-04 16:56', '2016-05-04 14:57', "The whole world of comments", false, 0, 2, 1, 1);
-insert into bookings values (5, '2016-05-05 16:58', '2016-05-05 14:57', "The whole world of comments", false, 0, 1, 1, 1);
-insert into bookings values (6, '2016-05-06 16:57', '2016-05-06 14:57', "The whole world of comments", false, 0, 2, 1, 1);
-insert into bookings values (7, '2016-05-07 15:20', '2016-05-07 15:05', "The whole world of comments", false, 0, 1, 2, 1);
-insert into bookings values (8, '2016-05-08 19:36', '2016-05-08 17:25', "The whole world of comments", false, 0, 2, 2, 1);
-insert into bookings values (9, '2016-05-09 19:47', '2016-05-09 12:30', "The whole world of comments", false, 0, 1, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (1, '2016-05-01 17:58', '2016-05-01 14:03', "The whole world of comments", false, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (2, '2016-05-02 19:32', '2016-05-02 17:37', "The whole world of comments", false, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (3, '2016-05-03 19:38', '2016-05-03 14:37', "The whole world of comments", false, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (4, '2016-05-04 16:56', '2016-05-04 14:57', "The whole world of comments", false, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (5, '2016-05-05 16:58', '2016-05-05 14:57', "The whole world of comments", false, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (6, '2016-05-06 16:57', '2016-05-06 14:57', "The whole world of comments", false, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (7, '2016-05-07 15:20', '2016-05-07 15:05', "The whole world of comments", false, 1, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (8, '2016-05-08 19:36', '2016-05-08 17:25', "The whole world of comments", false, 2, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (9, '2016-05-09 19:47', '2016-05-09 12:30', "The whole world of comments", false, 1, 2, 1);
 -- user@softserveinc.com bookings for month end
 -- user@softserveinc.com bookings for other period start
-insert into bookings values (11, '2016-04-01 18:15', '2016-04-01 15:24', "The whole world of comments", false, 0, 1, 1, 1);
-insert into bookings values (12, '2016-04-02 14:21', '2016-04-02 10:38', "The whole world of comments", false, 0, 2, 1, 1);
-insert into bookings values (13, '2016-04-03 15:48', '2016-04-03 15:32', "The whole world of comments", false, 0, 1, 2, 1);
-insert into bookings values (14, '2016-04-04 16:34', '2016-04-04 13:15', "The whole world of comments", false, 0, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (11, '2016-04-01 18:15', '2016-04-01 15:24', "The whole world of comments", false, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (12, '2016-04-02 14:21', '2016-04-02 10:38', "The whole world of comments", false, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (13, '2016-04-03 15:48', '2016-04-03 15:32', "The whole world of comments", false, 1, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (14, '2016-04-04 16:34', '2016-04-04 13:15', "The whole world of comments", false, 2, 1, 1);
 -- user@softserveinc.com bookings for other period end
 -- another parents start
-insert into bookings values (21, '2016-05-01 16:27', '2016-05-01 13:15', "The whole world of comments", false, 0, 4, 1, 4);
-insert into bookings values (22, '2016-05-02 18:26', '2016-05-02 14:27', "The whole world of comments", false, 0, 4, 2, 4);
-insert into bookings values (23, '2016-05-03 17:18', '2016-05-03 16:27', "The whole world of comments", false, 0, 4, 1, 4);
-insert into bookings values (24, '2016-04-01 16:34', '2016-04-01 13:15', "The whole world of comments", false, 0, 5, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (21, '2016-05-01 16:27', '2016-05-01 13:15', "The whole world of comments", false, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (22, '2016-05-02 18:26', '2016-05-02 14:27', "The whole world of comments", false, 4, 2, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (23, '2016-05-03 17:18', '2016-05-03 16:27', "The whole world of comments", false, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (24, '2016-04-01 16:34', '2016-04-01 13:15', "The whole world of comments", false, 5, 1, 5);
 -- another parents end
 -- DEMIAN DEMO END
 
 -- VASYL DEMO START
-insert into bookings values (31, '2015-04-04 16:39', '2015-04-04 15:00', "The whole world of comments", false, 0, 1, 1, 1);
-insert into bookings values (32, '2015-04-04 16:39', '2015-04-04 15:30', "The whole world of comments", false, 0, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (31, '2015-04-04 16:39', '2015-04-04 15:00', "The whole world of comments", false, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (32, '2015-04-04 16:39', '2015-04-04 15:30', "The whole world of comments", false, 4, 1, 4);
 -- VASYL DEMO END
