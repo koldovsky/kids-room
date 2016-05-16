@@ -109,9 +109,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Date day = new Date("2015/04/04");
         SimpleDateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         String currentDay = df.format(day);
-
         EntityManager entityManager = bookingDao.getEntityManager();
-
         List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
                 "from Booking where " + BOOKING_START_TIME + " like " + "'"+currentDay+"%'")
                 .getResultList();
@@ -133,7 +131,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     @SuppressWarnings("unchecked")
     public List<Booking> getBookingsByDay(String data){
+
         EntityManager entityManager = bookingDao.getEntityManager();
+
         List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
                 "from Booking where " + BOOKING_START_TIME + " like " + "'"+data+"%'")
                 .getResultList();

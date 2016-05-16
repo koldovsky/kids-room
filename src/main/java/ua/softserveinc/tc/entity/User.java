@@ -63,6 +63,7 @@ public class User{
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
     @Column
+    @Transient
     private Set<Child> children;
 
     public void setChildren(Set<Child> children) {
