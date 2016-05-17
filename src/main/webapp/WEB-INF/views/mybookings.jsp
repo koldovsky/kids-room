@@ -47,8 +47,8 @@
 
         </table>
         <div id="exportButton">
-         <i class="fa fa-file-excel-o"></i>
-                <button class="btn btn-raised btn-primary waves-effect waves-light exportButton glyphicon glyphicon-download-alt">
+                <button class="btn btn-raised btn-primary waves-effect
+                waves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
                 </button>
             </div>

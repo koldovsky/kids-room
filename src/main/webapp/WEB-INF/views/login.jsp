@@ -19,15 +19,13 @@
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <div class="checkbox">
                 <label>
                   <input type="checkbox" name="remember-me"><spring:message code="user.remember" />
                 </label>
-              </div>
+
             </div>
           </div>
           <div class="form-group">
-
             <div class="col-sm-offset-2 col-sm-10">
                   <c:if test="${param.error != null}">
                           <div class ="error">
