@@ -35,20 +35,15 @@
 
 
 
-    <script>
-        $(document).ready(function() {
-            // This command is used to initialize some elements and make them work properly
-            $.material.init();
-        });
-    </script>
+
 
 <!-- /Material design -->
-
 
 </head>
 
 
 <body>
+<script type="text/javascript" src="resources/js/langswitcher.js"></script>
 <div class="wrapper">
   <div class="header"><tiles:insertAttribute name="header" /></div>
 

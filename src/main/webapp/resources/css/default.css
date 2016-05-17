@@ -3,6 +3,10 @@
     border-top: 1px solid grey;
 }
 
+.langitem{
+    cursor: pointer;
+}
+
 .wrapper {
   display: table;
   height: 100%;

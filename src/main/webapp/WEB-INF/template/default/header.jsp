@@ -103,8 +103,8 @@
            <li class="dropdown menu-item">       
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language</a>
                 <ul class="dropdown-menu">
-                    <li><a href="?language=en">EN</a></li>
-                    <li><a href="?language=ua">UA</a></li>
+                    <li> <a class="langitem" id="EN">EN</a></li>
+                    <li> <a class="langitem" id="UA">UA</a></li>
                    </ul>
                  </li>
             </ul>
@@ -112,4 +112,3 @@
     </div>
     
 </nav>
-
