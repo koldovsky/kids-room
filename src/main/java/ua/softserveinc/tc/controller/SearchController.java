@@ -33,11 +33,13 @@ public class SearchController {
 
     @RequestMapping(value = "/user/search", method = RequestMethod.GET)
     public @ResponseBody String searchUser(@RequestParam("field") String field) {
-        List<User> users = userSearch.search(field);
-
         List<UserDTO> result = new ArrayList<UserDTO>();
-        for (User user : users) {
-            result.add(new UserDTO(user));
+
+        if (field.length() >= 3 && field.length() <= 1024) {
+            List<User> users = userSearch.search(field);
+            for (User user : users) {
+                result.add(new UserDTO(user));
+            }
         }
 
         Gson gson = new Gson();
@@ -46,11 +48,13 @@ public class SearchController {
 
     @RequestMapping(value = "/child/search", method = RequestMethod.GET)
     public @ResponseBody String searchChild(@RequestParam("field") String field) {
-        List<Child> children = childSearch.search(field);
-
         List<ChildDTO> result = new ArrayList<ChildDTO>();
-        for (Child child : children) {
-            result.add(new ChildDTO(child));
+
+        if (field.length() >= 3 && field.length() <= 1024) {
+            List<Child> children = childSearch.search(field);
+            for (Child child : children) {
+                result.add(new ChildDTO(child));
+            }
         }
 
         Gson gson = new Gson();

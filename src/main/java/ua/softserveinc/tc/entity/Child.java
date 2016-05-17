@@ -1,15 +1,25 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.springframework.format.annotation.DateTimeFormat;
-import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
-
-import javax.persistence.*;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 
 /**
  * Created by Demian on 29.04.2016.
@@ -27,10 +37,12 @@ public class Child implements Comparable<Child>
 
     @Column(name = ChildConst.FIRST_NAME)
     @Field
+    @Analyzer(definition = "ngram")
     private String firstName;
 
     @Column(name = ChildConst.LAST_NAME)
     @Field
+    @Analyzer(definition = "ngram")
     private String lastName;
 
     @ManyToOne

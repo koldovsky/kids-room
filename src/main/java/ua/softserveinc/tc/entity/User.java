@@ -1,26 +1,57 @@
 package ua.softserveinc.tc.entity;
 
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
-import ua.softserveinc.tc.service.UserService;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 @NamedQueries({
         @NamedQuery(name = UserConst.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
 })
 @Entity
-@Indexed
 @Table(name = UserConst.TABLE_NAME_USER)
+@Indexed
+@AnalyzerDef(name = "ngram",
+        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+        filters = {
+            @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+            @TokenFilterDef(factory = NGramFilterFactory.class,
+                params = {
+                    @Parameter(name = "minGramSize",value = "3"),
+                    @Parameter(name = "maxGramSize",value = "1024")
+                })
+        })
 public class User{
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -31,17 +62,20 @@ public class User{
     @NotEmpty
     @Column(name = UserConst.FIRST_NAME)
     @Field
+    @Analyzer(definition = "ngram")
     private String firstName;
 
     @NotEmpty
     @Column(name = UserConst.LAST_NAME)
     @Field
+    @Analyzer(definition = "ngram")
     private String lastName;
 
     @NotEmpty
     @Email
     @Column(name = UserConst.EMAIL, unique = true)
     @Field(store = Store.NO)
+    @Analyzer(definition = "ngram")
     private String email;
 
     @NotEmpty
@@ -54,6 +88,7 @@ public class User{
     @NotEmpty
     @Column(name = UserConst.PHONE)
     @Field(store = Store.NO)
+    @Analyzer(definition = "ngram")
     private String phoneNumber;
 
     @Column(name = UserConst.ROLE)
