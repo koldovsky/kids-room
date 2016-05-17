@@ -140,4 +140,15 @@ public class Booking {
         hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
         return hourAndMinute;
     }
+
+    public String getDuration()// Чи обов'язково переносити в сервіс?
+    {
+        long difference = bookingEndTime.getTime() - bookingStartTime.getTime();
+        long hours = difference / 1000 / 60 / 60;
+        long minutes = difference / 1000 / 60 % 60;
+        String duration = String.format("%02d", hours) + ":";
+        duration += String.format("%02d", minutes);
+
+        return duration;
+    }
 }

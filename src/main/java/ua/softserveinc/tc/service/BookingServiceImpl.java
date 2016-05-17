@@ -183,27 +183,4 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         return result;
     }
-
-    @Override
-    public String getDuration(Booking booking)
-    {
-        String duration = "";
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(booking.getBookingStartTime());
-        int startHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int startMinute = calendar.get(Calendar.MINUTE);
-
-        calendar.setTime(booking.getBookingEndTime());
-        int endHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int endMinute = calendar.get(Calendar.MINUTE);
-
-        int differenceHour = endHour - startHour;
-        int differenceMinute = endMinute - startMinute;
-        if (differenceMinute < 0) {differenceHour--; differenceMinute += 60;}
-
-        duration += String.format("%02d", differenceHour) + ":";
-        duration += String.format("%02d", differenceMinute);
-        return duration;
-    }
 }
