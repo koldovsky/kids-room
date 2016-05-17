@@ -2,6 +2,7 @@ package ua.softserveinc.tc.search;
 
 import org.springframework.stereotype.Repository;
 
+import ua.softserveinc.tc.constants.SearchConstants;
 import ua.softserveinc.tc.entity.Child;
 
 /**
@@ -11,7 +12,7 @@ import ua.softserveinc.tc.entity.Child;
 public class ChildSearch extends BaseSearch<Child> {
 
     {
-        searchFields = new String[]{"firstName", "lastName"};
+        searchFields = SearchConstants.childSearchFields;
     }
 
     @Override

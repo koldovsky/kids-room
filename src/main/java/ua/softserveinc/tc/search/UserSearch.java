@@ -3,6 +3,7 @@ package ua.softserveinc.tc.search;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import ua.softserveinc.tc.constants.SearchConstants;
 import ua.softserveinc.tc.entity.User;
 
 /**
@@ -13,7 +14,7 @@ import ua.softserveinc.tc.entity.User;
 public class UserSearch extends BaseSearch<User> {
 
     {
-        searchFields = new String[]{"firstName", "lastName", "email", "phoneNumber"};
+        searchFields = SearchConstants.userSearchFields;
     }
 
     @Override
