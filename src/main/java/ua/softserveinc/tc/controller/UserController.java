@@ -15,6 +15,7 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 /**
  * Created by Chak on 07.05.2016.
@@ -55,11 +56,15 @@ public class UserController {
     }
 
     @RequestMapping(value="/rules ", method = RequestMethod.GET)
-    public String getRules(Model model){
+    public String getRules(){
         return UsersConst.RULES_VIEW;
     }
 
-
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDenied(Model model, Principal principal) {
+        model.addAttribute(UsersConst.USER, userService.getUserByEmail(principal.getName()));
+        return UsersConst.ACCESS_DENIED_VIEW;
+    }
 }
 
 

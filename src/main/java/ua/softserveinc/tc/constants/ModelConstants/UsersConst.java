@@ -11,6 +11,7 @@ public interface UsersConst {
     String REGISTRATION_VIEW = "registration";
     String SUCCESS_VIEW = "success";
     String RULES_VIEW = "rules";
+    String ACCESS_DENIED_VIEW = "accessDenied";
 
     String MY_BOOKINGS_VIEW = "mybookings";
 }

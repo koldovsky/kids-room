@@ -68,6 +68,9 @@
         <put-attribute name="body" value="/WEB-INF/views/success.jsp" />
     </definition>
 
+    <definition name="accessDenied" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/accessDenied.jsp" />
+    </definition>
     <!-- Admin -->
 
     <definition name="adm-edit-manager" extends="default">
