@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,17 +11,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.softserveinc.tc.service.UserDetailsServiceImpl;
 
+
+@ComponentScan(basePackages = "ua.softserveinc.tc.service")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    @Qualifier("userDetailsService")
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,6 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/registration").anonymous()
                 .antMatchers(HttpMethod.GET, "/mykids").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/registerkid").hasRole("USER")
@@ -54,6 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/adm-add-room").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.POST, "/adm-add-room").hasRole("ADMINISTRATOR")
                 .and()
+                .exceptionHandling()
+                .accessDeniedPage("/accessDenied")
+                .and()
 
             .formLogin()
                 .loginPage("/login")
@@ -67,16 +77,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
                 .permitAll()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true)
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/accessDenied");
+                .logoutSuccessUrl("/login?logout");
         http.rememberMe().
                 key("rem-me-key").
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
-                tokenValiditySeconds(86400);
+                tokenValiditySeconds(286400);
     }
 
     @Bean

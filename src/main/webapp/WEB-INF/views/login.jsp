@@ -29,7 +29,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                   <c:if test="${param.error != null}">
                           <div class ="error">
-                              <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+                              <spring:message code="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
                           </div>
                   </c:if>
               <button type="submit" class="btn btn-default"><spring:message code="user.login" /></button>
