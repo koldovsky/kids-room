@@ -38,14 +38,17 @@ public class RegisterNewKidController {
 
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
     public String registerKid(Model model){
-        if(!model.containsAttribute("child")) {
-            model.addAttribute("child", new Child());
+        if(!model.containsAttribute(MyKidsConst.KID_ATTRIBUTE)) {
+            model.addAttribute(MyKidsConst.KID_ATTRIBUTE, new Child());
         }
         return MyKidsConst.KID_REGISTRATION_VIEW;
     }
 
     @RequestMapping(value="/registerkid", method = RequestMethod.POST)
-    public String submit(@ModelAttribute Child child, Principal principal, BindingResult bindingResult){
+    public String submit(@ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child child,
+                         Principal principal,
+                         BindingResult bindingResult){
+
         child.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));

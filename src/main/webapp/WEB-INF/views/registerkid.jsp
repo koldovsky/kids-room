@@ -2,9 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<%@ page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
+<%@ page import="ua.softserveinc.tc.constants.ValidationConst" %>
+
 <link rel='stylesheet' href='resources/css/registerkid.css'> 
 
-<form:form enctype="application/x-www-form-urlencoded" action="registerkid" method="post" modelAttribute="child">
+<form:form enctype="application/x-www-form-urlencoded" action="registerkid" method="post" modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>">
 
       <h2>
         <spring:message code="kid.register" />
@@ -16,14 +19,14 @@
              	<spring:message code="kid.firstname" />
              </label>
 
-              <form:input path="firstName" id="firstname" class="form-control" required="required" pattern="^[A-Z].*"/>
+              <form:input path="firstName" id="firstname" class="form-control" required="required" pattern="<%=ValidationConst.NAME_REGEX %>"/>
               <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
               <label for="lastname" class="required">
               	<spring:message code="kid.lastname" />
               </label>
-              <form:input path="lastName" id="lastname" class="form-control" required="required" />
+              <form:input path="lastName" id="lastname" class="form-control" required="required" pattern="<%=ValidationConst.NAME_REGEX %>"/>
               <form:errors path="lastName" cssClass="error" />
       </div>
 

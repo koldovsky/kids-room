@@ -2,7 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
+
+<%@ page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
 
@@ -10,7 +13,7 @@
 </script>
 
 
-<div class="list">
+<div class="list" modelAttribute="<%=MyKidsConst.MY_KIDS_LIST_ATTRIBUTE %>">
 <h2>
     <spring:message code="kid.list" />
 </h2>
@@ -18,6 +21,9 @@
 <div class="kidslistblock">
     <div class="kidslistitem">
     <h3>${kid.getFullName()}</h3>
+    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
+        &nbsp;<spring:message code="button.edit" />
+    </button>
     </div>
     <div class="kidinfo" data-id="${kid.getId()}">
             <h4>
@@ -27,10 +33,6 @@
                 ${kid.getComment()}
             </p>
     </div>
-
-    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
-        &nbsp;<spring:message code="button.edit" />
-    </button>
 </div>
 
 </c:forEach>

@@ -8,6 +8,6 @@ package ua.softserveinc.tc.constants;
 public interface ValidationConst {
     String PASSWORD_REGEX = "^(\\S){8,24}$";
     String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
-    String NAME_REGEX = "^[A-Z].*";
+    String NAME_REGEX = "^[A-Z].[a-zA-Z\\-\\.]+$";
     String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
 }
