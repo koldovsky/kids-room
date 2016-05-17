@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.softserveinc.tc.constants.SearchConstants;
 import ua.softserveinc.tc.dto.ChildDTO;
 import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.Child;
@@ -31,11 +32,11 @@ public class SearchController {
     @Autowired
     private ChildSearch childSearch;
 
-    @RequestMapping(value = "/user/search", method = RequestMethod.GET)
+    @RequestMapping(value = SearchConstants.userSearchUrl, method = RequestMethod.GET)
     public @ResponseBody String searchUser(@RequestParam("field") String field) {
         List<UserDTO> result = new ArrayList<UserDTO>();
 
-        if (field.length() >= 3 && field.length() <= 1024) {
+        if (isValidRequestField(field)) {
             List<User> users = userSearch.search(field);
             for (User user : users) {
                 result.add(new UserDTO(user));
@@ -46,11 +47,11 @@ public class SearchController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = "/child/search", method = RequestMethod.GET)
+    @RequestMapping(value = SearchConstants.childSearchUrl, method = RequestMethod.GET)
     public @ResponseBody String searchChild(@RequestParam("field") String field) {
         List<ChildDTO> result = new ArrayList<ChildDTO>();
 
-        if (field.length() >= 3 && field.length() <= 1024) {
+        if (isValidRequestField(field)) {
             List<Child> children = childSearch.search(field);
             for (Child child : children) {
                 result.add(new ChildDTO(child));
@@ -59,6 +60,10 @@ public class SearchController {
 
         Gson gson = new Gson();
         return gson.toJson(result);
+    }
+
+    private boolean isValidRequestField(String field) {
+        return field.length() >= 3 && field.length() <= 1024;
     }
 
 }
