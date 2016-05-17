@@ -1,18 +1,19 @@
-<!-- TODO: зробити сторінку) -->
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<c:url value="/j_spring_security_check" var="mybookings" />
-<link rel='stylesheet' href='resources/css/report.css'>
+<c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
+
+<link rel='stylesheet' href='resources/css/mybookings.css'>
+<script src="resources/js/exportIntoExcel.js"></script>
 
     <div class="tableDiv">
         <table>
             <caption>
                 <h2>
-                    <spring:message code="report.parentBookings" /> ${parent}</br>
-                    <span id="date">(${dateThen} - ${dateNow})</span>
+                    <spring:message code="report.myBookings" /></br>
+                    <span id="date">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
@@ -28,13 +29,13 @@
 
             <c:forEach var="booking" items="${bookings}">
             <tr>
-                <td><fmt:formatDate pattern="dd/MM" value="${booking.getBookingStartTime()}" /></td>
-                <td>${booking.getIdChild()}</td>
-                <td>${booking.getIdRoom()}</td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.getBookingStartTime()}" /></td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.getBookingEndTime()}" /></td>
+                <td><fmt:formatDate pattern="dd/MM" value="${booking.bookingStartTime}" /></td>
+                <td>${booking.idChild}</td>
+                <td>${booking.idRoom}</td>
+                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
+                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
                 <td>${booking.getDuration()}</td>
-                <td>${booking.getSum(booking.getDuration())}</td>
+                <td>${booking.sum}</td>
             </tr>
             </c:forEach>
 
@@ -45,4 +46,10 @@
             </caption>
 
         </table>
+        <div id="exportButton">
+         <i class="fa fa-file-excel-o"></i>
+                <button class="btn btn-raised btn-primary waves-effect waves-light exportButton glyphicon glyphicon-download-alt">
+                    &nbsp; <spring:message code="report.download" /> Excel
+                </button>
+            </div>
     </div>

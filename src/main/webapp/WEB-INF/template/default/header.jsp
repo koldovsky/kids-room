@@ -77,31 +77,68 @@
                                 <spring:message code="user.registration" />
                                   </a></li>
                         </sec:authorize>
+
+
                         <sec:authorize access="isAuthenticated()">
                             <sec:authorize access="hasRole('USER')">
-                                 <li><a href="mykids"><spring:message code="user.myKids" /></a></li>
-                                 <li><a href="mybookings"><spring:message code="user.myBookings" /></a></li>
+                                 <li><a href="mykids">
+                                 <span class="glyphicon glyphicon-user"></span>
+                                 <spring:message code="user.myKids" />
+                                 </a></li>
+                                 <li><a href="mybookings">
+                                 <span class="glyphicon glyphicon-th-list"></span>
+                                 <spring:message code="user.myBookings" />
+                                 </a></li>
                             </sec:authorize>
+
+
                             <sec:authorize access="hasRole('MANAGER')">
-                                  <li><a href="report"><spring:message code="manager.report" /></a></li>
-                                  <li><a href="listChildren"><spring:message code="manager.listOfKids" /></a></li>
-                                  <li><a href="allkidslist"><spring:message code="manager.allkidslist" /></a></li>
+                                  <li><a href="report">
+                                  <span class="glyphicon glyphicon-pencil"></span>
+                                  <spring:message code="manager.report" /></a>
+                                  </li>
+                                  <li><a href="listChildren">
+                                  <span class="glyphicon glyphicon-list"></span>
+                                  <spring:message code="manager.listOfKids" />
+                                  </a></li>
+                                  <li><a href="allkidslist">
+                                  <span class="glyphicon glyphicon-user"></span>
+                                  <spring:message code="manager.allkidslist" />
+                                  </a></li>
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
-                                <li><a href="adm-edit-city"><spring:message code="administrator.editCities" /></a></li>
-                                <li><a href="adm-edit-room"><spring:message code="administrator.editRooms" /></a></li>
-                                <li><a href="adm-edit-manager"><spring:message code="administrator.editManagers" /></a></li>
+                                <li><a href="adm-edit-city">
+                                <span class="glyphicon glyphicon-map-marker"></span>
+                                <spring:message code="administrator.editCities" />
+                                </a></li>
+                                <li><a href="adm-edit-room">
+                                <span class="glyphicon glyphicon-home"></span>
+                                <spring:message code="administrator.editRooms" />
+                                </a></li>
+                                <li><a href="adm-edit-manager">
+                                 <span class="glyphicon glyphicon-user"></span>
+                                <spring:message code="administrator.editManagers" />
+                                </a></li>
                             </sec:authorize>
 
-                                <li><a href="logout">     <spring:message code="user.logout" />   </a></li>
+                                <li>
+                                <a href="logout">
+                                <span class="glyphicon glyphicon-log-out"></span>
+                                <spring:message code="user.logout" />
+                                </a>
+                                </li>
+
                         </sec:authorize>
 
                 
             </ul>
             <ul class="nav navbar-nav navbar-right">
            <li class="dropdown menu-item">       
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-cog"></span>
+              <spring:message code="user.language" />
+              </a>
                 <ul class="dropdown-menu">
                     <li> <a class="langitem" id="EN">EN</a></li>
                     <li> <a class="langitem" id="UA">UA</a></li>

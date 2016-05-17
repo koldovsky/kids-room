@@ -35,8 +35,7 @@ public class MyBookingsController {
     @RequestMapping(value = "/mybookings", method = RequestMethod.GET)
     public ModelAndView getMyBookings(Principal principal){
 
-        //TODO: тут треба доробити, бо показувати буде тільки рівно на проміжку -1 місяць від сьогодні
-        //TODO: юзеру дати можливість вибрати дату
+        //TODO: юзеру дати можливість вибрати дату по AJAX-у
         ModelAndView model = new ModelAndView();
         model.setViewName(UsersConst.MY_BOOKINGS_VIEW);
         ModelMap modelMap = model.getModelMap();
@@ -52,9 +51,10 @@ public class MyBookingsController {
 
         int sumTotal = bookingService.getSumTotal(myBookings);
 
+        modelMap.addAttribute(ReportConst.PARENT, currentUser);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
         modelMap.addAttribute(ReportConst.BOOKINGS, myBookings);
+        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
         modelMap.addAttribute(ReportConst.SUM_TOTAL, sumTotal);
 
         return model;
