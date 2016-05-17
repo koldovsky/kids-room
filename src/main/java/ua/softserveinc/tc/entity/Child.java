@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 
@@ -14,6 +16,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = ChildConst.TABLE_NAME)
+@Indexed
 public class Child implements Comparable<Child>
 {
     @Id
@@ -23,9 +26,11 @@ public class Child implements Comparable<Child>
     private Long id;
 
     @Column(name = ChildConst.FIRST_NAME)
+    @Field
     private String firstName;
 
     @Column(name = ChildConst.LAST_NAME)
+    @Field
     private String lastName;
 
     @ManyToOne
