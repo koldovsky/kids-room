@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.dao;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 import ua.softserveinc.tc.entity.Role;
@@ -37,7 +36,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
             TypedQuery<User> query = getEntityManager().createNamedQuery(UserConst.NQ_FIND_USER_BY_EMAIL, User.class);
             return query.setParameter(UserConst.EMAIL, email).getSingleResult();
         } catch (NoResultException e) {
-            throw new UsernameNotFoundException("not found");
+            return null;
         }
     }
 }

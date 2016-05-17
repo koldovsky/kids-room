@@ -11,36 +11,35 @@
 
       <div class="form-group">
               <label for="firstname" class="required"><spring:message code="user.firstname" /></label>
-              <form:input path="firstName"   class="form-control" style="text-transform: capitalize" required="required"/>
+              <form:input path="firstName"   class="form-control" style="text-transform: capitalize"/>
               <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
               <label for="lastname" class="required"><spring:message code="user.lastname" /></label>
-              <form:input path="lastName"   class="form-control" style="text-transform: capitalize" required="required" />
+              <form:input path="lastName"   class="form-control" style="text-transform: capitalize"  />
               <form:errors path="lastName" cssClass="error" />
       </div>
       <div class="form-group">
                   <label for="email" class="required"><spring:message code="user.email" /></label>
                   <form:input path="email" type="email" id="userEmail" class="form-control"
-                                style="text-transform: lowercase" pattern="^(\w){1,60}[@][s]oft[s]erveinc[.]com$"
-                                title="Allow only emails with 'softserveinc.com' domain" required="required" />
+                                style="text-transform: lowercase"  />
                   <form:errors path="email" cssClass="error"  />
                   <span id="validEmail"></span>
       </div>
 
       <div class="form-group" >
                 <label for="password" class="required"><spring:message code="user.password" /></label>
-                <form:password path="password" id="userPassword" class="form-control" pattern="^(\S){8,}$" title="Eight or more characters" required="required" />
+                <form:password path="password" id="userPassword" class="form-control" />
                 <form:errors path="password" cssClass="error" />
       </div>
       <div class="form-group">
               <label for="confirm" class="required"><spring:message code="user.confirm" /></label>
-              <input type="password" name="confirm" id="userConfirm" class="form-control" required="required" />
+              <input type="password" name="confirm" id="userConfirm" class="form-control"  />
               <span id="validPassword"></span>
       </div>
       <div class="form-group">
               <label for="phonenumber" class="required"><spring:message code="user.phone" /></label>
-              <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control" pattern="^(\+38|8|)(\W*\d){10}\W*$" title="number not valid" required="required"/>
+              <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"/>
               <form:errors path="phoneNumber" cssClass="error"  />
               <span id="validPhone"></span>
       </div>
@@ -52,3 +51,4 @@
       </div>
     </form:form>
 </div>
+

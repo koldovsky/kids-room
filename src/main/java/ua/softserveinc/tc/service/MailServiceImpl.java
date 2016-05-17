@@ -60,7 +60,7 @@ public class MailServiceImpl implements MailService {
     public String buildRegisterMessage(User user, String token) {
 //        String link = "http://" + context.getVirtualServerName() + ":8080" + context.getContextPath()
 //        + "/confirm?token=" + token;
-        String link = "http://localhost:8080/home";
+        String link = "http://localhost:8080/home"+ "/confirm?token=" + token;
 
         Map model = new HashMap();
         model.put("user", user);
