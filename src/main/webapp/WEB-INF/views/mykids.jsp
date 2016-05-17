@@ -21,10 +21,10 @@
 <div class="kidslistblock">
     <div class="kidslistitem">
     <h3>${kid.getFullName()}</h3>
+    </div>
     <button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
         &nbsp;<spring:message code="button.edit" />
     </button>
-    </div>
     <div class="kidinfo" data-id="${kid.getId()}">
             <h4>
                 <spring:message code="kid.date" />: ${kid.getDateOfBirth()}

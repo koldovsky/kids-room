@@ -56,7 +56,8 @@
     <div class="container">
         <div class="navbar-header">
             <a href="/home" class="navbar-brand">Kids Room</a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top_navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#top_navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>

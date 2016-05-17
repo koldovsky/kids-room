@@ -7,17 +7,23 @@
 
 <link rel='stylesheet' href='resources/css/mybookings.css'>
 <script src="resources/js/exportIntoExcel.js"></script>
+<script src="resources/js/myBookings.js"></script>
+
+    <div class="dateSelector">
+        <input id="from" type="date"></input>
+        <input id="to" type="date"></input>
+    </div>
 
     <div class="tableDiv">
-        <table>
+        <table id="myBookings">
             <caption>
                 <h2>
                     <spring:message code="report.myBookings" /></br>
-                    <span id="date">(${dateThen} - ${dateNow})</span>
+
                 </h2>
             </caption>
 
-            <tr>
+            <tr id="header">
                 <th><spring:message code="report.date" /></th>
                 <th><spring:message code="report.kid" /></th>
                 <th><spring:message code="report.place" /></th>
@@ -26,6 +32,8 @@
                 <th><spring:message code="report.duration" /></th>
                 <th><spring:message code="report.sum" /></th>
             </tr>
+
+            <!--
 
             <c:forEach var="booking" items="${bookings}">
             <tr>
@@ -38,6 +46,7 @@
                 <td>${booking.sum}</td>
             </tr>
             </c:forEach>
+            -->
 
             <caption class="captionBottom">
                 <p>
