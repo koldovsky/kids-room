@@ -75,8 +75,9 @@
     <definition name="notFound" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/notFound.jsp" />
     </definition>
-    <!-- Admin -->
 
+
+    <!-- Admin -->
     <definition name="adm-edit-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-edit-manager.jsp" />
     </definition>
@@ -107,6 +108,10 @@
 
     <definition name="adm-add-city" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-add-city.jsp" />
+    </definition>
+
+    <definition name="confirm-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/confirm-manager.jsp" />
     </definition>
     <!-- /Admin -->
 
