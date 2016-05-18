@@ -41,6 +41,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userDao.create(user);
     }
 
+    @Override
+    public void confirmManagerRegistrationUpdate(User manager){
+        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
+        userDao.update(manager);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<User> getAllParents()

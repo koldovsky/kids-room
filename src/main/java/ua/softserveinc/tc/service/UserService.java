@@ -14,4 +14,6 @@ public interface UserService extends BaseService<User> {
     User getUserByEmail(String email);
 
     List<User> getAllParents();
+
+    void confirmManagerRegistrationUpdate(User manager);
 }
