@@ -30,7 +30,7 @@ public class ExceptionHandlingController {
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView denyAccess(Principal principal){
         ModelAndView model = new ModelAndView();
-        model.setViewName(UsersConst.ACCESS_DENIED_VIEW);
+        model.setViewName(ErrorPages.ACCESS_DENIED_VIEW);
         model.getModelMap().addAttribute(UsersConst.USER, userService.getUserByEmail(principal.getName()));
         return model;
     }
@@ -39,7 +39,7 @@ public class ExceptionHandlingController {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ModelAndView alertNotFound(){
         ModelAndView model = new ModelAndView();
-        model.setViewName(ErrorPages.NOT_FOUND);
+        model.setViewName(ErrorPages.NOT_FOUND_VIEW);
         return model;
     }
 }
