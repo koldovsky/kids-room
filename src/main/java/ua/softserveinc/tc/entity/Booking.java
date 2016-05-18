@@ -133,26 +133,6 @@ public class Booking {
         this.sum = sum;
     }
 
-    public String extractMonthDayAndYear() //TODO for Vasyl: Remove when unused
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(bookingStartTime);
-        String monthAndDay = calendar.get(Calendar.YEAR)+ "-";
-        monthAndDay += String.format("%02d", (calendar.get(Calendar.MONTH)) + 1) + "-";
-        monthAndDay += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        return monthAndDay;
-    }
-
-    public String extractHourAndMinuteFromStartTime()//TODO for Vasyl: Remove when unused
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(bookingStartTime);
-        String hourAndMinute = "";
-        hourAndMinute += String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY)) + ":";
-        hourAndMinute += String.format("%02d", calendar.get(Calendar.MINUTE));
-        return hourAndMinute;
-    }
-
     public String getDuration()// Чи обов'язково переносити в сервіс?
     {
         long difference = bookingEndTime.getTime() - bookingStartTime.getTime();
