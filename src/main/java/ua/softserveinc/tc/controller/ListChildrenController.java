@@ -49,11 +49,9 @@ public class ListChildrenController {
         return modelAndView;
     }
     @RequestMapping(value = "/listChildren", method = RequestMethod.POST)
-    public String p(Model model, @RequestParam("date") String p) throws ParseException{
-        model.addAttribute("listBooking", bookingService.getBookingsByDay(p));
-        DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        model.addAttribute("BookingPerDay",
-                df.format(bookingService.getBookingsByDay(p).get(0).getBookingStartTime()));
+    public String p(Model model, @RequestParam("date") String date) throws ParseException{
+        model.addAttribute("listBooking", bookingService.getBookingsByDay(date));
+        model.addAttribute("BookingPerDay",  date);
         return  "listChildren";
     }
 
