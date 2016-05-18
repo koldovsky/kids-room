@@ -203,6 +203,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         calendar.setTime(dfDateAndTime.parse(dateString));
         Date date = calendar.getTime();
         booking.setBookingStartTime(date);
+        update(booking);
         return booking;
     }
 }

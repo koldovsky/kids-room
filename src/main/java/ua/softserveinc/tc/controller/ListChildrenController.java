@@ -49,16 +49,10 @@ public class ListChildrenController {
     public
     @ResponseBody
     String setingBookings(@RequestBody BookingDTO bookingDTO) throws ParseException {
-        System.out.println(bookingDTO.getStartTime());
-        System.out.println(bookingDTO.getStartTime());
-        System.out.println(bookingDTO.getStartTime());
-        System.out.println(bookingDTO.getStartTime());
         Booking booking = bookingService.updatingBooking(bookingDTO);
-        bookingService.update(booking);
         BookingDTO jsonBooking = new BookingDTO(booking);
         Gson gson = new Gson();
-        String json = gson.toJson(jsonBooking);
-        return json;
+        return  gson.toJson(jsonBooking);
     }
 
 
@@ -69,8 +63,7 @@ public class ListChildrenController {
         Booking b = bookingService.findById(a);
         BookingDTO jsb = new BookingDTO(b);
         Gson gson = new Gson();
-        String json = gson.toJson(jsb);
-        return json;
+        return  gson.toJson(jsb);
 
     }
 }
