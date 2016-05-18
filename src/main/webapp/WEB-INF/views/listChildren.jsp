@@ -16,7 +16,7 @@
         <p ><input id="inputTime" name="date" type="date" value="${BookingPerDay}"/></p>
     </div>
     <div class="col-md-4">
-        <input type="submit" id="bookingStartTime" value=<spring:message code="booking.ChouseDate"/>>
+        <input type="submit" id="bookingStartTime" value="<spring:message code="booking.ChouseDate"/>" />
     </div>
     </form>
 
@@ -55,8 +55,8 @@
 </div>
 
 <div id="reportTime">
-	<input  type="submit" value= <spring:message code="kids.arrivaltime"/> />
-	<input type="submit" value= <spring:message code="kids.departuretime"/> />
+	<input  type="submit" value= "<spring:message code="kids.arrivaltime"/>" />
+	<input type="submit" value= "<spring:message code="kids.departuretime"/>" />
 	<table >
         <form action="" method="POST">
             <input id="idBook" name="idBook" type="hidden"/>
@@ -72,8 +72,8 @@
             </tr>
             <tr>
                 <td  colspan="2">
-                    <input type="button" class="buttons" id="ApplyBooking"
-                                        value= <spring:message code="booking.applybooking"/> />
+                    <input type="button" class="btn btn-raised btn-primary waves-effect waves-light" id="ApplyBooking"
+                                        value= "<spring:message code="booking.applybooking"/>" />
                 </td>
             </tr>
         </form>
