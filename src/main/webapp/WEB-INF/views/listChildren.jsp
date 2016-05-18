@@ -17,7 +17,7 @@
         <p ><input id="inputTime" type="date" value="${BookingPerDay}"/></p>
     </div>
     <div class="col-md-4">
-        <input type="button" id="bookingStartTime" value="Chouse Day"/>
+        <input type="button" id="bookingStartTime" value="Choose Day"/>
     </div>
     </form>
 

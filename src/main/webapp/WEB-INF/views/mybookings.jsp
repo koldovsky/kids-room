@@ -8,10 +8,19 @@
 <link rel='stylesheet' href='resources/css/mybookings.css'>
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/myexport.js"></script>
+<script src="resources/js/printMyBookings.js"></script>
 
+<div id="scroller">
     <div class="dateSelector">
-        <input id="from" type="date"></input>
-        <input id="to" type="date"></input>
+        <div id="from-div">
+            <h3><spring:message code="report.from" /></h3>
+            <input id="from" type="date"></input>
+        </div>
+        ------
+        <div id="to-div">
+            <h3><spring:message code="report.to" /></h3>
+            <input id="to" type="date"></input>
+        </div>
     </div>
 
     <div class="tableDiv">
@@ -33,9 +42,9 @@
             </tr>
 
             <caption class="captionBottom">
-                <p>
-                    <spring:message code="report.sumTotal" /> ${sumTotal}
-                </p>
+                <h3>
+                    <spring:message code="report.sumTotal" />
+                </h3>
             </caption>
 
         </table>
@@ -44,6 +53,10 @@
                 <button id="export" class="btn btn-raised btn-primary waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
                 </button>
+                <button id="print" class="btn btn-raised btn-danger exportButton glyphicon glyphicon-print">
+                                    &nbsp; <spring:message code="report.print" />
+                                </button>
     </div>
+</div>
 
 <script src="resources/js/myexport.js"></script>

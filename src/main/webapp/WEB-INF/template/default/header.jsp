@@ -87,7 +87,7 @@
                                  <spring:message code="user.myKids" />
                                  </a></li>
                                  <li><a href="mybookings">
-                                 <span class="glyphicon glyphicon-th-list"></span>
+                                 <span class="glyphicon glyphicon-tasks"></span>
                                  <spring:message code="user.myBookings" />
                                  </a></li>
                             </sec:authorize>
