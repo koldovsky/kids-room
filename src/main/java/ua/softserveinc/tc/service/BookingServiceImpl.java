@@ -115,9 +115,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public int getSumTotal(List<Booking> bookings)
+    public long getSumTotal(List<Booking> bookings)
     {
-        int sumTotal = 0;
+        long sumTotal = 0;
         for (Booking booking : bookings)
         {
             sumTotal += booking.getSum();
@@ -181,7 +181,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         // get sum total for each user
         for (User user : users)
         {
-            Integer sum = 0;
+            int sum = 0;
             for (Booking booking : bookings)
             {
                 if (booking.getIdUser().equals(user))
@@ -194,14 +194,17 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return result;
     }
     @Override
-    public Booking updatingBooking(BookingDTO bookingDTO) {
+    public Booking updatingBooking(BookingDTO bookingDTO) throws ParseException{
+        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_MINUTE_FORMAT);
         Booking booking = findById(bookingDTO.getId());
+        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
         Calendar calendar = Calendar.getInstance();
-        DateFormat df = new SimpleDateFormat(DateConst.DASH_DATE_FORMAT);
-        Date date = new Date(df.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime());
+        calendar.setTime(dfDateAndTime.parse(dateString));
+        Date date = calendar.getTime();
         booking.setBookingStartTime(date);
+        update(booking);
         return booking;
-
     }
 }
 

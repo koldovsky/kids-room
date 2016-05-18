@@ -59,13 +59,11 @@ public class UserController {
 //            return UsersConst.REGISTRATION_VIEW;
 //        }
         String token = UUID.randomUUID().toString();
-        System.out.println(token);
-
         user.setRole(Role.USER);
         user.setEnabled(false);
         userService.create(user);
         verificationTokenService.createToken(token, user);
-        mailService.sendMessage(user, UsersConst.CONFIRM_REGISTRATION, mailService.buildRegisterMessage(user,token));
+        mailService.buildRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
 

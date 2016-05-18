@@ -10,7 +10,6 @@
 <script src="resources/js/bookedkids.js"></script>
 
 
-
 <div class="col-md-4">
     <form action="" method='POST'>
     <div class="col-md-4">
@@ -115,8 +114,6 @@
     });
 }
 
-
-
     $('#ApplyBooking').click(function(){
 
         var inputData = {
@@ -129,17 +126,15 @@
                 data:   JSON.stringify(inputData),
                 type: 'POST',
                 success: function(data){
-                location.reload();
+                var text = data;
+                var obj = JSON.parse(text);
+                document.getElementById("startTime").innerHTML = obj.startTime
                 },
                 error: function(){
                 alert(status);
                 }
                 });
     });
-
-
-
-
 </script>
 
 
