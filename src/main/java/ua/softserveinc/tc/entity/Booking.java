@@ -46,8 +46,19 @@ public class Booking {
     @Column(name = BookingConst.IS_CANCELLED, nullable = false)
     private boolean isCancelled;
 
+    @Column(name = BookingConst.IS_CONFIRMED, nullable = false)
+    private boolean isConfirmed;
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
     @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
-    private int sum;
+    private long sum;
 
     public Long getIdBook() {
         return idBook;
@@ -113,11 +124,11 @@ public class Booking {
         isCancelled = cancelled;
     }
 
-    public int getSum() {
+    public long getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public void setSum(long sum) {
         this.sum = sum;
     }
 
@@ -150,5 +161,17 @@ public class Booking {
         duration += String.format("%02d", minutes);
 
         return duration;
+    }
+
+    public void confirm(){
+        this.isConfirmed = true;
+        Map<Integer, Integer> rates = this.getIdRoom().getPrices();
+        int duration = Integer.parseInt(this.getDuration().substring(0,2));
+
+        rates.forEach((hours, price)->{
+            if (duration < hours) {
+                this.sum = price;
+            }
+        });
     }
 }

@@ -17,6 +17,8 @@ public interface BookingConst {
 
     String IS_CANCELLED = "is_cancelled";
 
+    String IS_CONFIRMED = "is_confirmed";
+
     String SUM = "sum";
 
     // Don't need ID_MANAGER & ID_CITY.

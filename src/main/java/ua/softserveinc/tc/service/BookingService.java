@@ -13,7 +13,7 @@ public interface BookingService extends BaseService<Booking>
     String getDateMonthAgo();
     //String getDuration(Booking booking);
     List<Booking> getBookingsOfThisDay();
-    int getSumTotal(List<Booking> bookings);
+    long getSumTotal(List<Booking> bookings);
     List<Booking> getBookingsByDay(String data);
     HashMap<User, Integer> generateAReport(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
