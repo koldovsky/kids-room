@@ -11,12 +11,12 @@
 
 
 <div class="col-md-4">
-    <form action="" method='POST'>
+    <form action="listChildren" method='POST'>
     <div class="col-md-4">
-        <p ><input id="inputTime" type="date" value="${BookingPerDay}"/></p>
+        <p ><input id="inputTime" name="date" type="date" value="${BookingPerDay}"/></p>
     </div>
     <div class="col-md-4">
-        <input type="button" id="bookingStartTime" value="Choose Day"/>
+        <input type="submit" id="bookingStartTime" value="Choose Day"/>
     </div>
     </form>
 

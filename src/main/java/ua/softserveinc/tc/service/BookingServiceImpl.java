@@ -128,24 +128,22 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Booking> getBookingsByDay(String data){
+    public List<Booking> getBookingsByDay(String date) throws ParseException{
 
-        Date day = new Date("2015/04/04");
-        SimpleDateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        String currentDay = df.format(day);
-        EntityManager entityManager = bookingDao.getEntityManager();
-        List<Booking> bookingsDay;
+        String startTimeString = date + " 00:00";
+        String endTimeString = date + " 23:00";
+        Calendar calendarStartTime = Calendar.getInstance();
+        Calendar calendarEndTime = Calendar.getInstance();
 
-            if (currentDay.equals(data)) {
-                bookingsDay = (List<Booking>) entityManager.createQuery(
-                        "from Booking where " + BOOKING_START_TIME + " like " + "'" + currentDay + "%'")
-                        .getResultList();
-            } else {
-                bookingsDay = (List<Booking>) entityManager.createQuery(
-                        "from Booking where " + BOOKING_START_TIME + " like " + "'" + data + "%'")
-                        .getResultList();
-            }
-        return bookingsDay;
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
+        calendarStartTime.setTime(dfDateAndTime.parse(startTimeString));
+        calendarEndTime.setTime(dfDateAndTime.parse(endTimeString));
+
+        Date startTime = calendarStartTime.getTime();
+        Date endTime = calendarEndTime.getTime();
+        List<Booking> bookings= bookingDao.getBookingsByDay(startTime, endTime);
+
+        return bookings;
     }
 
     @Override
@@ -196,8 +194,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public Booking updatingBooking(BookingDTO bookingDTO) throws ParseException{
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_MINUTE_FORMAT);
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
         Booking booking = findById(bookingDTO.getId());
+        booking.setConfirmed(true);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dfDateAndTime.parse(dateString));

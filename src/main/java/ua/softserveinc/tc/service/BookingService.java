@@ -13,9 +13,9 @@ public interface BookingService extends BaseService<Booking>
     String getCurrentDate();
     String getDateMonthAgo();
     //String getDuration(Booking booking);
-    List<Booking> getBookingsOfThisDay();
+    List<Booking> getBookingsOfThisDay() ;
     int getSumTotal(List<Booking> bookings);
-    List<Booking> getBookingsByDay(String data);
+    List<Booking> getBookingsByDay(String data) throws ParseException;
     HashMap<User, Integer> generateAReport(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     List<User> getActiveUsersForRangeOfTime(String startDate, String endDate);
