@@ -71,4 +71,19 @@ public class MailServiceImpl implements MailService {
         sendMessage(user, subject, text);
     }
 
+    @Override
+    public void buildConfirmRegisterManager(String subject, User manager, String token) {
+
+        String link = "http://localhost:8080/home"+ "/confirm-manager?token=" + token;
+
+        Map model = new HashMap();
+        model.put("manager", manager);
+        model.put("link", link);
+
+        String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "/emailTemplate/confirmManager.vm", "UTF-8", model);
+
+        sendMessage(manager, subject, text);
+    }
+
 }
