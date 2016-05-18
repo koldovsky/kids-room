@@ -15,6 +15,7 @@ import ua.softserveinc.tc.service.ChildService;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,64 +30,42 @@ public class ListChildrenController {
     ChildService childService;
 
 
-    @RequestMapping(value = "/listChildren", method = RequestMethod.GET)
+    @RequestMapping(value = "/listChildren")
     public ModelAndView parentBookings(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("listChildren");
         ModelMap modelMap = modelAndView.getModelMap();
         modelAndView.addObject("bookedJSP", new Booking());
-
         List<Booking> listBooking = bookingService.getBookingsOfThisDay();
         modelMap.addAttribute("listBooking", listBooking);
-
-        String ss;
-      // if(listBooking.size()!=0) {
-           ss = listBooking.get(0).extractMonthDayAndYear();
-           modelMap.addAttribute("BookingPerDay", ss);
-           return modelAndView;
-
-     //  }else return new ModelAndView("listChildren");
-
-
-    }
-    @RequestMapping(value = "/result")
-    public ModelAndView setingBookings(@ModelAttribute Booking booking,
-                                       @RequestParam(value = "bookingTime") String bookingTime
-                                      ) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("result");
-
-        DateFormat df = new SimpleDateFormat(DateConst.DASH_DATE_FORMAT);
-
-
-        Booking b = bookingService.findById(booking.getIdBook());
-        Date date = new Date(df.format(b.extractMonthDayAndYear()) + " "+bookingTime);
-        b.setBookingStartTime(date);
-        bookingService.update(b);
-        modelAndView.addObject("bookedJSP", b);
+        DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        String date = df.format(listBooking.get(0).getBookingStartTime());
+        modelMap.addAttribute("BookingPerDay", date);
         return modelAndView;
     }
-    @RequestMapping(value = "getCompan/{a}",  method = RequestMethod.GET)
-    public @ResponseBody
-    String getRaandom(@PathVariable Long a) {
-        Booking b = bookingService.findById(a);
-        BookingDTO jsb = new BookingDTO(b.extractHourAndMinuteFromStartTime(), a);
-        Gson gson = new Gson();
-        String json = gson.toJson(jsb);
 
+    @RequestMapping(value = "/setTime", method = RequestMethod.POST, consumes = "application/json")
+    public
+    @ResponseBody
+    String setingBookings(@RequestBody BookingDTO bookingDTO) {
+        Booking booking = bookingService.updatingBooking(bookingDTO);
+        bookingService.update(booking);
+        BookingDTO jsonBooking = new BookingDTO(booking);
+        Gson gson = new Gson();
+        String json = gson.toJson(jsonBooking);
         return json;
     }
-  /*  @RequestMapping(value = "setBookingTime/{date}",  method = RequestMethod.POST)
-        public
-    @ResponseBody String setBookingTime(@PathVariable String date,
-                                              @RequestParam(value="bookingStartTime") String bookingStartTime){
-
-        List<Booking> listBooking = bookingService.getBookingsByDay(bookingStartTime);
-
-     //   ModelMap modelMap = modelAndView.getModelMap();
-     //   modelMap.addAttribute("listBooking", bookingByDay);
-        return modelAndView;
-    }*/
 
 
+    @RequestMapping(value = "getCompan/{a}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String getRaandom(@PathVariable Long a) {
+        Booking b = bookingService.findById(a);
+        BookingDTO jsb = new BookingDTO(b);
+        Gson gson = new Gson();
+        String json = gson.toJson(jsb);
+        return json;
+
+    }
 }

@@ -8,15 +8,26 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import ua.softserveinc.tc.constants.ModelConstants.DateConst;
+import ua.softserveinc.tc.entity.Booking;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Петришак on 14.05.2016.
  */
 public class BookingDTO  implements BaseDTO {
 
-    String start;
-    Long id;
+
+
+    private Long id;
+    private String reportTime;
 
     //Нестор: я зайшов пододавати поля і методи, ламати нічого не буду :)
+    //Василь: все ок, авиправив твої строки на константи :)
 
     private String date;
     private String startTime;
@@ -28,20 +39,16 @@ public class BookingDTO  implements BaseDTO {
 
 
 
-   public BookingDTO(String start){
-        this.start=start;
-
-    }
-    public BookingDTO(String start, Long id){
-        this.start=start;
+    public BookingDTO() {
         this.id=id;
+        this.startTime=startTime;
     }
 
     public BookingDTO(Booking booking){
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
         this.date = df.format(booking.getBookingStartTime());
 
-        df = new SimpleDateFormat("HH:mm");
+        df = new SimpleDateFormat(DateConst.TIME_FORMAT);
         this.startTime = df.format(booking.getBookingStartTime());
         this.endTime = df.format(booking.getBookingEndTime());
 
@@ -50,6 +57,8 @@ public class BookingDTO  implements BaseDTO {
         this.duration = booking.getDuration();
         this.sum = booking.getSum();
 
+        this.id = booking.getIdBook();
+        this.reportTime = getNowTime();
     }
 
     public String getDate() {
@@ -108,4 +117,28 @@ public class BookingDTO  implements BaseDTO {
         this.sum = sum;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getReportTime() {
+        return reportTime;
+    }
+
+    public void setReportTime(String reportTime) {
+        this.reportTime = reportTime;
+    }
+
+
+    public String getNowTime(){
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        DateFormat df = new SimpleDateFormat(DateConst.TIME_FORMAT);
+        String nowTime = df.format(date);
+        return  nowTime;
+    }
 }

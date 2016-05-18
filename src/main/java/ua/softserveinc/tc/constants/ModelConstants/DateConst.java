@@ -7,4 +7,6 @@ public interface DateConst {
     String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     String SHORT_DATE_FORMAT = "yyyy-MM-dd";
     String DASH_DATE_FORMAT = "yyyy/MM/dd";
+    String TIME_FORMAT = "HH:mm";
+    String DAY_MOUNTH_YEAR = "dd-MM-yyyy";
 }
