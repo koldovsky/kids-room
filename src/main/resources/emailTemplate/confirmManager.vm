@@ -1,0 +1,10 @@
+<html>
+    <body>
+        <h3>Hello, ${manager.firstName} ${manager.lastName},you was registered as MANAGER of KidsRoom service!</h3>
+        <div>
+            Please confirm your email address and set your password to log in system.<br>
+            Click this <a href="${link}"> link</a> to finish registration.<br><br>
+            If you don't know what about this message - please ignore it.
+        </div>
+    </body>
+</html>
