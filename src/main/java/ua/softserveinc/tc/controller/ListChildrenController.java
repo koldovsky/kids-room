@@ -14,6 +14,7 @@ import ua.softserveinc.tc.service.ChildService;
 
 import java.security.Principal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +48,11 @@ public class ListChildrenController {
     @RequestMapping(value = "/setTime", method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
-    String setingBookings(@RequestBody BookingDTO bookingDTO) {
+    String setingBookings(@RequestBody BookingDTO bookingDTO) throws ParseException {
+        System.out.println(bookingDTO.getStartTime());
+        System.out.println(bookingDTO.getStartTime());
+        System.out.println(bookingDTO.getStartTime());
+        System.out.println(bookingDTO.getStartTime());
         Booking booking = bookingService.updatingBooking(bookingDTO);
         bookingService.update(booking);
         BookingDTO jsonBooking = new BookingDTO(booking);

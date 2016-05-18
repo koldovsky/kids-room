@@ -42,6 +42,7 @@ public class BookingDTO  implements BaseDTO {
     public BookingDTO() {
         this.id=id;
         this.startTime=startTime;
+        this.reportTime = reportTime;
     }
 
     public BookingDTO(Booking booking){

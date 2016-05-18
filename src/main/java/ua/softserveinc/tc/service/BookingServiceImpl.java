@@ -194,14 +194,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return result;
     }
     @Override
-    public Booking updatingBooking(BookingDTO bookingDTO) {
+    public Booking updatingBooking(BookingDTO bookingDTO) throws ParseException{
+        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_MINUTE_FORMAT);
         Booking booking = findById(bookingDTO.getId());
+        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
         Calendar calendar = Calendar.getInstance();
-        DateFormat df = new SimpleDateFormat(DateConst.DASH_DATE_FORMAT);
-        Date date = new Date(df.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime());
+        calendar.setTime(dfDateAndTime.parse(dateString));
+        Date date = calendar.getTime();
         booking.setBookingStartTime(date);
         return booking;
-
     }
 }
 
