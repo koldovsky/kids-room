@@ -16,15 +16,15 @@
         <p ><input id="inputTime" name="date" type="date" value="${BookingPerDay}"/></p>
     </div>
     <div class="col-md-4">
-        <input type="submit" id="bookingStartTime" value="Choose Day"/>
+        <input type="submit" id="bookingStartTime" value=<spring:message code="booking.ChouseDate"/>>
     </div>
     </form>
 
 
    <table class="table table-hover" id="tabble">
-      <caption><h2>List of kids</h2></caption>
+      <caption><h2> <spring:message code="kids.list"/></h2></caption>
       <tr>
-        <th class="odd">Kids name</th>
+        <th class="odd"> <spring:message code="kids.name"/></th>
     </tr>
     <c:forEach var="booking" items="${listBooking}">
     <tr>
@@ -33,11 +33,7 @@
         </td>
     </tr>
 </c:forEach>
-<tr>
-   <td>
-       <button id="butAddKid"> Add kid</button>
-   </td>
-</tr>
+
 </table>
 <div >
     <table class="col-md-11" id="addKids">
@@ -59,14 +55,14 @@
 </div>
 
 <div id="reportTime">
-	<input class="buttons2" type="submit" value="Arrival time"/>
-	<input class="buttons2" type="submit" value="Departure time"/>
+	<input  type="submit" value= <spring:message code="kids.arrivaltime"/> />
+	<input type="submit" value= <spring:message code="kids.departuretime"/> />
 	<table >
         <form action="" method="POST">
             <input id="idBook" name="idBook" type="hidden"/>
             <tr>
-                <th class="odd"><spring:message code="booking.time" /></th>
-                <th class="odd">Real time</th>
+                <th class="odd"><spring:message code="booking.time"/></th>
+                <th class="odd"><spring:message code="booking.realtime"/></th>
             </tr>
             <tr>
                 <td id="startTime"> </td>
@@ -76,7 +72,8 @@
             </tr>
             <tr>
                 <td  colspan="2">
-                    <input type="button" class="buttons" id="ApplyBooking" value="Apply Booking"/>
+                    <input type="button" class="buttons" id="ApplyBooking"
+                                        value= <spring:message code="booking.applybooking"/> />
                 </td>
             </tr>
         </form>
@@ -128,7 +125,7 @@
                 success: function(data){
                 var text = data;
                 var obj = JSON.parse(text);
-                document.getElementById("startTime").innerHTML = obj.startTime
+                document.getElementById("startTime").innerHTML = obj.startTime;
                 },
                 error: function(){
                 alert(status);

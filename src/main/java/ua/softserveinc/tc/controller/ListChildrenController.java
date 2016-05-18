@@ -36,21 +36,23 @@ public class ListChildrenController {
 
 
     @RequestMapping(value = "/listChildren")
-    public ModelAndView parentBookings(Principal principal) {
+    public ModelAndView parentBookings(Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("listChildren");
-        ModelMap modelMap = modelAndView.getModelMap();
+
+   //     ModelMap modelMap = modelAndView.getModelMap();
  //       modelAndView.addObject("bookedJSP", new Booking());
         List<Booking> listBooking = bookingService.getBookingsOfThisDay();
-        modelMap.addAttribute("listBooking", listBooking);
+        model.addAttribute("listBooking", listBooking);
         DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         String date = df.format(listBooking.get(0).getBookingStartTime());
-        modelMap.addAttribute("BookingPerDay", date);
+        model.addAttribute("BookingPerDay", date);
         return modelAndView;
     }
     @RequestMapping(value = "/listChildren", method = RequestMethod.POST)
     public String p(Model model, @RequestParam("date") String date) throws ParseException{
-        model.addAttribute("listBooking", bookingService.getBookingsByDay(date));
+        List<Booking> listBooking = bookingService.getBookingsByDay(date);
+        model.addAttribute("listBooking", listBooking);
         model.addAttribute("BookingPerDay",  date);
         return  "listChildren";
     }
@@ -74,6 +76,5 @@ public class ListChildrenController {
         BookingDTO jsb = new BookingDTO(b);
         Gson gson = new Gson();
         return  gson.toJson(jsb);
-
     }
 }
