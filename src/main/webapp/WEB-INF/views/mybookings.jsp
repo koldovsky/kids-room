@@ -6,8 +6,8 @@
 <c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
 
 <link rel='stylesheet' href='resources/css/mybookings.css'>
-<script src="resources/js/exportIntoExcel.js"></script>
 <script src="resources/js/myBookings.js"></script>
+<script src="resources/js/myexport.js"></script>
 
     <div class="dateSelector">
         <input id="from" type="date"></input>
@@ -19,7 +19,6 @@
             <caption>
                 <h2>
                     <spring:message code="report.myBookings" /></br>
-
                 </h2>
             </caption>
 
@@ -33,21 +32,6 @@
                 <th><spring:message code="report.sum" /></th>
             </tr>
 
-            <!--
-
-            <c:forEach var="booking" items="${bookings}">
-            <tr>
-                <td><fmt:formatDate pattern="dd/MM" value="${booking.bookingStartTime}" /></td>
-                <td>${booking.idChild}</td>
-                <td>${booking.idRoom}</td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
-                <td>${booking.getDuration()}</td>
-                <td>${booking.sum}</td>
-            </tr>
-            </c:forEach>
-            -->
-
             <caption class="captionBottom">
                 <p>
                     <spring:message code="report.sumTotal" /> ${sumTotal}
@@ -55,10 +39,11 @@
             </caption>
 
         </table>
-        <div id="exportButton">
-                <button class="btn btn-raised btn-primary waves-effect
-                waves-light exportButton glyphicon glyphicon-download-alt">
+
+                <a id="dlink"  style="display:none;"></a>
+                <button id="export" class="btn btn-raised btn-primary waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
                 </button>
-            </div>
     </div>
+
+<script src="resources/js/myexport.js"></script>
