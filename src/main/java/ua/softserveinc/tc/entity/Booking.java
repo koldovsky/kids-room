@@ -133,7 +133,7 @@ public class Booking {
         this.sum = sum;
     }
 
-    public String getDuration()// Чи обов'язково переносити в сервіс?
+    public String getDuration()// TODO: придумати як рахувати суму, як бути з цим методом і з полем sum
     {
         long difference = bookingEndTime.getTime() - bookingStartTime.getTime();
         long hours = difference / 1000 / 60 / 60;
