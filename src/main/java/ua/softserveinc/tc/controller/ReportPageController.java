@@ -13,7 +13,6 @@ import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 
 import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.json.UserJSON;
 import ua.softserveinc.tc.service.BookingService;
 
 import java.util.ArrayList;
@@ -52,8 +51,7 @@ public class ReportPageController
         List<User> users = bookingService.getActiveUsersForRangeOfTime(startDate, endDate);
         List<UserDTO> userDTOs = new ArrayList<>();
         users.forEach(user -> userDTOs.add(new UserDTO(user)));
-        UserJSON userJSON = new UserJSON(userDTOs, startDate, endDate);
         Gson gson = new Gson();
-        return gson.toJson(userJSON);
+        return gson.toJson(userDTOs);
     }
 }

@@ -23,21 +23,23 @@ function addListener()
 
 function refreshView()
 {
+    var dateThen = $("#dateThenInput").val();
+    var dateNow = $("#dateNowInput").val();
 	var request = "refreshParents/";
-    request += $("#dateThenInput").val() + "/" + $("#dateNowInput").val();
+    request += dateThen + "/" + dateNow;
 
     $.ajax({url: request, success: function(result)
     {
-        var obj = JSON.parse(result);
+        var users = JSON.parse(result);
 
         $('#date').remove();
         var caption = $('caption h2').html();
-        caption += '<span id="date">(' + obj.startDate + ' - ' + obj.endDate + ')</span>';
+        caption += '<span id="date">(' + dateThen + ' - ' + dateNow + ')</span>';
         $( 'caption h2' ).html(caption);
 
         var tr = '<tr>';
 
-        $.each(obj.users, function(i, user)
+        $.each(users, function(i, user)
         {
             tr += '<td>' + user.firstName + '</td>'
             + '<td>' + user.lastName + '</td>'
