@@ -71,6 +71,10 @@
     <definition name="accessDenied" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/accessDenied.jsp" />
     </definition>
+
+    <definition name="notFound" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/notFound.jsp" />
+    </definition>
     <!-- Admin -->
 
     <definition name="adm-edit-manager" extends="default">

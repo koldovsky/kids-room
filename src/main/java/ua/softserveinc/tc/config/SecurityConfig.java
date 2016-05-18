@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/accessDenied")
                 .and()
 
+
             .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")

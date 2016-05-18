@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.ChildValidator;
@@ -27,7 +29,6 @@ import java.util.Date;
 /**
  * Created by Nestor on 10.05.2016.
  */
-
 @Controller
 public class EditMyKidPageController {
 
@@ -52,6 +53,10 @@ public class EditMyKidPageController {
         User current = userService.getUserByEmail(principal.getName());
         Child kidToEdit = childService
                 .findById(Long.parseLong(kidId));
+        if(kidToEdit == null){
+            throw new ResourceNotFoundException();
+        }
+
         if(!kidToEdit.getParentId().equals(current)) {
             throw new AccessDeniedException("You do not have access to this page");
         }

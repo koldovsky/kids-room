@@ -72,11 +72,11 @@ public class UserController {
         return UsersConst.RULES_VIEW;
     }
 
-    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
         model.addAttribute(UsersConst.USER, userService.getUserByEmail(principal.getName()));
         return UsersConst.ACCESS_DENIED_VIEW;
-    }
+    }*/
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
     public String confirmRegistration(@RequestParam("token") String token) {
