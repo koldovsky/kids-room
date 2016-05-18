@@ -46,7 +46,8 @@ public class Booking {
     @Column(name = BookingConst.IS_CANCELLED, nullable = false)
     private boolean isCancelled;
 
-    @Column(name = BookingConst.IS_CONFIRMED, nullable = false)
+    @Column(name = BookingConst.IS_CONFIRMED, nullable = false,
+            columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isConfirmed;
 
     public boolean isConfirmed() {
@@ -58,7 +59,7 @@ public class Booking {
     }
 
     @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
-    private long sum;
+    private int sum;
 
     public Long getIdBook() {
         return idBook;
@@ -124,11 +125,11 @@ public class Booking {
         isCancelled = cancelled;
     }
 
-    public long getSum() {
+    public int getSum() {
         return sum;
     }
 
-    public void setSum(long sum) {
+    public void setSum(int sum) {
         this.sum = sum;
     }
 
