@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service;
 
+import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
@@ -18,4 +19,5 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     List<User> getActiveUsersForRangeOfTime(String startDate, String endDate);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
+    Booking updatingBooking(BookingDTO bookingDTO);
 }

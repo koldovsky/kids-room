@@ -6,18 +6,32 @@
 <c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
 
 <link rel='stylesheet' href='resources/css/mybookings.css'>
-<script src="resources/js/exportIntoExcel.js"></script>
+<script src="resources/js/myBookings.js"></script>
+<script src="resources/js/myexport.js"></script>
+<script src="resources/js/printMyBookings.js"></script>
+
+<div id="scroller">
+    <div class="dateSelector">
+        <div id="from-div">
+            <h3><spring:message code="report.from" /></h3>
+            <input id="from" type="date"></input>
+        </div>
+        ------
+        <div id="to-div">
+            <h3><spring:message code="report.to" /></h3>
+            <input id="to" type="date"></input>
+        </div>
+    </div>
 
     <div class="tableDiv">
-        <table>
+        <table id="myBookings">
             <caption>
                 <h2>
                     <spring:message code="report.myBookings" /></br>
-                    <span id="date">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
-            <tr>
+            <tr id="header">
                 <th><spring:message code="report.date" /></th>
                 <th><spring:message code="report.kid" /></th>
                 <th><spring:message code="report.place" /></th>
@@ -27,29 +41,22 @@
                 <th><spring:message code="report.sum" /></th>
             </tr>
 
-            <c:forEach var="booking" items="${bookings}">
-            <tr>
-                <td><fmt:formatDate pattern="dd/MM" value="${booking.bookingStartTime}" /></td>
-                <td>${booking.idChild}</td>
-                <td>${booking.idRoom}</td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
-                <td>${booking.getDuration()}</td>
-                <td>${booking.sum}</td>
-            </tr>
-            </c:forEach>
-
             <caption class="captionBottom">
-                <p>
-                    <spring:message code="report.sumTotal" /> ${sumTotal}
-                </p>
+                <h3>
+                    <spring:message code="report.sumTotal" />
+                </h3>
             </caption>
 
         </table>
-        <div id="exportButton">
-                <button class="btn btn-raised btn-primary waves-effect
-                waves-light exportButton glyphicon glyphicon-download-alt">
+
+                <a id="dlink"  style="display:none;"></a>
+                <button id="export" class="btn btn-raised btn-primary waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
                 </button>
-            </div>
+                <button id="print" class="btn btn-raised btn-danger exportButton glyphicon glyphicon-print">
+                                    &nbsp; <spring:message code="report.print" />
+                                </button>
     </div>
+</div>
+
+<script src="resources/js/myexport.js"></script>

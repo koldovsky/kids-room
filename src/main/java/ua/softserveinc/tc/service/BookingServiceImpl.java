@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
@@ -129,12 +130,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @SuppressWarnings("unchecked")
     public List<Booking> getBookingsByDay(String data){
 
+        Date day = new Date("2015/04/04");
+        SimpleDateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        String currentDay = df.format(day);
         EntityManager entityManager = bookingDao.getEntityManager();
+        List<Booking> bookingsDay;
 
-        List<Booking> bookingsDay = (List<Booking>) entityManager.createQuery(
-                "from Booking where " + BOOKING_START_TIME + " like " + "'"+data+"%'")
-                .getResultList();
-
+            if (currentDay.equals(data)) {
+                bookingsDay = (List<Booking>) entityManager.createQuery(
+                        "from Booking where " + BOOKING_START_TIME + " like " + "'" + currentDay + "%'")
+                        .getResultList();
+            } else {
+                bookingsDay = (List<Booking>) entityManager.createQuery(
+                        "from Booking where " + BOOKING_START_TIME + " like " + "'" + data + "%'")
+                        .getResultList();
+            }
         return bookingsDay;
     }
 
@@ -183,4 +193,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         return result;
     }
+    @Override
+    public Booking updatingBooking(BookingDTO bookingDTO) {
+        Booking booking = findById(bookingDTO.getId());
+        Calendar calendar = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat(DateConst.DASH_DATE_FORMAT);
+        Date date = new Date(df.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime());
+        booking.setBookingStartTime(date);
+        return booking;
+
+    }
 }
+
+

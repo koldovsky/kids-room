@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;

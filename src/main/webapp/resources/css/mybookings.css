@@ -1,8 +1,4 @@
-#dateThenDiv, #dateNowDiv, .tableDiv, #generateButton, .exportButton {
-
-}
-
-.exportButton {
+.export {
     margin-top: 20px;
 }
 
@@ -50,4 +46,32 @@ table{
 .btn.glyphicon::first-letter {
     font-family: 'Glyphicons Halflings';
     line-height: 1;
+}
+
+.dateSelector{
+    margin: 0 auto;
+    text-align: center;
+}
+
+#from-div, #to-div{
+    display: inline-block;
+}
+
+td{
+min-width: 100px;
+}
+
+#scroller{
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 0px auto;
+    width: 70%;
+    min-width: 800px;
+    height: 100%;
+    text-align: center;
+    background-color: white;
+}
+
+.captionBottom{
+    padding-left: 20px;
 }

@@ -12,7 +12,7 @@ import ua.softserveinc.tc.entity.User;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service
+@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -21,10 +21,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.getUserByEmail(email);
+        if(user==null){
+            throw new UsernameNotFoundException("not found");
+        }
+        boolean accountNonExpired = true;
+        boolean credentialsNonExpired = true;
+        boolean accountNonLocked = true;
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority(user.getRole().getAuthority()));
+
         UserDetails userDetails =
-                new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
+                new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+                        user.isEnabled(), accountNonExpired, credentialsNonExpired, accountNonLocked, roles);
         return userDetails;
     }
 
