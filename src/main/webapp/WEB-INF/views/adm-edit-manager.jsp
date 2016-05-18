@@ -18,10 +18,11 @@
 
        <table class="for-table">
           <tr>
-             <td><strong>Manager email</strong></td>
-             <td><strong>Manager First Name</strong></td>
-             <td><strong>Manager Last Name</strong></td>
-             <td><strong>Manager Phone number</strong></td>
+             <td><strong>Email</strong></td>
+             <td><strong>First Name</strong></td>
+             <td><strong>Last Name</strong></td>
+             <td><strong>Phone number</strong></td>
+             <td><strong>Active account</strong></td>
              <td><strong>EDIT</strong></td>
              <td><strong>DELETE</strong></td>
           </tr>
@@ -32,6 +33,7 @@
              <td>${manager.firstName}</td>
              <td>${manager.lastName}</td>
              <td>${manager.phoneNumber}</td>
+             <td>${manager.enabled}</td>
              <td><a href="adm-update-manager?id=${manager.id}"><input type="button" value="Edit" class="for-button"/></a></td>
 
              <td><c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>

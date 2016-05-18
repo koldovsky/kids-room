@@ -1,6 +1,8 @@
 .for-table{
-	margin: auto;
-	width: 80%;
+    margin: auto;
+	width: 90%;
+	padding-top: 10px;
+	padding-bottom: 15px;
 }
 
 td{
@@ -22,8 +24,8 @@ body{
 .for-button{
     margin: 5px;
     display: inline-block;
-    height: 40px;
-    width: 80px;
+    height: 30px;
+    width: 60px;
     align-items: center;
     color: black;
 }
@@ -38,3 +40,7 @@ body{
     margin: auto;
     margin-bottom: 20px;
 }
+
+
+
+

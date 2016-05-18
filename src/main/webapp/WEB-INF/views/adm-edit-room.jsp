@@ -14,7 +14,7 @@
 
 <body>
    <div class="for-table">
-      <legend class="for-table center-position"><strong>Room list</strong></legend>
+      <legend class="for-table"><strong>Room list</strong></legend>
 
       <table class="for-table" >
          <tr>
