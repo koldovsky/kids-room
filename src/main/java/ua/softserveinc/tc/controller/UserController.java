@@ -63,8 +63,7 @@ public class UserController {
         user.setEnabled(false);
         userService.create(user);
         verificationTokenService.createToken(token, user);
-        String message = mailService.buildRegisterMessage(user,token);
-        mailService.sendMessage(user, UsersConst.CONFIRM_REGISTRATION, message);
+        mailService.buildRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
 

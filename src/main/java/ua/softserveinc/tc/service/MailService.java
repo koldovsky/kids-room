@@ -7,5 +7,5 @@ import ua.softserveinc.tc.entity.User;
  */
 public interface MailService {
     public void sendMessage(User user, String subject, String text);
-    public String buildRegisterMessage(User user, String token);
+    public void buildRegisterMessage(String subject, User user, String token);
 }

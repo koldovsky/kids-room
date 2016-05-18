@@ -57,7 +57,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public String buildRegisterMessage(User user, String token) {
+    public void buildRegisterMessage(String subject, User user, String token) {
 //        String link = "http://" + context.getVirtualServerName() + ":8080" + context.getContextPath()
 //        + "/confirm?token=" + token;
         String link = "http://localhost:8080/home"+ "/confirm?token=" + token;
@@ -68,7 +68,7 @@ public class MailServiceImpl implements MailService {
 
         String text = VelocityEngineUtils.mergeTemplateIntoString(
                 velocityEngine, "/emailTemplate/confirmEmail.vm", "UTF-8", model);
-        return text;
+        sendMessage(user, subject, text);
     }
 
 }
