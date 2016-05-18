@@ -13,51 +13,51 @@
 
 <body>
     <div class="for-table">
-        <form  class="for-table" action="adm-add-room" method="post" modelAttribute="room">
+        <form  class="for-table" action="adm-add-room" method="post" modelAttribute="city">
 
-                <legend class="for-field"><strong>Add room</strong></legend>
+           <legend class="for-field"><strong>Add room</strong></legend>
 
-                <div class="form-group">
-                    <label class="for-field"> Room name <input type="text" name="name" required class="form-control"/></label>
-                </div>
-                <div class="form-group">
-                    <label class="for-field"> Room capacity <input type="number" name="capacity" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Room name <input type="text" name="name" required class="form-control"/></label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> Room address <input type="text" name="address" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Room capacity <input type="number" name="capacity" required class="form-control"/></label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> City
-                        <select name="cities" required class="form-control">
-                            <c:forEach var="city" items="${cityList}" >
-                                <option value="${city.idCity}">${city.nameCity}</option>
-                            </c:forEach>
-                        </select>
-                    </label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Room address <input type="text" name="address" required class="form-control"/></label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> Room phone number <input type="number" name="phoneNumber" pattern="^[\d]{10,13}$" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> City
+                 <select name="cities" required class="form-control">
+                    <c:forEach var="city" items="${cityList}" >
+                       <option value="${city.idCity}">${city.nameCity}</option>
+                    </c:forEach>
+                 </select>
+              </label>
+           </div>
 
-                <div class="form-group">
+           <div class="form-group">
+              <label class="for-field"> Room phone number <input type="text" name="phoneNumber" pattern="^(\+38|8|)(\W*\d){10}\W*$"
+                                                                 required class="form-control"/></label>
+           </div>
 
-                    <label class="for-field"> Room-manager
-                        <select name="managers" required class="form-control">
-                            <c:forEach var="manager" items="${managerList}" >
-                                <option value="${manager.id}">${manager.firstName}</option>
-                            </c:forEach>
-                        </select>
-                    </label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Room-manager
+                 <select name="managers" required class="form-control" id="mySelect">
+                    <c:forEach var="manager" items="${managerList}" >
+                       <option value="${manager.id}">${manager.firstName} ${room.manager.lastName}</option>
+                    </c:forEach>
+                 </select>
+              </label>
+           </div>
 
-                <div class="form-group">
-                    <button class="for-button" type="submit" name="submit">Submit</button>
-                    <button class="for-button" type="reset" name="reset" >Cancel</button>
-                </div>
-
+           <div class="form-group">
+              <button class="for-button" type="submit" name="submit">Submit</button>
+              <button class="for-button" type="reset" name="reset" >Cancel</button>
+           </div>
         </form>
     </div>
 </body>

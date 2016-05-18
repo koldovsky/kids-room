@@ -11,35 +11,42 @@
 </head>
 
 <body>
-    <div class="for-table">
-        <form action="adm-add-manager" method="post" modelAttribute="user">
+   <div class="for-table">
+       <form action="adm-add-manager" method="post" modelAttribute="user">
 
-                <legend class="for-field"><strong>Add manager</strong></legend>
+           <legend class="for-field"><strong>Add manager</strong></legend>
 
-                <div class="form-group">
-                    <label class="for-field"> E-mail <input type="email" name="email" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> E-mail
+                 <input type="email" name="email" required class="form-control" pattern="^(\w){1,60}[@][s]oft[s]erveinc[.]com$"
+                                                   title="Allow only emails with 'softserveinc.com' domain"/>
+              </label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> Password <input type="password" name="password" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Password
+                 <input type="password" name="password" pattern="^(\S){8,}$" title="Eight or more characters" required
+                                                        class="form-control"/>
+              </label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> First Name <input type="text" name="firstName" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> First Name <input type="text" name="firstName" required class="form-control"/></label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> Last Name <input type="text" name="lastName" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Last Name <input type="text" name="lastName" required class="form-control"/></label>
+           </div>
 
-                <div class="form-group">
-                    <label class="for-field"> Phone number <input type="number" name="phoneNumber" pattern="^[\d]{10,13}$" required class="form-control"/></label>
-                </div>
+           <div class="form-group">
+              <label class="for-field"> Phone number <input type="text" name="phoneNumber" pattern="^(\+38|8|)(\W*\d){10}\W*$"
+                                                            title="number not valid" required class="form-control"/></label>
+           </div>
 
-                <div class="form-group">
-                    <button class="for-button" type="submit" name="submit">Submit</button>
-                    <button class="for-button" type="reset" name="reset" >Cancel</button>
-                </div>
+           <div class="form-group">
+              <button class="for-button" type="submit" name="submit">Submit</button>
+              <button class="for-button" type="reset" name="reset" >Cancel</button>
+           </div>
 
         </form>
     </div>

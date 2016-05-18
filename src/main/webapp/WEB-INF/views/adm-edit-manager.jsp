@@ -13,38 +13,38 @@
 </head>
 
 <body>
-    <div>
-        <script src="resources/js/adm-edit-loc.js"></script>
+   <div>
+       <legend class="for-table center-position"><strong>Manager list</strong></legend>
 
-        <legend class="for-table"><strong>Manager list</strong></legend>
+       <table class="for-table">
+          <tr>
+             <td><strong>Manager email</strong></td>
+             <td><strong>Manager First Name</strong></td>
+             <td><strong>Manager Last Name</strong></td>
+             <td><strong>Manager Phone number</strong></td>
+             <td><strong>EDIT</strong></td>
+             <td><strong>DELETE</strong></td>
+          </tr>
 
-        <table class="for-table">
-            <tr>
-                <td><strong>Manager email</strong></td>
-                <td><strong>Manager First Name</strong></td>
-                <td><strong>Manager Last Name</strong></td>
-                <td><strong>Manager Phone number</strong></td>
-            </tr>
+          <c:forEach var="manager" items="${managerList}">
+          <tr>
+             <td>${manager.email}</td>
+             <td>${manager.firstName}</td>
+             <td>${manager.lastName}</td>
+             <td>${manager.phoneNumber}</td>
+             <td><a href="adm-update-manager?id=${manager.id}"><input type="button" value="Edit" class="for-button"/></a></td>
 
-            <c:forEach var="manager" items="${managerList}">
-            <tr>
-                <td>${manager.email}</td>
-                <td>${manager.firstName}</td>
-                <td>${manager.lastName}</td>
-                <td>${manager.phoneNumber}</td>
-                <td><a href="adm-update-manager?id=${manager.id}"><input type="button" value="Edit" class="for-button"/></a>
+             <td><c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
+                <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
+                   <input id="manager" name="manager" type="hidden" value="${manager.id}" />
+                   <input type="submit" value="Delete" onClick="return confirm('sure?')" class="for-button"/>
+                </form:form>
+             </td>
+          </tr>
+          </c:forEach>
+       </table>
 
-                    <c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
-                          <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                          <input type="submit" value="Delete" onClick="return confirm('sure?')" class="for-button"/>
-                    </form:form>
-                    </td>
-            </tr>
-            </c:forEach>
-        </table>
-
-            <a href="adm-add-manager"><input type="button" value="Add" class="for-button"/></a>
+       <a href="adm-add-manager"><input type="button" value="Add" class="for-button center-position"/></a>
 
     </div>
 </body>

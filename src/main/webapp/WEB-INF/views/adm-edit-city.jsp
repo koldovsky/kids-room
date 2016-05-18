@@ -15,10 +15,10 @@
 <body>
     <div class="for-table">
 
-        <legend class="for-table"><strong>City list</strong></legend>
+        <legend class="for-table center-position"><strong>City list</strong></legend>
 
         <table class="for-field" >
-            <tr> <td><strong>City name</strong></td> </tr>
+            <tr><td><strong>City name</strong></td></tr>
             <c:forEach var="city" items="${cityList}">
             <tr>
                 <td>${city.nameCity}</td>
@@ -33,7 +33,7 @@
             </c:forEach>
         </table>
 
-        <a href="adm-add-city"><input type="button" value="Add" class="for-button"/></a>
+        <a href="adm-add-city"><input type="button" value="Add" class="for-button center-position"/></a>
 
     </div>
 </body>
