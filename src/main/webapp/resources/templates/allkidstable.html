@@ -1,0 +1,32 @@
+<div ng-repeat="child in children">
+    <div class="tr row-fluid accordion-toggle" ng-class="{table_even_element: checkIfEven($index)}"
+         data-toggle="collapse" data-target="#{{ 'kidcollapse' + $index }}">
+        <div class="td span3">
+            <a href="#">{{child.firstName}} {{child.lastName}}</a>
+        </div>
+        <div class="td span3">
+            <a href="#">{{child.firstName}} {{$index % 2 == 0}} {{child.lastName}}</a>
+        </div>
+        <div class="td span3">
+            {{child.dateOfBirth}}
+        </div>
+
+        </div>
+        <div ng-attr-id="{{ 'kidcollapse' + $index }}" class="kid-detailed-info row-fluid collapse out"
+             ng-class="{table_even_element: $index % 2 == 0}">
+            <div class="span1"></div>
+            <div class="span9">
+                <div class="span4">
+                    <h4>Phone</h4>
+                    <p style="float: right">
+                        <a href="#">Hello</a>
+                    </p>
+                    <br>
+                    <h4>Comment</h4>
+                    <p style="float: right">
+                        <a href="#">Hello</a>
+                    </p>
+                </div>
+            </div>
+    </div>
+</div>

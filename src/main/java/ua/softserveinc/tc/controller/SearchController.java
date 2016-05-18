@@ -39,7 +39,9 @@ public class SearchController {
         if (isValidRequestField(field)) {
             List<User> users = userSearch.search(field);
             for (User user : users) {
-                result.add(new UserDTO(user));
+                if (user.isEnabled()) {
+                    result.add(new UserDTO(user));
+                }
             }
         }
 
@@ -54,7 +56,9 @@ public class SearchController {
         if (isValidRequestField(field)) {
             List<Child> children = childSearch.search(field);
             for (Child child : children) {
-                result.add(new ChildDTO(child));
+                if (child.isEnabled()) {
+                    result.add(new ChildDTO(child));
+                }
             }
         }
 
