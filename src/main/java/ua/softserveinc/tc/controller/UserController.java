@@ -87,6 +87,17 @@ public class UserController {
         verificationTokenService.delete(verificationToken);
         return "redirect:/login";
     }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    public String changePassword(){
+        return "forgotPassword";
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    public String resetPassword(@RequestParam("email") String email){
+        System.out.println(email);
+        return "redirect:/login";
+    }
 }
 
 
