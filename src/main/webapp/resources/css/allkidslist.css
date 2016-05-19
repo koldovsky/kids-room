@@ -1,26 +1,38 @@
 #all_kids_table_wrapper {
     margin: 20px;
 }
+
+#all_kids_search {
+    padding: 10px;
+}
+
 .table {
     padding: 40px;
 }
 
 .thead, .th, .td {
-	text-align: center;
-    padding: 10px;
+	text-align: left;
+    padding: 10px 10px 10px 0px;
 }
 
 .thead {
-    background-color: #6495ED;
-    color: white;
-}
-
-.tr:hover, .tr:hover + div {
-    background-color:  #D8BFD8;
-    cursor: pointer;
-
-}
-
-.table_even_element {
     background-color: #fff;
+    color: rgb(158, 158, 158);
+    border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.thead, .tr, kid-detailed-info {
+    border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.tr:hover {
+    background-color:  #EEEEEE;
+}
+
+.tr {
+    background-color: #fff;
+}
+
+.tr p {
+    margin: 10px 0px 0px;
 }

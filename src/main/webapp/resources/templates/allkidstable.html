@@ -1,33 +1,58 @@
 <div class="span4">
-    <div class="input-group">
+    <div id="all_kids_search" class="input-group">
         <input type="text" class="form-control" placeholder="Search for..." ng-model="searchField"
             ng-change="searchChildren(searchField)">
     </div>
 </div>
+
 <div class="table" id="allkidstable">
+
     <div class="thead row-fluid">
-        <div class="th span1 checkbox"><label><input checked="" type="checkbox"></label></div>
+
+        <div class="th span1"></div>
         <div class="th span3">Parents Name</div>
         <div class="th span3">Kid Name</div>
         <div class="th span3">Age</div>
+
     </div>
-    <div ng-repeat="child in children">
-        <div class="tr row-fluid accordion-toggle" ng-class="{table_even_element: isIndexEven($index)}"
-             data-toggle="collapse" data-target="#{{ 'kidcollapse' + $index }}">
-            <div class="td span1 checkbox form-group"><input checked="" type="checkbox"></div>
-            <div class="td span3">
-                <a href="#">{{child.firstName}} {{child.lastName}}</a>
+
+    <div id="table-data" ng-repeat="child in children">
+
+        <div class="tr row-fluid accordion-toggle">
+
+            <div class="td span1">
+                <button type="button" id="{{'collapse-button-' + $index}}"
+                        class="btn btn-default"
+                        data-toggle="collapse"
+                        data-target="#{{ 'kidcollapse' + $index }}"
+                        ng-click="toggleCollapseButton('collapse-button-' + $index)">
+                    <span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
+                </button>
             </div>
+
             <div class="td span3">
-                <a href="#">{{child.firstName}} {{isIdEven($index)}} {{child.lastName}}</a>
+                <p>{{child.firstName}} {{child.lastName}}</p>
             </div>
+
             <div class="td span3">
-                {{child.dateOfBirth}}
+                <p>{{child.firstName}} {{isIdEven($index)}} {{child.lastName}}</p>
+            </div>
+
+            <div class="td span3">
+                <p>{{child.dateOfBirth}}</p>
+            </div>
+
+            <div class="td span2">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
             </div>
 
         </div>
-        <div ng-attr-id="{{ 'kidcollapse' + $index }}" class="kid-detailed-info row-fluid collapse out"
-             ng-class="{table_even_element: isIndexEven($index)}">
+
+        <div ng-attr-id="{{ 'kidcollapse' + $index }}"
+             class="kid-detailed-info row-fluid collapse out">
+
             <div class="span1"></div>
             <div class="span9">
                 <div class="span4">

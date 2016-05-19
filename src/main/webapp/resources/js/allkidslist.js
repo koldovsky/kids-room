@@ -34,7 +34,7 @@ function AllKidsTableController($scope, allKidsTableService) {
             allKidsTableService.searchChildren( field )
                 .then(
                     function( children ) {
-                        applyRemoteData( children )
+                        applyRemoteData( children );
                     }
                 );
         } else {
@@ -42,12 +42,13 @@ function AllKidsTableController($scope, allKidsTableService) {
         }
     }
 
-    function isIndexEven ( id ) {
-        return id % 2 == 0;
+    function toggleCollapseButton(buttonId) {
+        buttonId = '#' + buttonId;
+        $(buttonId).find('span').toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
     }
 
-    $scope.isIndexEven = isIndexEven;
     $scope.searchChildren = searchChildren;
+    $scope.toggleCollapseButton = toggleCollapseButton;
 
 }
 
