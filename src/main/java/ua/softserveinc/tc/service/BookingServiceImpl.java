@@ -120,7 +120,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         int sumTotal = 0;
         for (Booking booking : bookings)
         {
-            sumTotal += booking.getSum(booking.getDuration());
+            sumTotal += booking.getSum();
         }
 
         return sumTotal;

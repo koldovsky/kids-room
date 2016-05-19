@@ -175,7 +175,7 @@ public class Booking {
         }
     }
 
-    public void confirmAndSetSum(){
+    public void confirm(){
         this.isConfirmed = true;
         this.calculateSum();
     }
