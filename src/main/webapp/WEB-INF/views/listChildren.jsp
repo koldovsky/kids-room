@@ -11,23 +11,24 @@
 
 
 <div class="col-md-4">
+
     <form action="listChildren" method='POST'>
-    <div class="col-md-4">
-        <p ><input id="inputTime" name="date" type="date" value="${BookingPerDay}"/></p>
-    </div>
-    <div class="col-md-4">
-        <input type="submit" id="bookingStartTime" value="<spring:message code="booking.ChouseDate"/>" />
-    </div>
+        <div class= "form-group">
+            <div class="input-group">
+              <input class="form-control" id="inputTime" name="date" type="date" value="${BookingPerDay}"/>
+               <span class="input-group-btn">
+                    <input type="submit" class="btn btn-primary"  id="bookingStartTime"
+                                     value="<spring:message code="booking.ChouseDate"/>" />
+               </span>
+            </div>
+        </div>
     </form>
 
-
-   <table class="table table-hover" id="tabble">
+   <table class="table table-striped table-hover" id="tabble">
       <caption><h2> <spring:message code="kids.list"/></h2></caption>
-      <tr>
-        <th class="odd"> <spring:message code="kids.name"/></th>
-    </tr>
+
     <c:forEach var="booking" items="${listBooking}">
-    <tr>
+    <tr class="success">
         <td  class="showTable" id="${booking.idBook}" onclick="show(${booking.idBook})">
             <a href="#">${booking.idChild.getFullName()}</a>
         </td>
@@ -55,8 +56,10 @@
 </div>
 
 <div id="reportTime">
-	<input  type="submit" value= "<spring:message code="kids.arrivaltime"/>" />
-	<input type="submit" value= "<spring:message code="kids.departuretime"/>" />
+	<input type="submit" value="<spring:message code="kids.arrivaltime"/>"
+	                     class="btn btn-default" data-toggle="tooltip" data-placement="left"/>
+	<input type="submit" value= "<spring:message code="kids.departuretime"/>"
+	                     class="btn btn-default" data-toggle="tooltip" data-placement="right" />
 	<table >
         <form action="" method="POST">
             <input id="idBook" name="idBook" type="hidden"/>
@@ -72,7 +75,7 @@
             </tr>
             <tr>
                 <td  colspan="2">
-                    <input type="button" class="btn btn-raised btn-primary waves-effect waves-light" id="ApplyBooking"
+                    <input type="button" class="btn btn-raised btn-primary" id="ApplyBooking"
                                         value= "<spring:message code="booking.applybooking"/>" />
                 </td>
             </tr>
