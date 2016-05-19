@@ -28,16 +28,31 @@ function AllKidsTableController($scope, allKidsTableService) {
         ;
     }
 
-    $scope.isIndexEven = function(id) {
+    function searchChildren( field ) {
+        if (field.length >= 3) {
+            allKidsTableService.searchChildren( field )
+                .then(
+                    function( children ) {
+                        applyRemoteData( children )
+                    }
+                );
+        }
+    }
+
+    function isIndexEven ( id ) {
         return id % 2 == 0;
     }
+
+    $scope.isIndexEven = isIndexEven;
+    $scope.searchChildren = searchChildren;
 
 }
 
 function AllKidsTableService($http, $q) {
 
     return({
-        getChildren: getChildren
+        getChildren: getChildren,
+        searchChildren: searchChildren
     });
 
     function getChildren() {
@@ -50,7 +65,21 @@ function AllKidsTableService($http, $q) {
             }
         });
 
-        return( request.then( handleSuccess, handleError ) );
+        return ( request.then( handleSuccess, handleError ) );
+    }
+
+    function searchChildren(field) {
+
+        var request = $http({
+            method: "get",
+            url: "api/child/search",
+            params: {
+                action: "get",
+                field: field
+            }
+        });
+
+        return ( request.then( handleSuccess, handleError ) );
     }
 
     function handleError( response ) {

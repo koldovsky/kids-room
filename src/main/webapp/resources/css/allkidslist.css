@@ -1,16 +1,13 @@
-#allkidstable .btn-primary {
-    margin: 0px;
-    font-size: 12px;
-    border-radius: 3px;
-    border: 1px solid transparent;
-    height: 25px;
-    width: 40px;
+#all_kids_table_wrapper {
+    margin: 20px;
+}
+.table {
+    padding: 40px;
 }
 
 .thead, .th, .td {
 	text-align: center;
     padding: 10px;
-    margin-left: 50 px;
 }
 
 .thead {
@@ -22,10 +19,6 @@
     background-color:  #D8BFD8;
     cursor: pointer;
 
-}
-
-.table {
-    padding: 40px;
 }
 
 .table_even_element {
