@@ -123,6 +123,10 @@
         <put-attribute name="body" value="/WEB-INF/views/forgotPassword.jsp" />
     </definition>
 
+    <definition name="updatePassword" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/updatePassword.jsp" />
+    </definition>
+
     <definition name="json" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/json.jsp" />
     </definition>

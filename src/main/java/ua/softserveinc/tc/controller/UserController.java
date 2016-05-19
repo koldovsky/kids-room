@@ -1,6 +1,12 @@
 package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +24,6 @@ import ua.softserveinc.tc.service.VerificationTokenService;
 import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.UUID;
 
 /**
@@ -37,6 +42,11 @@ public class UserController {
 
     @Autowired
     private VerificationTokenService verificationTokenService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    @Qualifier("userDetailsService")
+    private UserDetailsService userDetailsService;
 
     @RequestMapping(value="/login ", method = RequestMethod.GET)
     public String login(Model model){
@@ -45,7 +55,7 @@ public class UserController {
 
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public String registration(Model model){
-        model.addAttribute(UsersConst.USER, new User());
+        model.addAttribute(UsersConst.USER, new ua.softserveinc.tc.entity.User());
         return UsersConst.REGISTRATION_VIEW;
     }
 
@@ -83,6 +93,7 @@ public class UserController {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
         User user = verificationToken.getUser();
         user.setEnabled(true);
+
         userService.update(user);
         verificationTokenService.delete(verificationToken);
         return "redirect:/login";
@@ -95,9 +106,38 @@ public class UserController {
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String resetPassword(@RequestParam("email") String email){
-        System.out.println(email);
-        return "redirect:/login";
+        User user = userService.getUserByEmail(email);
+        String token = UUID.randomUUID().toString();
+        verificationTokenService.createToken(token, user);
+        mailService.sendChangePassword("change", user, token);
+        return UsersConst.SUCCESS_VIEW;
     }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    public String changePassword(@RequestParam("id") Long id, @RequestParam("token") String token) {
+        System.out.println(token);
+        System.out.println(id);
+        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+        User user = verificationToken.getUser();
+        if(user.getId()!=id){
+            return "redirect:/registrtion";
+        }
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        verificationTokenService.delete(verificationToken);
+        return "updatePassword";
+    }
+
+    @RequestMapping(value = "/savePassword", method = RequestMethod.POST)
+    public String savePassword(@RequestParam("password") String password) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setPassword(passwordEncoder.encode(password));
+        userService.update(user);
+        return "login";
+    }
+
+
 }
 
 

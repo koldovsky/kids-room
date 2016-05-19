@@ -9,7 +9,6 @@ import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
@@ -40,6 +39,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.create(user);
     }
+
+
 
     @Override
     public void confirmManagerRegistrationUpdate(User manager){

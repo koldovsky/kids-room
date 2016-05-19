@@ -86,4 +86,18 @@ public class MailServiceImpl implements MailService {
         sendMessage(manager, subject, text);
     }
 
+    @Override
+    public void sendChangePassword(String subject, User user, String token) {
+
+        String link = "http://localhost:8080/home"+ "/changePassword?id="+user.getId()+"&token=" + token;
+
+        Map model = new HashMap();
+        model.put("user", user);
+        model.put("link", link);
+
+        String text = VelocityEngineUtils.mergeTemplateIntoString(
+                velocityEngine, "/emailTemplate/confirmEmail.vm", "UTF-8", model);
+        sendMessage(user, subject, text);
+    }
+
 }
