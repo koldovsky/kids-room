@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.softserveinc.tc.constants.ApiConstants;
 import ua.softserveinc.tc.dto.ChildDTO;
 import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.Child;
@@ -30,7 +31,7 @@ public class ApiController {
     @Autowired
     ChildService childService;
 
-    @RequestMapping(value = "/api/user", method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.usersRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getUser() {
         List<UserDTO> result = new ArrayList<UserDTO>();
         List<User> users = userService.findAll();
@@ -45,7 +46,7 @@ public class ApiController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = "/api/child", method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getChild() {
         List<ChildDTO> result = new ArrayList<ChildDTO>();
         List<Child> children = childService.findAll();
