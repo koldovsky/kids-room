@@ -13,10 +13,13 @@
 </head>
 
 <body>
-   <div >
-       <legend class="for-table center-position"><strong>Manager list</strong></legend>
-
+   <div class="for-table">
        <table class="for-table">
+          <tr>
+             <th colspan="7">
+                <legend class="for-table"><strong>Manager list</strong></legend>
+             </th>
+          </tr>
           <tr>
              <td><strong>Email</strong></td>
              <td><strong>First Name</strong></td>
@@ -37,7 +40,6 @@
              <td><a href="adm-update-manager?id=${manager.id}">
                     <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
 
-
              <td><c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
                 <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
                    <input id="manager" name="manager" type="hidden" value="${manager.id}" />
@@ -47,10 +49,14 @@
              </td>
           </tr>
           </c:forEach>
+          <tr></tr>
+          <tr>
+             <td colspan="7" class="hide-border">
+                <a href="adm-add-manager"><input type="button" value="Add"
+                                           class="btn btn-raised btn-primary waves-effect waves-light"/></a>
+             </td>
+          </tr>
        </table>
-
-       <a href="adm-add-manager"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
-
     </div>
 </body>
 </html>

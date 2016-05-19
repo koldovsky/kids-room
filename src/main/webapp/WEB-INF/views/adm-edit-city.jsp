@@ -15,10 +15,17 @@
 <body>
     <div class="for-table">
 
-        <legend class="for-table center-position"><strong>City list</strong></legend>
+
 
         <table class="for-field" >
-            <tr><td><strong>City name</strong></td></tr>
+
+            <tr>
+               <th colspan="2"><legend class="for-table"><strong>City list</strong></legend>
+            </tr>
+            <tr>
+               <td><strong>City name</strong></td>
+               <td><strong>DELETE</strong></td>
+            </tr>
             <c:forEach var="city" items="${cityList}">
             <tr>
                 <td>${city.nameCity}</td>
@@ -32,9 +39,16 @@
                 </td>
             </tr>
             </c:forEach>
+
+            <tr></tr>
+            <tr class="hide-border">
+                <td colspan="2" >
+                <a href="adm-add-city"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
+                </td>
+            </tr>
         </table>
 
-        <a href="adm-add-city"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
+
 
     </div>
 </body>

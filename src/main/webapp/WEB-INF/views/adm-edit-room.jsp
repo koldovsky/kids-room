@@ -14,16 +14,21 @@
 
 <body>
    <div class="for-table">
-      <legend class="for-table"><strong>Room list</strong></legend>
 
-      <table class="for-table" >
+
+      <table class="for-table">
+         <tr>
+            <th colspan="8"><legend class="for-table"><strong>Room list</strong></legend></th>
+         </tr>
          <tr>
             <td><strong>Room name</strong></td>
             <td><strong>Room address</strong></td>
             <td><strong>Room phone number</strong></td>
             <td><strong>Room capacity</strong></td>
             <td><strong>Room manager</strong></td>
-            <td><strong>Room city</strong></td>
+            <td><strong>City</strong></td>
+            <td><strong>EDIT</strong></td>
+            <td><strong>DELETE</strong></td>
          </tr>
 
          <c:forEach var="room" items="${roomList}">
@@ -40,9 +45,17 @@
             <td><button class="btn btn-info btn-lg glyphicon glyphicon-trash waves-light"/></td>
          </tr>
          </c:forEach>
+
+        <tr></tr>
+
+         <tr>
+            <td colspan="8" class="hide-border">
+                <a href="adm-add-room"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
+            </td>
+         </tr>
       </table>
 
-      <a href="adm-add-room"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
+
    </div>
 </body>
 </html>

@@ -5,16 +5,23 @@
 	padding-bottom: 15px;
 }
 
+.for-table-fields{
+    margin: auto;
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
 td{
     width: auto;
     border-collapse: collapse;
 }
-legend{
-    border: none;
-}
 
 .hide-border{
     border: hidden;
+}
+
+.no-border{
+    border: none;
 }
 
 body{
@@ -28,10 +35,6 @@ body{
     width: 60px;
     align-items: center;
     color: black;
-}
-
-.for-main-block{
-    align-items: center;
 }
 
 .for-field{
