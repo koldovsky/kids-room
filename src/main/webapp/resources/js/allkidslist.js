@@ -10,6 +10,7 @@ angular
 function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.children = [];
+    $scope.pageSize = 10;
 
     loadRemoteData();
 
@@ -36,6 +37,8 @@ function AllKidsTableController($scope, allKidsTableService) {
                         applyRemoteData( children )
                     }
                 );
+        } else {
+            loadRemoteData();
         }
     }
 
