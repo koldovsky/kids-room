@@ -29,8 +29,7 @@ import java.util.List;
 public class ListChildrenController {
     @Autowired
     private BookingService bookingService;
-    @Autowired
-    ChildService childService;
+
     @Autowired
     BookingDao bookingDao;
 

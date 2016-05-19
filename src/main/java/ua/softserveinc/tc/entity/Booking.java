@@ -178,5 +178,6 @@ public class Booking {
     public void confirm(){
         this.isConfirmed = true;
         this.calculateSum();
+
     }
 }
