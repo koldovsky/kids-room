@@ -52,7 +52,7 @@
 </header>
 -->
 
-<nav class="navbar navbar-default navbar-static-top primary-color">
+<nav class="navbar navbar-default navbar-static-top primary-color" id="topnavbar">
     <div class="container">
         <div class="navbar-header">
             <a href="/home" class="navbar-brand">Kids Room</a>

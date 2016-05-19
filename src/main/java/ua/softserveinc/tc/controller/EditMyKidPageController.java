@@ -92,7 +92,7 @@ public class EditMyKidPageController {
                             Principal principal){
         Child kidToRemove = childService.findById(Long.parseLong(id));
 
-        if(userService
+        if(!userService
                 .getUserByEmail(principal.getName())
                 .equals(kidToRemove.getParentId())){
             throw new AccessDeniedException("You do not have access to this page");

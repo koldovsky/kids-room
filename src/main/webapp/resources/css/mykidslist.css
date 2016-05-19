@@ -36,14 +36,16 @@
 }
 
 .kidinfo {
+    border-radius: 40px;
    display: none;
-   padding-top: 5px;
+   padding: 5px;
    margin: 0 auto;
    height: 20%;
    font-size: 15px;
    line-height: 1.428571429;
    width: 80%;
-   background-color: #BBDEFB;
+   max-width: 210px;
+   background-color: #ffA1DD;
 }
 
 .btn.glyphicon {
