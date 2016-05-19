@@ -144,6 +144,32 @@ public class Booking {
         return duration;
     }
 
+    public int getSum(String hoursAndMinutes) // Тимчасово тут, поки немає готового методу, який
+    // викликається, коли менеджер змінює час прибуття
+    {
+        // extract hour and minute from passed String
+        int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
+        int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
+
+        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
+        if (minutes > 0) hours++;
+
+        // get prices for particular room and sort them in order to choose appropriate one
+        Map<Integer, Integer> prices = idRoom.getPrices();
+        ArrayList<Integer> listOfKeys = new ArrayList<>();
+        listOfKeys.addAll(prices.keySet());
+        Collections.sort(listOfKeys);
+
+        while (true)
+        {
+            if (listOfKeys.contains(hours)) return prices.get(hours);
+            hours++;
+            // if manager enters value that is bigger than max value in the list
+            // we return price for max value
+            if (hours > 10) return prices.get(listOfKeys.get(listOfKeys.size() - 1));
+        }
+    }
+
     public void confirm(){
         this.isConfirmed = true;
         Map<Integer, Integer> rates = this.getIdRoom().getPrices();

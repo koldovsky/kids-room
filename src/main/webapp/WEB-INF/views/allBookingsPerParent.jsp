@@ -34,7 +34,7 @@
                 <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
                 <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
                 <td>${booking.getDuration()}</td>
-                <td>${booking.sum}</td>
+                <td>${booking.getSum(booking.getDuration())}</td>
             </tr>
             </c:forEach>
 
