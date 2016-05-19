@@ -39,10 +39,10 @@
             <td>${room.capacity}</td>
             <td>${room.manager}</td>
             <td>${room.city.nameCity}</td>
-            <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
+            <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-primary glyphicon glyphicon-pencil">
                                                         </button></a></td>
 
-            <td><button class="btn btn-info btn-lg glyphicon glyphicon-trash waves-light"/></td>
+            <td><button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-trash waves-light"/></td>
          </tr>
          </c:forEach>
 
@@ -50,7 +50,8 @@
 
          <tr>
             <td colspan="8" class="hide-border">
-                <a href="adm-add-room"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
+                <a href="adm-add-room"><input type="button" value="Add"
+                                        class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
             </td>
          </tr>
       </table>

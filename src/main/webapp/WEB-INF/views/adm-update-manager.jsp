@@ -56,8 +56,8 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" name="submit" class="glyphicon glyphicon-ok btn btn-info btn-lg"></button>
-                <button type="reset" name="reset" class="btn btn-info btn-lg glyphicon glyphicon-remove"></button>
+                <button type="submit" name="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok"></button>
+                <button type="reset" name="reset" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove"></button>
             </div>
         </th></tr>
 

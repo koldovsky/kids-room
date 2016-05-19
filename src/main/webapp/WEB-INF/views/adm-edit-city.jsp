@@ -34,7 +34,7 @@
                     <form:form id="${cityFormId}" action="${deleteUrl}" method="post">
                        <input id="city" name="city" type="hidden" value="${city.idCity}" />
                        <button type="submit" onClick="return confirm('sure?')"
-                                            class="btn btn-info btn-lg glyphicon glyphicon-trash" />
+                                            class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-trash" />
                     </form:form>
                 </td>
             </tr>
@@ -43,13 +43,11 @@
             <tr></tr>
             <tr class="hide-border">
                 <td colspan="2" >
-                <a href="adm-add-city"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
+                    <a href="adm-add-city"><input type="button" value="Add"
+                                            class="btn btn-raised btn-primary waves-effect waves-light"/></a>
                 </td>
             </tr>
         </table>
-
-
-
     </div>
 </body>
 </html>

@@ -28,15 +28,6 @@ body{
     margin:auto;
 }
 
-.for-button{
-    margin: 5px;
-    display: inline-block;
-    height: 30px;
-    width: 60px;
-    align-items: center;
-    color: black;
-}
-
 .for-field{
     height: 30px;
     width: 350px;
