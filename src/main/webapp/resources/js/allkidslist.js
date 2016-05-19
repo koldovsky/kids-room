@@ -1,35 +1,92 @@
-$(function(){
-    $.fn.editable.defaults.mode = 'inline';
-    $.fn.editable.defaults.disabled = true;
 
-    $(document).ready(function() {
-        $('a[id^=\'kidname\']').editable({
-               type: 'text',
-               pk: 1,
-               name: 'kidname',
-               title: 'Enter Full Name'
-        });
-        $('a[id^=\'parentname\']').editable({
-               type: 'text',
-               pk: 1,
-               name: 'parentname',
-               title: 'Enter Full Name'
-        });
-        $('a[id^=\'kidphone\']').editable({
-               type: 'text',
-               pk: 1,
-               name: 'kidphone',
-               title: 'Enter Phone Number'
-        });
-        $('a[id^=\'kidcomment\']').editable({
-               type: 'textarea',
-               pk: 1,
-               name: 'kidcomment',
-               title: 'Enter Comment'
-        });
+'use strict';
+
+angular
+    .module('allKidsList', [])
+    .controller('AllKidsTableController', ['$scope', 'AllKidsService', AllKidsTableController])
+    .service('AllKidsService', AllKidsTableService)
+    .directive('allKidsTable', AllKidsTable);
+
+function AllKidsTableController($scope, allKidsTableService) {
+
+    $scope.children = [];
+
+    loadRemoteData();
+
+    function applyRemoteData( newChildren ) {
+        $scope.children = newChildren;
+    }
+
+    function loadRemoteData() {
+
+        allKidsTableService.getChildren()
+            .then(
+                function( children ) {
+                    applyRemoteData( children );
+                }
+            )
+        ;
+    }
+
+    $scope.isIndexEven = function(id) {
+        return id % 2 == 0;
+    }
+
+}
+
+function AllKidsTableService($http, $q) {
+
+    return({
+        getChildren: getChildren
     });
 
-    $('#enable').click(function() {
-           $('#allkidstable .editable').editable('toggleDisabled');
-     });
-});
+    function getChildren() {
+
+        var request = $http({
+            method: "get",
+            url: "api/child",
+            params: {
+                action: "get"
+            }
+        });
+
+        return( request.then( handleSuccess, handleError ) );
+    }
+
+    function handleError( response ) {
+
+        if (
+            ! angular.isObject( response.data ) ||
+            ! response.data.message
+            ) {
+            return( $q.reject( "An unknown error occurred." ) );
+        }
+
+        return( $q.reject( response.data.message ) );
+    }
+
+    function handleSuccess( response ) {
+        return( response.data );
+    }
+}
+
+function AllKidsTable() {
+
+    var link = function (scope, element, attrs) {
+
+    }
+
+    var compile = function() {
+
+    }
+
+    return {
+        restrict: 'E',
+        templateUrl: 'resources/templates/allkidstable.html',
+        link: link,
+        controller: 'AllKidsTableController',
+        scope: {
+            children: "="
+        }
+    };
+}

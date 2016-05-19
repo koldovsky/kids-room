@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.dto;
 
+import java.util.Date;
+
 import ua.softserveinc.tc.entity.Child;
 
 /**
@@ -9,6 +11,8 @@ public class ChildDTO {
 
     private String firstName;
     private String lastName;
+    private Date dateOfBirth;
+    private long parentId;
 
     public String getFirstName() {
         return firstName;
@@ -27,9 +31,27 @@ public class ChildDTO {
         this.lastName = lastName;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
     public ChildDTO(Child child) {
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
+        this.dateOfBirth = child.getDateOfBirth();
+        this.parentId = child.getParentId().getId();
     }
 
 }

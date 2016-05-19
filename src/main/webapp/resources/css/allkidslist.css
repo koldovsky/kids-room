@@ -18,12 +18,10 @@
     color: white;
 }
 
-.tr:hover {
+.tr:hover, .tr:hover + div {
     background-color:  #D8BFD8;
-}
+    cursor: pointer;
 
-.tr:nth-of-type(odd) {
-    background-color: #f2f2f2;
 }
 
 .table {
@@ -31,5 +29,5 @@
 }
 
 .table_even_element {
-    background-color: #f2f2f2;
+    background-color: #fff;
 }
