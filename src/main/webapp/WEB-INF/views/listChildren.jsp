@@ -7,7 +7,7 @@
 <link rel='stylesheet' href='resources/css/listBookedChildren.css'>
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
-<script src="resources/js/bookedkids.js"></script>
+
 
 
 <div class="col-md-4">
@@ -17,7 +17,7 @@
             <div class="input-group">
               <input class="form-control" id="inputTime" name="date" type="date" value="${BookingPerDay}"/>
                <span class="input-group-btn">
-                    <input type="submit" class="btn btn-primary"  id="bookingStartTime"
+                    <input type="submit" class="btn"  id="bookingStartTime"
                                      value="<spring:message code="booking.ChouseDate"/>" />
                </span>
             </div>
@@ -82,59 +82,6 @@
         </form>
     </table>
 </div>
-<script>
 
- $('#addKids').hide();
- $('#butAddKid').click(function(){
-    $('#addKids').show();
-});
-
-
-
- $('#reportTime').hide();
-
- $('.showTable').click(function(){
-
-    $('#reportTime').show();
-});
-
- function show(a){
-
-    var str = "getCompan/"+a;
-    $.ajax({
-        url: str,
-        success: function(result){
-            var text = result;
-            var obj = JSON.parse(text);
-            document.getElementById("startTime").innerHTML = obj.startTime;
-            $('#idBook').val(obj.id);
-            $('#realTime').val(obj.reportTime);
-
-        }
-    });
-}
-
-    $('#ApplyBooking').click(function(){
-
-        var inputData = {
-            startTime: $('#realTime').val(),
-            id: $('#idBook').val(),
-        };
-            $.ajax({
-                url: "setTime",
-                contentType: 'application/json',
-                data:   JSON.stringify(inputData),
-                type: 'POST',
-                success: function(data){
-                var text = data;
-                var obj = JSON.parse(text);
-                document.getElementById("startTime").innerHTML = obj.startTime;
-                },
-                error: function(){
-                alert(status);
-                }
-                });
-    });
-</script>
-
+<script src="resources/js/bookedkids.js"></script>
 

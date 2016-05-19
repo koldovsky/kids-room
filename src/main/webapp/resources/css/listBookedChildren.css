@@ -1,0 +1,46 @@
+
+
+.col-sm-4{
+margin: 0 auto;
+}
+#butChouseTime{
+margin-left: 20%;
+}
+
+
+/*  -- TABLE -- */
+table.listChild {
+ text-align: center;
+   margin-left: 20px;
+   position:absolute;
+   width: 20%;
+   border: 2px solid #ddd;
+
+   }
+   th {
+    border: 2px solid #ddd;
+    padding: 20px;
+    background: #dfdf;
+
+    text-align: center;
+   }
+   tr,td{
+   border: 2px solid #ddd;
+   padding: 10px;
+   }
+
+   th.odd {
+   text-align: center;
+   background: #009688;
+   }
+
+   .success:hover {
+       cursor: pointer;
+   }
+
+
+
+
+
+/* -- AND TABLE   -- */
+
