@@ -45,7 +45,7 @@ public class EditMyKidPageController {
             method = RequestMethod.GET)
     public ModelAndView selectKid(
             @RequestParam("kidId") String kidId,
-            Principal principal)
+            Principal principal) throws ResourceNotFoundException, AccessDeniedException
     {
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.KID_EDITING_VIEW);
@@ -88,8 +88,16 @@ public class EditMyKidPageController {
 
     @RequestMapping(value = "/removemykid",
     method = RequestMethod.GET)
-    public String removeKid(@RequestParam("id") String id){
+    public String removeKid(@RequestParam("id") String id,
+                            Principal principal){
         Child kidToRemove = childService.findById(Long.parseLong(id));
+
+        if(userService
+                .getUserByEmail(principal.getName())
+                .equals(kidToRemove.getParentId())){
+            throw new AccessDeniedException("You do not have access to this page");
+        }
+
         kidToRemove.setEnabled(false);
         childService.update(kidToRemove);
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;

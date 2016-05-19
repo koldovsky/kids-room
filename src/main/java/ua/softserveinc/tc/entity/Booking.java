@@ -58,6 +58,7 @@ public class Booking {
         isConfirmed = confirmed;
     }
 
+    //TODO: переробити на лонг
     @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
     private int sum;
 

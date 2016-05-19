@@ -19,6 +19,7 @@ import java.util.Date;
 /**
  * Created by Петришак on 14.05.2016.
  */
+
 public class BookingDTO  implements BaseDTO {
 
 

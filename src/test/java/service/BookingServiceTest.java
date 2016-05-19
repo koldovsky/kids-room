@@ -9,7 +9,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.config.AppConfig;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.UserService;
+
 import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
@@ -23,12 +26,15 @@ import java.util.List;
 
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
-//в мануалі була своя конфігурація під окрему теестову базу
+//в мануалі була своя конфігурація під окрему тестову базу
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
 public class BookingServiceTest {
     @Resource
     BookingService bookingService;
+
+    @Autowired
+    UserService userService;
 
     @Test
     public void testSumTotal() throws Exception{
@@ -40,5 +46,4 @@ public class BookingServiceTest {
         assertEquals("Should be 20", 20, bookingService.getSumTotal(bookings));
 
     }
-
 }

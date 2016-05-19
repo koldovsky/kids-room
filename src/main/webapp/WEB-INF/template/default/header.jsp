@@ -23,7 +23,7 @@
                     </a>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
-                <div class="col-sm-12">
+                                                       <div class="col-sm-12">
 
                      <sec:authorize access="hasRole('USER')">
                                  <a href="mykids"><spring:message code="user.myKids" />

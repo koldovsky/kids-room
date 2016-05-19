@@ -34,7 +34,7 @@ function updateTable(){
 			var list = $.parseJSON(response);
 
 			var tableContent = '<tr>';
-
+            
 			$.each(list, function(i, booking){
 			tableContent += '<td>' + booking.date + '</td>'
             			+ '<td>' + booking.kidName + '</td>'
@@ -43,10 +43,23 @@ function updateTable(){
 			            + '<td>' + booking.endTime + '</td>'
 			            + '<td>' + booking.duration + '</td>'
 			            + '<td>' + booking.sum + '</td> + </tr>';
+			
 			        });
 
 			$('tr:not(#header)').remove();
-			$('#myBookings').append(tableContent);
+			$('#myBookings').append( tableContent );
+			updateTotal();
+			
+		}
+	});
+}
+
+function updateTotal(){
+	$.ajax({
+		type: "GET",
+		url: "mybookings/total",
+		success: function(response){
+			$('#sum').html( response );
 		}
 	});
 }

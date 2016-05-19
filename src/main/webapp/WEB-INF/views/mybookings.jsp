@@ -43,8 +43,9 @@
 
             <caption class="captionBottom">
                 <h3>
-                    <spring:message code="report.sumTotal" />
+                    <spring:message code="report.sumTotal" /><p id="sum"></p>
                 </h3>
+
             </caption>
 
         </table>

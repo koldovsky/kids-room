@@ -3,6 +3,7 @@ package ua.softserveinc.tc.constants.ColumnConstants;
 /**
  * Created by TARAS on 05.05.2016.
  */
+
 public interface BookingConst {
 
     String TABLE_NAME_BOOKING = "bookings";

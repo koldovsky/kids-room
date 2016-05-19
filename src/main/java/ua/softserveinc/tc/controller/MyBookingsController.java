@@ -18,6 +18,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Nestor on 14.05.2016.
@@ -61,8 +62,16 @@ public class MyBookingsController {
         return model;
     }
 
+    private long sumTotal = 0;
+
+    @RequestMapping(value = "mybookings/total")
+    public @ResponseBody String getSumTotal(){
+        return String.valueOf(sumTotal);
+    }
+
     @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
-    public @ResponseBody String getBookings(@RequestParam(value = "dateLo") String dateLo,
+    public @ResponseBody String getBookings(
+                       @RequestParam(value = "dateLo") String dateLo,
                        @RequestParam(value = "dateHi") String dateHi,
                        Principal principal){
 
@@ -70,6 +79,10 @@ public class MyBookingsController {
         List<Booking> myBookings = bookingService.getBookingsByUserByRangeOfTime(currentUser, dateLo, dateHi);
         List<BookingDTO> dtos = new ArrayList<>();
         myBookings.forEach((booking -> dtos.add(new BookingDTO(booking))));
+
+        Random rand = new Random();
+        sumTotal = 0;
+        dtos.forEach(bookingDTO -> sumTotal += bookingDTO.getSum());
         Gson gson = new Gson();
         return gson.toJson(dtos);
     }
