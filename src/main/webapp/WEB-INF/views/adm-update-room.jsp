@@ -67,8 +67,8 @@
        </div>
 
        <div class="form-group">
-          <button type="submit" name="submit" class="for-button">Submit</button>
-          <button type="reset" name="reset" class="for-button">Cancel</button>
+          <button type="submit" name="submit" class="glyphicon glyphicon-ok btn btn-info btn-lg">Submit</button>
+          <button type="reset" name="reset" class="btn btn-info btn-lg glyphicon glyphicon-remove">Cancel</button>
        </div>
    </form:form>
 </div>

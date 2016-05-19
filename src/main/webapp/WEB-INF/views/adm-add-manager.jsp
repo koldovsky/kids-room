@@ -44,8 +44,8 @@
            </div>
 
            <div class="form-group">
-              <button class="for-button" type="submit" name="submit">Submit</button>
-              <button class="for-button" type="reset" name="reset" >Cancel</button>
+              <button class="glyphicon glyphicon-ok btn btn-info btn-lg" type="submit" name="submit">Submit</button>
+              <button class="btn btn-info btn-lg glyphicon glyphicon-remove" type="reset" name="reset" >Cancel</button>
            </div>
 
         </form>

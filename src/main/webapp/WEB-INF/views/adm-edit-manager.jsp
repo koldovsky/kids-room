@@ -13,7 +13,7 @@
 </head>
 
 <body>
-   <div>
+   <div >
        <legend class="for-table center-position"><strong>Manager list</strong></legend>
 
        <table class="for-table">
@@ -34,19 +34,22 @@
              <td>${manager.lastName}</td>
              <td>${manager.phoneNumber}</td>
              <td>${manager.enabled}</td>
-             <td><a href="adm-update-manager?id=${manager.id}"><input type="button" value="Edit" class="for-button"/></a></td>
+             <td><a href="adm-update-manager?id=${manager.id}">
+                    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
+
 
              <td><c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
                 <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
                    <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                   <input type="submit" value="Delete" onClick="return confirm('sure?')" class="for-button"/>
+                   <button type="submit" value="Delete" onClick="return confirm('sure?')"
+                            class="btn btn-info btn-lg glyphicon glyphicon-trash"></button>
                 </form:form>
              </td>
           </tr>
           </c:forEach>
        </table>
 
-       <a href="adm-add-manager"><input type="button" value="Add" class="for-button center-position"/></a>
+       <a href="adm-add-manager"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
 
     </div>
 </body>

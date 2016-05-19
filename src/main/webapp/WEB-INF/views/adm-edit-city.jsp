@@ -26,14 +26,15 @@
                     <c:url var="deleteUrl" value="/adm-edit-city?id=${city.idCity}"/>
                     <form:form id="${cityFormId}" action="${deleteUrl}" method="post">
                        <input id="city" name="city" type="hidden" value="${city.idCity}" />
-                       <input type="submit" value="Delete" onClick="return confirm('sure?')" class="for-button" />
+                       <button type="submit" onClick="return confirm('sure?')"
+                                            class="btn btn-info btn-lg glyphicon glyphicon-trash" />
                     </form:form>
                 </td>
             </tr>
             </c:forEach>
         </table>
 
-        <a href="adm-add-city"><input type="button" value="Add" class="for-button center-position"/></a>
+        <a href="adm-add-city"><input type="button" value="Add" class="btn btn-raised btn-primary waves-effect waves-light"/></a>
 
     </div>
 </body>
