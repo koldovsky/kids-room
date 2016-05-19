@@ -35,21 +35,20 @@ public class ListChildrenController {
 
 
     @RequestMapping(value = "/listChildren")
-    public ModelAndView parentBookings(Model model) {
+    public ModelAndView parentBookings(Model model) throws ParseException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("listChildren");
-
-   //     ModelMap modelMap = modelAndView.getModelMap();
- //       modelAndView.addObject("bookedJSP", new Booking());
-        List<Booking> listBooking = bookingService.getBookingsOfThisDay();
-        model.addAttribute("listBooking", listBooking);
         DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        String date = df.format(listBooking.get(0).getBookingStartTime());
-        model.addAttribute("BookingPerDay", date);
+        Calendar toDay = Calendar.getInstance();
+        Date date = toDay.getTime();
+        String dateString = df.format(date);
+        List<Booking> listBooking = bookingService.getBookingsByDay(dateString);
+        model.addAttribute("listBooking", listBooking);
+        model.addAttribute("BookingPerDay", dateString);
         return modelAndView;
     }
     @RequestMapping(value = "/listChildren", method = RequestMethod.POST)
-    public String p(Model model, @RequestParam("date") String date) throws ParseException{
+    public String getBookingByDay (Model model, @RequestParam("date") String date) throws ParseException{
         List<Booking> listBooking = bookingService.getBookingsByDay(date);
         model.addAttribute("listBooking", listBooking);
         model.addAttribute("BookingPerDay",  date);
@@ -61,9 +60,9 @@ public class ListChildrenController {
     @ResponseBody
     String setingBookings(@RequestBody BookingDTO bookingDTO) throws ParseException {
         Booking booking = bookingService.updatingBooking(bookingDTO);
-        BookingDTO jsonBooking = new BookingDTO(booking);
+        BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();
-        return  gson.toJson(jsonBooking);
+        return  gson.toJson(bookingDTOtoJson);
     }
 
 
@@ -71,9 +70,9 @@ public class ListChildrenController {
     public
     @ResponseBody
     String getRaandom(@PathVariable Long a) {
-        Booking b = bookingService.findById(a);
-        BookingDTO jsb = new BookingDTO(b);
+        Booking booking = bookingService.findById(a);
+        BookingDTO bookingDTO = new BookingDTO(booking);
         Gson gson = new Gson();
-        return  gson.toJson(jsb);
+        return  gson.toJson(bookingDTO);
     }
 }
