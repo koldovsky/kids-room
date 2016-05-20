@@ -33,6 +33,7 @@ import java.util.UUID;
  */
 @Controller
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -44,26 +45,28 @@ public class UserController {
 
     @Autowired
     private TokenService tokenService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     @Qualifier(UsersConst.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
-    @RequestMapping(value="/login ", method = RequestMethod.GET)
-    public String login(Model model){
+    @RequestMapping(value = "/login ", method = RequestMethod.GET)
+    public String login(Model model) {
         return UsersConst.LOGIN_VIEW;
     }
 
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
-    public String registration(Model model){
-        model.addAttribute(UsersConst.USER, new ua.softserveinc.tc.entity.User());
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String registration(Model model) {
+        model.addAttribute(UsersConst.USER, new User());
         return UsersConst.REGISTRATION_VIEW;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute(UsersConst.USER) @Valid User user, BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
+//        userValidator.validate(user, bindingResult);
 //        if (bindingResult.hasErrors()){
 //            return UsersConst.REGISTRATION_VIEW;
 //        }
@@ -72,35 +75,35 @@ public class UserController {
         user.setEnabled(false);
         userService.create(user);
         tokenService.createToken(token, user);
-        mailService.buildRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
+        mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
 
-    @RequestMapping(value="/rules ", method = RequestMethod.GET)
-    public String getRules(){
+    @RequestMapping(value = "/rules ", method = RequestMethod.GET)
+    public String getRules() {
         return UsersConst.RULES_VIEW;
     }
 
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
-    public String confirmRegistration(@RequestParam(TokenConst.TOKEN) String token) {
-        Token verificationToken = tokenService.findByToken(token);
-        User user = verificationToken.getUser();
+    public String confirmRegistration(@RequestParam(TokenConst.TOKEN) String sToken) {
+        Token token = tokenService.findByToken(sToken);
+        User user = token.getUser();
         user.setEnabled(true);
         userService.update(user);
-        tokenService.delete(verificationToken);
+        tokenService.delete(token);
         return "redirect:/login";
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    public String changePassword(){
+    public String changePassword() {
         return UsersConst.FORGOT_PASS_VIEW;
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@RequestParam(UserConst.EMAIL) String email){
-        if(userService.getUserByEmail(email)==null){
-            return "redirect:/resetPassword";
+    public String resetPassword(@RequestParam(UserConst.EMAIL) String email) {
+        if (userService.getUserByEmail(email) == null) {
+            return UsersConst.FORGOT_PASS_VIEW;
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
@@ -114,8 +117,8 @@ public class UserController {
     public String changePassword(@RequestParam("id") Long id, @RequestParam(TokenConst.TOKEN) String token) {
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
-        if(user.getId()!=id){
-            return "redirect:/registrtion";
+        if (user.getId() != id) {
+            return UsersConst.FORGOT_PASS_VIEW;
         }
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
@@ -124,7 +127,7 @@ public class UserController {
         return UsersConst.UPDATE_PASS_VIEW;
     }
 
-    @RequestMapping(value = "/savePassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String savePassword(@RequestParam(UserConst.PASSWORD) String password) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(passwordEncoder.encode(password));
