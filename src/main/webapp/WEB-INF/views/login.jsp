@@ -35,6 +35,6 @@
               <button type="submit" class="btn btn-default"><spring:message code="user.login" /></button>
             </div>
           </div>
+          <a href="<c:url value="/resetPassword" />"> <spring:message code="password.reset" /></a>
         </form>
-
 </div>
