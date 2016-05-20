@@ -44,30 +44,11 @@ public class MyBookingsController {
 
         ModelMap modelMap = model.getModelMap();
 
-        /*String dateNow = bookingService.getCurrentDate();
-        String dateThen = bookingService.getDateMonthAgo();
 
-        User currentUser = userService
-                .getUserByEmail(principal.getName());
-
-        List<Booking> myBookings = bookingService
-                .getBookingsByUserByRangeOfTime(currentUser, dateThen, dateNow);
-
-        int sumTotal = bookingService.getSumTotal(myBookings);
-
-        modelMap.addAttribute(ReportConst.BOOKINGS, myBookings);
-        modelMap.addAttribute(ReportConst.SUM_TOTAL, sumTotal);
-        */
 
         return model;
     }
 
-    private long sumTotal = 0;
-
-    @RequestMapping(value = "mybookings/total")
-    public @ResponseBody String getSumTotal(){
-        return String.valueOf(sumTotal);
-    }
 
     @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
     public @ResponseBody String getBookings(
@@ -80,9 +61,6 @@ public class MyBookingsController {
         List<BookingDTO> dtos = new ArrayList<>();
         myBookings.forEach((booking -> dtos.add(new BookingDTO(booking))));
 
-        Random rand = new Random();
-        sumTotal = 0;
-        dtos.forEach(bookingDTO -> sumTotal += bookingDTO.getSum());
         Gson gson = new Gson();
         return gson.toJson(dtos);
     }

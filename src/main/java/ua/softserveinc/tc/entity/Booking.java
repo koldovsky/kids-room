@@ -7,7 +7,9 @@ import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+
 import java.util.*;
+
 
 /**
  * Created by TARAS on 30.04.2016.
@@ -15,7 +17,6 @@ import java.util.*;
 @Entity
 @Table(name = BookingConst.TABLE_NAME_BOOKING)
 public class Booking {
-
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
