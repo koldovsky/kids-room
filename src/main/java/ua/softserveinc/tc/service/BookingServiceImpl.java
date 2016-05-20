@@ -230,13 +230,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
         Booking booking = findById(bookingDTO.getId());
-        calculateSum(booking);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dfDateAndTime.parse(dateString));
         Date date = calendar.getTime();
         booking.setBookingStartTime(date);
         update(booking);
+        calculateSum(booking);
         return booking;
     }
 }
