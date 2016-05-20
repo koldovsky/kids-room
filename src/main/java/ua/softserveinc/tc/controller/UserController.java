@@ -64,9 +64,9 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute(UsersConst.USER) @Valid User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()){
-            return UsersConst.REGISTRATION_VIEW;
-        }
+//        if (bindingResult.hasErrors()){
+//            return UsersConst.REGISTRATION_VIEW;
+//        }
         String token = UUID.randomUUID().toString();
         user.setRole(Role.USER);
         user.setEnabled(false);
@@ -110,7 +110,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
-    public String changePassword(@RequestParam(UserConst.ID_USER) Long id, @RequestParam(TokenConst.TOKEN) String token) {
+    public String changePassword(@RequestParam("id") Long id, @RequestParam(TokenConst.TOKEN) String token) {
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         if(user.getId()!=id){
