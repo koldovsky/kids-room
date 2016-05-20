@@ -7,12 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.User;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Service("userDetailsService")
+@Service(UsersConst.USER_DETAILS_SERVICE)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

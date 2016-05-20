@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Role;
+import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.entity.VerificationToken;
 import ua.softserveinc.tc.service.MailService;
+import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.service.VerificationTokenService;
 import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.validation.Valid;
@@ -41,11 +43,11 @@ public class UserController {
     private UserValidator userValidator;
 
     @Autowired
-    private VerificationTokenService verificationTokenService;
+    private TokenService tokenService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    @Qualifier("userDetailsService")
+    @Qualifier(UsersConst.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value="/login ", method = RequestMethod.GET)
@@ -60,19 +62,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String saveUser(@ModelAttribute(UsersConst.USER) @Valid User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()){
             return UsersConst.REGISTRATION_VIEW;
         }
-//        if(!user.getPassword().equals(confirm)){
-//            return UsersConst.REGISTRATION_VIEW;
-//        }
         String token = UUID.randomUUID().toString();
         user.setRole(Role.USER);
         user.setEnabled(false);
         userService.create(user);
-        verificationTokenService.createToken(token, user);
+        tokenService.createToken(token, user);
         mailService.buildRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
@@ -82,45 +81,37 @@ public class UserController {
         return UsersConst.RULES_VIEW;
     }
 
-    /*@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
-    public String accessDenied(Model model, Principal principal) {
-        model.addAttribute(UsersConst.USER, userService.getUserByEmail(principal.getName()));
-        return UsersConst.ACCESS_DENIED_VIEW;
-    }*/
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
-    public String confirmRegistration(@RequestParam("token") String token) {
-        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+    public String confirmRegistration(@RequestParam(TokenConst.TOKEN) String token) {
+        Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         user.setEnabled(true);
-
         userService.update(user);
-        verificationTokenService.delete(verificationToken);
+        tokenService.delete(verificationToken);
         return "redirect:/login";
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public String changePassword(){
-        return "forgotPassword";
+        return UsersConst.FORGOT_PASS_VIEW;
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@RequestParam("email") String email){
+    public String resetPassword(@RequestParam(UserConst.EMAIL) String email){
         if(userService.getUserByEmail(email)==null){
             return "redirect:/resetPassword";
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
-        verificationTokenService.createToken(token, user);
-        mailService.sendChangePassword("Change password", user, token);
+        tokenService.createToken(token, user);
+        mailService.sendChangePassword(UsersConst.CHANGE_PASS, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
-    public String changePassword(@RequestParam("id") Long id, @RequestParam("token") String token) {
-        System.out.println(token);
-        System.out.println(id);
-        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+    public String changePassword(@RequestParam(UserConst.ID_USER) Long id, @RequestParam(TokenConst.TOKEN) String token) {
+        Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         if(user.getId()!=id){
             return "redirect:/registrtion";
@@ -128,16 +119,16 @@ public class UserController {
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
-        verificationTokenService.delete(verificationToken);
-        return "updatePassword";
+        tokenService.delete(verificationToken);
+        return UsersConst.UPDATE_PASS_VIEW;
     }
 
     @RequestMapping(value = "/savePassword", method = RequestMethod.POST)
-    public String savePassword(@RequestParam("password") String password) {
+    public String savePassword(@RequestParam(UserConst.PASSWORD) String password) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(passwordEncoder.encode(password));
         userService.update(user);
-        return "login";
+        return UsersConst.LOGIN_VIEW;
     }
 
 

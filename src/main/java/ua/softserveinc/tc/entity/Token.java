@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 
 import javax.persistence.*;
 
@@ -9,13 +10,16 @@ import javax.persistence.*;
  * Created by Chak on 17.05.2016.
  */
 @Entity
-public class VerificationToken {
+@Table(name = TokenConst.TABLE_NAME_TOKEN)
+public class Token {
     private static final int EXPIRATION = 24*60;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = TokenConst.ID_TOKEN, nullable = false)
     private Long id;
 
+    @Column(name = TokenConst.TOKEN, nullable = false)
     private String token;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -23,11 +27,11 @@ public class VerificationToken {
     private User user;
 
 
-    public VerificationToken() {
+    public Token() {
         super();
     }
 
-    public VerificationToken(String token, User user) {
+    public Token(String token, User user) {
         super();
         this.token = token;
         this.user = user;

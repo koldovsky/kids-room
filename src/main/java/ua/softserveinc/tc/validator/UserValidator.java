@@ -51,7 +51,7 @@ public class UserValidator implements Validator{
             errors.rejectValue("email", "registration.email");
         }
 
-        if(user.getPassword()!=user.getConfirm()){
+        if(!user.getPassword().equals(user.getConfirm())){
             errors.rejectValue("confirm", "registration.confirm");
         }
 
