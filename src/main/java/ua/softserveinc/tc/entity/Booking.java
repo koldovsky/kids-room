@@ -178,7 +178,10 @@ public class Booking {
             hours++;
             // if manager enters value that is bigger than max value in the list
             // we return price for max value
-            if (hours > 10) this.sum = prices.get(listOfKeys.get(listOfKeys.size() - 1));
+            if (hours > 10) {
+                this.sum = prices.get(listOfKeys.get(listOfKeys.size() - 1));
+                break;
+            }
         }
     }
 
