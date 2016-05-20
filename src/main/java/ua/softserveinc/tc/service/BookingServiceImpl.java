@@ -17,13 +17,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.*;
 
-import static ua.softserveinc.tc.constants.ColumnConstants.BookingConst.BOOKING_START_TIME;
-
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
     @Autowired
     private BookingDao bookingDao;
+
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
@@ -31,14 +31,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-
         Root<Booking> root = query.from(Booking.class);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try
         {
             query.where(builder.between(root.get("bookingStartTime"),
-                    dateFormat.parse(startDate), dateFormat.parse(endDate)));
+                    dateFormat.parse(startDate), dateFormat.parse(endDate)),
+                    builder.equal(root.get("isCancelled"), false));
         }
         catch (ParseException e)
         {
@@ -54,15 +53,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
-
         Root<Booking> root = query.from(Booking.class);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try
         {
             query.select(root.get("idUser"))
                     .where(builder.between(root.get("bookingStartTime"),
-                dateFormat.parse(startDate), dateFormat.parse(endDate)))
+                dateFormat.parse(startDate), dateFormat.parse(endDate)),
+                            builder.equal(root.get("isCancelled"), false))
                 .groupBy(root.get("idUser"));
         }
         catch (Exception e)
@@ -70,9 +68,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             System.out.println("Wrong format of date. " + e.getMessage());
         }
 
-        TypedQuery<User> typedQuery = entityManager.createQuery(query);
-
-        return typedQuery.getResultList();
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
@@ -81,15 +77,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-
         Root<Booking> root = query.from(Booking.class);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try
         {
             query.where(builder.between(root.get("bookingStartTime"),
                     dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                    builder.equal(root.get("idUser"), user))
+                    builder.equal(root.get("idUser"), user),
+                    builder.equal(root.get("isCancelled"), false))
                     .orderBy(builder.asc(root.get("bookingStartTime")));
         }
         catch (ParseException e)
