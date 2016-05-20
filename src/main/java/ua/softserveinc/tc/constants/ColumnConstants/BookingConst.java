@@ -22,11 +22,6 @@ public interface BookingConst {
 
     String SUM = "sum";
 
-    // Don't need ID_MANAGER & ID_CITY.
-    // Because we will get this constants from appropriate tables from relationship.
-
-    //String ID_CHILD = "id_child";
-    //String ID_ROOM = "id_room";
-    //String ID_USER = "id_user";
+    String DURATION = "duration";
 
 }
