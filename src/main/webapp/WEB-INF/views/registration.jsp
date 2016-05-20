@@ -34,7 +34,8 @@
       </div>
       <div class="form-group">
               <label for="confirm" class="required"><spring:message code="user.confirm" /></label>
-              <input type="password" name="confirm" id="userConfirm" class="form-control"  />
+              <form:password path="confirm"  class="form-control" />
+              <form:errors path="confirm" cssClass="error" />
               <span id="validPassword"></span>
       </div>
       <div class="form-group">

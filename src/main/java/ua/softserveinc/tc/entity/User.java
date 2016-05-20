@@ -63,6 +63,9 @@ public class User{
     @Column(name = UserConst.PASSWORD)
     private String password;
 
+
+    private transient String confirm;
+
     @Column(name = UserConst.ENABLED)
     private boolean enabled;
 
@@ -72,12 +75,22 @@ public class User{
     @Analyzer(definition = "ngram")
     private String phoneNumber;
 
+
+
     @Column(name = UserConst.ROLE)
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
     private Set<Child> children;
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
 
     public void setChildren(Set<Child> children) {
         this.children = children;

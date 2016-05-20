@@ -51,6 +51,10 @@ public class UserValidator implements Validator{
             errors.rejectValue("email", "registration.email");
         }
 
+        if(user.getPassword()!=user.getConfirm()){
+            errors.rejectValue("confirm", "registration.confirm");
+        }
+
         if(userService.getUserByEmail(user.getEmail())!=null){
             errors.rejectValue("email", "registration.emailExist");
         }

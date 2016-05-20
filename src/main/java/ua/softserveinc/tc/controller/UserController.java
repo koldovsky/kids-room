@@ -60,11 +60,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam(value = "confirm") String confirm) {
-//        userValidator.validate(user, bindingResult);
-//        if (bindingResult.hasErrors())){
-//            return UsersConst.REGISTRATION_VIEW;
-//        }
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()){
+            return UsersConst.REGISTRATION_VIEW;
+        }
 //        if(!user.getPassword().equals(confirm)){
 //            return UsersConst.REGISTRATION_VIEW;
 //        }
@@ -106,10 +106,13 @@ public class UserController {
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
     public String resetPassword(@RequestParam("email") String email){
+        if(userService.getUserByEmail(email)==null){
+            return "redirect:/resetPassword";
+        }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
         verificationTokenService.createToken(token, user);
-        mailService.sendChangePassword("change", user, token);
+        mailService.sendChangePassword("Change password", user, token);
         return UsersConst.SUCCESS_VIEW;
     }
 
