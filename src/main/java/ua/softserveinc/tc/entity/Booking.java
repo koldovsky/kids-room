@@ -50,13 +50,8 @@ public class Booking {
             columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isConfirmed;
 
-    public boolean isConfirmed() {
-        return isConfirmed;
-    }
-
-    public void setConfirmed(boolean confirmed) {
-        isConfirmed = confirmed;
-    }
+    @Column(name = BookingConst.DURATION)
+    private String duration;
 
     //TODO: переробити на лонг
     @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
@@ -124,6 +119,18 @@ public class Booking {
 
     public void setCancelled(boolean cancelled) {
         isCancelled = cancelled;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
     public int getSum() {
