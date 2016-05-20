@@ -47,15 +47,10 @@ public class Booking {
     @Column(name = BookingConst.IS_CANCELLED, nullable = false)
     private boolean isCancelled;
 
-    @Column(name = BookingConst.IS_CONFIRMED, nullable = false,
-            columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isConfirmed;
-
     @Column(name = BookingConst.DURATION)
     private String duration;
 
-    //TODO: переробити на лонг
-    @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
+    @Column(name = BookingConst.SUM, columnDefinition = "bigint default 0")
     private long sum;
 
     public Long getIdBook() {
@@ -122,12 +117,8 @@ public class Booking {
         isCancelled = cancelled;
     }
 
-    public boolean isConfirmed() {
-        return isConfirmed;
-    }
-
-    public void setConfirmed(boolean confirmed) {
-        isConfirmed = confirmed;
+    public String getDuration() {
+        return duration;
     }
 
     public void setDuration(String duration) {
@@ -140,55 +131,5 @@ public class Booking {
 
     public void setSum(long sum) {
         this.sum = sum;
-    }
-
-    public String getDuration()// TODO: придумати як рахувати суму, як бути з цим методом і з полем sum
-    {
-        long difference = bookingEndTime.getTime() - bookingStartTime.getTime();
-        long hours = difference / 1000 / 60 / 60;
-        long minutes = difference / 1000 / 60 % 60;
-        String duration = String.format("%02d", hours) + ":";
-        duration += String.format("%02d", minutes);
-
-        return duration;
-    }
-
-    public void calculateSum() // Тимчасово тут, поки немає готового методу, який
-    // викликається, коли менеджер змінює час прибуття
-    {
-        String hoursAndMinutes = this.getDuration();
-        // extract hour and minute from passed String
-        int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
-        int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
-
-        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
-        if (minutes > 0) hours++;
-
-        // get prices for particular room and sort them in order to choose appropriate one
-        Map<Integer, Long> prices = idRoom.getPrices();
-        ArrayList<Integer> listOfKeys = new ArrayList<>();
-        listOfKeys.addAll(prices.keySet());
-        Collections.sort(listOfKeys);
-
-        while (true)
-        {
-            if (listOfKeys.contains(hours)){
-                this.sum = prices.get(hours);
-                break;
-            }
-            hours++;
-            // if manager enters value that is bigger than max value in the list
-            // we return price for max value
-            if (hours > 10) {
-                this.sum = prices.get(listOfKeys.get(listOfKeys.size() - 1));
-                break;
-            }
-        }
-    }
-
-    public void confirm(){
-        this.isConfirmed = true;
-        this.calculateSum();
-
     }
 }

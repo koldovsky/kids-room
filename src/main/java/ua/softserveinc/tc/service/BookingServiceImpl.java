@@ -177,12 +177,60 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         return result;
     }
+
+    @Override
+    public void calculateDuration(Booking booking)
+    {
+        long difference = booking.getBookingEndTime().getTime() -
+                booking.getBookingStartTime().getTime();
+
+        long hours = difference / 1000 / 60 / 60;
+        long minutes = difference / 1000 / 60 % 60;
+
+        String duration = String.format("%02d", hours) + ":";
+        duration += String.format("%02d", minutes);
+
+        booking.setDuration(duration);
+    }
+
+    @Override
+    public void calculateSum(Booking booking)
+    {
+        calculateDuration(booking);
+        String hoursAndMinutes = booking.getDuration();
+        int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
+        int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
+
+        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
+        if (minutes > 0) hours++;
+
+        // get prices for particular room and sort them in order to choose appropriate one
+        Map<Integer, Long> prices = booking.getIdRoom().getPrices();
+        ArrayList<Integer> listOfKeys = new ArrayList<>();
+        listOfKeys.addAll(prices.keySet());
+        Collections.sort(listOfKeys);
+
+        while (true) {
+            if (listOfKeys.contains(hours)) {
+                booking.setSum(prices.get(hours));
+                break;
+            }
+            hours++;
+            // if manager enters value that is bigger than max value in the list
+            // we return price for max value
+            if (hours > 10) {
+                booking.setSum(prices.get(listOfKeys.get(listOfKeys.size() - 1)));
+                break;
+            }
+        }
+    }
+
     @Override
     public Booking updatingBooking(BookingDTO bookingDTO) throws ParseException{
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
         Booking booking = findById(bookingDTO.getId());
-        booking.confirm();
+        calculateSum(booking);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dfDateAndTime.parse(dateString));

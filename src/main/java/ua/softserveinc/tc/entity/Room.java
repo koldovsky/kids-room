@@ -112,7 +112,7 @@ public class Room {
         this.events = events;
     }
 
-    Map<Integer, Long> getPrices() {
+    public Map<Integer, Long> getPrices() {
         return prices;
     }
 
