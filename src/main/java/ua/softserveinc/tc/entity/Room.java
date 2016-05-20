@@ -46,7 +46,7 @@ public class Room {
             joinColumns = @JoinColumn(name = RoomConst.ID_ROOM))
     @MapKeyColumn(name = RoomConst.HOUR)
     @Column(name = RoomConst.PRICE)
-    private Map<Integer, Integer> prices = new HashMap<>();
+    private Map<Integer, Long> prices = new HashMap<>();
 
     public Long getId() {
         return id;
@@ -112,11 +112,11 @@ public class Room {
         this.events = events;
     }
 
-    Map<Integer, Integer> getPrices() {
+    Map<Integer, Long> getPrices() {
         return prices;
     }
 
-    public void setPrices(Map<Integer, Integer> prices) {
+    public void setPrices(Map<Integer, Long> prices) {
         this.prices = prices;
     }
 

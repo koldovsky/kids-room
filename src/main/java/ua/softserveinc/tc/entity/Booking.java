@@ -55,7 +55,7 @@ public class Booking {
 
     //TODO: переробити на лонг
     @Column(name = BookingConst.SUM, columnDefinition = "int default 0")
-    private int sum;
+    private long sum;
 
     public Long getIdBook() {
         return idBook;
@@ -133,11 +133,11 @@ public class Booking {
         this.duration = duration;
     }
 
-    public int getSum() {
+    public long getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public void setSum(long sum) {
         this.sum = sum;
     }
 
@@ -164,7 +164,7 @@ public class Booking {
         if (minutes > 0) hours++;
 
         // get prices for particular room and sort them in order to choose appropriate one
-        Map<Integer, Integer> prices = idRoom.getPrices();
+        Map<Integer, Long> prices = idRoom.getPrices();
         ArrayList<Integer> listOfKeys = new ArrayList<>();
         listOfKeys.addAll(prices.keySet());
         Collections.sort(listOfKeys);
