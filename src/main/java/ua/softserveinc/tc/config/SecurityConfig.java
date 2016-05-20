@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 
 
 @ComponentScan(basePackages = "ua.softserveinc.tc.service")
@@ -23,7 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    @Qualifier("userDetailsService")
+    @Qualifier(UsersConst.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
     @Autowired
