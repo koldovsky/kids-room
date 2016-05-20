@@ -109,6 +109,7 @@ public class UserController {
         return UsersConst.SUCCESS_VIEW;
     }
 
+
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
     public String changePassword(@RequestParam("id") Long id, @RequestParam(TokenConst.TOKEN) String token) {
         Token verificationToken = tokenService.findByToken(token);
