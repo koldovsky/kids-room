@@ -63,3 +63,29 @@
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 15px;
 }
+
+.kidsCard{
+        background-color: white;
+        border:  1px solid transparent;
+        width: 50%;
+        min-width: 300px;
+        margin: 25 auto;
+        padding-bottom: 25;
+        padding-top: 0;
+        text-align:center;
+        box-shadow: 5px 5px 20px grey;
+    }
+
+#Photo
+{
+    /* Width and height of photo container */
+    width: 200px;
+    height: 200px;
+
+/* For visibility. Delete me */
+border: 1px solid green;
+}
+
+.left{
+    margin: 0 auto;
+}

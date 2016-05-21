@@ -76,6 +76,10 @@
         <put-attribute name="body" value="/WEB-INF/views/error-not-found.jsp" />
     </definition>
 
+    <definition name="profile" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user-kid-profile.jsp" />
+    </definition>
+
 
     <!-- Admin -->
     <definition name="adm-edit-manager" extends="default">

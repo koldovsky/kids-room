@@ -10,4 +10,5 @@ public interface MyKidsConst {
 
     String MY_KIDS_LIST_ATTRIBUTE = "kids";
     String KID_ATTRIBUTE = "kid";
+    String KID_PROFILE_VIEW = "profile";
 }

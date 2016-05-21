@@ -18,21 +18,11 @@
     <spring:message code="kid.list" />
 </h2>
 <c:forEach var="kid" items="${kids}">
-<div class="kidslistblock">
+<div data-id="${kid.getId()}" class="kidslistblock">
     <div class="kidslistitem">
     <h3>${kid.getFullName()}</h3>
     </div>
-    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
-        &nbsp;<spring:message code="button.edit" />
-    </button>
-    <div class="kidinfo" data-id="${kid.getId()}">
-            <h4>
-                <spring:message code="kid.date" />: ${kid.getDateOfBirth()}
-            </h4>
-            <p>
-                ${kid.getComment()}
-            </p>
-    </div>
+
 </div>
 
 </c:forEach>
