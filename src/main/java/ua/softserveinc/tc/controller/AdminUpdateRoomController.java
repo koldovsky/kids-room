@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.entity.City;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.service.CityService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
@@ -46,8 +44,7 @@ public class AdminUpdateRoomController {
     }
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
-    public String submitRoomUpdate(@ModelAttribute("room") Room room, @RequestParam("cities") Long idCity,
-                                   @RequestParam("managers") Long id) {
+    public String submitRoomUpdate(@ModelAttribute("room") Room room, @RequestParam("managers") Long id) {
 
         User manager = userService.findById(id);
         room.setManager(manager);

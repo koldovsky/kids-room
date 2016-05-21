@@ -12,9 +12,9 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (5, "drink only whiskey", "2014-02-13", "Jimbo", "Third", 5);
 
 
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room,  id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room,  id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room,  id_user) values (3, "Pasternaka 15", 40, "LV-4", "+380974074537", 6);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", "Lviv", 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", "Lviv", 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Pasternaka 15", 40, "LV-4", "+380974074537", "Kyiv", 6);
 
 insert into prices (id_room, hour, price) values (1, 2, 300), (1, 4, 500), (1, 6, 600), (2, 2, 80), (2, 4, 90), (2, 6, 100);
 

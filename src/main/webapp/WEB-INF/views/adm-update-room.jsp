@@ -64,13 +64,7 @@
 
            <div class="form-group">
               <label for="city" class="for-field">Room city
-                 <select path="city" id="city" name="cities" required class="form-control">
-                    <option path="city" id="city" value="${room.city.idCity}" class="form-control">${room.city.nameCity}
-                                                                                                   </option>
-                    <c:forEach var="city" items="${cityList}" >
-                       <option value="${city.idCity}">${city.nameCity}</option>
-                    </c:forEach>
-                 </select>
+                 <form:input path="city" id="city" value="${room.city}" class="form-control" required="required"/>
               </label>
            </div>
 

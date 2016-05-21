@@ -37,12 +37,7 @@
                </div>
 
                <div class="form-group">
-                  <label class="for-field"> City
-                     <select name="cities" required class="form-control">
-                        <c:forEach var="city" items="${cityList}" >
-                           <option value="${city.idCity}">${city.nameCity}</option>
-                        </c:forEach>
-                     </select>
+                  <label class="for-field"> City <input type="text" name="city" required class="form-control"/></label>
                   </label>
                </div>
 

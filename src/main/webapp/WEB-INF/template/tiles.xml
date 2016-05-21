@@ -106,14 +106,6 @@
         <put-attribute name="body" value="/WEB-INF/views/adm-update-room.jsp" />
     </definition>
 
-    <definition name="adm-edit-city" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-edit-city.jsp" />
-    </definition>
-
-    <definition name="adm-add-city" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-add-city.jsp" />
-    </definition>
-
     <definition name="confirm-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/confirm-manager.jsp" />
     </definition>

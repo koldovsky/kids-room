@@ -38,7 +38,7 @@
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
             <td>${room.manager}</td>
-            <td>${room.city.nameCity}</td>
+            <td>${room.city}</td>
             <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-primary glyphicon glyphicon-pencil">
                                                         </button></a></td>
 
