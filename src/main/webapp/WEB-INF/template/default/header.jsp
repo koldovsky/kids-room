@@ -37,7 +37,6 @@
                       </sec:authorize>
 
                      <sec:authorize access="hasRole('ADMINISTRATOR')">
-                         <a href="adm-edit-city"><spring:message code="administrator.editCities" /></a>
                          <a href="adm-edit-room"><spring:message code="administrator.editRooms" /></a>
                          <a href="adm-edit-manager"><spring:message code="administrator.editManagers" /></a>
                      </sec:authorize>
@@ -109,10 +108,6 @@
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
-                                <li><a href="adm-edit-city">
-                                <span class="glyphicon glyphicon-map-marker"></span>
-                                <spring:message code="administrator.editCities" />
-                                </a></li>
                                 <li><a href="adm-edit-room">
                                 <span class="glyphicon glyphicon-home"></span>
                                 <spring:message code="administrator.editRooms" />
