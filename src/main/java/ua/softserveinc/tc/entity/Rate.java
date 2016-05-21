@@ -61,6 +61,14 @@ public class Rate {
         this.priceRate = priceRate;
     }
 
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
     @Override
     public String toString() {
         return "Rate{" +
