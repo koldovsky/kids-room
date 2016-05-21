@@ -15,6 +15,8 @@ public interface RoomConst {
 
     String ADDRESS_ROOM = "address_room";
 
+    String CITY_ROOM = "city_room";
+
     String PHONE_ROOM = "phone_room";
 
     String CAPACITY_ROOM = "capacity_room";

@@ -29,17 +29,13 @@ public class AdminAddRoomController {
     @Autowired
     private RoomService roomService;
 
-    @Autowired
-    private CityService cityService;
 
     @RequestMapping(value = "/adm-add-room", method = RequestMethod.GET)
     public ModelAndView showCreateRoomForm() {
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
-        List<City> cities = cityService.findAll();
 
         ModelAndView mav = new ModelAndView("adm-add-room");
         mav.addObject("managerList", managers);
-        mav.addObject("cityList", cities);
 
         return mav;
     }
@@ -48,11 +44,9 @@ public class AdminAddRoomController {
     public String saveRoom(@ModelAttribute Room room, @RequestParam("cities") Long idCity,
                            @RequestParam("managers") Long id) {
 
-        City city = cityService.findById(idCity);
         User manager = userService.findById(id);
 
         room.setManager(manager);
-        room.setCity(city);
 
         roomService.create(room);
         return "adm-add-room";

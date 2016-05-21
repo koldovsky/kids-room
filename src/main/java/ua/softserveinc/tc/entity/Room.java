@@ -16,6 +16,7 @@ import java.util.Map;
 @Entity
 @Table(name = RoomConst.TABLE_NAME_ROOMS)
 public class Room {
+
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -27,16 +28,19 @@ public class Room {
 
     @Column(name = RoomConst.ADDRESS_ROOM)
     private String address;
+
+    @Column(name = RoomConst.CITY_ROOM)
+    private String city;
+
     @Column(name = RoomConst.PHONE_ROOM)
     private String phoneNumber;
+
     @Column(name = RoomConst.CAPACITY_ROOM)
     private Integer capacity;
+
     @OneToOne
     @JoinColumn(name = UserConst.ID_USER)
     private User manager;
-    @ManyToOne
-    @JoinColumn(name = CityConst.ID_CITY)
-    private City city;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
@@ -91,11 +95,11 @@ public class Room {
         this.phoneNumber = phoneNumber;
     }
 
-    public City getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
@@ -133,6 +137,16 @@ public class Room {
 
     @Override
     public String toString() {
-        return name;
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", capacity=" + capacity +
+                ", manager=" + manager +
+                ", city='" + city + '\'' +
+                ", events=" + events +
+                ", rates=" + rates +
+                '}';
     }
 }

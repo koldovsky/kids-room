@@ -24,8 +24,8 @@ public class City {
     @Column(name = CityConst.NAME_CITY)
     private String nameCity;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
-    private List<Room> rooms;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
+//    private List<Room> rooms;
 
     public Long getIdCity() {
         return idCity;
@@ -43,13 +43,13 @@ public class City {
         this.nameCity = nameCity;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
+//    public List<Room> getRooms() {
+//        return rooms;
+//    }
+//
+//    public void setRooms(List<Room> rooms) {
+//        this.rooms = rooms;
+//    }
 
 
 //    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = CityConst.ID_CITY)

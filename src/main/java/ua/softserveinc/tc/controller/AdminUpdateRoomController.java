@@ -29,18 +29,14 @@ public class AdminUpdateRoomController {
     @Autowired
     private RoomService roomService;
 
-    @Autowired
-    private CityService cityService;
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.GET)
     public ModelAndView updateRoom(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView("adm-update-room");
 
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
-        List<City> cities = cityService.findAll();
 
         model.addObject("managerList", managers);
-        model.addObject("cityList", cities);
 
 
         Room room = roomService.findById(id);
@@ -53,10 +49,7 @@ public class AdminUpdateRoomController {
     public String submitRoomUpdate(@ModelAttribute("room") Room room, @RequestParam("cities") Long idCity,
                                    @RequestParam("managers") Long id) {
 
-        City city = cityService.findById(idCity);
         User manager = userService.findById(id);
-
-        room.setCity(city);
         room.setManager(manager);
 
         roomService.update(room);
