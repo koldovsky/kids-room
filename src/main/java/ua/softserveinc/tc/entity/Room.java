@@ -41,6 +41,9 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "idRate")
+    private List<Rate> rates;
+
     @ElementCollection
     @JoinTable(name = RoomConst.TABLE_NAME_PRICES,
             joinColumns = @JoinColumn(name = RoomConst.ID_ROOM))
@@ -118,6 +121,14 @@ public class Room {
 
     public void setPrices(Map<Integer, Long> prices) {
         this.prices = prices;
+    }
+
+    public List<Rate> getRates() {
+        return rates;
+    }
+
+    public void setRates(List<Rate> rates) {
+        this.rates = rates;
     }
 
     @Override
