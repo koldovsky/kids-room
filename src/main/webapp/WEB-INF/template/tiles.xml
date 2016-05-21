@@ -21,15 +21,19 @@
     </definition>
 
     <definition name="mykids" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/mykids.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/user-my-kids.jsp" />
     </definition>
 
     <definition name="editmykid" extends="default">
-        <put-attribute name="body" value = "/WEB-INF/views/editmykid.jsp" />
+        <put-attribute name="body" value = "/WEB-INF/views/user-edit-my-kid.jsp" />
     </definition>
 
     <definition name="mybookings" extends="default">
-        <put-attribute name="body" value = "/WEB-INF/views/mybookings.jsp" />
+        <put-attribute name="body" value = "/WEB-INF/views/user-my-bookings.jsp" />
+    </definition>
+
+    <definition name="registerkid" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user-register-kid.jsp" />
     </definition>
 
     <definition name="allkidslist" extends="default">
@@ -52,10 +56,6 @@
         <put-attribute name="body" value="/WEB-INF/views/registration.jsp" />
     </definition>
 
-    <definition name="registerkid" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/registerkid.jsp" />
-    </definition>
-
     <definition name="listChildren" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/listChildren.jsp" />
     </definition>
@@ -69,11 +69,11 @@
     </definition>
 
     <definition name="accessDenied" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/accessDenied.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/error-access-denied.jsp" />
     </definition>
 
     <definition name="notFound" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/notFound.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/error-not-found.jsp" />
     </definition>
 
 
