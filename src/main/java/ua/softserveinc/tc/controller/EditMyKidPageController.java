@@ -82,6 +82,9 @@ public class EditMyKidPageController {
             return MyKidsConst.KID_EDITING_VIEW;
         }
 
+        //if there was a profile pic, we will keep it
+        kidToEdit.setImage(childService.findById(kidToEdit.getId()).getImage());
+
         childService.update(kidToEdit);
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }

@@ -35,10 +35,15 @@ modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>" action="editmykid" method="post
       </div>
 
       <div class="form-group">
-
-              <form:radiobutton path="gender" value="MALE" label="Boy" />
-
-              <form:radiobutton path="gender" value="FEMALE" label="Girl" />
+              <label class="required"><spring:message code="kid.gender" /></label>
+              <table>
+              <tr>
+              <td>
+              <form:radiobutton required="required" name="Boy" path="gender" value="MALE"/><spring:message code="kid.boy" /></td>
+              <td>
+              <form:radiobutton required="required" path="gender" value="FEMALE" /><spring:message code="kid.girl" /></td>
+              </tr>
+              </table>
 
       </div>
 

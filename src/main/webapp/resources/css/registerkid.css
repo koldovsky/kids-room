@@ -64,3 +64,9 @@ margin: 0 auto;
 .primary-text-color    { color: #212121; }
 .secondary-text-color  { color: #727272; }
 .divider-color         { border-color: #B6B6B6; }
+
+table, tr, td{
+    margin: 0 auto;
+    border: none;
+    background: none;
+}
