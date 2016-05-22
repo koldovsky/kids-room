@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import ua.softserveinc.tc.entity.City;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -25,7 +24,7 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
     }
 
     @Override
-    public List<Room> findByCity(City city) {
+    public List<Room> findByCity(String city) {
         EntityManager entityManager = getEntityManager();
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

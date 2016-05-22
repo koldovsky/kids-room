@@ -25,8 +25,8 @@ public class Rate {
     @Column(name = RateConst.PRICE_RATE, nullable = false)
     private Long priceRate;
 
-    @ManyToOne
-    @JoinColumn(name = RoomConst.ID_ROOM, nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = RoomConst.ID_ROOM)
     private Room room;
 
     public Rate() {

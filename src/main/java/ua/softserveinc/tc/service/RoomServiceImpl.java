@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
-import ua.softserveinc.tc.entity.City;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -33,7 +32,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public List<Room> findByCity(City city) {
+    public List<Room> findByCity(String city) {
         return roomDao.findByCity(city);
     }
 
