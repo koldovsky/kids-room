@@ -37,16 +37,16 @@ function refreshView()
         caption += '<span id="date">(' + dateThen + ' - ' + dateNow + ')</span>';
         $( 'caption h2' ).html(caption);
 
-        var tr = '<tr>';
+        var tr = "";
 
         $.each(users, function(i, user)
         {
-            tr += '<td>' + user.firstName + '</td>'
+            tr += '<tr><td>' + user.firstName + '</td>'
             + '<td>' + user.lastName + '</td>'
             + '<td>' + user.email + '</td>'
             + '<td>' + user.phoneNumber + '</td>'
             + '<td class="parentRow" id="'
-            + user.email + '"><a>See details</a></tr>';
+            + user.email + '"><a>See details</a></td></tr>';
         });
 
         $('tr').remove();

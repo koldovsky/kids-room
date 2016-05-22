@@ -1,24 +1,28 @@
-<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:url value="/j_spring_security_check" var="reportURL" />
+
 <link rel='stylesheet' href='resources/css/report.css'>
 <script src="resources/js/report.js"></script>
 
     <form id="generateAReport" action="manager-report-all">
+
         <div id="dateThenDiv">
             <h2>Choose start time</br>
             <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></h2>
         </div>
+
         <div id="dateNowDiv">
             <h2>Choose end time</br>
             <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
         </div>
+
     </form>
 
     <div class="tableDiv">
         <table id="activeUsers">
+
             <caption>
                 <h2>
                     <spring:message code="report.activeParents" /></br>
@@ -50,7 +54,8 @@
     </div>
 
     <div id="generateButton">
-    <input type="submit" form="generateAReport" value=<spring:message code="report.generate" /> class="btn-primary">
+        <input type="submit" form="generateAReport"
+         value=<spring:message code="report.generate" /> class="btn-primary">
     </div>
 
     <form action="manager-report-parent" id="allBookingsPerParentForm">
