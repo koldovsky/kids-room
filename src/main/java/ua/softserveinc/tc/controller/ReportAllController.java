@@ -20,19 +20,19 @@ import java.util.List;
  * Created by Demian on 10.05.2016.
  */
 @Controller
-public class AllBookingsController
+public class ReportAllController
 {
     @Autowired
     BookingService bookingService;
 
-    @RequestMapping(value = "/allBookings", method = RequestMethod.GET,
+    @RequestMapping(value = "/manager-report-all", method = RequestMethod.GET,
             params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
     public @ResponseBody ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
                                                          @RequestParam(value = ReportConst.DATE_NOW) String dateNow)
     {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(ReportConst.REPORT_VIEW);
+        modelAndView.setViewName(ReportConst.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);

@@ -22,16 +22,16 @@ import java.util.List;
  * Created by Demian on 08.05.2016.
  */
 @Controller
-public class ReportPageController
+public class ReportController
 {
     @Autowired
     BookingService bookingService;
 
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
     public ModelAndView report()
     {
         ModelAndView model = new ModelAndView();
-        model.setViewName("");
+        model.setViewName(ReportConst.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
 
         String dateNow = bookingService.getCurrentDate();
@@ -45,7 +45,7 @@ public class ReportPageController
         return model;
     }
 
-    @RequestMapping(value = "/refrejshParents/{startDate}/{endDate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
     public @ResponseBody String refreshView(@PathVariable String startDate, @PathVariable String endDate)
     {
         List<User> users = bookingService.getActiveUsersForRangeOfTime(startDate, endDate);

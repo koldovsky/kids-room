@@ -40,16 +40,16 @@
         <put-attribute name="body" value="/WEB-INF/views/allkidslist.jsp" />
     </definition>
 
-    <definition name="report" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/report.jsp" />
+    <definition name="manager-report" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager-report.jsp" />
     </definition>
 
-    <definition name="allBookings" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/allBookings.jsp" />
+    <definition name="manager-report-all" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager-report-all.jsp" />
     </definition>
 
-    <definition name="allBookingsPerParent" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/allBookingsPerParent.jsp" />
+    <definition name="manager-report-parent" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager-report-parent.jsp" />
     </definition>
 
     <definition name="registration" extends="default">
