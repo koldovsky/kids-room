@@ -7,16 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.ChildValidator;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,10 +44,12 @@ public class RegisterNewKidController {
         return MyKidsConst.KID_REGISTRATION_VIEW;
     }
 
-    @RequestMapping(value="/registerkid", method = RequestMethod.POST)
+
+
+    @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
     public String submit(@ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child child,
                          Principal principal,
-                         BindingResult bindingResult){
+                         BindingResult bindingResult) {
 
         child.setParentId(
                 userService.getUserByEmail(

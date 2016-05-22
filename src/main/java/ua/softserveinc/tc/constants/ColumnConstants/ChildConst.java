@@ -21,4 +21,8 @@ public interface ChildConst {
 
     String DATE_FORMAT = "dd.MM.yyyy";
 
+    String PROFILE_IMG = "profile_image";
+
+    String GENDER = "gender";
+
 }

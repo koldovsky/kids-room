@@ -6,10 +6,10 @@ INSERT INTO users (id_user, email, first_name, last_name, password, phone_number
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, enabled) VALUES (5, 'parent2@softserveinc.com', 'Miron','Tereh', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '0987654321', 0, 0);
 
 
-INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (1, "he likes to play poker", "12.02.2011", "Adam", "First", 1);
-INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (2, "likes music", "12.02.2011", "Eva", "First", 1);
-INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (4, "drink only whiskey", "12.02.2011", "Sem", "Sec", 4);
-INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user)  VALUES (5, "drink only whiskey", "2014-02-13", "Jimbo", "Third", 5);
+INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (1, "he likes to play poker", "12.02.2011", "Adam", "First", 1, 0);
+INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (2, "likes music", "12.02.2011", "Eva", "First", 1, 1);
+INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (4, "drink only whiskey", "12.02.2011", "Sem", "Sec", 4, 0);
+INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (5, "drink only whiskey", "2014-02-13", "Jimbo", "Third", 5, 0);
 
 
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", "Lviv", 2);

@@ -9,15 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 
@@ -62,6 +54,22 @@ public class Child implements Comparable<Child>
             nullable = false,
             columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled = true;
+
+    @Column(name = ChildConst.GENDER)
+    @Enumerated(EnumType.ORDINAL)
+    private Gender gender;
+
+    @Lob
+    @Column(name = ChildConst.PROFILE_IMG)
+    private byte[] image;
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
     public Long getId() {
         return id;
@@ -117,6 +125,14 @@ public class Child implements Comparable<Child>
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override

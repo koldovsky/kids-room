@@ -44,6 +44,15 @@ method="post" modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>">
       </div>
 
       <div class="form-group">
+
+        <form:radiobutton path="gender" value="MALE" label="Boy" />
+
+        <form:radiobutton path="gender" value="FEMALE" label="Girl" />
+
+      </div>
+
+
+      <div class="form-group">
                     <label for="comment">
                     	<spring:message code="kid.comment" />
                     </label>

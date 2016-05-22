@@ -21,7 +21,7 @@
     min-width: 200px;
     margin: 25 auto;
     padding-bottom: 25;
-    padding-top: 0;
+    padding-top: 25;
     text-align:center;
     box-shadow: 5px 5px 20px grey;
 
@@ -71,21 +71,24 @@
         min-width: 300px;
         margin: 25 auto;
         padding-bottom: 25;
-        padding-top: 0;
+        padding-top: 25;
         text-align:center;
         box-shadow: 5px 5px 20px grey;
     }
 
 #Photo
 {
-    /* Width and height of photo container */
-    width: 200px;
-    height: 200px;
-
-/* For visibility. Delete me */
-border: 1px solid green;
+    width: 202px;
+    height: 202px;
+    border: 1px solid black;
+    margin: 0 auto;
 }
 
 .left{
     margin: 0 auto;
+    text-align: center;
+}
+
+#picture{
+    border: 1px solid black;
 }
