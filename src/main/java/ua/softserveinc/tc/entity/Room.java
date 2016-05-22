@@ -137,16 +137,6 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", capacity=" + capacity +
-                ", manager=" + manager +
-                ", city='" + city + '\'' +
-                ", events=" + events +
-                ", rates=" + rates +
-                '}';
+        return name;
     }
 }
