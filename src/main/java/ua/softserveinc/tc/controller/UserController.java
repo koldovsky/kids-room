@@ -25,7 +25,6 @@ import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.UserValidator;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
 /**
@@ -65,7 +64,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute(UsersConst.USER) @Valid User user, BindingResult bindingResult) {
+    public String saveUser(@ModelAttribute(UsersConst.USER) User user, BindingResult bindingResult) {
 //        userValidator.validate(user, bindingResult);
 //        if (bindingResult.hasErrors()){
 //            return UsersConst.REGISTRATION_VIEW;
@@ -76,6 +75,12 @@ public class UserController {
         userService.create(user);
         tokenService.createToken(token, user);
         mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
+        return UsersConst.SUCCESS_VIEW;
+    }
+
+    @RequestMapping(value = "/sendConfirmation")
+    public String sendConfirmation( ){
+
         return UsersConst.SUCCESS_VIEW;
     }
 

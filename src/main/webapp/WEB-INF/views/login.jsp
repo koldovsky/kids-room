@@ -3,38 +3,32 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <c:url value="/j_spring_security_check" var="loginUrl" />
-<div class="col-xs-6">
-        <form class="form-horizontal" action="${loginUrl}" method="post">
-          <div class="form-group">
-            <label for="email" class="col-sm-2 control-label"><spring:message code="user.email" /></label>
-            <div class="col-sm-10">
-              <input type="email" name="j_username" class="form-control" id="email" required autofocus value="manager@softserveinc.com">
+<div class="col-sm-offset-4 col-xs-3">
+    <form  action="${loginUrl}" method="post">
+        <div class="form-group">
+            <label for="email" ><spring:message code="user.email" /></label>
+            <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com" required/>
+        </div>
+        <div class="form-group">
+            <label for="password" ><spring:message code="user.password" /></label>
+            <input type="password" name="j_password" class="form-control"  required value="manager"/>
+            <div id="right">
+            <a href="<c:url value="/resetPassword"/>" > <spring:message code="password.reset" /></a>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="password" class="col-sm-2 control-label"><spring:message code="user.password" /></label>
-            <div class="col-sm-10">
-              <input type="password" name="j_password" class="form-control" id="password" required value="manager">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <label>
-                  <input type="checkbox" name="remember-me"><spring:message code="user.remember" />
-                </label>
+        </div>
+        <div>
+            <label>
+                <input type="checkbox" name="remember-me"><spring:message code="user.remember" />
+            </label>
+        </div>
+        <div class="col-sm-offset-4">
+            <c:if test="${param.error != null}">
+                <div class ="error">
+                    <spring:message code="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+                </div>
+            </c:if>
 
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                  <c:if test="${param.error != null}">
-                          <div class ="error">
-                              <spring:message code="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
-                          </div>
-                  </c:if>
-              <button type="submit" class="btn btn-default"><spring:message code="user.login" /></button>
-            </div>
-          </div>
-          <a href="<c:url value="/resetPassword" />"> <spring:message code="password.reset" /></a>
-        </form>
+            <button type="submit" class="btn btn-primary btn-lg"><spring:message code="user.login" /></button>
+        </div>
+    </form>
 </div>
