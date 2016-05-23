@@ -6,6 +6,11 @@
     padding: 10px;
 }
 
+#all_kids_add {
+    float: right;
+    padding-right: 40px;
+}
+
 .table {
     padding: 40px;
 }
@@ -18,10 +23,9 @@
 .thead {
     background-color: #fff;
     color: rgb(158, 158, 158);
-    border-bottom: 1px solid rgb(224, 224, 224);
 }
 
-.thead, .tr, kid-detailed-info {
+.thead, .tr, .kid_detailed_info, .kid_info {
     border-bottom: 1px solid rgb(224, 224, 224);
 }
 
@@ -29,10 +33,17 @@
     background-color:  #EEEEEE;
 }
 
-.tr {
+.tr, .kid_info {
     background-color: #fff;
 }
 
 .tr p {
     margin: 10px 0px 0px;
 }
+
+.kid_info {
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+

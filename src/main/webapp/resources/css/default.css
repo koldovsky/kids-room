@@ -93,3 +93,7 @@ body {
    background-color: #009688;
    color: white;
  }
+
+.right-align {
+    text-align: right;
+}

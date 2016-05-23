@@ -10,12 +10,13 @@ angular
 function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.children = [];
+    $scope.newChildFormIsShown = false;
     $scope.pageSize = 10;
 
     loadRemoteData();
 
     function applyRemoteData( newChildren ) {
-        $scope.children = newChildren;
+        $scope.children = unifyName(newChildren);
     }
 
     function loadRemoteData() {
@@ -34,7 +35,7 @@ function AllKidsTableController($scope, allKidsTableService) {
             allKidsTableService.searchChildren( field )
                 .then(
                     function( children ) {
-                        applyRemoteData( children );
+                        applyRemoteData( unifyName( children ) );
                     }
                 );
         } else {
@@ -42,13 +43,27 @@ function AllKidsTableController($scope, allKidsTableService) {
         }
     }
 
+    function unifyName( list ) {
+        for (var i = 0; i < list.length; i++) {
+            list[i].fullName = list[i].firstName + ' ' + list[i].lastName;
+        }
+        return list;
+    }
+
     function toggleCollapseButton(buttonId) {
         buttonId = '#' + buttonId;
-        $(buttonId).find('span').toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
+        $(buttonId).find('span')
+            .toggleClass('glyphicon-triangle-bottom')
+            .toggleClass('glyphicon-triangle-top');
     }
+
+    function go( path ) {
+        $location.path( path );
+    };
 
     $scope.searchChildren = searchChildren;
     $scope.toggleCollapseButton = toggleCollapseButton;
+    $scope.go = go;
 
 }
 
@@ -106,7 +121,6 @@ function AllKidsTableService($http, $q) {
 function AllKidsTable() {
 
     var link = function (scope, element, attrs) {
-
     }
 
     var compile = function() {
@@ -119,7 +133,6 @@ function AllKidsTable() {
         link: link,
         controller: 'AllKidsTableController',
         scope: {
-            children: "="
         }
     };
 }

@@ -9,9 +9,11 @@ import ua.softserveinc.tc.entity.Child;
  */
 public class ChildDTO {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
+    private String comment;
     private long parentId;
 
     public String getFirstName() {
@@ -39,6 +41,10 @@ public class ChildDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
     public long getParentId() {
         return parentId;
     }
@@ -48,9 +54,11 @@ public class ChildDTO {
     }
 
     public ChildDTO(Child child) {
+        this.id = child.getId();
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
         this.dateOfBirth = child.getDateOfBirth();
+        this.comment = child.getComment();
         this.parentId = child.getParentId().getId();
     }
 
