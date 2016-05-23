@@ -35,8 +35,22 @@ body{
     margin-bottom: 20px;
 }
 
-.tr:hover {
-    background-color: #EEEEEE;
+.for-field1{
+    height: 30px;
+    width: 140px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.for-field2{
+    height: 30px;
+    width: 190px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.tableDiv tr:hover {
+    background-color: #FFF
 }
 
 

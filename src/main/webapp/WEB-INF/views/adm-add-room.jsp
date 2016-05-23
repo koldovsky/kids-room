@@ -57,10 +57,37 @@
                   </label>
                </div>
 
+
+              <div ng-app="angularjs-starter" ng-controller="MainCtrl">
+              <div class="form-group">
+                 <label class="for-field">Room rates
+                     <fieldset  data-ng-repeat="choice in choices">
+                     <label class="for-field1">
+                        <input id="myText" type="text" ng-model="choice.hourRate" key="" placeholder="Hour" class="form-control">
+                     </label>
+                     <label class="for-field2">
+                        <input id="myText" type="text" ng-model="choice.priceRate" value="" placeholder="Price" class="form-control">
+                     </label>
+                        <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+                     </fieldset>
+                 </label>
+
+                 <button type="button" class="addfields" ng-click="addNewChoice()" >+</button>
+
+                 <div id="choicesDisplay">
+                    {{ choices }}
+                 </div>
+              </div>
+
+
                <div class="form-group">
                   <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok" type="submit" name="submit"></button>
                   <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove" type="reset" name="reset" ></button>
                </div>
+
+                 <script src="resources/js/for-rates.js"></script>
+              </div>
+
            </td></tr>
         </form>
         </table>
