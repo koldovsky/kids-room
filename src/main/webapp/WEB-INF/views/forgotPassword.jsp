@@ -6,15 +6,16 @@
 <%@ page session="false"%>
 
 
-<div>
+<div class="col-sm-offset-4 col-xs-3">
+    <spring:message code="user.resetPass" />
     <form  action="resetPassword" method="post">
         <div class="form-group">
             <label for="password"><spring:message code="user.email" /></label>
             <input name="email" class="form-control" type="email"/>
             <form:errors path="email" cssClass="error"  />
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-default"><spring:message code="user.send" /></button>
+        <div class="col-sm-offset-4">
+            <button type="submit" class="btn btn-primary btn-lg"><spring:message code="user.send" /></button>
         </div>
     </form>
 </div>
