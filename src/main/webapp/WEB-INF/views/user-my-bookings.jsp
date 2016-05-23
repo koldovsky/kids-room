@@ -16,7 +16,6 @@
             <h3><spring:message code="report.from" /></h3>
             <input id="from" type="date"></input>
         </div>
-        ------
         <div id="to-div">
             <h3><spring:message code="report.to" /></h3>
             <input id="to" type="date"></input>
@@ -57,6 +56,7 @@
                 <button id="print" class="btn btn-raised btn-danger exportButton glyphicon glyphicon-print">
                                     &nbsp; <spring:message code="report.print" />
                                 </button>
+
     </div>
 </div>
 
