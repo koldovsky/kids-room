@@ -54,11 +54,16 @@ function cancelBooking(idBook){
                   $(idElement).find('.bookingTime').empty();
                   $(idElement).find('.bookingTime').append(obj.startTime + " - " + obj.endTime);
                   $(idElement).find('.kidsName').toggleClass('highlighted');
+                   var dt = new Date();
+                      var time = dt.getHours() + ":" + dt.getMinutes();
+
+                   $('#ss').append(time);
                   },
                   error: function(){
                   alert(data);
               }});
           }
+
 
 $(document).ready(function(){
                       $('.leaveTime').timepicki({

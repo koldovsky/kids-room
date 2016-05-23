@@ -1,4 +1,5 @@
 <%@ page isELIgnored="false" %>
+<%@ page import="java.io.*,java.util.*" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -27,6 +28,7 @@
 
       <c:forEach var="booking" items="${listBooking}">
         <tr id="${booking.idBook}">
+
           <td  class="kidsName">
                 <a href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
           </td>
@@ -65,11 +67,15 @@
                 <button onclick="cancelBooking(${booking.idBook})">Canceled</button>
 
           </td>
-        </tr>
+            <td id = "ss">
+
+                  </td>
+            </tr>
+
       </c:forEach>
   </table>
 </div>
-
+<center>
 
 <script src="resources/js/bookedkids.js"></script>
 
