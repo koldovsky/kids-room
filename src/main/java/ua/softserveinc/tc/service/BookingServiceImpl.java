@@ -185,6 +185,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         String duration = String.format("%02d", hours) + ":";
         duration += String.format("%02d", minutes);
 
+        //Дем'ян, що робити, якщо різниця від'ємне число?
+
         booking.setDuration(duration);
     }
 
@@ -221,19 +223,33 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public Booking updatingBooking(BookingDTO bookingDTO) throws ParseException{
+    public Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException{
+        Booking booking = findById(bookingDTO.getId());
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
-        Booking booking = findById(bookingDTO.getId());
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dfDateAndTime.parse(dateString));
         Date date = calendar.getTime();
         booking.setBookingStartTime(date);
         update(booking);
+        return booking;
+    }
+    @Override
+    public Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException{
+        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
+        Booking booking = findById(bookingDTO.getId());
+        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getEndTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dfDateAndTime.parse(dateString));
+        Date date = calendar.getTime();
+        booking.setBookingEndTime(date);
+        update(booking);
         calculateSum(booking);
         return booking;
     }
+
 }
 
 

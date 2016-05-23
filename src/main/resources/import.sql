@@ -50,6 +50,8 @@ insert into bookings (id_book, booking_end_time, booking_start_time, comment, is
 -- DEMIAN DEMO END
 
 -- VASYL DEMO START
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (31, '2015-04-04 16:39', '2015-04-04 15:00', "The whole world of comments", false, 1, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (32, '2015-04-04 16:39', '2015-04-04 15:30', "The whole world of comments", false, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (31, '2016-06-20 16:39', '2016-06-20 15:00', "The whole world of comments", false, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (32, '2016-06-20 16:55', '2016-06-20 15:30', "The whole world of comments", false, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 19:30', "The whole world of comments", false, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 17:30', "The whole world of comments", false, 5, 1, 5);
 -- VASYL DEMO END

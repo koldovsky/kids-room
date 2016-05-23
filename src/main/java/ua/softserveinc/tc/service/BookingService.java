@@ -20,5 +20,6 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     List<User> getActiveUsersForRangeOfTime(String startDate, String endDate);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
-    Booking updatingBooking(BookingDTO bookingDTO) throws ParseException;
+    Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException;
+    Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException;
 }

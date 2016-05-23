@@ -36,7 +36,9 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         Root<Booking> root = query.from(Booking.class);
 
         try {
-            query.select(root).where(builder.between(root.get("bookingStartTime"), startTime, endTime));
+            query.select(root).where(builder.and(builder.between(root.get("bookingStartTime"),
+                            startTime, endTime)), builder.equal(root.get("isCancelled"), false));
+            query.orderBy(builder.asc(root.get("bookingStartTime")));
         }catch (Exception e){
             /*
             //Ask Andriy що тут має бути????
