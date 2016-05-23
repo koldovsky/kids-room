@@ -39,7 +39,9 @@ table.listChild {
    }
 
 
-
+.highlighted {
+    background-color: #008000;
+}
 
 
 /* -- AND TABLE   -- */

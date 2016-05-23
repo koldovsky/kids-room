@@ -1,4 +1,3 @@
-$(document).ready(function(){
 
 function cancelBooking(idBook){
      var str = "cancelBook/"+idBook;
@@ -61,6 +60,7 @@ function cancelBooking(idBook){
               }});
           }
 
+$(document).ready(function(){
                       $('.leaveTime').timepicki({
                     		show_meridian:false,
                     		min_hour_value:0,

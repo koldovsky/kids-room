@@ -52,7 +52,6 @@ public class ListChildrenController {
         model.addAttribute("listBooking", listBooking);
         model.addAttribute("BookingPerDay", dateString);
         model.addAttribute("nowTime", date);
-
         return modelAndView;
     }
 
