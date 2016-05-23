@@ -45,7 +45,7 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "idRate")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
     private List<Rate> rates;
 
     @ElementCollection

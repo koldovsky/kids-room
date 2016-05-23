@@ -25,8 +25,8 @@ public class Rate {
     @Column(name = RateConst.PRICE_RATE, nullable = false)
     private Long priceRate;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = RoomConst.ID_ROOM)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = RoomConst.ID_ROOM, nullable = false)
     private Room room;
 
     public Rate() {
