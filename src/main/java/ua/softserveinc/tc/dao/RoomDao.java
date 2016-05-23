@@ -7,6 +7,8 @@ import ua.softserveinc.tc.entity.User;
 
 public interface RoomDao extends BaseDao<Room> {
 
+    void saveOrUpdate(Room room);
+
     Room getRoomByName(String name);
 
     List<Room> findByCity(String city);

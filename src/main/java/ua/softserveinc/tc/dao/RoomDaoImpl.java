@@ -18,6 +18,11 @@ import javax.persistence.criteria.Root;
 public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
 
     @Override
+    public void saveOrUpdate(Room room){
+        getEntityManager().merge(room);
+    }
+
+    @Override
     public Room getRoomByName(String name) {
         TypedQuery<Room> query = getEntityManager().createNamedQuery("", Room.class);
         return query.setParameter(RoomConst.NAME_ROOM, name).getSingleResult();

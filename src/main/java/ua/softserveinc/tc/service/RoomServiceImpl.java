@@ -43,7 +43,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public void create(Room room) {
-        roomDao.create(room);
+        roomDao.saveOrUpdate(room);
     }
 
     @Override
