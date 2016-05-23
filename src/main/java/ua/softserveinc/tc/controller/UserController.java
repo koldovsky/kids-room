@@ -78,9 +78,15 @@ public class UserController {
         return UsersConst.SUCCESS_VIEW;
     }
 
-    @RequestMapping(value = "/sendConfirmation")
-    public String sendConfirmation( ){
-
+    @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
+    public String sendConfirmation(@RequestParam(UserConst.EMAIL) String email ){
+        if (userService.getUserByEmail(email) == null) {
+            return UsersConst.LOGIN_VIEW;
+        }
+        User user = userService.getUserByEmail(email);
+        String token = UUID.randomUUID().toString();
+        tokenService.createToken(token, user);
+        mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
 

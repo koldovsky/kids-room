@@ -3,9 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="ua.softserveinc.tc.constants.ModelConstants.UsersConst" %>
-<div class="col-sm-4">
-</div>
-<div class="col-sm-3">
+
+<div class="col-sm-offset-4 col-sm-3">
     <form:form id="userform" action="registration" method="post" modelAttribute="<%=UsersConst.USER %>">
       <form:input path="role" type="hidden" value="USER" />
 
@@ -46,8 +45,8 @@
       </div>
       <div class="form-group">
               <spring:message code="user.prerules" /><a href="<c:url value="/rules" />"> <spring:message code="user.rules" /></a>
-              <div class="col-sm-offset-4 col-sm-8">
-                <button type="submit" id="button" class="btn btn-default"><spring:message code="user.register" /></button>
+              <div class="col-sm-offset-3 col-sm-8">
+                <button type="submit" id="button" class="btn btn-primary btn-lg"><spring:message code="user.register" /></button>
               </div>
       </div>
     </form:form>
