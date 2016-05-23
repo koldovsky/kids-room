@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.ModelConstants.EventConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.dto.EventDTO;
+import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,8 @@ import java.security.Principal;
 @Controller
 public class ViewEventController {
 
+    @Autowired
+    GenericMapper<Event, EventDTO> genericMapper;
     @Autowired
     private CalendarService calendarService;
     @Autowired
@@ -57,7 +61,11 @@ public class ViewEventController {
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST)
     public String getAjax(@RequestBody EventDTO eventDTO) {
-        calendarService.create(eventDTO);
+        calendarService.create((genericMapper.toEntity(eventDTO)));
+
+
+
+
         return EventConst.MAIN_PAGE;
     }
 }

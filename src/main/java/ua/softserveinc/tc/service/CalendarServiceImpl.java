@@ -30,12 +30,8 @@ public class CalendarServiceImpl implements CalendarService{
     @Autowired
     private EventMapper eventMapper;
 
-    public final void create(final EventDTO eventDTO) {
-        Event event;
-        event = eventMapper.toEntity(eventDTO);
-
+    public final void create(final Event event) {
         eventDao.create(event);                 //тут івент отримує id
-
     }
 
     public final String eventsToString(long id) {

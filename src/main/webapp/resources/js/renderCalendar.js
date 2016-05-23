@@ -201,7 +201,8 @@ function forSendingToServer(event) {
 
 $(function() {
     $('#basicExample').timepicker({
-        dateFormat: "hh-mm-ss"
+        dateFormat: "hh-mm-ss",
+
     });
 });
 
@@ -403,8 +404,6 @@ function forSendingToServer(event) {
 
 function changeFunc(id) {
 
-    var maxId = 0;
-
     $('#calendar').fullCalendar('destroy');
     $('#dialog').dialog({
         autoOpen: false,
@@ -415,7 +414,8 @@ function changeFunc(id) {
         hide: {
             effect: 'clip',
             duration: 500
-        }
+        },
+
     })
 
     var path = "getCompanies/" + id;
@@ -466,20 +466,16 @@ function rendering(objects ,roomID) {
 
             var clickDate = date.format();
 
-            $('#startDate').val(clickDate);
-
-
-
+            $('#startDate').val('');
             $('#title').val('');
             $('#endDate').val('');
 
-
-            $("#dialog").dialog('open');
+            $('#dialog').dialog('open');
 
             $('#creating').click(function () {
-
-
-
+                if( $('#startDate').val() == "" || clickDate == "") {
+                    return;
+                }
 
                 var installedTime = $("#basicExample").timepicker('getTime');
 
@@ -525,24 +521,23 @@ function rendering(objects ,roomID) {
 
                 var superBuffer1 = "" + clickDate.substring(0,11) + timepickerHours1 + ":" +
                     timepickerMinutes1 + clickDate.substring(16);
-                $('#title').val('2016-05-21T12:30:00');
-                $('#endDate').val('2016-05-21T15:30:00');
-                                                                                //Відстій починається тута
+
+                alert(superBuffer);
 
                 var ev = {
                     title: $('#startDate').val(),
-                    start: $('#title').val(),
-                    end:   $('#endDate').val()
+                    start: superBuffer,
+                    end:   superBuffer1
                 }
 
                 $('#calendar').fullCalendar('renderEvent', ev, true);
                 forSendingToServer(ev, roomID);
 
-                $('#title').val("");
+                $('#startDate').val("");
                 $('#dialog').dialog('close');
+                clickDate = "";
             })
         },
-
 
         header: {
             left: 'prev,next today',
