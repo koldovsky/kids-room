@@ -15,8 +15,11 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     loadRemoteData();
 
-    function applyRemoteData( newChildren ) {
-        $scope.children = unifyName(newChildren);
+    function applyRemoteChildrenData( newChildren ) {
+        for (var i = 0; i < newChildren.length; i++) {
+            linkParent(newChildren[i]);
+        }
+        $scope.children = unifyNames(newChildren);
     }
 
     function loadRemoteData() {
@@ -24,7 +27,7 @@ function AllKidsTableController($scope, allKidsTableService) {
         allKidsTableService.getChildren()
             .then(
                 function( children ) {
-                    applyRemoteData( children );
+                    applyRemoteChildrenData( children );
                 }
             )
         ;
@@ -35,7 +38,7 @@ function AllKidsTableController($scope, allKidsTableService) {
             allKidsTableService.searchChildren( field )
                 .then(
                     function( children ) {
-                        applyRemoteData( unifyName( children ) );
+                        applyRemoteChildrenData( children );
                     }
                 );
         } else {
@@ -43,9 +46,23 @@ function AllKidsTableController($scope, allKidsTableService) {
         }
     }
 
-    function unifyName( list ) {
+    function linkParent( child ) {
+        allKidsTableService.getParent( child.id )
+            .then(
+                function( parent ) {
+                    unifyName(parent)
+                    child.parent = parent;
+                }
+            );
+    }
+
+    function unifyName( person ) {
+        person.fullName = person.firstName + ' ' + person.lastName;
+    }
+
+    function unifyNames( list ) {
         for (var i = 0; i < list.length; i++) {
-            list[i].fullName = list[i].firstName + ' ' + list[i].lastName;
+            unifyName(list[i]);
         }
         return list;
     }
@@ -57,13 +74,8 @@ function AllKidsTableController($scope, allKidsTableService) {
             .toggleClass('glyphicon-triangle-top');
     }
 
-    function go( path ) {
-        $location.path( path );
-    };
-
     $scope.searchChildren = searchChildren;
     $scope.toggleCollapseButton = toggleCollapseButton;
-    $scope.go = go;
 
 }
 
@@ -71,7 +83,8 @@ function AllKidsTableService($http, $q) {
 
     return({
         getChildren: getChildren,
-        searchChildren: searchChildren
+        searchChildren: searchChildren,
+        getParent: getParent
     });
 
     function getChildren() {
@@ -95,6 +108,19 @@ function AllKidsTableService($http, $q) {
             params: {
                 action: "get",
                 field: field
+            }
+        });
+
+        return ( request.then( handleSuccess, handleError ) );
+    }
+
+    function getParent( childId ) {
+
+        var request = $http({
+            method: "get",
+            url: "api/child/" + childId + "/parent",
+            params: {
+                action: "get"
             }
         });
 

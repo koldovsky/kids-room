@@ -6,7 +6,7 @@
 </div>
 
 <div id="all_kids_add" class="input-group">
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" ng-click="newChildFormIsShown = true;">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
 </div>
@@ -94,7 +94,7 @@
 
             <div class="td span3">
                 <p>
-                    {{ child.fullName }}
+                    {{ child.parent.fullName }}
                 </p>
             </div>
 
@@ -105,7 +105,7 @@
             </div>
 
             <div class="td span3">
-                <p>{{child.dateOfBirth}}</p>
+                <p>{{ child.age }}</p>
             </div>
 
             <div class="td span2">
@@ -128,7 +128,7 @@
                         <div class="span2">
                             <i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>
                         </div>
-                        <div class="right-align"><p>Hello</p></div>
+                        <div class="right-align"><p>{{ child.parent.phoneNumber || "Empty" }}</p></div>
                     </div>
                     <div>
                         <div class="span24">
@@ -136,7 +136,7 @@
                         </div>
                         <div>
                             <p>
-                                {{ child.comment }}
+                                {{ child.comment || "Empty" }}
                             </p>
                         </div>
                     </div>

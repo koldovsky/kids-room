@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,7 @@ import java.util.stream.Collectors;
                     @Parameter(name = "maxGramSize",value = "1024")
                 })
         })
-public class User{
+public class User {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")

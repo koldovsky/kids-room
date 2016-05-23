@@ -4,12 +4,18 @@ import com.google.gson.Gson;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
 
 import ua.softserveinc.tc.constants.ApiConstants;
 import ua.softserveinc.tc.dto.ChildDTO;
@@ -46,6 +52,17 @@ public class ApiController {
         return gson.toJson(result);
     }
 
+    @RequestMapping(value = ApiConstants.usersRestByIdUrl, method = RequestMethod.GET)
+    public @ResponseBody String getUserById(@PathVariable long id) {
+        User user = userService.findById(id);
+        Gson gson = new Gson();
+
+        if (user.isEnabled()) {
+            return gson.toJson(new UserDTO(user));
+        }
+        return null;
+    }
+
     @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getChild() {
         List<ChildDTO> result = new ArrayList<ChildDTO>();
@@ -59,6 +76,29 @@ public class ApiController {
 
         Gson gson = new Gson();
         return gson.toJson(result);
+    }
+
+    @RequestMapping(value = ApiConstants.childrenByIdRestUrl, method = RequestMethod.GET)
+    public @ResponseBody String getChildById(@PathVariable long id) {
+        Child child = childService.findById(id);
+        Gson gson = new Gson();
+
+        if (child.isEnabled()) {
+            return gson.toJson(new ChildDTO(child));
+        }
+        return null;
+    }
+
+    @RequestMapping(value = ApiConstants.getChildrenParentRestUrl, method = RequestMethod.GET)
+    public @ResponseBody String getParentByChild(@PathVariable long id) {
+        Child child = childService.findById(id);
+        User user = child.getParentId();
+        Gson gson = new Gson();
+
+        if (user.isEnabled()) {
+            return gson.toJson(new UserDTO(user));
+        }
+        return null;
     }
 
 }

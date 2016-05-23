@@ -7,6 +7,9 @@ package ua.softserveinc.tc.constants;
 public interface ApiConstants {
 
     String usersRestUrl = "/api/user";
+    String usersRestByIdUrl = "/api/user/{id}";
     String childrenRestUrl = "/api/child";
+    String childrenByIdRestUrl = "/api/child/{id}";
+    String getChildrenParentRestUrl = "/api/child/{id}/parent";
 
 }

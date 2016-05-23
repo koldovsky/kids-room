@@ -7,6 +7,7 @@ import ua.softserveinc.tc.entity.User;
  */
 public class UserDTO implements BaseDTO
 {
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -14,6 +15,7 @@ public class UserDTO implements BaseDTO
 
     public UserDTO(User user)
     {
+        this.id = user.getId();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
