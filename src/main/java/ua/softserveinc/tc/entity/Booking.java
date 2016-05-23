@@ -34,7 +34,6 @@ public class Booking {
     @ManyToOne(optional = false)
     @JoinColumn(name = UserConst.ID_USER)
     private User idUser;
-    //а чо в мене комітиться?
 
     @Column(name = BookingConst.BOOKING_START_TIME, nullable = false)
     private Date bookingStartTime;
