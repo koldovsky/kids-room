@@ -1,9 +1,12 @@
 package ua.softserveinc.tc.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dto.EventDTO;
 import ua.softserveinc.tc.entity.Event;
+import ua.softserveinc.tc.service.RoomService;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +16,10 @@ import java.util.Date;
  */
 @Component
 public class EventMapper implements GenericMapper<Event, EventDTO> {
+
+    @Autowired
+    RoomService roomService;
+
     @Override
     public final Event toEntity(final EventDTO eventDto) {
         Event event = new Event();
@@ -45,6 +52,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
 
         event.setStartTime(startDate);
         event.setEndTime(endDate);
+        event.setRoom(roomService.findById(eventDto.getRoomId()));
         return event;
     }
 

@@ -9,10 +9,7 @@ import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.dto.EventDTO;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.service.CalendarServiceImpl;
-import ua.softserveinc.tc.service.EventService;
-import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -24,7 +21,7 @@ import java.security.Principal;
 public class ViewEventController {
 
     @Autowired
-    private CalendarServiceImpl calendarServiceImpl;
+    private CalendarService calendarService;
     @Autowired
     private RoomService roomServiceImpl;
     @Autowired
@@ -53,12 +50,14 @@ public class ViewEventController {
     @RequestMapping(value = "getCompanies/{id}", method = RequestMethod.GET)
     public @ResponseBody
     String getEvents(@PathVariable int id) {
-        return calendarServiceImpl.eventsToString(id);
+        System.out.println(calendarService.eventsToString(id));
+        return calendarService.eventsToString(id);
+
     }
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST)
     public String getAjax(@RequestBody EventDTO eventDTO) {
-        calendarServiceImpl.create(eventDTO);
+        calendarService.create(eventDTO);
         return EventConst.MAIN_PAGE;
     }
 }

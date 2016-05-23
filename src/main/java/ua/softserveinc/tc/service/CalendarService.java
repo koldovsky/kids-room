@@ -10,4 +10,5 @@ import java.util.List;
 public interface CalendarService {
     void create(final EventDTO eventDTO);
     List<EventDTO> findByRoomId(final long roomId);
+    String eventsToString(long id);
 }
