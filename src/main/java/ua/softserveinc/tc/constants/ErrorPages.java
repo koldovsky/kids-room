@@ -7,4 +7,5 @@ package ua.softserveinc.tc.constants;
 public interface ErrorPages {
     String NOT_FOUND_VIEW = "notFound";
     String ACCESS_DENIED_VIEW = "accessDenied";
+
 }
