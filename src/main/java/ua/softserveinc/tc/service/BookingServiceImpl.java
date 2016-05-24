@@ -8,6 +8,7 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.TimeConverter;
 
 import javax.persistence.EntityManager;
 import java.text.SimpleDateFormat;
@@ -181,20 +182,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 booking.getBookingStartTime().getTime();
 
         booking.setDuration(difference);
-        //long hours = TimeUnit.MILLISECONDS.toHours(difference);
-        //long minutes = TimeUnit.MILLISECONDS.toMinutes(difference);
-        //String duration = String.format("%02d", hours) + ":";
-        //duration += String.format("%02d", minutes);
-
-        // - Дем'ян, що робити, якщо різниця від'ємне число?
-        // - Робити так, шоб різниця не була від'ємним числом.
     }
 
     @Override
     public void calculateSum(Booking booking)
     {
         calculateDuration(booking);
-        /*String hoursAndMinutes = booking.getDuration();
+        String hoursAndMinutes = new TimeConverter(booking.getDuration()).toHoursAndMinutes();
         int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
         int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
 
@@ -226,7 +220,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 booking.setSum(prices.get(listOfKeys.get(listOfKeys.size() - 1)));
                 break;
             }
-        }*/
+        }
     }
 
     @Override
@@ -240,6 +234,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Date date = calendar.getTime();
         booking.setBookingStartTime(date);
         update(booking);
+        calculateSum(booking);
         return booking;
     }
     @Override
