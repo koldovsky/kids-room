@@ -4,6 +4,7 @@
 <c:url value="/j_spring_security_check" var="allURL" />
 
 <link rel='stylesheet' href='resources/css/report.css'>
+<link rel='stylesheet' href='resources/css/bookings.css'>
 <script src="resources/js/exportIntoExcel.js"></script>
 
     <div class="tableDiv">
