@@ -20,7 +20,7 @@ public class Rate {
     private Long idRate;
 
     @Column(name = RateConst.HOUR_RATE, nullable = false)
-    private Long hourRate;
+    private Integer hourRate;
 
     @Column(name = RateConst.PRICE_RATE, nullable = false)
     private Long priceRate;
@@ -32,7 +32,7 @@ public class Rate {
     public Rate() {
     }
 
-    public Rate(Long hourRate, Long priceRate) {
+    public Rate(Integer hourRate, Long priceRate) {
         this.hourRate = hourRate;
         this.priceRate = priceRate;
     }
@@ -45,11 +45,11 @@ public class Rate {
         this.idRate = idRate;
     }
 
-    public Long getHourRate() {
+    public Integer getHourRate() {
         return hourRate;
     }
 
-    public void setHourRate(Long hourRate) {
+    public void setHourRate(Integer hourRate) {
         this.hourRate = hourRate;
     }
 

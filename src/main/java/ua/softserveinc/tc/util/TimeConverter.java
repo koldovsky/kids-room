@@ -1,10 +1,7 @@
 package ua.softserveinc.tc.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
-import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.service.BookingService;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -40,8 +37,8 @@ public class TimeConverter
 
     public String toHoursAndMinutes()
     {
-        long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds);
+        int hours = (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
+        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
 
         String hoursAndMinutes = String.format("%02d", hours) + ":";
         hoursAndMinutes += String.format("%02d", minutes);

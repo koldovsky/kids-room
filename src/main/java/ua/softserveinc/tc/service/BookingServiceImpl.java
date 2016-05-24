@@ -25,6 +25,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Autowired
     private BookingDao bookingDao;
 
+    @Autowired
+    RateService rateService;
+
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
@@ -188,39 +191,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public void calculateSum(Booking booking)
     {
         calculateDuration(booking);
-        String hoursAndMinutes = new TimeConverter(booking.getDuration()).toHoursAndMinutes();
-        int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
-        int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
 
-        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
-        if (minutes > 0) hours++;
-
-        // get prices for particular room and sort them in order to choose appropriate one
         Map<Integer, Long> prices = booking.getIdRoom().getPrices();
-        ArrayList<Integer> listOfKeys = new ArrayList<>();
-        listOfKeys.addAll(prices.keySet());
-        Collections.sort(listOfKeys);
-        Integer h = null;
-        for(Integer hour : listOfKeys) {
-            if(hours < hour) {
-                h = hour;
-                break;
-            }
-        }
-        if(h == null) h = listOfKeys.get(listOfKeys.size());
-        while (true) {
-            if (listOfKeys.contains(hours)) {
-                booking.setSum(prices.get(hours));
-                break;
-            }
-            hours++;
-            // if manager enters value that is bigger than max value in the list
-            // we return price for max value
-            if (hours > 10) {
-                booking.setSum(prices.get(listOfKeys.get(listOfKeys.size() - 1)));
-                break;
-            }
-        }
+        int closestHour = rateService.calculateClosestHour(booking.getDuration(), prices);
+        booking.setSum(prices.get(closestHour));
     }
 
     @Override

@@ -60,7 +60,7 @@ public class ListChildrenController {
                                                @PathVariable Long idBooking) throws ParseException{
         Booking booking = bookingService.findById(idBooking);
         booking.setCancelled(true);
-        booking.setSum(0);
+        booking.setSum(0l);
         bookingService.update(booking);
         BookingDTO bookingDTO = new BookingDTO(booking);
         Gson gson = new Gson();
