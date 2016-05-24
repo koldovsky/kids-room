@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.acls.model.NotFoundException;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,8 +48,11 @@ public class EditMyKidPageController {
             method = RequestMethod.GET)
     public ModelAndView selectKid(
             @RequestParam("kidId") String kidId,
-            Principal principal) throws ResourceNotFoundException, AccessDeniedException
+            Principal principal) throws ResourceNotFoundException, AccessDeniedException, MissingServletRequestParameterException
     {
+        if(kidId.isEmpty()){
+            throw new MissingServletRequestParameterException("kidId", "String");
+        }
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.KID_EDITING_VIEW);
 

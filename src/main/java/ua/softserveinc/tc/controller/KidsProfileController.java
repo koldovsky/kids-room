@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,12 +38,14 @@ public class KidsProfileController {
     @RequestMapping(value = "/profile",
             method = RequestMethod.GET)
     public ModelAndView getProfile(
-            @RequestParam("id") String id, Principal principal){
+            @RequestParam("id") String id, Principal principal) throws MissingServletRequestParameterException{
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
 
+        if(id.isEmpty()) {
+            throw new MissingServletRequestParameterException("kidId", "String");
+        }
         User current = userService.getUserByEmail(principal.getName());
-
         Child kid = childService.findById(Long.parseLong(id));
 
         if(kid == null){
