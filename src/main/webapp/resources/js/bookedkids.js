@@ -31,7 +31,7 @@ function cancelBooking(idBook){
                   $(clear).append(obj.startTime + " - " + obj.endTime);
                   },
                   error: function(){
-                  alert(data);
+
                   }});
                   }
 
@@ -51,29 +51,28 @@ function cancelBooking(idBook){
                   type: 'POST',
                   success: function(data){
                   var obj = JSON.parse(data);
-                  $(idElement).find('.bookingTime').empty();
-                  $(idElement).find('.bookingTime').append(obj.startTime + " - " + obj.endTime);
-                  $(idElement).find('.kidsName').toggleClass('highlighted');
-                   var dt = new Date();
-                      var time = dt.getHours() + ":" + dt.getMinutes();
-
-                   $('#ss').append(time);
+                  var bookingTime = $(idElement).find('.bookingTime');
+                  bookingTime.empty();
+                  bookingTime.append(obj.startTime + " - " + obj.endTime);
+                  $(idElement).find('.kidsName').addClass('highlighted');
                   },
                   error: function(){
-                  alert(data);
+
               }});
           }
 
 
-$(document).ready(function(){
-                      $('.leaveTime').timepicki({
-                    		show_meridian:false,
-                    		min_hour_value:0,
-                    		max_hour_value:23,
-                    		step_size_minutes:15,
-                    		overflow_minutes:true,
-                    		increase_direction:'up',
-                    		disable_keyboard_mobile: true
-                    		});
+            var timer;
+            var delay = 100;
 
-});
+            $('.arrivalTime').on('mouseenter', function(){
+                    var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
+                    var arrivalTime = $(this).val();
+                    $(this).val(date);
+            });
+
+
+            $('.leaveTime').on('mouseover', function(){
+                 var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
+                 $(this).val(date);
+                 });

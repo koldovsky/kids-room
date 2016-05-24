@@ -10,12 +10,12 @@
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 
-
+<div id="same">
 <div class="col-md-8">
 
   <div>
-      ${BookingPerDay}
-      Today is <fmt:formatDate pattern="dd-MM-yyy" value="${nowTime}"/>
+
+      Today <fmt:formatDate pattern="dd-MM-yyy" value="${nowTime}"/>
   </div>
 
   <table class="table table-striped table-hover" id="tabble">
@@ -29,18 +29,22 @@
       <c:forEach var="booking" items="${listBooking}">
         <tr id="${booking.idBook}">
 
-          <td  class="kidsName">
+          <td  class="kidsName" >
                 <a href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
           </td>
+
                       <td class="bookingTime">
+
                         <fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/> -
                         <fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
+
                      </td>
+
          <form action="" method="POST">
-            <td>
+            <td class='arr'>
                       <div class="input-group">
                            <input type="time" class="arrivalTime"
-                           value=<fmt:formatDate pattern="HH:mm" value="${nowTime}"/>
+                           value=<fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/>
                            </input>
                            <span class="input-group-btn">
                                 <input type="button" class="btn" onclick="setStartTime(${booking.idBook})" value="Ok"/>
@@ -52,7 +56,7 @@
 
                     <div class="input-group">
                           <input type="time" class="leaveTime"
-                          value=<fmt:formatDate pattern="HH:mm" value="${nowTime}"/>
+                          value=<fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
                           </input>
                           <span class="input-group-btn">
                                 <input type="button" class="btn" onclick="setEndTime(${booking.idBook})" value="Ok"/>
@@ -67,16 +71,16 @@
                 <button onclick="cancelBooking(${booking.idBook})">Canceled</button>
 
           </td>
-            <td id = "ss">
 
-                  </td>
-            </tr>
 
       </c:forEach>
   </table>
 </div>
-<center>
+</div>
+
+
 
 <script src="resources/js/bookedkids.js"></script>
+
 
 
