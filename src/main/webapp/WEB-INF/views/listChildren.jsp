@@ -1,5 +1,5 @@
 <%@ page isELIgnored="false" %>
-<%@ page import="java.io.*,java.util.*" %>
+
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -20,11 +20,11 @@
 
   <table class="table table-striped table-hover" id="tabble">
       <caption><h2> <spring:message code="kids.list"/></h2></caption>
-      <th>Childrens</th>
-      <th>Booking time</th>
-      <th>Arrival time</th>
-      <th>Leave time</th>
-      <th>Cancel booking</th>
+      <th><spring:message code= "booking.childrens"/></th>
+      <th><spring:message code= "booking.time"/></th>
+      <th><spring:message code= "booking.arrival"/></th>
+      <th><spring:message code= "booking.leave"/></th>
+      <th><spring:message code= "booking.cancel"/></th>
 
       <c:forEach var="booking" items="${listBooking}">
         <tr id="${booking.idBook}">
@@ -32,14 +32,10 @@
           <td  class="kidsName" >
                 <a href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
           </td>
-
                       <td class="bookingTime">
-
                         <fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/> -
                         <fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
-
                      </td>
-
          <form action="" method="POST">
             <td class='arr'>
                       <div class="input-group">
@@ -53,7 +49,6 @@
          </form>
          <form action="" method="POST">
             <td>
-
                     <div class="input-group">
                           <input type="time" class="leaveTime"
                           value=<fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
@@ -62,14 +57,13 @@
                                 <input type="button" class="btn" onclick="setEndTime(${booking.idBook})" value="Ok"/>
                           </span>
                     </div>
-
             </td>
           </form>
 
           <td>
-
-                <button onclick="cancelBooking(${booking.idBook})">Canceled</button>
-
+                <button onclick="cancelBooking(${booking.idBook})">
+                    <spring:message code= "booking.canceled"/>
+                </button>
           </td>
 
 
@@ -77,8 +71,6 @@
   </table>
 </div>
 </div>
-
-
 
 <script src="resources/js/bookedkids.js"></script>
 
