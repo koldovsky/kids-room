@@ -35,16 +35,8 @@ public class BookingDTO  implements BaseDTO {
     private String endTime;
     private String kidName;
     private String roomName;
-    private String duration;
+    private long duration;
     private long sum;
-
-
-
-    public BookingDTO() {
-        this.id=id;
-        this.startTime=startTime;
-        this.reportTime = reportTime;
-    }
 
     public BookingDTO(Booking booking){
         DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
@@ -103,11 +95,11 @@ public class BookingDTO  implements BaseDTO {
         this.roomName = roomName;
     }
 
-    public String getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

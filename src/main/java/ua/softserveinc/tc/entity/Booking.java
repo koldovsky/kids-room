@@ -47,8 +47,8 @@ public class Booking {
     @Column(name = BookingConst.IS_CANCELLED, nullable = false)
     private boolean isCancelled;
 
-    @Column(name = BookingConst.DURATION)
-    private String duration;
+    @Column(name = BookingConst.DURATION, columnDefinition = "bigint default 0")
+    private long duration;
 
     @Column(name = BookingConst.SUM, columnDefinition = "bigint default 0")
     private long sum;
@@ -117,11 +117,11 @@ public class Booking {
         isCancelled = cancelled;
     }
 
-    public String getDuration() {
+    public long getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(long duration) {
         this.duration = duration;
     }
 

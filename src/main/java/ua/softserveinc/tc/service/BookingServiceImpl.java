@@ -16,6 +16,7 @@ import javax.persistence.criteria.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
@@ -179,22 +180,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         long difference = booking.getBookingEndTime().getTime() -
                 booking.getBookingStartTime().getTime();
 
-        long hours = difference / 1000 / 60 / 60;
-        long minutes = difference / 1000 / 60 % 60;
+        booking.setDuration(difference);
+        //long hours = TimeUnit.MILLISECONDS.toHours(difference);
+        //long minutes = TimeUnit.MILLISECONDS.toMinutes(difference);
+        //String duration = String.format("%02d", hours) + ":";
+        //duration += String.format("%02d", minutes);
 
-        String duration = String.format("%02d", hours) + ":";
-        duration += String.format("%02d", minutes);
-
-        //Дем'ян, що робити, якщо різниця від'ємне число?
-
-        booking.setDuration(duration);
+        // - Дем'ян, що робити, якщо різниця від'ємне число?
+        // - Робити так, шоб різниця не була від'ємним числом.
     }
 
     @Override
     public void calculateSum(Booking booking)
     {
         calculateDuration(booking);
-        String hoursAndMinutes = booking.getDuration();
+        /*String hoursAndMinutes = booking.getDuration();
         int hours = Integer.parseInt(hoursAndMinutes.substring(0, 2));
         int minutes = Integer.parseInt(hoursAndMinutes.substring(3));
 
@@ -206,7 +206,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         ArrayList<Integer> listOfKeys = new ArrayList<>();
         listOfKeys.addAll(prices.keySet());
         Collections.sort(listOfKeys);
-
+        Integer h = null;
+        for(Integer hour : listOfKeys) {
+            if(hours < hour) {
+                h = hour;
+                break;
+            }
+        }
+        if(h == null) h = listOfKeys.get(listOfKeys.size());
         while (true) {
             if (listOfKeys.contains(hours)) {
                 booking.setSum(prices.get(hours));
@@ -219,7 +226,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 booking.setSum(prices.get(listOfKeys.get(listOfKeys.size() - 1)));
                 break;
             }
-        }
+        }*/
     }
 
     @Override
