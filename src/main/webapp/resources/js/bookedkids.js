@@ -65,14 +65,14 @@ function cancelBooking(idBook){
             var timer;
             var delay = 100;
 
-            $('.arrivalTime').on('mouseenter', function(){
+            $('.arrivalTime').on('click', function(){
                     var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
                     var arrivalTime = $(this).val();
                     $(this).val(date);
             });
 
 
-            $('.leaveTime').on('mouseover', function(){
+            $('.leaveTime').on('click', function(){
                  var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
                  $(this).val(date);
                  });

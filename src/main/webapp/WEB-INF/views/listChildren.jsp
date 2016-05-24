@@ -28,7 +28,6 @@
 
       <c:forEach var="booking" items="${listBooking}">
         <tr id="${booking.idBook}">
-
           <td  class="kidsName" >
                 <a href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
           </td>
@@ -40,7 +39,7 @@
             <td class='arr'>
                       <div class="input-group">
                            <input type="time" class="arrivalTime"
-                           value=<fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/>
+
                            </input>
                            <span class="input-group-btn">
                                 <input type="button" class="btn" onclick="setStartTime(${booking.idBook})" value="Ok"/>
@@ -51,7 +50,7 @@
             <td>
                     <div class="input-group">
                           <input type="time" class="leaveTime"
-                          value=<fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
+
                           </input>
                           <span class="input-group-btn">
                                 <input type="button" class="btn" onclick="setEndTime(${booking.idBook})" value="Ok"/>
@@ -65,8 +64,6 @@
                     <spring:message code= "booking.canceled"/>
                 </button>
           </td>
-
-
       </c:forEach>
   </table>
 </div>

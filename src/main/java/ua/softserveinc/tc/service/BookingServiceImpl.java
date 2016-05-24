@@ -114,11 +114,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public List<Booking> getBookingsByDay(String date) throws ParseException{
 
         String startTimeString = date + " 00:00";
-        String endTimeString = date + " 23:00";
+        String endTimeString = date + " 23:59";
         Calendar calendarStartTime = Calendar.getInstance();
         Calendar calendarEndTime = Calendar.getInstance();
 
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
         calendarStartTime.setTime(dfDateAndTime.parse(startTimeString));
         calendarEndTime.setTime(dfDateAndTime.parse(endTimeString));
 
@@ -226,12 +226,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException{
         Booking booking = findById(bookingDTO.getId());
-        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
-        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getStartTime();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dfDateAndTime.parse(dateString));
-        Date date = calendar.getTime();
+        Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
         booking.setBookingStartTime(date);
         update(booking);
         calculateSum(booking);
@@ -239,19 +234,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
     @Override
     public Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException{
-        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_MINUTE_FORMAT);
         Booking booking = findById(bookingDTO.getId());
-        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + bookingDTO.getEndTime();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dfDateAndTime.parse(dateString));
-        Date date = calendar.getTime();
+        Date date = getDateAndTimeBooking(booking, bookingDTO.getEndTime());
         booking.setBookingEndTime(date);
         update(booking);
         calculateSum(booking);
         return booking;
     }
 
+    private Date getDateAndTimeBooking(Booking booking, String time) throws ParseException {
+
+        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
+        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dfDateAndTime.parse(dateString));
+        Date date = calendar.getTime();
+        return date;
+
+    }
 }
 
 

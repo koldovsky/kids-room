@@ -25,11 +25,6 @@ public class BookingDTO  implements BaseDTO {
 
 
     private Long id;
-    private String reportTime;
-
-    //Нестор: я зайшов пододавати поля і методи, ламати нічого не буду :)
-    //Василь: все ок, авиправив твої строки на константи :)
-
     private String date;
     private String startTime;
     private String endTime;
@@ -39,9 +34,9 @@ public class BookingDTO  implements BaseDTO {
     private long sum;
 
     public BookingDTO() {
-        this.id = id;
-        this.reportTime = reportTime;
-        this.startTime = startTime;
+        this.id=id;
+        this.startTime=startTime;
+
     }
 
     public BookingDTO(Booking booking){
@@ -56,9 +51,8 @@ public class BookingDTO  implements BaseDTO {
         this.roomName = booking.getIdRoom().getAddress();
         this.duration = booking.getDuration();
         this.sum = booking.getSum();
-
         this.id = booking.getIdBook();
-        this.reportTime = getNowTime();
+
     }
 
     public String getDate() {
@@ -125,20 +119,5 @@ public class BookingDTO  implements BaseDTO {
         this.id = id;
     }
 
-    public String getReportTime() {
-        return reportTime;
-    }
 
-    public void setReportTime(String reportTime) {
-        this.reportTime = reportTime;
-    }
-
-
-    public String getNowTime(){
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-        DateFormat df = new SimpleDateFormat(DateConst.TIME_FORMAT);
-        String nowTime = df.format(date);
-        return  nowTime;
-    }
 }
