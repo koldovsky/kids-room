@@ -47,8 +47,8 @@ public class EditMyKidPageController {
     @RequestMapping(value="/editmykid",
             method = RequestMethod.GET)
     public ModelAndView selectKid(
-            @RequestParam("kidId") String kidId,
-            Principal principal) throws ResourceNotFoundException, AccessDeniedException, MissingServletRequestParameterException
+            @RequestParam("kidId") String kidId, Principal principal)
+            throws ResourceNotFoundException, AccessDeniedException, MissingServletRequestParameterException
     {
         if(kidId.isEmpty()){
             throw new MissingServletRequestParameterException("kidId", "String");
@@ -77,7 +77,8 @@ public class EditMyKidPageController {
     public String submit(
             @ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child kidToEdit,
             Principal principal,
-            BindingResult bindingResult){
+            BindingResult bindingResult)
+    {
         kidToEdit.setParentId(
                 userService.getUserByEmail(
                         principal.getName()));
@@ -97,8 +98,11 @@ public class EditMyKidPageController {
 
     @RequestMapping(value = "/removemykid",
     method = RequestMethod.GET)
-    public String removeKid(@RequestParam("id") String id,
-                            Principal principal){
+    public String removeKid(@RequestParam("id") String id, Principal principal)
+            throws AccessDeniedException, MissingServletRequestParameterException{
+        if(id.isEmpty()){
+            throw new MissingServletRequestParameterException("id", "String");
+        }
         Child kidToRemove = childService.findById(Long.parseLong(id));
 
         if(!userService

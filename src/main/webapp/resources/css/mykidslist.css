@@ -72,6 +72,7 @@
         margin: 25 auto;
         padding-bottom: 25;
         padding-top: 25;
+        padding: 25;
         text-align:center;
         box-shadow: 5px 5px 20px grey;
     }
@@ -91,4 +92,10 @@
 
 #picture{
     border: 1px solid black;
+}
+
+.col-md-8{
+    border: 1px solid grey;
+    border-radius: 5px;
+    background-color: rgb(250,250,250);
 }

@@ -37,8 +37,9 @@ public class KidsProfileController {
 
     @RequestMapping(value = "/profile",
             method = RequestMethod.GET)
-    public ModelAndView getProfile(
-            @RequestParam("id") String id, Principal principal) throws MissingServletRequestParameterException{
+    public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)
+            throws MissingServletRequestParameterException, AccessDeniedException, ResourceNotFoundException{
+
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
 
@@ -55,7 +56,6 @@ public class KidsProfileController {
         if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
             throw new AccessDeniedException("Have to be manager or parent");
         }
-
 
         model.getModelMap().addAttribute(MyKidsConst.KID_ATTRIBUTE, kid);
         return model;

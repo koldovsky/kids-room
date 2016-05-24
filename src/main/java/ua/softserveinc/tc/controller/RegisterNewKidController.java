@@ -47,9 +47,10 @@ public class RegisterNewKidController {
 
 
     @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
-    public String submit(@ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child child,
-                         Principal principal,
-                         BindingResult bindingResult) {
+    public String submit(
+            @ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child child,
+            Principal principal,
+            BindingResult bindingResult) {
 
         child.setParentId(
                 userService.getUserByEmail(

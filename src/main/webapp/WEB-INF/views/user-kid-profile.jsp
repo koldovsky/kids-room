@@ -14,7 +14,10 @@
  <div class="col-md-4">
     <div class="left">
         <div id="Photo">
-        <img id="picture" alt="Profile picture" src="images/${kid.id}.jpg" width="200" height="200" /></div>
+        <a href="images/${kid.id}.jpg">
+        <img id="picture" alt="Profile picture" src="images/${kid.id}.jpg" width="200" height="200" />
+        </a>
+        </div>
 
          <form method="POST" action="uploadImage/${kid.id}" enctype="multipart/form-data">
                  <label class="btn btn-success glyphicon glyphicon-folder-open">
