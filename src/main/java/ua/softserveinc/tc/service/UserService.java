@@ -5,15 +5,12 @@ import ua.softserveinc.tc.entity.User;
 
 import java.util.List;
 
-public interface UserService extends BaseService<User> {
-
-    void deleteUserById(Long id);
-
-    List<User> findAllUsersByRole(Role role);
-
-    User getUserByEmail(String email);
-
+public interface UserService extends BaseService<User>
+{
     List<User> getAllParents();
-
+    void deleteUserById(Long id);
+    User getUserByEmail(String email);
+    List<User> findAllUsersByRole(Role role);
     void confirmManagerRegistrationUpdate(User manager);
+    List<User> getActiveUsersForRangeOfTime(String startDate, String endDate);
 }

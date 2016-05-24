@@ -13,9 +13,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Demian on 24.05.2016.
  */
-public class TimeConverter
+public class TimeUtil
 {
-
     private long milliseconds;
 
     public static DateFormat dayformat = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
@@ -30,7 +29,7 @@ public class TimeConverter
         this.milliseconds = milliseconds;
     }
 
-    public TimeConverter(long milliseconds)
+    public TimeUtil(long milliseconds)
     {
         this.milliseconds = milliseconds;
     }
@@ -57,5 +56,23 @@ public class TimeConverter
 
     }
 
+    public static Calendar currentDate()
+    {
+        return Calendar.getInstance();
+    }
 
+    public static Calendar dateMonthAgo()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        return calendar;
+    }
+
+    public static String convertToString(Calendar calendar)
+    {
+        String result = calendar.get(Calendar.YEAR) + "-";
+        result += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        result += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        return result;
+    }
 }

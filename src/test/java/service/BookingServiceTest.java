@@ -41,7 +41,7 @@ public class BookingServiceTest {
         List<Booking> bookings = new ArrayList<>();
         bookings.add(new Booking());
         bookings.add(new Booking());
-        bookings.forEach(booking -> booking.setSum(10));
+        bookings.forEach(booking -> booking.setSum(10l));
 
         assertEquals("Should be 20", 20, bookingService.getSumTotal(bookings));
 

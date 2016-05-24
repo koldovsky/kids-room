@@ -10,16 +10,13 @@ import java.util.List;
 
 public interface BookingService extends BaseService<Booking>
 {
-    String getCurrentDate();
-    String getDateMonthAgo();
     void calculateSum(Booking booking);
     void calculateDuration(Booking booking);
     int getSumTotal(List<Booking> bookings);
-    List<Booking> getBookingsByDay(String data) throws ParseException;
     HashMap<User, Integer> generateAReport(List<Booking> bookings);
+    List<Booking> getBookingsByDay(String data) throws ParseException;
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    List<User> getActiveUsersForRangeOfTime(String startDate, String endDate);
-    List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
-    Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException;
     Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException;
+    Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException;
+    List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

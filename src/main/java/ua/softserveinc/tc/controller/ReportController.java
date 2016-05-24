@@ -13,10 +13,12 @@ import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 
 import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static ua.softserveinc.tc.util.TimeUtil.*;
 
 /**
  * Created by Demian on 08.05.2016.
@@ -25,7 +27,7 @@ import java.util.List;
 public class ReportController
 {
     @Autowired
-    BookingService bookingService;
+    UserService userService;
 
     @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
     public ModelAndView report()
@@ -34,9 +36,9 @@ public class ReportController
         model.setViewName(ReportConst.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = bookingService.getCurrentDate();
-        String dateThen = bookingService.getDateMonthAgo();
-        List<User> users = bookingService.getActiveUsersForRangeOfTime(dateThen, dateNow);
+        String dateNow = convertToString(currentDate());
+        String dateThen = convertToString(dateMonthAgo());
+        List<User> users = userService.getActiveUsersForRangeOfTime(dateThen, dateNow);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
@@ -48,7 +50,7 @@ public class ReportController
     @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
     public @ResponseBody String refreshView(@PathVariable String startDate, @PathVariable String endDate)
     {
-        List<User> users = bookingService.getActiveUsersForRangeOfTime(startDate, endDate);
+        List<User> users = userService.getActiveUsersForRangeOfTime(startDate, endDate);
         List<UserDTO> userDTOs = new ArrayList<>();
         users.forEach(user -> userDTOs.add(new UserDTO(user)));
         Gson gson = new Gson();

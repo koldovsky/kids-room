@@ -8,16 +8,13 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.util.TimeConverter;
 
 import javax.persistence.EntityManager;
 import java.text.SimpleDateFormat;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
@@ -45,30 +42,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                     builder.equal(root.get("isCancelled"), false));
         }
         catch (ParseException e)
-        {
-            System.out.println("Wrong format of date. " + e.getMessage());
-        }
-
-        return entityManager.createQuery(query).getResultList();
-    }
-
-    @Override
-    public List<User> getActiveUsersForRangeOfTime(String startDate, String endDate)
-    {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<Booking> root = query.from(Booking.class);
-
-        try
-        {
-            query.select(root.get("idUser"))
-                    .where(builder.between(root.get("bookingStartTime"),
-                dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                            builder.equal(root.get("isCancelled"), false))
-                .groupBy(root.get("idUser"));
-        }
-        catch (Exception e)
         {
             System.out.println("Wrong format of date. " + e.getMessage());
         }
@@ -130,27 +103,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         List<Booking> bookings= bookingDao.getBookingsByDay(startTime, endTime);
 
         return bookings;
-    }
-
-    @Override
-    public String getCurrentDate()
-    {
-        Calendar calendar = Calendar.getInstance();
-        String dateNow = calendar.get(Calendar.YEAR) + "-";
-        dateNow += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
-        dateNow += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        return dateNow;
-    }
-
-    @Override
-    public String getDateMonthAgo()
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1);
-        String dateThen = calendar.get(Calendar.YEAR) + "-";
-        dateThen += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
-        dateThen += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        return dateThen;
     }
 
     @Override
