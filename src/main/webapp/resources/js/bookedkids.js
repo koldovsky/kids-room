@@ -13,9 +13,9 @@ function cancelBooking(idBook){
 
    function setStartTime(idBooking){
 
-          var idElemant = "#"+idBooking;
+          var idElement = "#"+idBooking;
           var inputData = {
-              startTime: $(idElemant).find('#arrivalTime').val(),
+              startTime: $(idElement).find('#arrivalTime').val(),
               id: idBooking,
 
           };
@@ -26,9 +26,10 @@ function cancelBooking(idBook){
                   type: 'POST',
                   success: function(data){
                   var obj = JSON.parse(data);
-                  var clear = "#"+idBooking+" .bookingTime"
-                  $(clear).empty();
-                  $(clear).append(obj.startTime + " - " + obj.endTime);
+                  var bookingTime = $(idElement).find('.bookingTime');
+                  bookingTime.empty();
+                  bookingTime.append(obj.startTime + " - " + obj.endTime);
+                  $(idElement).addClass('highlighted1');
                   },
                   error: function(){
 
@@ -54,24 +55,15 @@ function cancelBooking(idBook){
                   var bookingTime = $(idElement).find('.bookingTime');
                   bookingTime.empty();
                   bookingTime.append(obj.startTime + " - " + obj.endTime);
-                  $(idElement).addClass('highlighted');
+                  $(idElement).addClass('highlighted2');
                   },
                   error: function(){
 
               }});
           }
-
-
-
-
-            $('.arrivalTime').on('click', function(){
-                    var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
-                    var arrivalTime = $(this).val();
-                    $(this).val(date);
-            });
-
-
-            $('.form-control').on('click', function(){
+            var dateNow = function(){
                  var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
                  $(this).val(date);
-                 });
+                 };
+           $('.input-group').find('#leaveTime').on('click', dateNow);
+           $('.input-group').find('#arrivalTime').on('click', dateNow);

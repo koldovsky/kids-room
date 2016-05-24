@@ -1,7 +1,11 @@
 
 
-.highlighted {
-    background-color: #008000;
+.highlighted1 {
+    background-color: #90EE90;
+}
+
+.highlighted2 {
+    background-color: #32CD32;
 }
 .tableDiv{
     padding-left: 50px;
@@ -13,12 +17,19 @@
     text-align: center;
     background-color: white;
     }
-     th {
-        text-align: center;
-       }
-    .table{
-    text-align: center;
-    }
+
+     th{
+     height: 60px;
+     text-align: center;
+     }
+     tr{
+     height: 10px;
+          text-align: center;
+     }
+     td{
+          height: 10px;
+
+     }
 
 
 /* -- AND TABLE   -- */

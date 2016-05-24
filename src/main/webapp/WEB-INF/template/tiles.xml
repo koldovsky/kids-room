@@ -56,8 +56,8 @@
         <put-attribute name="body" value="/WEB-INF/views/registration.jsp" />
     </definition>
 
-    <definition name="listChildren" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/listChildren.jsp" />
+    <definition name="manager-confirm-booking" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager-confirm-booking.jsp" />
     </definition>
 
     <definition name="rules" extends="default">

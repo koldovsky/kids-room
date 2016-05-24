@@ -40,9 +40,6 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
                             startTime, endTime)), builder.equal(root.get("isCancelled"), false));
             query.orderBy(builder.asc(root.get("bookingStartTime")));
         }catch (Exception e){
-            /*
-            //Ask Andriy що тут має бути????
-             */
         }
         return entityManager.createQuery(query).getResultList();
     }

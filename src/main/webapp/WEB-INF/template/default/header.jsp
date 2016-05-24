@@ -32,7 +32,7 @@
                       </sec:authorize>
                        <sec:authorize access="hasRole('MANAGER')">
                                   <a href="manager-report"><spring:message code="manager.report" /></a>
-                                  <a href="listChildren"><spring:message code="manager.bookings" /></a>
+                                  <a href="manager-confirm-booking"><spring:message code="manager.listbooking" /></a>
                                   <a href="allkidslist"><spring:message code="manager.kids" /></a>
                       </sec:authorize>
 
@@ -97,9 +97,9 @@
                                   <span class="glyphicon glyphicon-pencil"></span>
                                   <spring:message code="manager.report" /></a>
                                   </li>
-                                  <li><a href="listChildren">
+                                  <li><a href="manager-confirm-booking">
                                   <span class="glyphicon glyphicon-list"></span>
-                                  <spring:message code="manager.bookings" />
+                                  <spring:message code="manager.listbooking" />
                                   </a></li>
                                   <li><a href="allkidslist">
                                   <span class="glyphicon glyphicon-user"></span>
