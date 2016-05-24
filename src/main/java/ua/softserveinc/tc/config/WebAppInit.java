@@ -22,6 +22,7 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
         appContext.register(SecurityConfig.class);
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("SpringDispatcher",
                 new DispatcherServlet(appContext));
+        dispatcher.setInitParameter("throwExceptionIfNoHandlerFound", "true");
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
     }

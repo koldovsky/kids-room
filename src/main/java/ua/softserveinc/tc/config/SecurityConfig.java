@@ -93,6 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout");
+
         http.rememberMe().
                 key("rem-me-key").
                 rememberMeParameter("remember-me").

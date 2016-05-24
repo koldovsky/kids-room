@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.ErrorPages;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Role;
@@ -77,6 +78,8 @@ public class UserController {
         mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
     }
+
+
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
     public String sendConfirmation(@RequestParam(UserConst.EMAIL) String email ){
@@ -148,6 +151,10 @@ public class UserController {
         return UsersConst.LOGIN_VIEW;
     }
 
+    @RequestMapping("/accessDenied")
+    public String handleError403() {
+        return  ErrorPages.ACCESS_DENIED_VIEW;
+    }
 
 }
 
