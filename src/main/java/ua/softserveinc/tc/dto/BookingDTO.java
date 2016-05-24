@@ -38,6 +38,12 @@ public class BookingDTO  implements BaseDTO {
     private long duration;
     private long sum;
 
+    public BookingDTO() {
+        this.id = id;
+        this.reportTime = reportTime;
+        this.startTime = startTime;
+    }
+
     public BookingDTO(Booking booking){
         DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
         this.date = df.format(booking.getBookingStartTime());
