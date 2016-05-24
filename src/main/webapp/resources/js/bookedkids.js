@@ -13,11 +13,11 @@ function cancelBooking(idBook){
 
    function setStartTime(idBooking){
 
-          var idElemant = "#"+idBooking+" .arrivalTime";
+          var idElemant = "#"+idBooking;
           var inputData = {
-              startTime: $(idElemant).val(),
+              startTime: $(idElemant).find('#arrivalTime').val(),
               id: idBooking,
-              kidName: idElemant,
+
           };
               $.ajax({
                   url: "setTime",
@@ -40,9 +40,9 @@ function cancelBooking(idBook){
 
           var idElement = "#"+idBooking;
           var inputData = {
-              endTime: $(idElement).find('.leaveTime').val(),
+              endTime: $(idElement).find('#leaveTime').val(),
               id: idBooking,
-              kidName: idElement,
+
           };
               $.ajax({
                   url: "setEndTime",
@@ -54,7 +54,7 @@ function cancelBooking(idBook){
                   var bookingTime = $(idElement).find('.bookingTime');
                   bookingTime.empty();
                   bookingTime.append(obj.startTime + " - " + obj.endTime);
-                  $(idElement).find('.kidsName').addClass('highlighted');
+                  $(idElement).addClass('highlighted');
                   },
                   error: function(){
 
@@ -62,8 +62,7 @@ function cancelBooking(idBook){
           }
 
 
-            var timer;
-            var delay = 100;
+
 
             $('.arrivalTime').on('click', function(){
                     var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
@@ -72,7 +71,7 @@ function cancelBooking(idBook){
             });
 
 
-            $('.leaveTime').on('click', function(){
+            $('.form-control').on('click', function(){
                  var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
                  $(this).val(date);
                  });

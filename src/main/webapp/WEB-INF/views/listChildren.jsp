@@ -10,21 +10,18 @@
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 
-<div id="same">
-<div class="col-md-8">
 
-  <div>
 
-      Today <fmt:formatDate pattern="dd-MM-yyy" value="${nowTime}"/>
-  </div>
 
-  <table class="table table-striped table-hover" id="tabble">
+<div class="tableDiv">
+  <table class="table">
       <caption><h2> <spring:message code="kids.list"/></h2></caption>
-      <th><spring:message code= "booking.childrens"/></th>
-      <th><spring:message code= "booking.time"/></th>
-      <th><spring:message code= "booking.arrival"/></th>
-      <th><spring:message code= "booking.leave"/></th>
-      <th><spring:message code= "booking.cancel"/></th>
+
+      <th class="col-sm-6"><spring:message code= "booking.childrens"/></th>
+      <th class="col-sm-4"><spring:message code= "booking.time"/></th>
+      <th class="col-sm-4"><spring:message code= "booking.arrival"/></th>
+      <th class="col-sm-4"><spring:message code= "booking.leave"/></th>
+      <th class="col-sm-4"><spring:message code= "booking.cancel"/></th>
 
       <c:forEach var="booking" items="${listBooking}">
         <tr id="${booking.idBook}">
@@ -38,9 +35,7 @@
          <form action="" method="POST">
             <td class='arr'>
                       <div class="input-group">
-                           <input type="time" class="arrivalTime"
-
-                           </input>
+                           <input type="time" id="arrivalTime" class="form-control"/>
                            <span class="input-group-btn">
                                 <input type="button" class="btn" onclick="setStartTime(${booking.idBook})" value="Ok"/>
                            </span>
@@ -49,25 +44,23 @@
          <form action="" method="POST">
             <td>
                     <div class="input-group">
-                          <input type="time" class="leaveTime"
-
-                          </input>
+                          <input type="time" id="leaveTime" class="form-control"/>
                           <span class="input-group-btn">
-                                <input type="button" class="btn" onclick="setEndTime(${booking.idBook})" value="Ok"/>
+                                <input type="button" class="btn" onclick="setEndTime(${booking.idBook})" value="Set"/>
                           </span>
                     </div>
             </td>
-          </form>
 
+          </form>
           <td>
-                <button onclick="cancelBooking(${booking.idBook})">
+                <button class="btn" onclick="cancelBooking(${booking.idBook})">
                     <spring:message code= "booking.canceled"/>
                 </button>
           </td>
       </c:forEach>
   </table>
 </div>
-</div>
+
 
 <script src="resources/js/bookedkids.js"></script>
 

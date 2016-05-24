@@ -1,47 +1,24 @@
 
 
-.col-sm-4{
-margin: 0 auto;
-}
-#butChouseTime{
-margin-left: 20%;
-}
-
-
-/*  -- TABLE -- */
-table.listChild {
- text-align: center;
-   margin-left: 20px;
-   position:absolute;
-   width: 20%;
-   border: 2px solid #ddd;
-
-   }
-   th {
-    border: 2px solid #ddd;
-    padding: 20px;
-    background: #dfdf;
-
-    text-align: center;
-   }
-   tr,td{
-   border: 2px solid #ddd;
-   padding: 10px;
-   }
-
-   th.odd {
-   text-align: center;
-   background: #009688;
-   }
-
-   .success:hover {
-       cursor: pointer;
-   }
-
-
 .highlighted {
     background-color: #008000;
 }
+.tableDiv{
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: auto;
+    width: 70%;
+    min-width: 900px;
+    height: 100%;
+    text-align: center;
+    background-color: white;
+    }
+     th {
+        text-align: center;
+       }
+    .table{
+    text-align: center;
+    }
 
 
 /* -- AND TABLE   -- */

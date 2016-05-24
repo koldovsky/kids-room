@@ -34,19 +34,6 @@ body {
 .footer{
   display: table-row;
 }
-
-.table {
-	padding: 20px;
-}
-
-.table tr:nth-child(even){
-    background-color: #f2f2f2
-}
-
-.table tr:hover {
-    background-color:  #D8BFD8
-}
-
 #validPassword, #validEmail, #validPhone, .error{
     color:red;
 }
@@ -66,42 +53,11 @@ body {
 }
 
 #topnavbar{
+    background-color: #4285F4;
   margin: 0;
 }
-
-
- table, th, td {
-    text-align: center;
-     border: 2px solid #ddd;
-     border-collapse: collapse;
-     width: 40%;
-     padding: 10px;
-     margin-left: 50 px;
-
- }
- tr{
-   border-collapse: collapse;
-   border: 2px solid #ddd;
- }
-
-
- th {
-    border: 2px solid #ddd;
-     height: 50px;
- }
- th {
-     background-color: #009688;
-     color: white;
- }
- caption {
-   text-align: center;
-   background-color: #009688;
-   color: white;
- }
 
 .right-align {
     text-align: right;
 }
-#topnavbar{
-    background-color: #4285F4;
-}
+
