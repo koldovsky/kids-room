@@ -14,6 +14,11 @@
             <input name="email" class="form-control" type="email"/>
             <form:errors path="email" cssClass="error"  />
         </div>
+        <c:if test="${message}">
+        <div>
+           <p class="error"><spring:message code="user.with" />${email}<spring:message code="user.notExist" /><p>
+        </div>
+        </c:if>
         <div class="col-sm-offset-4">
             <button type="submit" class="btn btn-primary btn-lg"><spring:message code="user.send" /></button>
         </div>

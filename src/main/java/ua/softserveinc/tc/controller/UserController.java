@@ -117,8 +117,10 @@ public class UserController {
 
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@RequestParam(UserConst.EMAIL) String email) {
+    public String resetPassword(Model model, @RequestParam(UserConst.EMAIL) String email) {
         if (userService.getUserByEmail(email) == null) {
+            model.addAttribute("email", email);
+            model.addAttribute("message", true);
             return UsersConst.FORGOT_PASS_VIEW;
         }
         User user = userService.getUserByEmail(email);
