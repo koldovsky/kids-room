@@ -42,17 +42,10 @@ public class KidsProfileController {
 
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
-
-        Long idL;
-        try{
-            idL = Long.parseLong(id);
-        }
-        catch(Exception e) {
-            throw new ResourceNotFoundException();
-        }
+        Long idL = Long.parseLong(id);
 
         User current = userService.getUserByEmail(principal.getName());
-        Child kid = childService.findById(Long.parseLong(id));
+        Child kid = childService.findById(idL);
 
         if(kid == null){
             throw new ResourceNotFoundException();

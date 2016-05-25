@@ -23,7 +23,7 @@ public class ExceptionHandlingController {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler({NoHandlerFoundException.class, ResourceNotFoundException.class,
-            MissingServletRequestParameterException.class})
+            MissingServletRequestParameterException.class, Exception.class})
     public ModelAndView handleError404(HttpServletRequest request, Exception e) {
         ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
         mav.addObject("exception", e);

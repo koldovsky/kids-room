@@ -102,9 +102,9 @@ public class EditMyKidPageController {
     @RequestMapping(value = "/removemykid",
     method = RequestMethod.GET)
     public String removeKid(@RequestParam("id") String id, Principal principal)
-            throws AccessDeniedException, MissingServletRequestParameterException{
+            throws AccessDeniedException{
         if(id.isEmpty()){
-            throw new MissingServletRequestParameterException("id", "String");
+            throw new ResourceNotFoundException();
         }
         Child kidToRemove = childService.findById(Long.parseLong(id));
 
