@@ -3,13 +3,19 @@ package ua.softserveinc.tc.controller;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
+import ua.softserveinc.tc.entity.Role;
+import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
+import ua.softserveinc.tc.service.UserService;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
+import java.security.Principal;
 import java.sql.Blob;
 
 /**
@@ -30,6 +37,9 @@ import java.sql.Blob;
 public class ImagesController {
     @Autowired
     private ChildService childService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
     public String uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Long kidId){
@@ -49,10 +59,17 @@ public class ImagesController {
     @RequestMapping(value = "/images/{kidId}",
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public byte[] getProfilePic(@PathVariable Long kidId) throws IOException{
+    public byte[] getProfilePic(@PathVariable Long kidId, Principal principal)
+            throws IOException{
         Child kid = childService.findById(kidId);
+        if(kid == null){
+            throw new ResourceNotFoundException();
+        }
+        User current = userService.getUserByEmail(principal.getName());
+        if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
+            throw new AccessDeniedException("Have to be manager or parent");
+        }
         if(kid.getImage()!= null) return kid.getImage();
-
         String path;
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         if(kid.getGender() == Gender.FEMALE) {

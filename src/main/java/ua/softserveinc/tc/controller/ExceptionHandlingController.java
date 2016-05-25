@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,15 @@ public class ExceptionHandlingController {
             MissingServletRequestParameterException.class})
     public ModelAndView handleError404(HttpServletRequest request, Exception e) {
         ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
+        mav.addObject("exception", e);
+        return mav;
+    }
+
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ModelAndView handleError403(HttpServletRequest request, Exception e){
+        ModelAndView mav = new ModelAndView(ErrorPages.ACCESS_DENIED_VIEW);
         mav.addObject("exception", e);
         return mav;
     }

@@ -43,9 +43,14 @@ public class KidsProfileController {
         ModelAndView model = new ModelAndView();
         model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
 
-        if(id.isEmpty()) {
-            throw new MissingServletRequestParameterException("kidId", "String");
+        Long idL;
+        try{
+            idL = Long.parseLong(id);
         }
+        catch(Exception e) {
+            throw new ResourceNotFoundException();
+        }
+
         User current = userService.getUserByEmail(principal.getName());
         Child kid = childService.findById(Long.parseLong(id));
 

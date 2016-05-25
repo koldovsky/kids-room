@@ -50,15 +50,16 @@ public class EditMyKidPageController {
             @RequestParam("kidId") String kidId, Principal principal)
             throws ResourceNotFoundException, AccessDeniedException, MissingServletRequestParameterException
     {
-        if(kidId.isEmpty()){
-            throw new MissingServletRequestParameterException("kidId", "String");
+        Long id;
+        try {
+            id = Long.parseLong(kidId);
         }
-        ModelAndView model = new ModelAndView();
-        model.setViewName(MyKidsConst.KID_EDITING_VIEW);
+        catch(Exception e){
+            throw new ResourceNotFoundException();
+        }
 
         User current = userService.getUserByEmail(principal.getName());
-        Child kidToEdit = childService
-                .findById(Long.parseLong(kidId));
+        Child kidToEdit = childService.findById(id);
         if(kidToEdit == null){
             throw new ResourceNotFoundException();
         }
@@ -67,6 +68,8 @@ public class EditMyKidPageController {
             throw new AccessDeniedException("You do not have access to this page");
         }
 
+        ModelAndView model = new ModelAndView();
+        model.setViewName(MyKidsConst.KID_EDITING_VIEW);
         model.getModelMap()
                 .addAttribute(MyKidsConst.KID_ATTRIBUTE, kidToEdit);
         return model;
