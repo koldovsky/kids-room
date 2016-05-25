@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,6 +60,8 @@ public class UserController {
     @Qualifier(UsersConst.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
+
+    @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
     public String login(Model model) {
         return UsersConst.LOGIN_VIEW;
