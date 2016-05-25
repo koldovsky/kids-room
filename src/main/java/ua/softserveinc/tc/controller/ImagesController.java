@@ -42,11 +42,14 @@ public class ImagesController {
     private UserService userService;
 
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
-    public String uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Long kidId){
+    public String uploadImage(@RequestParam("file") MultipartFile file, @PathVariable String kidId){
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 Child kid = childService.findById(kidId);
+                if(kid == null){
+                    throw new ResourceNotFoundException();
+                }
                 kid.setImage(bytes);
                 childService.update(kid);
             } catch (IOException ioe) {
@@ -59,12 +62,20 @@ public class ImagesController {
     @RequestMapping(value = "/images/{kidId}",
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public byte[] getProfilePic(@PathVariable Long kidId, Principal principal)
+    public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
             throws IOException{
-        Child kid = childService.findById(kidId);
+        Long id;
+        try {
+            id = Long.parseLong(kidId);
+        }
+        catch(Exception e){
+            throw new ResourceNotFoundException();
+        }
+        Child kid = childService.findById(Long.parseLong(kidId));
         if(kid == null){
             throw new ResourceNotFoundException();
         }
+
         User current = userService.getUserByEmail(principal.getName());
         if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
             throw new AccessDeniedException("Have to be manager or parent");
