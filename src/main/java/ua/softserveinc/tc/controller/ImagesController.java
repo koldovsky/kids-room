@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.InternalError;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,7 +31,7 @@ import java.security.Principal;
 import java.sql.Blob;
 
 /**
- * Created by Admin on 22.05.2016.
+ * Created by Nestor on 22.05.2016.
  */
 
 @Controller
@@ -43,10 +44,11 @@ public class ImagesController {
 
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
     public String uploadImage(@RequestParam("file") MultipartFile file, @PathVariable String kidId){
+        Long id = Long.parseLong(kidId);
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                Child kid = childService.findById(kidId);
+                Child kid = childService.findById(id);
                 if(kid == null){
                     throw new ResourceNotFoundException();
                 }
@@ -67,10 +69,11 @@ public class ImagesController {
         Long id;
         try {
             id = Long.parseLong(kidId);
-        }
-        catch(Exception e){
+        } catch(Exception e){
+            //invalid parameter
             throw new ResourceNotFoundException();
         }
+
         Child kid = childService.findById(Long.parseLong(kidId));
         if(kid == null){
             throw new ResourceNotFoundException();
@@ -81,14 +84,13 @@ public class ImagesController {
             throw new AccessDeniedException("Have to be manager or parent");
         }
         if(kid.getImage()!= null) return kid.getImage();
+
         String path;
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        if(kid.getGender() == Gender.FEMALE) {
+        if(kid.getGender() == Gender.FEMALE)
              path = classloader.getResource("images/default-girl.jpg").getFile();
-        }
-        else{
+        else
             path = classloader.getResource("images/default-boy.jpg").getFile();
-        }
 
         File imgPath = new File(path);
 

@@ -21,11 +21,9 @@
 
          <form method="POST" action="uploadImage/${kid.id}" enctype="multipart/form-data">
                  <label class="btn btn-success glyphicon glyphicon-folder-open">
-                     &nbsp;<spring:message code="user.selectPhoto" /> <input type="file" name="file" style="display: none;">
+                     &nbsp;<spring:message code="user.selectPhoto" /> <input type="file" accept=".jpg, .png" id="file-upload" name="file" style="display: none;">
                  </label>
-                 <label class="btn btn-danger glyphicon glyphicon-open">
-                    <spring:message code="user.upload" /><input style="display: none;" type="submit" data-bfi-disabled>
-                 </label>
+                    <input id="file-submit" style="display: none;" type="submit" data-bfi-disabled>
          </form>
         </div>
  </div>

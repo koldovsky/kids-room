@@ -3,4 +3,8 @@ $(document).ready(function(){
             var id = $(".kidscard").data("id");
             window.location.href = "editmykid?kidId=" + id;
         });
+
+    $("#file-upload").change(function(){
+        $("#file-submit").click();
+    })
 });
