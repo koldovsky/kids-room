@@ -27,27 +27,14 @@
               </td>
               <form action="" method="POST">
                     <td>
-                        <div class="input-group">
-                           <input type="time" id="arrivalTime" class="form-control"/>
-                                <span class="input-group-btn">
-                                    <input type="button" class="btn btn-raised btn-sm btn-info"
-                                        onclick="setStartTime(${booking.idBook})"
-                                        value=<spring:message code= "booking.setTime"/>
-                                    </input>
-                                </span>
-                        </div>
+                       
                     </td>
               </form>
               <form action="" method="POST">
                     <td>
                         <div class="input-group">
                             <input type="time" id="leaveTime" class="form-control"/>
-                                <span class="input-group-btn">
-                                    <input type="button" class="btn btn-raised btn-sm btn-info"
-                                        onclick="setEndTime(${booking.idBook})"
-                                        value=<spring:message code= "booking.setTime"/>
-                                    </input>
-                                </span>
+                                
                         </div>
                     </td>
               </form>

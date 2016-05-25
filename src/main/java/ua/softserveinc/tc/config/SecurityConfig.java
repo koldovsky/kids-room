@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers(HttpMethod.GET,  "/registration").not().authenticated()
+                .antMatchers(HttpMethod.GET,  "/registration").anonymous()
                 .antMatchers(HttpMethod.GET, "/mykids").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/registerkid").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/registerkid").hasRole("USER")
