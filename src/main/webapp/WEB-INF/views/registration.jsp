@@ -44,11 +44,28 @@
               <span id="validPhone"></span>
       </div>
       <div class="form-group">
-              <spring:message code="user.prerules" /><a href="<c:url value="/rules" />"> <spring:message code="user.rules" /></a>
+              <spring:message code="user.prerules"/> <a data-toggle="modal" data-target="#rules"> <spring:message code="user.rules" /></a>
               <div class="col-sm-offset-3 col-sm-8">
                 <button type="submit" id="button" class="btn btn-primary btn-lg"><spring:message code="user.register" /></button>
               </div>
       </div>
     </form:form>
 </div>
+
+<div class="modal fade" id="rules" tabindex="-1" role="dialog"  aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><spring:message code="user.rule"/></h4>
+                </div>
+                <div class="modal-body">
+                    <p><spring:message code="rules"/></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="user.close"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
 
