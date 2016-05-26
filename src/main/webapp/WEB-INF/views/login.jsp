@@ -6,12 +6,12 @@
 <div class="col-sm-offset-4 col-xs-3">
     <form method="post" >
         <div class="form-group">
-            <label for="email" ><spring:message code="user.email" /></label>
+            <label for="email" ><spring:message code="user.email" />
             <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com" required  />
         </div>
         <div class="form-group">
-            <label for="password" ><spring:message code="user.password" required value="manager"/></label>
-            <input type="password" name="j_password" class="form-control"   />
+            <label for="password" ><spring:message code="user.password"/>
+            <input type="password" name="j_password" class="form-control" required value="manager"/>
 
         </div>
         <div class="clearfix">
