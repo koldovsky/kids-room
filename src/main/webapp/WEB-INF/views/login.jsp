@@ -4,22 +4,21 @@
 
 <c:url value="/j_spring_security_check" var="loginUrl" />
 <div class="col-sm-offset-4 col-xs-3">
-    <form method="post">
+    <form method="post" >
         <div class="form-group">
             <label for="email" ><spring:message code="user.email" /></label>
-            <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com" required/>
+            <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com" required  />
         </div>
         <div class="form-group">
-            <label for="password" ><spring:message code="user.password" /></label>
-            <input type="password" name="j_password" class="form-control"  required value="manager"/>
-            <div id="right">
-                <a href="<c:url value="/resetPassword"/>" > <spring:message code="password.reset" /></a>
-            </div>
+            <label for="password" ><spring:message code="user.password" required value="manager"/></label>
+            <input type="password" name="j_password" class="form-control"   />
+
         </div>
-        <div>
-            <label>
+        <div class="clearfix">
+            <label class="pull-left">
                 <input type="checkbox" name="remember-me"><spring:message code="user.remember" />
             </label>
+            <a href="<c:url value="/resetPassword"/>" class="pull-right"> <spring:message code="password.reset" /></a>
         </div>
         <div>
             <c:if test="${param.error != null}">
@@ -33,9 +32,5 @@
         </div>
     </form>
 </div>
-<script>
-function d(){
-alert();
-}
-</script>
+
 
