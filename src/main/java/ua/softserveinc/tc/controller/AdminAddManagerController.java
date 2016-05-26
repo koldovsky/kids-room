@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
+import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
+
+import java.util.UUID;
 
 /**
  * Created by TARAS on 18.05.2016.
@@ -23,6 +26,8 @@ public class AdminAddManagerController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private TokenService tokenService;
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public String showCreateManagerForm() {
@@ -31,14 +36,15 @@ public class AdminAddManagerController {
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute User user, BindingResult bindingResult) {
-
+        String token = UUID.randomUUID().toString();
         user.setRole(Role.MANAGER);
-
+        user.setEnabled(false);
         userService.create(user);
-
-        String token = user.getId().toString();//UUID.randomUUID().toString();
+        tokenService.createToken(token, user);
         mailService.buildConfirmRegisterManager("Confirmation registration", user, token);
 
         return "redirect:/" + "adm-edit-manager";
     }
+
+
 }

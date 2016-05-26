@@ -90,6 +90,10 @@
         <put-attribute name="body" value="/WEB-INF/views/adm-add-manager.jsp" />
     </definition>
 
+    <definition name="adm-confirm-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-confirm-manager.jsp" />
+    </definition>
+
     <definition name="adm-update-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-update-manager.jsp" />
     </definition>
