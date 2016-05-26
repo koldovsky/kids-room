@@ -23,8 +23,8 @@ import java.util.Date;
 
 /**
  * Created by Nestor on 07.05.2016.
+ * Controller handles kid registration
  */
-
 @Controller
 public class RegisterNewKidController {
     @Autowired
@@ -36,6 +36,12 @@ public class RegisterNewKidController {
     @Autowired
     private ChildValidator childValidator;
 
+    /**
+     * Handles HTTP GET request to display registration form
+     *
+     * @param model
+     * @return view name
+     */
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
     public String registerKid(Model model){
         if(!model.containsAttribute(MyKidsConst.KID_ATTRIBUTE)) {
@@ -45,7 +51,18 @@ public class RegisterNewKidController {
     }
 
 
-
+    /**
+     * Handles HTTP POST request from user after form submitting
+     * Validates the invariants of the Child object and prepares it
+     * for persistance into the database
+     *
+     * @param child A Child object to be persisted into the database
+     * @param principal A Spring Security interface implementation
+     *                  that represents currently logged in account
+     * @param bindingResult A result holder for object binding
+     * @return redirects to My Kids view if successful
+     *         or current view if failed
+     */
     @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
     public String submit(
             @ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child child,
@@ -66,7 +83,10 @@ public class RegisterNewKidController {
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }
 
-
+    /**
+     * Registers custom date format
+     * @param binder
+     */
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

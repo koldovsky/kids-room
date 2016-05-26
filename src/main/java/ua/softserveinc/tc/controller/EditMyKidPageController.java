@@ -48,16 +48,9 @@ public class EditMyKidPageController {
             method = RequestMethod.GET)
     public ModelAndView selectKid(
             @RequestParam("kidId") String kidId, Principal principal)
-            throws ResourceNotFoundException, AccessDeniedException, MissingServletRequestParameterException
+            throws ResourceNotFoundException, AccessDeniedException
     {
-        Long id;
-        try {
-            id = Long.parseLong(kidId);
-        }
-        catch(Exception e){
-            throw new ResourceNotFoundException();
-        }
-
+        Long id = Long.parseLong(kidId);
         User current = userService.getUserByEmail(principal.getName());
         Child kidToEdit = childService.findById(id);
         if(kidToEdit == null){

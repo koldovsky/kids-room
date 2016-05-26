@@ -24,8 +24,8 @@ import java.security.Principal;
 
 /**
  * Created by Nestor on 21.05.2016.
+ * Controller handles kids profiles
  */
-
 @Controller
 public class KidsProfileController {
 
@@ -35,6 +35,18 @@ public class KidsProfileController {
     @Autowired
     private ChildService childService;
 
+    /**
+     * Handles HTTP GET request for kids profile
+     *
+     * @param id ID of a kid
+     * @param principal User authentication info
+     * @return view name
+     * @throws AccessDeniedException
+     *          in case a user who has sent the request is not MANAGER
+     *          or a parent to this child
+     * @throws ResourceNotFoundException
+     *          in case no kid with such ID exists
+     */
     @RequestMapping(value = "/profile",
             method = RequestMethod.GET)
     public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)

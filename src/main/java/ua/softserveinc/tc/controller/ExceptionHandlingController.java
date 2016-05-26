@@ -16,21 +16,32 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Nestor on 18.05.2016.
+ *
+ * Class serves for global exception handling
  */
 
 @ControllerAdvice
 public class ExceptionHandlingController {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NoHandlerFoundException.class, ResourceNotFoundException.class,
-            MissingServletRequestParameterException.class, Exception.class})
+    @ExceptionHandler({
+            NoHandlerFoundException.class,
+            ResourceNotFoundException.class,
+            MissingServletRequestParameterException.class,
+            NumberFormatException.class
+    })
     public ModelAndView handleError404(HttpServletRequest request, Exception e) {
         ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
         mav.addObject("exception", e);
         return mav;
     }
 
-
+    /**
+     * Responds to user with Access Denied view
+     * @param request
+     * @param e
+     * @return
+     */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleError403(HttpServletRequest request, Exception e){

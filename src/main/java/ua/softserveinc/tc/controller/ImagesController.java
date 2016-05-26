@@ -32,6 +32,9 @@ import java.sql.Blob;
 
 /**
  * Created by Nestor on 22.05.2016.
+ *
+ * Controller handles all images-related work
+ * Such as: request for images, uploads of new images
  */
 
 @Controller
@@ -42,6 +45,12 @@ public class ImagesController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Uploading a new profile picture for a Child
+     * @param file a MultipartFile that is being uploaded
+     * @param kidId ID of a Child
+     * @return redirects back to kid's profile view
+     */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
     public String uploadImage(@RequestParam("file") MultipartFile file, @PathVariable String kidId){
         Long id = Long.parseLong(kidId);
@@ -61,6 +70,13 @@ public class ImagesController {
         return "redirect:/" + MyKidsConst.KID_PROFILE_VIEW + "?id=" + kidId;
     }
 
+    /**
+     * Returns profile pictures to client
+     * @param kidId
+     * @param principal
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/images/{kidId}",
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
