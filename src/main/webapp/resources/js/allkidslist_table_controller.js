@@ -9,7 +9,7 @@ function AllKidsTableController($scope, allKidsTableService) {
     $scope.pageSize = 10;
     $scope.newChild = {};
 
-    $scope.predicate = 'parent.fullName';
+    $scope.predicate = 'id';
     $scope.reverse = true;
 
     loadRemoteData();
