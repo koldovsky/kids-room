@@ -23,7 +23,7 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 
 
@@ -31,8 +31,6 @@
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 
 
-<script type="text/javascript" src="resources/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/css/bootstrap-datepicker.css"/>
 
 <body>
 <sec:authorize access="isAuthenticated()">
@@ -125,13 +123,15 @@
                         </div>
 
 
-
                         <div class="form-group">
                             <label for="Description">Description</label>
                             <textarea type="text" class="form-control" id="description"
                                       placeholder="description"></textarea>
                         </div>
-                        <button type="button" class="btn btn-success" id="creating">Create</button>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-success" id="creating">Create</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -142,34 +142,54 @@
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="updatingDialog" hidden>
-                    <form id="form-for-apdating">
+                <div id="updating" hidden>
+                    <form id="updatingForm">
                         <div class="form-group">
-                            <label for="startDate">Event title</label>
-                            <input type="text" class="form-control" id="startDateUpdating" placeholder="title">
+                            <label for="titleUpdate">Event title</label>
+                            <input type="text" class="form-control" id="titleUpdate" placeholder="title">
                         </div>
 
 
                         <div class="form-group">
-                            <label for="titleUpdating">Start date</label>
-                            <input type="text" class="form-control" id="titleUpdating" placeholder="startDate">
+                            <label for="startDayUpdate">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="startDayUpdate" placeholder="startDate" readonly>
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="startTimeUpdate" type="text" class="time form-control" size="6"/>
+                            </div>
                         </div>
+                        <br>
+
 
                         <div class="form-group">
-                            <label for="endDate">End date</label>
-                            <input type="text" class="form-control" id="endDateUpdating" placeholder="endDate">
+                            <label for="endDateUpdate">End date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="endDateUpdate" placeholder="endDate" readonly>
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="endTimeUpdate" type="text" class="time form-control" size="6"/>
+                            </div>
                         </div>
+
+
                         <div class="form-group">
-                            <label for="Description">Description</label>
-                            <textarea type="text" class="form-control" id="descriptionUpdating"
+                            <label for="descriptionUpdate">Description</label>
+                            <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-                        <button type="button" class="btn btn-success" id="updating">Update</button>
+
+                            <button type="button" class="btn btn-success" id="updatingButton">Update</button>
+                            <button type="button" class="btn btn-danger" id="deleting">Delete</button>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div id='calendar'></div>
 

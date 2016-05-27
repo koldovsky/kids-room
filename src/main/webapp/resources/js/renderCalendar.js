@@ -1,203 +1,3 @@
-/*
-
-
-
-
-
-
-$(function() {
-    $('#basicExample').timepicker({
-        dateFormat: "hh-mm-ss"
-    });
-});
-
-
-
-function changeFunc(id) {
-
-    $('#calendar').fullCalendar('destroy');
-    $('#dialog').dialog({
-        autoOpen: false,
-        show: {
-            effect: 'drop',
-            duration: 500
-        },
-        hide: {
-            effect: 'clip',
-            duration: 500
-        }
-    })
-
-    $('#updatingDialog').dialog({
-        autoOpen: false,
-        show: {
-            effect: 'drop',
-            duration: 500
-        },
-        hide: {
-            effect: 'clip',
-            duration: 500
-        }
-    })
-
-    var path = "getCompanies/" + id;
-
-    $.ajax({
-        url: path, success: function (result) {
-
-            if (result.length != 0) {
-                var objects = [];
-                result = result.split(',');
-
-                result[0] = " " + result[0];
-
-                for (var i = 0; i < result.length; i++) {
-                    var string = result[i];
-                    var stringToArray = string.split(' ');
-
-                    objects[i] = {
-                        id: parseInt(stringToArray[4]),
-                        title: stringToArray[1],
-                        start: stringToArray[2],
-                        end: stringToArray[3]
-                    }
-                }
-
-                rendering(objects);
-
-            } else {
-                $('#calendar').fullCalendar('destroy');
-
-                var objects = [{
-                    title: "1",
-                    start: "1",
-                    end: "1"
-                }]
-                rendering(objects);
-
-            }
-        }
-    });
-}
-
-function rendering(objects) {
-
-    $('#calendar').fullCalendar({
-
-        eventClick: function(event) {
-            $("#updatingDialog").dialog('open');
-
-            $('#titleUpdating').val(event.start);
-            $('#startDateUpdating').val(event.title);
-
-            $('#endDateUpdating').val(event.end);
-
-            $('#updating').click(function () {
-                $('#updatingDialog').dialog('close');
-            })
-            return 0;
-        },
-
-        dayClick: function f(date, jsEvent, view) {
-
-            var clickDate = date.format();
-
-            var dateobj = new Date(date);
-
-            $('#startDate').val("");
-            $('#endDate').val();
-            $('#title').val(clickDate);
-
-            $("#dialog").dialog('open');
-
-            $('#creating').click(function () {
-
-/!*
-                alert("date: " + date);
-                alert("clickDate: " + clickDate);
-                alert("dateobj: " + dateobj);
-*!/
-
-                var ev = {
-                    title: $('#startDate').val(),
-                    start: $('#title').val(),
-                    end: $('#endDate').val()
-                }
-
-                $('#calendar').fullCalendar('renderEvent', ev, true);
-                forSendingToServer(ev);
-
-                $('#title').val("");
-                $('#dialog').dialog('close');
-
-            })
-        },
-
-
-
-
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-        defaultDate: $('#calendar').fullCalendar('getDate'),
-
-        //selectable: true,
-        selectHelper: true,
-        select: function (start, end) {
-            var title = prompt('Event Title:');
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-        },
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        events: objects
-    });
-}
-
-
-function forSendingToServer(event) {
-
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'getnewevent',
-        dataType: "json",
-        data: JSON.stringify({
-            name: event.title,
-            startTime: event.start,
-            endTime: event.end
-        })
-    })
-}
-
-
-
-
-
-
-/*
-
-
-*!/
-
-
-/*
-
-
-
-
-/*/
 
 $(function() {
     $('#basicExample').timepicker({
@@ -212,190 +12,18 @@ $(function() {
     });
 });
 
-/*
-function changeFunc(id) {
-
-    $('#calendar').fullCalendar('destroy');
-    $('#dialog').dialog({
-        autoOpen: false,
-        show: {
-            effect: 'drop',
-            duration: 500
-        },
-        hide: {
-            effect: 'clip',
-            duration: 500
-        }
-    })
-
-    var path = "getCompanies/" + id;
-
-    $.ajax({
-        url: path, success: function (result) {
-
-            if (result.length != 0) {
-                var objects = [];
-                result = result.split(',');
-
-                result[0] = " " + result[0];
-
-                for (var i = 0; i < result.length; i++) {
-                    var string = result[i];
-                    var stringToArray = string.split(' ');
-
-                    objects[i] = {
-                        id: parseInt(stringToArray[4]),
-                        title: stringToArray[1],
-                        start: stringToArray[2],
-                        end: stringToArray[3]
-                    }
-                }
-
-                rendering(objects);
-
-            } else {
-                $('#calendar').fullCalendar('destroy');
-
-                var objects = [{
-                    title: "1",
-                    start: "1",
-                    end: "1"
-                }]
-                rendering(objects);
-
-            }
-        }
+$(function() {
+    $('#startTimeUpdate').timepicker({
+        dateFormat: "hh-mm-ss"
     });
-}
-
-function rendering(objects) {
-
-    $('#calendar').fullCalendar({
-
-        dayClick: function f(date, jsEvent, view) {
-
-            var clickDate = date.format();
-
-            $('#endDate').val(clickDate.substring(0,10));
-            $('#title').val(clickDate.substring(0,10));
-
-            $("#dialog").dialog('open');
-
-            $('#creating').click(function () {
-
-                var installedTime = $("#basicExample").timepicker('getTime');
+});
 
 
-                var timepickerMinutes = installedTime.getMinutes();
-                var timepickerHours = installedTime.getHours();
-
-                if(timepickerMinutes == 0) {
-                    timepickerMinutes = "00";
-                } else {
-                    timepickerMinutes = "30";
-                }
-
-                if(timepickerHours < 10) {
-                    timepickerHours = "0" + timepickerHours.toString();
-                } else {
-                    timepickerHours = timepickerHours.toString();
-                }
-
-
-                var superBuffer = "" + clickDate.substring(0,11) + timepickerHours + ":" +
-                    timepickerMinutes + clickDate.substring(16);
-
-
-
-
-
-
-                var installedTime1 = $("#ender").timepicker('getTime');
-
-
-                var timepickerMinutes1 = installedTime1.getMinutes();
-                var timepickerHours1 = installedTime1.getHours();
-
-                if(timepickerMinutes1 == 0) {
-                    timepickerMinutes1 = "00";
-                } else {
-                    timepickerMinutes1 = "30";
-                }
-
-                if(timepickerHours1 < 10) {
-                    timepickerHours1 = "0" + timepickerHours1.toString();
-                } else {
-                    timepickerHours1 = timepickerHours1.toString();
-                }
-
-
-                var superBuffer1 = "" + clickDate.substring(0,11) + timepickerHours1 + ":" +
-                    timepickerMinutes1 + clickDate.substring(16);
-
-
-
-                var ev = {
-                    title: $('#startDate').val(),
-                    start: "2016-05-21T14:00:00",
-                    end:  "2016-05-21T15:00:00"
-                }
-
-
-                $('#calendar').fullCalendar('renderEvent', ev, true);
-
-                    forSendingToServer(ev);
-
-                    $('#dialog').dialog('close');
-return;
-            })
-        },
-
-
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-        defaultDate: $('#calendar').fullCalendar('getDate'),
-
-        //selectable: true,
-        selectHelper: true,
-        select: function (start, end) {
-            var title = prompt('Event Title:');
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-        },
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        events: objects
+$(function() {
+    $('#endTimeUpdate').timepicker({
+        dateFormat: "hh-mm-ss"
     });
-}
-
-
-function forSendingToServer(event) {
-
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'getnewevent',
-        dataType: "json",
-        data: JSON.stringify({
-            name: event.title,
-            startTime: event.start,
-            endTime: event.end
-        })
-    })
-}
-*/
-
+});
 
 /**
  * Created by dima- on 12.05.2016.
@@ -405,7 +33,21 @@ function forSendingToServer(event) {
 function changeFunc(id) {
 
     $('#calendar').fullCalendar('destroy');
+
     $('#dialog').dialog({
+        autoOpen: false,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        },
+
+    })
+
+    $('#updating').dialog({
         autoOpen: false,
         show: {
             effect: 'drop',
@@ -466,77 +108,82 @@ function rendering(objects ,roomID) {
 
             var clickDate = date.format();
 
+
             $('#startDate').val('');
-            $('#title').val('');
-            $('#endDate').val('');
+            $('#title').val(clickDate.substring(0,10));
+            $('#endDate').val(clickDate.substring(0,10));
 
             $('#dialog').dialog('open');
+
+            if(clickDate.length < 12) {
+                clickDate = clickDate + "T00:00:00";
+            }
+
 
             $('#creating').click(function () {
                 if( $('#startDate').val() == "" || clickDate == "") {
                     return;
                 }
 
-                var installedTime = $("#basicExample").timepicker('getTime');
-
-
-                var timepickerMinutes = installedTime.getMinutes();
-                var timepickerHours = installedTime.getHours();
-
-                if(timepickerMinutes == 0) {
-                    timepickerMinutes = "00";
-                } else {
-                    timepickerMinutes = "30";
-                }
-
-                if(timepickerHours < 10) {
-                    timepickerHours = "0" + timepickerHours.toString();
-                } else {
-                    timepickerHours = timepickerHours.toString();
-                }
-
-
-                var superBuffer = "" + clickDate.substring(0,11) + timepickerHours + ":" +
-                    timepickerMinutes + clickDate.substring(16);
-
-
-                var installedTime1 = $("#ender").timepicker('getTime');
-
-
-                var timepickerMinutes1 = installedTime1.getMinutes();
-                var timepickerHours1 = installedTime1.getHours();
-
-                if(timepickerMinutes1 == 0) {
-                    timepickerMinutes1 = "00";
-                } else {
-                    timepickerMinutes1 = "30";
-                }
-
-                if(timepickerHours1 < 10) {
-                    timepickerHours1 = "0" + timepickerHours1.toString();
-                } else {
-                    timepickerHours1 = timepickerHours1.toString();
-                }
-
-
-                var superBuffer1 = "" + clickDate.substring(0,11) + timepickerHours1 + ":" +
-                    timepickerMinutes1 + clickDate.substring(16);
-
-                alert(superBuffer);
-
                 var ev = {
                     title: $('#startDate').val(),
-                    start: superBuffer,
-                    end:   superBuffer1
+                    start: makeISOtime(clickDate, "basicExample"),
+                    end:   makeISOtime(clickDate, "ender")
                 }
 
                 $('#calendar').fullCalendar('renderEvent', ev, true);
                 forSendingToServer(ev, roomID);
 
-                $('#startDate').val("");
+
+                $('#title').val("");
+
                 $('#dialog').dialog('close');
                 clickDate = "";
             })
+        },
+
+        eventClick: function(calEvent, jsEvent, view){
+
+            $('#titleUpdate').val(calEvent.title);
+            $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
+            $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
+
+
+            var date = new Date(calEvent.start.format());
+            var endDate = new Date(calEvent.end.format());
+
+            var newDate = new Date();
+            var newDateForEnd = new Date();
+            newDate.setHours(date.getUTCHours());
+            newDate.setMinutes(date.getUTCMinutes());
+            newDate.setSeconds(date.getUTCSeconds());
+
+            newDateForEnd.setHours(endDate.getUTCHours());
+            newDateForEnd.setMinutes(endDate.getUTCMinutes());
+            newDateForEnd.setSeconds(endDate.getUTCSeconds());
+
+            $('#startTimeUpdate').timepicker('setTime', newDate);
+            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);
+
+            $('#updating').dialog('open');
+
+
+            $('#updatingButton').click(function () {
+
+
+                var newStartDate = makeISOtime(calEvent.start.format(), "startTimeUpdate");
+                var newEndDate = makeISOtime(calEvent.start.format(), "endTimeUpdate");
+
+                var eventForUpdate = {
+                    id : calEvent.id,
+                    title: $('#titleUpdate').val(),
+                    start: newStartDate,
+                    end:   newEndDate
+
+                }
+                $('#updating').dialog('close');
+            });
+
         },
 
         header: {
@@ -546,7 +193,6 @@ function rendering(objects ,roomID) {
         },
         defaultDate: $('#calendar').fullCalendar('getDate'),
 
-        //selectable: true,
         selectHelper: true,
 /*        select: function (start, end) {
             var title = prompt('Event Title:');
@@ -562,7 +208,7 @@ function rendering(objects ,roomID) {
             $('#calendar').fullCalendar('unselect');
         },*/
         editable: true,
-        eventLimit: true, // allow "more" link when too many events
+        eventLimit: true,
         events: objects
     });
 }
@@ -580,7 +226,70 @@ function forSendingToServer(event, roomID) {
             startTime: event.start,
             endTime: event.end,
             roomId: roomID
-        })
+        }), success: function(result) {
+            console.log(result);
+        }
+    });
+
+    $.ajax({
+        type: 'post',
+        url: 'getnewevent',
+        success: function(result) {
+            alert("ferge");
+        }
     })
 }
 
+function sendToServerForUpdate(event, roomID) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'getnewevent',
+        dataType: "json",
+        data: JSON.stringify({
+            id : event.id,
+            name: event.title,
+            startTime: event.start,
+            endTime: event.end,
+            roomId: roomID
+        })
+    });
+}
+
+function sendToServerForDelete(event, roomID) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'getnewevent',
+        dataType: "json",
+        data: JSON.stringify({
+            id : event.id
+        })
+    });
+}
+
+function makeISOtime(clickDate, idOfTimePicker) {
+    var element = "#" + idOfTimePicker;
+     var installedTime = $(element).timepicker('getTime');
+
+
+     var timepickerMinutes = installedTime.getMinutes();
+     var timepickerHours = installedTime.getHours();
+
+     if(timepickerMinutes == 0) {
+     timepickerMinutes = "00";
+     } else {
+     timepickerMinutes = "30";
+     }
+
+     if(timepickerHours < 10) {
+     timepickerHours = "0" + timepickerHours.toString();
+     } else {
+     timepickerHours = timepickerHours.toString();
+     }
+
+     var superBuffer = "" + clickDate.substring(0,11) + timepickerHours + ":" +
+     timepickerMinutes + clickDate.substring(16);
+
+    return superBuffer;
+}

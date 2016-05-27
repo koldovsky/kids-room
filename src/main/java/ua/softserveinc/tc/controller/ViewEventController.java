@@ -54,20 +54,22 @@ public class ViewEventController {
     @RequestMapping(value = "getCompanies/{id}", method = RequestMethod.GET)
     public @ResponseBody
     String getEvents(@PathVariable int id) {
-        System.out.println(calendarService.eventsToString(id));
         return calendarService.eventsToString(id);
-
     }
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST)
-    public String getAjax(@RequestBody EventDTO eventDTO) {
+    public @ResponseBody
+    String getAjax(@RequestBody EventDTO eventDTO) {
         calendarService.create((genericMapper.toEntity(eventDTO)));
-
-
-
-
-        return EventConst.MAIN_PAGE;
+        return eventDTO.getName();
     }
+
+    @RequestMapping(value = "getnewevent", method = RequestMethod.GET)
+    public @ResponseBody
+    String getAjaxResponse() {
+        return "Some info";
+    }
+
 }
 
 
