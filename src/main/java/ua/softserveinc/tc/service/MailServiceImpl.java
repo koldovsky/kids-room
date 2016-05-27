@@ -56,6 +56,19 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
+    public void sendPaymentInfo(User user, String subject, Double sumTotal)
+    {
+        Map model = new HashMap();
+        model.put("user", user);
+        model.put("sumTotal", sumTotal);
+
+        String text = VelocityEngineUtils.mergeTemplateIntoString(
+                velocityEngine, "/emailTemplate/paymentInfo.vm", "UTF-8", model);
+
+        sendMessage(user, subject, text);
+    }
+
+    @Override
     public void sendRegisterMessage(String subject, User user, String token) {
 //        String link = "http://" + context.getVirtualServerName() + ":8080" + context.getContextPath()
 //        + "/confirm?token=" + token;

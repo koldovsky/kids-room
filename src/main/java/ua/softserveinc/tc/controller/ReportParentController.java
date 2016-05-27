@@ -12,6 +12,7 @@ import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public class ReportParentController
     BookingService bookingService;
     @Autowired
     UserService userService;
+    @Autowired
+    MailService mailService;
 
     @RequestMapping(value = "/manager-report-parent", method = RequestMethod.GET,
             params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
@@ -40,7 +43,8 @@ public class ReportParentController
 
         User parent = userService.getUserByEmail(parentEmail);
         List<Booking> bookings = bookingService.getBookingsByUserByRangeOfTime(parent, dateThen, dateNow);
-        long sumTotal = bookingService.getSumTotal(bookings);
+        Double sumTotal = bookingService.getSumTotal(bookings);
+        mailService.sendPaymentInfo(parent, "Subject", sumTotal);
 
         modelMap.addAttribute(ReportConst.PARENT, parent);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);

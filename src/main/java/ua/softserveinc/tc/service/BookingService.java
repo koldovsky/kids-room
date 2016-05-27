@@ -12,7 +12,7 @@ public interface BookingService extends BaseService<Booking>
 {
     void calculateSum(Booking booking);
     void calculateDuration(Booking booking);
-    int getSumTotal(List<Booking> bookings);
+    Double getSumTotal(List<Booking> bookings);
     HashMap<User, Integer> generateAReport(List<Booking> bookings);
     List<Booking> getBookingsByDay(String data) throws ParseException;
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
