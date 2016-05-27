@@ -36,10 +36,11 @@ public class AdminAddManagerController {
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute User user, BindingResult bindingResult) {
-        String token = UUID.randomUUID().toString();
         user.setRole(Role.MANAGER);
         user.setEnabled(false);
         userService.create(user);
+
+        String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
         mailService.buildConfirmRegisterManager("Confirmation registration", user, token);
 

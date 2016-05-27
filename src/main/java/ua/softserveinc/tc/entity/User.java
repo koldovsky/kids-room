@@ -11,8 +11,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,6 +69,9 @@ public class User {
     @Column(name = UserConst.ENABLED)
     private boolean enabled;
 
+    @Column(name = UserConst.BANNED)
+    private boolean banned;
+
     @NotEmpty
     @Column(name = UserConst.PHONE)
     @Field(store = Store.NO)
@@ -108,6 +109,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
     }
 
     public Long getId() {
