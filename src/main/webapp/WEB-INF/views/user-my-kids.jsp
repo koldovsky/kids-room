@@ -20,7 +20,9 @@
 <c:forEach var="kid" items="${kids}">
 <div data-id="${kid.getId()}" class="kidslistblock">
     <div class="kidslistitem">
+    <div class="thumb">
     <img id="picture" alt="Profile picture" src="images/${kid.id}.jpg" width="100" height="100" />
+    </div>
     <h3>${kid.getFullName()}</h3>
     </div>
 

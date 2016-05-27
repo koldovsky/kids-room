@@ -7,6 +7,7 @@ function AllKidsTableService($http, $q) {
         getChildren: getChildren,
         addChild: addChild,
         searchChildren: searchChildren,
+        searchParents: searchParents,
         getParent: getParent
     });
 
@@ -31,7 +32,7 @@ function AllKidsTableService($http, $q) {
 
     }
 
-    function searchChildren(field) {
+    function searchChildren( field ) {
 
         var request = $http({
             method: "get",
@@ -52,6 +53,20 @@ function AllKidsTableService($http, $q) {
             url: "api/child/" + childId + "/parent",
             params: {
                 action: "get"
+            }
+        });
+
+        return ( request.then( handleSuccess, handleError ) );
+    }
+
+    function searchParents( field ) {
+
+        var request = $http({
+            method: "get",
+            url: "api/user/search",
+            params: {
+                action: "get",
+                field: field
             }
         });
 

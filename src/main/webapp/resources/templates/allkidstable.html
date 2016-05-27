@@ -1,7 +1,7 @@
 <div class="span4">
     <div id="all_kids_search" class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." ng-model="searchField"
-            ng-change="searchChildren(searchField)">
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="childSearchField"
+            ng-change="searchChildren(childSearchField)">
     </div>
 </div>
 
@@ -16,9 +16,21 @@
     <div class="thead row-fluid">
 
         <div class="th span1"></div>
-        <div class="th span3">Parents Name</div>
-        <div class="th span3">Kid Name</div>
-        <div class="th span3">Age</div>
+        <div class="th span3" ng-click="orderTable('parent.fullName')">
+            Parents Name
+            <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true" ng-show="predicate == 'parent.fullName' && !reverse"></span>
+            <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true" ng-show="predicate == 'parent.fullName' && reverse"></span>
+        </div>
+        <div class="th span3" ng-click="orderTable('fullName')">
+            Kid Name
+            <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true" ng-show="predicate == 'fullName' && !reverse"></span>
+            <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true" ng-show="predicate == 'fullName' && reverse"></span>
+        </div>
+        <div class="th span3" ng-click="orderTable('age')">
+            Age
+            <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true" ng-show="predicate == 'age' && !reverse"></span>
+            <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true" ng-show="predicate == 'age' && reverse"></span>
+        </div>
 
     </div>
 
@@ -38,8 +50,8 @@
 
             <div class="td span3">
                 <p>
-                    <select class="ac-select stateList" ac-model="selectedState" ac-options="s.name for s in getAllStates()"
-                            ac-settings="{ comboMode: true, loadOnOpen: true, minWidth: '300px' }" ac-change="stateSelected(value)"></select>
+                    <input type="text" class="form-control" placeholder="Search for..." ng-model="parentSearchField"
+                           ng-change="searchParents(parentSearchField)">
                 </p>
             </div>
 
@@ -95,7 +107,7 @@
     </div>
     <!-- /New child -->
 
-    <div id="table-data" ng-repeat="child in children">
+    <div id="table-data" ng-repeat="child in children | orderBy:predicate:reverse">
 
         <div class="tr row-fluid accordion-toggle">
 
@@ -162,3 +174,4 @@
         </div>
     </div>
 </div>
+{{parents}}

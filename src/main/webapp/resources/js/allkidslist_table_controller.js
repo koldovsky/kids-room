@@ -4,9 +4,13 @@
 function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.children = [];
+    $scope.parents = [];
     $scope.newChildFormIsShown = false;
     $scope.pageSize = 10;
     $scope.newChild = {};
+
+    $scope.predicate = 'id';
+    $scope.reverse = true;
 
     loadRemoteData();
 
@@ -15,6 +19,14 @@ function AllKidsTableController($scope, allKidsTableService) {
             linkParent(newChildren[i]);
         }
         $scope.children = unifyNames(newChildren);
+    }
+
+    function applyRemoteParentData( newParents ) {
+        $scope.parents = unifyNames(newParents);
+    }
+
+    function emptyParents() {
+        $scope.parents = [];
     }
 
     function loadRemoteData() {
@@ -38,6 +50,19 @@ function AllKidsTableController($scope, allKidsTableService) {
                 );
         } else {
             loadRemoteData();
+        }
+    }
+
+    function searchParents( field ) {
+        if (field.length >= 3) {
+            allKidsTableService.searchParents( field )
+                .then(
+                    function( parents ) {
+                        applyRemoteParentData( parents );
+                    }
+                );
+        } else {
+            emptyParents();
         }
     }
 
@@ -68,11 +93,6 @@ function AllKidsTableController($scope, allKidsTableService) {
         delete(person.fullName);
     }
 
-    function toggleModal() {
-        ngDialog.open({ template: 'resources/templates/allkidstable_modal.html',
-            className: 'ngdialog-theme-plain', controller: 'AllKidsTableController' });
-    }
-
     function toggleCollapseButton(buttonId) {
         buttonId = '#' + buttonId;
         $(buttonId).find('span')
@@ -91,9 +111,16 @@ function AllKidsTableController($scope, allKidsTableService) {
         toggleNewChild();
     }
 
+    function orderTable( predicate ) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
+    };
+
     $scope.searchChildren = searchChildren;
+    $scope.searchParents = searchParents;
     $scope.toggleCollapseButton = toggleCollapseButton;
     $scope.toggleNewChild = toggleNewChild;
     $scope.addChild = addChild;
+    $scope.orderTable = orderTable;
 
 }
