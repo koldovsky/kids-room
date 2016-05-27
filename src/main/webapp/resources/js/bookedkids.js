@@ -1,14 +1,25 @@
 
-function cancelBooking(idBook){
-     var str = "cancelBook/"+idBook;
-        $.ajax({
-        url: str,
-        success: function(result){
-        var text = result;
-        var bookings = JSON.parse(text);
-        $('#' + bookings.id).hide();
-     }});
-  }
+        var  idBook=null;
+        $('.cancelClass').click(function(){
+              idBook = $(this).closest('tr').attr('id');
+              $('#'+idBook).addClass('highlightedRed');
+              return idBook;
+              });
+        $('#cancelModal').find('#closeCencel').click(function(){
+              $('#'+idBook).removeClass('highlightedRed');
+        });
+
+              $('#cancelModal').find('#cancelButton').click(function(){
+                      var str = "cancelBook/"+idBook;
+                      $.ajax({
+                      	    url: str,
+                      	    success: function(result){
+                      		var text = result;
+                      		var bookings = JSON.parse(text);
+                      		$('#' + bookings.id).hide();
+                      		}});
+                      $('#cancelModal').modal('toggle');
+              });
 
 
    function setStartTime(idBooking){
@@ -67,3 +78,9 @@ function cancelBooking(idBook){
                  };
            $('.input-group').find('#leaveTime').on('click', dateNow);
            $('.input-group').find('#arrivalTime').on('click', dateNow);
+
+
+
+
+
+

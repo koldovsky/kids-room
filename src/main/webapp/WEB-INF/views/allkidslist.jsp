@@ -6,6 +6,7 @@
 </div>
 
 <script src="resources/js/allkidslist_table_controller.js"></script>
+<script src="resources/js/addbooking_controller.js"></script>
 <script src="resources/js/allkidslist_table_service.js"></script>
 <script src="resources/js/allkidslist_table_directive.js"></script>
 <script src="resources/js/allkidslist_app.js"></script>

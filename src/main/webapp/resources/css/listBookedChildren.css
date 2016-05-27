@@ -4,6 +4,10 @@
     background-color: #90EE90;
 }
 
+.highlightedRed {
+    background-color: red;
+}
+
 .highlighted2 {
     background-color: #32CD32;
 }
