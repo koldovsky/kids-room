@@ -31,7 +31,7 @@ public class BookingDTO  implements BaseDTO {
     private String kidName;
     private String roomName;
     private long duration;
-    private long sum;
+    private Double sum;
 
     public BookingDTO() {
         this.id=id;
@@ -103,11 +103,11 @@ public class BookingDTO  implements BaseDTO {
         this.duration = duration;
     }
 
-    public long getSum() {
+    public Double getSum() {
         return sum;
     }
 
-    public void setSum(long sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 

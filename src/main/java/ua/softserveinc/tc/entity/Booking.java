@@ -51,7 +51,7 @@ public class Booking {
     private Long duration;
 
     @Column(name = BookingConst.SUM, columnDefinition = "bigint default 0")
-    private Long sum;
+    private Double sum;
 
     public Long getIdBook() {
         return idBook;
@@ -125,11 +125,11 @@ public class Booking {
         this.duration = duration;
     }
 
-    public Long getSum() {
+    public Double getSum() {
         return sum;
     }
 
-    public void setSum(Long sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 }

@@ -144,7 +144,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     {
         calculateDuration(booking);
 
-        Map<Integer, Long> prices = booking.getIdRoom().getPrices();
+        Map<Integer, Double> prices = booking.getIdRoom().getPrices();
         int closestHour = rateService.calculateClosestHour(booking.getDuration(), prices);
         booking.setSum(prices.get(closestHour));
     }

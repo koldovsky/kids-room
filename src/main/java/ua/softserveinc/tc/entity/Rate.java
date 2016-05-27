@@ -23,7 +23,7 @@ public class Rate {
     private Integer hourRate;
 
     @Column(name = RateConst.PRICE_RATE, nullable = false)
-    private Long priceRate;
+    private Double priceRate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = RoomConst.ID_ROOM, nullable = false)
@@ -32,7 +32,7 @@ public class Rate {
     public Rate() {
     }
 
-    public Rate(Integer hourRate, Long priceRate) {
+    public Rate(Integer hourRate, Double priceRate) {
         this.hourRate = hourRate;
         this.priceRate = priceRate;
     }
@@ -53,11 +53,11 @@ public class Rate {
         this.hourRate = hourRate;
     }
 
-    public Long getPriceRate() {
+    public Double getPriceRate() {
         return priceRate;
     }
 
-    public void setPriceRate(Long priceRate) {
+    public void setPriceRate(Double priceRate) {
         this.priceRate = priceRate;
     }
 

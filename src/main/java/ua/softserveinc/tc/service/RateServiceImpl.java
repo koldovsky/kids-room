@@ -27,7 +27,7 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
     }
 
     @Override
-    public int calculateClosestHour(long milliseconds, Map<Integer, Long> rates)
+    public int calculateClosestHour(long milliseconds, Map<Integer, Double> rates)
     {
         int hours = (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
         int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));

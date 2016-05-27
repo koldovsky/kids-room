@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface RateService extends BaseService<Rate>
 {
-    int calculateClosestHour(long milliseconds, Map<Integer, Long> rates);
+    int calculateClosestHour(long milliseconds, Map<Integer, Double> rates);
 }
