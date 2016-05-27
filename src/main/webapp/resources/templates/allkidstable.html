@@ -5,8 +5,8 @@
     </div>
 </div>
 
-<div id="all_kids_add" class="input-group">
-    <button type="button" class="btn btn-primary" ng-click="newChildFormIsShown = true;">
+<div id="all_kids_add" class="input-group" ng-if="!newChildFormIsShown">
+    <button type="button" class="btn btn-primary" ng-click="toggleNewChild()">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
 </div>
@@ -22,33 +22,49 @@
 
     </div>
 
-    <div id="all_kids_new_child_row" ng-if="newChildFormIsShown">
+    <!-- New child -->
+    <div id="all_kids_new_child_row kidcollapse-new-child" ng-if="newChildFormIsShown">
         <div class="tr row-fluid accordion-toggle">
 
-            <div class="td span1"></div>
+            <div class="td span1">
+                <button type="button" id="collapse-button-new"
+                        class="btn btn-default"
+                        data-toggle="collapse"
+                        data-target="#kidcollapse-new"
+                        ng-click="toggleCollapseButton('collapse-button-new')">
+                    <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+                </button>
+            </div>
 
             <div class="td span3">
                 <p>
-                    <input class="form-control" type="text">
+                    <select class="ac-select stateList" ac-model="selectedState" ac-options="s.name for s in getAllStates()"
+                            ac-settings="{ comboMode: true, loadOnOpen: true, minWidth: '300px' }" ac-change="stateSelected(value)"></select>
                 </p>
             </div>
 
             <div class="td span3">
                 <p>
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text" ng-model="newChild.fullName">
                 </p>
             </div>
 
             <div class="td span3">
-                <p><input class="form-control" type="text"></p>
+                <p><input class="form-control" type="text" ng-model="newChild.dateOfBirth"></p>
             </div>
 
             <div class="td span2">
+                <button type="button" class="btn btn-primary" ng-click="addChild(newChild)">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default" ng-click="toggleNewChild()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
             </div>
 
         </div>
 
-        <div class="kid_detailed_info row-fluid">
+        <div id="kidcollapse-new" class="kid_detailed_info row-fluid collapse in">
 
             <div class="span1"></div>
             <div class="span9">
@@ -77,6 +93,7 @@
             </div>
         </div>
     </div>
+    <!-- /New child -->
 
     <div id="table-data" ng-repeat="child in children">
 

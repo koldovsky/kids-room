@@ -5,6 +5,7 @@ function AllKidsTableService($http, $q) {
 
     return({
         getChildren: getChildren,
+        addChild: addChild,
         searchChildren: searchChildren,
         getParent: getParent
     });
@@ -20,6 +21,14 @@ function AllKidsTableService($http, $q) {
         });
 
         return ( request.then( handleSuccess, handleError ) );
+    }
+
+    function addChild( child ) {
+
+        var request = $http.post("api/child", child);
+
+        return ( request.then( handleSuccess, handleError ) );
+
     }
 
     function searchChildren(field) {

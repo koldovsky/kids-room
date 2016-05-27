@@ -6,6 +6,7 @@ function AllKidsTableController($scope, allKidsTableService) {
     $scope.children = [];
     $scope.newChildFormIsShown = false;
     $scope.pageSize = 10;
+    $scope.newChild = {};
 
     loadRemoteData();
 
@@ -61,6 +62,17 @@ function AllKidsTableController($scope, allKidsTableService) {
         return list;
     }
 
+    function splitName( person ) {
+        person.firstName = person.fullName.split(' ').slice(0, -1).join(' ');
+        person.lastName = person.fullName.split(' ').slice(-1).join(' ');
+        delete(person.fullName);
+    }
+
+    function toggleModal() {
+        ngDialog.open({ template: 'resources/templates/allkidstable_modal.html',
+            className: 'ngdialog-theme-plain', controller: 'AllKidsTableController' });
+    }
+
     function toggleCollapseButton(buttonId) {
         buttonId = '#' + buttonId;
         $(buttonId).find('span')
@@ -68,7 +80,20 @@ function AllKidsTableController($scope, allKidsTableService) {
             .toggleClass('glyphicon-triangle-top');
     }
 
+    function toggleNewChild() {
+        $scope.newChild = {};
+        $scope.newChildFormIsShown = !$scope.newChildFormIsShown;
+    }
+
+    function addChild( child ) {
+        splitName(child)
+        allKidsTableService.addChild(child);
+        toggleNewChild();
+    }
+
     $scope.searchChildren = searchChildren;
     $scope.toggleCollapseButton = toggleCollapseButton;
+    $scope.toggleNewChild = toggleNewChild;
+    $scope.addChild = addChild;
 
 }

@@ -5,6 +5,7 @@
     <all-kids-table></all-kids-table>
 </div>
 
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.1/js/ngDialog.min.js"></script>
 <script src="resources/js/allkidslist_table_controller.js"></script>
 <script src="resources/js/addbooking_controller.js"></script>
 <script src="resources/js/allkidslist_table_service.js"></script>

@@ -7,3 +7,4 @@ angular
     .controller('addBookingController', ['$scope', 'AllKidsService', addBookingController])
     .service('AllKidsService', AllKidsTableService)
     .directive('allKidsTable', AllKidsTable);
+
