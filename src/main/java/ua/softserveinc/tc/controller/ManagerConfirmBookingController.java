@@ -4,23 +4,19 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.BookingConstModel;
+import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 
-import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +55,7 @@ public class ManagerConfirmBookingController {
                                                @PathVariable Long idBooking) throws ParseException{
         Booking booking = bookingService.findById(idBooking);
         booking.setCancelled(true);
-        booking.setSum(0D);
+        booking.setSum(0L);
         bookingService.update(booking);
         BookingDTO bookingDTO = new BookingDTO(booking);
         Gson gson = new Gson();

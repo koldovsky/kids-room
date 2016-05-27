@@ -32,7 +32,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> getActiveUsersForRangeOfTime(String startDate, String endDate)
+    public List<User> getActiveUsers(String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

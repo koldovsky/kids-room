@@ -7,8 +7,7 @@ import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
-
-import java.util.*;
+import java.util.Date;
 
 
 /**
@@ -51,7 +50,7 @@ public class Booking {
     private Long duration;
 
     @Column(name = BookingConst.SUM, columnDefinition = "bigint default 0")
-    private Double sum;
+    private Long sum;
 
     public Long getIdBook() {
         return idBook;
@@ -125,11 +124,11 @@ public class Booking {
         this.duration = duration;
     }
 
-    public Double getSum() {
+    public Long getSum() {
         return sum;
     }
 
-    public void setSum(Double sum) {
+    public void setSum(Long sum) {
         this.sum = sum;
     }
 }

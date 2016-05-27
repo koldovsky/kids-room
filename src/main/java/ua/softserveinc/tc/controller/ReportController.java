@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
-
 import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
@@ -38,7 +37,7 @@ public class ReportController
 
         String dateNow = convertToString(currentDate());
         String dateThen = convertToString(dateMonthAgo());
-        List<User> users = userService.getActiveUsersForRangeOfTime(dateThen, dateNow);
+        List<User> users = userService.getActiveUsers(dateThen, dateNow);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
@@ -50,7 +49,7 @@ public class ReportController
     @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
     public @ResponseBody String refreshView(@PathVariable String startDate, @PathVariable String endDate)
     {
-        List<User> users = userService.getActiveUsersForRangeOfTime(startDate, endDate);
+        List<User> users = userService.getActiveUsers(startDate, endDate);
         List<UserDTO> userDTOs = new ArrayList<>();
         users.forEach(user -> userDTOs.add(new UserDTO(user)));
         Gson gson = new Gson();

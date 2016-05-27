@@ -1,20 +1,10 @@
 package ua.softserveinc.tc.dto;
 
-import ua.softserveinc.tc.entity.Booking;
-import org.apache.commons.lang.time.DateUtils;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.Booking;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Петришак on 14.05.2016.
@@ -30,8 +20,8 @@ public class BookingDTO  implements BaseDTO {
     private String endTime;
     private String kidName;
     private String roomName;
-    private long duration;
-    private Double sum;
+    private Long duration;
+    private Long sum;
 
     public BookingDTO() {
         this.id=id;
@@ -95,19 +85,19 @@ public class BookingDTO  implements BaseDTO {
         this.roomName = roomName;
     }
 
-    public long getDuration() {
+    public Long getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
     }
 
-    public Double getSum() {
+    public Long getSum() {
         return sum;
     }
 
-    public void setSum(Double sum) {
+    public void setSum(Long sum) {
         this.sum = sum;
     }
 
