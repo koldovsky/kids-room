@@ -56,7 +56,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendPaymentInfo(User user, String subject, Double sumTotal)
+    public void sendPaymentInfo(User user, String subject, Long sumTotal)
     {
         Map model = new HashMap();
         model.put("user", user);

@@ -9,7 +9,7 @@ public interface MailService {
 
     void sendMessage(User user, String subject, String text);
 
-    void sendPaymentInfo(User user, String subject, Double sumTotal);
+    void sendPaymentInfo(User user, String subject, Long sumTotal);
 
     void sendRegisterMessage(String subject, User user, String token);
 

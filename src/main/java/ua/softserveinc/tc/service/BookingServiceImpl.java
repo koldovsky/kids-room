@@ -76,9 +76,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public Double getSumTotal(List<Booking> bookings)
+    public Long getSumTotal(List<Booking> bookings)
     {
-        Double sumTotal = 0d;
+        Long sumTotal = 0L;
         for (Booking booking : bookings)
         {
             sumTotal += booking.getSum();
