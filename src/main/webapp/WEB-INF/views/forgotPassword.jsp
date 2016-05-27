@@ -8,7 +8,7 @@
 
 <div class="col-sm-offset-4 col-xs-4">
     <spring:message code="user.resetPass" />
-    <form:form  action="resetPassword" method="post" modelAttribute="emailWrapper">
+    <form:form  action="resetPassword" method="post" modelAttribute="user">
         <div class="form-group">
             <label for="email"><spring:message code="user.email" /></label>
             <form:input path="email" class="form-control" type="email" />

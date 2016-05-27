@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * A validator-class that handles User objects validation
  */
 
-@Component
+@Component("userValidator")
 public class UserValidator implements Validator {
 
     @Autowired
@@ -64,6 +64,13 @@ public class UserValidator implements Validator {
 
         if (userService.getUserByEmail(user.getEmail()) != null) {
             errors.rejectValue(ValidationConst.EMAIL, ValidationConst.EMAIL_ALREADY_IN_USE_MSG);
+        }
+    }
+
+    public void validateEmail(Object o, Errors errors) {
+        String email = (String) o;
+        if (userService.getUserByEmail(email) == null) {
+            errors.rejectValue(ValidationConst.EMAIL, ValidationConst.USER_NOT_EXIST);
         }
     }
 

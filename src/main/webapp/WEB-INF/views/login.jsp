@@ -31,6 +31,25 @@
             <button formaction="${loginUrl}" type="submit" class="btn btn-primary btn-lg"><spring:message code="user.login" /></button>
         </div>
     </form>
+
+<div class="modal fade" id="rules" tabindex="-1" role="dialog"  aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><spring:message code="user.rule"/></h4>
+                </div>
+                <div class="modal-body">
+                    <p><spring:message code="rules"/></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="user.close"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 

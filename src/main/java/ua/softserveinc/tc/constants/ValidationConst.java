@@ -29,4 +29,5 @@ public interface ValidationConst {
     String NOT_CONFIRMED_MSG = "registration.confirm";
     String EMAIL_ERROR_MSG = "registration.email";
     String EMAIL_ALREADY_IN_USE_MSG = "registration.emailExist";
+    String USER_NOT_EXIST = "user.notExist";
 }
