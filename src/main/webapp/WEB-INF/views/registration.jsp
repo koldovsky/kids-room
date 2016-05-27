@@ -23,7 +23,6 @@
                   <form:input path="email" type="email" id="userEmail" class="form-control"
                                 style="text-transform: lowercase"  />
                   <form:errors path="email" cssClass="error"  />
-                  <span id="validEmail"></span>
       </div>
 
       <div class="form-group" >
@@ -35,13 +34,11 @@
               <label for="confirm" class="required"><spring:message code="user.confirm" /></label>
               <form:password path="confirm"  class="form-control" />
               <form:errors path="confirm" cssClass="error" />
-              <span id="validPassword"></span>
       </div>
       <div class="form-group">
               <label for="phonenumber" class="required"><spring:message code="user.phone" /></label>
               <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"/>
               <form:errors path="phoneNumber" cssClass="error"  />
-              <span id="validPhone"></span>
       </div>
          <div class="form-group">
               <spring:message code="user.prerules"/> <a data-toggle="modal" data-target="#rules"> <spring:message code="user.rules" /></a>

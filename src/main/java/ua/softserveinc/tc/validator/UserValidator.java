@@ -74,4 +74,17 @@ public class UserValidator implements Validator {
         }
     }
 
+    public void validatePassword(Object o, Errors errors){
+        User user = (User) o;
+        if (!Pattern.compile(ValidationConst.PASSWORD_REGEX)
+                .matcher(user.getPassword())
+                .matches()) {
+            errors.rejectValue(ValidationConst.PASSWORD, ValidationConst.PASSWORD_ERROR_MSG);
+        }
+
+        if (!user.getPassword().equals(user.getConfirm())) {
+            errors.rejectValue(ValidationConst.CONFIRM, ValidationConst.NOT_CONFIRMED_MSG);
+        }
+    }
+
 }
