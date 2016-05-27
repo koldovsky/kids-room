@@ -59,7 +59,7 @@ public class ManagerConfirmBookingController {
                                                @PathVariable Long idBooking) throws ParseException{
         Booking booking = bookingService.findById(idBooking);
         booking.setCancelled(true);
-        booking.setSum(0L);
+        booking.setSum(0D);
         bookingService.update(booking);
         BookingDTO bookingDTO = new BookingDTO(booking);
         Gson gson = new Gson();
