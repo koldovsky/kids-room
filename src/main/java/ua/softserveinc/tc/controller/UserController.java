@@ -75,10 +75,10 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute(UsersConst.USER) User user, BindingResult bindingResult) {
-//        userValidator.validate(user, bindingResult);
-//        if (bindingResult.hasErrors()){
-//            return UsersConst.REGISTRATION_VIEW;
-//        }
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()){
+            return UsersConst.REGISTRATION_VIEW;
+        }
         String token = UUID.randomUUID().toString();
         user.setRole(Role.USER);
         user.setEnabled(false);

@@ -60,10 +60,10 @@ public class ConfirmManagerController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(manager.getPassword());
         user.setConfirm(manager.getConfirm());
-//        userValidator.validate(user, bindingResult);
-//        if (bindingResult.hasErrors()){
-//            return "adm-confirm-manager";
-//        }
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "adm-confirm-manager";
+        }
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
         user.setEnabled(true);
         userService.update(user);

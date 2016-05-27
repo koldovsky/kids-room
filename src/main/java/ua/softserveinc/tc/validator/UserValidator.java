@@ -52,11 +52,11 @@ public class UserValidator implements Validator {
             errors.rejectValue(ValidationConst.PHONE_NUMBER, ValidationConst.PHONE_NUMBER_ERROR_MSG);
         }
 
-        if (!Pattern.compile(ValidationConst.EMAIL_REGEX)
-                .matcher(user.getEmail())
-                .matches()) {
-            errors.rejectValue(ValidationConst.EMAIL, ValidationConst.EMAIL_ERROR_MSG);
-        }
+//        if (!Pattern.compile(ValidationConst.EMAIL_REGEX)
+//                .matcher(user.getEmail())
+//                .matches()) {
+//            errors.rejectValue(ValidationConst.EMAIL, ValidationConst.EMAIL_ERROR_MSG);
+//        }
 
         if (!user.getPassword().equals(user.getConfirm())) {
             errors.rejectValue(ValidationConst.CONFIRM, ValidationConst.NOT_CONFIRMED_MSG);
