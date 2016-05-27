@@ -6,12 +6,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Calendar;
-import java.util.Date;
+import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 
 import javax.persistence.*;
-
-import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Demian on 29.04.2016.
