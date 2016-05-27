@@ -8,6 +8,30 @@
 
 
 <div class="tableDiv">
+<div ng-app="allKidsList">
+      <div ng-controller="addBookingController">
+            <div class="input-group">
+                <input type="text" class="form-control -raised" placeholder="Search..." ng-model="searchField"
+                        ng-change="searchChildren(searchField)">
+            </div>
+            <div class="col-sm-6">
+                <div ng-repeat="child in children">
+                    <table class="table table-hover ">
+                        <tr>
+                            <td>
+                                {{child.fullName}}
+                            </td>
+                            <td>
+                                <button class="btn btn-raised btn-primary">
+                                      <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+  </div>
   <table class="table">
       <th class="col-sm-4"><spring:message code= "booking.childrens"/></th>
       <th class="col-sm-4"><spring:message code= "booking.time"/></th>
@@ -82,18 +106,6 @@
                 </div>
        </c:forEach>
   </table>
-  <div ng-app="allKidsList">
-        <div class="input-group" ng-controller="addBookingController">
-            <input type="text" class="form-control" placeholder="Search for..." ng-model="searchField"
-                 ng-change="searchChildren(searchField)">
-                                         {{ children }}
-            <div class="input-group-btn">
-               <button class="btn btn-raised btn-primary">
-                         <span class="glyphicon glyphicon-plus"></span>
-               </button>
-            </div>
-        </div>
-  </div>
 </div>
 
 <script src="resources/js/bookedkids.js"></script>
