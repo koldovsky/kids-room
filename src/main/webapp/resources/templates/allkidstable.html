@@ -16,9 +16,21 @@
     <div class="thead row-fluid">
 
         <div class="th span1"></div>
-        <div class="th span3" ng-click="orderTable('parent.fullName')">Parents Name</div>
-        <div class="th span3" ng-click="orderTable('fullName')">Kid Name</div>
-        <div class="th span3" ng-click="orderTable('age')">Age</div>
+        <div class="th span3" ng-click="orderTable('parent.fullName')">
+            Parents Name
+            <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true" ng-show="predicate == 'parent.fullName' && !reverse"></span>
+            <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true" ng-show="predicate == 'parent.fullName' && reverse"></span>
+        </div>
+        <div class="th span3" ng-click="orderTable('fullName')">
+            Kid Name
+            <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true" ng-show="predicate == 'fullName' && !reverse"></span>
+            <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true" ng-show="predicate == 'fullName' && reverse"></span>
+        </div>
+        <div class="th span3" ng-click="orderTable('age')">
+            Age
+            <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true" ng-show="predicate == 'age' && !reverse"></span>
+            <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true" ng-show="predicate == 'age' && reverse"></span>
+        </div>
 
     </div>
 
