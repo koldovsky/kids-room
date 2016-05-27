@@ -23,7 +23,7 @@ public interface UserConst {
 
     String NQ_FIND_USER_BY_EMAIL = "findUserByEmail";
 
-    String ENABLED = "enabled";
+    String CONFIRMED = "confirmed";
 
-    String BANNED = "banned";
+    String ACTIVE = "active";
 }

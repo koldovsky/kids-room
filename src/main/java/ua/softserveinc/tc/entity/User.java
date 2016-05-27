@@ -66,11 +66,13 @@ public class User {
 
     private transient String confirm;
 
-    @Column(name = UserConst.ENABLED)
-    private boolean enabled;
+    @Column(name = UserConst.CONFIRMED)
+    private boolean comfirmed;
 
-    @Column(name = UserConst.BANNED)
-    private boolean banned;
+
+
+    @Column(name = UserConst.ACTIVE)
+    private boolean active;
 
     @NotEmpty
     @Column(name = UserConst.PHONE)
@@ -111,12 +113,20 @@ public class User {
         this.password = password;
     }
 
-    public boolean isBanned() {
-        return banned;
+    public boolean isComfirmed() {
+        return comfirmed;
     }
 
-    public void setBanned(boolean banned) {
-        this.banned = banned;
+    public void setComfirmed(boolean comfirmed) {
+        this.comfirmed = comfirmed;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Long getId() {
@@ -169,14 +179,6 @@ public class User {
 
     public String getFullName() {
         return firstName + " " + lastName;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     @Override

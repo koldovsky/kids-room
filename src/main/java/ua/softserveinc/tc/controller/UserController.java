@@ -81,7 +81,7 @@ public class UserController {
         }
         String token = UUID.randomUUID().toString();
         user.setRole(Role.USER);
-        user.setEnabled(false);
+        user.setComfirmed(true);
         userService.create(user);
         tokenService.createToken(token, user);
         mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
@@ -112,7 +112,7 @@ public class UserController {
     public String confirmRegistration(@RequestParam(TokenConst.TOKEN) String sToken) {
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
-        user.setEnabled(true);
+        user.setComfirmed(true);
         userService.update(user);
         tokenService.delete(token);
         return "redirect:/login";

@@ -37,7 +37,7 @@ public class AdminAddManagerController {
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute User user, BindingResult bindingResult) {
         user.setRole(Role.MANAGER);
-        user.setEnabled(false);
+        user.setComfirmed(false);
         userService.create(user);
 
         String token = UUID.randomUUID().toString();
