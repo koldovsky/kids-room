@@ -4,30 +4,27 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Edit location</title>
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
 
-</head>
 
 <body>
-   <div class="for-table">
+   <div class="tableDiv for-table">
        <table class="for-table">
-          <tr>
-             <th colspan="7">
+          <tr class="hide-border">
+             <th colspan="7" >
                 <legend class="for-table"><strong>Manager list</strong></legend>
              </th>
           </tr>
+          <tr></tr>
           <tr>
-             <td><strong>Email</strong></td>
-             <td><strong>First Name</strong></td>
-             <td><strong>Last Name</strong></td>
-             <td><strong>Phone number</strong></td>
-             <td><strong>Active account</strong></td>
-             <td><strong>EDIT</strong></td>
-             <td><strong>DELETE</strong></td>
+             <th><strong>Email</strong></th>
+             <th><strong>First Name</strong></th>
+             <th><strong>Last Name</strong></th>
+             <th><strong>Phone number</strong></th>
+             <th><strong>Active account</strong></th>
+             <th><strong>EDIT</strong></th>
+             <th><strong>DELETE</strong></th>
           </tr>
 
           <c:forEach var="manager" items="${managerList}">
@@ -36,7 +33,7 @@
              <td>${manager.firstName}</td>
              <td>${manager.lastName}</td>
              <td>${manager.phoneNumber}</td>
-             <td>${manager.enabled}</td>
+             <td>${manager.active}</td>
              <td><a href="adm-update-manager?id=${manager.id}">
                     <button class="btn btn-raised btn-primary glyphicon glyphicon-pencil"></button></a></td>
 
@@ -52,7 +49,7 @@
 
           <tr></tr>
           <tr>
-             <td colspan="7" class="hide-border">
+             <td colspan="7" class="hide-border set-standard-color">
                 <a href="adm-add-manager"><input type="button" value="Add"
                                            class="btn btn-raised btn-primary waves-effect waves-light"/></a>
              </td>
@@ -60,4 +57,3 @@
        </table>
     </div>
 </body>
-</html>

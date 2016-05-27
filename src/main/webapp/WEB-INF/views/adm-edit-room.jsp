@@ -4,31 +4,25 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Edit room</title>
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
 
-</head>
 
 <body>
-   <div class="for-table">
-
-
+   <div class="tableDiv for-table">
       <table class="for-table">
          <tr>
             <th colspan="8"><legend class="for-table"><strong>Room list</strong></legend></th>
          </tr>
          <tr>
-            <td><strong>Room name</strong></td>
-            <td><strong>Room address</strong></td>
-            <td><strong>Room phone number</strong></td>
-            <td><strong>Room capacity</strong></td>
-            <td><strong>Room manager</strong></td>
-            <td><strong>City</strong></td>
-            <td><strong>EDIT</strong></td>
-            <td><strong>DELETE</strong></td>
+            <th><strong>Room name</strong></th>
+            <th><strong>Room address</strong></th>
+            <th><strong>Room phone number</strong></th>
+            <th><strong>Room capacity</strong></th>
+            <th><strong>Room manager</strong></th>
+            <th><strong>City</strong></th>
+            <th><strong>EDIT</strong></th>
+            <th><strong>DELETE</strong></th>
          </tr>
 
          <c:forEach var="room" items="${roomList}">
@@ -56,8 +50,5 @@
          </tr>
       </table>
 
-
    </div>
 </body>
-</html>
-
