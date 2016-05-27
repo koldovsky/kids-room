@@ -1,14 +1,11 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.CityConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Chak on 30.04.2016.
@@ -47,13 +44,6 @@ public class Room {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
     private List<Rate> rates;
-
-    @ElementCollection
-    @JoinTable(name = RoomConst.TABLE_NAME_PRICES,
-            joinColumns = @JoinColumn(name = RoomConst.ID_ROOM))
-    @MapKeyColumn(name = RoomConst.HOUR)
-    @Column(name = RoomConst.PRICE)
-    private Map<Integer, Double> prices = new HashMap<>();
 
     public Long getId() {
         return id;
@@ -117,14 +107,6 @@ public class Room {
 
     public void setEvents(List<Event> events) {
         this.events = events;
-    }
-
-    public Map<Integer, Double> getPrices() {
-        return prices;
-    }
-
-    public void setPrices(Map<Integer, Double> prices) {
-        this.prices = prices;
     }
 
     public List<Rate> getRates() {

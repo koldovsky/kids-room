@@ -2,18 +2,20 @@ package ua.softserveinc.tc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
-import java.text.SimpleDateFormat;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -144,9 +146,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     {
         calculateDuration(booking);
 
-        Map<Integer, Double> prices = booking.getIdRoom().getPrices();
-        int closestHour = rateService.calculateClosestHour(booking.getDuration(), prices);
-        booking.setSum(prices.get(closestHour));
+        List<Rate> rates = booking.getIdRoom().getRates();
+        Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
+        booking.setSum(closestRate.getPriceRate());
     }
 
     @Override
