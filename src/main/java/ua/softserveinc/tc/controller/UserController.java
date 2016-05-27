@@ -20,14 +20,12 @@ import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
 import ua.softserveinc.tc.constants.ErrorPages;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
-import ua.softserveinc.tc.dto.EmailWrapper;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.validator.EmailValidator;
 import ua.softserveinc.tc.validator.UserValidator;
 
 import java.util.UUID;
@@ -46,9 +44,6 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
-
-    @Autowired
-    private EmailValidator emailValidator;
 
     @Autowired
     private TokenService tokenService;
@@ -81,7 +76,8 @@ public class UserController {
         }
         String token = UUID.randomUUID().toString();
         user.setRole(Role.USER);
-        user.setComfirmed(true);
+        user.setComfirmed(false);
+        user.setActive(true);
         userService.create(user);
         tokenService.createToken(token, user);
         mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
@@ -120,24 +116,23 @@ public class UserController {
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public String changePassword(Model model) {
-        model.addAttribute("emailWrapper", new EmailWrapper());
+        model.addAttribute("user", new User());
         return UsersConst.FORGOT_PASS_VIEW;
     }
 
 
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@ModelAttribute("emailWrapper")EmailWrapper emailWrapper, BindingResult bindingResult, Errors errors) {
+    public String resetPassword(@ModelAttribute("user")User user, BindingResult bindingResult, Errors errors) {
 
-            emailValidator.validate(emailWrapper, bindingResult);
-            if (bindingResult.hasErrors()) {
-                return UsersConst.FORGOT_PASS_VIEW;
-            }
-
-        User user = userService.getUserByEmail(emailWrapper.getEmail());
+        userValidator.validateEmail(user.getEmail(), bindingResult);
+        if (bindingResult.hasErrors()) {
+            return UsersConst.FORGOT_PASS_VIEW;
+        }
+        User baseUser = userService.getUserByEmail(user.getEmail());
         String token = UUID.randomUUID().toString();
-        tokenService.createToken(token, user);
-        mailService.sendChangePassword(UsersConst.CHANGE_PASS, user, token);
+        tokenService.createToken(token, baseUser);
+        mailService.sendChangePassword(UsersConst.CHANGE_PASS, baseUser, token);
         return UsersConst.SUCCESS_VIEW;
     }
 

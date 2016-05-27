@@ -15,8 +15,10 @@ function addBookingController($scope, allKidsTableService) {
     function searchChildren( field ) {
         if (field.length >= 3) {
             allKidsTableService.searchChildren( field )
+
                 .then(
                     function( children ) {
+                        unifyNames(children);
                         applyRemoteChildrenData( children );
 
                     }

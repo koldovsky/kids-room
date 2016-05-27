@@ -37,6 +37,7 @@ public class AdminAddManagerController {
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@ModelAttribute User user, BindingResult bindingResult) {
         user.setRole(Role.MANAGER);
+        user.setActive(true);
         user.setComfirmed(false);
         userService.create(user);
 

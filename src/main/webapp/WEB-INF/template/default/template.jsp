@@ -20,6 +20,8 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.css">
+
 <link rel='stylesheet' href='resources/css/default.css'>
 
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
@@ -33,7 +35,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
 
 
-
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.js"></script>
 
 
 <!-- /Material design -->
