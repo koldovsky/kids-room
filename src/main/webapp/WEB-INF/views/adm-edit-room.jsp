@@ -11,8 +11,8 @@
 <body>
    <div class="tableDiv for-table">
       <table class="for-table">
-         <tr>
-            <th colspan="8"><legend class="for-table"><strong>Room list</strong></legend></th>
+         <tr class="hide-border">
+            <th colspan="8" class="set-standard-color"><legend class="for-table"><strong>Room list</strong></legend></th>
          </tr>
          <tr>
             <th><strong>Room name</strong></th>
@@ -43,7 +43,7 @@
         <tr></tr>
 
          <tr>
-            <td colspan="8" class="hide-border">
+            <td colspan="8" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value="Add"
                                         class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
             </td>

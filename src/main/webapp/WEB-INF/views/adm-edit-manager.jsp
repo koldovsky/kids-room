@@ -12,7 +12,7 @@
    <div class="tableDiv for-table">
        <table class="for-table">
           <tr class="hide-border">
-             <th colspan="7" >
+             <th colspan="7"  class="set-standard-color">
                 <legend class="for-table"><strong>Manager list</strong></legend>
              </th>
           </tr>

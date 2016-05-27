@@ -3,12 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Update location</title>
-    <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-</head>
+
+<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
+
 
 <div class="for-table">
    <table class="for-table-fields">

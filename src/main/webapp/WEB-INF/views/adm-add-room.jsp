@@ -1,15 +1,11 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Add location</title>
 
-	<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-</head>
+<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
+
 
 <body>
     <div class="for-table">
