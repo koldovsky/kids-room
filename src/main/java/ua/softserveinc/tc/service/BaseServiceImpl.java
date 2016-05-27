@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.softserveinc.tc.dao.BaseDao;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
 @Transactional
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
@@ -25,7 +26,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public T findById(Object id) {
-        return baseDao.findById(id);
+        T obj  = baseDao.findById(id);
+        if(obj == null) throw new ResourceNotFoundException();
+        return obj;
     }
 
     @Override

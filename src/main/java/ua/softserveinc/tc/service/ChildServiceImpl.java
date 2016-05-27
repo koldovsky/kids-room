@@ -40,11 +40,9 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
 
     @SuppressWarnings("unchecked")
     public List<Child> getChildrenByUser(User user){
-        return childDao
-                .getEntityManager()
-                .createQuery("from Child" +
-                        " where parentId = " + user.getId())
-                .getResultList();
+        List<Child> resultList = childDao.getEntityManager().createQuery("from Child" +
+                        " where parentId = " + user.getId()).getResultList();
+        return resultList;
     }
 
     //для чого це тут? в базовому севісі є метод findAll()

@@ -28,7 +28,7 @@ function selectRoomForUser(id) {
                         title: stringToArray[1],
                         start: stringToArray[2],
                         end: stringToArray[3],
-                        editable: false
+                        stick: true
                     }
                 }
 

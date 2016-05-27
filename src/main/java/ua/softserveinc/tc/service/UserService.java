@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
 import java.util.List;
 

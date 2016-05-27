@@ -27,7 +27,6 @@ public class ExceptionHandlingController {
     @ExceptionHandler({
             NoHandlerFoundException.class,
             ResourceNotFoundException.class,
-            MissingServletRequestParameterException.class,
             NumberFormatException.class
     })
     public ModelAndView handleError404(HttpServletRequest request, Exception e) {

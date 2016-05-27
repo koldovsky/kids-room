@@ -91,9 +91,6 @@ public class ImagesController {
         }
 
         Child kid = childService.findById(Long.parseLong(kidId));
-        if(kid == null){
-            throw new ResourceNotFoundException();
-        }
 
         User current = userService.getUserByEmail(principal.getName());
         if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
