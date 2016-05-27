@@ -104,9 +104,9 @@ public class ImagesController {
         String path;
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         if(kid.getGender() == Gender.FEMALE)
-             path = classloader.getResource("images/default-girl.jpg").getFile();
+             path = "src/main/resources/images/default-girl.jpg";
         else
-            path = classloader.getResource("images/default-boy.jpg").getFile();
+            path = "src/main/resources/images/default-boy.jpg";
 
         File imgPath = new File(path);
 
