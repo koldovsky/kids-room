@@ -107,6 +107,7 @@ function rendering(objects ,roomID) {
             var clickDate = date.format();
 
 
+
             $('#startDate').val('');
             $('#title').val(clickDate.substring(0,10));
             $('#endDate').val(clickDate.substring(0,10));
@@ -129,7 +130,8 @@ function rendering(objects ,roomID) {
                     start: makeISOtime(clickDate, "basicExample"),
                     end:   makeISOtime(clickDate, "ender"),
                     backgroundColor: '#33cc33',
-                    borderColor: '#33cc33'
+                    borderColor: '#33cc33',
+                    editable : false
                 }
 
                 $('#calendar').fullCalendar('renderEvent', ev, true);
@@ -153,11 +155,9 @@ function rendering(objects ,roomID) {
                         ev.id = newId;
                         ev.backgroundColor = '#428bca';
                         ev.borderColor = '#428bca';
-
+                        ev.editable = true;
 
                         $('#calendar').fullCalendar( 'renderEvent', ev );
-
-
                     }
                 });
 
@@ -170,10 +170,13 @@ function rendering(objects ,roomID) {
 
         eventClick: function (calEvent, jsEvent, view) {
 
+            var isChanged = false;
+
+            var beforeUpdate = calEvent.title;
+
             $('#titleUpdate').val(calEvent.title);
             $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
             $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
-
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
@@ -190,7 +193,7 @@ function rendering(objects ,roomID) {
             newDateForEnd.setSeconds(endDate.getUTCSeconds());
 
             $('#startTimeUpdate').timepicker('setTime', newDate);
-            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);
+            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);           //години до
 
             $('#updating').dialog('open');
 
@@ -198,8 +201,18 @@ function rendering(objects ,roomID) {
             $('#updatingButton').click(function () {
 
 
+
                 var newStartDate = makeISOtime(calEvent.start.format(), "startTimeUpdate");
-                var newEndDate = makeISOtime(calEvent.start.format(), "endTimeUpdate");
+                var newEndDate = makeISOtime(calEvent.end.format(), "endTimeUpdate");
+
+                if ((date.toDateString() === (new Date(newStartDate)).toDateString()) &&
+                    (endDate.toDateString() === (new Date(newEndDate)).toDateString()) &&
+                    (beforeUpdate === $('#titleUpdate').val())) {
+                        $('#updating').dialog('close');
+                        alert("shit");
+                        return;
+                }
+                $('#calendar').fullCalendar( 'removeEvents', calEvent.id);
 
                 var eventForUpdate = {
                     id: calEvent.id,
@@ -208,7 +221,9 @@ function rendering(objects ,roomID) {
                     end: newEndDate
 
                 }
-                alert(calEvent.id)
+                $('#calendar').fullCalendar( 'renderEvent', eventForUpdate );
+                alert("fefe");
+
                 $('#updating').dialog('close');
             });
 
