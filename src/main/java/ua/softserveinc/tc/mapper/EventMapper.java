@@ -25,7 +25,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         Event event = new Event();
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
-
+        if(eventDto.getId() != 0) event.setId(eventDto.getId());
         Date startDate = null;
         Date endDate = null;
         try{

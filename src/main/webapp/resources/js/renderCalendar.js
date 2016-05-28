@@ -170,8 +170,6 @@ function rendering(objects ,roomID) {
 
         eventClick: function (calEvent, jsEvent, view) {
 
-            var isChanged = false;
-
             var beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
@@ -209,7 +207,7 @@ function rendering(objects ,roomID) {
                     (endDate.toDateString() === (new Date(newEndDate)).toDateString()) &&
                     (beforeUpdate === $('#titleUpdate').val())) {
                         $('#updating').dialog('close');
-                        alert("shit");
+
                         return;
                 }
                 $('#calendar').fullCalendar( 'removeEvents', calEvent.id);
@@ -222,7 +220,8 @@ function rendering(objects ,roomID) {
 
                 }
                 $('#calendar').fullCalendar( 'renderEvent', eventForUpdate );
-                alert("fefe");
+                sendToServerForUpdate(eventForUpdate, roomID);
+
 
                 $('#updating').dialog('close');
             });
@@ -255,7 +254,7 @@ function rendering(objects ,roomID) {
         events: objects
     });
 }
-
+/*
 
 function forSendingToServer(event, roomID) {
 var res = -1;
@@ -277,14 +276,15 @@ var res = -1;
 
     return res;
 
-}
+}*/
 
 
 function sendToServerForUpdate(event, roomID) {
+    alert("update");
     $.ajax({
         type: 'post',
         contentType: 'application/json',
-        url: 'getnewevent',
+        url: 'geteventforupdate',
         dataType: "json",
         data: JSON.stringify({
             id : event.id,
