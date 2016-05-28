@@ -12,11 +12,10 @@ public class RateDTO implements BaseDTO {
     public RateDTO() {
     }
 
-    public RateDTO(String hourRate, String valueRate) {
+    public RateDTO(String hourRate, String priceRate) {
         this.hourRate = hourRate;
-        this.priceRate = valueRate;
+        this.priceRate = priceRate;
     }
-
 
     public String getHourRate() {
         return hourRate;
@@ -26,11 +25,11 @@ public class RateDTO implements BaseDTO {
         this.hourRate = hourRate;
     }
 
-    public String getValueRate() {
+    public String getPriceRate() {
         return priceRate;
     }
 
-    public void setValueRate(String valueRate) {
-        this.priceRate = valueRate;
+    public void setPriceRate(String priceRate) {
+        this.priceRate = priceRate;
     }
 }
