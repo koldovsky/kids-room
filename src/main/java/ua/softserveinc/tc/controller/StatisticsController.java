@@ -40,7 +40,7 @@ public class StatisticsController
         String dateThen = convertToString(dateMonthAgo());
         List<Room> rooms = roomService.findAll();
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
-        HashMap<Room, Long> statistics = bookingService.generateStatistics(rooms, bookings);
+        HashMap<Room, Long> statistics = bookingService.generateAReport(rooms, bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
