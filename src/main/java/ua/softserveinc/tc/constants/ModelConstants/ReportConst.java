@@ -11,10 +11,12 @@ public interface ReportConst
     String BOOKINGS = "bookings";
     String DATE_THEN = "dateThen";
     String SUM_TOTAL = "sumTotal";
+    String STATISTICS = "statistics";
     String ACTIVE_USERS = "activeUsers";
     String PARENT_EMAIL = "parentEmail";
 
     String REPORT_VIEW = "manager-report";
     String ALL_VIEW = "manager-report-all";
+    String STATISTICS_VIEW = "adm-statistics";
     String PARENT_VIEW = "manager-report-parent";
 }

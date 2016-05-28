@@ -20,6 +20,7 @@ import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
@@ -87,34 +88,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public Long getSumTotal(List<Booking> bookings)
     {
-        Long sumTotal = 0L;
-        for (Booking booking : bookings)
-        {
-            sumTotal += booking.getSum();
-        }
-
-        return sumTotal;
+        return bookings.stream()
+            .mapToLong(Booking::getSum)
+            .sum();
     }
 
     @Override
-    public <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings)
+    public Map<User, Long> generateAReport(List<Booking> bookings)
     {
-        HashMap<T, Long> report = new HashMap<>();
+        return bookings.stream()
+            .collect(Collectors.groupingBy(Booking::getIdUser,
+                Collectors.summingLong(Booking::getSum)));
+    }
 
-        for (T entity : entities)
-        {
-            Long sum = 0L;
-            for (Booking booking : bookings)
-            {
-                if (booking.getIdUser().equals(entity)
-                    || booking.getIdRoom().equals(entity))
-                {
-                    sum += booking.getSum();
-                }
-            }
-            report.put(entity, sum);
-        }
-        return report;
+    @Override
+    public Map<Room, Long> generateStatistics(List<Booking> bookings)
+    {
+        return bookings.stream()
+            .collect(Collectors.groupingBy(Booking::getIdRoom,
+                Collectors.summingLong(Booking::getSum)));
     }
 
     @Override

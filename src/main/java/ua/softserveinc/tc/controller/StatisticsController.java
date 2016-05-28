@@ -13,8 +13,8 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Demian on 28.05.2016.
@@ -23,19 +23,19 @@ import java.util.List;
 public class StatisticsController
 {
     @Autowired
-    DateUtil dateUtil;
+    private DateUtil dateUtil;
 
     @Autowired
-    RoomService roomService;
+    private RoomService roomService;
 
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
 
     @RequestMapping(value = "/adm-statistics", method = RequestMethod.GET)
     public ModelAndView statistics()
     {
         ModelAndView model = new ModelAndView();
-        model.setViewName("adm-statistics");
+        model.setViewName(ReportConst.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
         String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
@@ -44,11 +44,11 @@ public class StatisticsController
         List<Room> rooms = roomService.findAll();
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
 
-        HashMap<Room, Long> statistics = bookingService.generateAReport(rooms, bookings);
+        Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
-        modelMap.addAttribute("statistics", statistics);
+        modelMap.addAttribute(ReportConst.STATISTICS, statistics);
 
         return model;
     }

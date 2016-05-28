@@ -17,10 +17,10 @@ import java.util.List;
 public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateService
 {
     @Autowired
-    private DateUtil dateUtil;
+    private RateDao rateDao;
 
     @Autowired
-    private RateDao rateDao;
+    private DateUtil dateUtil;
 
     public void create(Rate rate)
     {
@@ -36,7 +36,7 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
         // 02:00 hours - 2 hours; 02:01 hours - 3 hours
         if (minutes > 0) hours++;
 
-        Collections.sort(rates, (x,y) -> Integer.compare(x.getHourRate(), y.getHourRate()));
+        Collections.sort(rates, (x, y) -> Integer.compare(x.getHourRate(), y.getHourRate()));
 
         for (Rate rate : rates)
             if (hours <= rate.getHourRate()) return rate;

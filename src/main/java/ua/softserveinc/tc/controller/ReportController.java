@@ -25,10 +25,10 @@ import java.util.List;
 public class ReportController
 {
     @Autowired
-    DateUtil dateUtil;
+    private DateUtil dateUtil;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
     public ModelAndView report()

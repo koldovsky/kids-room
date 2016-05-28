@@ -3,27 +3,27 @@ package ua.softserveinc.tc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
-
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService
+{
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private DateUtil dateUtil;
 
     @Autowired
     private BookingDao bookingDao;
@@ -39,19 +39,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<Booking> root = query.from(Booking.class);
 
-        DateFormat dateFormat = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-
-        try
-        {
-                query.select(root.get("idUser")).distinct(true)
-                    .where(builder.between(root.get("bookingStartTime"),
-                            dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                            builder.equal(root.get("isCancelled"), false));
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Wrong format of date. " + e.getMessage());
-        }
+        query.select(root.get("idUser")).distinct(true).where(
+            builder.between(root.get("bookingStartTime"),
+                dateUtil.toDate(startDate), dateUtil.toDate(endDate)),
+            builder.equal(root.get("isCancelled"), false));
 
         return entityManager.createQuery(query).getResultList();
     }

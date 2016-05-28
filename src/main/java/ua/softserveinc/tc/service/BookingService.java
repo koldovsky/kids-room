@@ -5,8 +5,8 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface BookingService extends BaseService<Booking>
 {
@@ -17,7 +17,8 @@ public interface BookingService extends BaseService<Booking>
     void calculateAndSetDuration(Booking booking);
     Booking confirmBookingEndTime(BookingDTO bookingDTO);
     Booking confirmBookingStartTime(BookingDTO bookingDTO);
+    Map<User, Long> generateAReport(List<Booking> bookings);
+    Map<Room, Long> generateStatistics(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

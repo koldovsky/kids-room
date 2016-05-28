@@ -23,9 +23,10 @@ import java.util.List;
 public class ReportParentController
 {
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
+
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/manager-report-parent", method = RequestMethod.GET,
             params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
