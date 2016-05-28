@@ -8,6 +8,7 @@ import ua.softserveinc.tc.dto.RoomDTO;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Chak on 30.04.2016.
@@ -163,5 +164,21 @@ public class Room {
                 ", events=" + events +
                 ", rates=" + rates +
                 '}';
+    }
+
+
+    @Override
+    public int hashCode() {
+        return 750 * Objects.hashCode(city)
+                + 13 * Objects.hashCode(address);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that == null) return false;
+        if (this == that) return true;
+        if (!(that instanceof Room)) return false;
+        Room other = (Room) that;
+        return city.equals(other.city) && address.equals(other.address);
     }
 }

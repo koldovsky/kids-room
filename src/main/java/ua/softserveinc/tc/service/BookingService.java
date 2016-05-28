@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
 import java.text.ParseException;
@@ -18,6 +19,7 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException;
     Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException;
-    HashMap<User, Integer> generateAReport(List<User> users, List<Booking> bookings);
+    HashMap<User, Long> generateAReport(List<User> users, List<Booking> bookings);
+    HashMap<Room, Long> generateStatistics(List<Room> rooms, List<Booking> bookings);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

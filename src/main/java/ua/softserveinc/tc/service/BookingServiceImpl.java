@@ -7,6 +7,7 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Rate;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
@@ -124,14 +125,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public HashMap<User, Integer> generateAReport(List<User> users, List<Booking> bookings)
+    //TODO: Rewrite statistics and report into one method
+    public HashMap<User, Long> generateAReport(List<User> users, List<Booking> bookings)
     {
-        HashMap<User, Integer> result = new HashMap<>();
+        HashMap<User, Long> result = new HashMap<>();
 
         // get sum total for each user
         for (User user : users)
         {
-            int sum = 0;
+            Long sum = 0L;
             for (Booking booking : bookings)
             {
                 if (booking.getIdUser().equals(user))
@@ -140,6 +142,26 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 }
             }
             result.put(user, sum);
+        }
+        return result;
+    }
+
+    @Override
+    public HashMap<Room, Long> generateStatistics(List<Room> rooms, List<Booking> bookings)
+    {
+        HashMap<Room, Long> result = new HashMap<>();
+
+        for (Room room : rooms)
+        {
+            Long sum = 0L;
+            for (Booking booking : bookings)
+            {
+                if (booking.getIdRoom().equals(room))
+                {
+                    sum += booking.getSum();
+                }
+            }
+            result.put(room, sum);
         }
         return result;
     }

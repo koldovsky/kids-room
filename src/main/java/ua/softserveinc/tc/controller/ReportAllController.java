@@ -42,7 +42,7 @@ public class ReportAllController
 
         List<User> users = userService.getActiveUsers(dateThen, dateNow);
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
-        HashMap<User, Integer> report = bookingService.generateAReport(users, bookings);
+        HashMap<User, Long> report = bookingService.generateAReport(users, bookings);
 
         modelMap.addAttribute(ReportConst.REPORT, report);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
