@@ -52,4 +52,8 @@ public class CalendarServiceImpl implements CalendarService{
         return result;
     }
 
+    public final Long returnEventId(Event event) {
+        create(event);
+        return event.getId();
+    }
 }

@@ -19,17 +19,6 @@
             <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
         </div>
 
-        <div id="roomDiv">
-            <h2>Choose room</br>
-            <input list="room" name="room"></h2>
-        </div>
-
-        <datalist id="room">
-            <c:forEach var="room" items="${rooms}">
-            <option value="${room.name}"></option>
-            </c:forEach>
-        </datalist>
-
     </form>
 
     <div class="tableDiv">
@@ -37,28 +26,26 @@
 
             <caption>
                 <h2>
-                    <spring:message code="report.activeParents" /></br>
+                    Rooms statistics</br>
                     <span id="date">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
             <tr>
-                <th><spring:message code="report.name" /></th>
-                <th><spring:message code="report.surname" /></th>
-                <th><spring:message code="report.email" /></th>
-                <th><spring:message code="report.phone" /></th>
-                <th><spring:message code="report.bookings" /></th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Manager</th>
+                <th>Sum</th>
             </tr>
 
-            <c:forEach var="user" items="${activeUsers}">
+            <c:forEach var="room" items="${statistics.keySet()}">
             <tr>
-                <td>${user.getFirstName()}</td>
-                <td>${user.getLastName()}</td>
-                <td>${user.getEmail()}</td>
-                <td>${user.getPhoneNumber()}</td>
-                <td class="parentRow" id="${user.getEmail()}">
-                    <a><spring:message code="report.details" /></a>
-                </td>
+                <td>${room.name}</td>
+                <td>${room.city}</td>
+                <td>${room.address}</td>
+                <td>${room.manager}</td>
+                <td>${statistics.get(room)}</td>
             </tr>
             </c:forEach>
 

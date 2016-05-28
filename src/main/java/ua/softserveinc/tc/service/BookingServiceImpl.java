@@ -16,30 +16,21 @@ import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
     @Autowired
-    private BookingDao bookingDao;
+    BookingDao bookingDao;
 
     @Autowired
     RateService rateService;
 
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-    @Override
-    public List<Booking> getBookingsWithZeroSum()
-    {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-
-        query.where(builder.equal(root.get("sum"), 0));
-        return entityManager.createQuery(query).getResultList();
-    }
 
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
@@ -88,6 +79,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public void calculateDuration(Booking booking)
+    {
+        long difference = booking.getBookingEndTime().getTime() -
+                booking.getBookingStartTime().getTime();
+
+        booking.setDuration(difference);
+    }
+
+    @Override
+    public void calculateSum(Booking booking)
+    {
+        calculateDuration(booking);
+
+        List<Rate> rates = booking.getIdRoom().getRates();
+        Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
+        booking.setSum(closestRate.getPriceRate());
+    }
+
+    @Override
     public Long getSumTotal(List<Booking> bookings)
     {
         Long sumTotal = 0L;
@@ -97,6 +107,40 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
 
         return sumTotal;
+    }
+
+    @Override
+    public <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings)
+    {
+        HashMap<T, Long> result = new HashMap<>();
+
+        for (T entity : entities)
+        {
+            Long sum = 0L;
+            for (Booking booking : bookings)
+            {
+                if (booking.getIdUser().equals(entity)
+                        || booking.getIdRoom().equals(entity))
+                {
+                    sum += booking.getSum();
+                }
+            }
+            result.put(entity, sum);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Booking> getBookingsWithZeroSum()
+    {
+        EntityManager entityManager = bookingDao.getEntityManager();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+
+        query.where(builder.equal(root.get("sum"), 0))
+                .where(builder.equal(root.get("is_cancelled"), false));
+        return entityManager.createQuery(query).getResultList();
     }
 
     @Override
@@ -120,50 +164,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public HashMap<User, Integer> generateAReport(List<Booking> bookings)
-    {
-        HashMap<User, Integer> result = new HashMap<>();
-
-        // get set of unique users
-        HashSet<User> users = new HashSet<>();
-        bookings.forEach(booking -> users.add(booking.getIdUser()));
-
-        // get sum total for each user
-        for (User user : users)
-        {
-            int sum = 0;
-            for (Booking booking : bookings)
-            {
-                if (booking.getIdUser().equals(user))
-                {
-                    sum += booking.getSum();
-                }
-            }
-            result.put(user, sum);
-        }
-        return result;
-    }
-
-    @Override
-    public void calculateDuration(Booking booking)
-    {
-        long difference = booking.getBookingEndTime().getTime() -
-                booking.getBookingStartTime().getTime();
-
-        booking.setDuration(difference);
-    }
-
-    @Override
-    public void calculateSum(Booking booking)
-    {
-        calculateDuration(booking);
-
-        List<Rate> rates = booking.getIdRoom().getRates();
-        Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
-        booking.setSum(closestRate.getPriceRate());
-    }
-
-    @Override
     public Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException{
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
@@ -172,6 +172,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         calculateSum(booking);
         return booking;
     }
+
     @Override
     public Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException{
         Booking booking = findById(bookingDTO.getId());

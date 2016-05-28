@@ -180,7 +180,7 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-
+                            <input type = "text" id = "kostyl" hidden/>
                             <button type="button" class="btn btn-success" id="updatingButton">Update</button>
                             <button type="button" class="btn btn-danger" id="deleting">Delete</button>
 

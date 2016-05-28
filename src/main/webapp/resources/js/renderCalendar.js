@@ -1,3 +1,8 @@
+/**
+ * Created by dima- on 12.05.2016.
+ */
+
+
 
 $(function() {
     $('#basicExample').timepicker({
@@ -24,10 +29,6 @@ $(function() {
         dateFormat: "hh-mm-ss"
     });
 });
-
-/**
- * Created by dima- on 12.05.2016.
- */
 
 
 function changeFunc(id) {
@@ -82,9 +83,7 @@ function changeFunc(id) {
                         end: stringToArray[3]
                     }
                 }
-
                 rendering(objects, id);
-
             } else {
                 $('#calendar').fullCalendar('destroy');
 
@@ -94,7 +93,6 @@ function changeFunc(id) {
                     end: "1"
                 }]
                 rendering(objects, id);
-
             }
         }
     });
@@ -107,6 +105,7 @@ function rendering(objects ,roomID) {
         dayClick: function f(date, jsEvent, view) {
 
             var clickDate = date.format();
+
 
 
             $('#startDate').val('');
@@ -126,14 +125,41 @@ function rendering(objects ,roomID) {
                 }
 
                 var ev = {
+                    id: -1,
                     title: $('#startDate').val(),
                     start: makeISOtime(clickDate, "basicExample"),
-                    end:   makeISOtime(clickDate, "ender")
+                    end:   makeISOtime(clickDate, "ender"),
+                    backgroundColor: '#33cc33',
+                    borderColor: '#33cc33',
+                    editable : false
                 }
 
                 $('#calendar').fullCalendar('renderEvent', ev, true);
-                forSendingToServer(ev, roomID);
 
+                $.ajax({
+                    type: 'post',
+                    contentType: 'application/json',
+                    url: 'getnewevent',
+                    dataType: "json",
+                    data: JSON.stringify({
+                        name: ev.title,
+                        startTime: ev.start,
+                        endTime: ev.end,
+                        roomId: roomID
+                    }),
+                    success: function (result) {
+                        var newId = parseInt(result);
+
+                        $('#calendar').fullCalendar( 'removeEvents', ev.id);
+
+                        ev.id = newId;
+                        ev.backgroundColor = '#428bca';
+                        ev.borderColor = '#428bca';
+                        ev.editable = true;
+
+                        $('#calendar').fullCalendar( 'renderEvent', ev );
+                    }
+                });
 
                 $('#title').val("");
 
@@ -142,18 +168,22 @@ function rendering(objects ,roomID) {
             })
         },
 
-        eventClick: function(calEvent, jsEvent, view){
+        eventClick: function (calEvent, jsEvent, view) {
+
+            var isChanged = false;
+
+            var beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
             $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
             $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
-
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
 
             var newDate = new Date();
             var newDateForEnd = new Date();
+
             newDate.setHours(date.getUTCHours());
             newDate.setMinutes(date.getUTCMinutes());
             newDate.setSeconds(date.getUTCSeconds());
@@ -163,7 +193,7 @@ function rendering(objects ,roomID) {
             newDateForEnd.setSeconds(endDate.getUTCSeconds());
 
             $('#startTimeUpdate').timepicker('setTime', newDate);
-            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);
+            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);           //години до
 
             $('#updating').dialog('open');
 
@@ -171,16 +201,29 @@ function rendering(objects ,roomID) {
             $('#updatingButton').click(function () {
 
 
+
                 var newStartDate = makeISOtime(calEvent.start.format(), "startTimeUpdate");
-                var newEndDate = makeISOtime(calEvent.start.format(), "endTimeUpdate");
+                var newEndDate = makeISOtime(calEvent.end.format(), "endTimeUpdate");
+
+                if ((date.toDateString() === (new Date(newStartDate)).toDateString()) &&
+                    (endDate.toDateString() === (new Date(newEndDate)).toDateString()) &&
+                    (beforeUpdate === $('#titleUpdate').val())) {
+                        $('#updating').dialog('close');
+                        alert("shit");
+                        return;
+                }
+                $('#calendar').fullCalendar( 'removeEvents', calEvent.id);
 
                 var eventForUpdate = {
-                    id : calEvent.id,
+                    id: calEvent.id,
                     title: $('#titleUpdate').val(),
                     start: newStartDate,
-                    end:   newEndDate
+                    end: newEndDate
 
                 }
+                $('#calendar').fullCalendar( 'renderEvent', eventForUpdate );
+                alert("fefe");
+
                 $('#updating').dialog('close');
             });
 
@@ -215,8 +258,8 @@ function rendering(objects ,roomID) {
 
 
 function forSendingToServer(event, roomID) {
-
-    $.ajax({
+var res = -1;
+   $.ajax({
         type: 'post',
         contentType: 'application/json',
         url: 'getnewevent',
@@ -226,19 +269,16 @@ function forSendingToServer(event, roomID) {
             startTime: event.start,
             endTime: event.end,
             roomId: roomID
-        }), success: function(result) {
-            console.log(result);
+        }),
+       success : function (result) {
+         res = result;
         }
     });
 
-    $.ajax({
-        type: 'post',
-        url: 'getnewevent',
-        success: function(result) {
-            alert("ferge");
-        }
-    })
+    return res;
+
 }
+
 
 function sendToServerForUpdate(event, roomID) {
     $.ajax({
@@ -291,5 +331,5 @@ function makeISOtime(clickDate, idOfTimePicker) {
      var superBuffer = "" + clickDate.substring(0,11) + timepickerHours + ":" +
      timepickerMinutes + clickDate.substring(16);
 
-    return superBuffer;
+     return superBuffer;
 }
