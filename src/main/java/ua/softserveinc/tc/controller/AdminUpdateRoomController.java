@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.dto.RoomDTO;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -29,27 +30,27 @@ public class AdminUpdateRoomController {
 
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.GET)
-    public ModelAndView updateRoom(@RequestParam("id") Long id) {
+    public ModelAndView getUpdateRoomForm(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView("adm-update-room");
 
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
-
         model.addObject("managerList", managers);
 
-
         Room room = roomService.findById(id);
-        model.getModelMap().addAttribute("room", room);
+        RoomDTO roomDTO = new RoomDTO(room);
+
+        model.getModelMap().addAttribute("room", roomDTO);
 
         return model;
     }
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
-    public String submitRoomUpdate(@ModelAttribute("room") Room room, @RequestParam("managers") Long id) {
+    public String submitRoomUpdate(@ModelAttribute("room") RoomDTO roomDTO, @RequestParam("managers") Long id) {
+        User managerForRoom = userService.findById(id);
+        roomDTO.setManager(managerForRoom);
 
-        User manager = userService.findById(id);
-        room.setManager(manager);
-
-        roomService.update(room);
+        Room room = new Room(roomDTO);
+        roomService.create(room);
 
         return "redirect:/" + "adm-edit-room";
     }
