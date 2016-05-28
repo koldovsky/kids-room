@@ -46,8 +46,10 @@ public class Booking
     @Column(name = BookingConst.COMMENT)
     private String comment;
 
-    @Column(name = BookingConst.IS_CANCELLED, nullable = false)
-    private boolean isCancelled;
+
+    @Column(name = BookingConst.BOOKING_STATE)
+    @Enumerated(EnumType.ORDINAL)
+    private BookingState bookingState;
 
     @Column(name = BookingConst.DURATION, columnDefinition = "bigint default 0")
     private Long duration;
@@ -114,14 +116,6 @@ public class Booking
         this.comment = comment;
     }
 
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
-    }
-
     public Long getDuration() {
         return duration;
     }
@@ -136,6 +130,13 @@ public class Booking
 
     public void setSum(Long sum) {
         this.sum = sum;
+    }
+
+    public BookingState getBookingState() {
+        return bookingState;
+    }
+    public void setBookingState(BookingState bookingState) {
+        this.bookingState = bookingState;
     }
 
     public String formatDuration()
