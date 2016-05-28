@@ -170,8 +170,6 @@ function rendering(objects ,roomID) {
 
         eventClick: function (calEvent, jsEvent, view) {
 
-            var isChanged = false;
-
             var beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
@@ -200,8 +198,6 @@ function rendering(objects ,roomID) {
 
             $('#updatingButton').click(function () {
 
-
-
                 var newStartDate = makeISOtime(calEvent.start.format(), "startTimeUpdate");
                 var newEndDate = makeISOtime(calEvent.end.format(), "endTimeUpdate");
 
@@ -209,7 +205,7 @@ function rendering(objects ,roomID) {
                     (endDate.toDateString() === (new Date(newEndDate)).toDateString()) &&
                     (beforeUpdate === $('#titleUpdate').val())) {
                         $('#updating').dialog('close');
-                        alert("shit");
+
                         return;
                 }
                 $('#calendar').fullCalendar( 'removeEvents', calEvent.id);
@@ -222,11 +218,17 @@ function rendering(objects ,roomID) {
 
                 }
                 $('#calendar').fullCalendar( 'renderEvent', eventForUpdate );
-                alert("fefe");
+                sendToServerForUpdate(eventForUpdate, roomID);
+
 
                 $('#updating').dialog('close');
             });
 
+            $('#deleting').click(function() {
+                sendToServerForDelete(calEvent);
+                $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                $('#updating').dialog('close');
+            })
         },
 
         header: {
@@ -255,7 +257,7 @@ function rendering(objects ,roomID) {
         events: objects
     });
 }
-
+/*
 
 function forSendingToServer(event, roomID) {
 var res = -1;
@@ -277,14 +279,15 @@ var res = -1;
 
     return res;
 
-}
+}*/
 
 
 function sendToServerForUpdate(event, roomID) {
+    alert("update");
     $.ajax({
         type: 'post',
         contentType: 'application/json',
-        url: 'getnewevent',
+        url: 'geteventforupdate',
         dataType: "json",
         data: JSON.stringify({
             id : event.id,
@@ -296,11 +299,11 @@ function sendToServerForUpdate(event, roomID) {
     });
 }
 
-function sendToServerForDelete(event, roomID) {
+function sendToServerForDelete(event) {
     $.ajax({
         type: 'post',
         contentType: 'application/json',
-        url: 'getnewevent',
+        url: 'geteventfordelete',
         dataType: "json",
         data: JSON.stringify({
             id : event.id

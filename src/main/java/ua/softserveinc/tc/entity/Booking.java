@@ -1,10 +1,12 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
-import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.EntityConstants.BookingConst;
+import ua.softserveinc.tc.constants.EntityConstants.ChildConst;
+import ua.softserveinc.tc.constants.EntityConstants.RoomConst;
+import ua.softserveinc.tc.constants.EntityConstants.UserConst;
+import ua.softserveinc.tc.util.DateUtil;
+import ua.softserveinc.tc.util.DateUtilImpl;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +17,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = BookingConst.TABLE_NAME_BOOKING)
-public class Booking {
+public class Booking
+{
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -43,14 +46,19 @@ public class Booking {
     @Column(name = BookingConst.COMMENT)
     private String comment;
 
-    @Column(name = BookingConst.IS_CANCELLED, nullable = false)
-    private boolean isCancelled;
+
+    @Column(name = BookingConst.BOOKING_STATE)
+    @Enumerated(EnumType.ORDINAL)
+    private BookingState bookingState;
 
     @Column(name = BookingConst.DURATION, columnDefinition = "bigint default 0")
     private Long duration;
 
     @Column(name = BookingConst.SUM, columnDefinition = "bigint default 0")
     private Long sum;
+
+    @Transient
+    private DateUtil dateUtil = new DateUtilImpl();
 
     public Long getIdBook() {
         return idBook;
@@ -108,14 +116,6 @@ public class Booking {
         this.comment = comment;
     }
 
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
-    }
-
     public Long getDuration() {
         return duration;
     }
@@ -130,5 +130,17 @@ public class Booking {
 
     public void setSum(Long sum) {
         this.sum = sum;
+    }
+
+    public BookingState getBookingState() {
+        return bookingState;
+    }
+    public void setBookingState(BookingState bookingState) {
+        this.bookingState = bookingState;
+    }
+
+    public String formatDuration()
+    {
+        return dateUtil.toHoursAndMinutes(duration);
     }
 }

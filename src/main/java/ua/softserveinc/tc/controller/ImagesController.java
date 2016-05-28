@@ -52,19 +52,26 @@ public class ImagesController {
      * @return redirects back to kid's profile view
      */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
-    public String uploadImage(@RequestParam("file") MultipartFile file, @PathVariable String kidId){
-        Long id = Long.parseLong(kidId);
+    public String uploadImage(@RequestParam("file") MultipartFile file,
+                              @PathVariable String kidId)
+            throws ResourceNotFoundException, AccessDeniedException
+    {
+        //Checking if URL is valid. If it cannot be parsed to Long an exception
+        //is thrown and passed to @ControllerAdvice
+        Long id;
+        try {id = Long.parseLong(kidId);}
+        catch(Exception e){throw new ResourceNotFoundException();}
+
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
                 Child kid = childService.findById(id);
-                if(kid == null){
-                    throw new ResourceNotFoundException();
-                }
                 kid.setImage(bytes);
                 childService.update(kid);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
+                //TODO: придумати новий ексепшн
+                throw new ResourceNotFoundException();
             }
         }
         return "redirect:/" + MyKidsConst.KID_PROFILE_VIEW + "?id=" + kidId;
@@ -76,21 +83,23 @@ public class ImagesController {
      * @param principal
      * @return
      * @throws IOException
+     * @throws ResourceNotFoundException
+     * @throws AccessDeniedException
      */
     @RequestMapping(value = "/images/{kidId}",
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
-            throws IOException{
+            throws IOException,
+            AccessDeniedException,
+            ResourceNotFoundException{
+        //Checking if URL is valid. If it cannot be parsed to Long an exception
+        //is thrown and passed to @ControllerAdvice
         Long id;
-        try {
-            id = Long.parseLong(kidId);
-        } catch(Exception e){
-            //invalid parameter
-            throw new ResourceNotFoundException();
-        }
+        try {id = Long.parseLong(kidId);}
+        catch(Exception e){throw new ResourceNotFoundException();}
 
-        Child kid = childService.findById(Long.parseLong(kidId));
+        Child kid = childService.findById(id);
 
         User current = userService.getUserByEmail(principal.getName());
         if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
@@ -99,7 +108,6 @@ public class ImagesController {
         if(kid.getImage()!= null) return kid.getImage();
 
         String path;
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         if(kid.getGender() == Gender.FEMALE)
              path = "src/main/resources/images/default-girl.jpg";
         else

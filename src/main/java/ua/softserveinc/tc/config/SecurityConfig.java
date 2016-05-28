@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/manager-report-parent").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/allkidslist").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/manager-confirm-booking").hasRole("MANAGER")
+                .antMatchers(HttpMethod.GET, "/adm-statistics").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.GET, "/adm-add-manager").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.POST, "/adm-add-manager").hasRole("ADMINISTRATOR")
                 .antMatchers(HttpMethod.GET, "/adm-edit-room").hasRole("ADMINISTRATOR")

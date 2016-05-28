@@ -46,24 +46,27 @@ public class KidsProfileController {
      *          or a parent to this child
      * @throws ResourceNotFoundException
      *          in case no kid with such ID exists
+     *          OR invalid request was detected
      */
     @RequestMapping(value = "/profile",
             method = RequestMethod.GET)
     public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)
             throws AccessDeniedException, ResourceNotFoundException{
-
-        ModelAndView model = new ModelAndView();
-        model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
-        Long idL = Long.parseLong(id);
+        //Checking if URL is valid. If it cannot be parsed to Long an exception
+        //is thrown and passed to @ControllerAdvice
+        Long idL;
+        try {idL = Long.parseLong(id);}
+        catch(Exception e) {throw new ResourceNotFoundException();}
 
         User current = userService.getUserByEmail(principal.getName());
         Child kid = childService.findById(idL);
 
-        if(kid == null) throw new ResourceNotFoundException();
-
-        if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId()))
+        if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
             throw new AccessDeniedException("Have to be manager or parent");
+        }
 
+        ModelAndView model = new ModelAndView();
+        model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
         model.getModelMap().addAttribute(MyKidsConst.KID_ATTRIBUTE, kid);
         return model;
     }

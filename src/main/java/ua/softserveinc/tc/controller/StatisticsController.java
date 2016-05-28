@@ -11,11 +11,10 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.DateUtil;
 
-import java.util.HashMap;
 import java.util.List;
-
-import static ua.softserveinc.tc.util.TimeUtil.*;
+import java.util.Map;
 
 /**
  * Created by Demian on 28.05.2016.
@@ -24,27 +23,32 @@ import static ua.softserveinc.tc.util.TimeUtil.*;
 public class StatisticsController
 {
     @Autowired
-    RoomService roomService;
+    private DateUtil dateUtil;
 
     @Autowired
-    BookingService bookingService;
+    private RoomService roomService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @RequestMapping(value = "/adm-statistics", method = RequestMethod.GET)
     public ModelAndView statistics()
     {
         ModelAndView model = new ModelAndView();
-        model.setViewName("adm-statistics");
+        model.setViewName(ReportConst.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = convertToString(currentDate());
-        String dateThen = convertToString(dateMonthAgo());
+        String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
+        String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
+
         List<Room> rooms = roomService.findAll();
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
-        HashMap<Room, Long> statistics = bookingService.generateAReport(rooms, bookings);
+
+        Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
-        modelMap.addAttribute("statistics", statistics);
+        modelMap.addAttribute(ReportConst.STATISTICS, statistics);
 
         return model;
     }

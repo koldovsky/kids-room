@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
-import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
+import ua.softserveinc.tc.constants.EntityConstants.EventConst;
 import ua.softserveinc.tc.entity.Event;
 
 /**

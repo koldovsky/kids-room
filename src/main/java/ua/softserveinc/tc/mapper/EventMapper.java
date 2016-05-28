@@ -25,7 +25,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         Event event = new Event();
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
-
+        if(eventDto.getId() != 0) event.setId(eventDto.getId());
         Date startDate = null;
         Date endDate = null;
         try{
@@ -38,7 +38,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
             }catch (Exception e){
 
             }
-        }
+        } catch (Exception e) {}
 
         try{
             DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
@@ -48,7 +48,7 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
                 DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
                 endDate = df.parse(eventDto.getEndTime());
             }catch (Exception e){}
-        }
+        } catch (Exception e) {}
 
         event.setStartTime(startDate);
         event.setEndTime(endDate);

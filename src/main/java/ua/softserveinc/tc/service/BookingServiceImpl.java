@@ -7,51 +7,37 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Rate;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.BookingUtil;
+import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
     @Autowired
-    BookingDao bookingDao;
+    private DateUtil dateUtil;
 
     @Autowired
-    RateService rateService;
+    private BookingDao bookingDao;
 
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    @Autowired
+    private RateService rateService;
 
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
     {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-
-        try
-        {
-            query.where(builder.between(root.get("bookingStartTime"),
-                    dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                    builder.equal(root.get("isCancelled"), false));
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Wrong format of date. " + e.getMessage());
-        }
-
-        return entityManager.createQuery(query).getResultList();
+        return getBookingsByUserByRangeOfTime(null, startDate, endDate);
     }
 
     @Override
@@ -59,27 +45,29 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
+        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
+        Root<Booking> root = criteria.from(Booking.class);
 
-        try
+        List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
+            builder.equal(root.get("isCancelled"), false),
+            builder.between(root.get("bookingStartTime"),
+                dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
+        );
+
+        if (user == null)
+            criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        else
         {
-            query.where(builder.between(root.get("bookingStartTime"),
-                    dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                    builder.equal(root.get("idUser"), user),
-                    builder.equal(root.get("isCancelled"), false))
-                    .orderBy(builder.asc(root.get("bookingStartTime")));
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Wrong format of date. " + e.getMessage());
+            restrictions.add(builder.equal(root.get("idUser"), user));
+            criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+            criteria.orderBy(builder.asc(root.get("bookingStartTime")));
         }
 
-        return entityManager.createQuery(query).getResultList();
+        return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override
-    public void calculateDuration(Booking booking)
+    public void calculateAndSetDuration(Booking booking)
     {
         long difference = booking.getBookingEndTime().getTime() -
                 booking.getBookingStartTime().getTime();
@@ -88,9 +76,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public void calculateSum(Booking booking)
+    public void calculateAndSetSum(Booking booking)
     {
-        calculateDuration(booking);
+        calculateAndSetDuration(booking);
 
         List<Rate> rates = booking.getIdRoom().getRates();
         Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
@@ -100,34 +88,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public Long getSumTotal(List<Booking> bookings)
     {
-        Long sumTotal = 0L;
-        for (Booking booking : bookings)
-        {
-            sumTotal += booking.getSum();
-        }
-
-        return sumTotal;
+        return bookings.stream()
+            .mapToLong(Booking::getSum)
+            .sum();
     }
 
     @Override
-    public <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings)
+    public Map<User, Long> generateAReport(List<Booking> bookings)
     {
-        HashMap<T, Long> result = new HashMap<>();
+        return bookings.stream()
+            .collect(Collectors.groupingBy(Booking::getIdUser,
+                Collectors.summingLong(Booking::getSum)));
+    }
 
-        for (T entity : entities)
-        {
-            Long sum = 0L;
-            for (Booking booking : bookings)
-            {
-                if (booking.getIdUser().equals(entity)
-                        || booking.getIdRoom().equals(entity))
-                {
-                    sum += booking.getSum();
-                }
-            }
-            result.put(entity, sum);
-        }
-        return result;
+    @Override
+    public Map<Room, Long> generateStatistics(List<Booking> bookings)
+    {
+        return bookings.stream()
+            .collect(Collectors.groupingBy(Booking::getIdRoom,
+                Collectors.summingLong(Booking::getSum)));
     }
 
     @Override
@@ -144,54 +123,50 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<Booking> getBookingsByDay(String date) throws ParseException{
+    public List<Booking> getBookingsByRoom(Room room){
 
-        String startTimeString = date + " 00:00";
-        String endTimeString = date + " 23:59";
-        Calendar calendarStartTime = Calendar.getInstance();
-        Calendar calendarEndTime = Calendar.getInstance();
+        Calendar toDay = Calendar.getInstance();
+        toDay.setTime(new Date("2016/06/20")); // temporarily: for example;
+        toDay.set(Calendar.AM_PM, 0);
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
+        Date startTime = toDay.getTime();
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
+        Date endTime = toDay.getTime();
 
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
-        calendarStartTime.setTime(dfDateAndTime.parse(startTimeString));
-        calendarEndTime.setTime(dfDateAndTime.parse(endTimeString));
-
-        Date startTime = calendarStartTime.getTime();
-        Date endTime = calendarEndTime.getTime();
-        List<Booking> bookings= bookingDao.getBookingsByDay(startTime, endTime);
-
-        return bookings;
+        return bookingDao.getBookingsByDay(startTime, endTime, room);
     }
 
     @Override
-    public Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException{
+    public Booking confirmBookingStartTime(BookingDTO bookingDTO){
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
         booking.setBookingStartTime(date);
         update(booking);
-        calculateSum(booking);
+        calculateAndSetSum(booking);
         return booking;
     }
 
     @Override
-    public Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException{
+    public Booking confirmBookingEndTime(BookingDTO bookingDTO){
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getEndTime());
         booking.setBookingEndTime(date);
         update(booking);
-        calculateSum(booking);
+        calculateAndSetSum(booking);
         return booking;
     }
 
-    private Date getDateAndTimeBooking(Booking booking, String time) throws ParseException {
+    private Date getDateAndTimeBooking(Booking booking, String time) {
 
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dfDateAndTime.parse(dateString));
-        Date date = calendar.getTime();
-        return date;
+        calendar.setTime(dateUtil.toDateAndTime(dateString));
+        return calendar.getTime();
 
     }
 }

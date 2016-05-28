@@ -14,11 +14,11 @@ import java.util.List;
 public class SumCalculation implements Job
 {
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
 
     public void execute(JobExecutionContext context)
     {
         List<Booking> bookings = bookingService.getBookingsWithZeroSum();
-        bookings.forEach(booking -> bookingService.calculateSum(booking));
+        bookings.forEach(booking -> bookingService.calculateAndSetSum(booking));
     }
 }

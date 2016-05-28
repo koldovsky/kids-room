@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.constants.ColumnConstants;
+package ua.softserveinc.tc.constants.EntityConstants;
 
 /**
  * Created by TARAS on 05.05.2016.
@@ -21,5 +21,7 @@ public interface BookingConst {
     String DURATION = "duration";
 
     String SUM = "sum";
+
+    String BOOKING_STATE = "booking_state";
 
 }

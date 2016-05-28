@@ -1,8 +1,8 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.EntityConstants.RoomConst;
+import ua.softserveinc.tc.constants.EntityConstants.UserConst;
 import ua.softserveinc.tc.dto.RoomDTO;
 
 import javax.persistence.*;
@@ -153,17 +153,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", capacity=" + capacity +
-                ", manager=" + manager +
-                ", events=" + events +
-                ", rates=" + rates +
-                '}';
+        return name;
     }
 
 

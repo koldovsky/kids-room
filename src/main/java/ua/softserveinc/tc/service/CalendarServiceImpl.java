@@ -34,7 +34,7 @@ public class CalendarServiceImpl implements CalendarService{
         eventDao.create(event);                 //тут івент отримує id
     }
 
-    public final String eventsToString(long id) {
+    public final String eventsToString(final long id) {
         String buf = findByRoomId(id).toString();
         return buf.substring(1, buf.length() - 1);
     }
@@ -52,8 +52,16 @@ public class CalendarServiceImpl implements CalendarService{
         return result;
     }
 
-    public final Long returnEventId(Event event) {
+    public final Long returnEventId(final Event event) {
         create(event);
         return event.getId();
+    }
+
+    public final void updateEvent(Event event) {
+        eventDao.update(event);
+    }
+
+    public final void deleteEvent(Event event) {
+        eventDao.delete(event);
     }
 }

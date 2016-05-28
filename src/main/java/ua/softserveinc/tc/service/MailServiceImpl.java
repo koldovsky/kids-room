@@ -21,12 +21,14 @@ import java.util.Map;
  */
 
 @Service
-public class MailServiceImpl implements MailService {
-
+public class MailServiceImpl implements MailService
+{
     @Autowired
     private JavaMailSender mailSender;
+
     @Autowired
     private VelocityEngine velocityEngine;
+
     @Autowired
     private ServletContext context;
 
@@ -58,7 +60,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal)
     {
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<>();
         model.put("user", user);
         model.put("sumTotal", sumTotal);
 

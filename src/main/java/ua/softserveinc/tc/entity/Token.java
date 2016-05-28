@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.entity;
 
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.EntityConstants.UserConst;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 
 import javax.persistence.*;

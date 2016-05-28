@@ -2,22 +2,23 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
-import java.text.ParseException;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface BookingService extends BaseService<Booking>
 {
-    void calculateSum(Booking booking);
     List<Booking> getBookingsWithZeroSum();
-    void calculateDuration(Booking booking);
+    void calculateAndSetSum(Booking booking);
     Long getSumTotal(List<Booking> bookings);
-    List<Booking> getBookingsByDay(String data) throws ParseException;
+    List<Booking> getBookingsByRoom(Room room);
+    void calculateAndSetDuration(Booking booking);
+    Booking confirmBookingEndTime(BookingDTO bookingDTO);
+    Booking confirmBookingStartTime(BookingDTO bookingDTO);
+    Map<User, Long> generateAReport(List<Booking> bookings);
+    Map<Room, Long> generateStatistics(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException;
-    Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException;
-    <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

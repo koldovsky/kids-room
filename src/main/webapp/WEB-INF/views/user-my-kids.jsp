@@ -17,6 +17,11 @@
 <h2>
     <spring:message code="kid.list" />
 </h2>
+
+<c:if test="${kids.isEmpty()}">
+      <h3><spring:message code="kids.listNONE" /></h3>
+</c:if>
+<c:if test="${!kids.isEmpty()}">
 <c:forEach var="kid" items="${kids}">
 <div data-id="${kid.getId()}" class="kidslistblock">
     <div class="kidslistitem">
@@ -27,8 +32,10 @@
     </div>
 
 </div>
-
 </c:forEach>
+</c:if>
+
+
 <form action="registerkid">
     <button class="btn btn-raised btn-primary waves-effect waves-light" type="submit">
         <spring:message code="button.add" />

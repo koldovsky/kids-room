@@ -13,11 +13,10 @@ import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.dto.UserDTO;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static ua.softserveinc.tc.util.TimeUtil.*;
 
 /**
  * Created by Demian on 08.05.2016.
@@ -26,7 +25,10 @@ import static ua.softserveinc.tc.util.TimeUtil.*;
 public class ReportController
 {
     @Autowired
-    UserService userService;
+    private DateUtil dateUtil;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
     public ModelAndView report()
@@ -35,8 +37,9 @@ public class ReportController
         model.setViewName(ReportConst.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = convertToString(currentDate());
-        String dateThen = convertToString(dateMonthAgo());
+        String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
+        String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
+
         List<User> users = userService.getActiveUsers(dateThen, dateNow);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);

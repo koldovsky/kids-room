@@ -8,7 +8,7 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.EntityConstants.UserConst;
 
 import javax.persistence.*;
 import java.util.ArrayList;
