@@ -12,14 +12,12 @@ import ua.softserveinc.tc.entity.User;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
@@ -30,52 +28,37 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Autowired
     RateService rateService;
 
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     @Override
-    public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
+    public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate) throws ParseException
     {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-
-        try
-        {
-            query.where(builder.between(root.get("bookingStartTime"),
-                    dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                    builder.equal(root.get("isCancelled"), false));
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Wrong format of date. " + e.getMessage());
-        }
-
-        return entityManager.createQuery(query).getResultList();
+        return getBookingsByUserByRangeOfTime(null, startDate, endDate);
     }
 
     @Override
-    public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate)
+    public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate) throws ParseException
     {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
+        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
+        Root<Booking> root = criteria.from(Booking.class);
 
-        try
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
+                builder.equal(root.get("isCancelled"), false),
+                builder.between(root.get("bookingStartTime"),
+                        dateFormat.parse(startDate), dateFormat.parse(endDate)))
+        );
+
+        if (user == null)
+            criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        else
         {
-            query.where(builder.between(root.get("bookingStartTime"),
-                    dateFormat.parse(startDate), dateFormat.parse(endDate)),
-                    builder.equal(root.get("idUser"), user),
-                    builder.equal(root.get("isCancelled"), false))
-                    .orderBy(builder.asc(root.get("bookingStartTime")));
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Wrong format of date. " + e.getMessage());
+            restrictions.add(builder.equal(root.get("idUser"), user));
+            criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
         }
 
-        return entityManager.createQuery(query).getResultList();
+        return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override

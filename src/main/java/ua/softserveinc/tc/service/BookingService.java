@@ -15,9 +15,9 @@ public interface BookingService extends BaseService<Booking>
     void calculateDuration(Booking booking);
     Long getSumTotal(List<Booking> bookings);
     List<Booking> getBookingsByDay(String data) throws ParseException;
-    List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException;
     Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException;
     <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings);
-    List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
+    List<Booking> getBookingsByRangeOfTime(String startDate, String endDate) throws ParseException;
+    List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate) throws ParseException;
 }

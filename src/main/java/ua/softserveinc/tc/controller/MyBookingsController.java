@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
@@ -16,9 +18,9 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Nestor on 14.05.2016.
@@ -54,7 +56,7 @@ public class MyBookingsController {
     public @ResponseBody String getBookings(
                        @RequestParam(value = "dateLo") String dateLo,
                        @RequestParam(value = "dateHi") String dateHi,
-                       Principal principal){
+                       Principal principal) throws ParseException{
 
         User currentUser = userService.getUserByEmail(principal.getName());
         List<Booking> myBookings = bookingService.getBookingsByUserByRangeOfTime(currentUser, dateLo, dateHi);
