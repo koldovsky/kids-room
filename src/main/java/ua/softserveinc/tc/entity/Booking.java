@@ -1,10 +1,10 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
-import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.EntityConstants.BookingConst;
+import ua.softserveinc.tc.constants.EntityConstants.ChildConst;
+import ua.softserveinc.tc.constants.EntityConstants.RoomConst;
+import ua.softserveinc.tc.constants.EntityConstants.UserConst;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.DateUtilImpl;
 

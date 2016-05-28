@@ -8,14 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.RateDao;
 import ua.softserveinc.tc.entity.Rate;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateService
 {
+    @Autowired
+    private DateUtil dateUtil;
 
     @Autowired
     private RateDao rateDao;
@@ -28,8 +30,8 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
     @Override
     public Rate calculateClosestRate(long milliseconds, final List<Rate> rates)
     {
-        int hours = (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
-        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
+        int hours = dateUtil.getHoursFromMilliseconds(milliseconds);
+        int minutes = dateUtil.getMinutesFromMilliseconds(milliseconds);
 
         // 02:00 hours - 2 hours; 02:01 hours - 3 hours
         if (minutes > 0) hours++;

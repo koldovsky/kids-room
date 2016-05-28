@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class DateUtilImpl implements DateUtil
 {
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
 
     @Override
     public Date toDate(String date)
@@ -29,16 +30,43 @@ public class DateUtilImpl implements DateUtil
         }
         catch (ParseException e)
         {
-            System.err.println("Wrong format of date." + e.getMessage());
+            System.err.println("Wrong format of date. " + e.getMessage());
             return null;
         }
     }
 
     @Override
+    public Date toDateAndTime(String date)
+    {
+        try
+        {
+            return dateAndTimeFormat.parse(date);
+        }
+        catch (ParseException e)
+        {
+            System.err.println("Wrong format of date. " + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public int getHoursFromMilliseconds(long milliseconds)
+    {
+        return (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
+    }
+
+    @Override
+    public int getMinutesFromMilliseconds(long milliseconds)
+    {
+        int hours = getHoursFromMilliseconds(milliseconds);
+        return (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
+    }
+
+    @Override
     public String toHoursAndMinutes(long milliseconds)
     {
-        int hours = (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
-        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
+        int hours = getHoursFromMilliseconds(milliseconds);
+        int minutes = getMinutesFromMilliseconds(milliseconds);
 
         String hoursAndMinutes = String.format("%02d", hours) + ":";
         hoursAndMinutes += String.format("%02d", minutes);
@@ -57,7 +85,7 @@ public class DateUtilImpl implements DateUtil
         }
         catch (ParseException e)
         {
-
+            System.err.println("Wrong format of date. " + e.getMessage());
         }
         Date date = calendar.getTime();
         return date;

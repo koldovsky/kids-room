@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
+import ua.softserveinc.tc.constants.EntityConstants.EventConst;
 
 import javax.persistence.*;
 import java.text.DateFormat;

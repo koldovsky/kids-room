@@ -1,8 +1,8 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.RateConst;
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
+import ua.softserveinc.tc.constants.EntityConstants.RateConst;
+import ua.softserveinc.tc.constants.EntityConstants.RoomConst;
 
 import javax.persistence.*;
 

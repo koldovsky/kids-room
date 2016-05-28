@@ -16,7 +16,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -24,13 +23,13 @@ import java.util.*;
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
     @Autowired
-    DateUtil dateUtil;
+    private DateUtil dateUtil;
 
     @Autowired
-    BookingDao bookingDao;
+    private BookingDao bookingDao;
 
     @Autowired
-    RateService rateService;
+    private RateService rateService;
 
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
@@ -47,9 +46,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
-                builder.equal(root.get("isCancelled"), false),
-                builder.between(root.get("bookingStartTime"),
-                        dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
+            builder.equal(root.get("isCancelled"), false),
+            builder.between(root.get("bookingStartTime"),
+                dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
         );
 
         if (user == null)
@@ -58,13 +57,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         {
             restrictions.add(builder.equal(root.get("idUser"), user));
             criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+            criteria.orderBy(builder.asc(root.get("bookingStartTime")));
         }
 
         return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override
-    public void calculateDuration(Booking booking)
+    public void calculateAndSetDuration(Booking booking)
     {
         long difference = booking.getBookingEndTime().getTime() -
                 booking.getBookingStartTime().getTime();
@@ -73,9 +73,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public void calculateSum(Booking booking)
+    public void calculateAndSetSum(Booking booking)
     {
-        calculateDuration(booking);
+        calculateAndSetDuration(booking);
 
         List<Rate> rates = booking.getIdRoom().getRates();
         Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
@@ -97,7 +97,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public <T> HashMap<T, Long> generateAReport(List<T> entities, List<Booking> bookings)
     {
-        HashMap<T, Long> result = new HashMap<>();
+        HashMap<T, Long> report = new HashMap<>();
 
         for (T entity : entities)
         {
@@ -105,14 +105,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             for (Booking booking : bookings)
             {
                 if (booking.getIdUser().equals(entity)
-                        || booking.getIdRoom().equals(entity))
+                    || booking.getIdRoom().equals(entity))
                 {
                     sum += booking.getSum();
                 }
             }
-            result.put(entity, sum);
+            report.put(entity, sum);
         }
-        return result;
+        return report;
     }
 
     @Override
@@ -129,54 +129,48 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<Booking> getBookingsByDay(String date) throws ParseException{
+    public List<Booking> getBookingsByDay(String date){
 
         String startTimeString = date + " 00:00";
         String endTimeString = date + " 23:59";
         Calendar calendarStartTime = Calendar.getInstance();
         Calendar calendarEndTime = Calendar.getInstance();
 
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
-        calendarStartTime.setTime(dfDateAndTime.parse(startTimeString));
-        calendarEndTime.setTime(dfDateAndTime.parse(endTimeString));
+        calendarStartTime.setTime(dateUtil.toDateAndTime(startTimeString));
+        calendarEndTime.setTime(dateUtil.toDateAndTime(endTimeString));
 
         Date startTime = calendarStartTime.getTime();
         Date endTime = calendarEndTime.getTime();
-        List<Booking> bookings= bookingDao.getBookingsByDay(startTime, endTime);
-
-        return bookings;
+        return bookingDao.getBookingsByDay(startTime, endTime);
     }
 
     @Override
-    public Booking confirmBookingStartTime(BookingDTO bookingDTO) throws ParseException{
+    public Booking confirmBookingStartTime(BookingDTO bookingDTO){
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
         booking.setBookingStartTime(date);
         update(booking);
-        calculateSum(booking);
+        calculateAndSetSum(booking);
         return booking;
     }
 
     @Override
-    public Booking confirmBookingEndTime(BookingDTO bookingDTO) throws ParseException{
+    public Booking confirmBookingEndTime(BookingDTO bookingDTO){
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getEndTime());
         booking.setBookingEndTime(date);
         update(booking);
-        calculateSum(booking);
+        calculateAndSetSum(booking);
         return booking;
     }
 
-    private Date getDateAndTimeBooking(Booking booking, String time) throws ParseException {
+    private Date getDateAndTimeBooking(Booking booking, String time) {
 
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dfDateAndTime.parse(dateString));
-        Date date = calendar.getTime();
-        return date;
+        calendar.setTime(dateUtil.toDateAndTime(dateString));
+        return calendar.getTime();
 
     }
 }

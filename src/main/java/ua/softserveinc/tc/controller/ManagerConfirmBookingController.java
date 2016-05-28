@@ -15,7 +15,6 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +36,7 @@ public class ManagerConfirmBookingController {
 
 
     @RequestMapping(value = BookingConstModel.MANAGER_CONF_BOOKING_VIEW)
-    public ModelAndView parentBookings(Model model) throws ParseException {
+    public ModelAndView parentBookings(Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstModel.MANAGER_CONF_BOOKING_VIEW);
         DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
@@ -52,7 +51,7 @@ public class ManagerConfirmBookingController {
 
     @RequestMapping(value = BookingConstModel.CANCEL_BOOKING, method = RequestMethod.GET)
     public @ResponseBody String cancelBooking (Model model,
-                                               @PathVariable Long idBooking) throws ParseException{
+                                               @PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setCancelled(true);
         booking.setSum(0L);
@@ -65,7 +64,7 @@ public class ManagerConfirmBookingController {
     @RequestMapping(value = BookingConstModel.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
-    String setingBookingsStartTime(@RequestBody BookingDTO bookingDTO) throws ParseException {
+    String setingBookingsStartTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDTO);
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();
@@ -75,7 +74,7 @@ public class ManagerConfirmBookingController {
     @RequestMapping(value = BookingConstModel.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
-    String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) throws ParseException {
+    String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();

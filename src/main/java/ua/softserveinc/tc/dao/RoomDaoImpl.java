@@ -1,10 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
+import ua.softserveinc.tc.constants.EntityConstants.RoomConst;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
@@ -14,6 +11,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Repository("roomDao")
 public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
