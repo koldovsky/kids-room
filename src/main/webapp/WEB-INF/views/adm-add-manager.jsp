@@ -48,8 +48,9 @@
                </div>
 
                <div class="form-group">
-                  <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok" type="submit" name="submit"></button>
-                  <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove" type="reset" name="reset" ></button>
+                  <button class="btn btn-raised btn-info glyphicon glyphicon-ok" type="submit" name="submit"></button>
+                  <button class="btn btn-raised btn-danger glyphicon glyphicon-remove" type="reset" name="reset"
+                          onclick="window.location.href='/home/adm-edit-manager'"/>
                </div>
 
            </td></tr>

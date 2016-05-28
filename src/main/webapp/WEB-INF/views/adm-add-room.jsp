@@ -17,6 +17,8 @@
            </th></tr>
 
            <tr><td>
+               <input hidden type="text" name="rate" path="rate" id="for-json"/>
+
                <div class="form-group">
                   <label class="for-field"> Room name <input type="text" name="name" required
                                                        class="form-control"/></label>
@@ -59,10 +61,10 @@
                  <label class="for-field">Room rates
                      <fieldset  data-ng-repeat="choice in choices">
                      <label class="for-field1">
-                        <input id="myText" type="text" ng-model="choice.hourRate" key="" placeholder="Hour" class="form-control">
+                        <input id="myText" type="text" ng-model="choice.hourRate" hourRate="" placeholder="Hour" class="form-control">
                      </label>
                      <label class="for-field2">
-                        <input id="myText" type="text" ng-model="choice.priceRate" value="" placeholder="Price" class="form-control">
+                        <input id="myText" type="text" ng-model="choice.priceRate" priceRate="" placeholder="Price" class="form-control">
                      </label>
                         <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
                      </fieldset>
@@ -75,19 +77,16 @@
                  </div>
               </div>
 
-
-               <div class="form-group">
-                  <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok" type="submit" name="submit"></button>
-                  <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove" type="reset" name="reset" ></button>
-               </div>
-
-                 <script src="resources/js/for-rates.js"></script>
+              <div class="form-group">
+                 <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok" type="submit" name="submit" ng-click="submit()"></button>
+                 <button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove" type="reset" name="reset" ></button>
               </div>
 
+                 <script src="resources/js/room-add-for-rates.js"></script>
+              </div>
            </td></tr>
         </form>
         </table>
     </div>
 </body>
-</html>
 

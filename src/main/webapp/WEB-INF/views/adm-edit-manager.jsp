@@ -35,13 +35,13 @@
              <td>${manager.phoneNumber}</td>
              <td>${manager.active}</td>
              <td><a href="adm-update-manager?id=${manager.id}">
-                    <button class="btn btn-raised btn-primary glyphicon glyphicon-pencil"></button></a></td>
+                    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
 
              <td><c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
                 <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
                    <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                    <button type="submit" value="Delete" onClick="return confirm('sure?')"
-                            class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-trash"></button>
+                            class="btn btn-raised btn-danger glyphicon glyphicon-trash"></button>
                 </form:form>
              </td>
           </tr>

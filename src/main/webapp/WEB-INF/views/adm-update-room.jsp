@@ -17,7 +17,8 @@
        </th></tr>
 
        <tr><td>
-           <form:hidden path="id" />
+           <form:hidden path="id" value="${room.id}"/>
+           <form:hidden path="rate" name="rate" value="${room.rate}" id="for-json"/>
 
            <div class="form-group">
               <label for="name" class="for-field">Room name
@@ -33,9 +34,22 @@
            </div>
 
            <div class="form-group">
+              <label for="city" class="for-field">Room city
+                 <form:input path="city" id="city" value="${room.city}" class="form-control" required="required"/>
+              </label>
+           </div>
+
+           <div class="form-group">
               <label for="phoneNumber" class="for-field">Room phone number
                  <form:input path="phoneNumber" id="phoneNumber" value="${room.phoneNumber}" class="form-control"
                                                                  required="required"/>
+              </label>
+           </div>
+
+           <div class="form-group">
+              <label for="capacity" class="for-field">Room capacity
+                 <form:input path="capacity" id="capacity" value="${room.capacity}" class="form-control"
+                                                           required="required"/>
               </label>
            </div>
 
@@ -45,31 +59,43 @@
                     <option path="manager" id="manager" value="${room.manager.id}" class="form-control">
                                             ${room.manager.firstName} ${room.manager.lastName}</option>
                     <c:forEach var="manager" items="${managerList}" >
+                       <c:if test="${room.manager.id ne manager.id}">
                        <option value="${manager.id}">${manager.firstName} ${room.manager.lastName}</option>
+                       </c:if>
                     </c:forEach>
                  </select>
               </label>
            </div>
 
+           <div ng-app="angularjs-starter" ng-controller="MainCtrl">
+              <div class="form-group">
+                 <label class="for-field">Room rates
+                     <fieldset  data-ng-repeat="choice in choices">
+                     <label class="for-field1">
+                        <input id="myText" type="text" ng-model="choice.hourRate" hourRate="" placeholder="Hour" class="form-control">
+                     </label>
+                     <label class="for-field2">
+                        <input id="myText" type="text" ng-model="choice.priceRate" priceRate="" placeholder="Price" class="form-control">
+                     </label>
+                        <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
+                     </fieldset>
+                 </label>
 
-           <div class="form-group">
-              <label for="capacity" class="for-field">Room capacity
-                 <form:input path="capacity" id="capacity" value="${room.capacity}" class="form-control"
-                                                           required="required"/>
-              </label>
+                 <button type="button" class="addfields" ng-click="addNewChoice()" >+</button>
+
+                 <div id="choicesDisplay">
+                    {{ choices }}
+                 </div>
+              </div>
+
+               <div class="form-group">
+                  <button type="submit" name="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok" ng-click="submit()"></button>
+                  <button type="reset" name="reset" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove"></button>
+               </div>
+
+               <script src="resources/js/room-update-for-rates.js"></script>
            </div>
 
-
-           <div class="form-group">
-              <label for="city" class="for-field">Room city
-                 <form:input path="city" id="city" value="${room.city}" class="form-control" required="required"/>
-              </label>
-           </div>
-
-           <div class="form-group">
-              <button type="submit" name="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok "></button>
-              <button type="reset" name="reset" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove"></button>
-           </div>
        </td></tr>
 
    </form:form>

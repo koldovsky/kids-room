@@ -9,18 +9,20 @@
 
 
 <body>
-   <div class="tableDiv for-table">
+  <div class="tableDiv  for-table">
       <table class="for-table">
          <tr class="hide-border">
-            <th colspan="8" class="set-standard-color"><legend class="for-table"><strong>Room list</strong></legend></th>
+            <th colspan="9" class="set-standard-color"><legend class="for-table"><strong>Room list</strong></legend></th>
          </tr>
+         <tr></tr>
          <tr>
             <th><strong>Room name</strong></th>
-            <th><strong>Room address</strong></th>
+            <th><strong>Address</strong></th>
+            <th><strong>City</strong></th>
             <th><strong>Room phone number</strong></th>
             <th><strong>Room capacity</strong></th>
             <th><strong>Room manager</strong></th>
-            <th><strong>City</strong></th>
+            <th><strong>Room Rates</strong></th>
             <th><strong>EDIT</strong></th>
             <th><strong>DELETE</strong></th>
          </tr>
@@ -29,26 +31,31 @@
          <tr>
             <td>${room.name}</td>
             <td>${room.address}</td>
+            <td>${room.city}</td>
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
             <td>${room.manager}</td>
-            <td>${room.city}</td>
-            <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-primary glyphicon glyphicon-pencil">
+            <td>
+                <c:forEach var="rate" items="${room.rates}" >
+                       To: <c:out value="${rate.hourRate}"/><br>
+                       [<c:out value="${rate.priceRate}"/>]<br>
+                </c:forEach>
+            </td>
+            <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                                                         </button></a></td>
 
-            <td><button class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-trash waves-light"/></td>
+            <td><button class="btn btn-raised btn-danger glyphicon glyphicon-trash"/></td>
          </tr>
          </c:forEach>
 
         <tr></tr>
 
          <tr>
-            <td colspan="8" class="hide-border set-standard-color">
+            <th colspan="9" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value="Add"
                                         class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
-            </td>
+            </th>
          </tr>
-      </table>
-
-   </div>
+       </table>
+    </div>
 </body>

@@ -54,12 +54,12 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok"></button>
-                <button type="reset" name="reset" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove"></button>
+                <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
+                <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                        onclick="window.location.href='/home/adm-edit-manager'"></button>
             </div>
         </th></tr>
 
     </form:form>
     </table>
 </div>
-</html>
