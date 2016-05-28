@@ -3,8 +3,10 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.dto.RoomDTO;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -43,7 +45,25 @@ public class Room {
     private List<Event> events;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
-    private List<Rate> rates;
+    private List<Rate> rates = new LinkedList<>();
+
+    public Room() {
+    }
+
+    public Room(RoomDTO roomDTO) {
+        this.id = roomDTO.getId();
+        this.name = roomDTO.getName();
+        this.address = roomDTO.getAddress();
+        this.city = roomDTO.getCity();
+        this.phoneNumber = roomDTO.getPhoneNumber();
+        this.capacity = roomDTO.getCapacity();
+        this.manager = roomDTO.getManager();
+
+        List<Rate> rates = roomDTO.fromJsonToListOfRates();
+        for (Rate rate : rates) {
+            this.addRate(rate);
+        }
+    }
 
     public Long getId() {
         return id;
@@ -117,8 +137,31 @@ public class Room {
         this.rates = rates;
     }
 
+    /**
+     * Method check if there is no the same values in collection,
+     * and if collection does not contains input value (rate) - add new note into collection.
+     *
+     * @param rate
+     */
+    public void addRate(Rate rate) {
+        if (!this.rates.contains(rate)) {
+            rate.setRoom(this);
+            this.rates.add(rate);
+        }
+    }
+
     @Override
     public String toString() {
-        return name;
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", capacity=" + capacity +
+                ", manager=" + manager +
+                ", events=" + events +
+                ", rates=" + rates +
+                '}';
     }
 }

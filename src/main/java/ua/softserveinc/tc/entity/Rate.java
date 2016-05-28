@@ -26,7 +26,7 @@ public class Rate {
     private Long priceRate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = RoomConst.ID_ROOM, nullable = false)
+    @JoinColumn(name = RoomConst.ID_ROOM)
     private Room room;
 
     public Rate() {
@@ -66,7 +66,23 @@ public class Rate {
     }
 
     public void setRoom(Room room) {
+        room.getRates().add(this);
         this.room = room;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Rate rate = (Rate) o;
+
+        return hourRate.equals(rate.hourRate);
+    }
+
+    @Override
+    public int hashCode() {
+        return hourRate.hashCode();
     }
 
     @Override
