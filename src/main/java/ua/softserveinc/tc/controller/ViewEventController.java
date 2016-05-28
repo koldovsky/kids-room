@@ -70,6 +70,10 @@ public class ViewEventController {
         calendarService.updateEvent(genericMapper.toEntity(eventDTO));
     }
 
+    @RequestMapping (value = "geteventfordelete", method = RequestMethod.POST)
+    public void getEventForDelete(@RequestBody EventDTO eventDTO) {
+        calendarService.deleteEvent(genericMapper.toEntity(eventDTO));
+    }
 /*    @RequestMapping(value = "getnewevent", method = RequestMethod.GET)
     public @ResponseBody
     String getAjaxResponse() {

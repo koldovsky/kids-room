@@ -198,8 +198,6 @@ function rendering(objects ,roomID) {
 
             $('#updatingButton').click(function () {
 
-
-
                 var newStartDate = makeISOtime(calEvent.start.format(), "startTimeUpdate");
                 var newEndDate = makeISOtime(calEvent.end.format(), "endTimeUpdate");
 
@@ -226,6 +224,11 @@ function rendering(objects ,roomID) {
                 $('#updating').dialog('close');
             });
 
+            $('#deleting').click(function() {
+                sendToServerForDelete(calEvent);
+                $('#calendar').fullCalendar('removeEvents', calEvent.id);
+                $('#updating').dialog('close');
+            })
         },
 
         header: {
@@ -296,11 +299,11 @@ function sendToServerForUpdate(event, roomID) {
     });
 }
 
-function sendToServerForDelete(event, roomID) {
+function sendToServerForDelete(event) {
     $.ajax({
         type: 'post',
         contentType: 'application/json',
-        url: 'getnewevent',
+        url: 'geteventfordelete',
         dataType: "json",
         data: JSON.stringify({
             id : event.id

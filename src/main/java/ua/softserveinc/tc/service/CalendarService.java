@@ -14,4 +14,5 @@ public interface CalendarService {
     String eventsToString(long id);
     Long returnEventId(Event event);
     void updateEvent(Event event);
+    void deleteEvent(Event event);
 }

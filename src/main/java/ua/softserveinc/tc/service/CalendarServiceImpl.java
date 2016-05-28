@@ -60,4 +60,8 @@ public class CalendarServiceImpl implements CalendarService{
     public final void updateEvent(Event event) {
         eventDao.update(event);
     }
+
+    public final void deleteEvent(Event event) {
+        eventDao.delete(event);
+    }
 }
