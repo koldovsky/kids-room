@@ -7,6 +7,7 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Rate;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.BookingUtil;
 import ua.softserveinc.tc.util.DateUtil;
@@ -130,10 +131,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getBookingsByDay(String date){
+    public List<Booking> getBookingsByRoom(Room room){
 
         Calendar toDay = Calendar.getInstance();
-        toDay.setTime(new Date("2016/06/20"));
+        toDay.setTime(new Date("2016/06/20")); // temporarily: for example;
         toDay.set(Calendar.AM_PM, 0);
         toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
         toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
@@ -144,7 +145,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
         Date endTime = toDay.getTime();
 
-        return bookingDao.getBookingsByDay(startTime, endTime);
+        return bookingDao.getBookingsByDay(startTime, endTime, room);
     }
 
     @Override

@@ -36,6 +36,12 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
+    public Room getRoombyManager(User currentManager) {
+
+        return roomDao.getRoombyManager(currentManager);
+    }
+
+    @Override
     public List<Room> findByManger(User manager) {
         return roomDao.findByManager(manager);
     }

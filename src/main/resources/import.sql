@@ -15,7 +15,7 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (6, "drink only whiskey", "2014-02-12", "Jimro", "Fours", 5, 0);
 
 
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", "Lviv", 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", "Lviv", 1);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", "Lviv", 2);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Pasternaka 15", 40, "LV-4", "+380974074537", "Kyiv", 6);
 
@@ -60,7 +60,7 @@ insert into bookings (id_book, booking_end_time, booking_start_time, comment, is
 -- VASYL DEMO START
 insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (31, '2016-06-20 16:39', '2016-06-20 15:00', "The whole world of comments", false, 1, 1, 1);
 insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (32, '2016-06-20 16:55', '2016-06-20 15:30', "The whole world of comments", false, 2, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 19:30', "The whole world of comments", false, 4, 1, 4);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 17:30', "The whole world of comments", false, 5, 1, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (35, '2016-06-20 21:50', '2016-06-20 18:30', "The whole world of comments", false, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 19:30', "The whole world of comments", false, 4, 2, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 17:30', "The whole world of comments", false, 5, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, is_cancelled, id_child, id_room, id_user) values (35, '2016-06-20 21:50', '2016-06-20 18:30', "The whole world of comments", false, 6, 2, 5);
 -- VASYL DEMO END

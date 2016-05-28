@@ -11,6 +11,8 @@ public interface RoomDao extends BaseDao<Room> {
 
     Room getRoomByName(String name);
 
+    Room getRoombyManager(User manager);
+
     List<Room> findByCity(String city);
 
     List<Room> findByManager(User user);

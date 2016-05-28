@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
 import java.util.HashMap;
@@ -12,7 +13,7 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsWithZeroSum();
     void calculateAndSetSum(Booking booking);
     Long getSumTotal(List<Booking> bookings);
-    List<Booking> getBookingsByDay(String data);
+    List<Booking> getBookingsByRoom(Room room);
     void calculateAndSetDuration(Booking booking);
     Booking confirmBookingEndTime(BookingDTO bookingDTO);
     Booking confirmBookingStartTime(BookingDTO bookingDTO);

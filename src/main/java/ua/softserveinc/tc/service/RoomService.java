@@ -15,6 +15,8 @@ public interface RoomService extends BaseService<Room> {
 
     List<Event> getAllEventsInRoom(Room room);
 
+    Room getRoombyManager(User currentManager);
+
     List<Room> findByCity(String city);
 
     List<Room> findByManger(User manager);

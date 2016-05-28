@@ -11,9 +11,14 @@ import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
+import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.service.UserService;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,9 +39,15 @@ public class ManagerConfirmBookingController {
     @Autowired
     ChildService child;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RoomService roomService;
+
 
     @RequestMapping(value = BookingConstModel.MANAGER_CONF_BOOKING_VIEW)
-    public ModelAndView parentBookings(Model model) {
+    public ModelAndView parentBookings(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstModel.MANAGER_CONF_BOOKING_VIEW);
         DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
@@ -44,7 +55,10 @@ public class ManagerConfirmBookingController {
         Date date = toDay.getTime();
         Date date1 = new Date("2016/06/20");
         String dateString = df.format(date1);
-        List<Booking> listBooking = bookingService.getBookingsByDay(dateString);
+        User currentManager = userService.getUserByEmail(principal.getName());
+        Room roomCurrentManager = roomService.getRoombyManager(currentManager);
+
+        List<Booking> listBooking = bookingService.getBookingsByRoom(roomCurrentManager);
         model.addAttribute(BookingConstModel.LIST_BOOKINGS, listBooking);
         return modelAndView;
     }
