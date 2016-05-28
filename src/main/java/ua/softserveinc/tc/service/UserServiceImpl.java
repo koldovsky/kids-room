@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.DateUtil;
@@ -42,7 +43,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         query.select(root.get("idUser")).distinct(true).where(
             builder.between(root.get("bookingStartTime"),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)),
-            builder.equal(root.get("isCancelled"), false));
+            builder.equal(root.get("bookingState"), BookingState.COMPLETED));
 
         return entityManager.createQuery(query).getResultList();
     }
@@ -67,8 +68,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.create(user);
     }
-
-
 
     @Override
     public void confirmManagerRegistrationUpdate(User manager){

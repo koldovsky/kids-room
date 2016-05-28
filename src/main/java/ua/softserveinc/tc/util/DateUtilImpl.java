@@ -2,7 +2,6 @@ package ua.softserveinc.tc.util;
 
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
-import ua.softserveinc.tc.entity.Booking;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -60,6 +59,17 @@ public class DateUtilImpl implements DateUtil
     {
         int hours = getHoursFromMilliseconds(milliseconds);
         return (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
+    }
+
+    public int getRoundedHours(long milliseconds)
+    {
+        int hours = getHoursFromMilliseconds(milliseconds);
+        int minutes = getMinutesFromMilliseconds(milliseconds);
+
+        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
+        if (minutes > 0) hours++;
+
+        return hours;
     }
 
     @Override

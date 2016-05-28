@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.util;
 
-import ua.softserveinc.tc.entity.Booking;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +13,7 @@ public interface DateUtil
     Calendar dateMonthAgo();
     Date toDate(String date);
     Date toDateAndTime(String date);
+    int getRoundedHours(long milliseconds);
     String getStringDate(Calendar calendar);
     String toHoursAndMinutes(long milliseconds);
     int getHoursFromMilliseconds(long milliseconds);

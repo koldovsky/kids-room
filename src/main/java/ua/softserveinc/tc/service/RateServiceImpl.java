@@ -10,8 +10,9 @@ import ua.softserveinc.tc.dao.RateDao;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.util.DateUtil;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateService
@@ -30,18 +31,12 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
     @Override
     public Rate calculateClosestRate(long milliseconds, final List<Rate> rates)
     {
-        int hours = dateUtil.getHoursFromMilliseconds(milliseconds);
-        int minutes = dateUtil.getMinutesFromMilliseconds(milliseconds);
+        final int hours = dateUtil.getRoundedHours(milliseconds);
+        Optional<Rate> min = rates.stream()
+            .filter(rate -> hours <= rate.getHourRate())
+            .min(Comparator.comparing(Rate::getHourRate));
 
-        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
-        if (minutes > 0) hours++;
-
-        Collections.sort(rates, (x, y) -> Integer.compare(x.getHourRate(), y.getHourRate()));
-
-        for (Rate rate : rates)
-            if (hours <= rate.getHourRate()) return rate;
-
-        // if manager enters value, that is bigger, than max value in rates
-        return rates.get(rates.size() - 1);
+        if (min.isPresent()) return min.get();
+        else return rates.stream().max(Comparator.comparing(Rate::getHourRate)).get();
     }
 }

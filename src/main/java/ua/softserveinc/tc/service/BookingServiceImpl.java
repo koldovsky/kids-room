@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.Rate;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.util.BookingUtil;
 import ua.softserveinc.tc.util.DateUtil;
 
@@ -49,7 +46,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
-            builder.equal(root.get("isCancelled"), false),
+            builder.equal(root.get("bookingState"), BookingState.COMPLETED),
             builder.between(root.get("bookingStartTime"),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
         );
@@ -60,8 +57,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         {
             restrictions.add(builder.equal(root.get("idUser"), user));
             criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-            criteria.orderBy(builder.asc(root.get("bookingStartTime")));
         }
+
+        criteria.orderBy(builder.asc(root.get("bookingStartTime")));
 
         return entityManager.createQuery(criteria).getResultList();
     }
@@ -118,7 +116,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = query.from(Booking.class);
 
         query.where(builder.equal(root.get("sum"), 0))
-                .where(builder.equal(root.get("is_cancelled"), false));
+            .where(builder.equal(root.get("bookingState"), BookingState.COMPLETED));
         return entityManager.createQuery(query).getResultList();
     }
 
