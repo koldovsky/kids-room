@@ -67,7 +67,7 @@ public class User {
     private transient String confirm;
 
     @Column(name = UserConst.CONFIRMED)
-    private boolean comfirmed;
+    private boolean confirmed;
 
 
 
@@ -113,12 +113,12 @@ public class User {
         this.password = password;
     }
 
-    public boolean isComfirmed() {
-        return comfirmed;
+    public boolean isConfirmed() {
+        return confirmed;
     }
 
-    public void setComfirmed(boolean comfirmed) {
-        this.comfirmed = comfirmed;
+    public void setConfirmed(boolean comfirmed) {
+        this.confirmed = comfirmed;
     }
 
     public boolean isActive() {

@@ -65,7 +65,7 @@ public class ConfirmManagerController {
             return "adm-confirm-manager";
         }
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
-        user.setComfirmed(true);
+        user.setConfirmed(true);
         userService.update(user);
         return UsersConst.LOGIN_VIEW;
     }

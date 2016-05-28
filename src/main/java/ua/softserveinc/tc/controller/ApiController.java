@@ -33,7 +33,7 @@ public class ApiController {
         List<User> users = userService.findAll();
 
         for (User user : users) {
-            if (user.isComfirmed()) {
+            if (user.isConfirmed()) {
                 result.add(new UserDTO(user));
             }
         }
@@ -47,7 +47,7 @@ public class ApiController {
         User user = userService.findById(id);
         Gson gson = new Gson();
 
-        if (user.isComfirmed()) {
+        if (user.isConfirmed()) {
             return gson.toJson(new UserDTO(user));
         }
         return null;
@@ -92,7 +92,7 @@ public class ApiController {
         User user = child.getParentId();
         Gson gson = new Gson();
 
-        if (user.isComfirmed()) {
+        if (user.isConfirmed()) {
             return gson.toJson(new UserDTO(user));
         }
         return null;

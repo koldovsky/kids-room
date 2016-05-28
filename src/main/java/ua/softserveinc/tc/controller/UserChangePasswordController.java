@@ -95,7 +95,7 @@ public class UserChangePasswordController {
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(passwordEncoder.encode(modelUser.getPassword()));
-        user.setComfirmed(true);
+        user.setConfirmed(true);
         userService.update(user);
         return UsersConst.LOGIN_VIEW;
     }

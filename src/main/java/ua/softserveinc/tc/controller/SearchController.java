@@ -37,7 +37,7 @@ public class SearchController {
         if (isValidRequestField(field)) {
             List<User> users = userSearch.search(field);
             for (User user : users) {
-                if (user.isComfirmed()) {
+                if (user.isConfirmed()) {
                     result.add(new UserDTO(user));
                 }
             }

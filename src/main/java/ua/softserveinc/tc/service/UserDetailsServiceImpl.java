@@ -32,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                        user.isComfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
+                        user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
         return userDetails;
     }
 

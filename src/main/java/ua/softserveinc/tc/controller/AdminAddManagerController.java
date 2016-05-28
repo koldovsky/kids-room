@@ -38,7 +38,7 @@ public class AdminAddManagerController {
     public String saveManager(@ModelAttribute User user, BindingResult bindingResult) {
         user.setRole(Role.MANAGER);
         user.setActive(true);
-        user.setComfirmed(false);
+        user.setConfirmed(false);
         userService.create(user);
 
         String token = UUID.randomUUID().toString();
