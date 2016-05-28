@@ -15,8 +15,8 @@ public interface ReportConst
     String ACTIVE_USERS = "activeUsers";
     String PARENT_EMAIL = "parentEmail";
 
-    String REPORT_VIEW = "manager-report";
-    String ALL_VIEW = "manager-report-all";
-    String STATISTICS_VIEW = "adm-statistics";
-    String PARENT_VIEW = "manager-report-parent";
+    String REPORT_VIEW = "report";
+    String ALL_VIEW = "report-all";
+    String PARENT_VIEW = "report-parent";
+    String STATISTICS_VIEW = "statistics";
 }

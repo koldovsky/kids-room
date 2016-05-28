@@ -31,7 +31,7 @@
 
                       </sec:authorize>
                        <sec:authorize access="hasRole('MANAGER')">
-                                  <a href="manager-report"><spring:message code="manager.report" /></a>
+                                  <a href="report"><spring:message code="manager.report" /></a>
                                   <a href="manager-confirm-booking"><spring:message code="manager.listbooking" /></a>
                                   <a href="allkidslist"><spring:message code="manager.kids" /></a>
                       </sec:authorize>
@@ -93,7 +93,7 @@
 
 
                             <sec:authorize access="hasRole('MANAGER')">
-                                  <li><a href="manager-report">
+                                  <li><a href="report">
                                   <span class="glyphicon glyphicon-pencil"></span>
                                   <spring:message code="manager.report" /></a>
                                   </li>
@@ -108,7 +108,7 @@
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
-                                <li><a href="adm-statistics">
+                                <li><a href="statistics">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                     <spring:message code="administrator.statistics" /></a>
                                 </li>

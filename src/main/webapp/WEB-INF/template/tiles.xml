@@ -40,15 +40,15 @@
         <put-attribute name="body" value="/WEB-INF/views/allkidslist.jsp" />
     </definition>
 
-    <definition name="manager-report" extends="default">
+    <definition name="report" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager-report.jsp" />
     </definition>
 
-    <definition name="manager-report-all" extends="default">
+    <definition name="report-all" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager-report-all.jsp" />
     </definition>
 
-    <definition name="manager-report-parent" extends="default">
+    <definition name="report-parent" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager-report-parent.jsp" />
     </definition>
 
@@ -82,7 +82,7 @@
 
 
     <!-- Admin -->
-    <definition name="adm-statistics" extends="default">
+    <definition name="statistics" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-statistics.jsp" />
     </definition>
 

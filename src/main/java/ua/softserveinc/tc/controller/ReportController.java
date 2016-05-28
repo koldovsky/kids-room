@@ -30,7 +30,7 @@ public class ReportController
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ModelAndView report()
     {
         ModelAndView model = new ModelAndView();

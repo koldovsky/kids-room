@@ -28,7 +28,7 @@ public class ReportParentController
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/manager-report-parent", method = RequestMethod.GET,
+    @RequestMapping(value = "/report-parent", method = RequestMethod.GET,
             params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
     public @ResponseBody ModelAndView parentBookings(@RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,

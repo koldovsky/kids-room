@@ -29,7 +29,7 @@ public class ReportAllController
     @Autowired
     private BookingService bookingService;
 
-    @RequestMapping(value = "/manager-report-all", method = RequestMethod.GET,
+    @RequestMapping(value = "/report-all", method = RequestMethod.GET,
             params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
     public @ResponseBody ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,

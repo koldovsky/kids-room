@@ -7,7 +7,7 @@
 <link rel='stylesheet' href='resources/css/bookings.css'>
 <script src="resources/js/report.js"></script>
 
-    <form id="generateAReport" action="manager-report-all">
+    <form id="generateAReport" action="report-all">
 
         <div id="dateThenDiv">
             <h2>Choose start time</br>
@@ -59,7 +59,7 @@
          value=<spring:message code="report.generate" /> class="btn-primary">
     </div>
 
-    <form action="manager-report-parent" id="allBookingsPerParentForm">
+    <form action="report-parent" id="allBookingsPerParentForm">
         <input type="hidden" id="parentEmailHidden" name="parentEmail"/>
         <input type="hidden" id="dateThenHidden" name="dateThen"/>
         <input type="hidden" id="dateNowHidden" name="dateNow"/>
