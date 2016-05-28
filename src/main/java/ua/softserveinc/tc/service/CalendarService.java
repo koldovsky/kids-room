@@ -12,4 +12,5 @@ public interface CalendarService {
     void create(final Event event);
     List<EventDTO> findByRoomId(final long roomId);
     String eventsToString(long id);
+    Long returnEventId(Event event);
 }
