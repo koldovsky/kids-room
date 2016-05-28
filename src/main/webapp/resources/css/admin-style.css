@@ -1,3 +1,7 @@
+body, table{
+    background-color: rgb(238, 238, 238);
+}
+
 .for-table{
     margin: auto;
 	width: 90%;
@@ -22,10 +26,6 @@ td{
 
 .no-border{
     border: none;
-}
-
-body{
-    margin:auto;
 }
 
 .for-field{
