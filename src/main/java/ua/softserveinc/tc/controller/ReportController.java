@@ -17,7 +17,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ua.softserveinc.tc.util.TimeUtil.*;
+import static ua.softserveinc.tc.util.DateUtilImpl.*;
 
 /**
  * Created by Demian on 08.05.2016.

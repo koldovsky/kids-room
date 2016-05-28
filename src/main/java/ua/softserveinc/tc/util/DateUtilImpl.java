@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.util;
 
+import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.Booking;
 
@@ -13,28 +14,28 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Demian on 24.05.2016.
  */
-public class TimeUtil
+
+@Service
+public class DateUtilImpl implements DateUtil
 {
-    private long milliseconds;
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static DateFormat dayformat = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-
-    public long getMilliseconds()
+    @Override
+    public Date toDate(String date)
     {
-        return milliseconds;
+        try
+        {
+            return dateFormat.parse(date);
+        }
+        catch (ParseException e)
+        {
+            System.err.println("Wrong format of date." + e.getMessage());
+            return null;
+        }
     }
 
-    public void setMilliseconds(long milliseconds)
-    {
-        this.milliseconds = milliseconds;
-    }
-
-    public TimeUtil(long milliseconds)
-    {
-        this.milliseconds = milliseconds;
-    }
-
-    public String toHoursAndMinutes()
+    @Override
+    public String toHoursAndMinutes(long milliseconds)
     {
         int hours = (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
         int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
@@ -45,12 +46,19 @@ public class TimeUtil
         return hoursAndMinutes;
     }
 
-    public Date sd(Booking booking, String time) throws ParseException {
+    @Override
+    public Date sd(Booking booking, String time) {
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dfDateAndTime.parse(dateString));
+        try {
+            calendar.setTime(dfDateAndTime.parse(dateString));
+        }
+        catch (ParseException e)
+        {
+
+        }
         Date date = calendar.getTime();
         return date;
 

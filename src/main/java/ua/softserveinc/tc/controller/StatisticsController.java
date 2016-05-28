@@ -12,11 +12,10 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 
-import static ua.softserveinc.tc.util.TimeUtil.*;
+import static ua.softserveinc.tc.util.DateUtilImpl.*;
 
 /**
  * Created by Demian on 28.05.2016.
@@ -31,7 +30,7 @@ public class StatisticsController
     BookingService bookingService;
 
     @RequestMapping(value = "/adm-statistics", method = RequestMethod.GET)
-    public ModelAndView statistics() throws ParseException
+    public ModelAndView statistics()
     {
         ModelAndView model = new ModelAndView();
         model.setViewName("adm-statistics");

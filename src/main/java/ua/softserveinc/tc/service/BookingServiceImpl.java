@@ -8,6 +8,7 @@ import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,31 +24,32 @@ import java.util.*;
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
 {
     @Autowired
+    DateUtil dateUtil;
+
+    @Autowired
     BookingDao bookingDao;
 
     @Autowired
     RateService rateService;
 
     @Override
-    public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate) throws ParseException
+    public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
     {
         return getBookingsByUserByRangeOfTime(null, startDate, endDate);
     }
 
     @Override
-    public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate) throws ParseException
+    public List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
                 builder.equal(root.get("isCancelled"), false),
                 builder.between(root.get("bookingStartTime"),
-                        dateFormat.parse(startDate), dateFormat.parse(endDate)))
+                        dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
         );
 
         if (user == null)

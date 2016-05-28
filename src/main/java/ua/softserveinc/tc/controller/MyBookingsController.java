@@ -18,7 +18,6 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class MyBookingsController {
     public @ResponseBody String getBookings(
                        @RequestParam(value = "dateLo") String dateLo,
                        @RequestParam(value = "dateHi") String dateHi,
-                       Principal principal) throws ParseException{
+                       Principal principal){
 
         User currentUser = userService.getUserByEmail(principal.getName());
         List<Booking> myBookings = bookingService.getBookingsByUserByRangeOfTime(currentUser, dateLo, dateHi);

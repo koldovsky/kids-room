@@ -14,7 +14,6 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.UserService;
 
-import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ public class ReportParentController
 
     public @ResponseBody ModelAndView parentBookings(@RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
                                                      @RequestParam(value = ReportConst.DATE_THEN) String dateThen,
-                                                     @RequestParam(value = ReportConst.DATE_NOW) String dateNow) throws ParseException
+                                                     @RequestParam(value = ReportConst.DATE_NOW) String dateNow)
     {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(ReportConst.PARENT_VIEW);
