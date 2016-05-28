@@ -108,6 +108,10 @@
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
+                                <li><a href="adm-statistics">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <spring:message code="administrator.statistics" /></a>
+                                </li>
                                 <li><a href="adm-edit-room">
                                 <span class="glyphicon glyphicon-home"></span>
                                 <spring:message code="administrator.editRooms" />

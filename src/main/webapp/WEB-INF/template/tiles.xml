@@ -82,6 +82,10 @@
 
 
     <!-- Admin -->
+    <definition name="adm-statistics" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/adm-statistics.jsp" />
+    </definition>
+
     <definition name="adm-edit-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/adm-edit-manager.jsp" />
     </definition>

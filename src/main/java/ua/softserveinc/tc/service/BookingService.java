@@ -11,6 +11,7 @@ import java.util.List;
 public interface BookingService extends BaseService<Booking>
 {
     void calculateSum(Booking booking);
+    List<Booking> getBookingsWithZeroSum();
     void calculateDuration(Booking booking);
     Long getSumTotal(List<Booking> bookings);
     HashMap<User, Integer> generateAReport(List<Booking> bookings);

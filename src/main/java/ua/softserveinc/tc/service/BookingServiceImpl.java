@@ -30,6 +30,18 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
+    public List<Booking> getBookingsWithZeroSum()
+    {
+        EntityManager entityManager = bookingDao.getEntityManager();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+
+        query.where(builder.equal(root.get("sum"), 0));
+        return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate)
     {
         EntityManager entityManager = bookingDao.getEntityManager();
