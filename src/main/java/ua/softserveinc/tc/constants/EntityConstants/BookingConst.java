@@ -22,4 +22,6 @@ public interface BookingConst {
 
     String SUM = "sum";
 
+    String BOOKING_STATE = "booking_state";
+
 }

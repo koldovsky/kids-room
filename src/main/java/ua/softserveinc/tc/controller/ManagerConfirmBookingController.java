@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,19 +46,18 @@ public class ManagerConfirmBookingController {
     @Autowired
     RoomService roomService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+
+
 
     @RequestMapping(value = BookingConstModel.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView parentBookings(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstModel.MANAGER_CONF_BOOKING_VIEW);
-        DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        Calendar toDay = Calendar.getInstance();
-        Date date = toDay.getTime();
-        Date date1 = new Date("2016/06/20");
-        String dateString = df.format(date1);
         User currentManager = userService.getUserByEmail(principal.getName());
         Room roomCurrentManager = roomService.getRoombyManager(currentManager);
-
         List<Booking> listBooking = bookingService.getBookingsByRoom(roomCurrentManager);
         model.addAttribute(BookingConstModel.LIST_BOOKINGS, listBooking);
         return modelAndView;
@@ -67,7 +67,7 @@ public class ManagerConfirmBookingController {
     public @ResponseBody String cancelBooking (Model model,
                                                @PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
-        booking.setCancelled(true);
+
         booking.setSum(0L);
         bookingService.update(booking);
         BookingDTO bookingDTO = new BookingDTO(booking);
