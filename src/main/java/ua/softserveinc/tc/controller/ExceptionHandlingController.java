@@ -27,7 +27,6 @@ public class ExceptionHandlingController {
     @ExceptionHandler({
             NoHandlerFoundException.class,
             ResourceNotFoundException.class,
-            NumberFormatException.class
     })
     public ModelAndView handleError404(HttpServletRequest request, Exception e) {
         ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
@@ -36,10 +35,10 @@ public class ExceptionHandlingController {
     }
 
     /**
-     * Responds to user with Access Denied view
-     * @param request
-     * @param e
-     * @return
+     * Responds to user with AccessDenied view
+     * @param request Object that contains request-related info
+     * @param e Exception
+     * @return AccessDenied view
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)

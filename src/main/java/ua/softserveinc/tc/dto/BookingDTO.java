@@ -20,7 +20,7 @@ public class BookingDTO  implements BaseDTO {
     private String endTime;
     private String kidName;
     private String roomName;
-    private Long duration;
+    private String duration;
     private Long sum;
 
     public BookingDTO() {
@@ -39,7 +39,7 @@ public class BookingDTO  implements BaseDTO {
 
         this.kidName = booking.getIdChild().getFullName();
         this.roomName = booking.getIdRoom().getAddress();
-        this.duration = booking.getDuration();
+        this.duration = booking.formatDuration();
         this.sum = booking.getSum();
         this.id = booking.getIdBook();
 
@@ -85,11 +85,11 @@ public class BookingDTO  implements BaseDTO {
         this.roomName = roomName;
     }
 
-    public Long getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

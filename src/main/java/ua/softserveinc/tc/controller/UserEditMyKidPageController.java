@@ -31,9 +31,11 @@ import java.util.Date;
 
 /**
  * Created by Nestor on 10.05.2016.
+ * Controller handles editing of registered children
+ * as well as disabling their account
  */
 @Controller
-public class EditMyKidPageController {
+public class UserEditMyKidPageController {
 
     @Autowired
     private ChildService childService;
@@ -44,6 +46,17 @@ public class EditMyKidPageController {
     @Autowired
     private ChildValidator validator;
 
+    /**
+     * Method for responding with an editing form
+     * to user's HTTP GET request
+     *
+     * @param kidId ID of a kid to be edited (GET param)
+     * @param principal Spring-provided object containing requesting user info
+     * @return ModelAndView of editing form
+     *
+     * @throws ResourceNotFoundException if no such kid exists in the db
+     * @throws AccessDeniedException if requesting user has to permission for this action
+     */
     @RequestMapping(value="/editmykid",
             method = RequestMethod.GET)
     public ModelAndView selectKid(
@@ -53,9 +66,6 @@ public class EditMyKidPageController {
         Long id = Long.parseLong(kidId);
         User current = userService.getUserByEmail(principal.getName());
         Child kidToEdit = childService.findById(id);
-        if(kidToEdit == null){
-            throw new ResourceNotFoundException();
-        }
 
         if(!kidToEdit.getParentId().equals(current)) {
             throw new AccessDeniedException("You do not have access to this page");
@@ -68,6 +78,15 @@ public class EditMyKidPageController {
         return model;
     }
 
+    /**
+     * handles POST form submit
+     * @param kidToEdit a Child object to be validated and persisted to database
+     * @param principal Spring-provided object containing requesting user info
+     * @param bindingResult object holding results of validating a ModelAttribute
+     *                      submitted with POST method
+     * @return "My kids" view if successful
+     *          Editing form if an object failed to pass validation
+     */
     @RequestMapping(value="/editmykid",
             method = RequestMethod.POST)
     public String submit(
@@ -92,15 +111,25 @@ public class EditMyKidPageController {
         return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
     }
 
+    /**
+     * Method handles disabling child's account
+     * @param id ID of a child (GET param)
+     * @param principal Spring-provided object containing requesting user info
+     * @return "My kids" view
+     * @throws AccessDeniedException if requesting user has to permission for this action
+     */
     @RequestMapping(value = "/removemykid",
     method = RequestMethod.GET)
     public String removeKid(@RequestParam("id") String id, Principal principal)
-            throws AccessDeniedException{
-        if(id.isEmpty()){
-            throw new ResourceNotFoundException();
-        }
-        Child kidToRemove = childService.findById(Long.parseLong(id));
+            throws AccessDeniedException, ResourceNotFoundException{
 
+        //Checking if URL is valid. If it cannot be parsed to Long an exception
+        //is thrown and passed to @ControllerAdvice
+        Long idL;
+        try {idL = Long.parseLong(id);}
+        catch(Exception e) {throw new ResourceNotFoundException();}
+
+        Child kidToRemove = childService.findById(idL);
         if(!userService
                 .getUserByEmail(principal.getName())
                 .equals(kidToRemove.getParentId())){

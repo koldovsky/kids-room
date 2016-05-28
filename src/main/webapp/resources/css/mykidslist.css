@@ -117,4 +117,5 @@ position: absolute;
 
 .col-md-8{
     border: 1px solid grey;
+    min-height: 202px;
 }
