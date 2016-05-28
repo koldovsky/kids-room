@@ -9,6 +9,10 @@
         var string = result[i];
         var stringToArray = string.split('|');
 
+        if(stringToArray.length < 2){
+             break;
+        }
+
         stringToArray[0] = parseInt(stringToArray[0].substring(10));
         stringToArray[1] = stringToArray[1].substring(0, stringToArray[1].length - 1);
         stringToArray[1] = parseInt(stringToArray[1].substring(10));

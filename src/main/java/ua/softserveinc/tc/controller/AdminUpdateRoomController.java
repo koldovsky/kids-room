@@ -39,6 +39,9 @@ public class AdminUpdateRoomController {
         Room room = roomService.findById(id);
         RoomDTO roomDTO = new RoomDTO(room);
 
+        if(roomDTO.getRate().equals("[]")){
+            roomDTO.setRate(null);
+        }
         model.getModelMap().addAttribute("room", roomDTO);
 
         return model;
@@ -46,6 +49,7 @@ public class AdminUpdateRoomController {
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
     public String submitRoomUpdate(@ModelAttribute("room") RoomDTO roomDTO, @RequestParam("managers") Long id) {
+
         User managerForRoom = userService.findById(id);
         roomDTO.setManager(managerForRoom);
 
