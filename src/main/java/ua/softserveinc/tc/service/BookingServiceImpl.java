@@ -8,6 +8,7 @@ import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.BookingUtil;
 import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.EntityManager;
@@ -131,16 +132,18 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<Booking> getBookingsByDay(String date){
 
-        String startTimeString = date + " 00:00";
-        String endTimeString = date + " 23:59";
-        Calendar calendarStartTime = Calendar.getInstance();
-        Calendar calendarEndTime = Calendar.getInstance();
+        Calendar toDay = Calendar.getInstance();
+        toDay.setTime(new Date("2016/06/20"));
+        toDay.set(Calendar.AM_PM, 0);
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
+        Date startTime = toDay.getTime();
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
+        Date endTime = toDay.getTime();
 
-        calendarStartTime.setTime(dateUtil.toDateAndTime(startTimeString));
-        calendarEndTime.setTime(dateUtil.toDateAndTime(endTimeString));
-
-        Date startTime = calendarStartTime.getTime();
-        Date endTime = calendarEndTime.getTime();
         return bookingDao.getBookingsByDay(startTime, endTime);
     }
 

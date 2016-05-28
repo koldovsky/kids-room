@@ -10,11 +10,11 @@ import java.util.Date;
  */
 public interface DateUtil
 {
+
     Calendar currentDate();
     Calendar dateMonthAgo();
     Date toDate(String date);
     Date toDateAndTime(String date);
-    Date sd(Booking booking, String time);
     String getStringDate(Calendar calendar);
     String toHoursAndMinutes(long milliseconds);
     int getHoursFromMilliseconds(long milliseconds);
