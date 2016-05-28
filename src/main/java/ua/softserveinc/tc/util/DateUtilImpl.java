@@ -64,19 +64,22 @@ public class DateUtilImpl implements DateUtil
 
     }
 
-    public static Calendar currentDate()
+    @Override
+    public Calendar currentDate()
     {
         return Calendar.getInstance();
     }
 
-    public static Calendar dateMonthAgo()
+    @Override
+    public Calendar dateMonthAgo()
     {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -1);
         return calendar;
     }
 
-    public static String convertToString(Calendar calendar)
+    @Override
+    public String getStringDate(Calendar calendar)
     {
         String result = calendar.get(Calendar.YEAR) + "-";
         result += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";

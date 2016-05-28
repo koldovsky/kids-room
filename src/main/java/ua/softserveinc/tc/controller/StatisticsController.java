@@ -11,11 +11,10 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.HashMap;
 import java.util.List;
-
-import static ua.softserveinc.tc.util.DateUtilImpl.*;
 
 /**
  * Created by Demian on 28.05.2016.
@@ -23,6 +22,9 @@ import static ua.softserveinc.tc.util.DateUtilImpl.*;
 @Controller
 public class StatisticsController
 {
+    @Autowired
+    DateUtil dateUtil;
+
     @Autowired
     RoomService roomService;
 
@@ -36,10 +38,12 @@ public class StatisticsController
         model.setViewName("adm-statistics");
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = convertToString(currentDate());
-        String dateThen = convertToString(dateMonthAgo());
+        String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
+        String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
+
         List<Room> rooms = roomService.findAll();
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
+
         HashMap<Room, Long> statistics = bookingService.generateAReport(rooms, bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
