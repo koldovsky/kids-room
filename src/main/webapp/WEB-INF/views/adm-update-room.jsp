@@ -89,8 +89,8 @@
               </div>
 
                <div class="form-group">
-                  <button type="submit" name="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok" ng-click="submit()"></button>
-                  <button type="reset" name="reset" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-remove"></button>
+                  <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok" ng-click="submit()"></button>
+                  <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"></button>
                </div>
 
                <script src="resources/js/room-update-for-rates.js"></script>

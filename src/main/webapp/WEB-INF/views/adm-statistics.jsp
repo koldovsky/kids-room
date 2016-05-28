@@ -26,7 +26,7 @@
 
         <datalist id="room">
             <c:forEach var="room" items="${rooms}">
-            <option value="${room}"></option>
+            <option value="${room.name}"></option>
             </c:forEach>
         </datalist>
 
