@@ -74,23 +74,6 @@ public class DateUtilImpl implements DateUtil
         return hoursAndMinutes;
     }
 
-    @Override
-    public Date sd(Booking booking, String time) {
-        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
-        DateFormat dfDateAndTime = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
-        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(dfDateAndTime.parse(dateString));
-        }
-        catch (ParseException e)
-        {
-            System.err.println("Wrong format of date. " + e.getMessage());
-        }
-        Date date = calendar.getTime();
-        return date;
-
-    }
 
     @Override
     public Calendar currentDate()
