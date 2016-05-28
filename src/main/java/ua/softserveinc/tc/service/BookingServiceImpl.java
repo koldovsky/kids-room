@@ -16,7 +16,10 @@ import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService
@@ -37,7 +40,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
 
-        query.where(builder.equal(root.get("sum"), 0));
+        query.where(builder.equal(root.get("sum"), 0))
+        .where(builder.equal(root.get("is_cancelled"), false));
         return entityManager.createQuery(query).getResultList();
     }
 
@@ -120,13 +124,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public HashMap<User, Integer> generateAReport(List<Booking> bookings)
+    public HashMap<User, Integer> generateAReport(List<User> users, List<Booking> bookings)
     {
         HashMap<User, Integer> result = new HashMap<>();
-
-        // get set of unique users
-        HashSet<User> users = new HashSet<>();
-        bookings.forEach(booking -> users.add(booking.getIdUser()));
 
         // get sum total for each user
         for (User user : users)

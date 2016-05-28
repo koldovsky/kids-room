@@ -12,6 +12,7 @@ import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.UserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,11 @@ import java.util.List;
 public class ReportAllController
 {
     @Autowired
+    UserService userService;
+
+    @Autowired
     BookingService bookingService;
+
 
     @RequestMapping(value = "/manager-report-all", method = RequestMethod.GET,
             params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
@@ -35,8 +40,9 @@ public class ReportAllController
         modelAndView.setViewName(ReportConst.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
+        List<User> users = userService.getActiveUsers(dateThen, dateNow);
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
-        HashMap<User, Integer> report = bookingService.generateAReport(bookings);
+        HashMap<User, Integer> report = bookingService.generateAReport(users, bookings);
 
         modelMap.addAttribute(ReportConst.REPORT, report);
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
