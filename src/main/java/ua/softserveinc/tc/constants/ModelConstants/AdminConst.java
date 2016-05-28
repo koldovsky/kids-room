@@ -21,10 +21,8 @@ public interface AdminConst {
     String UPDATE_ROOM = "adm-update-room";
 
 
-    String EDIT_CITY = "adm-edit-city";
 
-    String ADD_CITY = "adm-add-city";
-
+    String CONFIRM_MANAGER = "adm-confirm-manager";
     ///////////////////////////////////////
 
 
@@ -34,14 +32,10 @@ public interface AdminConst {
 
     String ROOM_LIST = "roomList";
 
-    String CITY_LIST = "cityList";
-
 
     String ATR_MANAGER = "manager";
 
     String ATR_ROOM = "room";
-
-    String ATR_CITY = "city";
 
     ///////////////////////////////////////
 

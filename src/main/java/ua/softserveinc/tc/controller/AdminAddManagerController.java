@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
@@ -31,7 +32,7 @@ public class AdminAddManagerController {
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public String showCreateManagerForm() {
-        return "adm-add-manager";
+        return AdminConst.ADD_MANAGER;//"adm-add-manager"
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
@@ -45,7 +46,7 @@ public class AdminAddManagerController {
         tokenService.createToken(token, user);
         mailService.buildConfirmRegisterManager("Confirmation registration", user, token);
 
-        return "redirect:/" + "adm-edit-manager";
+        return "redirect:/" + AdminConst.EDIT_MANAGER;//"adm-edit-manager"
     }
 
 

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
@@ -29,8 +30,8 @@ public class AdminEditRoomController {
     public ModelAndView getRoomMenu() {
         List<Room> rooms = roomService.findAll();
 
-        ModelAndView mav = new ModelAndView("adm-edit-room");
-        mav.addObject("roomList", rooms);
+        ModelAndView mav = new ModelAndView(AdminConst.EDIT_ROOM);//"adm-edit-room"
+        mav.addObject(AdminConst.ROOM_LIST, rooms);//"roomList"
 
         return mav;
     }
@@ -38,6 +39,6 @@ public class AdminEditRoomController {
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.POST)
     public String deleteRoom(@RequestParam Long id) {
         userService.deleteUserById(id);
-        return "redirect:/" + "adm-edit-room";
+        return "redirect:/" + AdminConst.EDIT_ROOM;//"adm-edit-room"
     }
 }

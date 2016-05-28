@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Token;
@@ -45,28 +46,36 @@ public class ConfirmManagerController {
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.GET)
     public String confirmRegistration(Model model, @RequestParam(TokenConst.TOKEN) String sToken) {
+
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
-        model.addAttribute("user", user);
+        model.addAttribute(UsersConst.USER, user);//"user"
+
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+
         tokenService.delete(token);
-        return "adm-confirm-manager";
+
+        return AdminConst.CONFIRM_MANAGER;//"adm-confirm-manager"
     }
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
     public String confirmPassword(@ModelAttribute(UsersConst.USER) User manager, BindingResult bindingResult) {
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(manager.getPassword());
         user.setConfirm(manager.getConfirm());
+
         userValidator.validate(user, bindingResult);
+
         if (bindingResult.hasErrors()){
-            return "adm-confirm-manager";
+            return AdminConst.CONFIRM_MANAGER;//"adm-confirm-manager"
         }
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
         user.setConfirmed(true);
         userService.update(user);
+
         return UsersConst.LOGIN_VIEW;
     }
 

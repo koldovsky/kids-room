@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
@@ -23,10 +24,10 @@ public class AdminUpdateManagerController {
 
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.GET)
     public ModelAndView updateManager(@RequestParam("id") Long id) {
-        ModelAndView model = new ModelAndView("adm-update-manager");
+        ModelAndView model = new ModelAndView(AdminConst.UPDATE_MANAGER);//"adm-update-manager"
 
         User manager = userService.findById(id);
-        model.getModelMap().addAttribute("manager", manager);
+        model.getModelMap().addAttribute(AdminConst.ATR_MANAGER, manager);//"manager"
 
         return model;
     }
@@ -36,6 +37,6 @@ public class AdminUpdateManagerController {
         manager.setRole(Role.MANAGER);
         userService.update(manager);
 
-        return "redirect:/" + "adm-edit-manager";
+        return "redirect:/" + AdminConst.EDIT_MANAGER;//"adm-edit-manager"
     }
 }
