@@ -65,8 +65,13 @@ margin: 0 auto;
 .secondary-text-color  { color: #727272; }
 .divider-color         { border-color: #B6B6B6; }
 
-table, tr, td{
+table, tr{
     margin: 0 auto;
     border: none;
     background: none;
+}
+
+td{
+    padding-left: 25px;
+    padding-right: 25px;
 }

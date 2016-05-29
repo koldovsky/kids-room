@@ -67,13 +67,13 @@
 .kidsCard{
         background-color: white;
         border:  1px solid transparent;
-        width: 65%;
+        width: 35%;
         min-width: 300px;
         margin: 25 auto;
         padding-bottom: 25;
         padding-top: 25;
         padding: 25;
-        text-align:center;
+        text-align: center;
         box-shadow: 5px 5px 20px grey;
     }
 
@@ -85,6 +85,7 @@
      overflow: hidden;
     margin: 0 auto;
     border: 1px solid black;
+    margin-bottom: 25px;
 
 }
 
@@ -116,6 +117,5 @@ position: absolute;
 }
 
 .col-md-8{
-    border: 1px solid grey;
     min-height: 202px;
 }

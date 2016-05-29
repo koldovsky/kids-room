@@ -2,8 +2,11 @@ package ua.softserveinc.tc.controller;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.InternalError;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Controller;
@@ -86,10 +89,10 @@ public class ImagesController {
      * @throws ResourceNotFoundException
      * @throws AccessDeniedException
      */
-    @RequestMapping(value = "/images/{kidId}",
+    @RequestMapping(value = "/images",
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
+    public byte[] getProfilePic(@RequestParam String kidId, Principal principal)
             throws IOException,
             AccessDeniedException,
             ResourceNotFoundException{
@@ -125,4 +128,11 @@ public class ImagesController {
         return Base64.decode(base64String);
 
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(JpaSystemException.class)
+    public String badUpload(){
+        return "error-bad-upload";
+    }
+
 }

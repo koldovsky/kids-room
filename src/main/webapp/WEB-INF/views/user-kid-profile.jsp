@@ -13,11 +13,11 @@
 <script src='resources/js/profile.js'></script>
 
 <div class="kidsCard" data-id="${kid.id}" modelAttribute="<%=MyKidsConst.MY_KIDS_LIST_ATTRIBUTE %>">
- <div class="col-md-4">
+
     <div class="left">
         <div id="Photo">
-        <a href="images/${kid.id}.jpg">
-        <img id="picture" alt="Profile picture" src="images/${kid.id}.jpg" width="200" height="200" />
+        <a href="images?kidId=${kid.id}">
+        <img id="picture" alt="Profile picture" src="images?kidId=${kid.id}" width="200" height="200" />
         </a>
         </div>
 
@@ -31,10 +31,6 @@
          </sec:authorize>
 
         </div>
-
- </div>
-
-<div class="col-md-8">
  <h2> ${kid.firstName} ${kid.lastName} </h2>
   <sec:authorize access="hasRole('USER')">
         <button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
@@ -44,7 +40,7 @@
 <h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}<h3>
 <h3> <spring:message code="kids.age" />: ${kid.getAge()}<h3>
 <h4> <spring:message code="kid.comment" />: ${kid.comment} </h4>
-</div>
+
 
 <div style="clear:both"></div>
 

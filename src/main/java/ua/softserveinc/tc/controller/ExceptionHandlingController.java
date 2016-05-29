@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.controller;
 
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +28,7 @@ public class ExceptionHandlingController {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler({
             NoHandlerFoundException.class,
-            ResourceNotFoundException.class,
+            ResourceNotFoundException.class
     })
     public ModelAndView handleError404(HttpServletRequest request, Exception e) {
         ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
