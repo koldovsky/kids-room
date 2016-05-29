@@ -1,15 +1,37 @@
 
+.table tbody {
+ display: block;
+   height: 350px;
+   text-align:left;
+   overflow: hidden;
+   overflow-y: auto;
+}
+.table thead{
+    background-color: #4285F4;
+    text-align:left;
+}
 
-.highlighted1 {
-    background-color: #90EE90;
+.table tr {
+    display: table;
+    table-layout: fixed;
+}
+.table td{
+    width: 150px;
+}
+.highlighted{
+        background-color:  #FFFFFF;
+}
+
+.highlight-active{
+    background-color: #C4DAF4;
 }
 
 .highlightedRed {
     background-color: red;
 }
 
-.highlighted2 {
-    background-color: #32CD32;
+.highlight-complet {
+    background-color: #8E8E8E;
 }
 .tableDiv{
     padding-left: 50px;

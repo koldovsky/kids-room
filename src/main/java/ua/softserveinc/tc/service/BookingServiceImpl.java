@@ -143,6 +143,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
         booking.setBookingStartTime(date);
+        booking.setBookingState(BookingState.ACTIVE);
         update(booking);
         calculateAndSetSum(booking);
         return booking;
@@ -153,6 +154,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getEndTime());
         booking.setBookingEndTime(date);
+        booking.setBookingState(BookingState.COMPLETED);
         update(booking);
         calculateAndSetSum(booking);
         return booking;

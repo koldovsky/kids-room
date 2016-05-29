@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
@@ -22,6 +24,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,10 +49,6 @@ public class ManagerConfirmBookingController {
     @Autowired
     RoomService roomService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-
 
 
     @RequestMapping(value = BookingConstModel.MANAGER_CONF_BOOKING_VIEW)
@@ -59,7 +58,15 @@ public class ManagerConfirmBookingController {
         User currentManager = userService.getUserByEmail(principal.getName());
         Room roomCurrentManager = roomService.getRoombyManager(currentManager);
         List<Booking> listBooking = bookingService.getBookingsByRoom(roomCurrentManager);
+        List<BookingDTO> list = new ArrayList<BookingDTO>();
+        for (Booking booking : listBooking) {
+            list.add(new BookingDTO(booking));
+        }
+        Gson gson = new Gson();
+        String listBookingDTO = gson.toJson(list);
         model.addAttribute(BookingConstModel.LIST_BOOKINGS, listBooking);
+        model.addAttribute("listBookingDTO", listBookingDTO);
+
         return modelAndView;
     }
 
@@ -67,7 +74,7 @@ public class ManagerConfirmBookingController {
     public @ResponseBody String cancelBooking (Model model,
                                                @PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
-
+        booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
         bookingService.update(booking);
         BookingDTO bookingDTO = new BookingDTO(booking);
@@ -80,7 +87,9 @@ public class ManagerConfirmBookingController {
     @ResponseBody
     String setingBookingsStartTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDTO);
+
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
+
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
     }
@@ -94,6 +103,27 @@ public class ManagerConfirmBookingController {
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
     }
+     @RequestMapping(value = "/listBook", method = RequestMethod.GET)
+     @ResponseBody
+     public String list(Principal principal) {
+         User currentManager = userService.getUserByEmail(principal.getName());
+         Room roomCurrentManager = roomService.getRoombyManager(currentManager);
+         List<Booking> listBooking = bookingService.getBookingsByRoom(roomCurrentManager);
+         List<BookingDTO> list = new ArrayList<BookingDTO>();
+         for (Booking booking : listBooking) {
+             list.add(new BookingDTO(booking));
+         }
+         Gson gson = new Gson();
+        return  gson.toJson(list);
+    }
+    /* @RequestMapping(value = "/BookDuration", method = RequestMethod.POST, consumes = "application/json")
+     @ResponseBody
+     public String BookinkDuration(@RequestBody BookingDTO bookingDTO) {
 
+         Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
+         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
+         Gson gson = new Gson();
+         return  gson.toJson(bookingDTOtoJson);
+    }*/
 
 }

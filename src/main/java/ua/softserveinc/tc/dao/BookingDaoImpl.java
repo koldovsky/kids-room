@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
+import ua.softserveinc.tc.constants.EntityConstants.BookingConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 
@@ -28,7 +29,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         try {
             query.select(root).where(builder.and(builder.between(root.get("bookingStartTime"),
-                            startTime, endTime)), builder.equal(root.get("isCancelled"), false),
+                            startTime, endTime)), builder.notEqual(root.get("bookingState"), BookingConst.BOOKING_CENCELLD),
                             builder.equal(root.get("idRoom"), room));
             query.orderBy(builder.asc(root.get("bookingStartTime")));
         }catch (Exception e){

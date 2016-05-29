@@ -2,6 +2,7 @@ package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,8 @@ public class BookingDTO  implements BaseDTO {
     private String roomName;
     private String duration;
     private Long sum;
+    private Long durtionLong;
+    private BookingState bookingState;
 
     public BookingDTO() {
         this.id=id;
@@ -42,6 +45,8 @@ public class BookingDTO  implements BaseDTO {
         this.duration = booking.formatDuration();
         this.sum = booking.getSum();
         this.id = booking.getIdBook();
+        this.bookingState = booking.getBookingState();
+        this.durtionLong = booking.getDuration();
 
     }
 
@@ -109,5 +114,11 @@ public class BookingDTO  implements BaseDTO {
         this.id = id;
     }
 
+    public Long getDurtionLong() {
+        return durtionLong;
+    }
 
+    public void setDurtionLong(Long durtionLong) {
+        this.durtionLong = durtionLong;
+    }
 }

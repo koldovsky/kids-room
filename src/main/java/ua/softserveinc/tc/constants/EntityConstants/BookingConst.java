@@ -24,4 +24,6 @@ public interface BookingConst {
 
     String BOOKING_STATE = "booking_state";
 
+    int BOOKING_CENCELLD = 3;
+
 }
