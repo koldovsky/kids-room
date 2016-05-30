@@ -48,7 +48,6 @@ public class ViewEventController {
         } catch (NullPointerException n) {
             return UsersConst.LOGIN_VIEW;
         }
-
     }
 
     @RequestMapping(value = "getCompanies/{id}", method = RequestMethod.GET)
@@ -74,10 +73,4 @@ public class ViewEventController {
     public void getEventForDelete(@RequestBody EventDTO eventDTO) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDTO));
     }
-/*    @RequestMapping(value = "getnewevent", method = RequestMethod.GET)
-    public @ResponseBody
-    String getAjaxResponse() {
-        return "Some info";
-    }*/
-
 }

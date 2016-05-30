@@ -80,7 +80,8 @@ function changeFunc(id) {
                         id: parseInt(stringToArray[4]),
                         title: stringToArray[1],
                         start: stringToArray[2],
-                        end: stringToArray[3]
+                        end: stringToArray[3],
+                     //   rendering : 'background'
                     }
                 }
                 rendering(objects, id);
@@ -101,12 +102,10 @@ function changeFunc(id) {
 function rendering(objects ,roomID) {
 
     $('#calendar').fullCalendar({
-
+        slotDuration: '00:15:00',
         dayClick: function f(date, jsEvent, view) {
 
             var clickDate = date.format();
-
-
 
             $('#startDate').val('');
             $('#title').val(clickDate.substring(0,10));
@@ -118,12 +117,24 @@ function rendering(objects ,roomID) {
                 clickDate = clickDate + "T00:00:00";
             }
 
+            var ckbox = $('#checkbox');
+
+            $('input').on('click',function () {
+                if (ckbox.is(':checked')) {
+                    $("#basicExample").prop("readonly", true);
+                    $("#ender").prop("readonly", true);
+                } else {
+                    $("#basicExample").prop("readonly", false);
+                    $("#ender").prop("readonly", false);
+                }
+            });
 
             $('#creating').click(function () {
                 if( $('#startDate').val() == "" || clickDate == "") {
                     return;
                 }
 
+/*
                 var ev = {
                     id: -1,
                     title: $('#startDate').val(),
@@ -131,7 +142,32 @@ function rendering(objects ,roomID) {
                     end:   makeISOtime(clickDate, "ender"),
                     backgroundColor: '#33cc33',
                     borderColor: '#33cc33',
-                    editable : false
+                    allDay: false
+                }
+*/
+
+                if(ckbox.is(':checked')){
+                    alert("");
+                    var ev = {
+                        id: -1,
+                        title: $('#startDate').val(),
+                        start: date.format().substring(0,11),
+                        backgroundColor: '#33cc33',
+                        borderColor: '#33cc33',
+                        editable: false,
+                        allDay: true
+                    }
+                } else {
+                    var ev = {
+                        id: -1,
+                        title: $('#startDate').val(),
+                        start: makeISOtime(clickDate, "basicExample"),
+                        end:   makeISOtime(clickDate, "ender"),
+                        backgroundColor: '#33cc33',
+                        borderColor: '#33cc33',
+                        editable: false,
+                        allDay: false
+                    }
                 }
 
                 $('#calendar').fullCalendar('renderEvent', ev, true);
@@ -167,7 +203,11 @@ function rendering(objects ,roomID) {
                 clickDate = "";
             })
         },
-
+/*        eventRender: function(event, element){
+            if(event.rendering == 'background'){
+                element.append(event.title);
+            }
+        },*/
         eventClick: function (calEvent, jsEvent, view) {
 
             var beforeUpdate = calEvent.title;
@@ -239,48 +279,11 @@ function rendering(objects ,roomID) {
         defaultDate: $('#calendar').fullCalendar('getDate'),
 
         selectHelper: true,
-/*        select: function (start, end) {
-            var title = prompt('Event Title:');
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-        },*/
         editable: true,
         eventLimit: true,
         events: objects
     });
 }
-/*
-
-function forSendingToServer(event, roomID) {
-var res = -1;
-   $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'getnewevent',
-        dataType: "json",
-        data: JSON.stringify({
-            name: event.title,
-            startTime: event.start,
-            endTime: event.end,
-            roomId: roomID
-        }),
-       success : function (result) {
-         res = result;
-        }
-    });
-
-    return res;
-
-}*/
-
 
 function sendToServerForUpdate(event, roomID) {
     alert("update");

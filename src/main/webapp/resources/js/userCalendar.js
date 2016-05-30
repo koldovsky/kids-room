@@ -4,14 +4,13 @@
 
 
 function selectRoomForUser(id) {
+    $('#user-calendar').fullCalendar('destroy');
 
-    $('#calendar').fullCalendar('destroy');
 
     var path = "getCompanies/" + id;
 
     $.ajax({
-        url: path,
-        success: function (result) {
+        url: path, success: function (result) {
 
             if (result.length != 0) {
                 var objects = [];
@@ -28,38 +27,39 @@ function selectRoomForUser(id) {
                         title: stringToArray[1],
                         start: stringToArray[2],
                         end: stringToArray[3],
-                        stick: true
+                        rendering : 'background'
                     }
                 }
-
-                rendering(objects);
-
+                renderingForUser(objects, id);
             } else {
-                $('#calendar').fullCalendar('destroy');
+                $('#user-calendar').fullCalendar('destroy');
 
                 var objects = [{
                     title: "1",
                     start: "1",
-                    end: "1",
-                    editable: false
+                    end: "1"
                 }]
-                rendering(objects);
-
+                renderingForUser(objects, id);
             }
         }
     });
 }
 
-function rendering(objects) {
+function renderingForUser(objects) {
+    $('#user-calendar').fullCalendar({
 
-    $('#calendar').fullCalendar({
+        eventBackgroundColor: '#068000',
+        eventColor: 'transparent',
+        eventBorderColor: 'transparent',
+        eventTextColor: '#000',
+        slotDuration: '00:15:00',
 
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-        defaultDate: $('#calendar').fullCalendar('getDate'),
+        defaultDate: $('#user-calendar').fullCalendar('getDate'),
 
         select: function (start, end) {
             var title = prompt('Event Title:');
@@ -68,15 +68,22 @@ function rendering(objects) {
                 eventData = {
                     title: title,
                     start: start,
-                    end: end,
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, false); // stick? = true
+                    end: end
+
+            };
+                $('#user-calendar').fullCalendar('renderEvent', eventData, false);
             }
-            $('#calendar').fullCalendar('unselect');
+            $('#user-calendar').fullCalendar('unselect');
+        },
+        eventRender: function(event, element){
+            if(event.rendering == 'background'){
+                element.append(event.title);
+            }
         },
         editable: false,
-        eventLimit: true, // allow "more" link when too many events
+        eventLimit: true,
         events: objects
+
     });
 }
 

@@ -18,6 +18,7 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", "Lviv", 1);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", "Lviv", 2);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Pasternaka 15", 40, "LV-4", "+380974074537", "Kyiv", 6);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (4, "Pasternaka 154", 40, "LV-4", "+380974074537", "Kyiv", 2);
 
 INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (1, 2, 300, 1);
 INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (2, 4, 500, 1);

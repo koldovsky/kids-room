@@ -48,19 +48,19 @@
     </c:forEach>
 
 
-    <select id="selectBox" onchange="selectRoomForUser(value);">
+    <select id="selectBoxUser" onchange="selectRoomForUser(value);">
 
         <option value=" "></option>
 
         <c:forEach items="${rooms}" var="r">
 
-            <option value="${r.id}">${r.address}</option>
+            <option value="${r.id}">${r.city}: ${r.address}</option>
 
         </c:forEach>
 
     </select>
 
-    <div id='calendar'></div>
+    <div id='user-calendar'></div>
 
 
 </sec:authorize>
@@ -80,7 +80,7 @@
 
         <c:forEach items="${rooms}" var="r">
 
-            <option value="${r.id}">${r.address}</option>
+            <option value="${r.id}">${r.city}: ${r.address}</option>
 
         </c:forEach>
 
@@ -96,7 +96,9 @@
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
-
+                        <div class="allDay">
+                            <label><input type="checkbox" id="checkbox" value="">   All day</label>
+                        </div>
 
                         <div class="form-group">
                             <label for="title">Start date</label>
@@ -180,7 +182,7 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-                            <input type = "text" id = "kostyl" hidden/>
+
                             <button type="button" class="btn btn-success" id="updatingButton">Update</button>
                             <button type="button" class="btn btn-danger" id="deleting">Delete</button>
 
