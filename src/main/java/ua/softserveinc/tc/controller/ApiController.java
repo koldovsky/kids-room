@@ -33,9 +33,7 @@ public class ApiController {
         List<User> users = userService.findAll();
 
         for (User user : users) {
-            if (user.isConfirmed()) {
-                result.add(new UserDTO(user));
-            }
+            result.add(new UserDTO(user));
         }
 
         Gson gson = new Gson();
@@ -47,10 +45,7 @@ public class ApiController {
         User user = userService.findById(id);
         Gson gson = new Gson();
 
-        if (user.isConfirmed()) {
-            return gson.toJson(new UserDTO(user));
-        }
-        return null;
+        return gson.toJson(new UserDTO(user));
     }
 
     @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.GET)
@@ -59,9 +54,7 @@ public class ApiController {
         List<Child> children = childService.findAll();
 
         for (Child child : children) {
-            if (child.isEnabled()) {
-                result.add(new ChildDTO(child));
-            }
+            result.add(new ChildDTO(child));
         }
 
         Gson gson = new Gson();
@@ -80,10 +73,7 @@ public class ApiController {
         Child child = childService.findById(id);
         Gson gson = new Gson();
 
-        if (child.isEnabled()) {
-            return gson.toJson(new ChildDTO(child));
-        }
-        return null;
+        return gson.toJson(new ChildDTO(child));
     }
 
     @RequestMapping(value = ApiConstants.getChildrenParentRestUrl, method = RequestMethod.GET)
@@ -92,10 +82,7 @@ public class ApiController {
         User user = child.getParentId();
         Gson gson = new Gson();
 
-        if (user.isConfirmed()) {
-            return gson.toJson(new UserDTO(user));
-        }
-        return null;
+        return gson.toJson(new UserDTO(user));
     }
 
 }
