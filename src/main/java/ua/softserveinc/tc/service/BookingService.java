@@ -5,6 +5,7 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,4 +22,5 @@ public interface BookingService extends BaseService<Booking>
     Map<Room, Long> generateStatistics(List<Booking> bookings);
     List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
     List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
+    Date getDateAndTimeBooking(Booking booking, String time);
 }

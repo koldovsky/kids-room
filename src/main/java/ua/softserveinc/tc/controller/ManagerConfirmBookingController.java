@@ -23,6 +23,7 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +51,6 @@ public class ManagerConfirmBookingController {
     RoomService roomService;
 
 
-
     @RequestMapping(value = BookingConstModel.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView parentBookings(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
@@ -58,15 +58,7 @@ public class ManagerConfirmBookingController {
         User currentManager = userService.getUserByEmail(principal.getName());
         Room roomCurrentManager = roomService.getRoombyManager(currentManager);
         List<Booking> listBooking = bookingService.getBookingsByRoom(roomCurrentManager);
-        List<BookingDTO> list = new ArrayList<BookingDTO>();
-        for (Booking booking : listBooking) {
-            list.add(new BookingDTO(booking));
-        }
-        Gson gson = new Gson();
-        String listBookingDTO = gson.toJson(list);
         model.addAttribute(BookingConstModel.LIST_BOOKINGS, listBooking);
-        model.addAttribute("listBookingDTO", listBookingDTO);
-
         return modelAndView;
     }
 
@@ -99,6 +91,8 @@ public class ManagerConfirmBookingController {
     @ResponseBody
     String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
+        booking.setBookingState(BookingState.COMPLETED);
+        bookingService.update(booking);
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
@@ -109,21 +103,24 @@ public class ManagerConfirmBookingController {
          User currentManager = userService.getUserByEmail(principal.getName());
          Room roomCurrentManager = roomService.getRoombyManager(currentManager);
          List<Booking> listBooking = bookingService.getBookingsByRoom(roomCurrentManager);
-         List<BookingDTO> list = new ArrayList<BookingDTO>();
-         for (Booking booking : listBooking) {
+         List<BookingDTO> listBookingDTO = new ArrayList<BookingDTO>();
+        /* for (Booking booking : listBooking) {
              list.add(new BookingDTO(booking));
-         }
+         }*/
+         listBooking.forEach(booking -> listBookingDTO.add(new BookingDTO(booking)));
          Gson gson = new Gson();
-        return  gson.toJson(list);
+        return  gson.toJson(listBookingDTO);
     }
-    /* @RequestMapping(value = "/BookDuration", method = RequestMethod.POST, consumes = "application/json")
+     @RequestMapping(value = "/BookDuration", method = RequestMethod.POST, consumes = "application/json")
      @ResponseBody
-     public String BookinkDuration(@RequestBody BookingDTO bookingDTO) {
-
-         Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
+     public String BookinkDuration(@RequestBody BookingDTO bookingDTO) throws ParseException{
+         Booking booking = bookingService.findById(bookingDTO.getId());
+         Date date = bookingService.getDateAndTimeBooking(booking, bookingDTO.getEndTime());
+         booking.setBookingEndTime(date);
+         bookingService.calculateAndSetDuration(booking);
          BookingDTO bookingDTOtoJson = new BookingDTO(booking);
          Gson gson = new Gson();
          return  gson.toJson(bookingDTOtoJson);
-    }*/
+    }
 
 }
