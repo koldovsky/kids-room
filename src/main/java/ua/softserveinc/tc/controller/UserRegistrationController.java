@@ -15,6 +15,7 @@ import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
@@ -41,9 +42,14 @@ public class UserRegistrationController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    BookingService bookingService;
+
     @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
     public String login(Model model) {
+        //TODO: REMOVE THIS LINE WHEN QUARTZ IS IMPLEMENTED.
+        bookingService.getBookingsWithZeroSum().forEach(booking -> bookingService.calculateAndSetSum(booking));
         return UsersConst.LOGIN_VIEW;
     }
 

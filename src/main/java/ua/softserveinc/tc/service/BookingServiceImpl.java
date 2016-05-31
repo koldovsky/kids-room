@@ -71,6 +71,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 booking.getBookingStartTime().getTime();
 
         booking.setDuration(difference);
+        bookingDao.update(booking);
     }
 
     @Override
@@ -80,7 +81,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         List<Rate> rates = booking.getIdRoom().getRates();
         Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
+
         booking.setSum(closestRate.getPriceRate());
+        bookingDao.update(booking);
     }
 
     @Override
@@ -145,7 +148,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         booking.setBookingStartTime(date);
         booking.setBookingState(BookingState.ACTIVE);
         update(booking);
-        calculateAndSetSum(booking);
         return booking;
     }
 
@@ -156,7 +158,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         booking.setBookingEndTime(date);
         booking.setBookingState(BookingState.COMPLETED);
         update(booking);
-        calculateAndSetSum(booking);
         return booking;
     }
     @Override
