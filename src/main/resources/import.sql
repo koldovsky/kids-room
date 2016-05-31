@@ -15,9 +15,21 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (6, "drink only whiskey", "2014-02-12", "Jimro", "Fours", 5, 0);
 
 
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "Roomy", "+380974074537", "Lviv", 1);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Pasternaka 5", 40, "LV-5", "+380974074537", "Lviv", 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Pasternaka 15", 40, "LV-4", "+380974074537", "Kyiv", 6);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "LV-3", "+380947715038", "Lviv", 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Antonycha 22", 30, "LV-5", "+380938587190", "Lviv", 58);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Nezalezhnosti 18", 50, "Nebesna", "+380951789603", "Kyiv", 61);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (4, "Shevchenka 32", 35, "Velyka", "+380936458634", "Kyiv", 64);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (5, "Franka 124", 30, "Kvitkova", "+380938710134", "Rivne", 67);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (6, "Tarasivka 27", 40, "Zelena", "+380949441026", "Lutsk", 69);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (7, "Pasichna 101", 20, "Pyrohova", "+380952802396", "Kryvyi Rih", 70);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (8, "Chervonoii Kalyny 3", 25, "Na Kalyny", "+380958750736", "Ternopil", 73);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (9, "Vernadskoho 12", 35, "Akademika", "+380961934921", "Vinnytsia", 76);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (10, "Rustaveli 26", 15, "Shota", "+380960751648", "Kharkiv", 79);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (11, "Naberezhna 34", 20, "Naberezhna", "+380942132627", "Odesa", 82);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (12, "Lastivkova 15", 30, "Lastivka", "+380944711658", "Dnipro", 85);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (13, "Soniachna 93", 45, "Hard", "+380964372962", "Alushta", 89);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (14, "Demianska 57", 50, "Roomy", "+380957792337", "Kamianets", 90);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (15, "Ulianivska 15", 30, "Oselia", "+380965168944", "Zhytomyr", 95);
 
 INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (1, 2, 300, 1);
 INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (2, 4, 500, 1);
