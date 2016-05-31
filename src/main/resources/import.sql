@@ -15,116 +15,6 @@ INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, l
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (6, "drink only whiskey", "2014-02-12", "Jimro", "Fours", 5, 0);
 
 
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "LV-3", "+380947715038", "Lviv", 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Antonycha 22", 30, "LV-5", "+380938587190", "Lviv", 58);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Nezalezhnosti 18", 50, "Nebesna", "+380951789603", "Kyiv", 61);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (4, "Shevchenka 32", 35, "Velyka", "+380936458634", "Kyiv", 64);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (5, "Franka 124", 30, "Kvitkova", "+380938710134", "Rivne", 67);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (6, "Tarasivka 27", 40, "Zelena", "+380949441026", "Lutsk", 69);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (7, "Pasichna 101", 20, "Pyrohova", "+380952802396", "Kryvyi Rih", 70);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (8, "Chervonoii Kalyny 3", 25, "Na Kalyny", "+380958750736", "Ternopil", 73);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (9, "Vernadskoho 12", 35, "Akademika", "+380961934921", "Vinnytsia", 76);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (10, "Rustaveli 26", 15, "Shota", "+380960751648", "Kharkiv", 79);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (11, "Naberezhna 34", 20, "Naberezhna", "+380942132627", "Odesa", 82);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (12, "Lastivkova 15", 30, "Lastivka", "+380944711658", "Dnipro", 85);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (13, "Soniachna 93", 45, "Hard", "+380964372962", "Alushta", 89);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (14, "Demianska 57", 50, "Roomy", "+380957792337", "Kamianets", 90);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (15, "Ulianivska 15", 30, "Oselia", "+380965168944", "Zhytomyr", 95);
-
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (1, 2, 300, 1);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (2, 4, 500, 1);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (3, 6, 600, 1);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (4, 2, 80, 2);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (5, 4, 90, 2);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (6, 6, 100, 2);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (7, 3, 30, 3);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (8, 5, 50, 3);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (9, 6, 60, 3);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (10, 2, 40, 4);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (11, 4, 80, 4);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (12, 6, 160, 4);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (13, 2, 20, 5);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (14, 4, 25, 5);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (15, 6, 30, 5);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (16, 2, 100, 6);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (17, 4, 200, 6);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (18, 6, 300, 6);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (19, 3, 50, 7);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (20, 5, 75, 7);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (21, 7, 100, 7);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (22, 3, 90, 8);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (23, 5, 105, 8);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (24, 7, 125, 8);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (25, 2, 70, 9);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (26, 4, 80, 9);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (27, 6, 90, 9);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (28, 2, 1000, 10);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (29, 4, 2000, 10);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (30, 6, 3000, 10);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (31, 2, 200, 11);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (32, 4, 400, 11);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (33, 6, 600, 11);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (34, 2, 5, 12);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (35, 4, 10, 12);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (36, 6, 15, 12);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (37, 2, 50, 13);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (38, 4, 75, 13);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (39, 6, 100, 13);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (40, 2, 100, 14);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (41, 4, 120, 14);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (42, 6, 140, 14);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (43, 2, 160, 15);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (44, 4, 180, 15);
-INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (45, 6, 200, 15);
-
-insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT1', '2016-05-10 15:00:00', 1);
-insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT2', '2016-05-15 15:00:00', 2);
-insert into events VALUES (3, 3, 5, 'NO', '2016-05-16 16:00:00', 'EVENT3', '2016-05-16 15:00:00', 2);
-insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT4', '2016-05-26 10:00:00', 2);
-
--- DEMIAN DEMO START
--- user@softserveinc.com bookings for month start
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (1, '2016-05-01 17:58', '2016-05-01 14:03', "The whole world of comments", 0, 1, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (2, '2016-05-02 19:32', '2016-05-02 17:37', "The whole world of comments", 0, 2, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (3, '2016-05-03 19:38', '2016-05-03 14:37', "The whole world of comments", 0, 1, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (4, '2016-05-04 16:56', '2016-05-04 14:57', "The whole world of comments", 0, 2, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (5, '2016-05-05 16:58', '2016-05-05 14:57', "The whole world of comments", 0, 1, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (6, '2016-05-06 16:57', '2016-05-06 14:57', "The whole world of comments", 0, 2, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (7, '2016-05-07 15:20', '2016-05-07 15:05', "The whole world of comments", 0, 1, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (8, '2016-05-08 19:36', '2016-05-08 17:25', "The whole world of comments", 0, 2, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (9, '2016-05-09 19:47', '2016-05-09 12:30', "The whole world of comments", 0, 1, 2, 1);
--- user@softserveinc.com bookings for month end
--- user@softserveinc.com bookings for other period start
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (11, '2016-04-01 18:15', '2016-04-01 15:24', "The whole world of comments", 0, 1, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (12, '2016-04-02 14:21', '2016-04-02 10:38', "The whole world of comments", 0, 2, 1, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (13, '2016-04-03 15:48', '2016-04-03 15:32', "The whole world of comments", 0, 1, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (14, '2016-04-04 16:34', '2016-04-04 13:15', "The whole world of comments", 0, 2, 1, 1);
--- user@softserveinc.com bookings for other period end
--- another parents start
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (21, '2016-05-01 16:27', '2016-05-01 13:15', "The whole world of comments", 0, 4, 1, 4);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (22, '2016-05-02 18:26', '2016-05-02 14:27', "The whole world of comments", 0, 4, 2, 4);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (23, '2016-05-03 17:18', '2016-05-03 16:27', "The whole world of comments", 0, 4, 1, 4);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (24, '2016-04-01 16:34', '2016-04-01 13:15', "The whole world of comments", 0, 5, 1, 5);
--- another parents end
--- DEMIAN DEMO END
-
--- VASYL DEMO START
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (31, '2016-06-20 16:39', '2016-06-20 15:00', "The whole world of comments", 2, 1, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (32, '2016-06-20 16:55', '2016-06-20 15:30', "The whole world of comments", 2, 2, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 16:30', "The whole world of comments", 1, 4, 2, 4);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 16:20', "The whole world of comments", 1, 5, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (35, '2016-06-20 19:20', '2016-06-20 16:45', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (36, '2016-06-20 21:50', '2016-06-20 16:40', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (37, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (38, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (39, '2016-06-20 21:50', '2016-06-20 17:30', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (40, '2016-06-20 21:50', '2016-06-20 18:32', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (41, '2016-06-20 21:50', '2016-06-20 18:35', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (42, '2016-06-20 21:50', '2016-06-20 18:38', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (43, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (44, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 2, 5);
--- VASYL DEMO END
-
 -- 50 SHADES OF PARENTS START
 INSERT INTO users (id_user, email, first_name, last_name, password, phone_number, role, confirmed, active) VALUES (8, 'evangeline_howe_8@softserveinc.com', 'Evangeline', 'Howe', '$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02', '5693494215', 0, 1, 1);
 INSERT INTO children(id_child, comment, date_of_birth_child, first_name_child, last_name_child, id_user, gender)  VALUES (7, 'Lorem Ipsum', '2013-06-23', 'Rodolfo', 'Howe', 8, 0);
@@ -485,3 +375,114 @@ insert into users (id_user, active, confirmed, email, first_name, last_name, pas
 insert into users (id_user, active, confirmed, email, first_name, last_name, password, phone_number, role) values (108, 0, 1, 'jwilliams1e@godaddy.com', 'Jimmy', 'Williams', '$2a$08$B.5vcvm4BiBF9DdPgyKH4.1Z9wOGL9Rv9Iy1sDsniHMOOGXCZ11Je', 5096613936, 1);
 
 -- 50 MANAGER END
+
+
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, "Pasternaka 8", 40, "LV-3", "+380947715038", "Lviv", 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, "Antonycha 22", 30, "LV-5", "+380938587190", "Lviv", 58);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, "Nezalezhnosti 18", 50, "Nebesna", "+380951789603", "Kyiv", 61);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (4, "Shevchenka 32", 35, "Velyka", "+380936458634", "Kyiv", 64);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (5, "Franka 124", 30, "Kvitkova", "+380938710134", "Rivne", 67);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (6, "Tarasivka 27", 40, "Zelena", "+380949441026", "Lutsk", 69);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (7, "Pasichna 101", 20, "Pyrohova", "+380952802396", "Kryvyi Rih", 70);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (8, "Chervonoii Kalyny 3", 25, "Na Kalyny", "+380958750736", "Ternopil", 73);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (9, "Vernadskoho 12", 35, "Akademika", "+380961934921", "Vinnytsia", 76);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (10, "Rustaveli 26", 15, "Shota", "+380960751648", "Kharkiv", 79);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (11, "Naberezhna 34", 20, "Naberezhna", "+380942132627", "Odesa", 82);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (12, "Lastivkova 15", 30, "Lastivka", "+380944711658", "Dnipro", 85);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (13, "Soniachna 93", 45, "Hard", "+380964372962", "Alushta", 89);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (14, "Demianska 57", 50, "Roomy", "+380957792337", "Kamianets", 90);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (15, "Ulianivska 15", 30, "Oselia", "+380965168944", "Zhytomyr", 95);
+
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (1, 2, 300, 1);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (2, 4, 500, 1);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (3, 6, 600, 1);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (4, 2, 80, 2);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (5, 4, 90, 2);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (6, 6, 100, 2);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (7, 3, 30, 3);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (8, 5, 50, 3);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (9, 6, 60, 3);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (10, 2, 40, 4);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (11, 4, 80, 4);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (12, 6, 160, 4);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (13, 2, 20, 5);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (14, 4, 25, 5);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (15, 6, 30, 5);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (16, 2, 100, 6);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (17, 4, 200, 6);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (18, 6, 300, 6);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (19, 3, 50, 7);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (20, 5, 75, 7);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (21, 7, 100, 7);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (22, 3, 90, 8);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (23, 5, 105, 8);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (24, 7, 125, 8);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (25, 2, 70, 9);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (26, 4, 80, 9);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (27, 6, 90, 9);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (28, 2, 1000, 10);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (29, 4, 2000, 10);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (30, 6, 3000, 10);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (31, 2, 200, 11);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (32, 4, 400, 11);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (33, 6, 600, 11);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (34, 2, 5, 12);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (35, 4, 10, 12);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (36, 6, 15, 12);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (37, 2, 50, 13);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (38, 4, 75, 13);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (39, 6, 100, 13);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (40, 2, 100, 14);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (41, 4, 120, 14);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (42, 6, 140, 14);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (43, 2, 160, 15);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (44, 4, 180, 15);
+INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (45, 6, 200, 15);
+
+insert into events VALUES (1, 3, 5, 'NO', '2016-05-10 16:00:00', 'EVENT1', '2016-05-10 15:00:00', 1);
+insert into events VALUES (2, 3, 5, 'NO', '2016-05-15 16:00:00', 'EVENT2', '2016-05-15 15:00:00', 2);
+insert into events VALUES (3, 3, 5, 'NO', '2016-05-16 16:00:00', 'EVENT3', '2016-05-16 15:00:00', 2);
+insert into events VALUES (4, 3, 5, 'NO', '2016-05-26 14:00:00', 'EVENT4', '2016-05-26 10:00:00', 2);
+
+-- DEMIAN DEMO START
+-- user@softserveinc.com bookings for month start
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (1, '2016-05-01 17:58', '2016-05-01 14:03', "The whole world of comments", 0, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (2, '2016-05-02 19:32', '2016-05-02 17:37', "The whole world of comments", 0, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (3, '2016-05-03 19:38', '2016-05-03 14:37', "The whole world of comments", 0, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (4, '2016-05-04 16:56', '2016-05-04 14:57', "The whole world of comments", 0, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (5, '2016-05-05 16:58', '2016-05-05 14:57', "The whole world of comments", 0, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (6, '2016-05-06 16:57', '2016-05-06 14:57', "The whole world of comments", 0, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (7, '2016-05-07 15:20', '2016-05-07 15:05', "The whole world of comments", 0, 1, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (8, '2016-05-08 19:36', '2016-05-08 17:25', "The whole world of comments", 0, 2, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (9, '2016-05-09 19:47', '2016-05-09 12:30', "The whole world of comments", 0, 1, 2, 1);
+-- user@softserveinc.com bookings for month end
+-- user@softserveinc.com bookings for other period start
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (11, '2016-04-01 18:15', '2016-04-01 15:24', "The whole world of comments", 0, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (12, '2016-04-02 14:21', '2016-04-02 10:38', "The whole world of comments", 0, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (13, '2016-04-03 15:48', '2016-04-03 15:32', "The whole world of comments", 0, 1, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (14, '2016-04-04 16:34', '2016-04-04 13:15', "The whole world of comments", 0, 2, 1, 1);
+-- user@softserveinc.com bookings for other period end
+-- another parents start
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (21, '2016-05-01 16:27', '2016-05-01 13:15', "The whole world of comments", 0, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (22, '2016-05-02 18:26', '2016-05-02 14:27', "The whole world of comments", 0, 4, 2, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (23, '2016-05-03 17:18', '2016-05-03 16:27', "The whole world of comments", 0, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (24, '2016-04-01 16:34', '2016-04-01 13:15', "The whole world of comments", 0, 5, 1, 5);
+-- another parents end
+-- DEMIAN DEMO END
+
+-- VASYL DEMO START
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (31, '2016-06-20 16:39', '2016-06-20 15:00', "The whole world of comments", 2, 1, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (32, '2016-06-20 16:55', '2016-06-20 15:30', "The whole world of comments", 2, 2, 2, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 16:30', "The whole world of comments", 1, 4, 2, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 16:20', "The whole world of comments", 1, 5, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (35, '2016-06-20 19:20', '2016-06-20 16:45', "The whole world of comments", 1, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (36, '2016-06-20 21:50', '2016-06-20 16:40', "The whole world of comments", 1, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (37, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (38, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (39, '2016-06-20 21:50', '2016-06-20 17:30', "The whole world of comments", 1, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (40, '2016-06-20 21:50', '2016-06-20 18:32', "The whole world of comments", 0, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (41, '2016-06-20 21:50', '2016-06-20 18:35', "The whole world of comments", 0, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (42, '2016-06-20 21:50', '2016-06-20 18:38', "The whole world of comments", 0, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (43, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (44, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 2, 5);
+-- VASYL DEMO END
