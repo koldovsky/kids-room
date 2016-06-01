@@ -21,7 +21,7 @@
 
     </form>
 
-    <div class="tableDiv">
+    <div class="tableDiv" id="statistics">
         <table id="activeUsers">
 
             <caption>

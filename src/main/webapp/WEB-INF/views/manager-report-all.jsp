@@ -7,7 +7,7 @@
 <link rel='stylesheet' href='resources/css/bookings.css'>
 <script src="resources/js/exportIntoExcel.js"></script>
 
-    <div class="tableDiv">
+    <div class="tableDiv" id="generated">
         <table>
 
             <caption>
