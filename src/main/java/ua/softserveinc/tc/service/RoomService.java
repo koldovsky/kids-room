@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.service;
 
 import org.springframework.stereotype.Component;
-
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -15,7 +14,7 @@ public interface RoomService extends BaseService<Room> {
 
     List<Event> getAllEventsInRoom(Room room);
 
-    Room getRoombyManager(User currentManager);
+    Room getRoomByManager(User currentManager);
 
     List<Room> findByCity(String city);
 

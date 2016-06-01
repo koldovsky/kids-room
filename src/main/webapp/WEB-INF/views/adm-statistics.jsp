@@ -5,7 +5,7 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
-<script src="resources/js/report.js"></script>
+<script src="resources/js/statistics.js"></script>
 
     <form id="generateAReport" action="manager-report-all">
 
@@ -21,7 +21,7 @@
 
     </form>
 
-    <div class="tableDiv">
+    <div class="tableDiv" id="statistics">
         <table id="activeUsers">
 
             <caption>

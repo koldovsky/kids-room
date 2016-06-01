@@ -13,10 +13,6 @@
 
 <script src='resources/js/userCalendar.js'></script>
 
-<!--
-<link href='resources/css/calendarstyle.css' rel='stylesheet' />
--->
-
 <script src='resources/js/renderCalendar.js'></script>
 <script type='text/javascript' src='resources/js/uk.js'></script>
 

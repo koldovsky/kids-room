@@ -1,18 +1,22 @@
 package ua.softserveinc.tc.controller;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
+import ua.softserveinc.tc.dto.RoomDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
-import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,9 +28,6 @@ public class StatisticsController
 {
     @Autowired
     private DateUtil dateUtil;
-
-    @Autowired
-    private RoomService roomService;
 
     @Autowired
     private BookingService bookingService;
@@ -41,9 +42,7 @@ public class StatisticsController
         String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
         String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
 
-        List<Room> rooms = roomService.findAll();
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
-
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
@@ -51,5 +50,17 @@ public class StatisticsController
         modelMap.addAttribute(ReportConst.STATISTICS, statistics);
 
         return model;
+    }
+
+    @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
+    public @ResponseBody
+    String refreshView(@PathVariable String startDate, @PathVariable String endDate)
+    {
+        List<Booking> bookings = bookingService.getBookingsByRangeOfTime(startDate, endDate);
+        Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
+        List<RoomDTO> rooms = new ArrayList<>();
+        statistics.forEach((room, sum) -> rooms.add(new RoomDTO(room, sum)));
+        Gson gson = new Gson();
+        return gson.toJson(rooms);
     }
 }

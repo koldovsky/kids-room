@@ -123,8 +123,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getBookingsByRoom(Room room){
-
+    public List<Booking> getTodayBookingsByRoom(Room room){
         Calendar toDay = Calendar.getInstance();
         toDay.setTime(new Date("2016/06/20")); // temporarily: for example;
         toDay.set(Calendar.AM_PM, 0);
@@ -136,7 +135,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
         toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
         Date endTime = toDay.getTime();
-
         return bookingDao.getBookingsByDay(startTime, endTime, room);
     }
 

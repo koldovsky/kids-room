@@ -2,7 +2,7 @@
 'use strict';
 
 angular
-    .module('allKidsList', [])
+    .module('allKidsList', ['ngMaterial'])
     .controller('AllKidsTableController', ['$scope', 'AllKidsService', AllKidsTableController])
     .controller('addBookingController', ['$scope', 'AllKidsService', addBookingController])
     .service('AllKidsService', AllKidsTableService)

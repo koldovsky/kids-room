@@ -1,5 +1,5 @@
 #dateThenDiv, #dateNowDiv, .tableDiv, #generateButton, .exportButton {
-    margin-left: 25px;
+
 }
 
 .exportButton {
@@ -28,4 +28,35 @@ caption h2  {
 
 #date {
     font-size: 18px;
+}
+
+#dateThenDiv, #dateNowDiv, .tableDiv, #generateButton, #exportButton, #parentDetails, #generated, #statistics {
+    margin: 10px auto;
+}
+
+.tableDiv {
+    width: 580px;
+}
+#dateThenDiv, #dateNowDiv {
+    width: 290px;
+}
+
+#generateButton {
+    width: 80px;
+}
+
+#exportButton {
+    width: 205px;
+}
+
+#parentDetails {
+    width: 520px;
+}
+
+#generated {
+    width: 385px;
+}
+
+#statistics {
+    width: 403px;
 }

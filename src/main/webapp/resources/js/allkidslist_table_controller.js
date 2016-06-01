@@ -5,9 +5,11 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.children = [];
     $scope.parents = [];
+
     $scope.newChildFormIsShown = false;
     $scope.pageSize = 10;
     $scope.newChild = {};
+    $scope.parentSearchText = '';
 
     $scope.predicate = 'id';
     $scope.reverse = true;
@@ -48,7 +50,7 @@ function AllKidsTableController($scope, allKidsTableService) {
                         applyRemoteChildrenData( children );
                     }
                 );
-        } else {
+        } else if (field.length == 0) {
             loadRemoteData();
         }
     }
@@ -106,6 +108,7 @@ function AllKidsTableController($scope, allKidsTableService) {
     }
 
     function addChild( child ) {
+        console.dir(child);
         splitName(child)
         allKidsTableService.addChild(child);
         toggleNewChild();
@@ -114,7 +117,11 @@ function AllKidsTableController($scope, allKidsTableService) {
     function orderTable( predicate ) {
         $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
         $scope.predicate = predicate;
-    };
+    }
+
+    function selectNewChildParent( parent ) {
+        $scope.newChild.parent = parent;
+    }
 
     $scope.searchChildren = searchChildren;
     $scope.searchParents = searchParents;
@@ -122,5 +129,6 @@ function AllKidsTableController($scope, allKidsTableService) {
     $scope.toggleNewChild = toggleNewChild;
     $scope.addChild = addChild;
     $scope.orderTable = orderTable;
+    $scope.selectNewChildParent = selectNewChildParent;
 
 }

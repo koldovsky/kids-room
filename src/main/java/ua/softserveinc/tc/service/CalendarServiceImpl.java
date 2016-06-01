@@ -31,7 +31,7 @@ public class CalendarServiceImpl implements CalendarService{
     private EventMapper eventMapper;
 
     public final void create(final Event event) {
-        eventDao.create(event);                 //тут івент отримує id
+        eventDao.create(event);
     }
 
     public final String eventsToString(final long id) {

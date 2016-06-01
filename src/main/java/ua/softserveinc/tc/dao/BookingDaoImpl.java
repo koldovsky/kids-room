@@ -26,7 +26,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
-
+        System.out.println(new Date());
         try {
             query.select(root).where(builder.and(builder.between(root.get("bookingStartTime"),
                             startTime, endTime)), builder.notEqual(root.get("bookingState"), BookingConst.BOOKING_CENCELLD),

@@ -45,7 +45,7 @@
                 <td>${user.getLastName()}</td>
                 <td>${user.getEmail()}</td>
                 <td>${user.getPhoneNumber()}</td>
-                <td class="parentRow" id="${user.getEmail()}">
+                <td class="parent" id="${user.getEmail()}">
                     <a><spring:message code="report.details" /></a>
                 </td>
             </tr>

@@ -36,7 +36,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public Room getRoombyManager(User currentManager) {
+    public Room getRoomByManager(User currentManager) {
 
         return roomDao.getRoombyManager(currentManager);
     }

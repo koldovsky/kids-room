@@ -50,9 +50,30 @@
 
             <div class="td span3">
                 <p>
-                    <input type="text" class="form-control" placeholder="Search for..." ng-model="parentSearchField"
-                           ng-change="searchParents(parentSearchField)">
-                </p>
+                    <md-autocomplete
+                            md-search-text-change="searchParents(parentSearchText)"
+                            md-search-text="parentSearchText"
+                            md-selected-item-change="selectNewChildParent(parent)"
+                            md-items="parent in parents"
+                            md-item-text="parent.fullName"
+                            md-min-length="0"
+                            md-delay="2"
+                            placeholder="Search Parent...">
+                        <md-item-template>
+                            <span class="item-title">
+                                <md-icon md-svg-icon="img/icons/octicon-repo.svg"></md-icon>
+                                <span> {{parent.fullName}} </span>
+                              </span>
+                              <span class="item-metadata">
+                                <span class="item-metastat">
+                                  <strong>{{parent.email}}</strong> watchers
+                                </span>
+                                <span class="item-metastat">
+                                  <strong>{{item.forks}}</strong> forks
+                                </span>
+                              </span>
+                        </md-item-template>
+                    </md-autocomplete>
             </div>
 
             <div class="td span3">
@@ -87,7 +108,7 @@
                         </div>
                         <div class="right-align">
                             <p>
-                                <input class="form-control" type="text">
+                                {{newChild.parent.phoneNumber || 'Empty'}}
                             </p>
                         </div>
                     </div>
