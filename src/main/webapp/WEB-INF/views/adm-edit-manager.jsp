@@ -12,7 +12,7 @@
    <div class="tableDiv for-table">
        <table class="for-table">
           <tr class="hide-border">
-             <th colspan="7"  class="set-standard-color">
+             <th colspan="8"  class="set-standard-color">
                 <legend class="for-table"><strong>Manager list</strong></legend>
              </th>
           </tr>
@@ -23,8 +23,9 @@
              <th><strong>Last Name</strong></th>
              <th><strong>Phone number</strong></th>
              <th><strong>Confirmed account</strong></th>
+             <th><strong>Active account</strong></th>
              <th><strong>EDIT</strong></th>
-             <th><strong>DELETE</strong></th>
+             <th><strong>BLOCK</strong></th>
           </tr>
 
           <c:forEach var="manager" items="${managerList}">
@@ -34,6 +35,7 @@
              <td>${manager.lastName}</td>
              <td>${manager.phoneNumber}</td>
              <td>${manager.confirmed}</td>
+             <td>${manager.active}</td>
              <td><a href="adm-update-manager?id=${manager.id}">
                     <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
 

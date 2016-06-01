@@ -35,8 +35,11 @@ public class AdminEditManagerController {
     }
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
-    public String deleteManager(@RequestParam Long id) {
-        userService.deleteUserById(id);
+    public String blockManager(@RequestParam Long id) {
+        User manager = userService.findById(id);
+        manager.setActive(false);
+        userService.update(manager);
+
         return "redirect:/" + AdminConst.EDIT_MANAGER;
     }
 

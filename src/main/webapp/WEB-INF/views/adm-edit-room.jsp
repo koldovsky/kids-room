@@ -56,7 +56,7 @@
          </tr>
          </c:forEach>
 
-        <tr></tr>
+         <tr></tr>
 
          <tr>
             <th colspan="9" class="hide-border set-standard-color">
