@@ -1,15 +1,12 @@
 package ua.softserveinc.tc.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.BookingConstModel;
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
@@ -22,11 +19,8 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -117,7 +111,7 @@ public class ManagerConfirmBookingController {
          Booking booking = bookingService.findById(bookingDTO.getId());
          Date date = bookingService.getDateAndTimeBooking(booking, bookingDTO.getEndTime());
          booking.setBookingEndTime(date);
-         bookingService.calculateAndSetDuration(booking);
+         bookingService.calculateAndSetSum(booking);
          BookingDTO bookingDTOtoJson = new BookingDTO(booking);
          Gson gson = new Gson();
          return  gson.toJson(bookingDTOtoJson);

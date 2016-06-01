@@ -49,7 +49,7 @@ function refreshView()
             + user.email + '"><a>See details</a></td></tr>';
         });
 
-        $('tr').remove();
+        $('td').remove();
 
         $('#activeUsers').append(tr);
 
