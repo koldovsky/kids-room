@@ -64,7 +64,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return entityManager.createQuery(criteria).getResultList();
     }
 
-    private void calculateAndSetDuration(Booking booking)
+    @Override
+    public void calculateAndSetDuration(Booking booking)
     {
         long difference = booking.getBookingEndTime().getTime() -
                 booking.getBookingStartTime().getTime();

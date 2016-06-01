@@ -111,7 +111,7 @@ public class ManagerConfirmBookingController {
          Booking booking = bookingService.findById(bookingDTO.getId());
          Date date = bookingService.getDateAndTimeBooking(booking, bookingDTO.getEndTime());
          booking.setBookingEndTime(date);
-         bookingService.calculateAndSetSum(booking);
+         bookingService.calculateAndSetDuration(booking);
          BookingDTO bookingDTOtoJson = new BookingDTO(booking);
          Gson gson = new Gson();
          return  gson.toJson(bookingDTOtoJson);
