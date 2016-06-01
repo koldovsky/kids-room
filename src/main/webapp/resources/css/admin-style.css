@@ -60,3 +60,16 @@ td{
 .for-delete-button {
     margin-top:32%;
 }
+
+.td-full{
+    border: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+.blocklink{
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+}

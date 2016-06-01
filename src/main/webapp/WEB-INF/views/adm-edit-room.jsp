@@ -35,11 +35,19 @@
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
             <td>${room.manager}</td>
-            <td>
-                <c:forEach var="rate" items="${room.rates}">
-                       To: <c:out value="${rate.hourRate}"/><br>
-                       [<c:out value="${rate.priceRate}"/>]<br>
-                </c:forEach>
+            <td class="td-full">
+                <table class="blocklink">
+                    <tr>
+                        <td>Hour</td>
+                        <td>Price</td>
+                    </tr>
+                    <c:forEach var="rate" items="${room.rates}">
+                    <tr>
+                        <td>${rate.hourRate}</td>
+                        <td>${rate.priceRate}</td>
+                    </tr>
+                    </c:forEach>
+                </table>
             </td>
             <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                                                         </button></a></td>
