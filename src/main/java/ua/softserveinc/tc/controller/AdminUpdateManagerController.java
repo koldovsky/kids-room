@@ -24,10 +24,10 @@ public class AdminUpdateManagerController {
 
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.GET)
     public ModelAndView updateManager(@RequestParam("id") Long id) {
-        ModelAndView model = new ModelAndView(AdminConst.UPDATE_MANAGER);//"adm-update-manager"
+        ModelAndView model = new ModelAndView(AdminConst.UPDATE_MANAGER);
 
         User manager = userService.findById(id);
-        model.getModelMap().addAttribute(AdminConst.ATR_MANAGER, manager);//"manager"
+        model.getModelMap().addAttribute(AdminConst.ATR_MANAGER, manager);
 
         return model;
     }
@@ -35,8 +35,9 @@ public class AdminUpdateManagerController {
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.POST)
     public String submitManagerUpdate(@ModelAttribute("manager") User manager) {
         manager.setRole(Role.MANAGER);
+        manager.setConfirmed(true);
         userService.update(manager);
 
-        return "redirect:/" + AdminConst.EDIT_MANAGER;//"adm-edit-manager"
+        return "redirect:/" + AdminConst.EDIT_MANAGER;
     }
 }

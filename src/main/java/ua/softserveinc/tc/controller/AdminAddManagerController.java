@@ -30,9 +30,10 @@ public class AdminAddManagerController {
     @Autowired
     private TokenService tokenService;
 
+
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public String showCreateManagerForm() {
-        return AdminConst.ADD_MANAGER;//"adm-add-manager"
+        return AdminConst.ADD_MANAGER;
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
@@ -46,8 +47,7 @@ public class AdminAddManagerController {
         tokenService.createToken(token, user);
         mailService.buildConfirmRegisterManager("Confirmation registration", user, token);
 
-        return "redirect:/" + AdminConst.EDIT_MANAGER;//"adm-edit-manager"
+        return "redirect:/" + AdminConst.EDIT_MANAGER;
     }
-
 
 }

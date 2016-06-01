@@ -30,8 +30,8 @@ public class AdminEditRoomController {
     public ModelAndView getRoomMenu() {
         List<Room> rooms = roomService.findAll();
 
-        ModelAndView mav = new ModelAndView(AdminConst.EDIT_ROOM);//"adm-edit-room"
-        mav.addObject(AdminConst.ROOM_LIST, rooms);//"roomList"
+        ModelAndView mav = new ModelAndView(AdminConst.EDIT_ROOM);
+        mav.addObject(AdminConst.ROOM_LIST, rooms);
 
         return mav;
     }
@@ -39,6 +39,6 @@ public class AdminEditRoomController {
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.POST)
     public String deleteRoom(@RequestParam Long id) {
         userService.deleteUserById(id);
-        return "redirect:/" + AdminConst.EDIT_ROOM;//"adm-edit-room"
+        return "redirect:/" + AdminConst.EDIT_ROOM;
     }
 }

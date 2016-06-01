@@ -32,10 +32,10 @@ public class AdminUpdateRoomController {
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.GET)
     public ModelAndView getUpdateRoomForm(@RequestParam("id") Long id) {
-        ModelAndView model = new ModelAndView(AdminConst.UPDATE_ROOM);//"adm-update-room"
+        ModelAndView model = new ModelAndView(AdminConst.UPDATE_ROOM);
 
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
-        model.addObject(AdminConst.MANAGER_LIST, managers);//"managerList"
+        model.addObject(AdminConst.MANAGER_LIST, managers);
 
         Room room = roomService.findById(id);
         RoomDTO roomDTO = new RoomDTO(room);
@@ -43,7 +43,7 @@ public class AdminUpdateRoomController {
         if(roomDTO.getRate().equals("[]")){
             roomDTO.setRate(null);
         }
-        model.getModelMap().addAttribute(AdminConst.ATR_ROOM, roomDTO);//"room"
+        model.getModelMap().addAttribute(AdminConst.ATR_ROOM, roomDTO);
 
         return model;
     }
@@ -57,6 +57,6 @@ public class AdminUpdateRoomController {
         Room room = new Room(roomDTO);
         roomService.create(room);
 
-        return "redirect:/" + AdminConst.EDIT_ROOM;//"adm-edit-room"
+        return "redirect:/" + AdminConst.EDIT_ROOM;
     }
 }

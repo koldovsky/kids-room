@@ -42,8 +42,8 @@ public class AdminAddRoomController {
     public ModelAndView showCreateRoomForm() {
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
 
-        ModelAndView mav = new ModelAndView(AdminConst.ADD_ROOM);//"adm-add-room"
-        mav.addObject(AdminConst.MANAGER_LIST, managers);//"managerList"
+        ModelAndView mav = new ModelAndView(AdminConst.ADD_ROOM);
+        mav.addObject(AdminConst.MANAGER_LIST, managers);
 
         return mav;
     }
@@ -64,6 +64,6 @@ public class AdminAddRoomController {
         Room room = new Room(roomDTO);
         roomService.create(room);
 
-        return "redirect:/" + AdminConst.EDIT_ROOM;//"adm-edit-room"
+        return "redirect:/" + AdminConst.EDIT_ROOM;
     }
 }

@@ -28,16 +28,17 @@ public class AdminEditManagerController {
     public ModelAndView getManagerMenu() {
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
 
-        ModelAndView mav = new ModelAndView(AdminConst.EDIT_MANAGER);//"adm-edit-manager"
-        mav.addObject(AdminConst.MANAGER_LIST, managers);//"managerList"
+        ModelAndView mav = new ModelAndView(AdminConst.EDIT_MANAGER);
+        mav.addObject(AdminConst.MANAGER_LIST, managers);
 
         return mav;
     }
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
     public String deleteManager(@RequestParam Long id) {
+        System.out.println(id);
         userService.deleteUserById(id);
-        return "redirect:/" + AdminConst.EDIT_MANAGER;//"adm-edit-manager"
+        return "redirect:/" + AdminConst.EDIT_MANAGER;
     }
 
 }
