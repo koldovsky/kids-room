@@ -52,7 +52,7 @@
 
           <tr></tr>
           <tr>
-             <td colspan="7" class="hide-border set-standard-color">
+             <td colspan="8" class="hide-border set-standard-color">
                 <a href="adm-add-manager"><input type="button" value="Add"
                                            class="btn btn-raised btn-primary waves-effect waves-light"/></a>
              </td>
