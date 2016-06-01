@@ -1,5 +1,5 @@
    function cancelBooking(idBook){
-
+        $('#'+idBook).addClass('highlightedRed');
         $('#cancelModal').find('#closeCencel').click(function(){
               $('#'+idBook).removeClass('highlightedRed');
         });
@@ -36,10 +36,7 @@
                   bookingTime.empty();
                   bookingTime.append(obj.startTime + " - " + obj.endTime);
                   $(idElement).addClass('highlight-active');
-                  },
-                  error: function(){
-
-              }});
+                  }});
    }
 
 
@@ -96,7 +93,6 @@
            $('#'+value.id).addClass('highlight-complet');
            $('#'+value.id).find('#arrivalTime').val(value.startTime);
            $('#'+value.id).find('#leaveTime').val(value.endTime);
-
         }});
    });
 

@@ -471,18 +471,18 @@ insert into bookings (id_book, booking_end_time, booking_start_time, comment, bo
 -- DEMIAN DEMO END
 
 -- VASYL DEMO START
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (31, '2016-06-20 16:39', '2016-06-20 15:00', "The whole world of comments", 2, 1, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (32, '2016-06-20 16:55', '2016-06-20 15:30', "The whole world of comments", 2, 2, 2, 1);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 16:30', "The whole world of comments", 1, 4, 2, 4);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 16:20', "The whole world of comments", 1, 5, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (35, '2016-06-20 19:20', '2016-06-20 16:45', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (36, '2016-06-20 21:50', '2016-06-20 16:40', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (37, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (38, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (39, '2016-06-20 21:50', '2016-06-20 17:30', "The whole world of comments", 1, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (40, '2016-06-20 21:50', '2016-06-20 18:32', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (41, '2016-06-20 21:50', '2016-06-20 18:35', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (42, '2016-06-20 21:50', '2016-06-20 18:38', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (43, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 2, 5);
-insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (44, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 2, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (31, '2016-06-20 16:39', '2016-06-20 15:00', "The whole world of comments", 2, 1, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (32, '2016-06-20 16:55', '2016-06-20 15:30', "The whole world of comments", 2, 2, 1, 1);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (33, '2016-06-20 21:00', '2016-06-20 16:30', "The whole world of comments", 1, 4, 1, 4);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (34, '2016-06-20 18:50', '2016-06-20 16:20', "The whole world of comments", 1, 5, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (35, '2016-06-20 19:20', '2016-06-20 16:45', "The whole world of comments", 1, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (36, '2016-06-20 21:50', '2016-06-20 16:40', "The whole world of comments", 1, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (37, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (38, '2016-06-20 21:50', '2016-06-20 17:10', "The whole world of comments", 1, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (39, '2016-06-20 21:50', '2016-06-20 17:30', "The whole world of comments", 1, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (40, '2016-06-20 21:50', '2016-06-20 18:32', "The whole world of comments", 0, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (41, '2016-06-20 21:50', '2016-06-20 18:35', "The whole world of comments", 0, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (42, '2016-06-20 21:50', '2016-06-20 18:38', "The whole world of comments", 0, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (43, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 1, 5);
+insert into bookings (id_book, booking_end_time, booking_start_time, comment, booking_state, id_child, id_room, id_user) values (44, '2016-06-20 21:50', '2016-06-20 18:39', "The whole world of comments", 0, 6, 1, 5);
 -- VASYL DEMO END
