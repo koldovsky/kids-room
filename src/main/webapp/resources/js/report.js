@@ -25,7 +25,6 @@ function refreshView()
     $.ajax({url: request, success: function(result)
     {
         var users = JSON.parse(result);
-        alert(JSON.stringify(users, null, 4));
 
         $('#date').remove();
         var caption = $('caption h2').html();
