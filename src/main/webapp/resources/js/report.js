@@ -1,24 +1,18 @@
-document.addEventListener("DOMContentLoaded", function ()
-{
+$(function(){
     addListener();
-	document.getElementById("dateNowInput").onchange = refreshView;
-	document.getElementById("dateThenInput").onchange = refreshView;
+    $("#dateNowInput, #dateThenInput").change(refreshView);
 });
 
 function addListener()
 {
-	var rows = document.getElementsByClassName("parentRow");
-	var rowsCount = rows.length;
-	for (var i = 0; i < rowsCount; i++)
-	{
-		rows[i].onclick = function(e)
-		{
-			document.getElementById("parentEmailHidden").value = this.id;
-			document.getElementById("dateNowHidden").value = document.getElementById("dateNowInput").value;
-			document.getElementById("dateThenHidden").value = document.getElementById("dateThenInput").value;
-			document.getElementById("allBookingsPerParentForm").submit();
-		};
-	}
+    $(".parent").each(function(){
+        $(this).click(function(){
+            $("#parentEmailHidden").val($(this).attr('id'));
+            $("#dateNowHidden").val($("#dateNowInput").val());
+            $("#dateThenHidden").val($("#dateThenInput").val());
+            $("#allBookingsPerParentForm").submit();
+        });
+    });
 };
 
 function refreshView()
@@ -31,6 +25,7 @@ function refreshView()
     $.ajax({url: request, success: function(result)
     {
         var users = JSON.parse(result);
+        alert(JSON.stringify(users, null, 4));
 
         $('#date').remove();
         var caption = $('caption h2').html();
@@ -45,7 +40,7 @@ function refreshView()
             + '<td>' + user.lastName + '</td>'
             + '<td>' + user.email + '</td>'
             + '<td>' + user.phoneNumber + '</td>'
-            + '<td class="parentRow" id="'
+            + '<td class="parent" id="'
             + user.email + '"><a>See details</a></td></tr>';
         });
 

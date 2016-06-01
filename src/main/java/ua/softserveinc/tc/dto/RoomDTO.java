@@ -34,6 +34,8 @@ public class RoomDTO {
 
     private String rate;
 
+    private Long sum;
+
     public RoomDTO() {
     }
 
@@ -50,6 +52,11 @@ public class RoomDTO {
         final Gson gson = gsonBuilder.registerTypeAdapter(Rate.class, new RateTypeAdapter()).create();
 
         this.rate = gson.toJson(room.getRates());
+    }
+
+    public RoomDTO(Room room, Long sum) {
+        this(room);
+        this.sum = sum;
     }
 
     public Long getId() {
