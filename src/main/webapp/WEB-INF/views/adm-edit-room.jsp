@@ -36,7 +36,7 @@
             <td>${room.capacity}</td>
             <td>${room.manager}</td>
             <td>
-                <c:forEach var="rate" items="${room.rates}" >
+                <c:forEach var="rate" items="${room.rates}">
                        To: <c:out value="${rate.hourRate}"/><br>
                        [<c:out value="${rate.priceRate}"/>]<br>
                 </c:forEach>

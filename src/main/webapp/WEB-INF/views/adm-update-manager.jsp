@@ -18,17 +18,11 @@
 
         <tr><td>
             <form:hidden path="id" />
+            <form:hidden path="password" id="password" value="${manager.password}"/>
 
             <div class="form-group">
                <label for="email" class="for-field">Email
                   <form:input path="email" id="email" value="${manager.email}" class="form-control" required="required"/>
-               </label>
-            </div>
-
-            <div class="form-group">
-               <label for="password" class="for-field">Password
-                  <form:input path="password" id="password" value="${manager.password}" class="form-control"
-                                                            required="required"/>
                </label>
             </div>
 

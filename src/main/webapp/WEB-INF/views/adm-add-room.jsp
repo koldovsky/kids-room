@@ -61,10 +61,10 @@
                  <label class="for-field">Room rates
                      <fieldset  data-ng-repeat="choice in choices">
                      <label class="for-field1">
-                        <input id="myText" type="text" ng-model="choice.hourRate" hourRate="" placeholder="Hour" class="form-control">
+                        <input id="myText" type="text" ng-model="choice.hourRate" hourRate="" placeholder="Hour" class="form-control"/>
                      </label>
                      <label class="for-field2">
-                        <input id="myText" type="text" ng-model="choice.priceRate" priceRate="" placeholder="Price" class="form-control">
+                        <input id="myText" type="text" ng-model="choice.priceRate" priceRate="" placeholder="Price" class="form-control"/>
                      </label>
                         <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
                      </fieldset>

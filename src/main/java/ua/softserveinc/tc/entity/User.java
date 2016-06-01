@@ -59,7 +59,7 @@ public class User {
     @Analyzer(definition = "ngram")
     private String email;
 
-    @NotEmpty
+
     @Column(name = UserConst.PASSWORD)
     private String password;
 

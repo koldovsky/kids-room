@@ -22,7 +22,7 @@
              <th><strong>First Name</strong></th>
              <th><strong>Last Name</strong></th>
              <th><strong>Phone number</strong></th>
-             <th><strong>Active account</strong></th>
+             <th><strong>Confirmed account</strong></th>
              <th><strong>EDIT</strong></th>
              <th><strong>DELETE</strong></th>
           </tr>
@@ -33,15 +33,16 @@
              <td>${manager.firstName}</td>
              <td>${manager.lastName}</td>
              <td>${manager.phoneNumber}</td>
-             <td>${manager.active}</td>
+             <td>${manager.confirmed}</td>
              <td><a href="adm-update-manager?id=${manager.id}">
                     <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
 
-             <td><c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                <form:form id="${managerFormId}" action="${deleteUrl}" method="POST">
+             <td>
+                <c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
+                <form:form id="${managerFormId}" action="${deleteUrl}" method="POST" >
                    <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                    <button type="submit" value="Delete" onClick="return confirm('sure?')"
-                            class="btn btn-raised btn-danger glyphicon glyphicon-trash"></button>
+                            class="btn btn-raised btn-danger glyphicon glyphicon-trash for-delete-button"></button>
                 </form:form>
              </td>
           </tr>

@@ -56,3 +56,7 @@ td{
 .set-standard-color{
     background-color: rgb(238, 238, 238);
 }
+
+.for-delete-button {
+    margin-top:32%;
+}

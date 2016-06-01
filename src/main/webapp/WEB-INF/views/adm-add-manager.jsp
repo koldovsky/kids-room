@@ -16,18 +16,13 @@
            </th></tr>
 
            <tr><td>
+               <input hidden type="text" name="password"/>
+
                <div class="form-group">
                   <label class="for-field"> E-mail
                      <input type="email" name="email" required class="form-control"
                                  pattern="^(\w){1,60}[@][s]oft[s]erveinc[.]com$"
                                  title="Allow only emails with 'softserveinc.com' domain"/>
-                  </label>
-               </div>
-
-               <div class="form-group">
-                  <label class="for-field"> Password
-                     <input type="password" name="password" pattern="^(\S){8,}$" title="Eight or more characters"
-                                                            required class="form-control"/>
                   </label>
                </div>
 
@@ -48,7 +43,7 @@
                </div>
 
                <div class="form-group">
-                  <button class="btn btn-raised btn-info glyphicon glyphicon-ok" type="submit" name="submit"></button>
+                  <button class="btn btn-raised btn-info glyphicon glyphicon-ok" type="submit" name="submit" ng-click="submit()"></button>
                   <button class="btn btn-raised btn-danger glyphicon glyphicon-remove" type="reset" name="reset"
                           onclick="window.location.href='/home/adm-edit-manager'"/>
                </div>

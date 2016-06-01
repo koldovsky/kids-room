@@ -36,7 +36,6 @@ public class AdminEditManagerController {
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
     public String deleteManager(@RequestParam Long id) {
-        System.out.println(id);
         userService.deleteUserById(id);
         return "redirect:/" + AdminConst.EDIT_MANAGER;
     }
