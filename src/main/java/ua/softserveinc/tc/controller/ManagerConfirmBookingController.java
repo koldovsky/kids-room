@@ -86,6 +86,8 @@ public class ManagerConfirmBookingController {
     String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
         booking.setBookingState(BookingState.COMPLETED);
+        bookingService.calculateAndSetDuration(booking);
+        bookingService.calculateAndSetSum(booking);
         bookingService.update(booking);
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();
