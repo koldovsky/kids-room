@@ -40,7 +40,7 @@ public class ViewEventController {
             User user = userService.getUserByEmail(email);
 
             if(userService.getUserByEmail(email).getRole() == Role.USER) {
-                model.addAttribute("rooms",roomServiceImpl.findAll());
+                model.addAttribute("rooms", roomServiceImpl.findAll());
             } else {
                 model.addAttribute("rooms", roomServiceImpl.findByManger(user));
             }
@@ -50,7 +50,7 @@ public class ViewEventController {
         }
     }
 
-    @RequestMapping(value = "getCompanies/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET)
     public @ResponseBody
     String getEvents(@PathVariable int id) {
         return calendarService.eventsToString(id);

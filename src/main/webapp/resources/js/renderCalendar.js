@@ -2,31 +2,29 @@
  * Created by dima- on 12.05.2016.
  */
 
-
-
-$(function() {
+$(function () {
     $('#basicExample').timepicker({
-        dateFormat: "hh-mm-ss",
+        dateFormat: 'hh-mm-ss',
 
     });
 });
 
-$(function() {
+$(function () {
     $('#ender').timepicker({
-        dateFormat: "hh-mm-ss"
+        dateFormat: 'hh-mm-ss'
     });
 });
 
-$(function() {
+$(function () {
     $('#startTimeUpdate').timepicker({
-        dateFormat: "hh-mm-ss"
+        dateFormat: 'hh-mm-ss'
     });
 });
 
 
-$(function() {
+$(function () {
     $('#endTimeUpdate').timepicker({
-        dateFormat: "hh-mm-ss"
+        dateFormat: 'hh-mm-ss'
     });
 });
 
@@ -44,9 +42,8 @@ function changeFunc(id) {
         hide: {
             effect: 'clip',
             duration: 500
-        },
-
-    })
+        }
+    });
 
     $('#updating').dialog({
         autoOpen: false,
@@ -57,11 +54,10 @@ function changeFunc(id) {
         hide: {
             effect: 'clip',
             duration: 500
-        },
+        }
+    });
 
-    })
-
-    var path = "getCompanies/" + id;
+    var path = 'getevents/' + id;
 
     $.ajax({
         url: path, success: function (result) {
@@ -70,7 +66,7 @@ function changeFunc(id) {
                 var objects = [];
                 result = result.split(',');
 
-                result[0] = " " + result[0];
+                result[0] = ' ' + result[0];
 
                 for (var i = 0; i < result.length; i++) {
                     var string = result[i];
@@ -80,8 +76,7 @@ function changeFunc(id) {
                         id: parseInt(stringToArray[4]),
                         title: stringToArray[1],
                         start: stringToArray[2],
-                        end: stringToArray[3],
-                     //   rendering : 'background'
+                        end: stringToArray[3]
                     }
                 }
                 rendering(objects, id);
@@ -89,86 +84,63 @@ function changeFunc(id) {
                 $('#calendar').fullCalendar('destroy');
 
                 var objects = [{
-                    title: "1",
-                    start: "1",
-                    end: "1"
-                }]
+                    title: '1',
+                    start: '1',
+                    end: '1'
+                }];
                 rendering(objects, id);
             }
         }
     });
 }
 
-function rendering(objects ,roomID) {
+function rendering(objects, roomID) {
+
+    var BLUE_COLOR = '#428bca';
+    var GREEN_COLOR = '#33cc33';
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
+
         dayClick: function f(date, jsEvent, view) {
 
             var clickDate = date.format();
-
             $('#startDate').val('');
-            $('#title').val(clickDate.substring(0,10));
-            $('#endDate').val(clickDate.substring(0,10));
+            $('#title').val(clickDate.substring(0, 10));
+            $('#endDate').val(clickDate.substring(0, 10));
 
             $('#dialog').dialog('open');
 
-            if(clickDate.length < 12) {
-                clickDate = clickDate + "T00:00:00";
+            if (clickDate.length < 12) {
+                clickDate = clickDate + 'T00:00:00';
             }
-
             var ckbox = $('#checkbox');
 
-            $('input').on('click',function () {
+            $('input').on('click', function () {
                 if (ckbox.is(':checked')) {
-                    $("#basicExample").prop("readonly", true);
-                    $("#ender").prop("readonly", true);
+                    $('#basicExample').prop('readonly', true);
+                    $('#ender').prop('readonly', true);
                 } else {
-                    $("#basicExample").prop("readonly", false);
-                    $("#ender").prop("readonly", false);
+                    $('#basicExample').prop('readonly', false);
+                    $('#ender').prop('readonly', false);
                 }
             });
 
             $('#creating').click(function () {
-                if( $('#startDate').val() == "" || clickDate == "") {
+                if ($('#startDate').val() == '' || clickDate == '') {
                     return;
                 }
 
-/*
                 var ev = {
                     id: -1,
                     title: $('#startDate').val(),
-                    start: makeISOtime(clickDate, "basicExample"),
-                    end:   makeISOtime(clickDate, "ender"),
-                    backgroundColor: '#33cc33',
-                    borderColor: '#33cc33',
+                    start: makeISOtime(clickDate, 'basicExample'),
+                    end: makeISOtime(clickDate, 'ender'),
+                    backgroundColor: GREEN_COLOR,
+                    borderColor: GREEN_COLOR,
                     allDay: false
-                }
-*/
+                };
 
-                if(ckbox.is(':checked')){
-                    alert("");
-                    var ev = {
-                        id: -1,
-                        title: $('#startDate').val(),
-                        start: date.format().substring(0,11),
-                        backgroundColor: '#33cc33',
-                        borderColor: '#33cc33',
-                        editable: false,
-                        allDay: true
-                    }
-                } else {
-                    var ev = {
-                        id: -1,
-                        title: $('#startDate').val(),
-                        start: makeISOtime(clickDate, "basicExample"),
-                        end:   makeISOtime(clickDate, "ender"),
-                        backgroundColor: '#33cc33',
-                        borderColor: '#33cc33',
-                        editable: false,
-                        allDay: false
-                    }
-                }
 
                 $('#calendar').fullCalendar('renderEvent', ev, true);
 
@@ -176,7 +148,7 @@ function rendering(objects ,roomID) {
                     type: 'post',
                     contentType: 'application/json',
                     url: 'getnewevent',
-                    dataType: "json",
+                    dataType: 'json',
                     data: JSON.stringify({
                         name: ev.title,
                         startTime: ev.start,
@@ -186,28 +158,24 @@ function rendering(objects ,roomID) {
                     success: function (result) {
                         var newId = parseInt(result);
 
-                        $('#calendar').fullCalendar( 'removeEvents', ev.id);
+                        $('#calendar').fullCalendar('removeEvents', ev.id);
 
                         ev.id = newId;
-                        ev.backgroundColor = '#428bca';
-                        ev.borderColor = '#428bca';
+                        ev.backgroundColor = BLUE_COLOR;
+                        ev.borderColor = BLUE_COLOR;
                         ev.editable = true;
 
-                        $('#calendar').fullCalendar( 'renderEvent', ev );
+                        $('#calendar').fullCalendar('renderEvent', ev);
                     }
                 });
 
-                $('#title').val("");
+                $('#title').val('');
 
                 $('#dialog').dialog('close');
-                clickDate = "";
+                clickDate = '';
             })
         },
-/*        eventRender: function(event, element){
-            if(event.rendering == 'background'){
-                element.append(event.title);
-            }
-        },*/
+
         eventClick: function (calEvent, jsEvent, view) {
 
             var beforeUpdate = calEvent.title;
@@ -231,24 +199,22 @@ function rendering(objects ,roomID) {
             newDateForEnd.setSeconds(endDate.getUTCSeconds());
 
             $('#startTimeUpdate').timepicker('setTime', newDate);
-            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);           //години до
+            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);
 
             $('#updating').dialog('open');
 
-
             $('#updatingButton').click(function () {
 
-                var newStartDate = makeISOtime(calEvent.start.format(), "startTimeUpdate");
-                var newEndDate = makeISOtime(calEvent.end.format(), "endTimeUpdate");
+                var newStartDate = makeISOtime(calEvent.start.format(), 'startTimeUpdate');
+                var newEndDate = makeISOtime(calEvent.end.format(), 'endTimeUpdate');
 
                 if ((date.toDateString() === (new Date(newStartDate)).toDateString()) &&
                     (endDate.toDateString() === (new Date(newEndDate)).toDateString()) &&
                     (beforeUpdate === $('#titleUpdate').val())) {
-                        $('#updating').dialog('close');
-
-                        return;
+                    $('#updating').dialog('close');
+                    return;
                 }
-                $('#calendar').fullCalendar( 'removeEvents', calEvent.id);
+                $('#calendar').fullCalendar('removeEvents', calEvent.id);
 
                 var eventForUpdate = {
                     id: calEvent.id,
@@ -256,15 +222,16 @@ function rendering(objects ,roomID) {
                     start: newStartDate,
                     end: newEndDate
 
-                }
-                $('#calendar').fullCalendar( 'renderEvent', eventForUpdate );
+                };
+
+                $('#calendar').fullCalendar('renderEvent', eventForUpdate);
                 sendToServerForUpdate(eventForUpdate, roomID);
 
 
                 $('#updating').dialog('close');
             });
 
-            $('#deleting').click(function() {
+            $('#deleting').click(function () {
                 sendToServerForDelete(calEvent);
                 $('#calendar').fullCalendar('removeEvents', calEvent.id);
                 $('#updating').dialog('close');
@@ -286,14 +253,14 @@ function rendering(objects ,roomID) {
 }
 
 function sendToServerForUpdate(event, roomID) {
-    alert("update");
+
     $.ajax({
         type: 'post',
         contentType: 'application/json',
         url: 'geteventforupdate',
-        dataType: "json",
+        dataType: 'json',
         data: JSON.stringify({
-            id : event.id,
+            id: event.id,
             name: event.title,
             startTime: event.start,
             endTime: event.end,
@@ -307,35 +274,32 @@ function sendToServerForDelete(event) {
         type: 'post',
         contentType: 'application/json',
         url: 'geteventfordelete',
-        dataType: "json",
+        dataType: 'json',
         data: JSON.stringify({
-            id : event.id
+            id: event.id
         })
     });
 }
 
 function makeISOtime(clickDate, idOfTimePicker) {
-    var element = "#" + idOfTimePicker;
-     var installedTime = $(element).timepicker('getTime');
+    var element = '#' + idOfTimePicker;
+    var installedTime = $(element).timepicker('getTime');
 
+    var timepickerMinutes = installedTime.getMinutes();
+    var timepickerHours = installedTime.getHours();
 
-     var timepickerMinutes = installedTime.getMinutes();
-     var timepickerHours = installedTime.getHours();
+    if (timepickerMinutes == 0) {
+        timepickerMinutes = '00';
+    } else {
+        timepickerMinutes = '30';
+    }
 
-     if(timepickerMinutes == 0) {
-     timepickerMinutes = "00";
-     } else {
-     timepickerMinutes = "30";
-     }
+    if (timepickerHours < 10) {
+        timepickerHours = '0' + timepickerHours.toString();
+    } else {
+        timepickerHours = timepickerHours.toString();
+    }
 
-     if(timepickerHours < 10) {
-     timepickerHours = "0" + timepickerHours.toString();
-     } else {
-     timepickerHours = timepickerHours.toString();
-     }
-
-     var superBuffer = "" + clickDate.substring(0,11) + timepickerHours + ":" +
-     timepickerMinutes + clickDate.substring(16);
-
-     return superBuffer;
+    return '' + clickDate.substring(0, 11) + timepickerHours + ':' +
+        timepickerMinutes + clickDate.substring(16);
 }

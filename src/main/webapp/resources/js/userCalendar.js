@@ -7,7 +7,7 @@ function selectRoomForUser(id) {
     $('#user-calendar').fullCalendar('destroy');
 
 
-    var path = "getCompanies/" + id;
+    var path = "getevents/" + id;
 
     $.ajax({
         url: path, success: function (result) {
