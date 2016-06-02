@@ -55,7 +55,10 @@ public class RoomDTO {
     }
 
     public RoomDTO(Room room, Long sum) {
-        this(room);
+        this.name = room.getName();
+        this.city = room.getCity();
+        this.address = room.getAddress();
+        this.manager = room.getManager();
         this.sum = sum;
     }
 
