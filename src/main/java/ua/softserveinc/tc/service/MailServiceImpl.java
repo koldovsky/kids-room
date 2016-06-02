@@ -13,6 +13,7 @@ import ua.softserveinc.tc.entity.User;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class MailServiceImpl implements MailService
     private VelocityEngine velocityEngine;
 
     @Autowired
-    private ServletContext context;
+    private ServletRequest request;
 
     @Async()
     @Override
@@ -59,8 +60,7 @@ public class MailServiceImpl implements MailService
 
     @Override
     public void sendRegisterMessage(String subject, User user, String token) {
-        String link = "http://" + context.getVirtualServerName()  + context.getContextPath()
-        + "/confirm?token=" + token;
+        String link = "http://" + request.getServerName()  + "/confirm?token=" + token;
 
         Map model = new HashMap();
         model.put("user", user);
@@ -73,8 +73,8 @@ public class MailServiceImpl implements MailService
 
     @Override
     public void sendChangePassword(String subject, User user, String token) {
-        String link = "http://" + context.getVirtualServerName() + context.getContextPath()
-        + "/changePassword?id=" + user.getId() + "&token=" + token;
+        String link = "http://" + request.getServerName()
+                + "/changePassword?id=" + user.getId() + "&token=" + token;
 
         Map model = new HashMap();
         model.put("user", user);
@@ -84,23 +84,6 @@ public class MailServiceImpl implements MailService
                 velocityEngine, "/emailTemplate/changePassword.vm", "UTF-8", model);
         sendMessage(user, subject, text);
     }
-
-    @Override
-    public void buildConfirmRegisterManager(String subject, User manager, String token) {
-
-        String link = "http://localhost:8080/home" + "/confirm-manager?token=" + token;
-
-        Map model = new HashMap();
-        model.put("manager", manager);
-        model.put("link", link);
-
-        String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "/emailTemplate/confirmManager.vm", "UTF-8", model);
-
-        sendMessage(manager, subject, text);
-    }
-
-
 
     @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal)
@@ -114,5 +97,22 @@ public class MailServiceImpl implements MailService
 
         sendMessage(user, subject, text);
     }
+
+
+    @Override
+    public void buildConfirmRegisterManager(String subject, User manager, String token) {
+
+        String link = "http://"+request.getServerName()  + "/confirm-manager?token=" + token;
+
+        Map model = new HashMap();
+        model.put("manager", manager);
+        model.put("link", link);
+
+        String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "/emailTemplate/confirmManager.vm", "UTF-8", model);
+
+        sendMessage(manager, subject, text);
+    }
+
 
 }
