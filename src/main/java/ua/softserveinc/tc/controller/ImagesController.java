@@ -73,7 +73,7 @@ public class ImagesController {
                 childService.update(kid);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
-                //TODO: придумати новий ексепшн
+                //TODO: need more appropriate exception
                 throw new ResourceNotFoundException();
             }
         }
