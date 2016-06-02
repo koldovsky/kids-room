@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
@@ -29,14 +30,10 @@
 
 
 <body>
-<sec:authorize access="isAuthenticated()">
-    Your email <sec:authentication property="principal.username"/></p>
-</sec:authorize>
 
 <sec:authorize access="hasRole('USER')">
-    <p> I am USER</p>
 
-
+    <spring:message code="user.selectRoom" />
     <c:forEach items="${managersRoom}" var="r">
 
         ${r.id}
@@ -61,7 +58,7 @@
 
 </sec:authorize>
 <sec:authorize access="hasRole('MANAGER')">
-    <p> I am MANAGER</p>
+
 
     <c:forEach items="${managersRoom}" var="r">
 
@@ -194,7 +191,7 @@
 
 </sec:authorize>
 <sec:authorize access="hasRole('ADMINISTRATOR')">
-    <p> I am ADMINISTRATOR</p>
+
 </sec:authorize>
 
 </body>
