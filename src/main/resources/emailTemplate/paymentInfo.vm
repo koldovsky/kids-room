@@ -3,7 +3,7 @@
         <h3>Hello, ${user}!</h3>
         <div>
             <p>Your total sum for visiting Kids Room in this month is ${sumTotal} uah.</p>
-            <p>For proper details, see this <a href="http://localhost:8080/home/mybookings">link</a>.</p>
+            <p>For proper details, see this <a href="${link}">link</a>.</p>
             <p>Thank you for your participation. We really appreciate it.</p>
         </div>
     </body>
