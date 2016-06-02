@@ -4,8 +4,7 @@
 
 $(function () {
     $('#basicExample').timepicker({
-        dateFormat: 'hh-mm-ss',
-
+        dateFormat: 'hh-mm-ss'
     });
 });
 
@@ -141,7 +140,6 @@ function rendering(objects, roomID) {
                     allDay: false
                 };
 
-
                 $('#calendar').fullCalendar('renderEvent', ev, true);
 
                 $.ajax({
@@ -208,8 +206,8 @@ function rendering(objects, roomID) {
                 var newStartDate = makeISOtime(calEvent.start.format(), 'startTimeUpdate');
                 var newEndDate = makeISOtime(calEvent.end.format(), 'endTimeUpdate');
 
-                if ((date.toDateString() === (new Date(newStartDate)).toDateString()) &&
-                    (endDate.toDateString() === (new Date(newEndDate)).toDateString()) &&
+                if ((date.toTimeString() === (new Date(newStartDate)).toTimeString()) &&
+                    (endDate.toTimeString() === (new Date(newEndDate)).toTimeString()) &&
                     (beforeUpdate === $('#titleUpdate').val())) {
                     $('#updating').dialog('close');
                     return;
@@ -221,12 +219,11 @@ function rendering(objects, roomID) {
                     title: $('#titleUpdate').val(),
                     start: newStartDate,
                     end: newEndDate
-
                 };
 
                 $('#calendar').fullCalendar('renderEvent', eventForUpdate);
-                sendToServerForUpdate(eventForUpdate, roomID);
 
+                sendToServerForUpdate(eventForUpdate, roomID);
 
                 $('#updating').dialog('close');
             });

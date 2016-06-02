@@ -30,8 +30,9 @@ public class CalendarServiceImpl implements CalendarService{
     @Autowired
     private EventMapper eventMapper;
 
-    public final void create(final Event event) {
+    public Long create(final Event event) {
         eventDao.create(event);
+        return event.getId();
     }
 
     public final String eventsToString(final long id) {
@@ -50,11 +51,6 @@ public class CalendarServiceImpl implements CalendarService{
             }
         }
         return result;
-    }
-
-    public final Long returnEventId(final Event event) {
-        create(event);
-        return event.getId();
     }
 
     public final void updateEvent(Event event) {

@@ -59,9 +59,7 @@ public class ViewEventController {
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody
     String getAjax(@RequestBody EventDTO eventDTO) {
-        String res = calendarService.returnEventId((genericMapper.toEntity(eventDTO))).toString();
-
-        return res;
+        return calendarService.create((genericMapper.toEntity(eventDTO))).toString();
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
