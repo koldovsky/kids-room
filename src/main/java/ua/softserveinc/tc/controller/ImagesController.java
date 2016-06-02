@@ -63,7 +63,7 @@ public class ImagesController {
         //is thrown and passed to @ControllerAdvice
         Long id;
         try {id = Long.parseLong(kidId);}
-        catch(Exception e){throw new ResourceNotFoundException();}
+        catch(NumberFormatException e){throw new ResourceNotFoundException();}
 
         if (!file.isEmpty()) {
             try {
@@ -100,7 +100,7 @@ public class ImagesController {
         //is thrown and passed to @ControllerAdvice
         Long id;
         try {id = Long.parseLong(kidId);}
-        catch(Exception e){throw new ResourceNotFoundException();}
+        catch(NumberFormatException e){throw new ResourceNotFoundException();}
 
         Child kid = childService.findById(id);
 

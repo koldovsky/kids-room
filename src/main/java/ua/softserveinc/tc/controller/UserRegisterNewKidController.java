@@ -26,7 +26,7 @@ import java.util.Date;
  * Controller handles kid registration
  */
 @Controller
-public class RegisterNewKidController {
+public class UserRegisterNewKidController {
     @Autowired
     private ChildService childService;
 

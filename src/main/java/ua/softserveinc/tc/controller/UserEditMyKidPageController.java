@@ -63,7 +63,10 @@ public class UserEditMyKidPageController {
             @RequestParam("kidId") String kidId, Principal principal)
             throws ResourceNotFoundException, AccessDeniedException
     {
-        Long id = Long.parseLong(kidId);
+        Long id;
+        try {id = Long.parseLong(kidId);}
+        catch(NumberFormatException e) {throw new ResourceNotFoundException();}
+
         User current = userService.getUserByEmail(principal.getName());
         Child kidToEdit = childService.findById(id);
 
@@ -95,8 +98,7 @@ public class UserEditMyKidPageController {
             BindingResult bindingResult)
     {
         kidToEdit.setParentId(
-                userService.getUserByEmail(
-                        principal.getName()));
+                userService.getUserByEmail(principal.getName()));
         kidToEdit.setEnabled(true);
         validator.validate(kidToEdit, bindingResult);
 
