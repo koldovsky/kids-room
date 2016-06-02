@@ -14,6 +14,6 @@ public interface UsersConst {
     String ACCESS_DENIED_VIEW = "accessDenied";
     String UPDATE_PASS_VIEW = "updatePassword";
     String MY_BOOKINGS_VIEW = "mybookings";
-    String FORGOT_PASS_VIEW = "forgotPassword";
+    String EMAIL_VIEW = "forgotPassword";
     String USER_DETAILS_SERVICE = "userDetailsService";
 }
