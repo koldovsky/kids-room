@@ -30,6 +30,7 @@ $(function () {
 
 function changeFunc(id) {
 
+
     $('#calendar').fullCalendar('destroy');
 
     $('#dialog').dialog({
@@ -63,19 +64,19 @@ function changeFunc(id) {
 
             if (result.length != 0) {
                 var objects = [];
-                result = result.split(',');
-
-                result[0] = ' ' + result[0];
+                result = result.split(', ');
 
                 for (var i = 0; i < result.length; i++) {
+
                     var string = result[i];
-                    var stringToArray = string.split(' ');
+
+                    var stringToArray = string.split('|');
 
                     objects[i] = {
-                        id: parseInt(stringToArray[4]),
-                        title: stringToArray[1],
-                        start: stringToArray[2],
-                        end: stringToArray[3]
+                        id: parseInt(stringToArray[3]),
+                        title: stringToArray[0],
+                        start: stringToArray[1],
+                        end: stringToArray[2]
                     }
                 }
                 rendering(objects, id);
@@ -95,6 +96,84 @@ function changeFunc(id) {
 
 function rendering(objects, roomID) {
 
+    $('#updatingButton').click(function () {
+        var newStartDate = makeISOtime(info.calEvent.start.format(), 'startTimeUpdate');
+        var newEndDate = makeISOtime(info.calEvent.end.format(), 'endTimeUpdate');
+
+        if ((info.date.toTimeString() === (new Date(newStartDate)).toTimeString()) &&
+            (info.endDate.toTimeString() === (new Date(newEndDate)).toTimeString()) &&
+            (info.beforeUpdate === $('#titleUpdate').val())) {
+            $('#updating').dialog('close');
+            return;
+        }
+        $('#calendar').fullCalendar('removeEvents', info.calEvent.id);
+
+        var eventForUpdate = {
+            id: info.calEvent.id,
+            title: $('#titleUpdate').val(),
+            start: newStartDate,
+            end: newEndDate
+        };
+
+        $('#calendar').fullCalendar('renderEvent', eventForUpdate);
+
+        sendToServerForUpdate(eventForUpdate, info.roomID);
+
+        $('#updating').dialog('close');
+    });
+
+    $('#deleting').click(function () {
+        sendToServerForDelete(info.calEvent);
+        $('#calendar').fullCalendar('removeEvents', info.calEvent.id);
+        $('#updating').dialog('close');
+    });
+
+    $('#creating').click(function () {
+
+        var ev = {
+            id: -1,
+            title: $('#startDate').val(),
+            start: makeISOtime(creatingEvent.clickDate, 'basicExample'),
+            end: makeISOtime(creatingEvent.clickDate, 'ender'),
+            backgroundColor: GREEN_COLOR,
+            borderColor: GREEN_COLOR,
+            editable: false
+        };
+
+        $('#calendar').fullCalendar('renderEvent', ev, true);
+
+        $.ajax({
+            type: 'post',
+            contentType: 'application/json',
+            url: 'getnewevent',
+            dataType: 'json',
+            data: JSON.stringify({
+                name: ev.title,
+                startTime: ev.start,
+                endTime: ev.end,
+                roomId: creatingEvent.roomID
+            }),
+            success: function (result) {
+                var newId = parseInt(result);
+
+                $('#calendar').fullCalendar('removeEvents', ev.id);
+
+                ev.id = newId;
+                ev.backgroundColor = BLUE_COLOR;
+                ev.borderColor = BLUE_COLOR;
+                ev.editable = true;
+
+                $('#calendar').fullCalendar('renderEvent', ev);
+            }
+        });
+
+        $('#title').val('');
+        $('#dialog').dialog('close');
+    })
+
+
+    var info = new Object();
+    var creatingEvent = new Object();
     var BLUE_COLOR = '#428bca';
     var GREEN_COLOR = '#33cc33';
 
@@ -125,53 +204,8 @@ function rendering(objects, roomID) {
                 }
             });
 
-            $('#creating').click(function () {
-                if ($('#startDate').val() == '' || clickDate == '') {
-                    return;
-                }
-
-                var ev = {
-                    id: -1,
-                    title: $('#startDate').val(),
-                    start: makeISOtime(clickDate, 'basicExample'),
-                    end: makeISOtime(clickDate, 'ender'),
-                    backgroundColor: GREEN_COLOR,
-                    borderColor: GREEN_COLOR,
-                    allDay: false
-                };
-
-                $('#calendar').fullCalendar('renderEvent', ev, true);
-
-                $.ajax({
-                    type: 'post',
-                    contentType: 'application/json',
-                    url: 'getnewevent',
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        name: ev.title,
-                        startTime: ev.start,
-                        endTime: ev.end,
-                        roomId: roomID
-                    }),
-                    success: function (result) {
-                        var newId = parseInt(result);
-
-                        $('#calendar').fullCalendar('removeEvents', ev.id);
-
-                        ev.id = newId;
-                        ev.backgroundColor = BLUE_COLOR;
-                        ev.borderColor = BLUE_COLOR;
-                        ev.editable = true;
-
-                        $('#calendar').fullCalendar('renderEvent', ev);
-                    }
-                });
-
-                $('#title').val('');
-
-                $('#dialog').dialog('close');
-                clickDate = '';
-            })
+            creatingEvent.clickDate = clickDate;
+            creatingEvent.roomID = roomID;
         },
 
         eventClick: function (calEvent, jsEvent, view) {
@@ -201,38 +235,11 @@ function rendering(objects, roomID) {
 
             $('#updating').dialog('open');
 
-            $('#updatingButton').click(function () {
-
-                var newStartDate = makeISOtime(calEvent.start.format(), 'startTimeUpdate');
-                var newEndDate = makeISOtime(calEvent.end.format(), 'endTimeUpdate');
-
-                if ((date.toTimeString() === (new Date(newStartDate)).toTimeString()) &&
-                    (endDate.toTimeString() === (new Date(newEndDate)).toTimeString()) &&
-                    (beforeUpdate === $('#titleUpdate').val())) {
-                    $('#updating').dialog('close');
-                    return;
-                }
-                $('#calendar').fullCalendar('removeEvents', calEvent.id);
-
-                var eventForUpdate = {
-                    id: calEvent.id,
-                    title: $('#titleUpdate').val(),
-                    start: newStartDate,
-                    end: newEndDate
-                };
-
-                $('#calendar').fullCalendar('renderEvent', eventForUpdate);
-
-                sendToServerForUpdate(eventForUpdate, roomID);
-
-                $('#updating').dialog('close');
-            });
-
-            $('#deleting').click(function () {
-                sendToServerForDelete(calEvent);
-                $('#calendar').fullCalendar('removeEvents', calEvent.id);
-                $('#updating').dialog('close');
-            })
+            info.beforeUpdate = beforeUpdate;
+            info.endDate = endDate;
+            info.calEvent = calEvent;
+            info.roomID = roomID;
+            info.date = date;
         },
 
         header: {
@@ -250,7 +257,6 @@ function rendering(objects, roomID) {
 }
 
 function sendToServerForUpdate(event, roomID) {
-
     $.ajax({
         type: 'post',
         contentType: 'application/json',
@@ -273,7 +279,10 @@ function sendToServerForDelete(event) {
         url: 'geteventfordelete',
         dataType: 'json',
         data: JSON.stringify({
-            id: event.id
+            id: event.id,
+            name: event.title,
+            startTime: event.start,
+            endTime: event.end
         })
     });
 }
@@ -300,3 +309,4 @@ function makeISOtime(clickDate, idOfTimePicker) {
     return '' + clickDate.substring(0, 11) + timepickerHours + ':' +
         timepickerMinutes + clickDate.substring(16);
 }
+

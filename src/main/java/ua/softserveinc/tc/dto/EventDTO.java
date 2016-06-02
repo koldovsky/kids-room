@@ -90,7 +90,7 @@ public class EventDTO implements BaseDTO{
 
     @Override
     public String toString() {
-        return name + " " + startTime +
-                " " + endTime + " " + id;
+        return name + "|" + startTime +
+                "|" + endTime + "|" + id;
     }
 }
