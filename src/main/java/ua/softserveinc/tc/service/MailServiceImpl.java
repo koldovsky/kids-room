@@ -62,7 +62,7 @@ public class MailServiceImpl implements MailService
     public void sendRegisterMessage(String subject, User user, String token) {
         String link = "http://" + request.getServerName()  + "/confirm?token=" + token;
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<>();
         model.put("user", user);
         model.put("link", link);
 
@@ -76,7 +76,7 @@ public class MailServiceImpl implements MailService
         String link = "http://" + request.getServerName()
                 + "/changePassword?id=" + user.getId() + "&token=" + token;
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<>();
         model.put("user", user);
         model.put("link", link);
 
@@ -88,9 +88,13 @@ public class MailServiceImpl implements MailService
     @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal)
     {
+        String link = "http://" + request.getServerName()
+                + "/mybookings";
+
         Map<String, Object> model = new HashMap<>();
         model.put("user", user);
         model.put("sumTotal", sumTotal);
+        model.put("link", link);
 
         String text = VelocityEngineUtils.mergeTemplateIntoString(
                 velocityEngine, "/emailTemplate/paymentInfo.vm", "UTF-8", model);
@@ -104,7 +108,7 @@ public class MailServiceImpl implements MailService
 
         String link = "http://"+request.getServerName()  + "/confirm-manager?token=" + token;
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<>();
         model.put("manager", manager);
         model.put("link", link);
 
