@@ -143,8 +143,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
         booking.setBookingStartTime(date);
-        booking.setBookingState(BookingState.ACTIVE);
-        update(booking);
         return booking;
     }
 
@@ -153,19 +151,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDTO.getId());
         Date date = getDateAndTimeBooking(booking, bookingDTO.getEndTime());
         booking.setBookingEndTime(date);
-        booking.setBookingState(BookingState.COMPLETED);
-        update(booking);
         return booking;
     }
     @Override
     public Date getDateAndTimeBooking(Booking booking, String time) {
-
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateUtil.toDateAndTime(dateString));
         return calendar.getTime();
-
     }
 }
 

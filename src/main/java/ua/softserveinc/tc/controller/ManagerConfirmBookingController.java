@@ -56,8 +56,7 @@ public class ManagerConfirmBookingController {
     }
 
     @RequestMapping(value = BookingConstModel.CANCEL_BOOKING, method = RequestMethod.GET)
-    public @ResponseBody String cancelBooking (Model model,
-                                               @PathVariable Long idBooking) {
+    public @ResponseBody String cancelBooking (@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
@@ -72,6 +71,8 @@ public class ManagerConfirmBookingController {
     @ResponseBody
     String setingBookingsStartTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDTO);
+        booking.setBookingState(BookingState.ACTIVE);
+        bookingService.update(booking);
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
@@ -82,6 +83,8 @@ public class ManagerConfirmBookingController {
     @ResponseBody
     String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
+        booking.setBookingState(BookingState.COMPLETED);
+        bookingService.update(booking);
         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
