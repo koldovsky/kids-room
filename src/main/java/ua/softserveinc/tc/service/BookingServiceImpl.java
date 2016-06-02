@@ -48,8 +48,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
-                builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED),
-                builder.between(root.get(BookingConst.START_TIME),
+            builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED),
+            builder.between(root.get(BookingConst.START_TIME),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
         );
 
@@ -120,7 +120,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = query.from(Booking.class);
 
         query.where(builder.equal(root.get(BookingConst.SUM), 0))
-                .where(builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED));
+             .where(builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED));
 
         return entityManager.createQuery(query).getResultList();
     }
