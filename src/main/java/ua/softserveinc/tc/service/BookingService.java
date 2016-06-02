@@ -14,8 +14,8 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsWithZeroSum();
     void calculateAndSetSum(Booking booking);
     Long getSumTotal(List<Booking> bookings);
-    List<Booking> getTodayBookingsByRoom(Room room);
     void calculateAndSetDuration(Booking booking);
+    List<Booking> getTodayBookingsByRoom(Room room);
     Booking confirmBookingEndTime(BookingDTO bookingDTO);
     Booking confirmBookingStartTime(BookingDTO bookingDTO);
     Map<User, Long> generateAReport(List<Booking> bookings);
