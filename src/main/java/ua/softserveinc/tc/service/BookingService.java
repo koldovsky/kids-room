@@ -15,12 +15,15 @@ public interface BookingService extends BaseService<Booking>
     void calculateAndSetSum(Booking booking);
     Long getSumTotal(List<Booking> bookings);
     void calculateAndSetDuration(Booking booking);
+    Map<User, Long> generateAReport(List<Booking> bookings);
+    Map<Room, Long> generateStatistics(List<Booking> bookings);
+    List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
+    List<Booking> getBookingsByUser(User user, String startDate, String endDate);
+    List<Booking> getBookingsByRoom(Room room, String startDate, String endDate);
+    List<Booking> getBookingsByUserByRoom(User user, Room room, String startDate, String endDate);
+
     List<Booking> getTodayBookingsByRoom(Room room);
     Booking confirmBookingEndTime(BookingDTO bookingDTO);
     Booking confirmBookingStartTime(BookingDTO bookingDTO);
-    Map<User, Long> generateAReport(List<Booking> bookings);
     Date getDateAndTimeBooking(Booking booking, String time);
-    Map<Room, Long> generateStatistics(List<Booking> bookings);
-    List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    List<Booking> getBookingsByUserByRangeOfTime(User user, String startDate, String endDate);
 }

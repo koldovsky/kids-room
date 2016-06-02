@@ -7,8 +7,14 @@ public interface BookingConst {
 
     String SUM = "sum";
 
+    String ID_USER = "idUser";
+
+    String ID_ROOM = "idRoom";
+
     String STATE = "bookingState";
 
     String START_TIME = "bookingStartTime";
+
+
 
 }
