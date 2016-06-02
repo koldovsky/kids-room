@@ -16,8 +16,6 @@ public interface BookingConst {
 
     String COMMENT = "comment";
 
-    String IS_CANCELLED = "is_cancelled";
-
     String DURATION = "duration";
 
     String SUM = "sum";

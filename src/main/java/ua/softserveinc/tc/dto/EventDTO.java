@@ -1,12 +1,9 @@
 package ua.softserveinc.tc.dto;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 /**
  * Created by dima- on 07.05.2016.
  */
-public class EventDTO implements BaseDTO{
+public class EventDTO {
 
     private long id;
 

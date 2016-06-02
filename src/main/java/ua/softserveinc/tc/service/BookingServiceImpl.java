@@ -61,9 +61,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         );
 
         if (user != null)
-            restrictions.add(builder.equal(root.get(BookingConst.ID_USER), user));
+            restrictions.add(builder.equal(root.get(BookingConst.USER), user));
         if (room != null)
-            restrictions.add(builder.equal(root.get(BookingConst.ID_ROOM), room));
+            restrictions.add(builder.equal(root.get(BookingConst.ROOM), room));
 
         criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
         criteria.orderBy(builder.asc(root.get(BookingConst.START_TIME)));

@@ -3,7 +3,7 @@ package ua.softserveinc.tc.dto;
 /**
  * Created by TARAS on 19.05.2016.
  */
-public class RateDTO implements BaseDTO {
+public class RateDTO {
 
     private String hourRate;
 

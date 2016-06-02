@@ -38,11 +38,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<Booking> root = query.from(Booking.class);
 
-        query.select(root.get(BookingConst.ID_USER)).distinct(true).where(
+        query.select(root.get(BookingConst.USER)).distinct(true).where(
             builder.between(root.get(BookingConst.START_TIME),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)),
             builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED),
-            builder.equal(root.get(BookingConst.ID_ROOM), room));
+            builder.equal(root.get(BookingConst.ROOM), room));
 
         return entityManager.createQuery(query).getResultList();
     }

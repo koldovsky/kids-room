@@ -53,13 +53,13 @@ public class StatisticsController
     }
 
     @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
-    public @ResponseBody
-    String refreshView(@PathVariable String startDate, @PathVariable String endDate)
+    public @ResponseBody String refreshView(@PathVariable String startDate,
+                                            @PathVariable String endDate)
     {
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(startDate, endDate);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
-
         Gson gson = new Gson();
+
         return gson.toJson(statistics.keySet().stream()
                 .map(room -> new RoomDTO(room, statistics.get(room)))
                 .collect(Collectors.toList()));
