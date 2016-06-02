@@ -121,6 +121,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         query.where(builder.equal(root.get(BookingConst.SUM), 0))
                 .where(builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED));
+
         return entityManager.createQuery(query).getResultList();
     }
 
