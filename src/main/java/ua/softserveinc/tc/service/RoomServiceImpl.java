@@ -2,7 +2,7 @@ package ua.softserveinc.tc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.constants.EntityConstants.EventConst;
+import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;

@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.constants.EntityConstants;
+package ua.softserveinc.tc.constants.ColumnConstants;
 
 /**
  * Created by TARAS on 21.05.2016.

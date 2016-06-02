@@ -2,6 +2,8 @@ package ua.softserveinc.tc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.constants.EntityConstants.BookingConst;
+import ua.softserveinc.tc.constants.EntityConstants.UserConst;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
@@ -46,8 +48,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
-            builder.equal(root.get("bookingState"), BookingState.COMPLETED),
-            builder.between(root.get("bookingStartTime"),
+                builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED),
+                builder.between(root.get(BookingConst.START_TIME),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
         );
 
@@ -55,11 +57,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
         else
         {
-            restrictions.add(builder.equal(root.get("idUser"), user));
+            restrictions.add(builder.equal(root.get(UserConst.ID), user));
             criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
         }
 
-        criteria.orderBy(builder.asc(root.get("bookingStartTime")));
+        criteria.orderBy(builder.asc(root.get(BookingConst.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
@@ -117,8 +119,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
 
-        query.where(builder.equal(root.get("sum"), 0))
-            .where(builder.equal(root.get("bookingState"), BookingState.COMPLETED));
+        query.where(builder.equal(root.get(BookingConst.SUM), 0))
+                .where(builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED));
         return entityManager.createQuery(query).getResultList();
     }
 

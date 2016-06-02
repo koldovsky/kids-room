@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
-import ua.softserveinc.tc.constants.EntityConstants.BookingConst;
+import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 
