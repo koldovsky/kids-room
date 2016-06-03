@@ -88,7 +88,7 @@ public class UserRegistrationController {
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.GET)
     public String sendConfirmation(Model model){
         model.addAttribute(UsersConst.USER, new User());
-        return UsersConst.EMAIL_VIEW;
+        return UsersConst.RESEND_MAIL_VIEW;
     }
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
@@ -96,7 +96,7 @@ public class UserRegistrationController {
         String email = modelUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
-            return UsersConst.EMAIL_VIEW;
+            return UsersConst.RESEND_MAIL_VIEW;
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();

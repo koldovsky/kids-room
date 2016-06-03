@@ -135,6 +135,10 @@
         <put-attribute name="body" value="/WEB-INF/views/updatePassword.jsp" />
     </definition>
 
+    <definition name="resend-mail" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/resend-mail.jsp" />
+    </definition>
+
     <definition name="json" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/json.jsp" />
     </definition>

@@ -56,7 +56,7 @@ public class MailServiceImpl implements MailService
         }
     }
 
-
+    private String EMAIL_TEMPLATE = "/emailTemplate/";
 
     @Override
     public void sendRegisterMessage(String subject, User user, String token) {
@@ -66,9 +66,7 @@ public class MailServiceImpl implements MailService
         model.put("user", user);
         model.put("link", link);
 
-        String text = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "/emailTemplate/confirmEmail.vm", "UTF-8", model);
-        sendMessage(user, subject, text);
+        sendMessage(user, subject, getTextMessage("confirmEmail.vm", model));
     }
 
     @Override
@@ -80,9 +78,7 @@ public class MailServiceImpl implements MailService
         model.put("user", user);
         model.put("link", link);
 
-        String text = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "/emailTemplate/changePassword.vm", "UTF-8", model);
-        sendMessage(user, subject, text);
+        sendMessage(user, subject, getTextMessage("changePassword.vm", model));
     }
 
     @Override
@@ -90,16 +86,12 @@ public class MailServiceImpl implements MailService
     {
         String link = "http://" + request.getServerName()
                 + "/mybookings";
-
         Map<String, Object> model = new HashMap<>();
         model.put("user", user);
         model.put("sumTotal", sumTotal);
         model.put("link", link);
 
-        String text = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "/emailTemplate/paymentInfo.vm", "UTF-8", model);
-
-        sendMessage(user, subject, text);
+        sendMessage(user, subject, getTextMessage("paymentInfo.vm", model));
     }
 
 
@@ -112,11 +104,11 @@ public class MailServiceImpl implements MailService
         model.put("manager", manager);
         model.put("link", link);
 
-        String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "/emailTemplate/confirmManager.vm", "UTF-8", model);
-
-        sendMessage(manager, subject, text);
+        sendMessage(manager, subject, getTextMessage("confirmManager.vm", model));
     }
 
-
+    private String getTextMessage(String template, Map<String, Object> model){
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                EMAIL_TEMPLATE +template, "UTF-8", model);
+    }
 }
