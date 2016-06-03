@@ -30,10 +30,8 @@ public class ExceptionHandlingController {
             NoHandlerFoundException.class,
             ResourceNotFoundException.class
     })
-    public ModelAndView handleError404(HttpServletRequest request, Exception e) {
-        ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
-        mav.addObject("exception", e);
-        return mav;
+    public String handleError404() {
+        return ErrorPages.NOT_FOUND_VIEW;
     }
 
     /**

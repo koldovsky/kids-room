@@ -45,12 +45,12 @@ public class ChildValidator implements Validator{
         ValidationUtils.rejectIfEmpty(errors, ValidationConst.LAST_NAME, ValidationConst.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors, ValidationConst.CHILD_DATE_OF_BIRTH, ValidationConst.EMPTY_FIELD_MSG);
 
-        if(!Pattern.compile(ValidationConst.NAME_REGEX)
+        /*if(!Pattern.compile(ValidationConst.NAME_REGEX)
                 .matcher(kidToValidate.getFirstName())
                 .matches()){
             errors.rejectValue(ValidationConst.FIRST_NAME,  ValidationConst.NAME_ERROR_MSG);
         }
-
+*/
         if(!Pattern.compile(ValidationConst.NAME_REGEX)
                 .matcher(kidToValidate.getLastName())
                 .matches()){

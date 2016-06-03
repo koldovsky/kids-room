@@ -89,10 +89,10 @@ public class ImagesController {
      * @throws ResourceNotFoundException
      * @throws AccessDeniedException
      */
-    @RequestMapping(value = "/images",
+    @RequestMapping(value = "/images/{kidId}",
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
-    public byte[] getProfilePic(@RequestParam String kidId, Principal principal)
+    public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
             throws IOException,
             AccessDeniedException,
             ResourceNotFoundException{

@@ -16,8 +16,8 @@
 
     <div class="left">
         <div id="Photo">
-        <a href="images?kidId=${kid.id}">
-        <img id="picture" alt="Profile picture" src="images?kidId=${kid.id}" width="200" height="200" />
+        <a href="images/${kid.id}">
+        <img id="picture" alt="Profile picture" src="images/${kid.id}" width="200" height="200" />
         </a>
         </div>
 
