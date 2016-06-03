@@ -19,6 +19,6 @@ public class CalculateSumJob
     public void task()
     {
         List<Booking> bookings = bookingService.getBookingsWithZeroSum();
-        bookings.forEach(System.out::println);
+        bookings.stream().map(Booking::getIdBook).forEach(System.out::println);
     }
 }
