@@ -30,25 +30,19 @@ import java.util.UUID;
 public class UserRegistrationController {
 
     @Autowired
+    BookingService bookingService;
+    @Autowired
     private UserService userService;
-
     @Autowired
     private MailService mailService;
-
     @Autowired
     private UserValidator userValidator;
-
     @Autowired
     private TokenService tokenService;
-
-    @Autowired
-    BookingService bookingService;
 
     @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
     public String login(Model model) {
-        //TODO: REMOVE THIS LINE WHEN QUARTZ IS IMPLEMENTED.
-        bookingService.getBookingsWithZeroSum().forEach(booking -> bookingService.calculateAndSetSum(booking));
         return UsersConst.LOGIN_VIEW;
     }
 
