@@ -63,7 +63,6 @@ public class ApiController {
 
     @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.POST)
     public @ResponseBody String addChild(@RequestBody Child child) {
-        System.out.println(child.getFullName());
         childService.create(child);
         Gson gson = new Gson();
         return gson.toJson(child);
