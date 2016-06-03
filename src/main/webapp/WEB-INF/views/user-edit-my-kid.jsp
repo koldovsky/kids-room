@@ -17,13 +17,13 @@ modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>" action="editmykid" method="post
       <div class="form-group">
              <label for="firstname" class="required"><spring:message code="kid.firstname" /></label>
               <form:input path="firstName" id="firstname" value="${kid.getFirstName()}"
-              class="primary-color form-control" required="required" pattern="<%=ValidationConst.NAME_REGEX %>"/>
+              class="primary-color form-control" required="required"/>
               <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
               <label for="lastname" class="required"><spring:message code="kid.lastname" /></label>
               <form:input path="lastName" id="lastname" value="${kid.getLastName()}"
-              class="form-control" required="required" pattern="<%=ValidationConst.NAME_REGEX %>"/>
+              class="form-control" required="required" />
               <form:errors path="lastName" cssClass="error" />
       </div>
 

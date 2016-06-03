@@ -21,7 +21,7 @@ method="post" modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>">
              </label>
 
               <form:input path="firstName" id="firstname" class="form-control"
-              required="required" pattern="<%=ValidationConst.NAME_REGEX %>"/>
+              required="required"/>
 
               <form:errors path="firstName" cssClass="error"  />
       </div>
@@ -30,7 +30,7 @@ method="post" modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>">
               	<spring:message code="kid.lastname" />
               </label>
               <form:input path="lastName" id="lastname" class="form-control"
-              required="required" pattern="<%=ValidationConst.NAME_REGEX %>"/>
+              required="required"/>
               <form:errors path="lastName" cssClass="error" />
       </div>
 
