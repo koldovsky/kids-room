@@ -4,26 +4,38 @@
 
 $(function () {
     $('#basicExample').timepicker({
-        dateFormat: 'hh-mm-ss'
+        dateFormat: 'hh-mm-ss',
+        'step': 15,
+        'minTime': '15:00pm',
+        'maxTime': '22:00pm'
     });
 });
 
 $(function () {
     $('#ender').timepicker({
-        dateFormat: 'hh-mm-ss'
+        dateFormat: 'hh-mm-ss',
+        'step': 15,
+        'minTime': '15:00pm',
+        'maxTime': '22:00pm'
     });
 });
 
 $(function () {
     $('#startTimeUpdate').timepicker({
-        dateFormat: 'hh-mm-ss'
+        dateFormat: 'hh-mm-ss',
+        'step': 15,
+        'minTime': '15:00pm',
+        'maxTime': '22:00pm'
     });
 });
 
 
 $(function () {
     $('#endTimeUpdate').timepicker({
-        dateFormat: 'hh-mm-ss'
+        dateFormat: 'hh-mm-ss',
+        'step': 15,
+        'minTime': '15:00pm',
+        'maxTime': '22:00pm'
     });
 });
 
@@ -135,8 +147,8 @@ function rendering(objects, roomID) {
             title: $('#startDate').val(),
             start: makeISOtime(creatingEvent.clickDate, 'basicExample'),
             end: makeISOtime(creatingEvent.clickDate, 'ender'),
-            backgroundColor: GREEN_COLOR,
-            borderColor: GREEN_COLOR,
+            backgroundColor: NOT_ACTIVE_EVENT,
+            borderColor: NOT_ACTIVE_EVENT,
             editable: false
         };
 
@@ -159,8 +171,8 @@ function rendering(objects, roomID) {
                 $('#calendar').fullCalendar('removeEvents', ev.id);
 
                 ev.id = newId;
-                ev.backgroundColor = BLUE_COLOR;
-                ev.borderColor = BLUE_COLOR;
+                ev.backgroundColor = ACTIVE_EVENT;
+                ev.borderColor = ACTIVE_EVENT;
                 ev.editable = true;
 
                 $('#calendar').fullCalendar('renderEvent', ev);
@@ -174,8 +186,8 @@ function rendering(objects, roomID) {
 
     var info = new Object();
     var creatingEvent = new Object();
-    var BLUE_COLOR = '#428bca';
-    var GREEN_COLOR = '#33cc33';
+    var ACTIVE_EVENT = '#428bca';
+    var NOT_ACTIVE_EVENT = '#33cc33';
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',

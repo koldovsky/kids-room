@@ -14,20 +14,20 @@ function selectRoomForUser(id) {
 
             if (result.length != 0) {
                 var objects = [];
-                result = result.split(',');
+                result = result.split(', ');
 
                 result[0] = " " + result[0];
 
                 for (var i = 0; i < result.length; i++) {
                     var string = result[i];
-                    var stringToArray = string.split(' ');
+                    var stringToArray = string.split('|');
 
                     objects[i] = {
-                        id: parseInt(stringToArray[4]),
-                        title: stringToArray[1],
-                        start: stringToArray[2],
-                        end: stringToArray[3],
-                        rendering : 'background'
+                        id: parseInt(stringToArray[3]),
+                        title: stringToArray[0],
+                        start: stringToArray[1],
+                        end: stringToArray[2],
+                        rendering: 'background'
                     }
                 }
                 renderingForUser(objects, id);
@@ -47,7 +47,8 @@ function selectRoomForUser(id) {
 
 function renderingForUser(objects) {
     $('#user-calendar').fullCalendar({
-
+        minTime: '10:00:00',
+        maxTime: '22:00:00',
         eventBackgroundColor: '#068000',
         eventColor: 'transparent',
         eventBorderColor: 'transparent',
@@ -70,14 +71,16 @@ function renderingForUser(objects) {
                     start: start,
                     end: end
 
-            };
+                };
                 $('#user-calendar').fullCalendar('renderEvent', eventData, false);
             }
             $('#user-calendar').fullCalendar('unselect');
         },
-        eventRender: function(event, element){
-            if(event.rendering == 'background'){
+        eventRender: function (event, element) {
+            if (event.rendering == 'background') {
                 element.append(event.title);
+                element.css("background-color", "yellow");
+                element.css("color", "black");
             }
         },
         editable: false,
