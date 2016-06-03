@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;
@@ -57,26 +58,29 @@ public class MailServiceImpl implements MailService
     }
 
     private String EMAIL_TEMPLATE = "/emailTemplate/";
+    private String HTTP = "http://";
+    private String LINK = "link";
+
 
     @Override
     public void sendRegisterMessage(String subject, User user, String token) {
-        String link = "http://" + request.getServerName()  + "/confirm?token=" + token;
+        String link = HTTP + request.getServerName()  + "/confirm?token=" + token;
 
         Map<String, Object> model = new HashMap<>();
-        model.put("user", user);
-        model.put("link", link);
+        model.put(UsersConst.USER, user);
+        model.put(LINK, link);
 
         sendMessage(user, subject, getTextMessage("confirmEmail.vm", model));
     }
 
     @Override
     public void sendChangePassword(String subject, User user, String token) {
-        String link = "http://" + request.getServerName()
-                + "/changePassword?id=" + user.getId() + "&token=" + token;
+        String link = HTTP + request.getServerName()
+                + "/changePassword?token=" + token;
 
         Map<String, Object> model = new HashMap<>();
-        model.put("user", user);
-        model.put("link", link);
+        model.put(UsersConst.USER, user);
+        model.put(LINK, link);
 
         sendMessage(user, subject, getTextMessage("changePassword.vm", model));
     }
@@ -84,12 +88,12 @@ public class MailServiceImpl implements MailService
     @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal)
     {
-        String link = "http://" + request.getServerName()
+        String link = HTTP + request.getServerName()
                 + "/mybookings";
         Map<String, Object> model = new HashMap<>();
-        model.put("user", user);
+        model.put(UsersConst.USER, user);
         model.put("sumTotal", sumTotal);
-        model.put("link", link);
+        model.put(LINK, link);
 
         sendMessage(user, subject, getTextMessage("paymentInfo.vm", model));
     }
@@ -98,11 +102,11 @@ public class MailServiceImpl implements MailService
     @Override
     public void buildConfirmRegisterManager(String subject, User manager, String token) {
 
-        String link = "http://"+request.getServerName()  + "/confirm-manager?token=" + token;
+        String link = HTTP +request.getServerName()  + "/confirm-manager?token=" + token;
 
         Map<String, Object> model = new HashMap<>();
         model.put("manager", manager);
-        model.put("link", link);
+        model.put(LINK, link);
 
         sendMessage(manager, subject, getTextMessage("confirmManager.vm", model));
     }

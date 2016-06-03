@@ -128,15 +128,15 @@
     </definition>
 
     <definition name="forgotPassword" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/forgotPassword.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/password-forgot.jsp" />
     </definition>
 
     <definition name="updatePassword" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/updatePassword.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/password-update.jsp" />
     </definition>
 
     <definition name="resend-mail" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/resend-mail.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/mail-resend.jsp" />
     </definition>
 
     <definition name="json" extends="default">

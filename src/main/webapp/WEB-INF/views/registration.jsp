@@ -3,9 +3,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="ua.softserveinc.tc.constants.ModelConstants.UsersConst" %>
-
+<%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 <div class="col-sm-offset-4 col-sm-3">
-    <form:form id="userform" action="registration" method="post" modelAttribute="<%=UsersConst.USER %>">
+    <form:form id="userform" action="registration" method="post"  modelAttribute="<%=UsersConst.USER %>">
       <form:input path="role" type="hidden" value="USER" />
 
       <div class="form-group">

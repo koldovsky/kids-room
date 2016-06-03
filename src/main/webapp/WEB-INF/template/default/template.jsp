@@ -6,6 +6,7 @@
 <html>
 <head>
 <%@ page contentType="text/html; charset=UTF-8" %>
+
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <!--Bootstrap and jQuery -->

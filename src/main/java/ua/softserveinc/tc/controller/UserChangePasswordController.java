@@ -73,13 +73,9 @@ public class UserChangePasswordController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
-    public String changePassword(Model model, @RequestParam("id") Long id, @RequestParam(TokenConst.TOKEN) String token) {
+    public String changePassword(Model model, @RequestParam(TokenConst.TOKEN) String token) {
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
-        if (user.getId() != id) {
-            return UsersConst.FORGOT_PASSWORD_VIEW;
-            //TODO del
-        }
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);

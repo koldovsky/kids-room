@@ -58,6 +58,7 @@ public class UserRegistrationController {
         if (bindingResult.hasErrors()){
             return UsersConst.REGISTRATION_VIEW;
         }
+        System.out.println(user.getFirstName());
         user.setRole(Role.USER);
         user.setConfirmed(false);
         user.setActive(true);
