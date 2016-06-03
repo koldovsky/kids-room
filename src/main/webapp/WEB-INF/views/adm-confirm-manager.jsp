@@ -2,6 +2,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
+<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
+
+
 <div class="col-sm-offset-4 col-sm-3">
     <form:form action="confirm-manager" method="post" modelAttribute="user">
 
