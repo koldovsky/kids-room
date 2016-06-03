@@ -11,6 +11,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by dima- on 07.05.2016.
@@ -76,5 +78,15 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
         eventDTO.setEndTime(df.format(event.getEndTime()));
 
         return eventDTO;
+    }
+
+    public final List<EventDTO> toDto(final List<Event> events) {
+        List<EventDTO> result = new LinkedList<EventDTO>();
+
+        for(Event event : events) {
+            result.add(this.toDto(event));
+        }
+
+        return result;
     }
 }

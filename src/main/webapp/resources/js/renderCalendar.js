@@ -81,7 +81,6 @@ function changeFunc(id) {
                 for (var i = 0; i < result.length; i++) {
 
                     var string = result[i];
-
                     var stringToArray = string.split('|');
 
                     objects[i] = {
@@ -107,6 +106,11 @@ function changeFunc(id) {
 }
 
 function rendering(objects, roomID) {
+
+    var info = new Object();
+    var creatingEvent = new Object();
+    var ACTIVE_EVENT = '#428bca';
+    var NOT_ACTIVE_EVENT = '#33cc33';
 
     $('#updatingButton').click(function () {
         var newStartDate = makeISOtime(info.calEvent.start.format(), 'startTimeUpdate');
@@ -183,12 +187,6 @@ function rendering(objects, roomID) {
         $('#dialog').dialog('close');
     })
 
-
-    var info = new Object();
-    var creatingEvent = new Object();
-    var ACTIVE_EVENT = '#428bca';
-    var NOT_ACTIVE_EVENT = '#33cc33';
-
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
 
@@ -204,6 +202,7 @@ function rendering(objects, roomID) {
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
+
             var ckbox = $('#checkbox');
 
             $('input').on('click', function () {

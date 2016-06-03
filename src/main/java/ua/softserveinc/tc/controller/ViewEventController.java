@@ -63,12 +63,14 @@ public class ViewEventController {
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
-    public void getEventForUpdate(@RequestBody EventDTO eventDTO) {
+    public String getEventForUpdate(@RequestBody EventDTO eventDTO) {
         calendarService.updateEvent(genericMapper.toEntity(eventDTO));
+        return EventConst.MAIN_PAGE;
     }
 
     @RequestMapping (value = "geteventfordelete", method = RequestMethod.POST)
-    public void getEventForDelete(@RequestBody EventDTO eventDTO) {
+    public String getEventForDelete(@RequestBody EventDTO eventDTO) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDTO));
+        return EventConst.MAIN_PAGE;
     }
 }

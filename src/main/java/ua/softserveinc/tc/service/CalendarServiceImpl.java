@@ -50,6 +50,9 @@ public class CalendarServiceImpl implements CalendarService{
                 result.add(eventMapper.toDto(listOfEvents.get(i)));
             }
         }
+
+        List<EventDTO> inRoom = eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));
+        System.out.println(inRoom);
         return result;
     }
 

@@ -7,7 +7,7 @@ function selectRoomForUser(id) {
     $('#user-calendar').fullCalendar('destroy');
 
 
-    var path = "getevents/" + id;
+    var path = 'getevents/' + id;
 
     $.ajax({
         url: path, success: function (result) {
@@ -16,7 +16,7 @@ function selectRoomForUser(id) {
                 var objects = [];
                 result = result.split(', ');
 
-                result[0] = " " + result[0];
+                result[0] = ' ' + result[0];
 
                 for (var i = 0; i < result.length; i++) {
                     var string = result[i];
@@ -35,9 +35,9 @@ function selectRoomForUser(id) {
                 $('#user-calendar').fullCalendar('destroy');
 
                 var objects = [{
-                    title: "1",
-                    start: "1",
-                    end: "1"
+                    title: '1',
+                    start: '1',
+                    end: '1'
                 }]
                 renderingForUser(objects, id);
             }
@@ -70,7 +70,6 @@ function renderingForUser(objects) {
                     title: title,
                     start: start,
                     end: end
-
                 };
                 $('#user-calendar').fullCalendar('renderEvent', eventData, false);
             }
@@ -79,14 +78,13 @@ function renderingForUser(objects) {
         eventRender: function (event, element) {
             if (event.rendering == 'background') {
                 element.append(event.title);
-                element.css("background-color", "yellow");
-                element.css("color", "black");
+                element.css('background-color', 'yellow');
+                element.css('color', 'black');
             }
         },
         editable: false,
         eventLimit: true,
         events: objects
-
     });
 }
 
