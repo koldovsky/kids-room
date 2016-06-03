@@ -10,5 +10,5 @@ import java.util.List;
  * Created by TARAS on 30.04.2016.
  */
 public interface BookingDao extends BaseDao<Booking> {
-    List<Booking> getBookingsByDay(Date startTime, Date endTime, Room room);
+    List<Booking> getTodayBookingsByRoom(Date startTime, Date endTime, Room room);
 }

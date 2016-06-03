@@ -2,7 +2,7 @@ package ua.softserveinc.tc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.constants.EntityConstants.BookingConst;
+import ua.softserveinc.tc.constants.BookingConstant;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
@@ -55,18 +55,18 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(
-            builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED),
-            builder.between(root.get(BookingConst.START_TIME),
+            builder.equal(root.get(BookingConstant.Entity.STATE), BookingState.COMPLETED),
+            builder.between(root.get(BookingConstant.Entity.START_TIME),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)))
         );
 
         if (user != null)
-            restrictions.add(builder.equal(root.get(BookingConst.USER), user));
+            restrictions.add(builder.equal(root.get(BookingConstant.Entity.USER), user));
         if (room != null)
-            restrictions.add(builder.equal(root.get(BookingConst.ROOM), room));
+            restrictions.add(builder.equal(root.get(BookingConstant.Entity.ROOM), room));
 
         criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        criteria.orderBy(builder.asc(root.get(BookingConst.START_TIME)));
+        criteria.orderBy(builder.asc(root.get(BookingConstant.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
@@ -125,16 +125,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = query.from(Booking.class);
 
         query.where(
-            builder.equal(root.get(BookingConst.SUM), 0),
-            builder.equal(root.get(BookingConst.STATE), BookingState.COMPLETED));
+            builder.equal(root.get(BookingConstant.Entity.SUM), 0),
+            builder.equal(root.get(BookingConstant.Entity.STATE), BookingState.COMPLETED));
 
         return entityManager.createQuery(query).getResultList();
     }
 
     @Override
     public List<Booking> getTodayBookingsByRoom(Room room){
+
         Calendar toDay = Calendar.getInstance();
-        toDay.setTime(new Date("2016/06/20")); // temporarily: for example;
         toDay.set(Calendar.AM_PM, 0);
         toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
         toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
@@ -144,7 +144,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
         toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
         Date endTime = toDay.getTime();
-        return bookingDao.getBookingsByDay(startTime, endTime, room);
+        return bookingDao.getTodayBookingsByRoom(startTime, endTime, room);
     }
 
     @Override

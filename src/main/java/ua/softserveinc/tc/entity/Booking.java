@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.ColumnConstants.BookingConst;
+import ua.softserveinc.tc.constants.BookingConstant;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
@@ -16,13 +16,13 @@ import java.util.Date;
  * Created by TARAS on 30.04.2016.
  */
 @Entity
-@Table(name = BookingConst.TABLE_NAME_BOOKING)
+@Table(name = BookingConstant.DB.TABLE_NAME_BOOKING)
 public class Booking
 {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = BookingConst.ID_BOOK, nullable = false)
+    @Column(name = BookingConstant.DB.ID_BOOK, nullable = false)
     private Long idBook;
 
     @ManyToOne(optional = false)//(cascade = CascadeType.ALL)
@@ -37,24 +37,24 @@ public class Booking
     @JoinColumn(name = UserConst.ID_USER)
     private User idUser;
 
-    @Column(name = BookingConst.BOOKING_START_TIME, nullable = false)
+    @Column(name = BookingConstant.DB.BOOKING_START_TIME, nullable = false)
     private Date bookingStartTime;
 
-    @Column(name = BookingConst.BOOKING_END_TIME, nullable = false)
+    @Column(name = BookingConstant.DB.BOOKING_END_TIME, nullable = false)
     private Date bookingEndTime;
 
-    @Column(name = BookingConst.COMMENT)
+    @Column(name = BookingConstant.DB.COMMENT)
     private String comment;
 
 
-    @Column(name = BookingConst.BOOKING_STATE)
+    @Column(name = BookingConstant.DB.BOOKING_STATE)
     @Enumerated(EnumType.ORDINAL)
     private BookingState bookingState;
 
-    @Column(name = BookingConst.DURATION, columnDefinition = "bigint default 0")
+    @Column(name = BookingConstant.DB.DURATION, columnDefinition = "bigint default 0")
     private Long duration;
 
-    @Column(name = BookingConst.SUM, columnDefinition = "bigint default 0")
+    @Column(name = BookingConstant.DB.SUM, columnDefinition = "bigint default 0")
     private Long sum;
 
     @Transient
