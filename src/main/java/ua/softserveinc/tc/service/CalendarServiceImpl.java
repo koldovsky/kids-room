@@ -41,19 +41,7 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     public final List<EventDTO> findByRoomId(final long roomId) {
-
-        List<EventDTO> result = new ArrayList<EventDTO>();
-        List<Event> listOfEvents = eventDao.findAll();
-
-        for(int i = 0; i < listOfEvents.size(); i++) {
-            if(listOfEvents.get(i).getRoom().getId() == roomId) {
-                result.add(eventMapper.toDto(listOfEvents.get(i)));
-            }
-        }
-
-        List<EventDTO> inRoom = eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));
-        System.out.println(inRoom);
-        return result;
+        return eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));
     }
 
     public final void updateEvent(Event event) {

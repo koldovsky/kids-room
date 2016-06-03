@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,14 @@ public class ViewEventController {
     @Autowired
     private RoomService roomServiceImpl;
     @Autowired
-    private EventService eventServiceImpl;
-    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
-        try {
+
+
+
+/*        try {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
 
@@ -47,10 +49,21 @@ public class ViewEventController {
             return EventConst.MAIN_PAGE;
         } catch (NullPointerException n) {
             return UsersConst.LOGIN_VIEW;
+        }*/
+        if(principal == null) return UsersConst.LOGIN_VIEW;
+        else {
+            String email = principal.getName();
+            User user = userService.getUserByEmail(email);
+            if(userService.getUserByEmail(email).getRole() == Role.USER) {
+                model.addAttribute("rooms", roomServiceImpl.findAll());
+            } else {
+                model.addAttribute("rooms", roomServiceImpl.findByManger(user));
+            }
+            return EventConst.MAIN_PAGE;
         }
     }
 
-    @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public @ResponseBody
     String getEvents(@PathVariable int id) {
         return calendarService.eventsToString(id);
@@ -63,14 +76,14 @@ public class ViewEventController {
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
-    public String getEventForUpdate(@RequestBody EventDTO eventDTO) {
+    @ResponseStatus(value = HttpStatus.OK)
+    public void getEventForUpdate(@RequestBody EventDTO eventDTO) {
         calendarService.updateEvent(genericMapper.toEntity(eventDTO));
-        return EventConst.MAIN_PAGE;
     }
 
-    @RequestMapping (value = "geteventfordelete", method = RequestMethod.POST)
-    public String getEventForDelete(@RequestBody EventDTO eventDTO) {
+    @RequestMapping(value = "geteventfordelete", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void getEventForDelete(@RequestBody EventDTO eventDTO) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDTO));
-        return EventConst.MAIN_PAGE;
     }
 }

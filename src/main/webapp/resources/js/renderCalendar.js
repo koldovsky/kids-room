@@ -4,7 +4,7 @@
 
 $(function () {
     $('#basicExample').timepicker({
-        dateFormat: 'hh-mm-ss',
+        'dateFormat': 'hh-mm-ss',
         'step': 15,
         'minTime': '15:00pm',
         'maxTime': '22:00pm'
@@ -13,7 +13,7 @@ $(function () {
 
 $(function () {
     $('#ender').timepicker({
-        dateFormat: 'hh-mm-ss',
+        'dateFormat': 'hh-mm-ss',
         'step': 15,
         'minTime': '15:00pm',
         'maxTime': '22:00pm'
@@ -22,7 +22,7 @@ $(function () {
 
 $(function () {
     $('#startTimeUpdate').timepicker({
-        dateFormat: 'hh-mm-ss',
+        'dateFormat': 'hh-mm-ss',
         'step': 15,
         'minTime': '15:00pm',
         'maxTime': '22:00pm'
@@ -32,7 +32,7 @@ $(function () {
 
 $(function () {
     $('#endTimeUpdate').timepicker({
-        dateFormat: 'hh-mm-ss',
+        'dateFormat': 'hh-mm-ss',
         'step': 15,
         'minTime': '15:00pm',
         'maxTime': '22:00pm'
@@ -72,7 +72,9 @@ function changeFunc(id) {
     var path = 'getevents/' + id;
 
     $.ajax({
-        url: path, success: function (result) {
+        url: path,
+
+        success: function (result) {
 
             if (result.length != 0) {
                 var objects = [];
@@ -89,6 +91,8 @@ function changeFunc(id) {
                         start: stringToArray[1],
                         end: stringToArray[2]
                     }
+
+
                 }
                 rendering(objects, id);
             } else {
