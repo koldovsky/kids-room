@@ -30,8 +30,9 @@ public class CalendarServiceImpl implements CalendarService{
     @Autowired
     private EventMapper eventMapper;
 
-    public final void create(final Event event) {
+    public Long create(final Event event) {
         eventDao.create(event);
+        return event.getId();
     }
 
     public final String eventsToString(final long id) {
@@ -40,21 +41,7 @@ public class CalendarServiceImpl implements CalendarService{
     }
 
     public final List<EventDTO> findByRoomId(final long roomId) {
-
-        List<EventDTO> result = new ArrayList<EventDTO>();
-        List<Event> listOfEvents = eventDao.findAll();
-
-        for(int i = 0; i < listOfEvents.size(); i++) {
-            if(listOfEvents.get(i).getRoom().getId() == roomId) {
-                result.add(eventMapper.toDto(listOfEvents.get(i)));
-            }
-        }
-        return result;
-    }
-
-    public final Long returnEventId(final Event event) {
-        create(event);
-        return event.getId();
+        return eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));
     }
 
     public final void updateEvent(Event event) {

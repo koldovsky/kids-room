@@ -16,9 +16,9 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Demian on 28.05.2016.
@@ -53,14 +53,15 @@ public class StatisticsController
     }
 
     @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
-    public @ResponseBody
-    String refreshView(@PathVariable String startDate, @PathVariable String endDate)
+    public @ResponseBody String refreshView(@PathVariable String startDate,
+                                            @PathVariable String endDate)
     {
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(startDate, endDate);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
-        List<RoomDTO> rooms = new ArrayList<>();
-        statistics.forEach((room, sum) -> rooms.add(new RoomDTO(room, sum)));
         Gson gson = new Gson();
-        return gson.toJson(rooms);
+
+        return gson.toJson(statistics.keySet().stream()
+                .map(room -> new RoomDTO(room, statistics.get(room)))
+                .collect(Collectors.toList()));
     }
 }

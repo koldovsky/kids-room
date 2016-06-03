@@ -2,9 +2,7 @@ package ua.softserveinc.tc.controller;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,7 +90,7 @@ public class UserMyBookingsController {
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookingsByUserByRangeOfTime(currentUser, dateLo, dateHi);
+        List<Booking> myBookings = bookingService.getBookingsByUser(currentUser, dateLo, dateHi);
         List<BookingDTO> dtos = new ArrayList<>();
         myBookings.forEach((booking -> dtos.add(new BookingDTO(booking))));
 

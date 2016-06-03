@@ -9,6 +9,10 @@ body {
     background-color: #eee;
 }
 
+.content {
+    background-color: #eee;
+}
+
 #right{
      text-align: right;
      font-size:13px;

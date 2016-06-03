@@ -13,6 +13,7 @@ import ua.softserveinc.tc.entity.User;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class MailServiceImpl implements MailService
     private VelocityEngine velocityEngine;
 
     @Autowired
-    private ServletContext context;
+    private ServletRequest request;
 
     @Async()
     @Override
@@ -42,77 +43,72 @@ public class MailServiceImpl implements MailService
             helper.setTo(user.getEmail());
             helper.setText(text, true);
             helper.setSubject(subject);
-        } catch (MessagingException e) {
-            //TODO
-        }
-        while (!sended) {
-            try {
+            while (!sended) {
                 synchronized (message) {
                     mailSender.send(message);
                     sended = true;
                 }
-            } catch (MailException e) {
-                //TODO
             }
+        } catch (MailException e) {
+            //TODO
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
+    }
+
+    private String EMAIL_TEMPLATE = "/emailTemplate/";
+
+    @Override
+    public void sendRegisterMessage(String subject, User user, String token) {
+        String link = "http://" + request.getServerName()  + "/confirm?token=" + token;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", user);
+        model.put("link", link);
+
+        sendMessage(user, subject, getTextMessage("confirmEmail.vm", model));
+    }
+
+    @Override
+    public void sendChangePassword(String subject, User user, String token) {
+        String link = "http://" + request.getServerName()
+                + "/changePassword?id=" + user.getId() + "&token=" + token;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", user);
+        model.put("link", link);
+
+        sendMessage(user, subject, getTextMessage("changePassword.vm", model));
     }
 
     @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal)
     {
+        String link = "http://" + request.getServerName()
+                + "/mybookings";
         Map<String, Object> model = new HashMap<>();
         model.put("user", user);
         model.put("sumTotal", sumTotal);
-
-        String text = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "/emailTemplate/paymentInfo.vm", "UTF-8", model);
-
-        sendMessage(user, subject, text);
-    }
-
-    @Override
-    public void sendRegisterMessage(String subject, User user, String token) {
-//        String link = "http://" + context.getVirtualServerName() + ":8080" + context.getContextPath()
-//        + "/confirm?token=" + token;
-        String link = "http://localhost:8080/home" + "/confirm?token=" + token;
-
-        Map model = new HashMap();
-        model.put("user", user);
         model.put("link", link);
 
-        String text = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "/emailTemplate/confirmEmail.vm", "UTF-8", model);
-        sendMessage(user, subject, text);
+        sendMessage(user, subject, getTextMessage("paymentInfo.vm", model));
     }
+
 
     @Override
     public void buildConfirmRegisterManager(String subject, User manager, String token) {
 
-        String link = "http://localhost:8080/home" + "/confirm-manager?token=" + token;
+        String link = "http://"+request.getServerName()  + "/confirm-manager?token=" + token;
 
-        Map model = new HashMap();
+        Map<String, Object> model = new HashMap<>();
         model.put("manager", manager);
         model.put("link", link);
 
-        String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "/emailTemplate/confirmManager.vm", "UTF-8", model);
-
-        sendMessage(manager, subject, text);
+        sendMessage(manager, subject, getTextMessage("confirmManager.vm", model));
     }
 
-    @Override
-    public void sendChangePassword(String subject, User user, String token) {
-//        String link = "http://" + context.getVirtualServerName() + context.getContextPath()
-//        + "/changePassword?id=" + user.getId() + "&token=" + token;
-        String link = "http://localhost:8080/home" + "/changePassword?id=" + user.getId() + "&token=" + token;
-
-        Map model = new HashMap();
-        model.put("user", user);
-        model.put("link", link);
-
-        String text = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "/emailTemplate/changePassword.vm", "UTF-8", model);
-        sendMessage(user, subject, text);
+    private String getTextMessage(String template, Map<String, Object> model){
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                EMAIL_TEMPLATE +template, "UTF-8", model);
     }
-
 }

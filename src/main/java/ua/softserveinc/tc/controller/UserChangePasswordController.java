@@ -55,15 +55,15 @@ public class UserChangePasswordController {
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public String changePassword(Model model) {
         model.addAttribute(UsersConst.USER, new User());
-        return UsersConst.FORGOT_PASS_VIEW;
+        return UsersConst.FORGOT_PASSWORD_VIEW;
     }
 
    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@ModelAttribute(UsersConst.USER)User modelUser, BindingResult bindingResult, Errors errors) {
+    public String resetPassword(@ModelAttribute(UsersConst.USER)User modelUser, BindingResult bindingResult) {
         String email = modelUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
-            return UsersConst.FORGOT_PASS_VIEW;
+            return UsersConst.FORGOT_PASSWORD_VIEW;
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
@@ -77,7 +77,8 @@ public class UserChangePasswordController {
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         if (user.getId() != id) {
-            return UsersConst.FORGOT_PASS_VIEW;
+            return UsersConst.FORGOT_PASSWORD_VIEW;
+            //TODO del
         }
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());

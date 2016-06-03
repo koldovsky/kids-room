@@ -1,8 +1,7 @@
 package ua.softserveinc.tc.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.softserveinc.tc.constants.EntityConstants.RoomConst;
+import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 

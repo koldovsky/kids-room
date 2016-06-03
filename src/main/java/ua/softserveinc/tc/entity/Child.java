@@ -5,7 +5,7 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.springframework.format.annotation.DateTimeFormat;
-import ua.softserveinc.tc.constants.EntityConstants.ChildConst;
+import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 
 import javax.persistence.*;
 import java.util.Calendar;

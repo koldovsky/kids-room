@@ -20,8 +20,6 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.min.css">
-
 <link rel='stylesheet' href='resources/css/default.css'>
 
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
@@ -41,6 +39,7 @@
 
 <!-- Angular Material Library -->
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
 
 <!-- /Material design -->

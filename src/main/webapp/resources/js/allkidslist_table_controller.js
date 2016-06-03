@@ -109,7 +109,8 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     function addChild( child ) {
         console.dir(child);
-        splitName(child)
+        splitName(child);
+        changeParentToParentId(child);
         allKidsTableService.addChild(child);
         toggleNewChild();
     }
@@ -121,6 +122,11 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     function selectNewChildParent( parent ) {
         $scope.newChild.parent = parent;
+    }
+
+    function changeParentToParentId( child ) {
+        child.parentId = child.parent;
+        delete(child.parent);
     }
 
     $scope.searchChildren = searchChildren;

@@ -1,22 +1,24 @@
 package ua.softserveinc.tc.quartz;
 
-import org.quartz.JobExecutionContext;
-import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.service.BookingService;
+
+import java.util.List;
 
 /**
- * Created by Demian on 30.05.2016.
+ * Created by Demian on 03.06.2016.
  */
-public class CalculateSumJob extends QuartzJobBean
+@Service("calculateSum")
+public class CalculateSumJob
 {
-    private CalculateSumTask calculateSumTask;
+    @Autowired
+    BookingService bookingService;
 
-    public void setCalculateSumTask(CalculateSumTask calculateSumTask)
+    public void task()
     {
-        this.calculateSumTask = calculateSumTask;
-    }
-
-    protected void executeInternal(JobExecutionContext context)
-    {
-        calculateSumTask.execute();
+        List<Booking> bookings = bookingService.getBookingsWithZeroSum();
+        bookings.stream().map(Booking::getIdBook).forEach(System.out::println);
     }
 }

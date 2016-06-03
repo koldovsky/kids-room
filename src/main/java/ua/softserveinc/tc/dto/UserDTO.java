@@ -5,9 +5,9 @@ import ua.softserveinc.tc.entity.User;
 /**
  * Created by Demian on 16.05.2016.
  */
-public class UserDTO implements BaseDTO
+public class UserDTO
 {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;

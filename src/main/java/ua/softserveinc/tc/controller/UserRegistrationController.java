@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.softserveinc.tc.constants.EntityConstants.UserConst;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
 import ua.softserveinc.tc.entity.Role;
@@ -31,25 +30,19 @@ import java.util.UUID;
 public class UserRegistrationController {
 
     @Autowired
+    BookingService bookingService;
+    @Autowired
     private UserService userService;
-
     @Autowired
     private MailService mailService;
-
     @Autowired
     private UserValidator userValidator;
-
     @Autowired
     private TokenService tokenService;
-
-    @Autowired
-    BookingService bookingService;
 
     @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
     public String login(Model model) {
-        //TODO: REMOVE THIS LINE WHEN QUARTZ IS IMPLEMENTED.
-        bookingService.getBookingsWithZeroSum().forEach(booking -> bookingService.calculateAndSetSum(booking));
         return UsersConst.LOGIN_VIEW;
     }
 
@@ -65,11 +58,12 @@ public class UserRegistrationController {
         if (bindingResult.hasErrors()){
             return UsersConst.REGISTRATION_VIEW;
         }
-        String token = UUID.randomUUID().toString();
         user.setRole(Role.USER);
         user.setConfirmed(false);
         user.setActive(true);
         userService.create(user);
+
+        String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
         mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
         return UsersConst.SUCCESS_VIEW;
@@ -85,10 +79,18 @@ public class UserRegistrationController {
         return "redirect:/login";
     }
 
+    @RequestMapping(value = "/resendConfirmation", method = RequestMethod.GET)
+    public String sendConfirmation(Model model){
+        model.addAttribute(UsersConst.USER, new User());
+        return UsersConst.RESEND_MAIL_VIEW;
+    }
+
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
-    public String sendConfirmation(@RequestParam(UserConst.EMAIL) String email ){
-        if (userService.getUserByEmail(email) == null) {
-            return UsersConst.LOGIN_VIEW;
+    public String sendConfirmation(@ModelAttribute(UsersConst.USER)User modelUser, BindingResult bindingResult) {
+        String email = modelUser.getEmail();
+        userValidator.validateEmail(email, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return UsersConst.RESEND_MAIL_VIEW;
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();

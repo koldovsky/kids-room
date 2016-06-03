@@ -56,7 +56,7 @@ public class KidsProfileController {
         //is thrown and passed to @ControllerAdvice
         Long idL;
         try {idL = Long.parseLong(id);}
-        catch(Exception e) {throw new ResourceNotFoundException();}
+        catch(NumberFormatException e) {throw new ResourceNotFoundException();}
 
         User current = userService.getUserByEmail(principal.getName());
         Child kid = childService.findById(idL);
