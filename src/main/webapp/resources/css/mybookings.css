@@ -51,6 +51,7 @@ table{
 .dateSelector{
     margin: 0 auto;
     text-align: center;
+    margin-bottom: 0px;
 }
 
 #from-div, #to-div{
@@ -111,4 +112,25 @@ min-width: 120px;
 
   input{
     font-size: 2rem;
+  }
+
+  div.pager {
+      text-align: center;
+      margin: 1em 0;
+  }
+
+  div.pager span {
+      display: inline-block;
+      width: 1.8em;
+      height: 1.8em;
+      line-height: 1.8;
+      text-align: center;
+      cursor: pointer;
+      background: #4285F4;
+      color: #fff;
+      margin-right: 0.5em;
+  }
+
+  div.pager span.active {
+      background: #c00;
   }

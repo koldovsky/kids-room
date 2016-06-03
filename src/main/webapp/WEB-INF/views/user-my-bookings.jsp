@@ -7,8 +7,8 @@
 
 <link rel='stylesheet' href='resources/css/mybookings.css'>
 <script src="resources/js/myBookings.js"></script>
-<script src="resources/js/myexport.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
+
 
 <div id="scroller">
     <div class="dateSelector">
@@ -30,6 +30,7 @@
                 </h2>
             </caption>
 
+         <thead>
             <tr id="header">
                 <th><spring:message code="report.date" /></th>
                 <th><spring:message code="report.kid" /></th>
@@ -39,6 +40,7 @@
                 <th><spring:message code="report.duration" /></th>
                 <th><spring:message code="report.sum" /></th>
             </tr>
+         </thead>
 
             <caption class="captionBottom">
                 <h3>
@@ -48,7 +50,7 @@
             </caption>
 
         </table>
-
+        <input id="itemsPerPage" type="hidden" value="11"></input>
                 <a id="dlink"  style="display:none;"></a>
                 <button id="export" onclick= "tableToExcel('myBookings', 'name')" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
@@ -59,5 +61,3 @@
 
     </div>
 </div>
-
-<script src="resources/js/myexport.js"></script>
