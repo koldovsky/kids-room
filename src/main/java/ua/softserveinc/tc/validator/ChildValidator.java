@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.ValidationConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class ChildValidator implements Validator{
+    @Autowired
+    private ApplicationConfigurator configurator;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -47,7 +50,7 @@ public class ChildValidator implements Validator{
 
         int age = kidToValidate.getAge();
 
-        if(age < ChildServiceImpl.getMinAge() || age> ChildServiceImpl.getMaxAge()){
+        if(age < configurator.getKidsMinAge() || age> configurator.getKidsMaxAge()){
             errors.rejectValue(ValidationConst.CHILD_DATE_OF_BIRTH, ValidationConst.DATE_ERROR_MSG);
         }
     }
