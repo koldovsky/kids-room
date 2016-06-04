@@ -67,8 +67,8 @@
 .kidsCard{
         background-color: white;
         border:  1px solid transparent;
-        width: 35%;
-        min-width: 300px;
+        width: 45%;
+        min-width: 350px;
         margin: 25 auto;
         padding-bottom: 25;
         padding-top: 25;
@@ -118,4 +118,8 @@ position: absolute;
 
 .col-md-8{
     min-height: 202px;
+}
+
+hr{
+    width: 300px;
 }
