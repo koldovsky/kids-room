@@ -19,6 +19,8 @@ public class CalculateSumJob
     public void task()
     {
         List<Booking> bookings = bookingService.getBookingsWithZeroSum();
-        bookings.stream().map(Booking::getIdBook).forEach(System.out::println);
+        System.out.println("Quartz is running, list of bookings is null: "
+                + (bookings == null) + ", size of the list: " + bookings.size());
+        bookings.forEach(bookingService::calculateAndSetSum);
     }
 }
