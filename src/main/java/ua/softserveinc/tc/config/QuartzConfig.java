@@ -28,8 +28,7 @@ public class QuartzConfig
     {
         SimpleTriggerFactoryBean stFactory = new SimpleTriggerFactoryBean();
         stFactory.setJobDetail(invokeCalculateSum().getObject());
-        stFactory.setRepeatInterval(1);
-        stFactory.setRepeatCount(0);
+        stFactory.setRepeatInterval(1800000);
         return stFactory;
     }
 
