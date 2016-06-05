@@ -8,6 +8,7 @@ import org.springframework.validation.Validator;
 import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.ValidationConst;
 import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.ChildServiceImpl;
 

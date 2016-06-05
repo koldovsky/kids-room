@@ -22,6 +22,7 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.ChildValidator;
+import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import java.security.Principal;
 
@@ -63,10 +64,11 @@ public class UserEditMyKidPageController {
             @RequestParam("kidId") String kidId, Principal principal)
             throws ResourceNotFoundException, AccessDeniedException
     {
-        Long id;
-        try {id = Long.parseLong(kidId);}
-        catch(NumberFormatException e) {throw new ResourceNotFoundException();}
+        if(!LogicalRequestsValidator.isRequestValid(kidId)) {
+            throw new ResourceNotFoundException();
+        }
 
+        Long id = Long.parseLong(kidId);
         User current = userService.getUserByEmail(principal.getName());
         Child kidToEdit = childService.findById(id);
 
@@ -125,12 +127,11 @@ public class UserEditMyKidPageController {
     public String removeKid(@RequestParam("id") String id, Principal principal)
             throws AccessDeniedException, ResourceNotFoundException{
 
-        //Checking if URL is valid. If it cannot be parsed to Long an exception
-        //is thrown and passed to @ControllerAdvice
-        Long idL;
-        try {idL = Long.parseLong(id);}
-        catch(Exception e) {throw new ResourceNotFoundException();}
+        if(!LogicalRequestsValidator.isRequestValid(id)){
+            throw new ResourceNotFoundException();
+        }
 
+        Long idL = Long.parseLong(id);
         Child kidToRemove = childService.findById(idL);
         if(!userService
                 .getUserByEmail(principal.getName())

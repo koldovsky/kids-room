@@ -20,6 +20,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -59,11 +60,11 @@ public class ImagesController {
                               @PathVariable String kidId)
             throws ResourceNotFoundException, AccessDeniedException
     {
-        //Checking if URL is valid. If it cannot be parsed to Long an exception
-        //is thrown and passed to @ControllerAdvice
-        Long id;
-        try {id = Long.parseLong(kidId);}
-        catch(NumberFormatException e){throw new ResourceNotFoundException();}
+        if(!LogicalRequestsValidator.isRequestValid(kidId)){
+            throw new ResourceNotFoundException();
+        }
+
+        Long id = Long.parseLong(kidId);
 
         if (!file.isEmpty()) {
             try {
@@ -96,11 +97,11 @@ public class ImagesController {
             throws IOException,
             AccessDeniedException,
             ResourceNotFoundException{
-        //Checking if URL is valid. If it cannot be parsed to Long an exception
-        //is thrown and passed to @ControllerAdvice
-        Long id;
-        try {id = Long.parseLong(kidId);}
-        catch(NumberFormatException e){throw new ResourceNotFoundException();}
+
+        if(!LogicalRequestsValidator.isRequestValid(kidId)){
+            throw new ResourceNotFoundException();
+        }
+        Long id = Long.parseLong(kidId);
 
         Child kid = childService.findById(id);
 
@@ -129,6 +130,11 @@ public class ImagesController {
 
     }
 
+    /**
+     * Handles bad image upload if the uploaded file cannot be persisted
+     * to the database for any reason
+     * @return "Bad Upload" view
+     */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(JpaSystemException.class)
     public String badUpload(){

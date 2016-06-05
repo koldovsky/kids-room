@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Role;
@@ -17,6 +18,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 
 import java.io.UnsupportedEncodingException;
@@ -52,12 +54,11 @@ public class KidsProfileController {
             method = RequestMethod.GET)
     public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)
             throws AccessDeniedException, ResourceNotFoundException{
-        //Checking if URL is valid. If it cannot be parsed to Long an exception
-        //is thrown and passed to @ControllerAdvice
-        Long idL;
-        try {idL = Long.parseLong(id);}
-        catch(NumberFormatException e) {throw new ResourceNotFoundException();}
+        if(!LogicalRequestsValidator.isRequestValid(id)){
+            throw new ResourceNotFoundException();
+        }
 
+        Long idL = Long.parseLong(id);
         User current = userService.getUserByEmail(principal.getName());
         Child kid = childService.findById(idL);
 
