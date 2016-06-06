@@ -4,38 +4,39 @@
 
 $(function () {
     $('#basicExample').timepicker({
-        'dateFormat': 'hh-mm-ss',
+
+        'timeFormat': 'H:i',
         'step': 15,
-        'minTime': '15:00pm',
-        'maxTime': '22:00pm'
+        'minTime': '15:00',
+        'maxTime': '22:00'
     });
 });
 
 $(function () {
     $('#ender').timepicker({
-        'dateFormat': 'hh-mm-ss',
+        'timeFormat': 'H:i',
         'step': 15,
-        'minTime': '15:00pm',
-        'maxTime': '22:00pm'
+        'minTime': '15:00',
+        'maxTime': '22:00'
     });
 });
 
 $(function () {
     $('#startTimeUpdate').timepicker({
-        'dateFormat': 'hh-mm-ss',
+        'timeFormat': 'H:i',
         'step': 15,
-        'minTime': '15:00pm',
-        'maxTime': '22:00pm'
+        'minTime': '15:00',
+        'maxTime': '22:00'
     });
 });
 
 
 $(function () {
     $('#endTimeUpdate').timepicker({
-        'dateFormat': 'hh-mm-ss',
+        'timeFormat': 'H:i',
         'step': 15,
-        'minTime': '15:00pm',
-        'maxTime': '22:00pm'
+        'minTime': '15:00',
+        'maxTime': '22:00'
     });
 });
 
@@ -189,7 +190,7 @@ function rendering(objects, roomID) {
 
         $('#title').val('');
         $('#dialog').dialog('close');
-    })
+    });
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',

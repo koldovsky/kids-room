@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.ModelConstants.EventConst;
 import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.dto.EventDTO;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
@@ -16,6 +17,7 @@ import ua.softserveinc.tc.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by dima- on 07.05.2016.
@@ -31,6 +33,7 @@ public class ViewEventController {
     private RoomService roomServiceImpl;
     @Autowired
     private UserService userService;
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
@@ -86,4 +89,6 @@ public class ViewEventController {
     public void getEventForDelete(@RequestBody EventDTO eventDTO) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDTO));
     }
+
+
 }

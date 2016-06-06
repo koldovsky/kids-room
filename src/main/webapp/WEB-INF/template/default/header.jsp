@@ -38,6 +38,21 @@
 
 
                         <sec:authorize access="isAuthenticated()">
+
+                            <sec:authorize access="hasRole('USER')">
+                                <li><a href="/home">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                    <spring:message code="user.calendar" />
+                                </a></li>
+                            </sec:authorize>
+
+                            <sec:authorize access="hasRole('MANAGER')">
+                                <li><a href="/home">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                    <spring:message code="user.calendar" />
+                                </a></li>
+                            </sec:authorize>
+
                             <sec:authorize access="hasRole('USER')">
                                  <li><a href="mykids">
                                  <span class="glyphicon glyphicon-user"></span>

@@ -53,6 +53,48 @@
 
     </select>
 
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="bookingDialog" hidden>
+                    <form id="bookingForm">
+                        <div class="form-group">
+                            <label for="bookingStartDate">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="bookingStartDate" placeholder="startDate" readonly>
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"/>
+                            </div>
+                        </div>
+                        <br>
+
+
+                        <div class="form-group">
+                            <label for="bookingEndDate">End date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="bookingEndDate" placeholder="endDate" readonly>
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-success" id="booking">Book</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div id='user-calendar'></div>
 
 
@@ -87,7 +129,7 @@
                     <form id="form">
                         <div class="form-group">
                             <label for="startDate">Event title</label>
-                            <input type="text" class="form-control" id="startDate" placeholder="title">
+                            <input type="text" class="form-control" id="startDate" placeholder="title" >
                         </div>
                         <div class="allDay">
                             <label><input type="checkbox" id="checkbox" value="">   All day</label>
