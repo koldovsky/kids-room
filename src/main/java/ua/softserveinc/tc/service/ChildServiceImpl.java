@@ -3,6 +3,7 @@ package ua.softserveinc.tc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ua.softserveinc.tc.ApplicationConfiguratorImpl;
 import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
@@ -34,6 +35,15 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
                 .getEntityManager()
                 .createQuery("from Child")
                 .getResultList();
+    }
+
+    @Override
+    public void create(Child entity) {
+        ApplicationConfiguratorImpl configurator = new ApplicationConfiguratorImpl();
+        if (entity.getAge() >= configurator.getKidsMinAge()
+                && entity.getAge() <= configurator.getKidsMaxAge()) {
+            super.create(entity);
+        }
     }
 
   /*  @Override
