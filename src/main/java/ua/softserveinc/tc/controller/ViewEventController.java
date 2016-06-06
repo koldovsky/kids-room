@@ -36,7 +36,7 @@ public class ViewEventController {
     public final String viewHome(Model model, Principal principal) {
 
 
-
+//TODO delete unused code
 /*        try {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
@@ -56,6 +56,7 @@ public class ViewEventController {
             User user = userService.getUserByEmail(email);
             if(userService.getUserByEmail(email).getRole() == Role.USER) {
                 model.addAttribute("rooms", roomServiceImpl.findAll());
+                //TODO add constants
             } else {
                 model.addAttribute("rooms", roomServiceImpl.findByManger(user));
             }
@@ -72,6 +73,7 @@ public class ViewEventController {
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody
     String getAjax(@RequestBody EventDTO eventDTO) {
+        //TODO rename this method
         return calendarService.create((genericMapper.toEntity(eventDTO))).toString();
     }
 
