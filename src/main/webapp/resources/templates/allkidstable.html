@@ -68,9 +68,6 @@
                                 <span class="item-metastat">
                                   <strong>{{parent.email}}</strong> watchers
                                 </span>
-                                <span class="item-metastat">
-                                  <strong>{{item.forks}}</strong> forks
-                                </span>
                               </span>
                         </md-item-template>
                     </md-autocomplete>
@@ -83,7 +80,9 @@
             </div>
 
             <div class="td span3">
-                <p><input class="form-control" type="text" ng-model="newChild.dateOfBirth"></p>
+                <p>
+                    <md-datepicker ng-model="newChild.dateOfBirth" md-placeholder="Date Of Birth"></md-datepicker>
+                </p>
             </div>
 
             <div class="td span2">
@@ -103,8 +102,18 @@
             <div class="span9">
                 <div class="span6 kid_info">
                     <div>
-                        <div class="span2">
-                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>
+                        <div class="span10">
+                            <p>Gender</p>
+                        </div>
+                        <md-select ng-model="newChild.gender" placeholder="Boy">
+                            <md-option ng-repeat="key in genderKeys"
+                                       ng-value="genders[key]">{{key}}
+                            </md-option>
+                        </md-select>
+                    </div>
+                    <div>
+                        <div class="span24">
+                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"> Phone</i>
                         </div>
                         <div class="right-align">
                             <p>
@@ -114,11 +123,11 @@
                     </div>
                     <div>
                         <div class="span24">
-                            <i class="glyphicon glyphicon-comment" aria-hidden="true"></i>
+                            <i class="glyphicon glyphicon-comment" aria-hidden="true"> Comment</i>
                         </div>
                         <div>
                             <p>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" ng-model="newChild.comment">
                             </p>
                         </div>
                     </div>
@@ -175,14 +184,14 @@
             <div class="span9">
                 <div class="span6 kid_info">
                     <div>
-                        <div class="span2">
-                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>
+                        <div class="span24">
+                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"> Phone</i>
                         </div>
                         <div class="right-align"><p>{{ child.parent.phoneNumber || "Empty" }}</p></div>
                     </div>
                     <div>
                         <div class="span24">
-                            <i class="glyphicon glyphicon-comment" aria-hidden="true"></i>
+                            <i class="glyphicon glyphicon-comment" aria-hidden="true"> Comment</i>
                         </div>
                         <div>
                             <p>
@@ -195,4 +204,3 @@
         </div>
     </div>
 </div>
-{{parents}}

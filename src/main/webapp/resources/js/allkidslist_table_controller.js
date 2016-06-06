@@ -1,7 +1,7 @@
 
 'use strict';
 
-function AllKidsTableController($scope, allKidsTableService) {
+function AllKidsTableController($scope, $timeout, allKidsTableService) {
 
     $scope.children = [];
     $scope.parents = [];
@@ -13,6 +13,9 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.predicate = 'id';
     $scope.reverse = true;
+
+    $scope.genders = {'Boy': 'MALE', 'Girl': 'FEMALE'};
+    $scope.genderKeys = ['Boy', 'Girl'];
 
     loadRemoteData();
 
@@ -89,10 +92,16 @@ function AllKidsTableController($scope, allKidsTableService) {
         return list;
     }
 
-    function splitName( person ) {
-        person.firstName = person.fullName.split(' ').slice(0, -1).join(' ');
-        person.lastName = person.fullName.split(' ').slice(-1).join(' ');
-        delete(person.fullName);
+    function splitChildName( child ) {
+        var splitted = child.fullName.split(' ');
+        if (splitted.length > 1) {
+            child.firstName = splitted.slice(0, -1).join(' ');
+            child.lastName = splitted.slice(-1).join(' ');
+        } else {
+            child.firstName = child.fullName;
+            child.lastName = child.parent.lastName;
+        }
+        delete(child.fullName);
     }
 
     function toggleCollapseButton(buttonId) {
@@ -107,12 +116,15 @@ function AllKidsTableController($scope, allKidsTableService) {
         $scope.newChildFormIsShown = !$scope.newChildFormIsShown;
     }
 
-    function addChild( child ) {
-        console.dir(child);
-        splitName(child);
-        changeParentToParentId(child);
-        allKidsTableService.addChild(child);
+    function addChild( newChild ) {
+        splitChildName(newChild);
+        changeParentToParentId(newChild);
+        allKidsTableService.addChild(newChild);
         toggleNewChild();
+    }
+
+    function addChildToList( newChild ) {
+        $scope.children.push(newChild);
     }
 
     function orderTable( predicate ) {
