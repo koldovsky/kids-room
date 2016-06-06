@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.ApiConstants;
 import ua.softserveinc.tc.dto.ChildDTO;
 import ua.softserveinc.tc.dto.UserDTO;
@@ -22,10 +24,13 @@ import java.util.List;
 public class ApiController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    ChildService childService;
+    private ChildService childService;
+
+    @Autowired
+    private ApplicationConfigurator configurator;
 
     @RequestMapping(value = ApiConstants.usersRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getUser() {
@@ -83,6 +88,12 @@ public class ApiController {
         Gson gson = new Gson();
 
         return gson.toJson(new UserDTO(user));
+    }
+
+    @RequestMapping(value = ApiConstants.getAppConfiguration, method = RequestMethod.GET)
+    public @ResponseBody String getAppConfiguration() {
+        Gson gson = new Gson();
+        return gson.toJson(configurator);
     }
 
 }

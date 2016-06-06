@@ -75,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/child/{id}/parent").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/api/user/search").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/api/child/search").hasRole("MANAGER")
+                .antMatchers(HttpMethod.GET, "/api/configuration").hasRole("MANAGER")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/accessDenied")

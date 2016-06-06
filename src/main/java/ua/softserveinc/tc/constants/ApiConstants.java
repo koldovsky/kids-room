@@ -11,5 +11,6 @@ public interface ApiConstants {
     String childrenRestUrl = "/api/child";
     String childrenByIdRestUrl = "/api/child/{id}";
     String getChildrenParentRestUrl = "/api/child/{id}/parent";
+    String getAppConfiguration = "/api/configuration";
 
 }
