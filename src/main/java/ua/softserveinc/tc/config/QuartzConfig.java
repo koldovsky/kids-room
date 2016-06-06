@@ -3,9 +3,9 @@ package ua.softserveinc.tc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 /**
  * Created by Demian on 03.06.2016.
@@ -24,11 +24,12 @@ public class QuartzConfig
     }
 
     @Bean
-    public SimpleTriggerFactoryBean simpleTriggerFactoryBean()
-    {
-        SimpleTriggerFactoryBean stFactory = new SimpleTriggerFactoryBean();
+    public CronTriggerFactoryBean cronTriggerFactoryBean(){
+        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeCalculateSum().getObject());
-        stFactory.setRepeatInterval(1800000);
+        stFactory.setName("mytrigger");
+        stFactory.setGroup("mygroup");
+        stFactory.setCronExpression("0 15 18 1/1 * ? *");
         return stFactory;
     }
 
@@ -36,7 +37,7 @@ public class QuartzConfig
     public SchedulerFactoryBean schedulerFactoryBean()
     {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        scheduler.setTriggers(simpleTriggerFactoryBean().getObject());
+        scheduler.setTriggers(cronTriggerFactoryBean().getObject());
         return scheduler;
     }
 }
