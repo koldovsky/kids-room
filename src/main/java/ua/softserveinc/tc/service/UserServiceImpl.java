@@ -64,6 +64,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public void create(User user) {
+        userDao.create(user);
+    }
+
+    @Override
+    public void createWithEncoder(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.create(user);
     }

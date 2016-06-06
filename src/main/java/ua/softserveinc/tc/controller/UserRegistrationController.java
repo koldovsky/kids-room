@@ -62,7 +62,7 @@ public class UserRegistrationController {
         user.setRole(Role.USER);
         user.setConfirmed(false);
         user.setActive(true);
-        userService.create(user);
+        userService.createWithEncoder(user);
 
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
