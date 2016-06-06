@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
@@ -43,20 +43,20 @@ public class UserRegistrationController {
     @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
     public String login(Model model) {
-        return UsersConst.LOGIN_VIEW;
+        return UserConstants.LOGIN_VIEW;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute(UsersConst.USER, new User());
-        return UsersConst.REGISTRATION_VIEW;
+        model.addAttribute(UserConstants.USER, new User());
+        return UserConstants.REGISTRATION_VIEW;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute(UsersConst.USER) User user, BindingResult bindingResult) {
+    public String saveUser(@ModelAttribute(UserConstants.USER) User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()){
-            return UsersConst.REGISTRATION_VIEW;
+            return UserConstants.REGISTRATION_VIEW;
         }
         System.out.println(user.getFirstName());
         user.setRole(Role.USER);
@@ -66,8 +66,8 @@ public class UserRegistrationController {
 
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
-        mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
-        return UsersConst.SUCCESS_VIEW;
+        mailService.sendRegisterMessage(UserConstants.CONFIRM_REGISTRATION, user, token);
+        return UserConstants.SUCCESS_VIEW;
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
@@ -82,22 +82,22 @@ public class UserRegistrationController {
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.GET)
     public String sendConfirmation(Model model){
-        model.addAttribute(UsersConst.USER, new User());
-        return UsersConst.RESEND_MAIL_VIEW;
+        model.addAttribute(UserConstants.USER, new User());
+        return UserConstants.RESEND_MAIL_VIEW;
     }
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
-    public String sendConfirmation(@ModelAttribute(UsersConst.USER)User modelUser, BindingResult bindingResult) {
+    public String sendConfirmation(@ModelAttribute(UserConstants.USER)User modelUser, BindingResult bindingResult) {
         String email = modelUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
-            return UsersConst.RESEND_MAIL_VIEW;
+            return UserConstants.RESEND_MAIL_VIEW;
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
-        mailService.sendRegisterMessage(UsersConst.CONFIRM_REGISTRATION, user, token);
-        return UsersConst.SUCCESS_VIEW;
+        mailService.sendRegisterMessage(UserConstants.CONFIRM_REGISTRATION, user, token);
+        return UserConstants.SUCCESS_VIEW;
     }
 }
 

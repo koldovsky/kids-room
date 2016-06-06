@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.constants.ErrorPages;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.constants.UserConstants;
 
 /**
  * Created by Chak on 07.05.2016.
@@ -14,7 +14,7 @@ public class UserController {
 
     @RequestMapping(value = "/rules ", method = RequestMethod.GET)
     public String getRules() {
-        return UsersConst.RULES_VIEW;
+        return UserConstants.RULES_VIEW;
     }
 
     @RequestMapping("/accessDenied")

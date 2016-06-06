@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
@@ -49,27 +49,27 @@ public class UserChangePasswordController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    @Qualifier(UsersConst.USER_DETAILS_SERVICE)
+    @Qualifier(UserConstants.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public String changePassword(Model model) {
-        model.addAttribute(UsersConst.USER, new User());
-        return UsersConst.FORGOT_PASSWORD_VIEW;
+        model.addAttribute(UserConstants.USER, new User());
+        return UserConstants.FORGOT_PASSWORD_VIEW;
     }
 
    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@ModelAttribute(UsersConst.USER)User modelUser, BindingResult bindingResult) {
+    public String resetPassword(@ModelAttribute(UserConstants.USER)User modelUser, BindingResult bindingResult) {
         String email = modelUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
-            return UsersConst.FORGOT_PASSWORD_VIEW;
+            return UserConstants.FORGOT_PASSWORD_VIEW;
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
-        mailService.sendChangePassword(UsersConst.CHANGE_PASS, user, token);
-        return UsersConst.SUCCESS_VIEW;
+        mailService.sendChangePassword(UserConstants.CHANGE_PASS, user, token);
+        return UserConstants.SUCCESS_VIEW;
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
@@ -80,20 +80,20 @@ public class UserChangePasswordController {
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
         tokenService.delete(verificationToken);
-        model.addAttribute(UsersConst.USER, user);
-        return UsersConst.UPDATE_PASS_VIEW;
+        model.addAttribute(UserConstants.USER, user);
+        return UserConstants.UPDATE_PASS_VIEW;
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public String savePassword(@ModelAttribute(UsersConst.USER)User modelUser, BindingResult bindingResult, Errors errors) {
+    public String savePassword(@ModelAttribute(UserConstants.USER)User modelUser, BindingResult bindingResult, Errors errors) {
         userValidator.validatePassword(modelUser, bindingResult);
         if (bindingResult.hasErrors()) {
-            return UsersConst.UPDATE_PASS_VIEW;
+            return UserConstants.UPDATE_PASS_VIEW;
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(passwordEncoder.encode(modelUser.getPassword()));
         user.setConfirmed(true);
         userService.update(user);
-        return UsersConst.LOGIN_VIEW;
+        return UserConstants.LOGIN_VIEW;
     }
 }

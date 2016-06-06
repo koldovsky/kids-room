@@ -8,7 +8,7 @@ import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.UserConstants;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @NamedQueries({
-        @NamedQuery(name = UserConst.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
+        @NamedQuery(name = UserConstants.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
 })
 @Entity
-@Table(name = UserConst.TABLE_NAME_USER)
+@Table(name = UserConstants.TABLE_NAME_USER)
 @Indexed
 @AnalyzerDef(name = "ngram",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
@@ -37,52 +37,52 @@ public class User {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = UserConst.ID_USER, nullable = false)
+    @Column(name = UserConstants.ID_USER, nullable = false)
     private Long id;
 
     @NotEmpty
-    @Column(name = UserConst.FIRST_NAME)
+    @Column(name = UserConstants.FIRST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String firstName;
 
     @NotEmpty
-    @Column(name = UserConst.LAST_NAME)
+    @Column(name = UserConstants.LAST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String lastName;
 
     @NotEmpty
     @Email
-    @Column(name = UserConst.EMAIL, unique = true)
+    @Column(name = UserConstants.EMAIL, unique = true)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
     private String email;
 
 
-    @Column(name = UserConst.PASSWORD)
+    @Column(name = UserConstants.PASSWORD)
     private String password;
 
 
     private transient String confirm;
 
-    @Column(name = UserConst.CONFIRMED)
+    @Column(name = UserConstants.CONFIRMED)
     private boolean confirmed;
 
 
 
-    @Column(name = UserConst.ACTIVE)
+    @Column(name = UserConstants.ACTIVE)
     private boolean active;
 
     @NotEmpty
-    @Column(name = UserConst.PHONE)
+    @Column(name = UserConstants.PHONE)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
     private String phoneNumber;
 
 
 
-    @Column(name = UserConst.ROLE)
+    @Column(name = UserConstants.ROLE)
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 

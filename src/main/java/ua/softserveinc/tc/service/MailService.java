@@ -7,7 +7,7 @@ import ua.softserveinc.tc.entity.User;
  */
 public interface MailService {
 
-    void sendMessage(User user, String subject, String text);
+    void sendMessage(String email, String subject, String text);
 
     void sendPaymentInfo(User user, String subject, Long sumTotal);
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Role;
@@ -59,7 +59,7 @@ public class UserMyBookingsController {
         }
 
         ModelAndView model = new ModelAndView();
-        model.setViewName(UsersConst.MY_BOOKINGS_VIEW);
+        model.setViewName(UserConstants.MY_BOOKINGS_VIEW);
         ModelMap modelMap = model.getModelMap();
         return model;
     }

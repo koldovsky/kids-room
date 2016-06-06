@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.TokenService;
@@ -41,7 +41,7 @@ public class ConfirmManagerController {
     private UserValidator userValidator;
 
     @Autowired
-    @Qualifier(UsersConst.USER_DETAILS_SERVICE)
+    @Qualifier(UserConstants.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.GET)
@@ -49,7 +49,7 @@ public class ConfirmManagerController {
 
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
-        model.addAttribute(UsersConst.USER, user);//"user"
+        model.addAttribute(UserConstants.USER, user);//"user"
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
@@ -61,7 +61,7 @@ public class ConfirmManagerController {
     }
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
-    public String confirmPassword(@ModelAttribute(UsersConst.USER) User manager, BindingResult bindingResult) {
+    public String confirmPassword(@ModelAttribute(UserConstants.USER) User manager, BindingResult bindingResult) {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setPassword(manager.getPassword());
@@ -76,7 +76,7 @@ public class ConfirmManagerController {
         user.setConfirmed(true);
         userService.update(user);
 
-        return UsersConst.LOGIN_VIEW;
+        return UserConstants.LOGIN_VIEW;
     }
 
 }

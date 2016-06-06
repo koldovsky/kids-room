@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.constants.ColumnConstants;
 
 
+import ua.softserveinc.tc.constants.UserConstants;
+
 public interface ChildConst {
 
     String TABLE_NAME = "children";
@@ -15,7 +17,7 @@ public interface ChildConst {
 
     String COMMENT = "comment";
 
-    String ID_PARENT = UserConst.ID_USER;
+    String ID_PARENT = UserConstants.ID_USER;
 
     String ENABLED = "enabled";
 

@@ -4,8 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.BookingConstant;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
-import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.DateUtilImpl;
 
@@ -35,7 +34,7 @@ public class Booking
     private Room idRoom;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = UserConst.ID_USER)
+    @JoinColumn(name = UserConstants.ID_USER)
     private User idUser;
 
     @Column(name = BookingConstant.DB.BOOKING_START_TIME, nullable = false)

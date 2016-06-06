@@ -2,7 +2,7 @@ package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
-import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.RoomDTO;
 
 import javax.persistence.*;
@@ -39,7 +39,7 @@ public class Room {
     private Integer capacity;
 
     @OneToOne
-    @JoinColumn(name = UserConst.ID_USER)
+    @JoinColumn(name = UserConstants.ID_USER)
     private User manager;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")

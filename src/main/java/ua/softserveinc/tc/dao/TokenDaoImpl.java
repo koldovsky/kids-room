@@ -2,7 +2,7 @@ package ua.softserveinc.tc.dao;
 
 import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
-import ua.softserveinc.tc.constants.ModelConstants.UsersConst;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 
@@ -23,7 +23,7 @@ public class TokenDaoImpl extends BaseDaoImpl<Token> implements TokenDao {
     @Override
     public Token findByUser(User user) {
         Query query = getEntityManager().createQuery("from Token where user.id = :user");
-        query.setParameter(UsersConst.USER, user.getId());
+        query.setParameter(UserConstants.USER, user.getId());
         return (Token) query.getSingleResult();
     }
 
