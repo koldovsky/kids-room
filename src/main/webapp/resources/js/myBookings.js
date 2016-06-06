@@ -57,15 +57,15 @@ function updateTable(){
 }
 
 function paginate(){
-     $( '.pager' ).remove();
-     $( '#myBookings' ).each(function() {
+     $('.pager').remove();
+     $('#myBookings').each(function() {
             var currentPage = 0;
             var numPerPage = parseInt( $( '#itemsPerPage' ).val());
             var $table = $(this);
             $table.bind( 'repaginate', function() {
-                $table.find( 'tbody tr' ).hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
             });
-            $table.trigger( 'repaginate' );
+            $table.trigger('repaginate');
             var numRows = $table.find( 'tbody tr' ).length;
             var numPages = Math.ceil(numRows / numPerPage);
             var $pager = $( '<div class="pager"></div>' );

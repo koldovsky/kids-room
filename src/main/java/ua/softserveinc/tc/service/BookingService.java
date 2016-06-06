@@ -22,6 +22,8 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsByRoom(Room room, String startDate, String endDate);
     List<Booking> getBookingsByUserByRoom(User user, Room room, String startDate, String endDate);
 
+    List<BookingDTO> persistBookingsFromDTOandSetID(List<BookingDTO> listDTO);
+
     List<Booking> getTodayBookingsByRoom(Room room);
     Booking confirmBookingEndTime(BookingDTO bookingDTO);
     Booking confirmBookingStartTime(BookingDTO bookingDTO);

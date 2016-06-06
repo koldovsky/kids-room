@@ -32,6 +32,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Autowired
     private RateService rateService;
 
+    @Autowired
+    private ChildService childService;
+
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate) {
         return getBookingsByUserByRoom(null, null, startDate, endDate);
@@ -170,6 +173,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         calendar.setTime(dateUtil.toDateAndTime(dateString));
         return calendar.getTime();
     }
+
+    @Override
+    public List<BookingDTO> persistBookingsFromDTOandSetID(List<BookingDTO> listDTO){
+
+        listDTO.forEach(bookingDTO -> {
+            Booking booking = bookingDTO.getBookingObject();
+            booking.setIdChild(childService.findById(bookingDTO.getKidId()));
+            bookingDao.create(booking);
+            bookingDTO.setId(booking.getIdBook());
+        });
+
+        return listDTO;
+    }
+
+
 }
 
 

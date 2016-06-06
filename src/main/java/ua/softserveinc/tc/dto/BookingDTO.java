@@ -1,10 +1,11 @@
 package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.*;
 
+import javax.naming.PartialResultException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -12,8 +13,6 @@ import java.text.SimpleDateFormat;
  */
 
 public class BookingDTO {
-
-
 
     private Long id;
     private String date;
@@ -25,12 +24,46 @@ public class BookingDTO {
     private Long sum;
     private Long durationLong;
     private BookingState bookingState;
+    private String comment;
+
+    private Long userId;
+    private Long kidId;
+    private Long roomId;
+
+    transient private Child child;
+    transient private User user;
+    transient private Room room;
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public BookingDTO() {
         this.id=id;
         this.startTime=startTime;
-
     }
+
+
 
     public BookingDTO(Booking booking){
         DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
@@ -48,6 +81,74 @@ public class BookingDTO {
         this.bookingState = booking.getBookingState();
         this.durationLong = booking.getDuration();
 
+    }
+
+    public Booking getBookingObject(){
+        DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
+        Booking booking = new Booking();
+        try {
+            booking.setBookingStartTime(dateFormat.parse(date + " " + startTime));
+            booking.setBookingEndTime(dateFormat.parse(date + " " + endTime));
+        }
+        catch(ParseException pe){
+            pe.printStackTrace();
+            //TODO: throw another exception
+        }
+
+        booking.setComment(comment);
+        booking.setIdRoom(room);
+        booking.setIdChild(child);
+        booking.setIdUser(user);
+        return booking;
+    }
+
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public BookingState getBookingState() {
+        return bookingState;
+    }
+
+    public void setBookingState(BookingState bookingState) {
+        this.bookingState = bookingState;
+    }
+
+    public Long getDurationLong() {
+        return durationLong;
+    }
+
+    public void setDurationLong(Long durationLong) {
+        this.durationLong = durationLong;
+    }
+
+    public Long getKidId() {
+        return kidId;
+    }
+
+    public void setKidId(Long kidId) {
+        this.kidId = kidId;
     }
 
     public String getDate() {

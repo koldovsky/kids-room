@@ -6,7 +6,9 @@
 
 <div class="tophead">
     <div class="logo">
+        <a href="/home">
         <img src="resources/logo.png" width="300"  />
+        </a>
     </div>
 </div>
 <nav class="navbar navbar-default navbar-static-top primary-color" id="topnavbar">

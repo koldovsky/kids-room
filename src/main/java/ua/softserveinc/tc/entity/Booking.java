@@ -5,6 +5,7 @@ import ua.softserveinc.tc.constants.BookingConstant;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.ColumnConstants.UserConst;
+import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.DateUtilImpl;
 
