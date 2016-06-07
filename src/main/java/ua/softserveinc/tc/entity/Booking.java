@@ -5,11 +5,11 @@ import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.util.DateUtil;
-import ua.softserveinc.tc.util.DateUtilImpl;
 
 import javax.persistence.*;
 import java.util.Date;
+
+import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
 
 
 /**
@@ -17,8 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = BookingConstants.DB.TABLE_NAME_BOOKING)
-public class Booking
-{
+public class Booking {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -56,9 +55,6 @@ public class Booking
 
     @Column(name = BookingConstants.DB.SUM, columnDefinition = "bigint default 0")
     private Long sum;
-
-    @Transient
-    private DateUtil dateUtil = new DateUtilImpl();
 
     public Long getIdBook() {
         return idBook;
@@ -135,12 +131,12 @@ public class Booking
     public BookingState getBookingState() {
         return bookingState;
     }
+
     public void setBookingState(BookingState bookingState) {
         this.bookingState = bookingState;
     }
 
-    public String formatDuration()
-    {
-        return dateUtil.toHoursAndMinutes(duration);
+    public String formatDuration() {
+        return toHoursAndMinutes(duration);
     }
 }

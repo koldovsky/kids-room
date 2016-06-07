@@ -15,21 +15,18 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.util.DateUtil;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ua.softserveinc.tc.util.DateUtil.*;
+
 /**
  * Created by Demian on 08.05.2016.
  */
 @Controller
-public class ReportController
-{
-    @Autowired
-    private DateUtil dateUtil;
-
+public class ReportController {
     @Autowired
     private UserService userService;
 
@@ -42,8 +39,8 @@ public class ReportController
         model.setViewName(ReportConst.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
-        String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
+        String dateNow = getStringDate(currentDate());
+        String dateThen = getStringDate(dateMonthAgo());
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
 
         List<User> users = userService.getActiveUsers(dateThen, dateNow, room);
@@ -56,9 +53,10 @@ public class ReportController
     }
 
     @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
-    public @ResponseBody String refreshView(@PathVariable String startDate,
-                                            @PathVariable String endDate, Principal principal)
-    {
+    public
+    @ResponseBody
+    String refreshView(@PathVariable String startDate,
+                       @PathVariable String endDate, Principal principal) {
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
         List<User> users = userService.getActiveUsers(startDate, endDate, room);
         Gson gson = new Gson();

@@ -11,8 +11,6 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
-import ua.softserveinc.tc.util.DateUtil;
-import ua.softserveinc.tc.util.DateUtilImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,10 +23,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static ua.softserveinc.tc.util.DateUtil.*;
+
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
-    @Autowired
-    private DateUtil dateUtil;
 
     @Autowired
     private BookingDao bookingDao;
@@ -66,7 +64,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         List<Predicate> restrictions = new ArrayList<>(Arrays.asList(builder.equal(root.get(BookingConstants.Entity.STATE),
                 BookingState.COMPLETED), builder.between(root.get(BookingConstants.Entity.START_TIME),
-                dateUtil.toDate(startDate), dateUtil.toDate(endDate))));
+                toDate(startDate), toDate(endDate))));
 
         if (user != null) restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
         if (room != null) restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
@@ -123,27 +121,27 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getTodayNotCancelledBookingsByRoom(Room room){
-        return bookingDao.getTodayNotCancelledBookingsByRoom(DateUtilImpl.warkingHours().get(0),
-                                                             DateUtilImpl.warkingHours().get(1), room);
+    public List<Booking> getTodayNotCancelledBookingsByRoom(Room room) {
+        return bookingDao.getTodayNotCancelledBookingsByRoom(warkingHours().get(0),
+                warkingHours().get(1), room);
     }
 
     @Override
     public List<Booking> getTodayBookingsByRoom(Room room) {
-        return bookingDao.getTodayBookingsByRoom(DateUtilImpl.warkingHours().get(0),
-                                                 DateUtilImpl.warkingHours().get(1), room);
+        return bookingDao.getTodayBookingsByRoom(warkingHours().get(0),
+                warkingHours().get(1), room);
     }
 
-    public Boolean checkFreePlaces (Room room, String startTime, String endTime) {
+    public Boolean checkFreePlaces(Room room, String startTime, String endTime) {
 
-        Date startTimeDate = dateUtil.toDateAndTime(startTime);
-        Date endTimeDate = dateUtil.toDateAndTime(endTime);
+        Date startTimeDate = toDateAndTime(startTime);
+        Date endTimeDate = toDateAndTime(endTime);
         List<Booking> list = bookingDao.getTodayBookingsByRoom(startTimeDate, endTimeDate, room);
         Integer countBooking = list.size();
         Integer roomCapacity = room.getCapacity();
-        if(countBooking<roomCapacity){
+        if (countBooking < roomCapacity) {
             return true;
-        }else return false;
+        } else return false;
     }
 
     @Override
@@ -167,7 +165,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dateUtil.toDateAndTime(dateString));
+        calendar.setTime(toDateAndTime(dateString));
         return calendar.getTime();
     }
 
@@ -186,7 +184,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     //TODO: maybe move next three methods to RoomService
     @Override
-    public Map<String, String> getBlockedPeriodsForWeek(Room room){
+    public Map<String, String> getBlockedPeriodsForWeek(Room room) {
         Calendar start = Calendar.getInstance();
         start.set(Calendar.HOUR_OF_DAY, 0);
         start.clear(Calendar.MINUTE);
@@ -195,7 +193,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         start.set(Calendar.DAY_OF_WEEK, start.getFirstDayOfWeek());
 
         Map<String, String> blockedPeriods = getBlockedPeriodsForDay(room, start);
-        for(int i = 1; i < 7; i++){
+        for (int i = 1; i < 7; i++) {
             start.add(Calendar.DAY_OF_WEEK, 1);
             blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
         }
@@ -204,7 +202,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart){
+    public Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         //Calendar calendarStart = Calendar.getInstance();
@@ -220,14 +218,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             temp.setTime(timeFormat.parse(room.getWorkingHoursEnd()));
             calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
             calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
-        }catch (ParseException pe){
+        } catch (ParseException pe) {
             //TODO: throw reasonable exception to Advice
         }
 
         Calendar temp = Calendar.getInstance();
-        Map <Date, Date> periods = new HashMap<>();
+        Map<Date, Date> periods = new HashMap<>();
 
-        while(calendarStart.compareTo(calendarEnd) <= 0){
+        while (calendarStart.compareTo(calendarEnd) <= 0) {
             temp.setTime(calendarStart.getTime());
             temp.add(Calendar.MINUTE, appConfigurator.getMinPeriodSize());
             periods.put(calendarStart.getTime(), temp.getTime());
@@ -235,11 +233,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
 
         Map<String, String> blockedPeriods = new HashMap<>();
-        periods.forEach((startDate, endDate)->{
-            if(!isPeriodAvailable(room, startDate, endDate)){
+        periods.forEach((startDate, endDate) -> {
+            if (!isPeriodAvailable(room, startDate, endDate)) {
                 blockedPeriods.put(
-                        DateUtilImpl.convertDateToString(startDate),
-                        DateUtilImpl.convertDateToString(endDate)
+                        convertDateToString(startDate),
+                        convertDateToString(endDate)
                 );
             }
         });
@@ -251,7 +249,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return !(bookingDao.getTodayBookingsByRoom(dateLo, dateHi, room)
                 .stream().filter(booking ->
                         booking.getBookingState() == BookingState.BOOKED ||
-                        booking.getBookingState() == BookingState.ACTIVE)
+                                booking.getBookingState() == BookingState.ACTIVE)
                 .collect(Collectors.toList())
                 .size() > room.getCapacity());
     }

@@ -14,33 +14,29 @@ import ua.softserveinc.tc.dto.RoomDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
-import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static ua.softserveinc.tc.util.DateUtil.*;
+
 /**
  * Created by Demian on 28.05.2016.
  */
 @Controller
-public class StatisticsController
-{
-    @Autowired
-    private DateUtil dateUtil;
-
+public class StatisticsController {
     @Autowired
     private BookingService bookingService;
 
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
-    public ModelAndView statistics()
-    {
+    public ModelAndView statistics() {
         ModelAndView model = new ModelAndView();
         model.setViewName(ReportConst.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
-        String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
+        String dateNow = getStringDate(currentDate());
+        String dateThen = getStringDate(dateMonthAgo());
 
         List<Booking> bookings = bookingService.getBookings(dateThen, dateNow);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
@@ -53,9 +49,10 @@ public class StatisticsController
     }
 
     @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
-    public @ResponseBody String refreshView(@PathVariable String startDate,
-                                            @PathVariable String endDate)
-    {
+    public
+    @ResponseBody
+    String refreshView(@PathVariable String startDate,
+                       @PathVariable String endDate) {
         List<Booking> bookings = bookingService.getBookings(startDate, endDate);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
         Gson gson = new Gson();

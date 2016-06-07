@@ -16,11 +16,12 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.util.DateUtil;
 
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+
+import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 /**
  * Created by Петришак on 04.06.2016.
@@ -28,7 +29,6 @@ import java.util.List;
 
 @Controller
 public class BookingEditController {
-
     @Autowired
     UserService userService;
 
@@ -38,11 +38,8 @@ public class BookingEditController {
     @Autowired
     BookingService bookingService;
 
-    @Autowired
-    DateUtil dateUtil;
-
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
-    public ModelAndView changeBooking (Model model, Principal principal){
+    public ModelAndView changeBooking(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         System.out.println();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
@@ -56,12 +53,14 @@ public class BookingEditController {
     }
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW, method = RequestMethod.POST,
-                    consumes = "application/json")
-        public @ResponseBody Boolean change(@RequestBody BookingDTO bookingDTO){
+            consumes = "application/json")
+    public
+    @ResponseBody
+    Boolean change(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.findById(bookingDTO.getId());
         Room room = booking.getIdRoom();
-        Date startTime = dateUtil.toDateAndTime(bookingDTO.getStartTime());
-        Date endTime = dateUtil.toDateAndTime(bookingDTO.getEndTime());
+        Date startTime = toDateAndTime(bookingDTO.getStartTime());
+        Date endTime = toDateAndTime(bookingDTO.getEndTime());
         bookingService.isPeriodAvailable(room, startTime, endTime);
         return false;
     }
