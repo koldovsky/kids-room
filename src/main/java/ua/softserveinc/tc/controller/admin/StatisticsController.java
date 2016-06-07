@@ -42,7 +42,7 @@ public class StatisticsController
         String dateNow = dateUtil.getStringDate(dateUtil.currentDate());
         String dateThen = dateUtil.getStringDate(dateUtil.dateMonthAgo());
 
-        List<Booking> bookings = bookingService.getBookingsByRangeOfTime(dateThen, dateNow);
+        List<Booking> bookings = bookingService.getBookings(dateThen, dateNow);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
@@ -56,7 +56,7 @@ public class StatisticsController
     public @ResponseBody String refreshView(@PathVariable String startDate,
                                             @PathVariable String endDate)
     {
-        List<Booking> bookings = bookingService.getBookingsByRangeOfTime(startDate, endDate);
+        List<Booking> bookings = bookingService.getBookings(startDate, endDate);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
         Gson gson = new Gson();
 

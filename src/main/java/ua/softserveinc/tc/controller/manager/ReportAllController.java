@@ -47,7 +47,7 @@ public class ReportAllController
         ModelMap modelMap = modelAndView.getModelMap();
 
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
-        List<Booking> bookings = bookingService.getBookingsByRoom(room, dateThen, dateNow);
+        List<Booking> bookings = bookingService.getBookings(room, dateThen, dateNow);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         modelMap.addAttribute(ReportConst.REPORT, report);

@@ -18,10 +18,10 @@ public interface BookingService extends BaseService<Booking>
     void calculateAndSetDuration(Booking booking);
     Map<User, Long> generateAReport(List<Booking> bookings);
     Map<Room, Long> generateStatistics(List<Booking> bookings);
-    List<Booking> getBookingsByRangeOfTime(String startDate, String endDate);
-    List<Booking> getBookingsByUser(User user, String startDate, String endDate);
-    List<Booking> getBookingsByRoom(Room room, String startDate, String endDate);
-    List<Booking> getBookingsByUserByRoom(User user, Room room, String startDate, String endDate);
+    List<Booking> getBookings(String startDate, String endDate);
+    List<Booking> getBookings(User user, String startDate, String endDate);
+    List<Booking> getBookings(Room room, String startDate, String endDate);
+    List<Booking> getBookings(User user, Room room, String startDate, String endDate);
 
     Map<String, String> getBlockedPeriodsForWeek(Room room);
     Map<String, String> getBlockedPeriodsForDay(Room room, Calendar day);

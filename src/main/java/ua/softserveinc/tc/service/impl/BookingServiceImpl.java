@@ -11,7 +11,6 @@ import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RateService;
-import ua.softserveinc.tc.util.BookingUtil;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.DateUtilImpl;
 
@@ -44,22 +43,22 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ApplicationConfigurator appConfigurator;
 
     @Override
-    public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate) {
-        return getBookingsByUserByRoom(null, null, startDate, endDate);
+    public List<Booking> getBookings(String startDate, String endDate) {
+        return getBookings(null, null, startDate, endDate);
     }
 
     @Override
-    public List<Booking> getBookingsByUser(User user, String startDate, String endDate) {
-        return getBookingsByUserByRoom(user, null, startDate, endDate);
+    public List<Booking> getBookings(User user, String startDate, String endDate) {
+        return getBookings(user, null, startDate, endDate);
     }
 
     @Override
-    public List<Booking> getBookingsByRoom(Room room, String startDate, String endDate) {
-        return getBookingsByUserByRoom(null, room, startDate, endDate);
+    public List<Booking> getBookings(Room room, String startDate, String endDate) {
+        return getBookings(null, room, startDate, endDate);
     }
 
     @Override
-    public List<Booking> getBookingsByUserByRoom(User user, Room room, String startDate, String endDate) {
+    public List<Booking> getBookings(User user, Room room, String startDate, String endDate) {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
@@ -248,7 +247,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return blockedPeriods;
     }
 
-    private Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
+    public Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
         return !(bookingDao.getTodayBookingsByRoom(dateLo, dateHi, room)
                 .stream().filter(booking ->
                         booking.getBookingState() == BookingState.BOOKED ||
