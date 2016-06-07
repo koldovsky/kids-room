@@ -18,28 +18,24 @@ public interface ApplicationConfigurator {
     Integer getKidsMaxAge();
 
     /**
-     * @return stringified date with format "dd"
-     *         marks a date to send e-mail reports to each user by Quarz
-     */
-    String getDateToSendEmailReport();
-
-    /**
-     * @return stringified time with format "hh:mm:ss"
-     *         marks a time to (re)calculate the duration and price for all bookings
-     */
-    String getTimeToCalculateAllBookingsEachDay();
-
-    /**
      * @return List of allowed e-mail domains
      */
     List<String> getAllowedDomainsList();
-
 
     Integer getMinPeriodSize();
 
     void setMinPeriodSize(Integer minPeriodSize);
 
+    String getServerName();
 
-    public String getServerName();
+    int getMinutesToCalculateBookingsEveryDay();
+
+    int getHourToCalculateBookingsEveryDay();
+
+    int getMinutesToSendEmailReport();
+
+    int getHourToSendEmailReport();
+
+    int getDayToSendEmailReport();
 
 }

@@ -1,11 +1,13 @@
 package ua.softserveinc.tc.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.QuartzConstants;
 
 /**
@@ -14,6 +16,9 @@ import ua.softserveinc.tc.constants.QuartzConstants;
 @Configuration
 @ComponentScan(QuartzConstants.QUARTZ_PACKAGE)
 public class QuartzConfig {
+    @Autowired
+    ApplicationConfigurator configurator;
+
     @Bean
     public MethodInvokingJobDetailFactoryBean invokeCalculateSum() {
         MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
@@ -35,7 +40,9 @@ public class QuartzConfig {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeCalculateSum().getObject());
         stFactory.setName(QuartzConstants.CALCULATE_SUM_TRIGGER);
-        stFactory.setCronExpression("0 15 18 1/1 * ? *");
+        stFactory.setCronExpression("0 " + configurator.getMinutesToCalculateBookingsEveryDay() +
+                " " + configurator.getHourToCalculateBookingsEveryDay() + " 1/1 * ? *");
+
         return stFactory;
     }
 
@@ -44,7 +51,10 @@ public class QuartzConfig {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeSendPaymentInfo().getObject());
         stFactory.setName(QuartzConstants.SEND_PAYMENT_INFO_TRIGGER);
-        stFactory.setCronExpression("0 30 19 20 1/1 ? *");
+        stFactory.setCronExpression("0 " + configurator.getMinutesToSendEmailReport() +
+                " " + configurator.getHourToSendEmailReport() + " " +
+                configurator.getDayToSendEmailReport() + " 1/1 ? *");
+
         return stFactory;
     }
 
