@@ -8,7 +8,6 @@ import java.util.Date;
  */
 public interface DateUtil
 {
-
     Calendar currentDate();
     Calendar dateMonthAgo();
     Date toDate(String date);
@@ -18,4 +17,5 @@ public interface DateUtil
     String toHoursAndMinutes(long milliseconds);
     int getHoursFromMilliseconds(long milliseconds);
     int getMinutesFromMilliseconds(long milliseconds);
+
 }

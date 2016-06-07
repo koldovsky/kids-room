@@ -48,6 +48,25 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
     private List<Rate> rates = new LinkedList<>();
 
+    private String workingHoursStart;
+    private String workingHoursEnd;
+
+    public String getWorkingHoursEnd() {
+        return workingHoursEnd;
+    }
+
+    public void setWorkingHoursEnd(String workingHoursEnd) {
+        this.workingHoursEnd = workingHoursEnd;
+    }
+
+    public String getWorkingHoursStart() {
+        return workingHoursStart;
+    }
+
+    public void setWorkingHoursStart(String workingHoursStart) {
+        this.workingHoursStart = workingHoursStart;
+    }
+
     public Room() {
     }
 

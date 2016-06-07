@@ -5,17 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,5 +46,27 @@ public class UserBookingTimeController {
 
         return new Gson()
                 .toJson(bookingService.persistBookingsFromDTOandSetID(dtos));
+    }
+
+    @RequestMapping(value = "/disabled")
+    public @ResponseBody String getDisabledTime(@RequestParam Long roomID,
+                                                @RequestParam String period){
+        Date start;
+        Date end;
+
+        if(period == "day"){
+            Calendar calendarStart = Calendar.getInstance();
+            calendarStart.set(Calendar.HOUR_OF_DAY, 0);
+            calendarStart.set(Calendar.MINUTE, 0);
+            calendarStart.set(Calendar.SECOND, 0);
+            start = calendarStart.getTime();
+
+            Calendar calendarEnd = Calendar.getInstance();
+            calendarEnd.set(Calendar.HOUR_OF_DAY, 23);
+            calendarEnd.set(Calendar.MINUTE, 59);
+            calendarEnd.set(Calendar.SECOND, 59);
+            end = calendarEnd.getTime();
+        }
+        return "";
     }
 }

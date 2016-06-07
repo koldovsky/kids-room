@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -107,4 +108,8 @@ public class DateUtilImpl implements DateUtil
         result += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
         return result;
     }
+
+    /*public static HashMap<Date, Date> splitIntoRequiredPeriods(String startTime, String endTime, String ){
+
+    }*/
 }
