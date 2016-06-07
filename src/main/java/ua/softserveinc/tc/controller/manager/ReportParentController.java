@@ -48,7 +48,7 @@ public class ReportParentController
 
         User parent = userService.getUserByEmail(parentEmail);
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
-        List<Booking> bookings = bookingService.getBookings(parent, room, dateThen, dateNow);
+        List<Booking> bookings = bookingService.getBookings(dateThen, dateNow, parent, room);
         Long sumTotal = bookingService.getSumTotal(bookings);
 
         modelMap.addAttribute(ReportConst.PARENT, parent);

@@ -42,32 +42,36 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Booking> getBookings(String startDate, String endDate) {
-        return getBookings(null, null, startDate, endDate);
+        return getBookings(startDate, endDate, null, null);
     }
 
     @Override
-    public List<Booking> getBookings(User user, String startDate, String endDate) {
-        return getBookings(user, null, startDate, endDate);
+    public List<Booking> getBookings(String startDate, String endDate, User user) {
+        return getBookings(startDate, endDate, user, null);
     }
 
     @Override
-    public List<Booking> getBookings(Room room, String startDate, String endDate) {
-        return getBookings(null, room, startDate, endDate);
+    public List<Booking> getBookings(String startDate, String endDate, Room room) {
+        return getBookings(startDate, endDate, null, room);
     }
 
     @Override
-    public List<Booking> getBookings(User user, Room room, String startDate, String endDate) {
+    public List<Booking> getBookings(String startDate, String endDate, User user, Room room) {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
-        List<Predicate> restrictions = new ArrayList<>(Arrays.asList(builder.equal(root.get(BookingConstants.Entity.STATE),
-                BookingState.COMPLETED), builder.between(root.get(BookingConstants.Entity.START_TIME),
-                toDate(startDate), toDate(endDate))));
+        List<Predicate> restrictions = new ArrayList<>();
+        restrictions.add(builder.equal(root.get(
+                BookingConstants.Entity.STATE), BookingState.COMPLETED));
+        restrictions.add(builder.between(root.get(
+                BookingConstants.Entity.START_TIME), toDate(startDate), toDate(endDate)));
 
-        if (user != null) restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
-        if (room != null) restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
+        if (user != null)
+            restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
+        if (room != null)
+            restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
         criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
@@ -77,7 +81,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public void calculateAndSetDuration(Booking booking) {
-        long difference = booking.getBookingEndTime().getTime() - booking.getBookingStartTime().getTime();
+        long difference = booking.getBookingEndTime().getTime() -
+                booking.getBookingStartTime().getTime();
 
         booking.setDuration(difference);
     }
@@ -100,12 +105,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public Map<User, Long> generateAReport(List<Booking> bookings) {
-        return bookings.stream().collect(Collectors.groupingBy(Booking::getIdUser, Collectors.summingLong(Booking::getSum)));
+        return bookings.stream()
+                .collect(Collectors.groupingBy(Booking::getIdUser,
+                        Collectors.summingLong(Booking::getSum)));
     }
 
     @Override
     public Map<Room, Long> generateStatistics(List<Booking> bookings) {
-        return bookings.stream().collect(Collectors.groupingBy(Booking::getIdRoom, Collectors.summingLong(Booking::getSum)));
+        return bookings.stream()
+                .collect(Collectors.groupingBy(Booking::getIdRoom,
+                        Collectors.summingLong(Booking::getSum)));
     }
 
     @Override
@@ -115,7 +124,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
 
-        query.where(builder.equal(root.get(BookingConstants.Entity.SUM), 0), builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED));
+        query.where(
+                builder.equal(root.get(BookingConstants.Entity.SUM), 0),
+                builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED));
 
         return entityManager.createQuery(query).getResultList();
     }
