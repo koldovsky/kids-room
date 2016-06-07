@@ -1,7 +1,7 @@
 
 'use strict';
 
-function AllKidsTableController($scope, $timeout, allKidsTableService) {
+function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.children = [];
     $scope.parents = [];
@@ -9,7 +9,6 @@ function AllKidsTableController($scope, $timeout, allKidsTableService) {
     $scope.newChildFormIsShown = false;
     $scope.pageSize = 10;
     $scope.newChild = {};
-    $scope.parentSearchText = '';
 
     $scope.predicate = 'id';
     $scope.reverse = true;
@@ -21,7 +20,7 @@ function AllKidsTableController($scope, $timeout, allKidsTableService) {
 
     function applyRemoteChildrenData( newChildren ) {
         for (var i = 0; i < newChildren.length; i++) {
-            linkParent(newChildren[i]);
+            unifyName(newChildren[i].parentId);
         }
         $scope.children = unifyNames(newChildren);
     }
@@ -69,16 +68,6 @@ function AllKidsTableController($scope, $timeout, allKidsTableService) {
         } else {
             emptyParents();
         }
-    }
-
-    function linkParent( child ) {
-        allKidsTableService.getParent( child.id )
-            .then(
-                function( parent ) {
-                    unifyName(parent)
-                    child.parent = parent;
-                }
-            );
     }
 
     function unifyName( person ) {

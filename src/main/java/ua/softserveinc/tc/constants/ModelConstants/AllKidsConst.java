@@ -9,6 +9,4 @@ public interface AllKidsConst {
 
     String ALL_KIDS_VIEW = "allkidslist";
 
-    String KIDS_ATTRIBUTE = "kids";
-
 }
