@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.ValidationConst;
 import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 /**
  * Created by Nestor on 12.05.2016.

@@ -28,7 +28,7 @@ import java.util.Date;
  * as well as disabling their account
  */
 @Controller
-public class UserEditMyKidPageController {
+public class EditMyKidPageController {
 
     @Autowired
     private ChildService childService;

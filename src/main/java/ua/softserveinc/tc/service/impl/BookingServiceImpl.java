@@ -2,7 +2,6 @@ package ua.softserveinc.tc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
@@ -11,6 +10,7 @@ import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RateService;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.DateUtilImpl;
 

@@ -23,7 +23,7 @@ import java.util.List;
  * Controller class for "adm-add-room", witch accompanies add new room's into system.
  */
 @Controller
-public class AdminAddRoomController {
+public class AddRoomController {
 
     @Autowired
     private UserService userService;

@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 @Controller
-public class UserMyKidsPageController {
+public class MyKidsPageController {
     @Autowired
     private UserService userService;
 

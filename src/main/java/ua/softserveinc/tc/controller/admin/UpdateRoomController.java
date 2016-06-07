@@ -21,7 +21,7 @@ import java.util.List;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-public class AdminUpdateRoomController {
+public class UpdateRoomController {
 
     @Autowired
     private UserService userService;

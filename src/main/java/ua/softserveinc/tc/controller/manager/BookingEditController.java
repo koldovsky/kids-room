@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.controller;
+package ua.softserveinc.tc.controller.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 
 @Controller
-public class ManagerBookingEditController {
+public class BookingEditController {
 
     @Autowired
     UserService userService;

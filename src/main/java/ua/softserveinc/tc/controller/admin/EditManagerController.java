@@ -2,7 +2,6 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,32 +11,36 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 
+import java.util.List;
+
 /**
- * Created by TARAS on 18.05.2016.
+ * Created by TARAS on 16.05.2016.
  */
+
 @Controller
-public class AdminUpdateManagerController {
+public class EditManagerController {
 
     @Autowired
     private UserService userService;
 
 
-    @RequestMapping(value = "/adm-update-manager", method = RequestMethod.GET)
-    public ModelAndView updateManager(@RequestParam("id") Long id) {
-        ModelAndView model = new ModelAndView(AdminConst.UPDATE_MANAGER);
+    @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.GET)
+    public ModelAndView getManagerMenu() {
+        List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
 
-        User manager = userService.findById(id);
-        model.getModelMap().addAttribute(AdminConst.ATR_MANAGER, manager);
+        ModelAndView mav = new ModelAndView(AdminConst.EDIT_MANAGER);
+        mav.addObject(AdminConst.MANAGER_LIST, managers);
 
-        return model;
+        return mav;
     }
 
-    @RequestMapping(value = "/adm-update-manager", method = RequestMethod.POST)
-    public String submitManagerUpdate(@ModelAttribute("manager") User manager) {
-        manager.setRole(Role.MANAGER);
-        manager.setConfirmed(true);
+    @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
+    public String blockManager(@RequestParam Long id) {
+        User manager = userService.findById(id);
+        manager.setActive(false);
         userService.update(manager);
 
         return "redirect:/" + AdminConst.EDIT_MANAGER;
     }
+
 }

@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.controller;
+package ua.softserveinc.tc.controller.util;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;

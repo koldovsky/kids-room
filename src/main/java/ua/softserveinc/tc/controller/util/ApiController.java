@@ -1,11 +1,9 @@
-package ua.softserveinc.tc.controller;
+package ua.softserveinc.tc.controller.util;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.ApiConstants;
 import ua.softserveinc.tc.dto.ChildDTO;
 import ua.softserveinc.tc.dto.UserDTO;
@@ -13,6 +11,7 @@ import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 import java.util.ArrayList;
 import java.util.List;

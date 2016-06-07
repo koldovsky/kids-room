@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.controller;
+package ua.softserveinc.tc.controller.util;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

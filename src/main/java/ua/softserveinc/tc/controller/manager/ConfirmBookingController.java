@@ -28,21 +28,17 @@ import java.util.List;
  * Created by Петришак on 08.05.2016.
  */
 @Controller
-public class ManagerConfirmBookingController {
-    @Autowired
-    private BookingService bookingService;
-
+public class ConfirmBookingController {
     @Autowired
     BookingDao bookingDao;
-
     @Autowired
     ChildService child;
-
     @Autowired
     UserService userService;
-
     @Autowired
     RoomService roomService;
+    @Autowired
+    private BookingService bookingService;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView listBookings(Model model, Principal principal) {

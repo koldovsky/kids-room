@@ -1,4 +1,4 @@
-package ua.softserveinc.tc;
+package ua.softserveinc.tc.util;
 
 import org.springframework.stereotype.Component;
 

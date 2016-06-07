@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 @Controller
-public class UserMyBookingsController {
+public class MyBookingsController {
     @Autowired
     private UserService userService;
 

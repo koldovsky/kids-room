@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by dima- on 06.06.2016.
  */
 @Controller
-public class UserBookingTimeController {
+public class BookingTimeController {
     @Autowired
     private UserService userService;
 

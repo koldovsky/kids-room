@@ -1,14 +1,11 @@
-package ua.softserveinc.tc.controller;
+package ua.softserveinc.tc.controller.util;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.InternalError;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,15 +21,10 @@ import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import java.net.URL;
 import java.security.Principal;
-import java.sql.Blob;
 
 /**
  * Created by Nestor on 22.05.2016.

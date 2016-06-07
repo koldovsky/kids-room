@@ -1,13 +1,13 @@
-package ua.softserveinc.tc;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+package ua.softserveinc.tc.util;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * The only meaning for this class is to build the Lucene index at application

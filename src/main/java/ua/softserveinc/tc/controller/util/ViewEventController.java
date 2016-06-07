@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.controller;
+package ua.softserveinc.tc.controller.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,9 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.mapper.GenericMapper;
-import ua.softserveinc.tc.service.*;
+import ua.softserveinc.tc.service.CalendarService;
+import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
 

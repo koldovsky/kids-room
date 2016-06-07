@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.QuartzConstants;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 /**
  * Created by Demian on 03.06.2016.

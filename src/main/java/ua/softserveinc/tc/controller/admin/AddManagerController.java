@@ -19,7 +19,7 @@ import java.util.UUID;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-public class AdminAddManagerController {
+public class AddManagerController {
 
     @Autowired
     private UserService userService;

@@ -8,12 +8,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

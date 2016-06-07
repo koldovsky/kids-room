@@ -17,7 +17,7 @@ import java.util.List;
  * Created by TARAS on 16.05.2016.
  */
 @Controller
-public class AdminEditRoomController {
+public class EditRoomController {
 
     @Autowired
     private UserService userService;
