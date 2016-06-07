@@ -1,10 +1,9 @@
 package ua.softserveinc.tc.service;
 
-import org.apache.lucene.search.Collector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.ApplicationConfigurator;
-import ua.softserveinc.tc.constants.BookingConstant;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
@@ -21,7 +20,6 @@ import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -64,15 +62,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
-        List<Predicate> restrictions = new ArrayList<>(Arrays.asList(builder.equal(root.get(BookingConstant.Entity.STATE),
-                BookingState.COMPLETED), builder.between(root.get(BookingConstant.Entity.START_TIME),
+        List<Predicate> restrictions = new ArrayList<>(Arrays.asList(builder.equal(root.get(BookingConstants.Entity.STATE),
+                BookingState.COMPLETED), builder.between(root.get(BookingConstants.Entity.START_TIME),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate))));
 
-        if (user != null) restrictions.add(builder.equal(root.get(BookingConstant.Entity.USER), user));
-        if (room != null) restrictions.add(builder.equal(root.get(BookingConstant.Entity.ROOM), room));
+        if (user != null) restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
+        if (room != null) restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        criteria.orderBy(builder.asc(root.get(BookingConstant.Entity.START_TIME)));
+        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
@@ -117,7 +115,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
 
-        query.where(builder.equal(root.get(BookingConstant.Entity.SUM), 0), builder.equal(root.get(BookingConstant.Entity.STATE), BookingState.COMPLETED));
+        query.where(builder.equal(root.get(BookingConstants.Entity.SUM), 0), builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED));
 
         return entityManager.createQuery(query).getResultList();
     }

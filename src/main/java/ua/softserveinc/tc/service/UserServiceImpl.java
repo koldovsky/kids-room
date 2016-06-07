@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.constants.BookingConstant;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.*;
@@ -39,11 +39,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<Booking> root = query.from(Booking.class);
 
-        query.select(root.get(BookingConstant.Entity.USER)).distinct(true).where(
-            builder.between(root.get(BookingConstant.Entity.START_TIME),
+        query.select(root.get(BookingConstants.Entity.USER)).distinct(true).where(
+            builder.between(root.get(BookingConstants.Entity.START_TIME),
                 dateUtil.toDate(startDate), dateUtil.toDate(endDate)),
-            builder.equal(root.get(BookingConstant.Entity.STATE), BookingState.COMPLETED),
-            builder.equal(root.get(BookingConstant.Entity.ROOM), room));
+            builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED),
+            builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         return entityManager.createQuery(query).getResultList();
     }

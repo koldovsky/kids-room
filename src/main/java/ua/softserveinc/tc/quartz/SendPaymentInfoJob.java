@@ -2,6 +2,8 @@ package ua.softserveinc.tc.quartz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
@@ -14,7 +16,7 @@ import java.util.Map;
 /**
  * Created by Demian on 06.06.2016.
  */
-@Service("sendPaymentInfo")
+@Service(QuartzConstants.SEND_PAYMENT_INFO)
 public class SendPaymentInfoJob {
     @Autowired
     private DateUtil dateUtil;
@@ -26,6 +28,7 @@ public class SendPaymentInfoJob {
     private BookingService bookingService;
 
     private void task() {
+
         String now = dateUtil.getStringDate(dateUtil.currentDate());
         String then = dateUtil.getStringDate(dateUtil.dateMonthAgo());
 
@@ -34,7 +37,7 @@ public class SendPaymentInfoJob {
 
         report.forEach((user, sum) -> {
             if (user.getEmail().equals("bahrianyi@ukr.net"))
-                mailService.sendPaymentInfo(user, "Payment info", sum);
+                mailService.sendPaymentInfo(user, MailConstants.PAYMENT_INFO_SUBJECT, sum);
         });
     }
 }

@@ -3,7 +3,7 @@ package ua.softserveinc.tc.constants;
 /**
  * Created by Петришак on 03.06.2016.
  */
-public interface BookingConstant {
+public interface BookingConstants {
 
     interface Entity {
 

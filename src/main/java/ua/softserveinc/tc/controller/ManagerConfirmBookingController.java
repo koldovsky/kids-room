@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.BookingConstant;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Booking;
@@ -30,32 +30,28 @@ import java.util.List;
 @Controller
 public class ManagerConfirmBookingController {
     @Autowired
-    private BookingService bookingService;
-
-    @Autowired
     BookingDao bookingDao;
-
     @Autowired
     ChildService child;
-
     @Autowired
     UserService userService;
-
     @Autowired
     RoomService roomService;
+    @Autowired
+    private BookingService bookingService;
 
-    @RequestMapping(value = BookingConstant.Model.MANAGER_CONF_BOOKING_VIEW)
+    @RequestMapping(value = BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView listBookings(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(BookingConstant.Model.MANAGER_CONF_BOOKING_VIEW);
+        modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         Room currentRoom = roomService.getRoomByManager(currentManager);
         List<Booking> listBooking = bookingService.getTodayBookingsByRoom(currentRoom);
-        model.addAttribute(BookingConstant.Model.LIST_BOOKINGS, listBooking);
+        model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, listBooking);
         return modelAndView;
     }
 
-    @RequestMapping(value = BookingConstant.Model.CANCEL_BOOKING, method = RequestMethod.GET)
+    @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
     public @ResponseBody String cancelBooking (@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
@@ -66,7 +62,7 @@ public class ManagerConfirmBookingController {
         return  gson.toJson(bookingDTO);
     }
 
-    @RequestMapping(value = BookingConstant.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
     String setingBookingsStartTime(@RequestBody BookingDTO bookingDTO) {
@@ -78,7 +74,7 @@ public class ManagerConfirmBookingController {
         return  gson.toJson(bookingDTOtoJson);
     }
 
-    @RequestMapping(value = BookingConstant.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
     String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) {
@@ -90,7 +86,7 @@ public class ManagerConfirmBookingController {
         return  gson.toJson(bookingDTOtoJson);
     }
 
-     @RequestMapping(value = BookingConstant.Model.LIST_BOOKING, method = RequestMethod.GET)
+     @RequestMapping(value = BookingConstants.Model.LIST_BOOKING, method = RequestMethod.GET)
      @ResponseBody
      public String listBookigs(Principal principal) {
          User currentManager = userService.getUserByEmail(principal.getName());
@@ -102,7 +98,7 @@ public class ManagerConfirmBookingController {
          return  gson.toJson(listBookingDTO);
     }
 
-     @RequestMapping(value = BookingConstant.Model.BOOK_DURATION, method = RequestMethod.POST, consumes = "application/json")
+     @RequestMapping(value = BookingConstants.Model.BOOK_DURATION, method = RequestMethod.POST, consumes = "application/json")
      @ResponseBody
      public String bookinkDuration(@RequestBody BookingDTO bookingDTO) throws ParseException{
          Booking booking = bookingService.findById(bookingDTO.getId());
