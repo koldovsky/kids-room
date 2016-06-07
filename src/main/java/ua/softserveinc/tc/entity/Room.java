@@ -3,7 +3,7 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.dto.RoomDtosss;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -54,7 +54,7 @@ public class Room {
     public Room() {
     }
 
-    public Room(RoomDto roomDto) {
+    public Room(RoomDtosss roomDto) {
         this.id = roomDto.getId();
         this.name = roomDto.getName();
         this.address = roomDto.getAddress();

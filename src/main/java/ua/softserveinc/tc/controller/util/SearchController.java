@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.softserveinc.tc.constants.SearchConstants;
-import ua.softserveinc.tc.dto.ChildDto;
-import ua.softserveinc.tc.dto.UserDto;
+import ua.softserveinc.tc.dto.ChildDtosss;
+import ua.softserveinc.tc.dto.UserDtosss;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.search.ChildSearch;
@@ -32,12 +32,12 @@ public class SearchController {
 
     @RequestMapping(value = SearchConstants.userSearchUrl, method = RequestMethod.GET)
     public @ResponseBody String searchUser(@RequestParam("field") String field) {
-        List<UserDto> result = new ArrayList<UserDto>();
+        List<UserDtosss> result = new ArrayList<UserDtosss>();
 
         if (isValidRequestField(field)) {
             List<User> users = userSearch.search(field);
             for (User user : users) {
-                result.add(new UserDto(user));
+                result.add(new UserDtosss(user));
             }
         }
 
@@ -47,12 +47,12 @@ public class SearchController {
 
     @RequestMapping(value = SearchConstants.childSearchUrl, method = RequestMethod.GET)
     public @ResponseBody String searchChild(@RequestParam("field") String field) {
-        List<ChildDto> result = new ArrayList<ChildDto>();
+        List<ChildDtosss> result = new ArrayList<ChildDtosss>();
 
         if (isValidRequestField(field)) {
             List<Child> children = childSearch.search(field);
             for (Child child : children) {
-                result.add(new ChildDto(child));
+                result.add(new ChildDtosss(child));
             }
         }
 

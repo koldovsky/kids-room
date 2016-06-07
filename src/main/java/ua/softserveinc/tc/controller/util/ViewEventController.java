@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.ModelConstants.EventConst;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.EventDtosss;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
@@ -25,7 +25,7 @@ import java.security.Principal;
 public class ViewEventController {
 
     @Autowired
-    GenericMapper<Event, EventDto> genericMapper;
+    GenericMapper<Event, EventDtosss> genericMapper;
     @Autowired
     private CalendarService calendarService;
     @Autowired
@@ -74,20 +74,20 @@ public class ViewEventController {
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody
-    String getAjax(@RequestBody EventDto eventDto) {
+    String getAjax(@RequestBody EventDtosss eventDto) {
         //TODO rename this method
         return calendarService.create((genericMapper.toEntity(eventDto))).toString();
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void getEventForUpdate(@RequestBody EventDto eventDto) {
+    public void getEventForUpdate(@RequestBody EventDtosss eventDto) {
         calendarService.updateEvent(genericMapper.toEntity(eventDto));
     }
 
     @RequestMapping(value = "geteventfordelete", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void getEventForDelete(@RequestBody EventDto eventDto) {
+    public void getEventForDelete(@RequestBody EventDtosss eventDto) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDto));
     }
 

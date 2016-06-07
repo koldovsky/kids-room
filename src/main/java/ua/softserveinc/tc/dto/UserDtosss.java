@@ -5,7 +5,7 @@ import ua.softserveinc.tc.entity.User;
 /**
  * Created by Demian on 16.05.2016.
  */
-public class UserDto
+public class UserDtosss
 {
     private Long id;
     private String firstName;
@@ -13,7 +13,7 @@ public class UserDto
     private String email;
     private String phoneNumber;
 
-    public UserDto(User user)
+    public UserDtosss(User user)
     {
         this.id = user.getId();
         this.firstName = user.getFirstName();

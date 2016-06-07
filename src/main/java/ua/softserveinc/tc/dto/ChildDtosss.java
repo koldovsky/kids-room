@@ -7,21 +7,21 @@ import java.util.Date;
 /**
  * Created by edward on 5/17/16.
  */
-public class ChildDto {
+public class ChildDtosss {
 
     private Long id;
     private String firstName;
     private String lastName;
-    private UserDto parentId;
+    private UserDtosss parentId;
     private Date dateOfBirth;
     private long age;
     private String comment;
 
-    public ChildDto(Child child) {
+    public ChildDtosss(Child child) {
         this.id = child.getId();
         this.firstName = child.getFirstName();
         this.lastName = child.getLastName();
-        this.parentId = new UserDto(child.getParentId());
+        this.parentId = new UserDtosss(child.getParentId());
         this.dateOfBirth = child.getDateOfBirth();
         this.age = child.getAge();
         this.comment = child.getComment();

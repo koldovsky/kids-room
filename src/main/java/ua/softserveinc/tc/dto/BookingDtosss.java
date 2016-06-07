@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
  * Created by Петришак on 14.05.2016.
  */
 
-public class BookingDto {
+public class BookingDtosss {
 
     private Long id;
     private String date;
@@ -33,12 +33,12 @@ public class BookingDto {
     transient private User user;
     transient private Room room;
 
-    public BookingDto() {
+    public BookingDtosss() {
         this.id=id;
         this.startTime=startTime;
     }
 
-    public BookingDto(Booking booking){
+    public BookingDtosss(Booking booking){
         DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
         this.date = df.format(booking.getBookingStartTime());
 

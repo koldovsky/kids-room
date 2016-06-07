@@ -3,7 +3,7 @@ package ua.softserveinc.tc.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
-import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.EventDtosss;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.RoomService;
 
@@ -18,13 +18,13 @@ import java.util.List;
  * Created by dima- on 07.05.2016.
  */
 @Component
-public class EventMapper implements GenericMapper<Event, EventDto> {
+public class EventMapper implements GenericMapper<Event, EventDtosss> {
 
     @Autowired
     RoomService roomService;
 
     @Override
-    public final Event toEntity(final EventDto eventDto) {
+    public final Event toEntity(final EventDtosss eventDto) {
         Event event = new Event();
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
@@ -64,8 +64,8 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
     }
 
     @Override
-    public final EventDto toDto(final Event event) {
-        EventDto eventDto = new EventDto();
+    public final EventDtosss toDto(final Event event) {
+        EventDtosss eventDto = new EventDtosss();
         eventDto.setAgeHigh(event.getAgeHigh());
         eventDto.setAgeLow(event.getAgeLow());
         eventDto.setName(event.getName());
@@ -80,8 +80,8 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         return eventDto;
     }
 
-    public final List<EventDto> toDto(final List<Event> events) {
-        List<EventDto> result = new LinkedList<EventDto>();
+    public final List<EventDtosss> toDto(final List<Event> events) {
+        List<EventDtosss> result = new LinkedList<EventDtosss>();
 
         for(Event event : events) {
             result.add(this.toDto(event));
