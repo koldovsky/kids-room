@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.service;
 
-import ua.softserveinc.tc.dto.BookingDtosss;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -26,11 +26,11 @@ public interface BookingService extends BaseService<Booking>
     Map<String, String> getBlockedPeriodsForWeek(Room room);
     Map<String, String> getBlockedPeriodsForDay(Room room, Calendar day);
     List<Booking> getTodayNotCancelledBookingsByRoom(Room room);
-    List<BookingDtosss> persistBookingsFromDTOandSetID(List<BookingDtosss> listDTO);
+    List<BookingDto> persistBookingsFromDTOandSetID(List<BookingDto> listDTO);
     Boolean checkFreePlaces (Room room, String startTime, String endTime);
     Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi);
     List<Booking> getTodayBookingsByRoom(Room room);
-    Booking confirmBookingEndTime(BookingDtosss bookingDto);
-    Booking confirmBookingStartTime(BookingDtosss bookingDto);
+    Booking confirmBookingEndTime(BookingDto bookingDto);
+    Booking confirmBookingStartTime(BookingDto bookingDto);
     Date replaceBookingTime(Booking booking, String time);
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
-import ua.softserveinc.tc.dto.RoomDtosss;
+import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -38,7 +38,7 @@ public class UpdateRoomController {
         model.addObject(AdminConst.MANAGER_LIST, managers);
 
         Room room = roomService.findById(id);
-        RoomDtosss roomDto = new RoomDtosss(room);
+        RoomDto roomDto = new RoomDto(room);
 
         if(roomDto.getRate().equals("[]")){
             roomDto.setRate(null);
@@ -49,7 +49,7 @@ public class UpdateRoomController {
     }
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
-    public String submitRoomUpdate(@ModelAttribute("room") RoomDtosss roomDto, @RequestParam("managers") Long id) {
+    public String submitRoomUpdate(@ModelAttribute("room") RoomDto roomDto, @RequestParam("managers") Long id) {
 
         User managerForRoom = userService.findById(id);
         roomDto.setManager(managerForRoom);

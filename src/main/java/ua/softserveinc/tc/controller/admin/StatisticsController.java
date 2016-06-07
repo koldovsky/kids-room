@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
-import ua.softserveinc.tc.dto.RoomDtosss;
+import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
@@ -58,7 +58,7 @@ public class StatisticsController {
         Gson gson = new Gson();
 
         return gson.toJson(statistics.keySet().stream()
-                .map(room -> new RoomDtosss(room, statistics.get(room)))
+                .map(room -> new RoomDto(room, statistics.get(room)))
                 .collect(Collectors.toList()));
     }
 }

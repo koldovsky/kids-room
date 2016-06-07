@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dao.RoomDao;
-import ua.softserveinc.tc.dto.EventDtosss;
+import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.service.CalendarService;
@@ -41,7 +41,7 @@ public class CalendarServiceImpl implements CalendarService {
         return buf.substring(1, buf.length() - 1);
     }
 
-    public final List<EventDtosss> findByRoomId(final long roomId) {
+    public final List<EventDto> findByRoomId(final long roomId) {
         return eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));
     }
 

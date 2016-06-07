@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
-import ua.softserveinc.tc.dto.RoomDtosss;
+import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -57,7 +57,7 @@ public class AddRoomController {
      * @return string, witch redirect on other view
      */
     @RequestMapping(value = "/adm-add-room", method = RequestMethod.POST)
-    public String saveRoom(@ModelAttribute RoomDtosss roomDto, @RequestParam("managers") Long id) {
+    public String saveRoom(@ModelAttribute RoomDto roomDto, @RequestParam("managers") Long id) {
         User managerForRoom = userService.findById(id);
         roomDto.setManager(managerForRoom);
 
