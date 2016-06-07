@@ -8,7 +8,7 @@ public interface MailConstants {
     String LINK = "link";
     String UTF_8 = "UTF-8";
     String HTTP = "http://";
-    String EMAIL_TEMPLATE = "/emailTemplate/";
+    String EMAIL_TEMPLATE = "/emailTemplates/";
 
     String MY_BOOKINGS_LINK = "/mybookings";
     String CONFIRM_USER_LINK = "/confirm?token=";

@@ -21,10 +21,10 @@ on Runner tab set VM Options:
 
 "Hello, it's kids room" page will be available on http://localhost:8080/home/
 
-` src/main/resources/hibernate.properties`:
+` src/main/resources/properties/properties/hibernate.properties`:
 ```properties
 jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/hibernatedb
+jdbc.url = jdbc:mysql://localhost:3306/kidsroom
 jdbc.username = root
 jdbc.password = password
 hibernate.dialect = org.hibernate.dialect.MySQLDialect

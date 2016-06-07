@@ -15,5 +15,5 @@ WebContent/
 KidsRoom.iml
 SpringMVC.iml
 main.iml
-/src/main/resources/hibernate.properties
+hibernate.properties
 .gitignore
