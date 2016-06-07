@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.constants.UserConstants;
@@ -32,6 +33,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private VelocityEngine velocityEngine;
+
+    @Autowired
+    private ApplicationConfigurator configurator;
 
     @Async()
     @Override
@@ -79,7 +83,9 @@ public class MailServiceImpl implements MailService {
     public void sendPaymentInfo(User user, String subject, Long sumTotal) {
         Map<String, Object> model = getModelWithUser(user);
         model.put(ReportConst.SUM_TOTAL, sumTotal);
-        model.put(MailConstants.LINK, "http://localhost:8080/home/mybookings");
+        model.put(MailConstants.LINK, MailConstants.HTTP +
+                configurator.getServerName() + MailConstants.MY_BOOKINGS_LINK);
+
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.PAYMENT_VM, model));
     }
 

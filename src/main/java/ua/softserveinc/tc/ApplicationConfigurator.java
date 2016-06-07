@@ -19,13 +19,13 @@ public interface ApplicationConfigurator {
 
     /**
      * @return stringified date with format "dd"
-     *         marks a date to send e-mail reports to each user by Quarz
+     * marks a date to send e-mail reports to each user by Quarz
      */
     String getDateToSendEmailReport();
 
     /**
      * @return stringified time with format "hh:mm:ss"
-     *         marks a time to (re)calculate the duration and price for all bookings
+     * marks a time to (re)calculate the duration and price for all bookings
      */
     String getTimeToCalculateAllBookingsEachDay();
 
@@ -34,4 +34,5 @@ public interface ApplicationConfigurator {
      */
     List<String> getAllowedDomainsList();
 
+    String getServerName();
 }

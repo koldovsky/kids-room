@@ -12,15 +12,14 @@ import java.util.List;
  */
 
 @Component
-public class ApplicationConfiguratorImpl implements ApplicationConfigurator{
-
-    private Integer kidsMinAge = 3;
-    private Integer kidsMaxAge = 8;
-
-    private String dateToSendEmailReport = "01";
-    private String timeToCalculateAllBookingsEachDay = "23:59:00";
+public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
 
     List<String> allowedDomains = new ArrayList<>(Arrays.asList("softserveinc.com"));
+    private Integer kidsMinAge = 3;
+    private Integer kidsMaxAge = 8;
+    private String serverName = "localhost:8080/home";
+    private String dateToSendEmailReport = "01";
+    private String timeToCalculateAllBookingsEachDay = "23:59:00";
 
     @Override
     public Integer getKidsMinAge() {
@@ -45,5 +44,10 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator{
     @Override
     public List<String> getAllowedDomainsList() {
         return allowedDomains;
+    }
+
+    @Override
+    public String getServerName() {
+        return serverName;
     }
 }
