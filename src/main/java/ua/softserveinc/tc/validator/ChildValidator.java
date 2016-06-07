@@ -8,17 +8,6 @@ import org.springframework.validation.Validator;
 import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.ValidationConst;
 import ua.softserveinc.tc.entity.Child;
-import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
-import ua.softserveinc.tc.service.ChildService;
-import ua.softserveinc.tc.service.ChildServiceImpl;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Created by Nestor on 12.05.2016.

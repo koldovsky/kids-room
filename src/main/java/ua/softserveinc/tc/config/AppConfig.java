@@ -25,7 +25,7 @@ import org.springframework.ui.velocity.VelocityEngineFactory;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
-import ua.softserveinc.tc.service.UserDetailsServiceImpl;
+import ua.softserveinc.tc.service.impl.UserDetailsServiceImpl;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
