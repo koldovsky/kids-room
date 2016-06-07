@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
-import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
@@ -145,17 +145,17 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public Booking confirmBookingStartTime(BookingDTO bookingDTO) {
-        Booking booking = findById(bookingDTO.getId());
-        Date date = replaceBookingTime(booking, bookingDTO.getStartTime());
+    public Booking confirmBookingStartTime(BookingDto bookingDto) {
+        Booking booking = findById(bookingDto.getId());
+        Date date = replaceBookingTime(booking, bookingDto.getStartTime());
         booking.setBookingStartTime(date);
         return booking;
     }
 
     @Override
-    public Booking confirmBookingEndTime(BookingDTO bookingDTO) {
-        Booking booking = findById(bookingDTO.getId());
-        Date date = replaceBookingTime(booking, bookingDTO.getEndTime());
+    public Booking confirmBookingEndTime(BookingDto bookingDto) {
+        Booking booking = findById(bookingDto.getId());
+        Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
         return booking;
     }
@@ -170,7 +170,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDTO> persistBookingsFromDTOandSetID(List<BookingDTO> listDTO) {
+    public List<BookingDto> persistBookingsFromDTOandSetID(List<BookingDto> listDTO) {
 
         listDTO.forEach(bookingDTO -> {
             Booking booking = bookingDTO.getBookingObject();

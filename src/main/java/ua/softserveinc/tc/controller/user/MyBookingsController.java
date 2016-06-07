@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
@@ -91,8 +91,8 @@ public class MyBookingsController {
             throw new AccessDeniedException("Have to be a User");
         }
         List<Booking> myBookings = bookingService.getBookings(currentUser, dateLo, dateHi);
-        List<BookingDTO> dtos = new ArrayList<>();
-        myBookings.forEach((booking -> dtos.add(new BookingDTO(booking))));
+        List<BookingDto> dtos = new ArrayList<>();
+        myBookings.forEach((booking -> dtos.add(new BookingDto(booking))));
 
         Gson gson = new Gson();
         return gson.toJson(dtos);

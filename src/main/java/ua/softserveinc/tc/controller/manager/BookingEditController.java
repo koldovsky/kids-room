@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -56,11 +56,11 @@ public class BookingEditController {
             consumes = "application/json")
     public
     @ResponseBody
-    Boolean change(@RequestBody BookingDTO bookingDTO) {
-        Booking booking = bookingService.findById(bookingDTO.getId());
+    Boolean change(@RequestBody BookingDto bookingDto) {
+        Booking booking = bookingService.findById(bookingDto.getId());
         Room room = booking.getIdRoom();
-        Date startTime = toDateAndTime(bookingDTO.getStartTime());
-        Date endTime = toDateAndTime(bookingDTO.getEndTime());
+        Date startTime = toDateAndTime(bookingDto.getStartTime());
+        Date endTime = toDateAndTime(bookingDto.getEndTime());
         bookingService.isPeriodAvailable(room, startTime, endTime);
         return false;
     }

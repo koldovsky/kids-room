@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.ApiConstants;
-import ua.softserveinc.tc.dto.ChildDTO;
-import ua.softserveinc.tc.dto.UserDTO;
+import ua.softserveinc.tc.dto.ChildDto;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.ChildService;
@@ -33,11 +33,11 @@ public class ApiController {
 
     @RequestMapping(value = ApiConstants.usersRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getUser() {
-        List<UserDTO> result = new ArrayList<UserDTO>();
+        List<UserDto> result = new ArrayList<UserDto>();
         List<User> users = userService.findAll();
 
         for (User user : users) {
-            result.add(new UserDTO(user));
+            result.add(new UserDto(user));
         }
 
         Gson gson = new Gson();
@@ -49,16 +49,16 @@ public class ApiController {
         User user = userService.findById(id);
         Gson gson = new Gson();
 
-        return gson.toJson(new UserDTO(user));
+        return gson.toJson(new UserDto(user));
     }
 
     @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getChild() {
-        List<ChildDTO> result = new ArrayList<ChildDTO>();
+        List<ChildDto> result = new ArrayList<ChildDto>();
         List<Child> children = childService.findAll();
 
         for (Child child : children) {
-            result.add(new ChildDTO(child));
+            result.add(new ChildDto(child));
         }
 
         Gson gson = new Gson();
@@ -77,7 +77,7 @@ public class ApiController {
         Child child = childService.findById(id);
         Gson gson = new Gson();
 
-        return gson.toJson(new ChildDTO(child));
+        return gson.toJson(new ChildDto(child));
     }
 
     @RequestMapping(value = ApiConstants.getChildrenParentRestUrl, method = RequestMethod.GET)
@@ -86,7 +86,7 @@ public class ApiController {
         User user = child.getParentId();
         Gson gson = new Gson();
 
-        return gson.toJson(new UserDTO(user));
+        return gson.toJson(new UserDto(user));
     }
 
     @RequestMapping(value = ApiConstants.getAppConfiguration, method = RequestMethod.GET)

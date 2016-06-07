@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by TARAS on 24.05.2016.
  */
-public class RoomDTO {
+public class RoomDto {
 
     private Long id;
 
@@ -36,10 +36,10 @@ public class RoomDTO {
 
     private Long sum;
 
-    public RoomDTO() {
+    public RoomDto() {
     }
 
-    public RoomDTO(Room room) {
+    public RoomDto(Room room) {
         this.id = room.getId();
         this.name = room.getName();
         this.address = room.getAddress();
@@ -54,7 +54,7 @@ public class RoomDTO {
         this.rate = gson.toJson(room.getRates());
     }
 
-    public RoomDTO(Room room, Long sum) {
+    public RoomDto(Room room, Long sum) {
         this.name = room.getName();
         this.city = room.getCity();
         this.address = room.getAddress();
@@ -128,7 +128,7 @@ public class RoomDTO {
 
     @Override
     public String toString() {
-        return "RoomDTO{" +
+        return "RoomDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
@@ -151,9 +151,9 @@ public class RoomDTO {
         final GsonBuilder gsonBuilder = new GsonBuilder();
         final Gson gson = gsonBuilder.create();
 
-        RateDTO[] stringList = gson.fromJson(this.rate, RateDTO[].class);
+        RateDto[] stringList = gson.fromJson(this.rate, RateDto[].class);
 
-        for (RateDTO rate : stringList) {
+        for (RateDto rate : stringList) {
             if (rate.getHourRate() != null && rate.getPriceRate() != null) {
                 result.add(new Rate(Integer.parseInt(rate.getHourRate()), Long.parseLong(rate.getPriceRate())));
             }

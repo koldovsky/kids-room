@@ -3,7 +3,7 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.dto.RoomDTO;
+import ua.softserveinc.tc.dto.RoomDto;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -51,6 +51,24 @@ public class Room {
     private String workingHoursStart;
     private String workingHoursEnd;
 
+    public Room() {
+    }
+
+    public Room(RoomDto roomDto) {
+        this.id = roomDto.getId();
+        this.name = roomDto.getName();
+        this.address = roomDto.getAddress();
+        this.city = roomDto.getCity();
+        this.phoneNumber = roomDto.getPhoneNumber();
+        this.capacity = roomDto.getCapacity();
+        this.manager = roomDto.getManager();
+
+        List<Rate> rates = roomDto.fromJsonToListOfRates();
+        for (Rate rate : rates) {
+            this.addRate(rate);
+        }
+    }
+
     public String getWorkingHoursEnd() {
         return workingHoursEnd;
     }
@@ -65,24 +83,6 @@ public class Room {
 
     public void setWorkingHoursStart(String workingHoursStart) {
         this.workingHoursStart = workingHoursStart;
-    }
-
-    public Room() {
-    }
-
-    public Room(RoomDTO roomDTO) {
-        this.id = roomDTO.getId();
-        this.name = roomDTO.getName();
-        this.address = roomDTO.getAddress();
-        this.city = roomDTO.getCity();
-        this.phoneNumber = roomDTO.getPhoneNumber();
-        this.capacity = roomDTO.getCapacity();
-        this.manager = roomDTO.getManager();
-
-        List<Rate> rates = roomDTO.fromJsonToListOfRates();
-        for (Rate rate : rates) {
-            this.addRate(rate);
-        }
     }
 
     public Long getId() {

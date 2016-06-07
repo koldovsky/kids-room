@@ -3,16 +3,16 @@ package ua.softserveinc.tc.dto;
 /**
  * Created by TARAS on 19.05.2016.
  */
-public class RateDTO {
+public class RateDto {
 
     private String hourRate;
 
     private String priceRate;
 
-    public RateDTO() {
+    public RateDto() {
     }
 
-    public RateDTO(String hourRate, String priceRate) {
+    public RateDto(String hourRate, String priceRate) {
         this.hourRate = hourRate;
         this.priceRate = priceRate;
     }

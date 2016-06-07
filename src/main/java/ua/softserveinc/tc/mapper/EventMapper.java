@@ -3,7 +3,7 @@ package ua.softserveinc.tc.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
-import ua.softserveinc.tc.dto.EventDTO;
+import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.RoomService;
 
@@ -18,13 +18,13 @@ import java.util.List;
  * Created by dima- on 07.05.2016.
  */
 @Component
-public class EventMapper implements GenericMapper<Event, EventDTO> {
+public class EventMapper implements GenericMapper<Event, EventDto> {
 
     @Autowired
     RoomService roomService;
 
     @Override
-    public final Event toEntity(final EventDTO eventDto) {
+    public final Event toEntity(final EventDto eventDto) {
         Event event = new Event();
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
@@ -64,24 +64,24 @@ public class EventMapper implements GenericMapper<Event, EventDTO> {
     }
 
     @Override
-    public final EventDTO toDto(final Event event) {
-        EventDTO eventDTO = new EventDTO();
-        eventDTO.setAgeHigh(event.getAgeHigh());
-        eventDTO.setAgeLow(event.getAgeLow());
-        eventDTO.setName(event.getName());
-        eventDTO.setDescription(event.getDescription());
-        eventDTO.setId(event.getId());
+    public final EventDto toDto(final Event event) {
+        EventDto eventDto = new EventDto();
+        eventDto.setAgeHigh(event.getAgeHigh());
+        eventDto.setAgeLow(event.getAgeLow());
+        eventDto.setName(event.getName());
+        eventDto.setDescription(event.getDescription());
+        eventDto.setId(event.getId());
 
         DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
 
-        eventDTO.setStartTime(df.format(event.getStartTime()));
-        eventDTO.setEndTime(df.format(event.getEndTime()));
+        eventDto.setStartTime(df.format(event.getStartTime()));
+        eventDto.setEndTime(df.format(event.getEndTime()));
 
-        return eventDTO;
+        return eventDto;
     }
 
-    public final List<EventDTO> toDto(final List<Event> events) {
-        List<EventDTO> result = new LinkedList<EventDTO>();
+    public final List<EventDto> toDto(final List<Event> events) {
+        List<EventDto> result = new LinkedList<EventDto>();
 
         for(Event event : events) {
             result.add(this.toDto(event));

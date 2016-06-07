@@ -3,7 +3,6 @@ package ua.softserveinc.tc.dto;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.*;
 
-import javax.naming.PartialResultException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +11,7 @@ import java.text.SimpleDateFormat;
  * Created by Петришак on 14.05.2016.
  */
 
-public class BookingDTO {
+public class BookingDto {
 
     private Long id;
     private String date;
@@ -33,6 +32,29 @@ public class BookingDTO {
     transient private Child child;
     transient private User user;
     transient private Room room;
+
+    public BookingDto() {
+        this.id=id;
+        this.startTime=startTime;
+    }
+
+    public BookingDto(Booking booking){
+        DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
+        this.date = df.format(booking.getBookingStartTime());
+
+        df = new SimpleDateFormat(DateConst.TIME_FORMAT);
+        this.startTime = df.format(booking.getBookingStartTime());
+        this.endTime = df.format(booking.getBookingEndTime());
+
+        this.kidName = booking.getIdChild().getFullName();
+        this.roomName = booking.getIdRoom().getAddress();
+        this.duration = booking.formatDuration();
+        this.sum = booking.getSum();
+        this.id = booking.getIdBook();
+        this.bookingState = booking.getBookingState();
+        this.durationLong = booking.getDuration();
+
+    }
 
     public Child getChild() {
         return child;
@@ -56,31 +78,6 @@ public class BookingDTO {
 
     public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public BookingDTO() {
-        this.id=id;
-        this.startTime=startTime;
-    }
-
-
-
-    public BookingDTO(Booking booking){
-        DateFormat df = new SimpleDateFormat(DateConst.DAY_MOUNTH_YEAR);
-        this.date = df.format(booking.getBookingStartTime());
-
-        df = new SimpleDateFormat(DateConst.TIME_FORMAT);
-        this.startTime = df.format(booking.getBookingStartTime());
-        this.endTime = df.format(booking.getBookingEndTime());
-
-        this.kidName = booking.getIdChild().getFullName();
-        this.roomName = booking.getIdRoom().getAddress();
-        this.duration = booking.formatDuration();
-        this.sum = booking.getSum();
-        this.id = booking.getIdBook();
-        this.bookingState = booking.getBookingState();
-        this.durationLong = booking.getDuration();
-
     }
 
     public Booking getBookingObject(){

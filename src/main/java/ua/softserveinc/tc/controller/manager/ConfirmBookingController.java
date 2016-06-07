@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
-import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -57,19 +57,19 @@ public class ConfirmBookingController {
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
         bookingService.update(booking);
-        BookingDTO bookingDTO = new BookingDTO(booking);
+        BookingDto bookingDto = new BookingDto(booking);
         Gson gson = new Gson();
-        return  gson.toJson(bookingDTO);
+        return  gson.toJson(bookingDto);
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
-    String setingBookingsStartTime(@RequestBody BookingDTO bookingDTO) {
-        Booking booking = bookingService.confirmBookingStartTime(bookingDTO);
+    String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
+        Booking booking = bookingService.confirmBookingStartTime(bookingDto);
         booking.setBookingState(BookingState.ACTIVE);
         bookingService.update(booking);
-        BookingDTO bookingDTOtoJson = new BookingDTO(booking);
+        BookingDto bookingDTOtoJson = new BookingDto(booking);
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
     }
@@ -77,11 +77,11 @@ public class ConfirmBookingController {
     @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
     public
     @ResponseBody
-    String setingBookingsEndTime(@RequestBody BookingDTO bookingDTO) {
-        Booking booking = bookingService.confirmBookingEndTime(bookingDTO);
+    String setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
+        Booking booking = bookingService.confirmBookingEndTime(bookingDto);
         booking.setBookingState(BookingState.COMPLETED);
         bookingService.update(booking);
-        BookingDTO bookingDTOtoJson = new BookingDTO(booking);
+        BookingDto bookingDTOtoJson = new BookingDto(booking);
         Gson gson = new Gson();
         return  gson.toJson(bookingDTOtoJson);
     }
@@ -92,20 +92,20 @@ public class ConfirmBookingController {
          User currentManager = userService.getUserByEmail(principal.getName());
          Room roomCurrentManager = roomService.getRoomByManager(currentManager);
          List<Booking> listBooking = bookingService.getTodayNotCancelledBookingsByRoom(roomCurrentManager);
-         List<BookingDTO> listBookingDTO = new ArrayList<BookingDTO>();
-         listBooking.forEach(booking -> listBookingDTO.add(new BookingDTO(booking)));
+         List<BookingDto> listBookingDto = new ArrayList<BookingDto>();
+         listBooking.forEach(booking -> listBookingDto.add(new BookingDto(booking)));
          Gson gson = new Gson();
-         return  gson.toJson(listBookingDTO);
+         return  gson.toJson(listBookingDto);
     }
 
      @RequestMapping(value = BookingConstants.Model.BOOK_DURATION, method = RequestMethod.POST, consumes = "application/json")
      @ResponseBody
-     public String bookinkDuration(@RequestBody BookingDTO bookingDTO) throws ParseException{
-         Booking booking = bookingService.findById(bookingDTO.getId());
-         Date date = bookingService.replaceBookingTime(booking, bookingDTO.getEndTime());
+     public String bookinkDuration(@RequestBody BookingDto bookingDto) throws ParseException{
+         Booking booking = bookingService.findById(bookingDto.getId());
+         Date date = bookingService.replaceBookingTime(booking, bookingDto.getEndTime());
          booking.setBookingEndTime(date);
          bookingService.calculateAndSetDuration(booking);
-         BookingDTO bookingDTOtoJson = new BookingDTO(booking);
+         BookingDto bookingDTOtoJson = new BookingDto(booking);
          Gson gson = new Gson();
          return  gson.toJson(bookingDTOtoJson);
     }

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ua.softserveinc.tc.dto.BookingDTO;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
@@ -35,7 +35,7 @@ public class BookingTimeController {
     private BookingService bookingService;
 
     @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
-    public @ResponseBody String getBooking(@RequestBody List<BookingDTO> dtos, Principal principal) {
+    public @ResponseBody String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dtos.get(1).getDate());
         dtos.forEach(dto -> {
             dto.setUser(userService.getUserByEmail(principal.getName()));

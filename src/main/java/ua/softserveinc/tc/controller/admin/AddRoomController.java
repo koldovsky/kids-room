@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
-import ua.softserveinc.tc.dto.RoomDTO;
+import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -52,16 +52,16 @@ public class AddRoomController {
      * Method build model based based on parameters received from view with action "adm-add-room".
      * Method send built Room object into Service layer with  method create().
      *
-     * @param roomDTO (Data Transfer Object for Room, needed to get json of rate's in String type)
+     * @param roomDto (Data Transfer Object for Room, needed to get json of rate's in String type)
      * @param id      (chosen on view manager id from list)
      * @return string, witch redirect on other view
      */
     @RequestMapping(value = "/adm-add-room", method = RequestMethod.POST)
-    public String saveRoom(@ModelAttribute RoomDTO roomDTO, @RequestParam("managers") Long id) {
+    public String saveRoom(@ModelAttribute RoomDto roomDto, @RequestParam("managers") Long id) {
         User managerForRoom = userService.findById(id);
-        roomDTO.setManager(managerForRoom);
+        roomDto.setManager(managerForRoom);
 
-        Room room = new Room(roomDTO);
+        Room room = new Room(roomDto);
         roomService.create(room);
 
         return "redirect:/" + AdminConst.EDIT_ROOM;
