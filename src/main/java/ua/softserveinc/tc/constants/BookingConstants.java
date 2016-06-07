@@ -23,6 +23,8 @@ public interface BookingConstants {
 
         String MANAGER_CONF_BOOKING_VIEW = "manager-confirm-booking";
 
+        String MANAGER_EDIT_BOOKING_VIEW = "manager-edit-booking";
+
         String LIST_BOOKINGS = "listBooking";
 
         String CANCEL_BOOKING = "cancelBook/{idBooking}";
@@ -55,6 +57,8 @@ public interface BookingConstants {
         String BOOKING_STATE = "booking_state";
 
         int BOOKING_CENCELLD = 3;
+
+        int BOOKING_BOOKED = 0;
 
     }
 

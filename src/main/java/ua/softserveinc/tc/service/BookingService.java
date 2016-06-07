@@ -25,10 +25,12 @@ public interface BookingService extends BaseService<Booking>
 
     Map<String, String> getBlockedPeriodsForWeek(Room room);
     Map<String, String> getBlockedPeriodsForDay(Room room, Calendar day);
+    List<Booking> getTodayNotCancelledBookingsByRoom(Room room);
     List<BookingDTO> persistBookingsFromDTOandSetID(List<BookingDTO> listDTO);
-
+    Boolean checkFreePlaces (Room room, String startTime, String endTime);
+    Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi);
     List<Booking> getTodayBookingsByRoom(Room room);
     Booking confirmBookingEndTime(BookingDTO bookingDTO);
     Booking confirmBookingStartTime(BookingDTO bookingDTO);
-    Date getDateAndTimeBooking(Booking booking, String time);
+    Date replaceBookingTime(Booking booking, String time);
 }

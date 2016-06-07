@@ -124,25 +124,33 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getTodayBookingsByRoom(Room room) {
+    public List<Booking> getTodayNotCancelledBookingsByRoom(Room room){
+        return bookingDao.getTodayNotCancelledBookingsByRoom(DateUtilImpl.warkingHours().get(0),
+                                                             DateUtilImpl.warkingHours().get(1), room);
+    }
 
-        Calendar toDay = Calendar.getInstance();
-        toDay.set(Calendar.AM_PM, 0);
-        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
-        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
-        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
-        Date startTime = toDay.getTime();
-        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
-        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
-        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
-        Date endTime = toDay.getTime();
-        return bookingDao.getTodayBookingsByRoom(startTime, endTime, room);
+    @Override
+    public List<Booking> getTodayBookingsByRoom(Room room) {
+        return bookingDao.getTodayBookingsByRoom(DateUtilImpl.warkingHours().get(0),
+                                                 DateUtilImpl.warkingHours().get(1), room);
+    }
+
+    public Boolean checkFreePlaces (Room room, String startTime, String endTime) {
+
+        Date startTimeDate = dateUtil.toDateAndTime(startTime);
+        Date endTimeDate = dateUtil.toDateAndTime(endTime);
+        List<Booking> list = bookingDao.getTodayBookingsByRoom(startTimeDate, endTimeDate, room);
+        Integer countBooking = list.size();
+        Integer roomCapacity = room.getCapacity();
+        if(countBooking<roomCapacity){
+            return true;
+        }else return false;
     }
 
     @Override
     public Booking confirmBookingStartTime(BookingDTO bookingDTO) {
         Booking booking = findById(bookingDTO.getId());
-        Date date = getDateAndTimeBooking(booking, bookingDTO.getStartTime());
+        Date date = replaceBookingTime(booking, bookingDTO.getStartTime());
         booking.setBookingStartTime(date);
         return booking;
     }
@@ -150,13 +158,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public Booking confirmBookingEndTime(BookingDTO bookingDTO) {
         Booking booking = findById(bookingDTO.getId());
-        Date date = getDateAndTimeBooking(booking, bookingDTO.getEndTime());
+        Date date = replaceBookingTime(booking, bookingDTO.getEndTime());
         booking.setBookingEndTime(date);
         return booking;
     }
 
     @Override
-    public Date getDateAndTimeBooking(Booking booking, String time) {
+    public Date replaceBookingTime(Booking booking, String time) {
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();

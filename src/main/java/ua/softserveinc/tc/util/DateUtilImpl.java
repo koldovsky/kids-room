@@ -6,8 +6,10 @@ import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -109,6 +111,26 @@ public class DateUtilImpl implements DateUtil
         return result;
     }
 
+    public static List<Date> warkingHours(){
+        Calendar toDay = Calendar.getInstance();
+        toDay.set(Calendar.AM_PM, 0);
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
+        Date startTime = toDay.getTime();
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
+        Date endTime = toDay.getTime();
+        List<Date> list = new ArrayList<>();
+        list.add(startTime);
+        list.add(endTime);
+        return list;
+    }
+
+    /*public static HashMap<Date, Date> splitIntoRequiredPeriods(String startTime, String endTime, String ){
+
+    }*/
     public static String convertDateToString(Date date){
         DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
         return df.format(date);

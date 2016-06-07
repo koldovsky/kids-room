@@ -30,15 +30,19 @@ import java.util.List;
 @Controller
 public class ManagerConfirmBookingController {
     @Autowired
+    private BookingService bookingService;
+
+    @Autowired
     BookingDao bookingDao;
+
     @Autowired
     ChildService child;
+
     @Autowired
     UserService userService;
+
     @Autowired
     RoomService roomService;
-    @Autowired
-    private BookingService bookingService;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView listBookings(Model model, Principal principal) {
@@ -46,7 +50,7 @@ public class ManagerConfirmBookingController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         Room currentRoom = roomService.getRoomByManager(currentManager);
-        List<Booking> listBooking = bookingService.getTodayBookingsByRoom(currentRoom);
+        List<Booking> listBooking = bookingService.getTodayNotCancelledBookingsByRoom(currentRoom);
         model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, listBooking);
         return modelAndView;
     }
@@ -91,7 +95,7 @@ public class ManagerConfirmBookingController {
      public String listBookigs(Principal principal) {
          User currentManager = userService.getUserByEmail(principal.getName());
          Room roomCurrentManager = roomService.getRoomByManager(currentManager);
-         List<Booking> listBooking = bookingService.getTodayBookingsByRoom(roomCurrentManager);
+         List<Booking> listBooking = bookingService.getTodayNotCancelledBookingsByRoom(roomCurrentManager);
          List<BookingDTO> listBookingDTO = new ArrayList<BookingDTO>();
          listBooking.forEach(booking -> listBookingDTO.add(new BookingDTO(booking)));
          Gson gson = new Gson();
@@ -102,7 +106,7 @@ public class ManagerConfirmBookingController {
      @ResponseBody
      public String bookinkDuration(@RequestBody BookingDTO bookingDTO) throws ParseException{
          Booking booking = bookingService.findById(bookingDTO.getId());
-         Date date = bookingService.getDateAndTimeBooking(booking, bookingDTO.getEndTime());
+         Date date = bookingService.replaceBookingTime(booking, bookingDTO.getEndTime());
          booking.setBookingEndTime(date);
          bookingService.calculateAndSetDuration(booking);
          BookingDTO bookingDTOtoJson = new BookingDTO(booking);

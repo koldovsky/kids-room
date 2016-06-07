@@ -85,6 +85,7 @@
 
 
    $.getJSON("listBook", function( list ){
+
        $.each(list, function(index, value) {
        if(value.bookingState=="ACTIVE"){
            $('#'+value.id).addClass('highlight-active');

@@ -60,6 +60,10 @@
         <put-attribute name="body" value="/WEB-INF/views/manager-confirm-booking.jsp" />
     </definition>
 
+    <definition name="manager-edit-booking" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager-edit-booking.jsp" />
+    </definition>
+
     <definition name="rules" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/rules.jsp" />
     </definition>
