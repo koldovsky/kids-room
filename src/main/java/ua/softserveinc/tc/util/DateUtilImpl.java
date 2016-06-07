@@ -109,7 +109,8 @@ public class DateUtilImpl implements DateUtil
         return result;
     }
 
-    /*public static HashMap<Date, Date> splitIntoRequiredPeriods(String startTime, String endTime, String ){
-
-    }*/
+    public static String convertDateToString(Date date){
+        DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
+        return df.format(date);
+    }
 }

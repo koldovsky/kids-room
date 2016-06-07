@@ -5,6 +5,7 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ public interface BookingService extends BaseService<Booking>
     List<Booking> getBookingsByRoom(Room room, String startDate, String endDate);
     List<Booking> getBookingsByUserByRoom(User user, Room room, String startDate, String endDate);
 
+    Map<String, String> getBlockedPeriodsForWeek(Room room);
+    Map<String, String> getBlockedPeriodsForDay(Room room, Calendar day);
     List<BookingDTO> persistBookingsFromDTOandSetID(List<BookingDTO> listDTO);
 
     List<Booking> getTodayBookingsByRoom(Room room);

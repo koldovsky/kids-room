@@ -7,6 +7,7 @@ import ua.softserveinc.tc.constants.BookingConstant;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.EntityManager;
@@ -58,8 +59,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
+    public User getUserByEmail(String email) throws ResourceNotFoundException{
+        User user = userDao.getUserByEmail(email);
+        if(user == null)
+            throw new ResourceNotFoundException();
+        return user;
     }
 
     @Override

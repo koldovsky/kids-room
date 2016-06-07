@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
@@ -17,6 +18,7 @@ import java.security.Principal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dima- on 06.06.2016.
@@ -51,22 +53,22 @@ public class UserBookingTimeController {
     @RequestMapping(value = "/disabled")
     public @ResponseBody String getDisabledTime(@RequestParam Long roomID,
                                                 @RequestParam String period){
-        Date start;
-        Date end;
-
-        if(period == "day"){
-            Calendar calendarStart = Calendar.getInstance();
-            calendarStart.set(Calendar.HOUR_OF_DAY, 0);
-            calendarStart.set(Calendar.MINUTE, 0);
-            calendarStart.set(Calendar.SECOND, 0);
-            start = calendarStart.getTime();
-
-            Calendar calendarEnd = Calendar.getInstance();
-            calendarEnd.set(Calendar.HOUR_OF_DAY, 23);
-            calendarEnd.set(Calendar.MINUTE, 59);
-            calendarEnd.set(Calendar.SECOND, 59);
-            end = calendarEnd.getTime();
+        Map<String, String> blockedPeriods;
+        Room room = roomService.findById(roomID);
+        switch (period){
+            case "day":
+                blockedPeriods = bookingService
+                        .getBlockedPeriodsForDay(room, Calendar.getInstance());
+                break;
+            case "week":
+                blockedPeriods = bookingService
+                        .getBlockedPeriodsForWeek(room);
+                break;
+            default:
+                throw new ResourceNotFoundException();
         }
-        return "";
+
+        return new Gson()
+                .toJson(blockedPeriods);
     }
 }

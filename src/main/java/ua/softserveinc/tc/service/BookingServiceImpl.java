@@ -3,6 +3,7 @@ package ua.softserveinc.tc.service;
 import org.apache.lucene.search.Collector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.BookingConstant;
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
@@ -10,6 +11,7 @@ import ua.softserveinc.tc.dto.BookingDTO;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.util.BookingUtil;
 import ua.softserveinc.tc.util.DateUtil;
+import ua.softserveinc.tc.util.DateUtilImpl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,6 +19,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -35,6 +38,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Autowired
     private ChildService childService;
+
+    @Autowired
+    private ApplicationConfigurator appConfigurator;
 
     @Override
     public List<Booking> getBookingsByRangeOfTime(String startDate, String endDate) {
@@ -170,7 +176,70 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return listDTO;
     }
 
-    public Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
+    //TODO: maybe move next three methods to RoomService
+    @Override
+    public Map<String, String> getBlockedPeriodsForWeek(Room room){
+        Calendar start = Calendar.getInstance();
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.clear(Calendar.MINUTE);
+        start.clear(Calendar.SECOND);
+        start.clear(Calendar.MILLISECOND);
+        start.set(Calendar.DAY_OF_WEEK, start.getFirstDayOfWeek());
+
+        Map<String, String> blockedPeriods = getBlockedPeriodsForDay(room, start);
+        for(int i = 1; i < 7; i++){
+            start.add(Calendar.DAY_OF_WEEK, 1);
+            blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
+        }
+
+        return blockedPeriods;
+    }
+
+    @Override
+    public Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart){
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        //Calendar calendarStart = Calendar.getInstance();
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTime(calendarStart.getTime());
+
+        try {
+            Calendar temp = Calendar.getInstance();
+            temp.setTime(timeFormat.parse(room.getWorkingHoursStart()));
+            calendarStart.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
+            calendarStart.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
+
+            temp.setTime(timeFormat.parse(room.getWorkingHoursEnd()));
+            calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
+            calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
+        }catch (ParseException pe){
+            //TODO: throw reasonable exception to Advice
+        }
+
+        Calendar temp = Calendar.getInstance();
+        Map <Date, Date> periods = new HashMap<>();
+
+        while(calendarStart.compareTo(calendarEnd) <= 0){
+            temp.setTime(calendarStart.getTime());
+            temp.add(Calendar.MINUTE, appConfigurator.getMinPeriodSize());
+            periods.put(calendarStart.getTime(), temp.getTime());
+            calendarStart = temp;
+        }
+
+        Map<String, String> blockedPeriods = new HashMap<>();
+        periods.forEach((startDate, endDate)->{
+            if(!isPeriodAvailable(room, startDate, endDate)){
+                blockedPeriods.put(
+                        DateUtilImpl.convertDateToString(startDate),
+                        DateUtilImpl.convertDateToString(endDate)
+                );
+            }
+        });
+
+        return blockedPeriods;
+    }
+
+    private Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
         return !(bookingDao.getTodayBookingsByRoom(dateLo, dateHi, room)
                 .stream().filter(booking ->
                         booking.getBookingState() == BookingState.BOOKED ||
