@@ -22,18 +22,16 @@ import java.util.Map;
 /**
  * Created by Chak on 10.05.2016.
  */
-
 @Service
-public class MailServiceImpl implements MailService
-{
+public class MailServiceImpl implements MailService {
+    @Autowired
+    private ServletRequest request;
+
     @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
     private VelocityEngine velocityEngine;
-
-    @Autowired
-    private ServletRequest request;
 
     @Async()
     @Override
@@ -59,9 +57,6 @@ public class MailServiceImpl implements MailService
         }
     }
 
-
-
-
     @Override
     public void sendRegisterMessage(String subject, User user, String token) {
 
@@ -81,15 +76,12 @@ public class MailServiceImpl implements MailService
     }
 
     @Override
-    public void sendPaymentInfo(User user, String subject, Long sumTotal)
-    {
+    public void sendPaymentInfo(User user, String subject, Long sumTotal) {
         Map<String, Object> model = getModelWithUser(user);
         model.put(ReportConst.SUM_TOTAL, sumTotal);
-        model.put(MailConstants.LINK, getLink(MailConstants.MY_BOOKINGS_LINK));
-
+        model.put(MailConstants.LINK, "http://localhost:8080/home/mybookings");
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.PAYMENT_VM, model));
     }
-
 
     @Override
     public void buildConfirmRegisterManager(String subject, User user, String token) {
@@ -100,20 +92,18 @@ public class MailServiceImpl implements MailService
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
     }
 
-    private String getTextMessage(String template, Map<String, Object> model){
+    private String getTextMessage(String template, Map<String, Object> model) {
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                MailConstants.EMAIL_TEMPLATE +template, MailConstants.UTF_8, model);
+                MailConstants.EMAIL_TEMPLATE + template, MailConstants.UTF_8, model);
     }
 
-    private Map<String, Object> getModelWithUser(User user){
+    private Map<String, Object> getModelWithUser(User user) {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.USER, user);
         return model;
     }
 
-    private StringBuilder getLink(String partOfLink){
+    private StringBuilder getLink(String partOfLink) {
         return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink);
     }
-
-
 }

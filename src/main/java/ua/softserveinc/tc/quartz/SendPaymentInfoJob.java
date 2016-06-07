@@ -15,8 +15,7 @@ import java.util.Map;
  * Created by Demian on 06.06.2016.
  */
 @Service("sendPaymentInfo")
-public class SendPaymentInfoJob
-{
+public class SendPaymentInfoJob {
     @Autowired
     private DateUtil dateUtil;
 
@@ -26,14 +25,16 @@ public class SendPaymentInfoJob
     @Autowired
     private BookingService bookingService;
 
-    private void task()
-    {
+    private void task() {
         String now = dateUtil.getStringDate(dateUtil.currentDate());
         String then = dateUtil.getStringDate(dateUtil.dateMonthAgo());
 
         List<Booking> bookings = bookingService.getBookingsByRangeOfTime(then, now);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
-        report.forEach((user, sum) -> System.out.println("User: " + user + ", sum: " + sum));
+        report.forEach((user, sum) -> {
+            if (user.getEmail().equals("bahrianyi@ukr.net"))
+                mailService.sendPaymentInfo(user, "Payment info", sum);
+        });
     }
 }
