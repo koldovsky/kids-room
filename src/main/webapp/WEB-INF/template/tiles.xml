@@ -38,7 +38,7 @@
     </definition>
 
     <definition name="registration" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/registration.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/authorization/registration.jsp"/>
     </definition>
 
     <definition name="success" extends="default">
