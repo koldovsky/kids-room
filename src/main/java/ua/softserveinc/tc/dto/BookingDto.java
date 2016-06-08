@@ -20,6 +20,7 @@ public class BookingDto {
     private String kidName;
     private String roomName;
     private String duration;
+    private Long idChild;
     private Long sum;
     private Long durationLong;
     private BookingState bookingState;
@@ -53,6 +54,7 @@ public class BookingDto {
         this.id = booking.getIdBook();
         this.bookingState = booking.getBookingState();
         this.durationLong = booking.getDuration();
+        this.idChild = booking.getIdChild().getId();
 
     }
 

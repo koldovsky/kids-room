@@ -101,6 +101,44 @@ public class DateUtil {
         list.add(endTime);
         return list;
     }
+    public static List<Date> workingHours(Date date) {
+        Calendar toDay = Calendar.getInstance();
+        toDay.setTime(date);
+        toDay.set(Calendar.AM_PM, 0);
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
+        Date startTime = toDay.getTime();
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
+        Date endTime = toDay.getTime();
+        List<Date> list = new ArrayList<>();
+        list.add(startTime);
+        list.add(endTime);
+        return list;
+    }
+    public static Date setStartTime (Date date){
+        Calendar toDay = Calendar.getInstance();
+        toDay.setTime(date);
+        toDay.set(Calendar.AM_PM, 0);
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
+        Date startTime = toDay.getTime();
+        return startTime;
+    }
+
+    public static Date setEndTime (Date date){
+        Calendar toDay = Calendar.getInstance();
+        toDay.setTime(date);
+        toDay.set(Calendar.AM_PM, 0);
+        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
+        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
+        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
+        Date endTime = toDay.getTime();
+        return endTime;
+    }
 
     /*public static HashMap<Date, Date> splitIntoRequiredPeriods(String startTime, String endTime, String ){
 

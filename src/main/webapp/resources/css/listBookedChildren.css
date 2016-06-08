@@ -57,6 +57,24 @@
 
      }
 
+#href-kids{
+    color: #4285F4;
+}
+.edit-booking{
+margin: auto;
+    width: 70%;
+    min-width: 900px;
+    height: 100%;
+    text-align: center;
+    background-color: white;
+    text-align:left;
+}
+.time{
+    margin: auto;
+    width: 70%;
+        min-width: 900px;
+}
+
 
 /* -- AND TABLE   -- */
 

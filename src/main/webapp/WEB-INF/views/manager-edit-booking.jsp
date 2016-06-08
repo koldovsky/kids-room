@@ -2,19 +2,12 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link rel='stylesheet' href='resources/css/edit-booking.css'>
 
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 
-<div class="tableDiv">
-
-<div>
-<div class="input-group" id="chose-data">
-    <form action="", method="POST">
-        <input id="data-booking" name="date" class ="form-control" type = "date"/>
-    </form>
-</div>
-</div>
+<div class="container">
 
     <select id="selectBoxUser" onchange="selectRoomForManager(value);">
 
@@ -27,13 +20,21 @@
         </c:forEach>
 
     </select>
-<table class="table">
-		<thead>
-			<th class="col-sm-4"><spring:message code= "booking.childrens"/></th>
-			<th class="col-sm-4"><spring:message code= "booking.time"/></th>
-			<th class="col-sm-4">Change booking</th>
-		</thead>
-		<tbody>
+
+<table class="table-edit">
+        <div id="set-time">
+            <div class="input-group" id="chose-data">
+                <form action="", method="POST">
+                    <h3> Choose booking day </h3>
+                    <input id="data-booking" name="date" class ="form-control" type = "date"
+                    value='<fmt:formatDate pattern="yyyy-MM-dd" value="${today}"/>'/>
+                </form>
+            </div>
+        </div>
+		<div id = "body-booking">
+			<th><spring:message code= "booking.childrens"/></th>
+			<th><spring:message code= "booking.time"/></th>
+			<th><spring:message code= "button.edit"/></th>
 			<c:forEach var="booking" items="${listBooking}">
 				<tr id="${booking.idBook}" class="trbooking">
 					<div class="col-sm-4">
@@ -49,12 +50,12 @@
 						<button class="btn btn-sm btn-primary"
 							data-toggle="modal" data-target="#change-booking-modal"
 							onclick="changeBooking(${booking.idBook})">
-							Change
+                            <spring:message code= "button.edit"/>
 						</button>
 					</td>
 				</tr>
 			</c:forEach>
-		</tbody>
+		</div>
 	</table>
 
 
@@ -81,15 +82,16 @@
 									<input type="time" id="endTime" class="form-control" placeholder="Choose End time"/>
 								</div>
     					    </form>
+    					 <span class="validate" id="wrong-interval"> Please choose another time </span>
+    					 <span class="validate" id="fill-in"> Please fill in all fields </span>
     					</div>
     					<div>
     						<button id="close-modal" class="btn btn-raised" data-dismiss="modal">
-    							Close
+    							<spring:message code= "user.close"/>
     						</button>
     						<button id="change-booking" class="btn btn-raised btn-info">
-                                 Cahge
+                                 <spring:message code= "button.edit"/>
                             </button>
-
     					</div>
     				</div>
     			</div>
@@ -97,41 +99,8 @@
     	</div>
 </div>
 
-
 <script src="resources/js/bookedkids.js"></script>
-<script>
 
-    function selectRoomForManager(value){
-
-
-    }
-
-    function changeBooking(id){
-     var idElement="#"+id;
-        $('#change-booking-modal').find('#change-booking').click(function(){
-            var getData = $(this).closest('.modal-dialog');
-            var inputDate = {
-                id: id,
-                startTime: getData.find('#data').val()+" "+getData.find('#startTime').val(),
-                endTime: getData.find('#data').val()+" "+ getData.find('#endTime').val(),
-            };
-            $.ajax({
-                url: 'manager-change-booking',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(inputDate),
-                success: function(data){
-                    if(!data){
-                        alert(data);
-                    } else
-                    $('#change-booking-modal').modal('hide');
-                }
-            });
-        });
-
-    }
-
-</script>
 
 
 

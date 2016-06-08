@@ -6,8 +6,6 @@
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 
-
-
 <div class="tableDiv">
 	<div ng-app="allKidsList">
 		<div ng-controller="addBookingController">
@@ -37,8 +35,8 @@
 			<c:forEach var="booking" items="${listBooking}">
 				<tr id="${booking.idBook}" class="trbooking">
 					<div class="col-sm-4">
-						<td  class="kidsName">
-							<a href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
+						<td>
+							<a id="href-kids" href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
 						</td>
 					</div>
 					<td class="bookingTime" class="col-sm-4">

@@ -1,0 +1,22 @@
+
+
+.table-edit{
+    text-align:center;
+    margin: auto;
+    width: 70%;
+    min-width: 900px;
+    background-color: white;
+    border: 2px solid #ddd;
+}
+th, td{
+    border: 2px solid #ddd;
+    text-align:center;
+}
+th{
+    height: 50px;
+    background-color: #4285F4;
+}
+.validate{
+display: none;
+color: red;
+}

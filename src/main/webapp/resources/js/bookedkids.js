@@ -97,6 +97,69 @@
         }});
    });
 
+ $('#data-booking').on('change', function(){
+        var time = $(this).val();
+
+        var src = 'manager-edit-booking/'+time;
+        $.ajax({
+                url: src,
+                success: function(result){
+                    alert(result);
+                    var bookings = JSON.parse(result);
+                    var tr = "";
+                    $.each(bookings, function(i, booking){
+                    var clfun = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
+                        tr+= '<tr id=' + booking.id +'><td>'
+                        + '<a href=profile?id=' + booking.idChild +'>'
+                        + booking.kidName +'</td>'
+                        + '<td>' + booking.startTime + " -" + booking.endTime +  '</td>'
+                        +'<td class="change-booking">'
+                        +'<button class="btn btn-sm btn-primary"'
+                        + 'data-toggle="modal"'
+                        + 'data-target="#change-booking-modal"'
+                        + clfun  +'> Edit </button>'
+                        + '</td>'
+                        +'</tr>';
+                    });
+                    $('td').remove();
+                    $('.table-edit').append(tr);
+                }
+        });
+    });
+
+    function changeBooking(id){
+         $('#wrong-interval').hide();
+         $('#fill-in').hide();
+         var idElement="#"+id;
+            $('#change-booking-modal').find('#change-booking').click(function(){
+                if (!$('.input-group').val()){
+                $('#fill-in').show();
+                }else{
+                    var getData = $(this).closest('.modal-dialog');
+                    var inputDate = {
+                        id: id,
+                        startTime: getData.find('#data').val()+" "+getData.find('#startTime').val(),
+                        endTime: getData.find('#data').val()+" "+ getData.find('#endTime').val(),
+                    };
+                    $.ajax({
+                        url: 'change-booking',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(inputDate),
+                        success: function(data){
+                            if(!data){
+                                alert(data);
+                                $('#wrong-interval').show();
+                            } else
+
+                            $('#change-booking-modal').modal('hide');
+                        }
+                    });
+                }
+            });
+
+        }
+
 
 
 

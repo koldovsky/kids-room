@@ -77,6 +77,11 @@
                                   <span class="glyphicon glyphicon-list"></span>
                                   <spring:message code="manager.listbooking" />
                                   </a></li>
+                                  <li><a href="manager-edit-booking">
+                                  <span class="glyphicon glyphicon-edit"></span>
+                                  <spring:message code="button.edit" />
+                                  </a></li>
+
                                   <li><a href="allkidslist">
                                   <span class="glyphicon glyphicon-user"></span>
                                   <spring:message code="manager.kids" />
