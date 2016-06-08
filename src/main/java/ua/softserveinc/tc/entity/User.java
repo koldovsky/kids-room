@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 @AnalyzerDef(name = "ngram",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
         filters = {
-            @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-            @TokenFilterDef(factory = NGramFilterFactory.class,
-                params = {
-                    @Parameter(name = "minGramSize",value = "3"),
-                    @Parameter(name = "maxGramSize",value = "1024")
-                })
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = NGramFilterFactory.class,
+                        params = {
+                                @Parameter(name = "minGramSize", value = "3"),
+                                @Parameter(name = "maxGramSize", value = "1024")
+                        })
         })
 public class User {
     @Id
@@ -68,7 +68,6 @@ public class User {
 
     @Column(name = UserConstants.CONFIRMED)
     private boolean confirmed;
-
 
 
     @Column(name = UserConstants.ACTIVE)
@@ -210,9 +209,15 @@ public class User {
 
     @Override
     public boolean equals(Object that) {
-        if (that == null) return false;
-        if (this == that) return true;
-        if (!(that instanceof User)) return false;
+        if (that == null) {
+            return false;
+        }
+        if (this == that) {
+            return true;
+        }
+        if (!(that instanceof User)) {
+            return false;
+        }
         User other = (User) that;
         return email.equals(other.email);
     }
