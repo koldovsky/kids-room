@@ -55,10 +55,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User getUserByEmail(String email) throws ResourceNotFoundException {
+    public User getUserByEmail(String email)  {
         User user = userDao.getUserByEmail(email);
-        if (user == null)
-            throw new ResourceNotFoundException();
         return user;
     }
 
