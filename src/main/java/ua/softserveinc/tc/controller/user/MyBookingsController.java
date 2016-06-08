@@ -24,6 +24,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ua.softserveinc.tc.util.DateUtil.toDate;
+
 /**
  * Created by Nestor on 14.05.2016.
  * Controller handles reports on User's bookings
@@ -90,7 +92,7 @@ public class MyBookingsController {
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookings(dateLo, dateHi, currentUser);
+        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo), toDate(dateHi), currentUser);
         List<BookingDto> dtos = new ArrayList<>();
         myBookings.forEach((booking -> dtos.add(new BookingDto(booking))));
 

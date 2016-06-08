@@ -19,6 +19,8 @@ import ua.softserveinc.tc.service.UserService;
 import java.security.Principal;
 import java.util.List;
 
+import static ua.softserveinc.tc.util.DateUtil.toDate;
+
 /**
  * Created by Demian on 08.05.2016.
  */
@@ -48,7 +50,7 @@ public class ReportParentController
 
         User parent = userService.getUserByEmail(parentEmail);
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
-        List<Booking> bookings = bookingService.getBookings(dateThen, dateNow, parent, room);
+        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), parent, room);
         Long sumTotal = bookingService.getSumTotal(bookings);
 
         modelMap.addAttribute(ReportConst.PARENT, parent);

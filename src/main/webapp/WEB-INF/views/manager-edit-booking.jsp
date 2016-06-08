@@ -6,9 +6,15 @@
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 
-
-
 <div class="tableDiv">
+
+<div>
+<div class="input-group" id="chose-data">
+    <form action="", method="POST">
+        <input id="data-booking" name="date" class ="form-control" type = "date"/>
+    </form>
+</div>
+</div>
 
     <select id="selectBoxUser" onchange="selectRoomForManager(value);">
 
@@ -92,7 +98,7 @@
 </div>
 
 
-
+<script src="resources/js/bookedkids.js"></script>
 <script>
 
     function selectRoomForManager(value){
