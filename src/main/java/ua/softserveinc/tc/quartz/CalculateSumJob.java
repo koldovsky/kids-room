@@ -19,6 +19,6 @@ public class CalculateSumJob {
     private void task() {
         List<Booking> bookings = bookingService.findAll();
         List<Booking> filtered = bookingService.filterBySum(bookings, 0L);
-        bookings.forEach(bookingService::calculateAndSetSum);
+        filtered.forEach(bookingService::calculateAndSetSum);
     }
 }

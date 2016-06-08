@@ -4,6 +4,7 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserService extends BaseService<User>
@@ -14,5 +15,5 @@ public interface UserService extends BaseService<User>
     void createWithEncoder(User user);
     List<User> findAllUsersByRole(Role role);
     void confirmManagerRegistrationUpdate(User manager);
-    List<User> getActiveUsers(String startDate, String endDate, Room room);
+    List<User> getActiveUsers(Date startDate, Date endDate, Room room);
 }
