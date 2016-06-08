@@ -20,12 +20,14 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import static ua.softserveinc.tc.util.DateUtil.toDate;
+
 /**
  * Created by Demian on 10.05.2016.
  */
 @Controller
-public class ReportAllController
-{
+public class ReportAllController {
+
     @Autowired
     private UserService userService;
 
@@ -38,16 +40,18 @@ public class ReportAllController
     @RequestMapping(value = "/report-all", method = RequestMethod.GET,
             params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
-    public @ResponseBody ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
-                                                         @RequestParam(value = ReportConst.DATE_NOW) String dateNow,
-                                                         Principal principal)
-    {
+    public
+    @ResponseBody
+    ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
+                                    @RequestParam(value = ReportConst.DATE_NOW) String dateNow,
+                                    Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(ReportConst.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
-        List<Booking> bookings = bookingService.getBookings(dateThen, dateNow, room);
+
+        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), room);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         modelMap.addAttribute(ReportConst.REPORT, report);

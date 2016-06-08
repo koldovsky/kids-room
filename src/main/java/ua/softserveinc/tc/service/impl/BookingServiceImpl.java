@@ -41,32 +41,30 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ApplicationConfigurator appConfigurator;
 
     @Override
-    public List<Booking> getBookings(String startDate, String endDate) {
+    public List<Booking> getBookings(Date startDate, Date endDate) {
         return getBookings(startDate, endDate, null, null);
     }
 
     @Override
-    public List<Booking> getBookings(String startDate, String endDate, User user) {
+    public List<Booking> getBookings(Date startDate, Date endDate, User user) {
         return getBookings(startDate, endDate, user, null);
     }
 
     @Override
-    public List<Booking> getBookings(String startDate, String endDate, Room room) {
+    public List<Booking> getBookings(Date startDate, Date endDate, Room room) {
         return getBookings(startDate, endDate, null, room);
     }
 
     @Override
-    public List<Booking> getBookings(String startDate, String endDate, User user, Room room) {
+    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room) {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>();
-        restrictions.add(builder.equal(root.get(
-                BookingConstants.Entity.STATE), BookingState.COMPLETED));
         restrictions.add(builder.between(root.get(
-                BookingConstants.Entity.START_TIME), toDate(startDate), toDate(endDate)));
+                BookingConstants.Entity.START_TIME), startDate, endDate));
 
         if (user != null)
             restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
@@ -133,21 +131,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Booking> getTodayNotCancelledBookingsByRoom(Room room) {
-        return bookingDao.getTodayNotCancelledBookingsByRoom(warkingHours().get(0),
-                warkingHours().get(1), room);
+        return bookingDao.getTodayNotCancelledBookingsByRoom(workingHours().get(0),
+                workingHours().get(1), room);
     }
 
     @Override
     public List<Booking> getTodayBookingsByRoom(Room room) {
-        return bookingDao.getTodayBookingsByRoom(warkingHours().get(0),
-                warkingHours().get(1), room);
+        return bookingDao.getBookingsByRoomByDay(workingHours().get(0),
+                workingHours().get(1), room);
     }
 
     public Boolean checkFreePlaces(Room room, String startTime, String endTime) {
 
         Date startTimeDate = toDateAndTime(startTime);
         Date endTimeDate = toDateAndTime(endTime);
-        List<Booking> list = bookingDao.getTodayBookingsByRoom(startTimeDate, endTimeDate, room);
+        List<Booking> list = bookingDao.getBookingsByRoomByDay(startTimeDate, endTimeDate, room);
         Integer countBooking = list.size();
         Integer roomCapacity = room.getCapacity();
         if (countBooking < roomCapacity) {
@@ -160,6 +158,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getStartTime());
         booking.setBookingStartTime(date);
+        resetSumAndDuration(booking);
         return booking;
     }
 
@@ -168,9 +167,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
+        resetSumAndDuration(booking);
         return booking;
     }
 
+    private void resetSumAndDuration(Booking booking){
+        booking.setDuration(0L);
+        booking.setSum(0L);
+    }
     @Override
     public Date replaceBookingTime(Booking booking, String time) {
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
@@ -257,7 +261,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     public Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
-        return !(bookingDao.getTodayBookingsByRoom(dateLo, dateHi, room)
+        return !(bookingDao.getBookingsByRoomByDay(dateLo, dateHi, room)
                 .stream().filter(booking ->
                         booking.getBookingState() == BookingState.BOOKED ||
                                 booking.getBookingState() == BookingState.ACTIVE)

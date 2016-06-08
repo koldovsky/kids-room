@@ -100,7 +100,7 @@ public class DateUtil
         return result;
     }
 
-    public static List<Date> warkingHours(){
+    public static List<Date> workingHours(){
         Calendar toDay = Calendar.getInstance();
         toDay.set(Calendar.AM_PM, 0);
         toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);

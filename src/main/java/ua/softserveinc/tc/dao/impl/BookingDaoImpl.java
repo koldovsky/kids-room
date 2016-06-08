@@ -37,7 +37,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
-    public List<Booking> getTodayBookingsByRoom(Date startTime, Date endTime, Room room) {
+    public List<Booking> getBookingsByRoomByDay(Date startTime, Date endTime, Room room) {
 
         EntityManager entityManager = getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -45,8 +45,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         Root<Booking> root = query.from(Booking.class);
 
         query.select(root).where(builder.and(builder.between(root.get(BookingConstants.Entity.START_TIME),
-                startTime, endTime)), builder.equal(root.get(BookingConstants.Entity.STATE),
-                BookingConstants.DB.BOOKING_BOOKED),
+                startTime, endTime)),
                 builder.equal(root.get(BookingConstants.Entity.ROOM), room));
         query.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 

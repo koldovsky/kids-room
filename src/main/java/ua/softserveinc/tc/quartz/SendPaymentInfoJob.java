@@ -30,7 +30,7 @@ public class SendPaymentInfoJob {
         String now = getStringDate(currentDate());
         String then = getStringDate(dateMonthAgo());
 
-        List<Booking> bookings = bookingService.getBookings(then, now);
+        List<Booking> bookings = bookingService.getBookings(toDate(then), toDate(now));
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         report.forEach((user, sum) -> {
