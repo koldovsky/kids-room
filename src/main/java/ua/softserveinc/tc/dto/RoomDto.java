@@ -12,6 +12,7 @@ import ua.softserveinc.tc.entity.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by TARAS on 24.05.2016.
@@ -32,6 +33,10 @@ public class RoomDto {
 
     private User manager;
 
+    private String workingHoursStart;
+
+    private String workingHoursEnd;
+
     private String rate;
 
     private Long sum;
@@ -47,11 +52,13 @@ public class RoomDto {
         this.phoneNumber = room.getPhoneNumber();
         this.capacity = room.getCapacity();
         this.manager = room.getManager();
+        this.workingHoursStart = room.getWorkingHoursStart();
+        this.workingHoursEnd = room.getWorkingHoursEnd();
 
-        final GsonBuilder gsonBuilder = new GsonBuilder();
-        final Gson gson = gsonBuilder.registerTypeAdapter(Rate.class, new RateTypeAdapter()).create();
-
-        this.rate = gson.toJson(room.getRates());
+        Gson gson = new Gson();
+        this.setRate(gson.toJson(room.getRates().stream()
+                .map(RateDto::new)
+                .collect(Collectors.toList())));
     }
 
     public RoomDto(Room room, Long sum) {
@@ -60,6 +67,22 @@ public class RoomDto {
         this.address = room.getAddress();
         this.manager = room.getManager();
         this.sum = sum;
+    }
+
+    public String getWorkingHoursStart() {
+        return workingHoursStart;
+    }
+
+    public void setWorkingHoursStart(String workingHoursStart) {
+        this.workingHoursStart = workingHoursStart;
+    }
+
+    public String getWorkingHoursEnd() {
+        return workingHoursEnd;
+    }
+
+    public void setWorkingHoursEnd(String workingHoursEnd) {
+        this.workingHoursEnd = workingHoursEnd;
     }
 
     public Long getId() {
@@ -160,31 +183,5 @@ public class RoomDto {
         }
 
         return result;
-    }
-
-    class RateTypeAdapter extends TypeAdapter<Rate> {
-
-        /**
-         * Method to get String from object Rate.
-         *
-         * @param jsonWriter
-         * @param rate
-         * @throws IOException
-         */
-        @Override
-        public void write(JsonWriter jsonWriter, Rate rate) throws IOException {
-            if (rate == null) {
-                jsonWriter.nullValue();
-                return;
-            }
-            String result = "hourRate:" + rate.getHourRate() + "|priceRate:" + rate.getPriceRate();
-            jsonWriter.value(result);
-        }
-
-        @Deprecated
-        @Override
-        public Rate read(JsonReader jsonReader) throws IOException {
-            return null;
-        }
     }
 }

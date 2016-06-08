@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.dto;
 
+import ua.softserveinc.tc.entity.Rate;
+
 /**
  * Created by TARAS on 19.05.2016.
  */
@@ -15,6 +17,11 @@ public class RateDto {
     public RateDto(String hourRate, String priceRate) {
         this.hourRate = hourRate;
         this.priceRate = priceRate;
+    }
+
+    public RateDto(Rate rate) {
+        this.hourRate = rate.getHourRate().toString();
+        this.priceRate = rate.getPriceRate().toString();
     }
 
     public String getHourRate() {
