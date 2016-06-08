@@ -15,11 +15,13 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -37,43 +39,41 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ChildService childService;
 
     @Autowired
-    private ApplicationConfigurator appConfigurator;
+    private ApplicationConfigurator configurator;
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate) {
-        return getBookings(startDate, endDate, null, null);
-    }
-
-    @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user) {
-        return getBookings(startDate, endDate, user, null);
-    }
-
-    @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, Room room) {
-        return getBookings(startDate, endDate, null, room);
-    }
-
-    @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room) {
         EntityManager entityManager = bookingDao.getEntityManager();
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
-        List<Predicate> restrictions = new ArrayList<>();
-        restrictions.add(builder.between(root.get(
-                BookingConstants.Entity.START_TIME), startDate, endDate));
-
-        if (user != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
-        if (room != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
-
-        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        criteria.where(builder.between(root.get(BookingConstants.Entity.START_TIME), startDate, endDate));
         criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Booking> getBookings(Date startDate, Date endDate, User user) {
+        return getBookings(startDate, endDate).stream()
+                .filter(booking -> booking.getIdUser().equals(user))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Booking> getBookings(Date startDate, Date endDate, Room room) {
+        return getBookings(startDate, endDate).stream()
+                .filter(booking -> booking.getIdRoom().equals(room))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room) {
+        return getBookings(startDate, endDate).stream()
+                .filter(booking ->
+                        booking.getIdUser().equals(user) && booking.getIdRoom().equals(room))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -85,10 +85,17 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> filterByNotState(List<Booking> bookings, BookingState bookingState) {
+    public List<Booking> filterByOppositeState(List<Booking> bookings, BookingState bookingState) {
         return bookings.stream()
                 .filter(booking ->
                         booking.getBookingState() != bookingState)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Booking> filterBySum(List<Booking> bookings, Long sum) {
+        return bookings.stream()
+                .filter(booking -> booking.getSum() == 0L)
                 .collect(Collectors.toList());
     }
 
@@ -130,14 +137,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         Collectors.summingLong(Booking::getSum)));
     }
 
-
-    @Override
-    public List<Booking> filterBySum(List<Booking> bookings, Long sum) {
-        return  bookings.stream()
-                .filter(booking -> booking.getSum() == 0L)
-                .collect(Collectors.toList());
-    }
-
     @Override
     public Booking confirmBookingStartTime(BookingDto bookingDto) {
         Booking booking = findById(bookingDto.getId());
@@ -156,7 +155,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return booking;
     }
 
-
     @Override
     public Booking confirmBooking(BookingDto bookingDto) {
         Booking booking = findById(bookingDto.getId());
@@ -166,10 +164,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return booking;
     }
 
-    private void resetSumAndDuration(Booking booking){
+    private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);
         booking.setSum(0L);
     }
+
     @Override
     public Date replaceBookingTime(Booking booking, String time) {
         DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
@@ -180,7 +179,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDto> persistBookingsFromDTOandSetID(List<BookingDto> listDTO) {
+    public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
 
         listDTO.forEach(bookingDTO -> {
             Booking booking = bookingDTO.getBookingObject();
@@ -191,9 +190,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         return listDTO;
     }
-
-
-
 }
 
 

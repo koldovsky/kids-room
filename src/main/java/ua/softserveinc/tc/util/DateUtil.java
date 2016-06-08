@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
+
     private DateUtil() {
     }
 
@@ -38,11 +39,11 @@ public class DateUtil {
         }
     }
 
-    public static int getHoursFromMilliseconds(long milliseconds) {
+    private static int getHoursFromMilliseconds(long milliseconds) {
         return (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
     }
 
-    public static int getMinutesFromMilliseconds(long milliseconds) {
+    private static int getMinutesFromMilliseconds(long milliseconds) {
         int hours = getHoursFromMilliseconds(milliseconds);
         return (int) TimeUnit.MILLISECONDS.toMinutes(milliseconds - TimeUnit.HOURS.toMillis(hours));
     }

@@ -46,7 +46,7 @@ public class BookingTimeController {
         });
 
         return new Gson()
-                .toJson(bookingService.persistBookingsFromDTOandSetID(dtos));
+                .toJson(bookingService.persistBookingsFromDtoAndSetId(dtos));
     }
 
     @RequestMapping(value = "/disabled")

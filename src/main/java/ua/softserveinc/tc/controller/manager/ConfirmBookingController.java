@@ -49,7 +49,7 @@ public class ConfirmBookingController {
         User currentManager = userService.getUserByEmail(principal.getName());
         Room currentRoom = roomService.getRoomByManager(currentManager);
         List<Booking> listAllBookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom);
-        List<Booking> listBooking = bookingService.filterByNotState(listAllBookings, BookingState.CANCELLED);
+        List<Booking> listBooking = bookingService.filterByOppositeState(listAllBookings, BookingState.CANCELLED);
         model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, listBooking);
         return modelAndView;
     }
@@ -95,7 +95,7 @@ public class ConfirmBookingController {
          User currentManager = userService.getUserByEmail(principal.getName());
          Room currentRoom = roomService.getRoomByManager(currentManager);
          List<Booking> listAllBookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom);
-         List<Booking> listBooking = bookingService.filterByNotState(listAllBookings, BookingState.CANCELLED);
+         List<Booking> listBooking = bookingService.filterByOppositeState(listAllBookings, BookingState.CANCELLED);
          List<BookingDto> listBookingDto = new ArrayList<BookingDto>();
          listBooking.forEach(booking -> listBookingDto.add(new BookingDto(booking)));
          Gson gson = new Gson();
