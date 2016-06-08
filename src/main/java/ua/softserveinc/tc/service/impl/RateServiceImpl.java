@@ -10,6 +10,7 @@ import ua.softserveinc.tc.dao.RateDao;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.service.RateService;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,6 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
                 .min(Comparator.comparing(Rate::getHourRate));
 
         if (min.isPresent()) return min.get();
-        else return rates.stream().max(Comparator.comparing(Rate::getHourRate)).get();
+        else return Collections.max(rates, Comparator.comparing(Rate::getHourRate));
     }
 }
