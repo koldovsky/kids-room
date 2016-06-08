@@ -13,10 +13,6 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
 
-/**
- * Created by TARAS on 16.05.2016.
- */
-
 @Controller
 public class EditManagerController {
 
@@ -35,9 +31,13 @@ public class EditManagerController {
     }
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
-    public String blockManager(@RequestParam Long id) {
+    public String managerBlockUnblock(@RequestParam Long id) {
         User manager = userService.findById(id);
-        manager.setActive(false);
+        if (manager.isActive() == true) {
+            manager.setActive(false);
+        } else {
+            manager.setActive(true);
+        }
         userService.update(manager);
 
         return "redirect:/" + AdminConst.EDIT_MANAGER;

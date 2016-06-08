@@ -12,9 +12,7 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 
-/**
- * Created by TARAS on 18.05.2016.
- */
+
 @Controller
 public class UpdateManagerController {
 
@@ -36,6 +34,7 @@ public class UpdateManagerController {
     public String submitManagerUpdate(@ModelAttribute("manager") User manager) {
         manager.setRole(Role.MANAGER);
         manager.setConfirmed(true);
+        manager.setActive(true);
         userService.update(manager);
 
         return "redirect:/" + AdminConst.EDIT_MANAGER;

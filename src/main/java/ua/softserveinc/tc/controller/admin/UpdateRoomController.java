@@ -17,9 +17,6 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
 
-/**
- * Created by TARAS on 18.05.2016.
- */
 @Controller
 public class UpdateRoomController {
 
@@ -40,9 +37,6 @@ public class UpdateRoomController {
         Room room = roomService.findById(id);
         RoomDto roomDto = new RoomDto(room);
 
-        if(roomDto.getRate().equals("[]")){
-            roomDto.setRate(null);
-        }
         model.getModelMap().addAttribute(AdminConst.ATR_ROOM, roomDto);
 
         return model;

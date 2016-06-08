@@ -13,9 +13,7 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
 
-/**
- * Created by TARAS on 16.05.2016.
- */
+
 @Controller
 public class EditRoomController {
 
@@ -37,7 +35,8 @@ public class EditRoomController {
     }
 
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.POST)
-    public String deleteRoom(@RequestParam Long id) {
+    public String roomBlockUnblock(@RequestParam Long id) {
+        //TODO: block&unblock room
         userService.deleteUserById(id);
         return "redirect:/" + AdminConst.EDIT_ROOM;
     }
