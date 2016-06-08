@@ -14,10 +14,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Demian on 07.06.2016.
  */
-public class DateUtil {
+public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
 
+    // Suppresses default constructor, ensuring non-instantiability.
     private DateUtil() {
     }
 
