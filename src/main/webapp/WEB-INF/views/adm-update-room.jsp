@@ -27,15 +27,37 @@
            </div>
 
            <div class="form-group">
-              <label for="address" class="for-field">Room address
+              <label for="capacity" class="for-field">Room capacity
+                 <form:input path="capacity" id="capacity" value="${room.capacity}" class="form-control"
+                                                           required="required"/>
+              </label>
+           </div>
+
+           <div class="form-group">
+              <label for="address" class="for-field">Address
                  <form:input path="address" id="address" value="${room.address}" class="form-control"
                                                          required="required"/>
               </label>
            </div>
 
            <div class="form-group">
-              <label for="city" class="for-field">Room city
-                 <form:input path="city" id="city" value="${room.city}" class="form-control" required="required"/>
+              <label for="city" class="for-field">City
+                 <form:input path="city" id="city" value="${room.city}" class="form-control"
+                                                         required="required"/>
+              </label>
+           </div>
+
+           <div class="form-group">
+              <label for="workingHoursStart" class="for-field">Begin of working
+                 <form:input type="time" path="workingHoursStart" id="workingHoursStart" value="${room.workingHoursStart}"
+                                                      class="form-control" required="required"/>
+              </label>
+           </div>
+
+           <div class="form-group">
+              <label for="workingHoursEnd" class="for-field">End of working
+                 <form:input type="time" path="workingHoursEnd" id="workingHoursEnd" value="${room.workingHoursEnd}"
+                                                    class="form-control" required="required"/>
               </label>
            </div>
 
@@ -47,16 +69,9 @@
            </div>
 
            <div class="form-group">
-              <label for="capacity" class="for-field">Room capacity
-                 <form:input path="capacity" id="capacity" value="${room.capacity}" class="form-control"
-                                                           required="required"/>
-              </label>
-           </div>
-
-           <div class="form-group">
               <label for="manager" class="for-field"> Room-manager
                  <select name="managers" required class="form-control" id="mySelect">
-                    <option path="manager" id="manager" value="${room.manager.id}" class="form-control">
+                    <option path="manager" id="manager" value="${room.manager.id}" class="form-control" >
                                             ${room.manager.firstName} ${room.manager.lastName}</option>
                     <c:forEach var="manager" items="${managerList}" >
                        <c:if test="${room.manager.id ne manager.id}">

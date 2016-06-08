@@ -36,8 +36,17 @@
 
                <div class="form-group">
                   <label class="for-field"> City <input type="text" name="city" required class="form-control"/></label>
-                  </label>
                </div>
+
+               <div class="form-group">
+                  <label class="for-field"> Begin of working <input type="time" name="workingHoursStart"
+                                                              class="form-control"/></label>
+               </div>
+
+              <div class="form-group">
+                 <label class="for-field"> End of working <input type="time" name="workingHoursEnd"
+                                                           class="form-control"/></label>
+              </div>
 
                <div class="form-group">
                   <label class="for-field"> Room phone number <input type="text" name="phoneNumber"

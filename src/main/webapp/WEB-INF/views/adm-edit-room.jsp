@@ -12,7 +12,7 @@
   <div class="tableDiv  for-table">
       <table class="for-table">
          <tr class="hide-border">
-            <th colspan="9" class="set-standard-color"><legend class="for-table"><strong>Room list</strong></legend></th>
+            <th colspan="10" class="set-standard-color"><legend class="for-table"><strong>Room list</strong></legend></th>
          </tr>
          <tr></tr>
          <tr>
@@ -21,6 +21,7 @@
             <th><strong>City</strong></th>
             <th><strong>Room phone number</strong></th>
             <th><strong>Room capacity</strong></th>
+            <th><strong>Room working hours</strong></th>
             <th><strong>Room manager</strong></th>
             <th><strong>Room Rates</strong></th>
             <th><strong>EDIT</strong></th>
@@ -34,9 +35,10 @@
             <td>${room.city}</td>
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
+            <td>${room.workingHoursStart} ${room.workingHoursEnd}</td>
             <td>${room.manager}</td>
             <td class="td-full">
-                <table class="blocklink">
+                <table class="blocklink hide-border">
                     <tr>
                         <td>Hour</td>
                         <td>Price</td>
@@ -59,7 +61,7 @@
          <tr></tr>
 
          <tr>
-            <th colspan="9" class="hide-border set-standard-color">
+            <th colspan="10" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value="Add"
                                         class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
             </th>

@@ -1,7 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
@@ -10,47 +10,46 @@
 <body>
    <div class="for-table">
        <table class="for-table-fields">
-       <form action="adm-add-manager" method="post" modelAttribute="user">
            <tr><th>
                <legend class="for-field"><strong>Add manager</strong></legend>
            </th></tr>
 
            <tr><td>
-               <input hidden type="text" name="password"/>
+               <form:form id="userform" action="adm-add-manager" method="post"  modelAttribute="manager">
 
-               <div class="form-group">
-                  <label class="for-field"> E-mail
-                     <input type="email" name="email" required class="form-control"
-                                 pattern="^(\w){1,60}[@][s]oft[s]erveinc[.]com$"
-                                 title="Allow only emails with 'softserveinc.com' domain"/>
-                  </label>
-               </div>
+                  <form:input path="role" type="hidden" value="MANAGER" />
+                  <form:input  path="password" type="hidden" name="password"/>
 
-               <div class="form-group">
-                  <label class="for-field"> First Name <input type="text" name="firstName" required
-                                                        class="form-control"/></label>
-               </div>
+                  <div class="form-group">
+                          <label for="firstname" class="required"><spring:message code="user.firstname" /></label>
+                          <form:input path="firstName"   class="form-control" style="text-transform: capitalize"/>
+                          <form:errors path="firstName" cssClass="error"  />
+                  </div>
+                  <div class="form-group">
+                          <label for="lastname" class="required"><spring:message code="user.lastname" /></label>
+                          <form:input path="lastName"   class="form-control" style="text-transform: capitalize"  />
+                          <form:errors path="lastName" cssClass="error" />
+                  </div>
+                  <div class="form-group">
+                              <label for="email" class="required"><spring:message code="user.email" /></label>
+                              <form:input path="email" type="email" id="userEmail" class="form-control"
+                                            style="text-transform: lowercase"  />
+                              <form:errors path="email" cssClass="error"  />
+                  </div>
+                  <div class="form-group">
+                          <label for="phonenumber" class="required"><spring:message code="user.phone" /></label>
+                          <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"/>
+                          <form:errors path="phoneNumber" cssClass="error"  />
+                  </div>
+                  <div class="form-group">
+                         <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
+                         <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                                 onclick="window.location.href='/home/adm-edit-manager'"></button>
+                  </div>
 
-               <div class="form-group">
-                  <label class="for-field"> Last Name <input type="text" name="lastName" required
-                                                       class="form-control"/></label>
-               </div>
-
-               <div class="form-group">
-                  <label class="for-field"> Phone number <input type="text" name="phoneNumber"
-                                                          pattern="^(\+38|8|)(\W*\d){10}\W*$"
-                                                          title="number not valid" required class="form-control"/></label>
-               </div>
-
-               <div class="form-group">
-                  <button class="btn btn-raised btn-info glyphicon glyphicon-ok" type="submit" name="submit" ng-click="submit()"></button>
-                  <button class="btn btn-raised btn-danger glyphicon glyphicon-remove" type="reset" name="reset"
-                          onclick="window.location.href='/home/adm-edit-manager'"/>
-               </div>
-
+                </form:form>
            </td></tr>
-       </form>
+
        </table>
     </div>
 </body>
-</html>
