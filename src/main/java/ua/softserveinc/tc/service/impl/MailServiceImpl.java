@@ -66,7 +66,7 @@ public class MailServiceImpl implements MailService {
     public void sendRegisterMessage(String subject, User user, String token) {
 
         Map<String, Object> model = getModelWithUser(user);
-        model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_USER_LINK).append(token));
+        model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_USER_LINK, token));
 
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_USER_VM, model));
     }
@@ -75,7 +75,7 @@ public class MailServiceImpl implements MailService {
     public void sendChangePassword(String subject, User user, String token) {
 
         Map<String, Object> model = getModelWithUser(user);
-        model.put(MailConstants.LINK, getLink(MailConstants.CHANGE_PASS_LINK).append(token));
+        model.put(MailConstants.LINK, getLink(MailConstants.CHANGE_PASS_LINK, token));
 
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CHANGE_PASS_VM, model));
     }
@@ -94,7 +94,7 @@ public class MailServiceImpl implements MailService {
     public void buildConfirmRegisterManager(String subject, User user, String token) {
 
         Map<String, Object> model = getModelWithUser(user);
-        model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_MANAGER_LINK).append(token));
+        model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_MANAGER_LINK, token));
 
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
     }
@@ -110,7 +110,7 @@ public class MailServiceImpl implements MailService {
         return model;
     }
 
-    private StringBuilder getLink(String partOfLink) {
-        return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink);
+    private StringBuilder getLink(String partOfLink, String token) {
+        return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink).append(token);
     }
 }

@@ -85,7 +85,7 @@ public class UserChangePasswordController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public String savePassword(@ModelAttribute(UserConstants.USER)User modelUser, BindingResult bindingResult, Errors errors) {
+    public String savePassword(@ModelAttribute(UserConstants.USER)User modelUser, BindingResult bindingResult) {
         userValidator.validatePassword(modelUser, bindingResult);
         if (bindingResult.hasErrors()) {
             return UserConstants.UPDATE_PASS_VIEW;
