@@ -19,6 +19,7 @@ public class DateUtil
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
 
+    //TODO: private constructor
     public static Date toDate(String date)
     {
         try

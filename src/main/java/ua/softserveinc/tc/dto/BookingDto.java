@@ -34,8 +34,8 @@ public class BookingDto {
     transient private Room room;
 
     public BookingDto() {
-        this.id=id;
-        this.startTime=startTime;
+        this.id = id;
+        this.startTime = startTime;
     }
 
     public BookingDto(Booking booking){
@@ -81,11 +81,11 @@ public class BookingDto {
     }
 
     public Booking getBookingObject(){
-        DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
+        DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
         Booking booking = new Booking();
         try {
-            booking.setBookingStartTime(dateFormat.parse(date + " " + startTime));
-            booking.setBookingEndTime(dateFormat.parse(date + " " + endTime));
+            booking.setBookingStartTime(dateFormat.parse(startTime));
+            booking.setBookingEndTime(dateFormat.parse(endTime));
         }
         catch(ParseException pe){
             pe.printStackTrace();
