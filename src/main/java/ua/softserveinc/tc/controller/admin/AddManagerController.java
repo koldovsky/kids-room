@@ -47,19 +47,21 @@ public class AddManagerController {
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public ModelAndView showCreateManagerForm() {
         ModelAndView model = new ModelAndView(AdminConst.ADD_MANAGER);
-        model.addObject("manager", new User());
+        model.addObject(AdminConst.ATR_MANAGER, new User());
 
         return model;
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
-    public String saveManager(@ModelAttribute("manager") User manager, BindingResult bindingResult, SessionStatus status) {
+    public String saveManager(@ModelAttribute(AdminConst.ATR_MANAGER) User manager, BindingResult bindingResult,
+                              SessionStatus status) {
 
         Set<ConstraintViolation<User>> violations = validator.validate(manager);
         for (ConstraintViolation<User> violation : violations) {
             String propertyPath = violation.getPropertyPath().toString();
             String message = violation.getMessage();
-            bindingResult.addError(new FieldError("manager", propertyPath, "Invalid " + propertyPath + "(" + message + ")"));
+            bindingResult.addError(new FieldError(AdminConst.ATR_MANAGER, propertyPath, "Invalid " + propertyPath
+                    + "(" + message + ")"));
         }
         if (bindingResult.hasErrors()) {
             return AdminConst.ADD_MANAGER;

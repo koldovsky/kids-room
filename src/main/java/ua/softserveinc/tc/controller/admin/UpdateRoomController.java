@@ -43,7 +43,8 @@ public class UpdateRoomController {
     }
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
-    public String submitRoomUpdate(@ModelAttribute("room") RoomDto roomDto, @RequestParam("managers") Long id) {
+    public String submitRoomUpdate(@ModelAttribute(AdminConst.ATR_ROOM) RoomDto roomDto,
+                                   @RequestParam("managers") Long id) {
 
         User managerForRoom = userService.findById(id);
         roomDto.setManager(managerForRoom);

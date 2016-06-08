@@ -62,12 +62,11 @@ td{
 }
 
 .td-full{
-    border: hidden;
     padding: 0px;
     margin: 0px;
 }
 
-.blocklink{
+.block-link{
     top:0px;
     left:0px;
     width:100%;

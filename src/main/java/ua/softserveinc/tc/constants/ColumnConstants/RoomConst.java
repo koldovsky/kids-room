@@ -21,6 +21,12 @@ public interface RoomConst {
 
     String CAPACITY_ROOM = "capacity_room";
 
+    String WORKING_START_HOUR = "working_start_hour";
+
+    String WORKING_END_HOUR = "working_end_hour";
+
+    String ACTIVE = "active";
+
     String HOUR = "hour";
 
     String PRICE = "price";
