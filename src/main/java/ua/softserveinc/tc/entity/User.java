@@ -80,7 +80,8 @@ public class User {
     @Analyzer(definition = "ngram")
     private String phoneNumber;
 
-
+    @ManyToMany(mappedBy = "managers")
+    private List<Room> rooms = new ArrayList<>();
 
     @Column(name = UserConstants.ROLE)
     @Enumerated(EnumType.ORDINAL)
@@ -88,6 +89,15 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
     private Set<Child> children;
+
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
 
     public String getConfirm() {
         return confirm;

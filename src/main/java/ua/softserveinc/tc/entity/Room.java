@@ -6,6 +6,7 @@ import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -48,8 +49,15 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
     private List<Rate> rates = new LinkedList<>();
 
+    @Column(name = RoomConst.WORKING_START_HOUR)
     private String workingHoursStart;
+
+    @Column(name = RoomConst.WORKING_END_HOUR)
     private String workingHoursEnd;
+
+    @ManyToMany
+    private List<User> managers = new ArrayList<>();
+
 
     public Room() {
     }
@@ -61,12 +69,22 @@ public class Room {
         this.city = roomDto.getCity();
         this.phoneNumber = roomDto.getPhoneNumber();
         this.capacity = roomDto.getCapacity();
-        this.manager = roomDto.getManager();
+        this.workingHoursStart = roomDto.getWorkingHoursStart();
+        this.workingHoursEnd = roomDto.getWorkingHoursEnd();
+        this.manager= roomDto.getManager();
 
         List<Rate> rates = roomDto.fromJsonToListOfRates();
         for (Rate rate : rates) {
             this.addRate(rate);
         }
+    }
+
+    public List<User> getManagers() {
+        return managers;
+    }
+
+    public void setManagers(List<User> managers) {
+        this.managers = managers;
     }
 
     public String getWorkingHoursEnd() {
