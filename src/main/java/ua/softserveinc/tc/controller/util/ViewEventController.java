@@ -13,6 +13,7 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
+import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
@@ -32,26 +33,12 @@ public class ViewEventController {
     private RoomService roomServiceImpl;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private ChildService childService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
 
-
-//TODO delete unused code
-/*        try {
-            String email = principal.getName();
-            User user = userService.getUserByEmail(email);
-
-            if(userService.getUserByEmail(email).getRole() == Role.USER) {
-                model.addAttribute("rooms", roomServiceImpl.findAll());
-            } else {
-                model.addAttribute("rooms", roomServiceImpl.findByManger(user));
-            }
-            return EventConst.MAIN_PAGE;
-        } catch (NullPointerException n) {
-            return UsersConst.LOGIN_VIEW;
-        }*/
         if(principal == null) return UserConstants.LOGIN_VIEW;
         else {
             String email = principal.getName();
@@ -59,6 +46,7 @@ public class ViewEventController {
             if(userService.getUserByEmail(email).getRole() == Role.USER) {
                 model.addAttribute("rooms", roomServiceImpl.findAll());
                 //TODO add constants
+                model.addAttribute("kids", childService.getChildrenByUser(user));
             } else {
                 model.addAttribute("rooms", roomServiceImpl.findByManger(user));
             }
@@ -90,6 +78,4 @@ public class ViewEventController {
     public void getEventForDelete(@RequestBody EventDto eventDto) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDto));
     }
-
-
 }

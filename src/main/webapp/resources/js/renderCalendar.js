@@ -207,7 +207,7 @@ function rendering(objects, roomID) {
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
-
+                                                            //тут вставляються автоматичні дати для події на весь день
             var ckbox = $('#checkbox');
 
             $('input').on('click', function () {
@@ -303,6 +303,7 @@ function sendToServerForDelete(event) {
     });
 }
 
+/*
 function makeISOtime(clickDate, idOfTimePicker) {
     var element = '#' + idOfTimePicker;
     var installedTime = $(element).timepicker('getTime');
@@ -326,3 +327,4 @@ function makeISOtime(clickDate, idOfTimePicker) {
         timepickerMinutes + clickDate.substring(16);
 }
 
+*/

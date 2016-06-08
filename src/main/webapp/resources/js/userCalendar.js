@@ -11,6 +11,7 @@ $(function () {
     });
 });
 
+
 $(function () {
     $('#bookingEndTimepicker').timepicker({
         'timeFormat': 'H:i',
@@ -20,9 +21,20 @@ $(function () {
     });
 });
 
-
 function selectRoomForUser(id) {
     $('#user-calendar').fullCalendar('destroy');
+
+    $('input').on('click', function () {
+
+        for(var i = 0; i < ($('#kostil').val()); i++) {
+            if ($('#checkboxKid' + i).is(':checked')) {
+                $('#child-comment-' + i).prop('readonly', false);
+            } else {
+                $('#child-comment-' + i).prop('readonly', true);
+            }
+        }
+    });
+
 
     $('#bookingForm').dialog({
         autoOpen: false,
@@ -35,7 +47,6 @@ function selectRoomForUser(id) {
             duration: 500
         }
     });
-
 
     var path = 'getevents/' + id;
 
@@ -74,39 +85,38 @@ function selectRoomForUser(id) {
     });
 }
 
-function renderingForUser(objects) {
+function renderingForUser(objects, id) {
 
-    var newBooking = new Object();
-    var newBooking1 = new Object();
-    var objectsArray = [];
+    var bookingDate = new Object();
+
+    var bookingsArray = [];
 
     $('#booking').click(function () {
+alert(id);
+        for (var i = 0; i < ($('#kostil').val()); i++) {
+            if ($('#checkboxKid' + i).is(':checked')) {
+                bookingsArray.push(
+                    new Booking(makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker'),
+                        makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'), "NO", 1, id));
+            }
+        }
 
-        var a1 = {
-            date: "2016-06-06",
-            startTime: "2016-06-06T15:00:00",
-            endTime: "2016-06-06T15:00:00"
-        };
-
-        var a2 = {
-            date: "2013-03-03",
-            startTime: "2016-06-06T15:00:00",
-            endTime: "2016-06-06T15:00:00"
-        };
-
-        var array = [a1, a2];
         $.ajax({
             type: 'post',
             contentType: 'application/json',
-            url: 'getnewbooking',
+            url: 'makenewbooking',
             dataType: 'json',
-            data: JSON.stringify(array),
+            data: JSON.stringify(bookingsArray),
             success: function (result) {
                 alert("YEEEEEEEEEES");
             }
         });
 
+
+        bookingsArray = [];
+
         $('#title').val('');
+
         $('#bookingForm').dialog('close');
     });
 
@@ -127,18 +137,14 @@ function renderingForUser(objects) {
             $('#bookingStartDate').val(clickDate.substring(0, 10));
             $('#bookingEndDate').val(clickDate.substring(0, 10));
 
-            $('#dialog').dialog('open');
 
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
 
-            newBooking.id = "1";
-            newBooking1.id = "2";
+            bookingDate.clickDate = clickDate;                  //цей об'єкт переносить дату у ф-цію для створення букігу
 
-            objectsArray[0] = newBooking;
-
-            objectsArray[1] = newBooking1;
+            $('#dialog').dialog('open');
         },
 
         header: {
@@ -161,6 +167,7 @@ function renderingForUser(objects) {
             }
             $('#user-calendar').fullCalendar('unselect');
         },
+
         eventRender: function (event, element) {
             if (event.rendering == 'background') {
                 element.append(event.title);
@@ -174,3 +181,33 @@ function renderingForUser(objects) {
     });
 }
 
+function makeISOtime(clickDate, idOfTimePicker) {
+    var element = '#' + idOfTimePicker;
+    var installedTime = $(element).timepicker('getTime');
+
+    var timepickerMinutes = installedTime.getMinutes();
+    var timepickerHours = installedTime.getHours();
+
+    if (timepickerMinutes == 0) {
+        timepickerMinutes = '00';
+    } else {
+        timepickerMinutes = '30';
+    }
+
+    if (timepickerHours < 10) {
+        timepickerHours = '0' + timepickerHours.toString();
+    } else {
+        timepickerHours = timepickerHours.toString();
+    }
+
+    return '' + clickDate.substring(0, 11) + timepickerHours + ':' +
+        timepickerMinutes + clickDate.substring(16);
+}
+
+function Booking(startTime, endTime, comment, kidId, roomId) {
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.comment = comment;
+    this.kidId = kidId;
+    this.roomId = roomId;
+}

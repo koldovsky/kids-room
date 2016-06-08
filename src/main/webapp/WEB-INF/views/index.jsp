@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
@@ -28,12 +29,11 @@
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 
 
-
 <body>
 
 <sec:authorize access="hasRole('USER')">
 
-    <spring:message code="user.selectRoom" />
+    <spring:message code="user.selectRoom"/>
     <c:forEach items="${managersRoom}" var="r">
 
         ${r.id}
@@ -62,7 +62,8 @@
                             <label for="bookingStartDate">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="bookingStartDate" placeholder="startDate" readonly>
+                                <input type="text" class="form-control" id="bookingStartDate" placeholder="startDate"
+                                       readonly>
                             </div>
                             <div class="col-xs-5">
                                 <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"/>
@@ -75,12 +76,38 @@
                             <label for="bookingEndDate">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="bookingEndDate" placeholder="endDate" readonly>
+                                <input type="text" class="form-control" id="bookingEndDate" placeholder="endDate"
+                                       readonly>
                             </div>
                             <div class="col-xs-5">
                                 <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"/>
                             </div>
                         </div>
+
+
+                        <table>
+                            <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                <tr>
+                                    <label><input type="checkbox" value=""
+                                                  id="checkboxKid${loop.index}">${kids.firstName}</label>
+                                        ${loop.index} <br>
+                                </tr>
+
+                            </c:forEach>
+
+                            <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                <tr>
+                                    <label for="child-comment-${loop.index}">Comment for ${kids.firstName}:</label>
+
+                                    <input type="text" value="" id="child-comment-${loop.index}">
+                                </tr>
+
+
+                            </c:forEach>
+                            <input id="kostil" hidden value="${fn:length(kids)}">
+                        </table>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="booking">Book</button>
@@ -91,8 +118,6 @@
             </div>
         </div>
     </div>
-
-
 
 
     <div id='user-calendar'></div>
@@ -129,10 +154,10 @@
                     <form id="form">
                         <div class="form-group">
                             <label for="startDate">Event title</label>
-                            <input type="text" class="form-control" id="startDate" placeholder="title" >
+                            <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
                         <div class="allDay">
-                            <label><input type="checkbox" id="checkbox" value="">   All day</label>
+                            <label><input type="checkbox" id="checkbox" value=""> All day</label>
                         </div>
 
                         <div class="form-group">
@@ -191,7 +216,8 @@
                             <label for="startDayUpdate">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="startDayUpdate" placeholder="startDate" readonly>
+                                <input type="text" class="form-control" id="startDayUpdate" placeholder="startDate"
+                                       readonly>
                             </div>
                             <div class="col-xs-5">
                                 <input id="startTimeUpdate" type="text" class="time form-control" size="6"/>
@@ -204,7 +230,8 @@
                             <label for="endDateUpdate">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="endDateUpdate" placeholder="endDate" readonly>
+                                <input type="text" class="form-control" id="endDateUpdate" placeholder="endDate"
+                                       readonly>
                             </div>
                             <div class="col-xs-5">
                                 <input id="endTimeUpdate" type="text" class="time form-control" size="6"/>
@@ -218,8 +245,8 @@
                                       placeholder="description"></textarea>
                         </div>
 
-                            <button type="button" class="btn btn-success" id="updatingButton">Update</button>
-                            <button type="button" class="btn btn-danger" id="deleting">Delete</button>
+                        <button type="button" class="btn btn-success" id="updatingButton">Update</button>
+                        <button type="button" class="btn btn-danger" id="deleting">Delete</button>
 
                     </form>
                 </div>

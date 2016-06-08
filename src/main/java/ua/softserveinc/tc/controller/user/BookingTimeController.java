@@ -35,8 +35,10 @@ public class BookingTimeController {
     private BookingService bookingService;
 
     @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
-    public @ResponseBody String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dtos.get(1).getDate());
+    public
+    @ResponseBody
+    String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dtos.get(0).getStartTime());
         dtos.forEach(dto -> {
             dto.setUser(userService.getUserByEmail(principal.getName()));
             dto.setChild(childService.findById(dto.getKidId()));
@@ -48,11 +50,13 @@ public class BookingTimeController {
     }
 
     @RequestMapping(value = "/disabled")
-    public @ResponseBody String getDisabledTime(@RequestParam Long roomID,
-                                                @RequestParam String period){
+    public
+    @ResponseBody
+    String getDisabledTime(@RequestParam Long roomID,
+                           @RequestParam String period) {
         Map<String, String> blockedPeriods;
         Room room = roomService.findById(roomID);
-        switch (period){
+        switch (period) {
             case "day":
                 blockedPeriods = roomService
                         .getBlockedPeriodsForDay(room, Calendar.getInstance());
