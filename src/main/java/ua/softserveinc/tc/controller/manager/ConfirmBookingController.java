@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static ua.softserveinc.tc.util.DateUtil.workingHours;
+
 /**
  * Created by Петришак on 08.05.2016.
  */
@@ -46,7 +48,8 @@ public class ConfirmBookingController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         Room currentRoom = roomService.getRoomByManager(currentManager);
-        List<Booking> listBooking = bookingService.getTodayNotCancelledBookingsByRoom(currentRoom);
+        List<Booking> listAllBookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom);
+        List<Booking> listBooking = bookingService.filterByNotState(listAllBookings, BookingState.CANCELLED);
         model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, listBooking);
         return modelAndView;
     }
@@ -90,8 +93,9 @@ public class ConfirmBookingController {
      @ResponseBody
      public String listBookigs(Principal principal) {
          User currentManager = userService.getUserByEmail(principal.getName());
-         Room roomCurrentManager = roomService.getRoomByManager(currentManager);
-         List<Booking> listBooking = bookingService.getTodayNotCancelledBookingsByRoom(roomCurrentManager);
+         Room currentRoom = roomService.getRoomByManager(currentManager);
+         List<Booking> listAllBookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom);
+         List<Booking> listBooking = bookingService.filterByNotState(listAllBookings, BookingState.CANCELLED);
          List<BookingDto> listBookingDto = new ArrayList<BookingDto>();
          listBooking.forEach(booking -> listBookingDto.add(new BookingDto(booking)));
          Gson gson = new Gson();

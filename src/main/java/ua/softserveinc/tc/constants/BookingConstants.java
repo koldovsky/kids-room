@@ -58,8 +58,6 @@ public interface BookingConstants {
 
         int BOOKING_CENCELLD = 3;
 
-        int BOOKING_BOOKED = 0;
-
     }
 
 

@@ -18,12 +18,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.*;
+import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
@@ -78,6 +77,22 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public List<Booking> filterByState(List<Booking> bookings, BookingState bookingState) {
+        return bookings.stream()
+                .filter(booking ->
+                        booking.getBookingState() == bookingState)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Booking> filterByNotState(List<Booking> bookings, BookingState bookingState) {
+        return bookings.stream()
+                .filter(booking ->
+                        booking.getBookingState() != bookingState)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void calculateAndSetDuration(Booking booking) {
         long difference = booking.getBookingEndTime().getTime() -
                 booking.getBookingStartTime().getTime();
@@ -115,42 +130,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         Collectors.summingLong(Booking::getSum)));
     }
 
-    @Override
-    public List<Booking> getBookingsWithZeroSum() {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-
-        query.where(
-                builder.equal(root.get(BookingConstants.Entity.SUM), 0),
-                builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED));
-
-        return entityManager.createQuery(query).getResultList();
-    }
 
     @Override
-    public List<Booking> getTodayNotCancelledBookingsByRoom(Room room) {
-        return bookingDao.getTodayNotCancelledBookingsByRoom(workingHours().get(0),
-                workingHours().get(1), room);
-    }
-
-    @Override
-    public List<Booking> getTodayBookingsByRoom(Room room) {
-        return bookingDao.getBookingsByRoomByDay(workingHours().get(0),
-                workingHours().get(1), room);
-    }
-
-    public Boolean checkFreePlaces(Room room, String startTime, String endTime) {
-
-        Date startTimeDate = toDateAndTime(startTime);
-        Date endTimeDate = toDateAndTime(endTime);
-        List<Booking> list = bookingDao.getBookingsByRoomByDay(startTimeDate, endTimeDate, room);
-        Integer countBooking = list.size();
-        Integer roomCapacity = room.getCapacity();
-        if (countBooking < roomCapacity) {
-            return true;
-        } else return false;
+    public List<Booking> filterBySum(List<Booking> bookings, Long sum) {
+        return  bookings.stream()
+                .filter(booking -> booking.getSum() == 0L)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -167,6 +152,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
+        resetSumAndDuration(booking);
+        return booking;
+    }
+
+
+    @Override
+    public Booking confirmBooking(BookingDto bookingDto) {
+        Booking booking = findById(bookingDto.getId());
+        booking.setBookingStartTime(replaceBookingTime(booking, bookingDto.getStartTime()));
+        booking.setBookingStartTime(replaceBookingTime(booking, bookingDto.getEndTime()));
         resetSumAndDuration(booking);
         return booking;
     }
@@ -197,77 +192,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return listDTO;
     }
 
-    //TODO: maybe move next three methods to RoomService
-    @Override
-    public Map<String, String> getBlockedPeriodsForWeek(Room room) {
-        Calendar start = Calendar.getInstance();
-        start.set(Calendar.HOUR_OF_DAY, 0);
-        start.clear(Calendar.MINUTE);
-        start.clear(Calendar.SECOND);
-        start.clear(Calendar.MILLISECOND);
-        start.set(Calendar.DAY_OF_WEEK, start.getFirstDayOfWeek());
 
-        Map<String, String> blockedPeriods = getBlockedPeriodsForDay(room, start);
-        for (int i = 1; i < 7; i++) {
-            start.add(Calendar.DAY_OF_WEEK, 1);
-            blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
-        }
 
-        return blockedPeriods;
-    }
-
-    @Override
-    public Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
-        //Calendar calendarStart = Calendar.getInstance();
-        Calendar calendarEnd = Calendar.getInstance();
-        calendarEnd.setTime(calendarStart.getTime());
-
-        try {
-            Calendar temp = Calendar.getInstance();
-            temp.setTime(timeFormat.parse(room.getWorkingHoursStart()));
-            calendarStart.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
-            calendarStart.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
-
-            temp.setTime(timeFormat.parse(room.getWorkingHoursEnd()));
-            calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
-            calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
-        } catch (ParseException pe) {
-            //TODO: throw reasonable exception to Advice
-        }
-
-        Calendar temp = Calendar.getInstance();
-        Map<Date, Date> periods = new HashMap<>();
-
-        while (calendarStart.compareTo(calendarEnd) <= 0) {
-            temp.setTime(calendarStart.getTime());
-            temp.add(Calendar.MINUTE, appConfigurator.getMinPeriodSize());
-            periods.put(calendarStart.getTime(), temp.getTime());
-            calendarStart = temp;
-        }
-
-        Map<String, String> blockedPeriods = new HashMap<>();
-        periods.forEach((startDate, endDate) -> {
-            if (!isPeriodAvailable(room, startDate, endDate)) {
-                blockedPeriods.put(
-                        convertDateToString(startDate),
-                        convertDateToString(endDate)
-                );
-            }
-        });
-
-        return blockedPeriods;
-    }
-
-    public Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
-        return !(bookingDao.getBookingsByRoomByDay(dateLo, dateHi, room)
-                .stream().filter(booking ->
-                        booking.getBookingState() == BookingState.BOOKED ||
-                                booking.getBookingState() == BookingState.ACTIVE)
-                .collect(Collectors.toList())
-                .size() > room.getCapacity());
-    }
 }
 
 

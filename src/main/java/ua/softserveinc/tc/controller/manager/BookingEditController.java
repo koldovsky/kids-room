@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
@@ -21,6 +22,7 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import static ua.softserveinc.tc.util.DateUtil.toDate;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 /**
@@ -46,7 +48,10 @@ public class BookingEditController {
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> listRoom = roomService.findByManger(currentManager);
         Room room = roomService.getRoomByManager(currentManager);
-        List<Booking> listBooking = bookingService.getTodayBookingsByRoom(room);
+        List<Booking> listBooking = bookingService.getBookings(toDate(room.getWorkingHoursStart()),
+                toDate(room.getWorkingHoursEnd())
+                ,room);
+        List<Booking> filterBookedList = bookingService.filterByState(listBooking, BookingState.BOOKED);
         modelAndView.addObject("listRoom", listRoom);
         modelAndView.addObject("listBooking", listBooking);
         return modelAndView;
@@ -61,7 +66,7 @@ public class BookingEditController {
         Room room = booking.getIdRoom();
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
-        bookingService.isPeriodAvailable(room, startTime, endTime);
+        roomService.isPeriodAvailable(room, startTime, endTime);
         return false;
     }
 }

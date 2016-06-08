@@ -54,11 +54,11 @@ public class BookingTimeController {
         Room room = roomService.findById(roomID);
         switch (period){
             case "day":
-                blockedPeriods = bookingService
+                blockedPeriods = roomService
                         .getBlockedPeriodsForDay(room, Calendar.getInstance());
                 break;
             case "week":
-                blockedPeriods = bookingService
+                blockedPeriods = roomService
                         .getBlockedPeriodsForWeek(room);
                 break;
             default:
