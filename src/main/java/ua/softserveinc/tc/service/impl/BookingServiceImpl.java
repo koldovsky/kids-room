@@ -8,9 +8,7 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
-import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RateService;
-import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,18 +26,11 @@ import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
-
     @Autowired
     private BookingDao bookingDao;
 
     @Autowired
     private RateService rateService;
-
-    @Autowired
-    private ChildService childService;
-
-    @Autowired
-    private ApplicationConfigurator configurator;
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate) {
@@ -95,7 +86,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<Booking> filterBySum(List<Booking> bookings, Long sum) {
         return bookings.stream()
-                .filter(booking -> booking.getSum() == 0L)
+                .filter(booking -> booking.getSum().equals(sum))
                 .collect(Collectors.toList());
     }
 
@@ -112,7 +103,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         calculateAndSetDuration(booking);
 
         List<Rate> rates = booking.getIdRoom().getRates();
-        Rate closestRate = rateService.calculateClosestRate(booking.getDuration(), rates);
+        Rate closestRate = rateService.calculateAppropriateRate(booking.getDuration(), rates);
 
         booking.setSum(closestRate.getPriceRate());
         bookingDao.update(booking);
@@ -191,5 +182,3 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return listDTO;
     }
 }
-
-

@@ -21,13 +21,9 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
     @Autowired
     private RateDao rateDao;
 
-    public void create(Rate rate) {
-        rateDao.create(rate);
-    }
-
     @Override
-    public Rate calculateClosestRate(long milliseconds, final List<Rate> rates) {
-        final int hours = getRoundedHours(milliseconds);
+    public Rate calculateAppropriateRate(long milliseconds, List<Rate> rates) {
+        int hours = getRoundedHours(milliseconds);
         Optional<Rate> min = rates.stream()
                 .filter(rate -> hours <= rate.getHourRate())
                 .min(Comparator.comparing(Rate::getHourRate));
