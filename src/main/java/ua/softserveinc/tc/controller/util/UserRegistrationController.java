@@ -30,8 +30,6 @@ import java.util.UUID;
 public class UserRegistrationController {
 
     @Autowired
-    BookingService bookingService;
-    @Autowired
     private UserService userService;
     @Autowired
     private MailService mailService;
@@ -42,7 +40,7 @@ public class UserRegistrationController {
 
     @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
-    public String login(Model model) {
+    public String login() {
         return UserConstants.LOGIN_VIEW;
     }
 
@@ -55,7 +53,7 @@ public class UserRegistrationController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute(UserConstants.USER) User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return UserConstants.REGISTRATION_VIEW;
         }
         user.setRole(Role.USER);
@@ -80,13 +78,13 @@ public class UserRegistrationController {
     }
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.GET)
-    public String sendConfirmation(Model model){
+    public String sendConfirmation(Model model) {
         model.addAttribute(UserConstants.USER, new User());
         return UserConstants.RESEND_MAIL_VIEW;
     }
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
-    public String sendConfirmation(@ModelAttribute(UserConstants.USER)User modelUser, BindingResult bindingResult) {
+    public String sendConfirmation(@ModelAttribute(UserConstants.USER) User modelUser, BindingResult bindingResult) {
         String email = modelUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {

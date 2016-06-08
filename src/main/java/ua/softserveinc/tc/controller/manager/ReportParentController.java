@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
@@ -25,8 +26,7 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
  * Created by Demian on 08.05.2016.
  */
 @Controller
-public class ReportParentController
-{
+public class ReportParentController {
     @Autowired
     private UserService userService;
 
@@ -39,18 +39,20 @@ public class ReportParentController
     @RequestMapping(value = "/report-parent", method = RequestMethod.GET,
             params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
 
-    public @ResponseBody ModelAndView parentBookings(Principal principal,
-                                                     @RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
-                                                     @RequestParam(value = ReportConst.DATE_THEN) String dateThen,
-                                                     @RequestParam(value = ReportConst.DATE_NOW) String dateNow                                                     )
-    {
+    public
+    @ResponseBody
+    ModelAndView parentBookings(Principal principal,
+                                @RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
+                                @RequestParam(value = ReportConst.DATE_THEN) String dateThen,
+                                @RequestParam(value = ReportConst.DATE_NOW) String dateNow) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(ReportConst.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         User parent = userService.getUserByEmail(parentEmail);
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
-        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), parent, room);
+        List<Booking> notFiltered = bookingService.getBookings(toDate(dateThen), toDate(dateNow), parent, room);
+        List<Booking> bookings = bookingService.filterByState(notFiltered, BookingState.COMPLETED);
         Long sumTotal = bookingService.getSumTotal(bookings);
 
         modelMap.addAttribute(ReportConst.PARENT, parent);

@@ -3,149 +3,142 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
-    <tiles-definitions>
+<tiles-definitions>
     <definition name="default" template="/WEB-INF/template/default/template.jsp">
-        <put-attribute name="title" value="Kid's Room" />
-        <put-attribute name="header" value="/WEB-INF/template/default/header.jsp" />
-        <put-attribute name="body" value="" />
-        <put-attribute name="footer" value="/WEB-INF/template/default/footer.jsp" />
-
+        <put-attribute name="title" value="Kid's Room"/>
+        <put-attribute name="header" value="/WEB-INF/template/default/header.jsp"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/template/default/footer.jsp"/>
     </definition>
 
+    <!-- Common -->
     <definition name="index" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
-    </definition>
-
-    <definition name="login" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
-    </definition>
-
-    <definition name="mykids" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/user-my-kids.jsp" />
-    </definition>
-
-    <definition name="editmykid" extends="default">
-        <put-attribute name="body" value = "/WEB-INF/views/user-edit-my-kid.jsp" />
-    </definition>
-
-    <definition name="mybookings" extends="default">
-        <put-attribute name="body" value = "/WEB-INF/views/user-my-bookings.jsp" />
-    </definition>
-
-    <definition name="registerkid" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/user-register-kid.jsp" />
-    </definition>
-
-    <definition name="allkidslist" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/allkidslist.jsp" />
-    </definition>
-
-    <definition name="report" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager-report.jsp" />
-    </definition>
-
-    <definition name="report-all" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager-report-all.jsp" />
-    </definition>
-
-    <definition name="report-parent" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager-report-parent.jsp" />
-    </definition>
-
-    <definition name="registration" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/registration.jsp" />
-    </definition>
-
-    <definition name="manager-confirm-booking" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager-confirm-booking.jsp" />
-    </definition>
-
-    <definition name="manager-edit-booking" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager-edit-booking.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/common/index.jsp"/>
     </definition>
 
     <definition name="rules" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/rules.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/common/rules.jsp"/>
     </definition>
 
-    <definition name="success" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/success.jsp" />
-    </definition>
-
-    <definition name="accessDenied" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/error-access-denied.jsp" />
-    </definition>
-
-    <definition name="error-bad-upload" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/error-bad-upload.jsp" />
-    </definition>
-
-    <definition name="notFound" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/error-not-found.jsp" />
-    </definition>
-
-    <definition name="profile" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/user-kid-profile.jsp" />
-    </definition>
-
-
-    <!-- Admin -->
-    <definition name="statistics" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-statistics.jsp" />
-    </definition>
-
-    <definition name="adm-edit-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-edit-manager.jsp" />
-    </definition>
-
-    <definition name="adm-add-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-add-manager.jsp" />
-    </definition>
-
-    <definition name="adm-confirm-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-confirm-manager.jsp" />
-    </definition>
-
-    <definition name="adm-update-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-update-manager.jsp" />
-    </definition>
-
-    <definition name="adm-edit-room" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-edit-room.jsp" />
-    </definition>
-
-    <definition name="adm-add-room" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-add-room.jsp" />
-    </definition>
-
-    <definition name="adm-update-room" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/adm-update-room.jsp" />
-    </definition>
-
-    <definition name="confirm-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/confirm-manager.jsp" />
-    </definition>
-    <!-- /Admin -->
-
-    <definition name="result" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/result.jsp" />
-    </definition>
-
-    <definition name="forgotPassword" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/password-forgot.jsp" />
-    </definition>
-
-    <definition name="updatePassword" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/password-update.jsp" />
+    <!-- Authorization -->
+    <definition name="login" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/authorization/login.jsp"/>
     </definition>
 
     <definition name="resend-mail" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/mail-resend.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/authorization/mail-resend.jsp"/>
     </definition>
 
-    <definition name="json" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/json.jsp" />
+    <definition name="forgotPassword" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/authorization/password-forgot.jsp"/>
     </definition>
 
+    <definition name="updatePassword" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/authorization/password-update.jsp"/>
+    </definition>
+
+    <definition name="registration" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/authorization/registration.jsp"/>
+    </definition>
+
+    <definition name="success" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/authorization/success.jsp"/>
+    </definition>
+
+    <!-- Errors -->
+    <definition name="accessDenied" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/access-denied.jsp"/>
+    </definition>
+
+    <definition name="error-bad-upload" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/bad-upload.jsp"/>
+    </definition>
+
+    <definition name="notFound" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/not-found.jsp"/>
+    </definition>
+
+    <!-- Admin -->
+    <definition name="adm-add-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/add-manager.jsp"/>
+    </definition>
+
+    <definition name="adm-add-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/add-room.jsp"/>
+    </definition>
+
+    <definition name="adm-confirm-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/confirm-manager.jsp"/>
+    </definition>
+
+    <definition name="confirm-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/confirm-manager.jsp"/>
+    </definition>
+
+    <definition name="adm-edit-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/edit-manager.jsp"/>
+    </definition>
+
+    <definition name="adm-edit-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/edit-room.jsp"/>
+    </definition>
+
+    <definition name="statistics" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/statistics.jsp"/>
+    </definition>
+
+    <definition name="adm-update-manager" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/update-manager.jsp"/>
+    </definition>
+
+    <definition name="adm-update-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/update-room.jsp"/>
+    </definition>
+
+    <!-- Manager -->
+    <definition name="allkidslist" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/allkidslist.jsp"/>
+    </definition>
+
+    <definition name="manager-confirm-booking" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/confirm-booking.jsp"/>
+    </definition>
+
+    <definition name="manager-edit-booking" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/edit-booking.jsp"/>
+    </definition>
+
+    <definition name="report" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/report.jsp"/>
+    </definition>
+
+    <definition name="report-all" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/report-all.jsp"/>
+    </definition>
+
+    <definition name="report-parent" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/report-parent.jsp"/>
+    </definition>
+
+    <!-- User -->
+    <definition name="editmykid" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user/edit-my-kid.jsp"/>
+    </definition>
+
+    <definition name="profile" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user/kid-profile.jsp"/>
+    </definition>
+
+    <definition name="mybookings" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user/my-bookings.jsp"/>
+    </definition>
+
+    <definition name="mykids" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user/my-kids.jsp"/>
+    </definition>
+
+    <definition name="registerkid" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user/register-kid.jsp"/>
+    </definition>
 
 </tiles-definitions>

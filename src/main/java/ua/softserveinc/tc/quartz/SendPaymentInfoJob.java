@@ -9,6 +9,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.MailService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +27,10 @@ public class SendPaymentInfoJob {
     private BookingService bookingService;
 
     private void task() {
+        Date startDate = toDate(getStringDate(dateMonthAgo()));
+        Date endDate = toDate(getStringDate(currentDate()));
 
-        String now = getStringDate(currentDate());
-        String then = getStringDate(dateMonthAgo());
-
-        List<Booking> bookings = bookingService.getBookings(toDate(then), toDate(now));
+        List<Booking> bookings = bookingService.getBookings(startDate, endDate);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         report.forEach((user, sum) -> {

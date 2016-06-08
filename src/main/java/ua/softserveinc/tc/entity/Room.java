@@ -71,7 +71,7 @@ public class Room {
         this.capacity = roomDto.getCapacity();
         this.workingHoursStart = roomDto.getWorkingHoursStart();
         this.workingHoursEnd = roomDto.getWorkingHoursEnd();
-        this.manager= roomDto.getManager();
+        this.manager = roomDto.getManager();
 
         List<Rate> rates = roomDto.fromJsonToListOfRates();
         for (Rate rate : rates) {
@@ -202,9 +202,15 @@ public class Room {
 
     @Override
     public boolean equals(Object that) {
-        if (that == null) return false;
-        if (this == that) return true;
-        if (!(that instanceof Room)) return false;
+        if (that == null) {
+            return false;
+        }
+        if (this == that) {
+            return true;
+        }
+        if (!(that instanceof Room)) {
+            return false;
+        }
         Room other = (Room) that;
         return city.equals(other.city) && address.equals(other.address);
     }

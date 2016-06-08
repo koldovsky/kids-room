@@ -35,7 +35,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("ua.softserveinc.tc")
-@PropertySource(value = { "classpath:mail.properties",
+@PropertySource(value = { "classpath:properties/mail.properties",
                           "classpath:hibernate.properties" })
 public class AppConfig {
 
@@ -107,7 +107,7 @@ public class AppConfig {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
+        messageSource.setBasename("properties/messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }

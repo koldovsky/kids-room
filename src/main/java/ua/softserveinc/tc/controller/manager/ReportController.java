@@ -43,7 +43,7 @@ public class ReportController {
         String dateThen = getStringDate(dateMonthAgo());
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
 
-        List<User> users = userService.getActiveUsers(dateThen, dateNow, room);
+        List<User> users = userService.getActiveUsers(toDate(dateThen), toDate(dateNow), room);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
@@ -58,7 +58,7 @@ public class ReportController {
     String refreshView(@PathVariable String startDate,
                        @PathVariable String endDate, Principal principal) {
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
-        List<User> users = userService.getActiveUsers(startDate, endDate, room);
+        List<User> users = userService.getActiveUsers(toDate(startDate), toDate(endDate), room);
         Gson gson = new Gson();
 
         return gson.toJson(users.stream()

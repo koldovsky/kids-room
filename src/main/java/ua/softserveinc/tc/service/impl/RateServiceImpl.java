@@ -10,6 +10,7 @@ import ua.softserveinc.tc.dao.RateDao;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.service.RateService;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -21,18 +22,14 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
     @Autowired
     private RateDao rateDao;
 
-    public void create(Rate rate) {
-        rateDao.create(rate);
-    }
-
     @Override
-    public Rate calculateClosestRate(long milliseconds, final List<Rate> rates) {
-        final int hours = getRoundedHours(milliseconds);
+    public Rate calculateAppropriateRate(long milliseconds, List<Rate> rates) {
+        int hours = getRoundedHours(milliseconds);
         Optional<Rate> min = rates.stream()
                 .filter(rate -> hours <= rate.getHourRate())
                 .min(Comparator.comparing(Rate::getHourRate));
 
         if (min.isPresent()) return min.get();
-        else return rates.stream().max(Comparator.comparing(Rate::getHourRate)).get();
+        else return Collections.max(rates, Comparator.comparing(Rate::getHourRate));
     }
 }

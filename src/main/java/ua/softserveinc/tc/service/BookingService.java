@@ -19,18 +19,20 @@ public interface BookingService extends BaseService<Booking>
 
     Map<User, Long> generateAReport(List<Booking> bookings);
     Map<Room, Long> generateStatistics(List<Booking> bookings);
+
     List<Booking> getBookings(Date startDate, Date endDate);
     List<Booking> getBookings(Date startDate, Date endDate, User user);
     List<Booking> getBookings(Date startDate, Date endDate, Room room);
     List<Booking> getBookings(Date startDate, Date endDate, User user, Room room);
-    List<Booking> filterByState(List<Booking> bookings, BookingState bookingState);
-    List<Booking> filterByNotState(List<Booking> bookings, BookingState bookingState);
+
     List<Booking> filterBySum(List<Booking> bookings, Long sum);
+    List<Booking> filterByState(List<Booking> bookings, BookingState bookingState);
+    List<Booking> filterByOppositeState(List<Booking> bookings, BookingState bookingState);
 
     Booking confirmBooking(BookingDto bookingDto);
     Booking confirmBookingEndTime(BookingDto bookingDto);
     Booking confirmBookingStartTime(BookingDto bookingDto);
     Date replaceBookingTime(Booking booking, String time);
 
-    List<BookingDto> persistBookingsFromDTOandSetID(List<BookingDto> listDTO);
+    List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO);
 }

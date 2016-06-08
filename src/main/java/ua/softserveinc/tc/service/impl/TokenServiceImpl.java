@@ -31,7 +31,9 @@ public class TokenServiceImpl extends BaseServiceImpl<Token> implements TokenSer
     @Override
     public Token findByToken(String token) {
         Token result = tokenDao.findByToken(token);
-        if(result == null) throw new TokenInvalidException();
+        if (result == null) {
+            throw new TokenInvalidException();
+        }
         return result;
     }
 }
