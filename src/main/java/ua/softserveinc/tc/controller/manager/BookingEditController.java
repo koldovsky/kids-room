@@ -86,7 +86,7 @@ public class BookingEditController {
         Room room = booking.getIdRoom();
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
-        if(roomService.isPeriodAvailable(room, startTime, endTime)) {
+        if(roomService.isPeriodAvailable(startTime, endTime, room)) {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
             bookingService.update(booking);
