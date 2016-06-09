@@ -11,8 +11,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import ua.softserveinc.tc.constants.ErrorPages;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Created by Nestor on 18.05.2016.
  *
@@ -46,7 +44,7 @@ public class ExceptionHandlingController {
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ModelAndView handleError500(HttpServletRequest request, Exception e) {
+    public ModelAndView handleError500(Exception e) {
         ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
         mav.addObject("exception", e);
         return mav;

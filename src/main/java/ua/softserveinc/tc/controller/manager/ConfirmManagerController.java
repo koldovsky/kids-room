@@ -21,7 +21,7 @@ import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.validator.UserValidator;
+import ua.softserveinc.tc.validator.UserValidatorImpl;
 
 /**
  * Created by TARAS on 18.05.2016.
@@ -38,7 +38,7 @@ public class ConfirmManagerController {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private UserValidator userValidator;
+    private UserValidatorImpl userValidator;
 
     @Autowired
     @Qualifier(UserConstants.USER_DETAILS_SERVICE)
