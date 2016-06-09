@@ -42,6 +42,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return entityManager.createQuery(criteria).getResultList();
     }
 
+    //works bad, tested manually
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, User user) {
         return getBookings(startDate, endDate).stream()

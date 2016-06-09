@@ -97,7 +97,7 @@ var tableToExcel = ( function() {
                       document.getElementById("dlink").href = uri + base64(format(template, ctx));
                       document.getElementById("dlink").download = filename;
                       document.getElementById("dlink").click();
-                      $('#itemsPerPage').val(11);
+                      $('#itemsPerPage').val(10);
                       paginate();
                       }
           })()

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -37,6 +38,7 @@ import java.util.Properties;
 @ComponentScan("ua.softserveinc.tc")
 @PropertySource(value = { "classpath:properties/mail.properties",
                           "classpath:hibernate.properties" })
+@EnableJpaRepositories(basePackages = "ua.softserveinc.tc.repo")
 public class AppConfig {
 
     @Autowired
