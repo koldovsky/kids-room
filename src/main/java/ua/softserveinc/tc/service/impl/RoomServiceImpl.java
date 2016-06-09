@@ -92,15 +92,15 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end){
-        if(start.equals(end)){
+    public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
+        if (start.equals(end)) {
             return getBlockedPeriodsForDay(room, start);
         }
 
         Map<String, String> blockedPeriods = new HashMap<>();
-        while(start.compareTo(end) <= 0){
-                blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
-                start.add(Calendar.DAY_OF_MONTH, 1);
+        while (start.compareTo(end) <= 0) {
+            blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
+            start.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         return blockedPeriods;
@@ -171,6 +171,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room) {
         List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room);
         List<Booking> filtered = bookingService.filterByStates(bookings, BookingConstants.ACTIVE_AND_BOOKED);
-        return room.getCapacity() <= filtered.size();
+        return room.getCapacity() >= filtered.size();
     }
 }

@@ -196,8 +196,7 @@ public class Room {
 
     @Override
     public int hashCode() {
-        return 750 * Objects.hashCode(city)
-                + 13 * Objects.hashCode(address);
+        return Objects.hash(city, address);
     }
 
     @Override
