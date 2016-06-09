@@ -7,8 +7,10 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.*;
-import java.util.EnumSet;
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 
 public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitializer implements WebApplicationInitializer {
 
@@ -32,8 +34,8 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
     }
 
     @Override
-    protected Class<?>[] getRootConfigClasses(){
-        return new Class[] {WebAppConfig.class};
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[]{WebAppConfig.class};
     }
 
     @Override
@@ -43,6 +45,6 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
 }

@@ -14,7 +14,6 @@ import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
