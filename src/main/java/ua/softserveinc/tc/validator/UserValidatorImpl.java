@@ -51,6 +51,7 @@ public class UserValidatorImpl implements UserValidator {
             errors.rejectValue(ValidationConst.PHONE_NUMBER, ValidationConst.PHONE_NUMBER_ERROR_MSG);
         }
 
+        //TODO: Delete if don't using. /Revived by Taras/
 //        if (!Pattern.compile(ValidationConst.EMAIL_REGEX)
 //                .matcher(user.getEmail())
 //                .matches()) {

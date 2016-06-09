@@ -46,13 +46,13 @@ public class KidsProfileController {
      */
     @RequestMapping(value = "/profile",
             method = RequestMethod.GET)
-    public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)
+    public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)//TODO: non-information variable name "id". /Revived by Taras/
             throws AccessDeniedException, ResourceNotFoundException{
         if(!LogicalRequestsValidator.isRequestValid(id)){
             throw new ResourceNotFoundException();
         }
 
-        Long idL = Long.parseLong(id);
+        Long idL = Long.parseLong(id);//TODO: non-information variable name "idL". /Revived by Taras/
         User current = userService.getUserByEmail(principal.getName());
         Child kid = childService.findById(idL);
 

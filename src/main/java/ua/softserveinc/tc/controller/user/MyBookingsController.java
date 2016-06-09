@@ -93,7 +93,7 @@ public class MyBookingsController {
             throw new AccessDeniedException("Have to be a User");
         }
         List<Booking> myBookings = bookingService.getBookings(toDate(dateLo), toDate(dateHi), currentUser);
-        List<BookingDto> dtos = new ArrayList<>();
+        List<BookingDto> dtos = new ArrayList<>();//TODO: non-information variable name "dtos". /Revived by Taras/
         myBookings.forEach((booking -> dtos.add(new BookingDto(booking))));
 
         Gson gson = new Gson();

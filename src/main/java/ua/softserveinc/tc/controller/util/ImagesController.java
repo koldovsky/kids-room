@@ -114,12 +114,14 @@ public class ImagesController {
 
         File imgPath = new File(path);
 
-        BufferedImage bufferedImage = ImageIO.read(imgPath);
+        BufferedImage bufferedImage = ImageIO.read(imgPath);//TODO: ------
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
         ImageIO.write(bufferedImage, "jpg", baos);
         baos.flush();
         String base64String = Base64.encode(baos.toByteArray());
         baos.close();
+        //TODO: Better make this part of code with try-finally, where you will close stream in finally block
+        //TODO: (for 100% close stream). /Revived by Taras/
 
         return Base64.decode(base64String);
 

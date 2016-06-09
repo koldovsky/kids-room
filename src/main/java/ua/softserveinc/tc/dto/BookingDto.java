@@ -34,6 +34,7 @@ public class BookingDto {
     transient private User user;
     transient private Room room;
 
+    //TODO: What is it for? /Revived by Taras/
     public BookingDto() {
         this.id = id;
         this.startTime = startTime;
