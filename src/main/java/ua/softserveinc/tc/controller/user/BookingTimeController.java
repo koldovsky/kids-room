@@ -39,7 +39,6 @@ public class BookingTimeController {
     public
     @ResponseBody
     String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + dtos.get(0).getStartTime());
         dtos.forEach(dto -> {
             dto.setUser(userService.getUserByEmail(principal.getName()));
             dto.setChild(childService.findById(dto.getKidId()));
@@ -48,6 +47,13 @@ public class BookingTimeController {
 
         return new Gson()
                 .toJson(bookingService.persistBookingsFromDtoAndSetId(dtos));
+    }
+
+    @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    public
+    @ResponseBody
+    String getAllBookings(@PathVariable Long idUser, @PathVariable Long idRoom) {
+        return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
     @RequestMapping(value = "/disabled")

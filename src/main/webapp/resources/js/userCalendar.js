@@ -26,7 +26,7 @@ function selectRoomForUser(id) {
 
     $('input').on('click', function () {
 
-        for(var i = 0; i < ($('#kostil').val()); i++) {
+        for (var i = 0; i < ($('#kostil').val()); i++) {
             if ($('#checkboxKid' + i).is(':checked')) {
                 $('#child-comment-' + i).prop('readonly', false);
             } else {
@@ -34,7 +34,6 @@ function selectRoomForUser(id) {
             }
         }
     });
-
 
     $('#bookingForm').dialog({
         autoOpen: false,
@@ -67,7 +66,9 @@ function selectRoomForUser(id) {
                         title: stringToArray[0],
                         start: stringToArray[1],
                         end: stringToArray[2],
-                        rendering: 'background'
+                       // rendering: 'background'
+                        editable:false,
+                        color:"#ffff00"
                     }
                 }
                 renderingForUser(objects, id);
@@ -78,7 +79,7 @@ function selectRoomForUser(id) {
                     title: '1',
                     start: '1',
                     end: '1'
-                }]
+                }];
                 renderingForUser(objects, id);
             }
         }
@@ -92,12 +93,16 @@ function renderingForUser(objects, id) {
     var bookingsArray = [];
 
     $('#booking').click(function () {
-alert(id);
         for (var i = 0; i < ($('#kostil').val()); i++) {
             if ($('#checkboxKid' + i).is(':checked')) {
                 bookingsArray.push(
                     new Booking(makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker'),
-                        makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'), "NO", 1, id));
+                        makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'), "NO", 1, id, 1));
+
+                $('#user-calendar').fullCalendar('renderEvent', {
+                    title: "name",
+                    start: makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker')
+                });
             }
         }
 
@@ -112,7 +117,6 @@ alert(id);
             }
         });
 
-
         bookingsArray = [];
 
         $('#title').val('');
@@ -120,65 +124,151 @@ alert(id);
         $('#bookingForm').dialog('close');
     });
 
-    $('#user-calendar').fullCalendar({
-        minTime: '10:00:00',
-        maxTime: '22:00:00',
-        eventBackgroundColor: '#068000',
-        eventColor: 'transparent',
-        eventBorderColor: 'transparent',
-        eventTextColor: '#000',
-        slotDuration: '00:15:00',
+    var pathForUploadingAllBookingsForUsers = 'getallbookings/1/' + id;
 
-        dayClick: function f(date, jsEvent, view) {
-            $('#bookingForm').dialog('open');
+    $.ajax({
+        url: pathForUploadingAllBookingsForUsers, success: function (result) {
+            result = JSON.parse(result);
 
-            var clickDate = date.format();
+            var objectsLen = objects.length;
 
-            $('#bookingStartDate').val(clickDate.substring(0, 10));
-            $('#bookingEndDate').val(clickDate.substring(0, 10));
+            result.forEach(function (item, i, result) {
+                console.log(item.date + item.startTime + ":00");
+                objects[objectsLen + i] = {
+                    title: item.kidName,
+                    start: item.date + "T" + item.startTime + ":00",
+                    end: item.date + "T" + item.endTime + ":00",
+                    color: "#99ff33",
+                    editable: true
+                }
+            });
+
+            $('#user-calendar').fullCalendar({
+                minTime: '10:00:00',
+                maxTime: '22:00:00',
+                eventBackgroundColor: '#068000',
+                eventColor: 'transparent',
+                eventBorderColor: 'transparent',
+                eventTextColor: '#000',
+                slotDuration: '00:15:00',
+
+                dayClick: function f(date, jsEvent, view) {
+                    $('#bookingForm').dialog('open');
+
+                    var clickDate = date.format();
+
+                    $('#bookingStartDate').val(clickDate.substring(0, 10));
+                    $('#bookingEndDate').val(clickDate.substring(0, 10));
 
 
-            if (clickDate.length < 12) {
-                clickDate = clickDate + 'T00:00:00';
-            }
+                    if (clickDate.length < 12) {
+                        clickDate = clickDate + 'T00:00:00';
+                    }
 
-            bookingDate.clickDate = clickDate;                  //цей об'єкт переносить дату у ф-цію для створення букігу
+                    bookingDate.clickDate = clickDate;                  //цей об'єкт переносить дату у ф-цію для створення букігу
 
-            $('#dialog').dialog('open');
-        },
+                    $('#dialog').dialog('open');
+                },
 
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-        },
-        defaultDate: $('#user-calendar').fullCalendar('getDate'),
+                eventClick: function (calEvent, jsEvent, view) {
+                  alert("DON'T TOUCH THIS!!!!!!");
+                },
 
-        select: function (start, end) {
-            var title = prompt('Event Title:');
-            var eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                $('#user-calendar').fullCalendar('renderEvent', eventData, false);
-            }
-            $('#user-calendar').fullCalendar('unselect');
-        },
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
 
-        eventRender: function (event, element) {
-            if (event.rendering == 'background') {
-                element.append(event.title);
-                element.css('background-color', 'yellow');
-                element.css('color', 'black');
-            }
-        },
-        editable: false,
-        eventLimit: true,
-        events: objects
+                defaultDate: $('#user-calendar').fullCalendar('getDate'),
+
+                select: function (start, end) {
+                    var title = prompt('Event Title:');
+                    var eventData;
+                    if (title) {
+                        eventData = {
+                            title: title,
+                            start: start,
+                            end: end
+                        };
+                        $('#user-calendar').fullCalendar('renderEvent', eventData, false);
+                    }
+                    $('#user-calendar').fullCalendar('unselect');
+                },
+
+                eventRender: function (event, element) {
+                    if (event.rendering == 'background') {
+                        element.append(event.title);
+                        element.css('background-color', 'yellow');
+                        element.css('color', 'black');
+                    }
+                },
+                editable: false,
+                eventLimit: true,
+                events: objects
+            });
+        }
     });
+
+    /* $('#user-calendar').fullCalendar({
+     minTime: '10:00:00',
+     maxTime: '22:00:00',
+     eventBackgroundColor: '#068000',
+     eventColor: 'transparent',
+     eventBorderColor: 'transparent',
+     eventTextColor: '#000',
+     slotDuration: '00:15:00',
+
+     dayClick: function f(date, jsEvent, view) {
+     $('#bookingForm').dialog('open');
+
+     var clickDate = date.format();
+
+     $('#bookingStartDate').val(clickDate.substring(0, 10));
+     $('#bookingEndDate').val(clickDate.substring(0, 10));
+
+
+     if (clickDate.length < 12) {
+     clickDate = clickDate + 'T00:00:00';
+     }
+
+     bookingDate.clickDate = clickDate;                  //цей об'єкт переносить дату у ф-цію для створення букігу
+
+     $('#dialog').dialog('open');
+     },
+
+     header: {
+     left: 'prev,next today',
+     center: 'title',
+     right: 'month,agendaWeek,agendaDay'
+     },
+     defaultDate: $('#user-calendar').fullCalendar('getDate'),
+
+     select: function (start, end) {
+     var title = prompt('Event Title:');
+     var eventData;
+     if (title) {
+     eventData = {
+     title: title,
+     start: start,
+     end: end
+     };
+     $('#user-calendar').fullCalendar('renderEvent', eventData, false);
+     }
+     $('#user-calendar').fullCalendar('unselect');
+     },
+
+     eventRender: function (event, element) {
+     if (event.rendering == 'background') {
+     element.append(event.title);
+     element.css('background-color', 'yellow');
+     element.css('color', 'black');
+     }
+     },
+     editable: false,
+     eventLimit: true,
+     events: objects
+     });*/
 }
 
 function makeISOtime(clickDate, idOfTimePicker) {
@@ -204,10 +294,11 @@ function makeISOtime(clickDate, idOfTimePicker) {
         timepickerMinutes + clickDate.substring(16);
 }
 
-function Booking(startTime, endTime, comment, kidId, roomId) {
+function Booking(startTime, endTime, comment, kidId, roomId, userId) {
     this.startTime = startTime;
     this.endTime = endTime;
     this.comment = comment;
     this.kidId = kidId;
     this.roomId = roomId;
+    this.userId = userId;
 }

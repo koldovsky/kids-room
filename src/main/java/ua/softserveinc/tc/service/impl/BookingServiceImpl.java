@@ -219,4 +219,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         return listDTO;
     }
+
+    public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
+
+        List<Booking> bookings = bookingDao.findAll();
+
+        List<BookingDto> bookingDtos = new LinkedList<>();
+
+        for (Booking booking : bookings) {
+            if ((booking.getIdRoom().getId() == idUser) && (booking.getIdUser().getId() == idRoom)) {
+                bookingDtos.add(new BookingDto(booking));
+            }
+        }
+        return bookingDtos;
+    }
 }
+

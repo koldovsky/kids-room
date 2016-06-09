@@ -35,4 +35,6 @@ public interface BookingService extends BaseService<Booking>
     Date replaceBookingTime(Booking booking, String time);
 
     List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO);
+
+    List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom);
 }

@@ -4,7 +4,6 @@
 
 $(function () {
     $('#basicExample').timepicker({
-
         'timeFormat': 'H:i',
         'step': 15,
         'minTime': '15:00',
@@ -207,7 +206,7 @@ function rendering(objects, roomID) {
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
-                                                            //тут вставляються автоматичні дати для події на весь день
+
             var ckbox = $('#checkbox');
 
             $('input').on('click', function () {
