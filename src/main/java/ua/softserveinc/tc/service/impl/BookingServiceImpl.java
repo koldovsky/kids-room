@@ -64,6 +64,44 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .collect(Collectors.toList());
     }
 
+    // Option 2
+    /*@Override
+    public List<Booking> getBookings(Date startDate, Date endDate) {
+        return getBookings(startDate, endDate, null, null);
+    }
+
+    @Override
+    public List<Booking> getBookings(Date startDate, Date endDate, User user) {
+        return getBookings(startDate, endDate, user, null);
+    }
+
+    @Override
+    public List<Booking> getBookings(Date startDate, Date endDate, Room room) {
+        return getBookings(startDate, endDate, null, room);
+    }
+
+    @Override
+    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room) {
+        EntityManager entityManager = bookingDao.getEntityManager();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
+        Root<Booking> root = criteria.from(Booking.class);
+
+        List<Predicate> restrictions = new ArrayList<>();
+        restrictions.add(builder.between(root.get(
+                BookingConstants.Entity.START_TIME), startDate, endDate));
+
+        if (user != null)
+            restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
+        if (room != null)
+            restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
+
+        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
+
+        return entityManager.createQuery(criteria).getResultList();
+    }*/
+
     @Override
     public List<Booking> filterByState(List<Booking> bookings, BookingState bookingState) {
         return bookings.stream()
