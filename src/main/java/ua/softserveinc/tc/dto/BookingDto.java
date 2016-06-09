@@ -49,7 +49,7 @@ public class BookingDto {
 
         this.kidName = booking.getIdChild().getFullName();
         this.roomName = booking.getIdRoom().getAddress();
-//        this.duration = booking.formatDuration();
+        this.duration = booking.formatDuration();
         this.sum = booking.getSum();
         this.id = booking.getIdBook();
         this.bookingState = booking.getBookingState();
