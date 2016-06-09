@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.entity.Event;
-import ua.softserveinc.tc.entity.Room;
 
 import java.util.Date;
 import java.util.List;

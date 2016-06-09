@@ -7,7 +7,6 @@ import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.*;
-import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.UserService;
 
 import javax.persistence.EntityManager;

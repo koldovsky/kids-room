@@ -39,13 +39,13 @@ public class ViewEventController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
 
-        if(principal == null) return UserConstants.LOGIN_VIEW;
-        else {
+        if(principal == null) {
+            return UserConstants.LOGIN_VIEW;
+        } else {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
             if(userService.getUserByEmail(email).getRole() == Role.USER) {
                 model.addAttribute("rooms", roomServiceImpl.findAll());
-                //TODO add constants
                 model.addAttribute("kids", childService.getChildrenByUser(user));
             } else {
                 model.addAttribute("rooms", roomServiceImpl.findByManger(user));
@@ -63,7 +63,6 @@ public class ViewEventController {
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody
     String getAjax(@RequestBody EventDto eventDto) {
-        //TODO rename this method
         return calendarService.create((genericMapper.toEntity(eventDto))).toString();
     }
 

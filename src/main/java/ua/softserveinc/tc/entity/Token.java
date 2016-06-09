@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
-import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
+import ua.softserveinc.tc.constants.UserConstants;
 
 import javax.persistence.*;
 
@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = TokenConst.TABLE_NAME_TOKEN)
 public class Token {
-    private static final int EXPIRATION = 24*60;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

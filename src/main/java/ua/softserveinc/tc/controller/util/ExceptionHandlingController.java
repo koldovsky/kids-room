@@ -33,13 +33,12 @@ public class ExceptionHandlingController {
 
     /**
      * Responds to user with AccessDenied view
-     * @param request Object that contains request-related info
      * @param e Exception
      * @return AccessDenied view
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
-    public ModelAndView handleError403(HttpServletRequest request, Exception e){
+    public ModelAndView handleError403(Exception e){
         ModelAndView mav = new ModelAndView(ErrorPages.ACCESS_DENIED_VIEW);
         mav.addObject("exception", e);
         return mav;
