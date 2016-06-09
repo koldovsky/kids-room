@@ -21,7 +21,9 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public List<User> findAllUsersByRole(Role role) {
-        List<User> result = (List<User>) entityManager.createQuery("from User where role = " + role.ordinal()).getResultList();
+        List<User> result = (List<User>) entityManager
+                .createQuery("from User where role = " + role.ordinal())
+                .getResultList();
 
         return result;
     }
