@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.service;
 
-import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 
