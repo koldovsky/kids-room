@@ -2,13 +2,11 @@ package ua.softserveinc.tc.util;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 
+import java.sql.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**

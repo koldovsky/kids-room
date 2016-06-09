@@ -92,6 +92,22 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
+    public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end){
+        if(start.equals(end)){
+            return getBlockedPeriodsForDay(room, start);
+        }
+
+        Map<String, String> blockedPeriods = new HashMap<>();
+        while(start.compareTo(end) <= 0){
+                blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
+                start.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return blockedPeriods;
+    }
+
+    @Override
+    @Deprecated
     public Map<String, String> getBlockedPeriodsForWeek(Room room) {
         Calendar start = Calendar.getInstance();
         start.set(Calendar.HOUR_OF_DAY, 0);
@@ -109,11 +125,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return blockedPeriods;
     }
 
-    @Override
-    public Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
+    private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        //Calendar calendarStart = Calendar.getInstance();
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(calendarStart.getTime());
 
@@ -157,6 +171,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room) {
         List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room);
         List<Booking> filtered = bookingService.filterByStates(bookings, BookingConstants.ACTIVE_AND_BOOKED);
-        return !(filtered.size() > room.getCapacity());
+        return room.getCapacity() <= filtered.size();
     }
 }

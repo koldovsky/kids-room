@@ -11,6 +11,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.security.Principal;
 import java.util.Calendar;
@@ -53,23 +54,18 @@ public class BookingTimeController {
     public
     @ResponseBody
     String getDisabledTime(@RequestParam Long roomID,
-                           @RequestParam String period) {
-        Map<String, String> blockedPeriods;
+                           @RequestParam String dateLo,
+                           @RequestParam String dateHi) {
         Room room = roomService.findById(roomID);
-        switch (period) {
-            case "day":
-                blockedPeriods = roomService
-                        .getBlockedPeriodsForDay(room, Calendar.getInstance());
-                break;
-            case "week":
-                blockedPeriods = roomService
-                        .getBlockedPeriodsForWeek(room);
-                break;
-            default:
-                throw new ResourceNotFoundException();
-        }
+
+        Calendar start = Calendar.getInstance();
+        start.setTime(DateUtil.toDate(dateLo));
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(DateUtil.toDate(dateHi));
 
         return new Gson()
-                .toJson(blockedPeriods);
+                .toJson(roomService
+                        .getBlockedPeriods(room, start, end));
     }
 }

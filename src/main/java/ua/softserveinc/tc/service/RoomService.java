@@ -23,9 +23,11 @@ public interface RoomService extends BaseService<Room> {
 
     List<Room> findByManger(User manager);
 
+    Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
+
     Map<String, String> getBlockedPeriodsForWeek(Room room);
 
-    Map<String, String> getBlockedPeriodsForDay(Room room, Calendar day);
-
     Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room);
+
+
 }
