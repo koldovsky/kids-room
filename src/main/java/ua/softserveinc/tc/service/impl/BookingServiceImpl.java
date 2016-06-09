@@ -73,7 +73,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     public List<Booking> filterByStates(List<Booking> bookings, BookingState... bookingStates) {
-        if (bookingStates.length == 0) return bookings;
+        if (bookingStates.length == 0) {
+            return bookings;
+        }
         return Arrays.stream(bookingStates)
                 .flatMap(bookingState -> filterByState(bookings, bookingState).stream())
                 .collect(Collectors.toList());

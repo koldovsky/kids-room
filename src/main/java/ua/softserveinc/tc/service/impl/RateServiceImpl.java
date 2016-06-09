@@ -29,7 +29,10 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
                 .filter(rate -> hours <= rate.getHourRate())
                 .min(Comparator.comparing(Rate::getHourRate));
 
-        if (min.isPresent()) return min.get();
-        else return Collections.max(rates, Comparator.comparing(Rate::getHourRate));
+        if (min.isPresent()) {
+            return min.get();
+        } else {
+            return Collections.max(rates, Comparator.comparing(Rate::getHourRate));
+        }
     }
 }

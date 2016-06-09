@@ -27,7 +27,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public T findById(Object id) {
         T obj  = baseDao.findById(id);
-        if(obj == null) throw new ResourceNotFoundException();
+        if(obj == null) {
+            throw new ResourceNotFoundException();
+        }
         return obj;
     }
 

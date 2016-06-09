@@ -28,7 +28,7 @@ import java.security.Principal;
 
 /**
  * Created by Nestor on 22.05.2016.
- *
+ * <p>
  * Controller handles all images-related work
  * Such as: request for images, uploads of new images
  */
@@ -43,16 +43,16 @@ public class ImagesController {
 
     /**
      * Uploading a new profile picture for a Child
-     * @param file a MultipartFile that is being uploaded
+     *
+     * @param file  a MultipartFile that is being uploaded
      * @param kidId ID of a Child
      * @return redirects back to kid's profile view
      */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
     public String uploadImage(@RequestParam("file") MultipartFile file,
                               @PathVariable String kidId)
-            throws ResourceNotFoundException, AccessDeniedException
-    {
-        if(!LogicalRequestsValidator.isRequestValid(kidId)){
+            throws ResourceNotFoundException, AccessDeniedException {
+        if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
 
@@ -75,6 +75,7 @@ public class ImagesController {
 
     /**
      * Returns profile pictures to client
+     *
      * @param kidId
      * @param principal
      * @return
@@ -88,9 +89,9 @@ public class ImagesController {
     public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
             throws IOException,
             AccessDeniedException,
-            ResourceNotFoundException{
+            ResourceNotFoundException {
 
-        if(!LogicalRequestsValidator.isRequestValid(kidId)){
+        if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
         Long id = Long.parseLong(kidId);
@@ -98,14 +99,16 @@ public class ImagesController {
         Child kid = childService.findById(id);
 
         User current = userService.getUserByEmail(principal.getName());
-        if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
+        if (current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
             throw new AccessDeniedException("Have to be manager or parent");
         }
-        if(kid.getImage()!= null) return kid.getImage();
+        if (kid.getImage() != null) {
+            return kid.getImage();
+        }
 
         String path;
-        if(kid.getGender() == Gender.FEMALE)
-             path = "src/main/resources/images/default-girl.jpg";
+        if (kid.getGender() == Gender.FEMALE)
+            path = "src/main/resources/images/default-girl.jpg";
         else
             path = "src/main/resources/images/default-boy.jpg";
 
@@ -115,7 +118,7 @@ public class ImagesController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
         ImageIO.write(bufferedImage, "jpg", baos);
         baos.flush();
-        String base64String= Base64.encode(baos.toByteArray());
+        String base64String = Base64.encode(baos.toByteArray());
         baos.close();
 
         return Base64.decode(base64String);
@@ -125,11 +128,12 @@ public class ImagesController {
     /**
      * Handles bad image upload if the uploaded file cannot be persisted
      * to the database for any reason
+     *
      * @return "Bad Upload" view
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(JpaSystemException.class)
-    public String badUpload(){
+    public String badUpload() {
         return "error-bad-upload";
     }
 

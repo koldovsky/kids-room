@@ -28,7 +28,9 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         Event event = new Event();
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
-        if (eventDto.getId() != 0) event.setId(eventDto.getId());
+        if (eventDto.getId() != 0) {
+            event.setId(eventDto.getId());
+        }
         Date startDate = null;
         Date endDate = null;
         try {
@@ -83,7 +85,7 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
     public final List<EventDto> toDto(final List<Event> events) {
         List<EventDto> result = new LinkedList<EventDto>();
 
-        for(Event event : events) {
+        for (Event event : events) {
             result.add(this.toDto(event));
         }
 
