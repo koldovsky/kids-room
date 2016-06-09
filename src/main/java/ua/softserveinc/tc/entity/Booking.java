@@ -1,13 +1,26 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.UserConstants;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
 
@@ -17,6 +30,7 @@ import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
  */
 @Entity
 @Table(name = BookingConstants.DB.TABLE_NAME_BOOKING)
+@Indexed
 public class Booking {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -26,6 +40,8 @@ public class Booking {
 
     @ManyToOne(optional = false)//(cascade = CascadeType.ALL)
     @JoinColumn(name = ChildConst.ID_CHILD)
+    @Embedded
+    @IndexedEmbedded(targetElement = Child.class)
     private Child idChild;
 
     @ManyToOne(optional = false)//(fetch = FetchType.LAZY)

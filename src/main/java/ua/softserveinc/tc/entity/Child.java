@@ -17,6 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = ChildConst.TABLE_NAME)
 @Indexed
+@Embeddable
 public class Child implements Comparable<Child>
 {
     @Id

@@ -7,8 +7,10 @@ public interface SearchConstants {
 
     String[] childSearchFields = {"firstName", "lastName"};
     String[] userSearchFields = {"firstName", "lastName", "email", "phoneNumber"};
+    String[] bookingSearchFields = {"idChild.firstName", "idChild.lastName"};
 
     String childSearchUrl = "api/child/search";
     String userSearchUrl = "api/user/search";
+    String bookingSearchUrl = "api/booking/search";
 
 }

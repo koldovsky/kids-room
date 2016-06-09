@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.softserveinc.tc.constants.SearchConstants;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.dto.UserDto;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.search.BookingSearch;
 import ua.softserveinc.tc.search.ChildSearch;
 import ua.softserveinc.tc.search.UserSearch;
 
@@ -29,6 +32,9 @@ public class SearchController {
 
     @Autowired
     private ChildSearch childSearch;
+
+    @Autowired
+    private BookingSearch bookingSearch;
 
     @RequestMapping(value = SearchConstants.userSearchUrl, method = RequestMethod.GET)
     public @ResponseBody String searchUser(@RequestParam("field") String field) {
@@ -53,6 +59,21 @@ public class SearchController {
             List<Child> children = childSearch.search(field);
             for (Child child : children) {
                 result.add(new ChildDto(child));
+            }
+        }
+
+        Gson gson = new Gson();
+        return gson.toJson(result);
+    }
+
+    @RequestMapping(value = SearchConstants.bookingSearchUrl, method = RequestMethod.GET)
+    public @ResponseBody String searchBooking(@RequestParam("field") String field) {
+        List<BookingDto> result = new ArrayList<BookingDto>();
+
+        if (isValidRequestField(field)) {
+            List<Booking> bookings = bookingSearch.search(field);
+            for (Booking booking : bookings) {
+                result.add(new BookingDto(booking));
             }
         }
 
