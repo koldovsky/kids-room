@@ -27,7 +27,7 @@ public interface BookingService extends BaseService<Booking>
 
     List<Booking> filterBySum(List<Booking> bookings, Long sum);
     List<Booking> filterByState(List<Booking> bookings, BookingState bookingState);
-    List<Booking> filterByOppositeState(List<Booking> bookings, BookingState bookingState);
+    List<Booking> filterByStates(List<Booking> bookings, BookingState... bookingStates);
 
     Booking confirmBooking(BookingDto bookingDto);
     Booking confirmBookingEndTime(BookingDto bookingDto);

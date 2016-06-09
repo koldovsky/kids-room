@@ -16,10 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -75,11 +72,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Booking> filterByOppositeState(List<Booking> bookings, BookingState bookingState) {
-        return bookings.stream()
-                .filter(booking ->
-                        booking.getBookingState() != bookingState)
+    public List<Booking> filterByStates(List<Booking> bookings, BookingState... bookingStates) {
+        if (bookingStates.length == 0) return bookings;
+        return Arrays.stream(bookingStates)
+                .flatMap(bookingState -> filterByState(bookings, bookingState).stream())
                 .collect(Collectors.toList());
     }
 
@@ -111,7 +107,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public Long getSumTotal(List<Booking> bookings) {
-        return bookings.stream().mapToLong(Booking::getSum).sum();
+        return bookings.stream()
+                .mapToLong(Booking::getSum)
+                .sum();
     }
 
     @Override

@@ -1,9 +1,17 @@
 package ua.softserveinc.tc.constants;
 
+import ua.softserveinc.tc.entity.BookingState;
+
 /**
  * Created by Петришак on 03.06.2016.
  */
 public interface BookingConstants {
+
+    BookingState[] ALL_STATES_BUT_CANCELLED = {
+            BookingState.ACTIVE,
+            BookingState.BOOKED,
+            BookingState.COMPLETED
+    };
 
     interface Entity {
 
