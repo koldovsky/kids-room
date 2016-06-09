@@ -10,13 +10,13 @@
     <form id="generateAReport" action="report-all">
 
         <div id="dateThenDiv">
-            <h2>Choose start time</br>
-            <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></h2>
+            <h2><spring:message code="report.from" /></br>
+            <input type="date" value="${dateThen}" name="dateThen" id="dateThen"></h2>
         </div>
 
         <div id="dateNowDiv">
-            <h2>Choose end time</br>
-            <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
+            <h2><spring:message code="report.to" /></br>
+            <input type="date" value="${dateNow}" name="dateNow" id="dateNow"></h2>
         </div>
 
     </form>
@@ -46,7 +46,7 @@
                 <td>${user.getEmail()}</td>
                 <td>${user.getPhoneNumber()}</td>
                 <td class="parent" id="${user.getEmail()}">
-                    <a><spring:message code="report.details" /></a>
+                    <a id="seeDetails"><spring:message code="report.details" /></a>
                 </td>
             </tr>
             </c:forEach>

@@ -5,7 +5,6 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
-<script src="resources/js/exportIntoExcel.js"></script>
 
     <div class="tableDiv" id="generated">
         <table>
@@ -35,5 +34,5 @@
     </div>
 
     <div id="exportButton">
-        <input type="button" value="Export into Excel" class="btn-primary exportButton">
+        <input type="button" value=<spring:message code="report.download" /> class="btn-primary exportButton">
     </div>

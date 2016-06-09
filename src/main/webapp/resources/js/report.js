@@ -1,6 +1,7 @@
 $(function(){
+    localizedDetails = $("#seeDetails").html();
     addListener();
-    $("#dateNowInput, #dateThenInput").change(refreshView);
+    $("#dateNow, #dateThen").change(refreshView);
 });
 
 function addListener()
@@ -8,8 +9,8 @@ function addListener()
     $(".parent").each(function(){
         $(this).click(function(){
             $("#parentEmailHidden").val($(this).attr('id'));
-            $("#dateNowHidden").val($("#dateNowInput").val());
-            $("#dateThenHidden").val($("#dateThenInput").val());
+            $("#dateNowHidden").val($("#dateNow").val());
+            $("#dateThenHidden").val($("#dateThen").val());
             $("#allBookingsPerParentForm").submit();
         });
     });
@@ -17,8 +18,8 @@ function addListener()
 
 function refreshView()
 {
-    var dateThen = $("#dateThenInput").val();
-    var dateNow = $("#dateNowInput").val();
+    var dateThen = $("#dateThen").val();
+    var dateNow = $("#dateNow").val();
 	var request = "refreshParents/";
     request += dateThen + "/" + dateNow;
 
@@ -40,7 +41,7 @@ function refreshView()
             + '<td>' + user.email + '</td>'
             + '<td>' + user.phoneNumber + '</td>'
             + '<td class="parent" id="'
-            + user.email + '"><a>See details</a></td></tr>';
+            + user.email + '"><a>' + localizedDetails + '</a></td></tr>';
         });
 
         $('td').remove();

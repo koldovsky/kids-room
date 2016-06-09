@@ -7,36 +7,33 @@
 <link rel='stylesheet' href='resources/css/bookings.css'>
 <script src="resources/js/statistics.js"></script>
 
-    <form id="generateAReport" action="manager-report-all">
 
-        <div id="dateThenDiv">
-            <h2>Choose start time</br>
-            <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></h2>
-        </div>
+    <div id="dateThenDiv">
+        <h2><spring:message code="report.from" /></br>
+        <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></h2>
+    </div>
 
-        <div id="dateNowDiv">
-            <h2>Choose end time</br>
-            <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
-        </div>
-
-    </form>
+    <div id="dateNowDiv">
+        <h2><spring:message code="report.to" /></br>
+        <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
+    </div>
 
     <div class="tableDiv" id="statistics">
         <table id="activeUsers">
 
             <caption>
                 <h2>
-                    Rooms statistics</br>
+                    <spring:message code="statistics.rooms" /></br>
                     <span id="date">(${dateThen} - ${dateNow})</span>
                 </h2>
             </caption>
 
             <tr>
-                <th>Name</th>
-                <th>City</th>
-                <th>Address</th>
-                <th>Manager</th>
-                <th>Sum</th>
+                <th><spring:message code="statistics.name" /></th>
+                <th><spring:message code="statistics.city" /></th>
+                <th><spring:message code="statistics.address" /></th>
+                <th><spring:message code="statistics.manager" /></th>
+                <th><spring:message code="statistics.sum" /></th>
             </tr>
 
             <c:forEach var="room" items="${statistics.keySet()}">
