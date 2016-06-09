@@ -2,9 +2,10 @@ package ua.softserveinc.tc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
 import ua.softserveinc.tc.dao.RoomDao;
-import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -20,7 +21,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 
@@ -31,10 +31,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private RoomDao roomDao;
 
     @Autowired
-    ApplicationConfigurator appConfigurator;
+    private ApplicationConfigurator appConfigurator;
 
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
 
     @Override
     public Room findById(Object id) {
@@ -77,7 +77,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return roomDao.update(entity);
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public List<Event> getAllEventsInRoom(Room room) {
         EntityManager entityManager = roomDao.getEntityManager();
 
@@ -153,13 +153,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return blockedPeriods;
     }
 
+    @Override
     public Boolean isPeriodAvailable(Room room, Date dateLo, Date dateHi) {
-        return !(bookingService.getBookings(dateLo, dateHi, room)
-                .stream().filter(booking ->
-                        booking.getBookingState() == BookingState.BOOKED ||
-                                booking.getBookingState() == BookingState.ACTIVE)
-                .collect(Collectors.toList())
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room);
+        return !(bookingService.filterByStates(bookings, BookingConstants.ACTIVE_AND_BOOKED)
                 .size() > room.getCapacity());
     }
-
 }
