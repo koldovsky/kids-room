@@ -69,6 +69,7 @@ public class BookingDto {
         booking.setBookingEndTime(dateEndTime);
         booking.setComment(comment);
         booking.setIdRoom(room);
+        booking.setIdChild(child);
         booking.setIdUser(user);
         booking.setBookingState(bookingState);
         return booking;

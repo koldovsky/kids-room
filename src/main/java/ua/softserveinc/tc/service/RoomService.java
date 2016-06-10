@@ -29,5 +29,5 @@ public interface RoomService extends BaseService<Room> {
 
     Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room);
 
-
+    Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room);
 }

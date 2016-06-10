@@ -12,6 +12,7 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.service.UserService;
 
 import javax.annotation.Resource;
 import java.util.Calendar;
@@ -29,6 +30,9 @@ import static org.junit.Assert.*;
 public class UserRepositoryTest {
     @Resource
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RoomService roomService;
@@ -53,5 +57,8 @@ public class UserRepositoryTest {
         User u = userRepository.findOne(1L);
         userRepository.updateManagerPassword(u, "testPassword");
         assertEquals("should be testPassword", "testPassword",userRepository.findOne(1L).getPassword());
+
+        //maybe we need a db for testing only not to affect the main db
+        userRepository.updateManagerPassword(u, "$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02");
     }
 }

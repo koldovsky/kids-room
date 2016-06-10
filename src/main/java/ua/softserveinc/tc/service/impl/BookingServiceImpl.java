@@ -9,6 +9,7 @@ import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
+import ua.softserveinc.tc.service.RoomService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,6 +30,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Autowired
     private RateService rateService;
 
+    @Autowired
+    private RoomService roomService;
+
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate) {
         EntityManager entityManager = bookingDao.getEntityManager();
@@ -42,7 +46,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return entityManager.createQuery(criteria).getResultList();
     }
 
-    //works bad, tested manually
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, User user) {
         return getBookings(startDate, endDate).stream()
@@ -209,16 +212,20 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
-
-        listDTO.forEach(bookingDTO -> {
-            Booking booking = bookingDTO.getBookingObject();
-            booking.setBookingState(BookingState.BOOKED);
-            bookingDao.create(booking);
-            bookingDTO.setId(booking.getIdBook());
-        });
-
-        return listDTO;
+    public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO){
+        BookingDto bdto = listDTO.get(0);
+        if(roomService.getAvailableSpaceForPeriod(
+                        bdto.getDateStartTime(),
+                        bdto.getDateEndTime(),
+                        bdto.getRoom()) >= listDTO.size()) {
+            listDTO.forEach(bookingDTO -> {
+                Booking booking = bookingDTO.getBookingObject();
+                bookingDao.create(booking);
+                bookingDTO.setId(booking.getIdBook());
+            });
+            return listDTO;
+        }
+        else return null;
     }
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {

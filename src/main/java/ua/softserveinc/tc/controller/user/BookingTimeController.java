@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -49,8 +51,8 @@ public class BookingTimeController {
             dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
         });
 
-        return new Gson()
-                .toJson(bookingService.persistBookingsFromDtoAndSetId(dtos));
+        dtos = bookingService.persistBookingsFromDtoAndSetId(dtos);
+        return new Gson().toJson(dtos);
     }
 
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
@@ -74,8 +76,7 @@ public class BookingTimeController {
         Calendar end = Calendar.getInstance();
         end.setTime(DateUtil.toDate(dateHi));
 
-        return new Gson()
-                .toJson(roomService
-                        .getBlockedPeriods(room, start, end));
+        return new Gson().toJson(roomService
+                .getBlockedPeriods(room, start, end));
     }
 }
