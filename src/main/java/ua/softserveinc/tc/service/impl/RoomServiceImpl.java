@@ -25,7 +25,7 @@ import java.util.*;
 import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 
 @Service
-public class  RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
+public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
 
     @Autowired
     private RoomDao roomDao;
@@ -169,9 +169,8 @@ public class  RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServi
 
     @Override
     public Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room) {
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room);
-        List<Booking> filtered = bookingService.filterByStates(bookings, BookingConstants.ACTIVE_AND_BOOKED);
-        return room.getCapacity() > filtered.size();
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.ACTIVE_AND_BOOKED);
+        return room.getCapacity() > bookings.size();
     }
 
     /**
@@ -181,8 +180,7 @@ public class  RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServi
      * @return number of places available in the room for the period
      */
     public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room){
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room);
-        List<Booking> filtered = bookingService.filterByStates(bookings, BookingConstants.ACTIVE_AND_BOOKED);
-        return room.getCapacity() - filtered.size();
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.ACTIVE_AND_BOOKED);
+        return room.getCapacity() - bookings.size();
     }
 }

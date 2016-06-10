@@ -50,16 +50,15 @@ public class BookingEditController {
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> listRoom = roomService.findByManger(currentManager);
         Room room = listRoom.get(0);
-        List<Booking> listBooking = bookingService.getBookings(workingHours().get(0),
-                workingHours().get(1)
-                ,room);
-        List<Booking> filterBookedList = bookingService.filterByState(listBooking, BookingState.BOOKED);
+        List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
+                workingHours().get(1),
+                room, BookingState.BOOKED);
         Date date = currentDate().getTime();
         List<Child> children = childService.findAll();
         model.addAttribute("rooms", listRoom);
         model.addAttribute("listChild", children);
         model.addAttribute("today", date);
-        model.addAttribute("listBooking", filterBookedList);
+        model.addAttribute("listBooking", bookings);
         return modelAndView;
     }
 
