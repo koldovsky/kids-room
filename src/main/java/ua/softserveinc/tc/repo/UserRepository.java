@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -23,6 +25,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
             "WHERE b.idRoom = ?1 AND b.bookingEndTime > ?2 " +
             "AND b.bookingEndTime < ?3 AND b.bookingState = 2")
     List<User> getActiveUsers(Room room, Date lo, Date hi);
+
+    @Query("UPDATE User u SET u.password = ?2 where u = ?1")
+    @Modifying
+    @Transactional
+    void updateManagerPassword(User manager, String password);
 
     //TODO: to implement other methods we should provide a class connected to this interface through another interface
 }

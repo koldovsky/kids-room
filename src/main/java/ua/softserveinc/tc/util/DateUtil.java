@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
+    private static DateFormat ISODateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
 
     // Suppresses default constructor, ensuring non-instantiability.
     private DateUtil() {
@@ -34,6 +35,15 @@ public final class DateUtil {
             return dateAndTimeFormat.parse(date);
         } catch (ParseException e) {
             System.err.println("Wrong format of date. " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static Date toDateISOFormat(String dateToParse){
+        try{
+            return ISODateFormat.parse(dateToParse);
+        } catch (ParseException e){
+            //TODO: log
             return null;
         }
     }

@@ -6,6 +6,7 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -31,11 +32,13 @@ public class BookingDto {
     private Long kidId;
     private Long roomId;
 
-    transient private Child child;
-    transient private User user;
-    transient private Room room;
+    private transient Child child;
+    private transient User user;
+    private transient Room room;
 
-    //TODO: What is it for? /Revived by Taras/
+    private transient Date dateStartTime;
+    private transient Date dateEndTime;
+
     public BookingDto() {
 
     }
@@ -57,6 +60,18 @@ public class BookingDto {
         this.durationLong = booking.getDuration();
         this.idChild = booking.getIdChild().getId();
 
+    }
+
+    public Booking getBookingObject(){
+        DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
+        Booking booking = new Booking();
+        booking.setBookingStartTime(dateStartTime);
+        booking.setBookingEndTime(dateEndTime);
+        booking.setComment(comment);
+        booking.setIdRoom(room);
+        booking.setIdUser(user);
+        booking.setBookingState(bookingState);
+        return booking;
     }
 
     public Child getChild() {
@@ -83,25 +98,20 @@ public class BookingDto {
         this.room = room;
     }
 
-    public Booking getBookingObject(){
-        DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
-        Booking booking = new Booking();
-        /*try {
-            booking.setBookingStartTime(dateFormat.parse(startTime));
-            booking.setBookingEndTime(dateFormat.parse(endTime));
-        }
+    public Date getDateStartTime() {
+        return dateStartTime;
+    }
 
-        catch(ParseException pe){
-            pe.printStackTrace();
+    public void setDateStartTime(Date dateStartTime) {
+        this.dateStartTime = dateStartTime;
+    }
 
-            //TODO: throw another exception
-        }*/
-        booking.setBookingStartTime(DateUtil.toDateAndTime(startTime));
-        booking.setBookingEndTime(DateUtil.toDateAndTime(endTime));
-        booking.setComment(comment);
-        booking.setIdRoom(room);
-        booking.setIdUser(user);
-        return booking;
+    public Date getDateEndTime() {
+        return dateEndTime;
+    }
+
+    public void setDateEndTime(Date dateEndTime) {
+        this.dateEndTime = dateEndTime;
     }
 
 

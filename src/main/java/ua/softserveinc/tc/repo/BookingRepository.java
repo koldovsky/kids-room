@@ -16,9 +16,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByBookingEndTimeBetween(Date start, Date end);
 
-//    @Query("select b from Booking b where b.idRoom = ?1 and b.bookingStartTime > ?2 and b.bookingEndTime < ?3")
-//    List<Booking> findByRoomAndPeriod(Room room, Date start, Date end);
-
     List<Booking> findByIdRoomAndBookingEndTimeBetween(Room room, Date start, Date end);
 
     List<Booking> findByIdUserAndBookingEndTimeBetween(User user, Date start, Date end);

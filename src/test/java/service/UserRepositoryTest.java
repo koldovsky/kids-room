@@ -47,4 +47,11 @@ public class UserRepositoryTest {
         User u = userRepository.findByEmail("user@softserveinc.com");
         assertEquals("Should be equal", "Alan Bom", u.getFullName());
     }
+
+    @Test
+    public void testUpdatePass(){
+        User u = userRepository.findOne(1L);
+        userRepository.updateManagerPassword(u, "testPassword");
+        assertEquals("should be testPassword", "testPassword",userRepository.findOne(1L).getPassword());
+    }
 }

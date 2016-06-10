@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
@@ -43,6 +44,9 @@ public class BookingTimeController {
             dto.setUser(userService.getUserByEmail(principal.getName()));
             dto.setChild(childService.findById(dto.getKidId()));
             dto.setRoom(roomService.findById(dto.getRoomId()));
+            dto.setBookingState(BookingState.BOOKED);
+            dto.setDateStartTime(DateUtil.toDateISOFormat(dto.getStartTime()));
+            dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
         });
 
         return new Gson()

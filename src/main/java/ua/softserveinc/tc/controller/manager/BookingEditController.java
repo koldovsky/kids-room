@@ -109,6 +109,10 @@ public class BookingEditController {
         Room room = roomService.findByManger(manager).get(0);
         Date dateLo = toDateAndTime(bookingDto.getStartTime());
         Date dateHi = toDateAndTime(bookingDto.getEndTime());
+
+        bookingDto.setDateStartTime(dateLo);
+        bookingDto.setDateEndTime(dateHi);
+
         Child child = childService.findById(bookingDto.getIdChild());
         // TODO: 10.06.2016  get booking by child
         if(roomService.isPeriodAvailable(dateLo, dateHi, room)){
