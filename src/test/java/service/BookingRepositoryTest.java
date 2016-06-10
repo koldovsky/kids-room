@@ -58,7 +58,7 @@ public class BookingRepositoryTest {
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DAY_OF_MONTH, 1);
         List<Booking> lst = bookingRepository
-                .findByIdRoomAndBookingEndTimeBetween(r, c.getTime(), Calendar.getInstance().getTime());
+                .findByRoomAndBookingEndTimeBetween(r, c.getTime(), Calendar.getInstance().getTime());
         System.out.println("FindByRoomAndPeriod: " + lst.size());
 
     }
@@ -71,7 +71,7 @@ public class BookingRepositoryTest {
         c.add(Calendar.MONTH, -1);
         c.set(Calendar.HOUR_OF_DAY, 0);
         List<Booking> lst = bookingRepository
-                .findByIdRoomAndIdUserAndBookingEndTimeBetween(r, user, c.getTime(), Calendar.getInstance().getTime());
+                .findByRoomAndUserAndBookingEndTimeBetween(r, user, c.getTime(), Calendar.getInstance().getTime());
 
         System.out.println("FindByUserAndRoomAndPeriod: " + lst.size());
     }
@@ -83,7 +83,7 @@ public class BookingRepositoryTest {
         c.add(Calendar.MONTH, -1);
         c.set(Calendar.HOUR_OF_DAY, 0);
         List<Booking> lst = bookingRepository
-                .findByIdUserAndBookingEndTimeBetween(user, c.getTime(), Calendar.getInstance().getTime());
+                .findByUserAndBookingEndTimeBetween(user, c.getTime(), Calendar.getInstance().getTime());
 
         System.out.println("FindByUserAndPeriod: " + lst.size());
     }

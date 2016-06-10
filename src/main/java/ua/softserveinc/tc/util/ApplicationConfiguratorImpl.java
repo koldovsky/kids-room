@@ -1,5 +1,8 @@
 package ua.softserveinc.tc.util;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,7 +17,8 @@ import java.util.List;
 @Component
 public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
 
-    List<String> allowedDomains = new ArrayList<>(Arrays.asList("softserveinc.com"));
+    String[] allowedDomains = {"softserveinc.com"};
+
     private Integer kidsMinAge = 3;
     private Integer kidsMaxAge = 8;
     private Integer minutesToCalculateBookingsEveryDay = 15;
@@ -36,18 +40,13 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
     }
 
     @Override
-    public List<String> getAllowedDomainsList() {
+    public String[] getAllowedDomainsList() {
         return allowedDomains;
     }
 
     @Override
     public Integer getMinPeriodSize() {
         return minPeriodSize;
-    }
-
-    @Override
-    public void setMinPeriodSize(Integer minPeriodSize) {
-        this.minPeriodSize = minPeriodSize;
     }
 
     @Override

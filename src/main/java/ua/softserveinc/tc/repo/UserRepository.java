@@ -21,8 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     List<User> findByRole(Role role);
 
-    @Query("SELECT DISTINCT b.idUser FROM Booking b " +
-            "WHERE b.idRoom = ?1 AND b.bookingEndTime > ?2 " +
+    @Query("SELECT DISTINCT b.user FROM Booking b " +
+            "WHERE b.room = ?1 AND b.bookingEndTime > ?2 " +
             "AND b.bookingEndTime < ?3 AND b.bookingState = 2")
     List<User> getActiveUsers(Room room, Date lo, Date hi);
 
