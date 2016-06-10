@@ -8,8 +8,8 @@ import ua.softserveinc.tc.entity.BookingState;
 public interface BookingConstants {
 
     BookingState[] NOT_CANCELLED = {
-            BookingState.ACTIVE,
             BookingState.BOOKED,
+            BookingState.ACTIVE,
             BookingState.COMPLETED
     };
 

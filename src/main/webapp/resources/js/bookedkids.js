@@ -1,5 +1,6 @@
    function cancelBooking(idBook){
         $('#'+idBook).addClass('highlightedRed');
+
         $('#cancelModal').find('#closeCencel').click(function(){
               $('#'+idBook).removeClass('highlightedRed');
         });
@@ -107,8 +108,10 @@
                     alert(result);
                     var bookings = JSON.parse(result);
                     var tr = "";
+                    var cancel = '<spring:message code= "booking.canceled"/>';
                     $.each(bookings, function(i, booking){
-                    var clfun = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
+                    var changeButton = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
+                    var cancelButton = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
                         tr+= '<tr id=' + booking.id +'><td>'
                         + '<a href=profile?id=' + booking.idChild +'>'
                         + booking.kidName +'</td>'
@@ -117,30 +120,36 @@
                         +'<button class="btn btn-sm btn-primary"'
                         + 'data-toggle="modal"'
                         + 'data-target="#change-booking-modal"'
-                        + clfun  +'> Edit </button>'
+                        + changeButton  +'> Edit </button>'
                         + '</td>'
-                        +'</tr>';
+                        + '<td class="cancelClass">'
+                        + '<button class="btn btn-sm btn-warning"'
+                        + 'data-toggle="modal"'
+                        + 'data-target="#cancelModal"'
+                        + cancelButton +'> Cancel </button>'
+                        + '</td>'
+                        + '</tr>';
                     });
                     $('td').remove();
                     $('.table-edit').append(tr);
                 }
-        });
-    });
+       });
+ });
 
-    function changeBooking(id){
-         $('#wrong-interval').hide();
-         $('#fill-in').hide();
-         var idElement="#"+id;
+
+ function changeBooking(id){
+
+             $('#wrong-interval').hide();
+             $('#fill-in').hide();
+             var idElement="#"+id;
             $('#change-booking-modal').find('#change-booking').click(function(){
-                if (!$('.input-group').val()){
-                $('#fill-in').show();
-                }else{
                     var getData = $(this).closest('.modal-dialog');
                     var inputDate = {
                         id: id,
                         startTime: getData.find('#data').val()+" "+getData.find('#startTime').val(),
                         endTime: getData.find('#data').val()+" "+ getData.find('#endTime').val(),
                     };
+
                     $.ajax({
                         url: 'change-booking',
                         type: 'POST',
@@ -155,10 +164,48 @@
                             $('#change-booking-modal').modal('hide');
                         }
                     });
-                }
+
             });
 
-        }
+ }
+
+ function selectSelectKid(id){
+
+        $('#send-button').click(function(){
+            var date = $('#create-date').val();
+            var stTime = date+ " "+$('#create-start-time').val();
+            var enTime = date+ " "+$('#create-end-time').val();
+            var comment = $('#create-comment').val();
+            alert(comment);
+            var inputDate = {
+                startTime:  stTime,
+                endTime: enTime,
+                idChild: id,
+                comment: comment,
+            };
+
+            $.ajax({
+                url: 'create-booking',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(inputDate),
+                success: function(data){
+                   alert(data);
+                }
+            });
+        });
+    }
+$(function(){
+        if(localStorage['room']==null)
+        localStorage['room']=1;
+
+   // $("#selectRoom").val(localStorage['room']);
+
+    $("#selectRoom").each(function()
+    {
+        alert($(this).val());
+    });
+});
 
 
 
