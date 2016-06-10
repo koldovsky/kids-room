@@ -41,7 +41,7 @@ public class Booking {
     @ManyToOne(optional = false)//(cascade = CascadeType.ALL)
     @JoinColumn(name = ChildConst.ID_CHILD)
     @Embedded
-    @IndexedEmbedded(targetElement = Child.class)
+    @IndexedEmbedded
     private Child idChild;
 
     @ManyToOne(optional = false)//(fetch = FetchType.LAZY)

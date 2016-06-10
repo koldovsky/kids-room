@@ -5,7 +5,7 @@ package ua.softserveinc.tc.constants;
  */
 public interface SearchConstants {
 
-    String[] childSearchFields = {"firstName", "lastName"};
+    String[] childSearchFields = {"firstName", "lastName", "parentId.firstName", "parentId.lastName"};
     String[] userSearchFields = {"firstName", "lastName", "email", "phoneNumber"};
     String[] bookingSearchFields = {"idChild.firstName", "idChild.lastName"};
 

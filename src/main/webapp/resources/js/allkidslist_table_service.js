@@ -8,7 +8,8 @@ function AllKidsTableService($http, $q) {
         addChild: addChild,
         searchChildren: searchChildren,
         searchParents: searchParents,
-        getParent: getParent
+        getParent: getParent,
+        getLocale: getLocale
     });
 
     function getChildren() {
@@ -72,6 +73,20 @@ function AllKidsTableService($http, $q) {
 
         return ( request.then( handleSuccess, handleError ) );
     }
+
+    function getLocale( locale ) {
+
+            var request = $http({
+                method: "get",
+                url: "api/localization",
+                params: {
+                    action: "get",
+                    locale: locale
+                }
+            });
+
+            return ( request.then( handleSuccess, handleError ) );
+        }
 
     function handleError( response ) {
 

@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
                                 @Parameter(name = "maxGramSize", value = "1024")
                         })
         })
+@Embeddable
 public class User {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")

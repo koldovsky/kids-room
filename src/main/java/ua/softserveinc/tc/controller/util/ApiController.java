@@ -2,9 +2,11 @@ package ua.softserveinc.tc.controller.util;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.ApiConstants;
+import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Child;
@@ -14,7 +16,10 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by edward on 5/17/16.
@@ -30,6 +35,9 @@ public class ApiController {
 
     @Autowired
     private ApplicationConfigurator configurator;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping(value = ApiConstants.usersRestUrl, method = RequestMethod.GET)
     public @ResponseBody String getUser() {
@@ -93,6 +101,17 @@ public class ApiController {
     public @ResponseBody String getAppConfiguration() {
         Gson gson = new Gson();
         return gson.toJson(configurator);
+    }
+
+    @RequestMapping(value = "/api/localization", method = RequestMethod.GET)
+    public @ResponseBody String getLocale(@RequestParam("locale") String locale) {
+        Map<String, String> messages = new HashMap<String, String>();
+        Locale localeObj = new Locale(locale);
+        for (String message : LocaleConstants.messages) {
+            messages.put(message, messageSource.getMessage(message, null, localeObj));
+        }
+        Gson gson = new Gson();
+        return gson.toJson(messages);
     }
 
 }
