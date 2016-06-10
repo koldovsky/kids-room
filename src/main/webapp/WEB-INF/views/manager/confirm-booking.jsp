@@ -13,14 +13,6 @@
 <script src="resources/js/allkidslist_table_directive.js"></script>
 <script src="resources/js/allkidslist_app.js"></script>
 
-    <select id="selectRoom" onchange="selectRoomForManager(value);">
-        <c:forEach items="${rooms}" var="room">
-            <option value="${room.id}">${room.city}: ${room.address}</option>
-        </c:forEach>
-        <option value="2">Second</option>
-        <option value="3">Third</option>
-    </select>
-
 <div class="tableDiv">
 	<div ng-app="allKidsList">
 		<div ng-controller="addBookingController">
@@ -51,7 +43,7 @@
 				<tr id="${booking.idBook}" class="trbooking">
 					<div class="col-sm-4">
 						<td>
-							<a id="href-kids" href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
+							<a id="href-kids" href="profile?id=${booking.child.id}">${booking.child.getFullName()}</a>
 						</td>
 					</div>
 					<td class="bookingTime" class="col-sm-4">

@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.constants.model.DateConst;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
@@ -144,11 +144,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);
         booking.setSum(0L);
+        booking.setBookingState(BookingState.CALCULATE_SUM);
     }
 
     @Override
     public Date replaceBookingTime(Booking booking, String time) {
-        DateFormat dfDate = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+        DateFormat dfDate = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
         String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(toDateAndTime(dateString));
