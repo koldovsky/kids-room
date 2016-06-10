@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.dto;
 
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
+import ua.softserveinc.tc.constants.model.DateConst;
 import ua.softserveinc.tc.entity.*;
 
 import java.text.DateFormat;

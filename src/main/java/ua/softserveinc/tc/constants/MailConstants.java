@@ -21,4 +21,6 @@ public interface MailConstants {
     String CONFIRM_MANAGER_VM = "confirmManager.vm";
 
     String PAYMENT_INFO_SUBJECT = "Payment info";
+    String CHANGE_PASS = "Change password";
+    String CONFIRM_REGISTRATION = "Confirmation registration";
 }

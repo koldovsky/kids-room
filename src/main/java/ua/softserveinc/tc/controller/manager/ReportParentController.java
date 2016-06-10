@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
+import ua.softserveinc.tc.constants.model.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -38,10 +38,8 @@ public class ReportParentController {
 
     @RequestMapping(value = "/report-parent", method = RequestMethod.GET,
             params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
-
-    public
     @ResponseBody
-    ModelAndView parentBookings(Principal principal,
+    public ModelAndView parentBookings(Principal principal,
                                 @RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
                                 @RequestParam(value = ReportConst.DATE_THEN) String dateThen,
                                 @RequestParam(value = ReportConst.DATE_NOW) String dateNow) {

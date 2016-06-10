@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.constants.ColumnConstants;
+package ua.softserveinc.tc.constants.column;
 
 /**
  * Created by Chak on 05.05.2016.

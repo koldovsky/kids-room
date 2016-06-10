@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
+import ua.softserveinc.tc.constants.column.RoomConst;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;

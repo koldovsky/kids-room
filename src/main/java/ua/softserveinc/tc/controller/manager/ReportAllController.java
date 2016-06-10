@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
+import ua.softserveinc.tc.constants.model.ReportConst;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -39,12 +39,10 @@ public class ReportAllController {
 
     @RequestMapping(value = "/report-all", method = RequestMethod.GET,
             params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
-
-    public
     @ResponseBody
-    ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
-                                    @RequestParam(value = ReportConst.DATE_NOW) String dateNow,
-                                    Principal principal) {
+    public ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
+                                           @RequestParam(value = ReportConst.DATE_NOW) String dateNow,
+                                           Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(ReportConst.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();

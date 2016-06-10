@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.AllKidsConst;
+import ua.softserveinc.tc.constants.model.AllKidsConst;
 
 /**
  * Created by edward on 5/8/16.

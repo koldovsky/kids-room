@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import ua.softserveinc.tc.constants.MailConstants;
-import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.model.ReportConst;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -106,7 +106,7 @@ public class MailServiceImpl implements MailService {
 
     private Map<String, Object> getModelWithUser(User user) {
         Map<String, Object> model = new HashMap<>();
-        model.put(UserConstants.USER, user);
+        model.put(UserConstants.Entity.USER, user);
         return model;
     }
 

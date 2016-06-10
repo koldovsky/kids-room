@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
+import ua.softserveinc.tc.constants.model.AdminConst;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;

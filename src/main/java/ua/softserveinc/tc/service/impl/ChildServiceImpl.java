@@ -25,19 +25,8 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
 
     @SuppressWarnings("unchecked")
     public List<Child> getChildrenByUser(User user){
-        List<Child> resultList = childDao.getEntityManager().createQuery("from Child" +
+        return childDao.getEntityManager().createQuery("from Child" +
                         " where parentId = " + user.getId()).getResultList();
-        return resultList;
-    }
-
-    //для чого це тут? в базовому севісі є метод findAll()
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Child> getAllChildren() {
-        return childDao
-                .getEntityManager()
-                .createQuery("from Child")
-                .getResultList();
     }
 
     @Override
@@ -48,11 +37,5 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
         }
     }
 
-  /*  @Override
-    public List<Child> getBookedChildren() {
-        return childDao
-                .getEntityManager()
-                .createQuery("from Booking" + " where " + BOOKING_START_TIME + " = " + new Date())
-                .getResultList();
-    }*/
+
 }

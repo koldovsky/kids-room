@@ -21,11 +21,9 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
     @Override
     public List<User> findAllUsersByRole(Role role) {
-        List<User> result = (List<User>) entityManager
+        return entityManager
                 .createQuery("from User where role = " + role.ordinal())
                 .getResultList();
-
-        return result;
     }
 
     @Override
@@ -36,8 +34,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     @Override
     public User getUserByEmail(String email) {
         try {
-            TypedQuery<User> query = getEntityManager().createNamedQuery(UserConstants.NQ_FIND_USER_BY_EMAIL, User.class);
-            return query.setParameter(UserConstants.EMAIL, email).getSingleResult();
+            TypedQuery<User> query = getEntityManager().createNamedQuery(UserConstants.Entity.NQ_FIND_USER_BY_EMAIL, User.class);
+            return query.setParameter(UserConstants.Entity.EMAIL, email).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }

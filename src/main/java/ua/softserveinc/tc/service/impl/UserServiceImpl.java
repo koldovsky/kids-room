@@ -55,8 +55,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public User getUserByEmail(String email)  {
-        User user = userDao.getUserByEmail(email);
-        return user;
+        return userDao.getUserByEmail(email);
     }
 
     @Override
@@ -80,11 +79,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public List<User> getAllParents() {
         EntityManager entityManager = userDao.getEntityManager();
-        List<User> list = (List<User>) entityManager
+        return entityManager
                 .createQuery("from User" +
                         " where role = 0")
                 .getResultList();
-        return list;
     }
 
 }

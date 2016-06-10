@@ -1,15 +1,12 @@
 package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
-import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
@@ -19,7 +16,6 @@ import ua.softserveinc.tc.util.DateUtil;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dima- on 06.06.2016.
@@ -39,9 +35,8 @@ public class BookingTimeController {
     private BookingService bookingService;
 
     @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
-    public
     @ResponseBody
-    String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
+    public String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
         dtos.forEach(dto -> {
             dto.setUser(userService.getUserByEmail(principal.getName()));
             dto.setChild(childService.findById(dto.getKidId()));
@@ -56,16 +51,14 @@ public class BookingTimeController {
     }
 
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-    public
     @ResponseBody
-    String getAllBookings(@PathVariable Long idUser, @PathVariable Long idRoom) {
+    public String getAllBookings(@PathVariable Long idUser, @PathVariable Long idRoom) {
         return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
     @RequestMapping(value = "/disabled")
-    public
     @ResponseBody
-    String getDisabledTime(@RequestParam Long roomID,
+    public String getDisabledTime(@RequestParam Long roomID,
                            @RequestParam String dateLo,
                            @RequestParam String dateHi) {
         Room room = roomService.findById(roomID);
