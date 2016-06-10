@@ -40,8 +40,9 @@ $(function () {
 });
 
 
-function changeFunc(id) {
+function selectRoomForManager(id) {
 
+    localStorage["room"] = id;
 
     $('#calendar').fullCalendar('destroy');
 
@@ -107,8 +108,6 @@ function changeFunc(id) {
             }
         }
     });
-
-    localStorage["room"] = id;
 }
 
 function rendering(objects, roomID) {

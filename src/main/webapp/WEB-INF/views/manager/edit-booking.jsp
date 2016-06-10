@@ -6,17 +6,10 @@
 
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
+<script src="resources/js/bookedkids.js"></script>
+<script src="resources/js/changeroom.js"></script>
+
 <div>
-
-    <select id="selectRoom" onchange="selectRoomForManager(value);">
-        <c:forEach items="${rooms}" var="room">
-            <option value="${room.id}">${room.city}: ${room.address}</option>
-        </c:forEach>
-        <option value="2">Second</option>
-        <option value="3">Third</option>
-    </select>
-
-
     <div class="container">
         <div>
             <button class="btn btn-primary"
@@ -44,7 +37,7 @@
                     <tr id="${booking.idBook}" class="trbooking">
                         <div class="col-sm-4">
                             <td  class="kidsName">
-                                <a href="profile?id=${booking.idChild.id}">${booking.idChild.getFullName()}</a>
+                                <a href="profile?id=${booking.child.id}">${booking.child.getFullName()}</a>
                             </td>
                         </div>
                         <td class="bookingTime" class="col-sm-4">
@@ -172,6 +165,3 @@
         </div>
     </div>
 </div>
-
-
-<script src="resources/js/bookedkids.js"></script>

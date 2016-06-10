@@ -144,6 +144,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);
         booking.setSum(0L);
+        booking.setBookingState(BookingState.CALCULATE_SUM);
     }
 
     @Override
