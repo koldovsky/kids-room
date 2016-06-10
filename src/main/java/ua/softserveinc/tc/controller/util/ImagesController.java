@@ -9,7 +9,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
+import ua.softserveinc.tc.constants.model.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;

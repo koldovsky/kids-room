@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.AdminConst;
+import ua.softserveinc.tc.constants.model.AdminConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;

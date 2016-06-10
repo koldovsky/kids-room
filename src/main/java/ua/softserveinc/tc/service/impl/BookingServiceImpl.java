@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
+import ua.softserveinc.tc.constants.model.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;

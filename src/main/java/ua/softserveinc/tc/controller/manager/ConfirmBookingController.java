@@ -56,7 +56,8 @@ public class ConfirmBookingController {
     }
 
     @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
-    public @ResponseBody String cancelBooking (@PathVariable Long idBooking) {
+    @ResponseBody
+    public String cancelBooking (@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
@@ -67,9 +68,8 @@ public class ConfirmBookingController {
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
-    public
     @ResponseBody
-    String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
+    public String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
         booking.setBookingState(BookingState.ACTIVE);
         bookingService.update(booking);
@@ -79,9 +79,8 @@ public class ConfirmBookingController {
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
-    public
     @ResponseBody
-    String setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
+    public String setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDto);
         booking.setBookingState(BookingState.COMPLETED);
         bookingService.update(booking);

@@ -52,6 +52,8 @@ public class BuildSearchIndex
             System.out.println(
                     "An error occurred trying to build the serach index: " +
                             e.toString());
+            // FIXME: 10.06.2016
+            Thread.currentThread().interrupt();
         }
         return;
     }

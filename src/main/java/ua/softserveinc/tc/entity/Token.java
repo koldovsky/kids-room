@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
-import ua.softserveinc.tc.constants.ModelConstants.TokenConst;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.model.TokenConst;
 
 import javax.persistence.*;
 
@@ -22,7 +22,7 @@ public class Token {
     private String token;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = UserConstants.ID_USER)
+    @JoinColumn(name = UserConstants.Entity.ID_USER)
     private User user;
 
 

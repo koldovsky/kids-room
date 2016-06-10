@@ -24,7 +24,7 @@ import ua.softserveinc.tc.constants.UserConstants;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    @Qualifier(UserConstants.USER_DETAILS_SERVICE)
+    @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
     @Autowired

@@ -40,6 +40,7 @@ public class RoomDto {
     public RoomDto() {
     }
 
+
     public RoomDto(Room room) {
         this.id = room.getId();
         this.name = room.getName();

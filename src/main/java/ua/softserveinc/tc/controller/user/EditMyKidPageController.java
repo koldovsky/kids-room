@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.MyKidsConst;
+import ua.softserveinc.tc.constants.model.MyKidsConst;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;

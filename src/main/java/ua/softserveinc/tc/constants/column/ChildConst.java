@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.constants.ColumnConstants;
+package ua.softserveinc.tc.constants.column;
 
 
 import ua.softserveinc.tc.constants.UserConstants;
@@ -17,7 +17,7 @@ public interface ChildConst {
 
     String COMMENT = "comment";
 
-    String ID_PARENT = UserConstants.ID_USER;
+    String ID_PARENT = UserConstants.Entity.ID_USER;
 
     String ENABLED = "enabled";
 

@@ -14,7 +14,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service(UserConstants.USER_DETAILS_SERVICE)
+@Service(UserConstants.Model.USER_DETAILS_SERVICE)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

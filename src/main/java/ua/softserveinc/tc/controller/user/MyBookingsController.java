@@ -61,7 +61,7 @@ public class MyBookingsController {
         }
 
         ModelAndView model = new ModelAndView();
-        model.setViewName(UserConstants.MY_BOOKINGS_VIEW);
+        model.setViewName(UserConstants.Model.MY_BOOKINGS_VIEW);
         ModelMap modelMap = model.getModelMap();
         return model;
     }
@@ -82,7 +82,8 @@ public class MyBookingsController {
      * if any of the requesting resources were not found
      */
     @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
-    public @ResponseBody String getBookings(
+    @ResponseBody
+    public String getBookings(
                        @RequestParam(value = "dateLo") String dateLo,
                        @RequestParam(value = "dateHi") String dateHi,
                        Principal principal)

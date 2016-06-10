@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.ModelConstants.ReportConst;
+import ua.softserveinc.tc.constants.model.ReportConst;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -56,10 +56,9 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
-    public
     @ResponseBody
-    String refreshView(@PathVariable String startDate,
-                       @PathVariable String endDate, Principal principal) {
+    public String refreshView(@PathVariable String startDate,
+                              @PathVariable String endDate, Principal principal) {
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
         List<User> users = userService.getActiveUsers(toDate(startDate), toDate(endDate), room);
         Gson gson = new Gson();

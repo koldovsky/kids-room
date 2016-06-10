@@ -6,7 +6,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.springframework.format.annotation.DateTimeFormat;
-import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
+import ua.softserveinc.tc.constants.column.ChildConst;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -164,5 +164,28 @@ public class Child implements Comparable<Child>
         else if(this.getId()<o.getId())
             return -1;
         return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this==obj){
+            return true;
+        }
+        if(obj==null){
+            return false;
+        }
+        if(this.getClass()!=obj.getClass()){
+            return false;
+        }
+        Child other = (Child) obj;
+        if(this.getId()!=other.getId()){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return 13 * id.hashCode();
     }
 }

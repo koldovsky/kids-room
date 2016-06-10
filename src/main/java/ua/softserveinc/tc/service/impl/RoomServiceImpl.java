@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.constants.ColumnConstants.EventConst;
+import ua.softserveinc.tc.constants.column.EventConst;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
