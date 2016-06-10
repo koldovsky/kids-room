@@ -105,7 +105,6 @@
         $.ajax({
                 url: src,
                 success: function(result){
-                    alert(result);
                     var bookings = JSON.parse(result);
                     var tr = "";
                     var cancel = '<spring:message code= "booking.canceled"/>';
@@ -157,7 +156,6 @@
                         data: JSON.stringify(inputDate),
                         success: function(data){
                             if(!data){
-                                alert(data);
                                 $('#wrong-interval').show();
                             } else
 
@@ -189,7 +187,6 @@
                 contentType: 'application/json',
                 data: JSON.stringify(inputDate),
                 success: function(data){
-                   alert(data);
                 }
             });
         });

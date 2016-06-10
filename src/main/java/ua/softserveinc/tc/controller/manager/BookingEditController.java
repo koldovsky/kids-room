@@ -64,7 +64,7 @@ public class BookingEditController {
 
     @RequestMapping (value = "manager-edit-booking/{date}",
             method = RequestMethod.GET)
-    public @ResponseBody
+    @ResponseBody public
         String bookingsByDay(Principal principal,@PathVariable String date){
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> listRoom = roomService.findByManger(currentManager);
@@ -72,8 +72,8 @@ public class BookingEditController {
         List<Booking> bookings = bookingService.getBookings(setStartTime(toDate(date)), setEndTime(toDate(date)), room);
         Gson gson = new Gson();
         List<BookingDto> bokDto = new ArrayList<>();
-        for (Booking boking: bookings) {
-            bokDto.add(new BookingDto(boking));
+        for (Booking booking: bookings) {
+            bokDto.add(new BookingDto(booking));
         }
      /*   List<User> lst = userService.findAll();
           return   gson.toJson(lst.stream()
@@ -89,7 +89,7 @@ public class BookingEditController {
     @ResponseBody
     Boolean change(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.findById(bookingDto.getId());
-        Room room = booking.getIdRoom();
+        Room room = booking.getRoom();
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
         if(roomService.isPeriodAvailable(startTime, endTime, room)) {
@@ -116,9 +116,10 @@ public class BookingEditController {
         // TODO: 10.06.2016  get booking by child
         if(roomService.isPeriodAvailable(dateLo, dateHi, room)){
             Booking booking = bookingDto.getBookingObject();
-            booking.setIdRoom(room);
-            booking.setIdChild(child);
-            booking.setIdUser(child.getParentId());
+            booking.setRoom(room);
+            booking.setChild(child);
+            booking.setUser(child.getParentId());
+            booking.setBookingState(BookingState.BOOKED);
             bookingDao.create(booking);
             bookingDao.update(booking);
             return true;

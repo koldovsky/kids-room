@@ -50,14 +50,14 @@ public class BookingDto {
         this.startTime = df.format(booking.getBookingStartTime());
         this.endTime = df.format(booking.getBookingEndTime());
 
-        this.kidName = booking.getIdChild().getFullName();
-        this.roomName = booking.getIdRoom().getAddress();
-        this.duration = booking.formatDuration();
+        this.kidName = booking.getChild().getFullName();
+        this.roomName = booking.getRoom().getAddress();
+ //       this.duration = booking.formatDuration();
         this.sum = booking.getSum();
         this.id = booking.getIdBook();
         this.bookingState = booking.getBookingState();
         this.durationLong = booking.getDuration();
-        this.idChild = booking.getIdChild().getId();
+        this.idChild = booking.getChild().getId();
 
     }
 
@@ -67,9 +67,9 @@ public class BookingDto {
         booking.setBookingStartTime(dateStartTime);
         booking.setBookingEndTime(dateEndTime);
         booking.setComment(comment);
-        booking.setIdRoom(room);
-        booking.setIdChild(child);
-        booking.setIdUser(user);
+        booking.setRoom(room);
+        booking.setChild(child);
+        booking.setUser(user);
         booking.setBookingState(bookingState);
         return booking;
     }

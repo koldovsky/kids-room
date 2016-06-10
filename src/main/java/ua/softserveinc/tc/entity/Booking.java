@@ -3,24 +3,14 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
 import ua.softserveinc.tc.constants.UserConstants;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
 
@@ -42,20 +32,21 @@ public class Booking {
     @JoinColumn(name = ChildConst.ID_CHILD)
     @Embedded
     @IndexedEmbedded
-    private Child idChild;
+    private Child child;
 
     @ManyToOne(optional = false)//(fetch = FetchType.LAZY)
     @JoinColumn(name = RoomConst.ID_ROOM)
-    private Room idRoom;
+    private Room room;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = UserConstants.ID_USER)
-    private User idUser;
+    private User user;
 
     @Column(name = BookingConstants.DB.BOOKING_START_TIME, nullable = false)
     private Date bookingStartTime;
 
     @Column(name = BookingConstants.DB.BOOKING_END_TIME, nullable = false)
+    @NotNull
     private Date bookingEndTime;
 
     @Column(name = BookingConstants.DB.COMMENT)
@@ -80,28 +71,28 @@ public class Booking {
         this.idBook = idBook;
     }
 
-    public Child getIdChild() {
-        return idChild;
+    public Child getChild() {
+        return child;
     }
 
-    public void setIdChild(Child idChild) {
-        this.idChild = idChild;
+    public void setChild(Child child) {
+        this.child = child;
     }
 
-    public Room getIdRoom() {
-        return idRoom;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setIdRoom(Room idRoom) {
-        this.idRoom = idRoom;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
-    public User getIdUser() {
-        return idUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getBookingStartTime() {
