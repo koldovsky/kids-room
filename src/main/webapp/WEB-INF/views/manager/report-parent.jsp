@@ -30,8 +30,8 @@
             <c:forEach var="booking" items="${bookings}">
             <tr>
                 <td><fmt:formatDate pattern="dd/MM" value="${booking.bookingStartTime}" /></td>
-                <td>${booking.idChild}</td>
-                <td>${booking.idRoom}</td>
+                <td>${booking.child}</td>
+                <td>${booking.room}</td>
                 <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
                 <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
                 <td>${booking.formatDuration()}</td>

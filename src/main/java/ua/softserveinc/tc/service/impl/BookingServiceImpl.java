@@ -74,13 +74,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> filterBySum(List<Booking> bookings, Long sum) {
-        return bookings.stream()
-                .filter(booking -> booking.getSum().equals(sum))
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public void calculateAndSetDuration(Booking booking) {
         long difference = booking.getBookingEndTime().getTime() -
                 booking.getBookingStartTime().getTime();
@@ -96,6 +89,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Rate closestRate = rateService.calculateAppropriateRate(booking.getDuration(), rates);
 
         booking.setSum(closestRate.getPriceRate());
+        booking.setBookingState(BookingState.COMPLETED);
         bookingDao.update(booking);
     }
 

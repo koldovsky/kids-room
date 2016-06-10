@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.BookingService;
 
 import java.util.List;
@@ -16,9 +18,11 @@ public class CalculateSumJob {
     @Autowired
     private BookingService bookingService;
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
     private void task() {
-        List<Booking> bookings = bookingService.findAll();
-        List<Booking> filtered = bookingService.filterBySum(bookings, 0L);
-        filtered.forEach(bookingService::calculateAndSetSum);
+        List<Booking> bookings = bookingRepository.findByBookingState(BookingState.CALCULATE_SUM);
+        bookings.forEach(bookingService::calculateAndSetSum);
     }
 }
