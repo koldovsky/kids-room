@@ -169,18 +169,18 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room) {
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.ACTIVE_AND_BOOKED);
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.ACTIVE_AND_BOOKED);
         return room.getCapacity() > bookings.size();
     }
 
     /**
      * @param dateLo start of period
      * @param dateHi end of period
-     * @param room a requested room
+     * @param room   a requested room
      * @return number of places available in the room for the period
      */
-    public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room){
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.ACTIVE_AND_BOOKED);
+    public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.ACTIVE_AND_BOOKED);
         return room.getCapacity() - bookings.size();
     }
 }

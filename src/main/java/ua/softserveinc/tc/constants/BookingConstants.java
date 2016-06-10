@@ -7,16 +7,18 @@ import ua.softserveinc.tc.entity.BookingState;
  */
 public interface BookingConstants {
 
-    BookingState[] NOT_CANCELLED = {
-            BookingState.BOOKED,
-            BookingState.ACTIVE,
-            BookingState.COMPLETED
-    };
+    interface States {
+        BookingState[] NOT_CANCELLED = {
+                BookingState.ACTIVE,
+                BookingState.BOOKED,
+                BookingState.COMPLETED
+        };
 
-    BookingState[] ACTIVE_AND_BOOKED = {
-            BookingState.ACTIVE,
-            BookingState.BOOKED
-    };
+        BookingState[] ACTIVE_AND_BOOKED = {
+                BookingState.ACTIVE,
+                BookingState.BOOKED
+        };
+    }
 
     interface Entity {
 
@@ -68,6 +70,5 @@ public interface BookingConstants {
         String SUM = "sum";
 
         String BOOKING_STATE = "booking_state";
-
     }
 }

@@ -162,20 +162,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO){
+    public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
         BookingDto bdto = listDTO.get(0);
-        if(roomService.getAvailableSpaceForPeriod(
-                        bdto.getDateStartTime(),
-                        bdto.getDateEndTime(),
-                        bdto.getRoom()) >= listDTO.size()) {
+        if (roomService.getAvailableSpaceForPeriod(
+                bdto.getDateStartTime(),
+                bdto.getDateEndTime(),
+                bdto.getRoom()) >= listDTO.size()) {
             listDTO.forEach(bookingDTO -> {
                 Booking booking = bookingDTO.getBookingObject();
                 bookingDao.create(booking);
                 bookingDTO.setId(booking.getIdBook());
             });
             return listDTO;
-        }
-        else return null;
+        } else return null;
     }
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {

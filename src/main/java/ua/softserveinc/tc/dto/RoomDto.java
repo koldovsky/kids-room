@@ -65,22 +65,6 @@ public class RoomDto {
         this.sum = sum;
     }
 
-    public String getWorkingHoursStart() {
-        return workingHoursStart;
-    }
-
-    public void setWorkingHoursStart(String workingHoursStart) {
-        this.workingHoursStart = workingHoursStart;
-    }
-
-    public String getWorkingHoursEnd() {
-        return workingHoursEnd;
-    }
-
-    public void setWorkingHoursEnd(String workingHoursEnd) {
-        this.workingHoursEnd = workingHoursEnd;
-    }
-
     public Long getId() {
         return id;
     }
@@ -137,12 +121,36 @@ public class RoomDto {
         this.manager = manager;
     }
 
+    public String getWorkingHoursStart() {
+        return workingHoursStart;
+    }
+
+    public void setWorkingHoursStart(String workingHoursStart) {
+        this.workingHoursStart = workingHoursStart;
+    }
+
+    public String getWorkingHoursEnd() {
+        return workingHoursEnd;
+    }
+
+    public void setWorkingHoursEnd(String workingHoursEnd) {
+        this.workingHoursEnd = workingHoursEnd;
+    }
+
     public String getRate() {
         return rate;
     }
 
     public void setRate(String rate) {
         this.rate = rate;
+    }
+
+    public Long getSum() {
+        return sum;
+    }
+
+    public void setSum(Long sum) {
+        this.sum = sum;
     }
 
     @Override

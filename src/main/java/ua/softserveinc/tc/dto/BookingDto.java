@@ -2,7 +2,6 @@ package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.*;
-import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,7 +42,7 @@ public class BookingDto {
 
     }
 
-    public BookingDto(Booking booking){
+    public BookingDto(Booking booking) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         this.date = df.format(booking.getBookingStartTime());
 
@@ -62,7 +61,7 @@ public class BookingDto {
 
     }
 
-    public Booking getBookingObject(){
+    public Booking getBookingObject() {
         DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
         Booking booking = new Booking();
         booking.setBookingStartTime(dateStartTime);
