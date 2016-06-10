@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 import org.springframework.format.annotation.DateTimeFormat;
 import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
 
@@ -39,6 +40,8 @@ public class Child implements Comparable<Child>
     @ManyToOne
     @JoinColumn(name = ChildConst.ID_PARENT,
     nullable = false)
+    @Embedded
+    @IndexedEmbedded
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)
