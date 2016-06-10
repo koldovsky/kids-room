@@ -7,12 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
+import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
@@ -38,6 +37,12 @@ public class BookingEditController {
     @Autowired
     BookingService bookingService;
 
+    @Autowired
+    ChildService childService;
+
+    @Autowired
+    BookingDao bookingDao;
+
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
     public ModelAndView changeBooking(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
@@ -50,7 +55,9 @@ public class BookingEditController {
                 ,room);
         List<Booking> filterBookedList = bookingService.filterByState(listBooking, BookingState.BOOKED);
         Date date = currentDate().getTime();
+        List<Child> children = childService.findAll();
         model.addAttribute("listRoom", listRoom);
+        model.addAttribute("listChild", children);
         model.addAttribute("today", date);
         model.addAttribute("listBooking", filterBookedList);
         return modelAndView;
@@ -94,4 +101,28 @@ public class BookingEditController {
         }
         return false;
     }
+    @RequestMapping(value = "create-booking", method = RequestMethod.POST,  consumes = "application/json")
+    public
+    @ResponseBody
+    Boolean createBooking (Principal principal, @RequestBody BookingDto bookingDto){
+        User manager = userService.getUserByEmail(principal.getName());
+        Room room = roomService.findByManger(manager).get(0);
+        Date dateLo = toDateAndTime(bookingDto.getStartTime());
+        Date dateHi = toDateAndTime(bookingDto.getEndTime());
+        Child child = childService.findById(bookingDto.getIdChild());
+        // TODO: 10.06.2016  get booking by child
+        if(roomService.isPeriodAvailable(dateLo, dateHi, room)){
+            Booking booking = bookingDto.getBookingObject();
+            booking.setIdRoom(room);
+            booking.setIdChild(child);
+            booking.setIdUser(child.getParentId());
+            bookingDao.create(booking);
+            bookingDao.update(booking);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 }

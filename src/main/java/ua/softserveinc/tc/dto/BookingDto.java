@@ -2,10 +2,11 @@ package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.constants.ModelConstants.DateConst;
 import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 
 /**
  * Created by Петришак on 14.05.2016.
@@ -36,8 +37,7 @@ public class BookingDto {
 
     //TODO: What is it for? /Revived by Taras/
     public BookingDto() {
-        this.id = id;
-        this.startTime = startTime;
+
     }
 
     public BookingDto(Booking booking){
@@ -86,18 +86,20 @@ public class BookingDto {
     public Booking getBookingObject(){
         DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
         Booking booking = new Booking();
-        try {
+        /*try {
             booking.setBookingStartTime(dateFormat.parse(startTime));
             booking.setBookingEndTime(dateFormat.parse(endTime));
         }
+
         catch(ParseException pe){
             pe.printStackTrace();
-            //TODO: throw another exception
-        }
 
+            //TODO: throw another exception
+        }*/
+        booking.setBookingStartTime(DateUtil.toDateAndTime(startTime));
+        booking.setBookingEndTime(DateUtil.toDateAndTime(endTime));
         booking.setComment(comment);
         booking.setIdRoom(room);
-        booking.setIdChild(child);
         booking.setIdUser(user);
         return booking;
     }
@@ -221,5 +223,13 @@ public class BookingDto {
 
     public void setDurtionLong(Long durtionLong) {
         this.durationLong = durtionLong;
+    }
+
+    public Long getIdChild() {
+        return idChild;
+    }
+
+    public void setIdChild(Long idChild) {
+        this.idChild = idChild;
     }
 }
