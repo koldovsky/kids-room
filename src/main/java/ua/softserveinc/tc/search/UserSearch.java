@@ -14,7 +14,7 @@ import ua.softserveinc.tc.entity.User;
 public class UserSearch extends BaseSearch<User> {
 
     {
-        searchFields = SearchConstants.userSearchFields;
+        searchFields = SearchConstants.USER_SEARCH_FIELDS;
     }
 
     @Override

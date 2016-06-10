@@ -12,7 +12,7 @@ import ua.softserveinc.tc.entity.Booking;
 public class BookingSearch extends BaseSearch<Booking> {
 
     {
-        searchFields = SearchConstants.bookingSearchFields;
+        searchFields = SearchConstants.BOOKING_SEARCH_FIELDS;
     }
 
     @Override

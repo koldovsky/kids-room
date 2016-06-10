@@ -5,6 +5,6 @@ package ua.softserveinc.tc.constants;
  */
 public interface LocaleConstants {
 
-    String[] messages = {"kids.name", "kids.parentsName", "kids.age", "kids.phone"};
+    String[] messages = {"kids.name", "kids.parentsName", "kids.age", "kids.phone", "kids."};
 
 }

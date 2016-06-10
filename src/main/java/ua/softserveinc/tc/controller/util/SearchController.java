@@ -36,7 +36,7 @@ public class SearchController {
     @Autowired
     private BookingSearch bookingSearch;
 
-    @RequestMapping(value = SearchConstants.userSearchUrl, method = RequestMethod.GET)
+    @RequestMapping(value = SearchConstants.USER_SEARCH_URL, method = RequestMethod.GET)
     public @ResponseBody String searchUser(@RequestParam("field") String field) {
         List<UserDto> result = new ArrayList<UserDto>();
 
@@ -51,7 +51,7 @@ public class SearchController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = SearchConstants.childSearchUrl, method = RequestMethod.GET)
+    @RequestMapping(value = SearchConstants.CHILD_SEARCH_URL, method = RequestMethod.GET)
     public @ResponseBody String searchChild(@RequestParam("field") String field) {
         List<ChildDto> result = new ArrayList<ChildDto>();
 
@@ -66,7 +66,7 @@ public class SearchController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = SearchConstants.bookingSearchUrl, method = RequestMethod.GET)
+    @RequestMapping(value = SearchConstants.BOOKING_SEARCH_URL, method = RequestMethod.GET)
     public @ResponseBody String searchBooking(@RequestParam("field") String field) {
         List<BookingDto> result = new ArrayList<BookingDto>();
 

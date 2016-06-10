@@ -6,11 +6,12 @@ package ua.softserveinc.tc.constants;
  */
 public interface ApiConstants {
 
-    String usersRestUrl = "/api/user";
-    String usersRestByIdUrl = "/api/user/{id}";
-    String childrenRestUrl = "/api/child";
-    String childrenByIdRestUrl = "/api/child/{id}";
-    String getChildrenParentRestUrl = "/api/child/{id}/parent";
-    String getAppConfiguration = "/api/configuration";
+    String USER_REST_URL = "/api/user";
+    String USER_REST_BY_ID_URL = "/api/user/{id}";
+    String CHILD_REST_URL = "/api/child";
+    String CHILD_BY_ID_REST_URL = "/api/child/{id}";
+    String GET_CHILD_PARENT_REST_URL = "/api/child/{id}/parent";
+    String GET_APP_CONFIGURATION = "/api/configuration";
+    String GET_APP_LOCALIZATION = "/api/localization";
 
 }

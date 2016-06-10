@@ -12,7 +12,7 @@ import ua.softserveinc.tc.entity.Child;
 public class ChildSearch extends BaseSearch<Child> {
 
     {
-        searchFields = SearchConstants.childSearchFields;
+        searchFields = SearchConstants.CHILD_SEARCH_FIELDS;
     }
 
     @Override

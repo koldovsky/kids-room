@@ -39,7 +39,7 @@ public class ApiController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value = ApiConstants.usersRestUrl, method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.USER_REST_URL, method = RequestMethod.GET)
     public @ResponseBody String getUser() {
         List<UserDto> result = new ArrayList<UserDto>();
         List<User> users = userService.findAll();
@@ -52,7 +52,7 @@ public class ApiController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = ApiConstants.usersRestByIdUrl, method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.USER_REST_BY_ID_URL, method = RequestMethod.GET)
     public @ResponseBody String getUserById(@PathVariable long id) {
         User user = userService.findById(id);
         Gson gson = new Gson();
@@ -60,7 +60,7 @@ public class ApiController {
         return gson.toJson(new UserDto(user));
     }
 
-    @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.CHILD_REST_URL, method = RequestMethod.GET)
     public @ResponseBody String getChild() {
         List<ChildDto> result = new ArrayList<ChildDto>();
         List<Child> children = childService.findAll();
@@ -73,14 +73,14 @@ public class ApiController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = ApiConstants.childrenRestUrl, method = RequestMethod.POST)
+    @RequestMapping(value = ApiConstants.CHILD_REST_URL, method = RequestMethod.POST)
     public @ResponseBody String addChild(@RequestBody Child child) {
         childService.create(child);
         Gson gson = new Gson();
         return gson.toJson(child);
     }
 
-    @RequestMapping(value = ApiConstants.childrenByIdRestUrl, method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.CHILD_BY_ID_REST_URL, method = RequestMethod.GET)
     public @ResponseBody String getChildById(@PathVariable long id) {
         Child child = childService.findById(id);
         Gson gson = new Gson();
@@ -88,7 +88,7 @@ public class ApiController {
         return gson.toJson(new ChildDto(child));
     }
 
-    @RequestMapping(value = ApiConstants.getChildrenParentRestUrl, method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.GET_CHILD_PARENT_REST_URL, method = RequestMethod.GET)
     public @ResponseBody String getParentByChild(@PathVariable long id) {
         Child child = childService.findById(id);
         User user = child.getParentId();
@@ -97,13 +97,13 @@ public class ApiController {
         return gson.toJson(new UserDto(user));
     }
 
-    @RequestMapping(value = ApiConstants.getAppConfiguration, method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.GET_APP_CONFIGURATION, method = RequestMethod.GET)
     public @ResponseBody String getAppConfiguration() {
         Gson gson = new Gson();
         return gson.toJson(configurator);
     }
 
-    @RequestMapping(value = "/api/localization", method = RequestMethod.GET)
+    @RequestMapping(value = ApiConstants.GET_APP_LOCALIZATION, method = RequestMethod.GET)
     public @ResponseBody String getLocale(@RequestParam("locale") String locale) {
         Map<String, String> messages = new HashMap<String, String>();
         Locale localeObj = new Locale(locale);
