@@ -50,6 +50,27 @@ public final class DateUtil {
         }
     }
 
+    public static Date toDate(Calendar calendar) {
+        return calendar.getTime();
+    }
+
+    public static Calendar dateNow() {
+        return Calendar.getInstance();
+    }
+
+    public static Calendar dateMonthAgo() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        return calendar;
+    }
+
+    public static String getStringDate(Calendar calendar) {
+        String result = calendar.get(Calendar.YEAR) + "-";
+        result += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        result += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        return result;
+    }
+
     private static int getHoursFromMilliseconds(long milliseconds) {
         return (int) TimeUnit.MILLISECONDS.toHours(milliseconds);
     }
@@ -77,24 +98,6 @@ public final class DateUtil {
         hoursAndMinutes += String.format("%02d", minutes);
 
         return hoursAndMinutes;
-    }
-
-
-    public static Calendar currentDate() {
-        return Calendar.getInstance();
-    }
-
-    public static Calendar dateMonthAgo() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1);
-        return calendar;
-    }
-
-    public static String getStringDate(Calendar calendar) {
-        String result = calendar.get(Calendar.YEAR) + "-";
-        result += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
-        result += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        return result;
     }
 
     public static List<Date> workingHours() {

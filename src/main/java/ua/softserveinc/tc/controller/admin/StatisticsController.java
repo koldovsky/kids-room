@@ -35,10 +35,10 @@ public class StatisticsController {
         model.setViewName(ReportConst.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = getStringDate(currentDate());
+        String dateNow = getStringDate(dateNow());
         String dateThen = getStringDate(dateMonthAgo());
 
-        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow));
+        List<Booking> bookings = bookingService.getBookings(toDate(dateMonthAgo()), toDate(dateNow()));
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);

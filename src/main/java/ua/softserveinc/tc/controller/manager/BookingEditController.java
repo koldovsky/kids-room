@@ -53,7 +53,7 @@ public class BookingEditController {
         List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
                 workingHours().get(1),
                 room, BookingState.BOOKED);
-        Date date = currentDate().getTime();
+        Date date = toDate(dateNow());
         List<Child> children = childService.findAll();
         model.addAttribute("rooms", listRoom);
         model.addAttribute("listChild", children);
