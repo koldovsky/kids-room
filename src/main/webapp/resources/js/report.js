@@ -1,6 +1,4 @@
 $(function(){
-    var person = prompt("Please enter your name", localStorage['bahrianyi']);
-    localStorage['bahrianyi'] = person;
     localizedDetails = $("#seeDetails").html();
     addListener();
     $("#dateNow, #dateThen").change(refreshView);

@@ -37,7 +37,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("ua.softserveinc.tc")
 @PropertySource(value = { "classpath:properties/mail.properties",
-                          "classpath:hibernate.properties" })
+                          "classpath:properties/hibernate.properties" })
 @EnableJpaRepositories(basePackages = "ua.softserveinc.tc.repo")
 public class AppConfig {
 
