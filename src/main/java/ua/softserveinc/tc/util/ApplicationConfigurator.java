@@ -20,11 +20,9 @@ public interface ApplicationConfigurator {
     /**
      * @return List of allowed e-mail domains
      */
-    List<String> getAllowedDomainsList();
+    String[] getAllowedDomainsList();
 
     Integer getMinPeriodSize();
-
-    void setMinPeriodSize(Integer minPeriodSize);
 
     String getServerName();
 

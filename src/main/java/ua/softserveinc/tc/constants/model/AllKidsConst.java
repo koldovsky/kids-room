@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.constants.ModelConstants;
+package ua.softserveinc.tc.constants.model;
 
 /**
  * Created by edward on 5/13/16.

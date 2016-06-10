@@ -5,10 +5,9 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by edward on 5/16/16.
@@ -40,10 +39,7 @@ public abstract class BaseSearch <T> {
         javax.persistence.Query persistenceQuery =
                 fullTextEntityManager.createFullTextQuery(query, getTClass());
 
-        @SuppressWarnings("unchecked")
-        List<T> results = persistenceQuery.getResultList();
-
-        return results;
+        return persistenceQuery.getResultList();
     }
 
 }

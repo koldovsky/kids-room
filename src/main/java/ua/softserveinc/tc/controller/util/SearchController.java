@@ -37,8 +37,9 @@ public class SearchController {
     private BookingSearch bookingSearch;
 
     @RequestMapping(value = SearchConstants.USER_SEARCH_URL, method = RequestMethod.GET)
-    public @ResponseBody String searchUser(@RequestParam("field") String field) {
-        List<UserDto> result = new ArrayList<UserDto>();
+    @ResponseBody
+    public String searchUser(@RequestParam("field") String field) {
+        List<UserDto> result = new ArrayList<>();
 
         if (isValidRequestField(field)) {
             List<User> users = userSearch.search(field);
@@ -52,8 +53,9 @@ public class SearchController {
     }
 
     @RequestMapping(value = SearchConstants.CHILD_SEARCH_URL, method = RequestMethod.GET)
-    public @ResponseBody String searchChild(@RequestParam("field") String field) {
-        List<ChildDto> result = new ArrayList<ChildDto>();
+    @ResponseBody
+    public String searchChild(@RequestParam("field") String field) {
+        List<ChildDto> result = new ArrayList<>();
 
         if (isValidRequestField(field)) {
             List<Child> children = childSearch.search(field);
@@ -67,8 +69,9 @@ public class SearchController {
     }
 
     @RequestMapping(value = SearchConstants.BOOKING_SEARCH_URL, method = RequestMethod.GET)
-    public @ResponseBody String searchBooking(@RequestParam("field") String field) {
-        List<BookingDto> result = new ArrayList<BookingDto>();
+    @ResponseBody
+    public String searchBooking(@RequestParam("field") String field) {
+        List<BookingDto> result = new ArrayList<>();
 
         if (isValidRequestField(field)) {
             List<Booking> bookings = bookingSearch.search(field);

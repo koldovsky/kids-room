@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.softserveinc.tc.constants.ModelConstants.EventConst;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.model.EventConst;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
@@ -40,7 +40,7 @@ public class ViewEventController {
     public final String viewHome(Model model, Principal principal) {
 
         if(principal == null) {
-            return UserConstants.LOGIN_VIEW;
+            return UserConstants.Model.LOGIN_VIEW;
         } else {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
@@ -55,14 +55,14 @@ public class ViewEventController {
     }
 
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-    public @ResponseBody
-    String getEvents(@PathVariable int id) {
+    @ResponseBody
+    public String getEvents(@PathVariable int id) {
         return calendarService.eventsToString(id);
     }
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody
-    String getAjax(@RequestBody EventDto eventDto) {
+    @ResponseBody
+    public String getAjax(@RequestBody EventDto eventDto) {
         return calendarService.create((genericMapper.toEntity(eventDto))).toString();
     }
 

@@ -15,11 +15,7 @@ import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by edward on 5/17/16.
@@ -40,8 +36,9 @@ public class ApiController {
     private MessageSource messageSource;
 
     @RequestMapping(value = ApiConstants.USER_REST_URL, method = RequestMethod.GET)
-    public @ResponseBody String getUser() {
-        List<UserDto> result = new ArrayList<UserDto>();
+    @ResponseBody
+    public String getUser() {
+        List<UserDto> result = new ArrayList<>();
         List<User> users = userService.findAll();
 
         for (User user : users) {
@@ -53,7 +50,8 @@ public class ApiController {
     }
 
     @RequestMapping(value = ApiConstants.USER_REST_BY_ID_URL, method = RequestMethod.GET)
-    public @ResponseBody String getUserById(@PathVariable long id) {
+    @ResponseBody
+    public String getUserById(@PathVariable long id) {
         User user = userService.findById(id);
         Gson gson = new Gson();
 
@@ -61,8 +59,9 @@ public class ApiController {
     }
 
     @RequestMapping(value = ApiConstants.CHILD_REST_URL, method = RequestMethod.GET)
-    public @ResponseBody String getChild() {
-        List<ChildDto> result = new ArrayList<ChildDto>();
+    @ResponseBody
+    public String getChild() {
+        List<ChildDto> result = new ArrayList<>();
         List<Child> children = childService.findAll();
 
         for (Child child : children) {
@@ -74,14 +73,16 @@ public class ApiController {
     }
 
     @RequestMapping(value = ApiConstants.CHILD_REST_URL, method = RequestMethod.POST)
-    public @ResponseBody String addChild(@RequestBody Child child) {
+    @ResponseBody
+    public String addChild(@RequestBody Child child) {
         childService.create(child);
         Gson gson = new Gson();
         return gson.toJson(child);
     }
 
     @RequestMapping(value = ApiConstants.CHILD_BY_ID_REST_URL, method = RequestMethod.GET)
-    public @ResponseBody String getChildById(@PathVariable long id) {
+    @ResponseBody
+    public String getChildById(@PathVariable long id) {
         Child child = childService.findById(id);
         Gson gson = new Gson();
 
@@ -89,7 +90,8 @@ public class ApiController {
     }
 
     @RequestMapping(value = ApiConstants.GET_CHILD_PARENT_REST_URL, method = RequestMethod.GET)
-    public @ResponseBody String getParentByChild(@PathVariable long id) {
+    @ResponseBody
+    public String getParentByChild(@PathVariable long id) {
         Child child = childService.findById(id);
         User user = child.getParentId();
         Gson gson = new Gson();
@@ -98,14 +100,16 @@ public class ApiController {
     }
 
     @RequestMapping(value = ApiConstants.GET_APP_CONFIGURATION, method = RequestMethod.GET)
-    public @ResponseBody String getAppConfiguration() {
+    @ResponseBody
+    public String getAppConfiguration() {
         Gson gson = new Gson();
         return gson.toJson(configurator);
     }
 
     @RequestMapping(value = ApiConstants.GET_APP_LOCALIZATION, method = RequestMethod.GET)
-    public @ResponseBody String getLocale(@RequestParam("locale") String locale) {
-        Map<String, String> messages = new HashMap<String, String>();
+    @ResponseBody
+    public String getLocale(@RequestParam("locale") String locale) {
+        Map<String, String> messages = new HashMap<>();
         Locale localeObj = new Locale(locale);
         for (String message : LocaleConstants.messages) {
             messages.put(message, messageSource.getMessage(message, null, localeObj));

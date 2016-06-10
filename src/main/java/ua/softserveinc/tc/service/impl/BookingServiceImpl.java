@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
+import ua.softserveinc.tc.constants.model.DateConst;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
@@ -92,7 +92,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public void calculateAndSetSum(Booking booking) {
         calculateAndSetDuration(booking);
 
-        List<Rate> rates = booking.getIdRoom().getRates();
+        List<Rate> rates = booking.getRoom().getRates();
         Rate closestRate = rateService.calculateAppropriateRate(booking.getDuration(), rates);
 
         booking.setSum(closestRate.getPriceRate());
@@ -109,14 +109,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public Map<User, Long> generateAReport(List<Booking> bookings) {
         return bookings.stream()
-                .collect(Collectors.groupingBy(Booking::getIdUser,
+                .collect(Collectors.groupingBy(Booking::getUser,
                         Collectors.summingLong(Booking::getSum)));
     }
 
     @Override
     public Map<Room, Long> generateStatistics(List<Booking> bookings) {
         return bookings.stream()
-                .collect(Collectors.groupingBy(Booking::getIdRoom,
+                .collect(Collectors.groupingBy(Booking::getRoom,
                         Collectors.summingLong(Booking::getSum)));
     }
 
@@ -184,7 +184,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         List<BookingDto> bookingDtos = new LinkedList<>();
 
         for (Booking booking : bookings) {
-            if ((booking.getIdRoom().getId() == idUser) && (booking.getIdUser().getId() == idRoom)) {
+            if ((booking.getRoom().getId() == idUser) && (booking.getUser().getId() == idRoom)) {
                 bookingDtos.add(new BookingDto(booking));
             }
         }

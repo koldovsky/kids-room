@@ -4,8 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.constants.ColumnConstants.ChildConst;
-import ua.softserveinc.tc.constants.ColumnConstants.RoomConst;
+import ua.softserveinc.tc.constants.column.ChildConst;
+import ua.softserveinc.tc.constants.column.RoomConst;
 import ua.softserveinc.tc.constants.UserConstants;
 
 import javax.persistence.*;
@@ -39,7 +39,7 @@ public class Booking {
     private Room room;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = UserConstants.ID_USER)
+    @JoinColumn(name = UserConstants.Entity.ID_USER)
     private User user;
 
     @Column(name = BookingConstants.DB.BOOKING_START_TIME, nullable = false)

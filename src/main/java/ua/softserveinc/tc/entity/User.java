@@ -18,10 +18,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @NamedQueries({
-        @NamedQuery(name = UserConstants.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
+        @NamedQuery(name = UserConstants.Entity.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
 })
 @Entity
-@Table(name = UserConstants.TABLE_NAME_USER)
+@Table(name = UserConstants.Entity.TABLE_NAME_USER)
 @Indexed
 @AnalyzerDef(name = "ngram",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
@@ -38,44 +38,44 @@ public class User {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = UserConstants.ID_USER, nullable = false)
+    @Column(name = UserConstants.Entity.ID_USER, nullable = false)
     private Long id;
 
     @NotEmpty
-    @Column(name = UserConstants.FIRST_NAME)
+    @Column(name = UserConstants.Entity.FIRST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String firstName;
 
     @NotEmpty
-    @Column(name = UserConstants.LAST_NAME)
+    @Column(name = UserConstants.Entity.LAST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String lastName;
 
     @NotEmpty
     @Email
-    @Column(name = UserConstants.EMAIL, unique = true)
+    @Column(name = UserConstants.Entity.EMAIL, unique = true)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
     private String email;
 
 
-    @Column(name = UserConstants.PASSWORD)
+    @Column(name = UserConstants.Entity.PASSWORD)
     private String password;
 
 
     private transient String confirm;
 
-    @Column(name = UserConstants.CONFIRMED)
+    @Column(name = UserConstants.Entity.CONFIRMED)
     private boolean confirmed;
 
 
-    @Column(name = UserConstants.ACTIVE)
+    @Column(name = UserConstants.Entity.ACTIVE)
     private boolean active;
 
     @NotEmpty
-    @Column(name = UserConstants.PHONE)
+    @Column(name = UserConstants.Entity.PHONE)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
     private String phoneNumber;
@@ -83,7 +83,7 @@ public class User {
     @ManyToMany(mappedBy = "managers")
     private List<Room> rooms = new ArrayList<>();
 
-    @Column(name = UserConstants.ROLE)
+    @Column(name = UserConstants.Entity.ROLE)
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 

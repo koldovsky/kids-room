@@ -14,7 +14,7 @@ public class UserController {
 
     @RequestMapping(value = "/rules ", method = RequestMethod.GET)
     public String getRules() {
-        return UserConstants.RULES_VIEW;
+        return UserConstants.Model.RULES_VIEW;
     }
 
     @RequestMapping("/accessDenied")

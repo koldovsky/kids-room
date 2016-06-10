@@ -1,12 +1,14 @@
 package ua.softserveinc.tc.util;
 
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
+import ua.softserveinc.tc.constants.model.DateConst;
 
-import java.sql.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -135,8 +137,7 @@ public final class DateUtil {
         toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
         toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
         toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
-        Date startTime = toDay.getTime();
-        return startTime;
+        return toDay.getTime();
     }
 
     public static Date setEndTime (Date date){
@@ -146,13 +147,9 @@ public final class DateUtil {
         toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
         toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
         toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
-        Date endTime = toDay.getTime();
-        return endTime;
+        return toDay.getTime();
     }
 
-    /*public static HashMap<Date, Date> splitIntoRequiredPeriods(String startTime, String endTime, String ){
-
-    }*/
     public static String convertDateToString(Date date) {
         DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
         return df.format(date);

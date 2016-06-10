@@ -2,7 +2,7 @@ package ua.softserveinc.tc.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.softserveinc.tc.constants.ModelConstants.DateConst;
+import ua.softserveinc.tc.constants.model.DateConst;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.RoomService;
@@ -83,7 +83,7 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
     }
 
     public final List<EventDto> toDto(final List<Event> events) {
-        List<EventDto> result = new LinkedList<EventDto>();
+        List<EventDto> result = new LinkedList<>();
 
         for (Event event : events) {
             result.add(this.toDto(event));

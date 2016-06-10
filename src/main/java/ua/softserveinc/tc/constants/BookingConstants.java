@@ -22,35 +22,35 @@ public interface BookingConstants {
 
     interface Entity {
 
-        String SUM = "sum";
+        public static final String SUM = "sum";
 
-        String USER = "idUser";
+        public static final String USER = "user";
 
-        String ROOM = "idRoom";
+        public static final String ROOM = "room";
 
-        String STATE = "bookingState";
+        public static final String STATE = "bookingState";
 
-        String START_TIME = "bookingStartTime";
+        public static final String START_TIME = "bookingStartTime";
 
     }
 
     interface Model {
 
-        String MANAGER_CONF_BOOKING_VIEW = "manager-confirm-booking";
+        public static final String MANAGER_CONF_BOOKING_VIEW = "manager-confirm-booking";
 
-        String MANAGER_EDIT_BOOKING_VIEW = "manager-edit-booking";
+        public static final String MANAGER_EDIT_BOOKING_VIEW = "manager-edit-booking";
 
-        String LIST_BOOKINGS = "listBooking";
+        public static final String LIST_BOOKINGS = "listBooking";
 
-        String CANCEL_BOOKING = "cancelBook/{idBooking}";
+        public static final String CANCEL_BOOKING = "cancelBook/{idBooking}";
 
-        String SET_START_TIME = "/setTime";
+        public static final String SET_START_TIME = "/setTime";
 
-        String SET_END_TIME = "/setEndTime";
+        public static final String SET_END_TIME = "/setEndTime";
 
-        String BOOK_DURATION = "/BookDuration";
+        public static final String BOOK_DURATION = "/BookDuration";
 
-        String LIST_BOOKING = "/listBook";
+        public static final String LIST_BOOKING = "/listBook";
     }
 
     interface DB {
