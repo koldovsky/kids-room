@@ -176,7 +176,6 @@
             var stTime = date+ " "+$('#create-start-time').val();
             var enTime = date+ " "+$('#create-end-time').val();
             var comment = $('#create-comment').val();
-            alert(comment);
             var inputDate = {
                 startTime:  stTime,
                 endTime: enTime,
@@ -195,23 +194,6 @@
             });
         });
     }
-$(function(){
-        if(localStorage['room']==null)
-        localStorage['room']=1;
-
-   // $("#selectRoom").val(localStorage['room']);
-
-    $("#selectRoom").each(function()
-    {
-        alert($(this).val());
-    });
-});
-
-
-
-
-
-
 
 
 

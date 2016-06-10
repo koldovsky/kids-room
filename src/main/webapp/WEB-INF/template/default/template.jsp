@@ -9,6 +9,8 @@
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
+<script src="resources/js/changeroom.js"></script>
+
 <!--Bootstrap and jQuery -->
 
 <script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>

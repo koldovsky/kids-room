@@ -86,6 +86,12 @@
                                   <span class="glyphicon glyphicon-user"></span>
                                   <spring:message code="manager.kids" />
                                   </a></li>
+
+                                  <select id="selectRoom" onchange="selectRoomForManager(value);">
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                  </select>
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
@@ -128,5 +134,4 @@
             </ul>
         </div>
     </div>
-    
 </nav>
