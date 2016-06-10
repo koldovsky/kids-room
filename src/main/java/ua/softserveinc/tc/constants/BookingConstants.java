@@ -24,9 +24,9 @@ public interface BookingConstants {
 
         public static final String SUM = "sum";
 
-        public static final String USER = "idUser";
+        public static final String USER = "user";
 
-        public static final String ROOM = "idRoom";
+        public static final String ROOM = "room";
 
         public static final String STATE = "bookingState";
 
