@@ -113,6 +113,7 @@ public class BookingEditController {
         bookingDto.setDateEndTime(dateHi);
 
         Child child = childService.findById(bookingDto.getIdChild());
+
         // TODO: 10.06.2016  get booking by child
         if(roomService.isPeriodAvailable(dateLo, dateHi, room)){
             Booking booking = bookingDto.getBookingObject();

@@ -79,4 +79,6 @@ public class BookingTimeController {
         return new Gson().toJson(roomService
                 .getBlockedPeriods(room, start, end));
     }
+
+
 }

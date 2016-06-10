@@ -66,9 +66,9 @@ function selectRoomForUser(id) {
                         title: stringToArray[0],
                         start: stringToArray[1],
                         end: stringToArray[2],
-                       // rendering: 'background'
-                        editable:false,
-                        color:"#ffff00"
+                        // rendering: 'background'
+                        editable: false,
+                        color: "#ffff00"
                     }
                 }
                 renderingForUser(objects, id);
@@ -78,7 +78,8 @@ function selectRoomForUser(id) {
                 var objects = [{
                     title: '1',
                     start: '1',
-                    end: '1'
+                    end: '1',
+                    editable: false
                 }];
                 renderingForUser(objects, id);
             }
@@ -100,8 +101,10 @@ function renderingForUser(objects, id) {
                         makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'), "NO", 1, id, 1));
 
                 $('#user-calendar').fullCalendar('renderEvent', {
+                    id: -1,
                     title: "name",
-                    start: makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker')
+                    start: makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker'),
+                    editable: false
                 });
             }
         }
@@ -113,16 +116,35 @@ function renderingForUser(objects, id) {
             dataType: 'json',
             data: JSON.stringify(bookingsArray),
             success: function (result) {
-                alert("YEEEEEEEEEES");
+                var refresh = JSON.parse(result);
+
+                $('#user-calendar').fullCalendar('removeEvents');
+
+                refresh.forEach(function (item, i, refresh) {
+                    $('#user-calendar').fullCalendar('renderEvent', {
+                        id: item.id,
+                        title: item.kidName,
+                        start: item.startTime,
+                        end: item.endTime,
+                        color: "#ff0000",
+                        editable: false
+                    });
+                });
             }
         });
-
-        bookingsArray = [];
-
-        $('#title').val('');
-
         $('#bookingForm').dialog('close');
     });
+
+
+
+
+
+
+
+
+
+
+
 
     var pathForUploadingAllBookingsForUsers = 'getallbookings/1/' + id;
 
@@ -135,6 +157,7 @@ function renderingForUser(objects, id) {
             result.forEach(function (item, i, result) {
                 console.log(item.date + item.startTime + ":00");
                 objects[objectsLen + i] = {
+                    id: item.id,
                     title: item.kidName,
                     start: item.date + "T" + item.startTime + ":00",
                     end: item.date + "T" + item.endTime + ":00",
@@ -166,12 +189,12 @@ function renderingForUser(objects, id) {
                     }
 
                     bookingDate.clickDate = clickDate;                  //цей об'єкт переносить дату у ф-цію для створення букігу
-
+                    alert(clickDate);
                     $('#dialog').dialog('open');
                 },
 
                 eventClick: function (calEvent, jsEvent, view) {
-                  alert("DON'T TOUCH THIS!!!!!!");
+                    alert("DON'T TOUCH THIS!!!!!!");
                 },
 
                 header: {

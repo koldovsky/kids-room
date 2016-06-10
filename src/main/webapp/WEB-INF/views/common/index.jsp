@@ -9,7 +9,7 @@
 
 <script src='resources/js/moment.min.js'></script>
 
-<script src='resources/js/fullcalendar.min.js'></script>
+
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.js'></script>
 <script src='resources/js/changeroom.js'></script>
