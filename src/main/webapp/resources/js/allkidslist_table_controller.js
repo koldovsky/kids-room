@@ -5,6 +5,7 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     $scope.children = [];
     $scope.parents = [];
+    $scope.locale = [];
 
     $scope.newChildFormIsShown = false;
     $scope.pageSize = 10;
@@ -17,6 +18,7 @@ function AllKidsTableController($scope, allKidsTableService) {
     $scope.genderKeys = ['Boy', 'Girl'];
 
     loadRemoteData();
+    loadLocale("ua");
 
     function applyRemoteChildrenData( newChildren ) {
         for (var i = 0; i < newChildren.length; i++) {
@@ -27,6 +29,11 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     function applyRemoteParentData( newParents ) {
         $scope.parents = unifyNames(newParents);
+    }
+
+    function applyLocale( locale ) {
+        $scope.locale = locale;
+        console.log(locale);
     }
 
     function emptyParents() {
@@ -68,6 +75,15 @@ function AllKidsTableController($scope, allKidsTableService) {
         } else {
             emptyParents();
         }
+    }
+
+    function loadLocale( locale ) {
+        allKidsTableService.getLocale( locale )
+            .then(
+                function( locale ) {
+                    applyLocale( locale );
+                }
+            )
     }
 
     function unifyName( person ) {
