@@ -62,7 +62,6 @@ public class BookingDto {
     }
 
     public Booking getBookingObject() {
-        DateFormat dateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
         Booking booking = new Booking();
         booking.setBookingStartTime(dateStartTime);
         booking.setBookingEndTime(dateEndTime);

@@ -24,7 +24,6 @@ public interface UserConstants {
         String REGISTRATION_VIEW = "registration";
         String SUCCESS_VIEW = "success";
         String RULES_VIEW = "rules";
-        String ACCESS_DENIED_VIEW = "accessDenied";
         String UPDATE_PASS_VIEW = "updatePassword";
         String MY_BOOKINGS_VIEW = "mybookings";
         String FORGOT_PASSWORD_VIEW = "forgotPassword";

@@ -181,9 +181,9 @@ public class RoomDto {
 
         RateDto[] stringList = gson.fromJson(this.rate, RateDto[].class);
 
-        for (RateDto rate : stringList) {
-            if (rate.getHourRate() != null && rate.getPriceRate() != null) {
-                result.add(new Rate(Integer.parseInt(rate.getHourRate()), Long.parseLong(rate.getPriceRate())));
+        for (RateDto rateDto : stringList) {
+            if (rateDto.getHourRate() != null && rateDto.getPriceRate() != null) {
+                result.add(new Rate(Integer.parseInt(rateDto.getHourRate()), Long.parseLong(rateDto.getPriceRate())));
             }
         }
 

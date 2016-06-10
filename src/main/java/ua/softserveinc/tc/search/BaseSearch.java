@@ -14,12 +14,12 @@ import java.util.List;
  */
 public abstract class BaseSearch <T> {
 
-    abstract Class<T> getTClass();
-
     @PersistenceContext
     protected EntityManager entityManager;
 
     protected String[] searchFields;
+
+    abstract Class<T> getTClass();
 
     @Transactional
     public List<T> search(String text) {

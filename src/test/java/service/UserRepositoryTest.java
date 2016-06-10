@@ -17,7 +17,7 @@ import ua.softserveinc.tc.service.UserService;
 import javax.annotation.Resource;
 import java.util.Calendar;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Nestor on 09.06.2016.

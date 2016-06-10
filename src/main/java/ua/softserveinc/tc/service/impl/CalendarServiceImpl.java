@@ -36,8 +36,6 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     public final String eventsToString(final long id) {
-        String buf = findByRoomId(id).toString();
-        //TODO buf??????????
         return findByRoomId(id).toString().substring(1, findByRoomId(id).toString().length() - 1);
     }
 

@@ -9,10 +9,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.config.AppConfig;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
-
-import static org.junit.Assert.*;
-
 import javax.annotation.Resource;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Nestor on 10.06.2016.
