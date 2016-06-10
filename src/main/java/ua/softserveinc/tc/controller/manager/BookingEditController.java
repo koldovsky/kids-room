@@ -56,7 +56,7 @@ public class BookingEditController {
         List<Booking> filterBookedList = bookingService.filterByState(listBooking, BookingState.BOOKED);
         Date date = currentDate().getTime();
         List<Child> children = childService.findAll();
-        model.addAttribute("listRoom", listRoom);
+        model.addAttribute("rooms", listRoom);
         model.addAttribute("listChild", children);
         model.addAttribute("today", date);
         model.addAttribute("listBooking", filterBookedList);

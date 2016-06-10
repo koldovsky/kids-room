@@ -42,12 +42,15 @@ public class ReportController {
         String dateNow = getStringDate(currentDate());
         String dateThen = getStringDate(dateMonthAgo());
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
+        User currentManager = userService.getUserByEmail(principal.getName());
+        List<Room> rooms = roomService.findByManger(currentManager);
 
         List<User> users = userService.getActiveUsers(toDate(dateThen), toDate(dateNow), room);
 
         modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
         modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
         modelMap.addAttribute(ReportConst.ACTIVE_USERS, users);
+        modelMap.addAttribute("rooms", rooms);
 
         return model;
     }

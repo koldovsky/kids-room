@@ -6,6 +6,17 @@
 
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
+<script src="resources/js/bookedkids.js"></script>
+<script src="resources/js/changeroom.js"></script>
+
+    <select id="selectRoom" onchange="selectRoomForManager(value);">
+        <c:forEach items="${rooms}" var="room">
+            <option value="${room.id}">${room.city}: ${room.address}</option>
+        </c:forEach>
+        <option value="2">Second</option>
+        <option value="3">Third</option>
+    </select>
+
 <div>
 
 <div class="container">
@@ -15,17 +26,6 @@
         <spring:message code="button.add"/>
         </button>
     </div>
-
-    <select id="selectRoom" onchange="selectRoomForManager(value);">
-        <option value="sadfgd">sadfgd</option>
-        <option value="sadsdfsdfgsdgfgd">sadsdfsdfgsdgfgd</option>
-        <c:forEach items="${listRoom}" var="room">
-            <option value="${room.id}">${room.city}: ${room.address}</option>
-        </c:forEach>
-
-    </select>
-
-
 
 <table class="table-edit">
         <div id="set-time">
@@ -173,12 +173,6 @@
     	</div>
 </div>
 </div>
-
-<script src="resources/js/bookedkids.js"></script>
-<script>
-
-
-</script>
 
 
 

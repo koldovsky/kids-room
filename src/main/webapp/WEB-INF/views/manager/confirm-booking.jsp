@@ -5,6 +5,21 @@
 <link rel='stylesheet' href='resources/css/listBookedChildren.css'>
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
+<script src="resources/js/changeroom.js"></script>
+<script src="resources/js/bookedkids.js"></script>
+<script src="resources/js/allkidslist_table_controller.js"></script>
+<script src="resources/js/addbooking_controller.js"></script>
+<script src="resources/js/allkidslist_table_service.js"></script>
+<script src="resources/js/allkidslist_table_directive.js"></script>
+<script src="resources/js/allkidslist_app.js"></script>
+
+    <select id="selectRoom" onchange="selectRoomForManager(value);">
+        <c:forEach items="${rooms}" var="room">
+            <option value="${room.id}">${room.city}: ${room.address}</option>
+        </c:forEach>
+        <option value="2">Second</option>
+        <option value="3">Third</option>
+    </select>
 
 <div class="tableDiv">
 	<div ng-app="allKidsList">
@@ -124,13 +139,6 @@
 		</div>
 	</div>
 </div>
-
-<script src="resources/js/bookedkids.js"></script>
-<script src="resources/js/allkidslist_table_controller.js"></script>
-<script src="resources/js/addbooking_controller.js"></script>
-<script src="resources/js/allkidslist_table_service.js"></script>
-<script src="resources/js/allkidslist_table_directive.js"></script>
-<script src="resources/js/allkidslist_app.js"></script>
 
 
 

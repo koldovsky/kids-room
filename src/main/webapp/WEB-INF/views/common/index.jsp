@@ -12,6 +12,7 @@
 <script src='resources/js/fullcalendar.min.js'></script>
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.js'></script>
+<script src='resources/js/changeroom.js'></script>
 
 <script src='resources/js/userCalendar.js'></script>
 
@@ -134,16 +135,13 @@
     </c:forEach>
 
 
-    <select id="selectBox" onchange="changeFunc(value);">
-
-        <option value=" "></option>
+    <select id="selectRoom" onchange="changeFunc(value);">
 
         <c:forEach items="${rooms}" var="r">
-
             <option value="${r.id}">${r.city}: ${r.address}</option>
-
         </c:forEach>
-
+        <option value="2">Second</option>
+        <option value="3">Third</option>
     </select>
 
 

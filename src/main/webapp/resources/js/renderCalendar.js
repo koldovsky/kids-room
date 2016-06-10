@@ -107,6 +107,8 @@ function changeFunc(id) {
             }
         }
     });
+
+    localStorage["room"] = id;
 }
 
 function rendering(objects, roomID) {
