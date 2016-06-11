@@ -20,21 +20,11 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
     @Autowired
     private ChildDao childDao;
 
-    @Autowired
-    private ApplicationConfiguratorImpl configurator;
 
     @SuppressWarnings("unchecked")
     public List<Child> getChildrenByUser(User user){
         return childDao.getEntityManager().createQuery("from Child" +
                         " where parentId = " + user.getId()).getResultList();
-    }
-
-    @Override
-    public void create(Child entity) {
-        if (entity.getAge() >= configurator.getKidsMinAge()
-                && entity.getAge() <= configurator.getKidsMaxAge()) {
-            super.create(entity);
-        }
     }
 
 

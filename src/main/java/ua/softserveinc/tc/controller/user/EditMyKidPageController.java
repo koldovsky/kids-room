@@ -9,14 +9,17 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.validator.ChildValidator;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,6 +42,9 @@ public class EditMyKidPageController {
     @Autowired
     private ChildValidator validator;
 
+    @Autowired
+    private ApplicationConfigurator applicationConfigurator;
+
     /**
      * Method for responding with an editing form
      * to user's HTTP GET request
@@ -53,8 +59,9 @@ public class EditMyKidPageController {
     @RequestMapping(value="/editmykid",
             method = RequestMethod.GET)
     public ModelAndView selectKid(
-            @RequestParam("kidId") String kidId, Principal principal)
-            throws ResourceNotFoundException, AccessDeniedException
+            @RequestParam("kidId") String kidId,
+            Principal principal,
+            HttpServletRequest request) throws ResourceNotFoundException, AccessDeniedException
     {
         if(!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
@@ -72,6 +79,7 @@ public class EditMyKidPageController {
         model.setViewName(ChildConstants.View.KID_EDITING);
         model.getModelMap()
                 .addAttribute(ChildConstants.View.KID_ATTRIBUTE, kidToEdit);
+        request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
         return model;
     }
 

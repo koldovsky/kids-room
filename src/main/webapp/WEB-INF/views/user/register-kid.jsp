@@ -41,7 +41,11 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
                     </label>
                     <form:input path="dateOfBirth" type="date" id="date" name="date"
                     class="form-control" required="required" />
-                    <form:errors path="dateOfBirth" cssClass="error" />
+                    <div class="err-msg">
+                    <form:errors path="dateOfBirth" cssClass="error">
+                    <spring:message code="registration.kid.date" arguments="${config.kidsMinAge}, ${config.kidsMaxAge}" />
+                    </form:errors>
+                    </div>
       </div>
 
       <div class="form-group">

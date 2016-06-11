@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.validator.ChildValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +38,9 @@ public class RegisterNewKidController {
     @Autowired
     private ChildValidator childValidator;
 
+    @Autowired
+    private ApplicationConfigurator applicationConfigurator;
+
     /**
      * Handles HTTP GET request to display registration form
      *
@@ -42,10 +48,12 @@ public class RegisterNewKidController {
      * @return view name
      */
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
-    public String registerKid(Model model){
+    public String registerKid(Model model, HttpServletRequest request){
         if(!model.containsAttribute(ChildConstants.View.KID_ATTRIBUTE)) {
             model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, new Child());
         }
+
+        request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
         return ChildConstants.View.KID_REGISTRATION;
     }
 
@@ -68,8 +76,7 @@ public class RegisterNewKidController {
             Principal principal,
             BindingResult bindingResult) {
 
-        child.setParentId(
-                userService.getUserByEmail(
+        child.setParentId(userService.getUserByEmail(
                         principal.getName()));
 
         childValidator.validate(child, bindingResult);

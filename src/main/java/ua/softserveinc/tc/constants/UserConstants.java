@@ -29,6 +29,7 @@ public interface UserConstants {
         String FORGOT_PASSWORD_VIEW = "forgotPassword";
         String RESEND_MAIL_VIEW = "resend-mail";
         String USER_DETAILS_SERVICE = "userDetailsService";
+        String ATRIBUTE_CONFIG = "config";
     }
 
     interface Role {

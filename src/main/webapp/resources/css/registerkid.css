@@ -26,6 +26,11 @@ form .required:after {
 				color: red;
 			}
 
+.err-msg{
+    color: red;
+    text-color: red;
+}
+
 
 input, textarea, label{
     text-align: center;

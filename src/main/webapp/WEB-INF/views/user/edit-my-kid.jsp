@@ -31,7 +31,12 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
                     <label for="date" class="required"><spring:message code="kid.date" /></label>
                     <form:input type="date" path="dateOfBirth" id="date" name="date"
                     value="${kid.getDateOfBirth()}" class="form-control" required="required" />
-                    <form:errors path="dateOfBirth" cssClass="error" />
+                     <div class="err-msg">
+                              <form:errors path="dateOfBirth" cssClass="error">
+                                    <spring:message code="registration.kid.date"
+                                    arguments="${config.kidsMinAge}, ${config.kidsMaxAge}" />
+                              </form:errors>
+                      </div>
       </div>
 
       <div class="form-group">
