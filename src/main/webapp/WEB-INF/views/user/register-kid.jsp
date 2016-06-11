@@ -5,7 +5,8 @@
 <%@ page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
 <%@ page import="ua.softserveinc.tc.constants.ValidationConst" %>
 
-<link rel='stylesheet' href='resources/css/registerkid.css'> 
+<link rel='stylesheet' href='resources/css/registerkid.css'>
+<script src="resources/js/kid-registration.js"></script>
 
 <form:form enctype="application/x-www-form-urlencoded" action="registerkid"
 method="post" modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>">
