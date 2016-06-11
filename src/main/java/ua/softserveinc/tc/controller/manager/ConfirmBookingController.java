@@ -23,8 +23,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.workingHours;
+import static ua.softserveinc.tc.util.DateUtil.*;
 
 /**
  * Created by Петришак on 08.05.2016.
@@ -53,6 +54,7 @@ public class ConfirmBookingController {
         model.addAttribute("rooms", rooms);
         return modelAndView;
     }
+
 
     @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
     @ResponseBody
@@ -110,6 +112,19 @@ public class ConfirmBookingController {
          BookingDto bookingDTOtoJson = new BookingDto(booking);
          Gson gson = new Gson();
          return  gson.toJson(bookingDTOtoJson);
+    }
+
+    @RequestMapping (value = "manager-dayle-booking/{id}",
+            method = RequestMethod.GET)
+    @ResponseBody
+    public String bookingsByDay(@PathVariable Long id){
+        Date toDay= new Date();
+        Room room = roomService.findById(id);
+        List<Booking> bookings = bookingService.getBookings(setStartTime(toDay), setEndTime(toDay), room, BookingConstants.States.NOT_CANCELLED);
+        Gson gson = new Gson();
+        return  gson.toJson(bookings.stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList()));
     }
 
 }

@@ -53,7 +53,6 @@ function refresh(){
                         startTime: getData.find('#data').val()+" "+getData.find('#startTime').val(),
                         endTime: getData.find('#data').val()+" "+ getData.find('#endTime').val(),
                     };
-
                     $.ajax({
                         url: 'change-booking',
                         type: 'POST',

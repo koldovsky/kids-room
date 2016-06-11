@@ -7,51 +7,31 @@
 
 <script src="resources/js/changeroom.js"></script>
 <script src="resources/js/bookedkids.js"></script>
-<script src="resources/js/allkidslist_table_controller.js"></script>
-<script src="resources/js/addbooking_controller.js"></script>
-<script src="resources/js/allkidslist_table_service.js"></script>
-<script src="resources/js/allkidslist_table_directive.js"></script>
-<script src="resources/js/allkidslist_app.js"></script>
 
 <div class="tableDiv">
-	<div ng-app="allKidsList">
-		<div ng-controller="addBookingController">
-			<div class="input-group">
-				<input type="text" class="form-control -raised" placeholder="Search..." ng-model="searchField"
-				ng-change="searchChildren(searchField)">
-			</div>
-			<div class="col-sm-6">
-				<div ng-repeat="child in children">
-					<div>
-						{{child.fullName}}
-						{{child.id}}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	<table class="table">
-		<thead>
-			<th class="col-sm-2"><spring:message code= "booking.childrens"/></th>
-			<th class="col-sm-2"><spring:message code= "booking.time"/></th>
-			<th class="col-sm-2"><spring:message code= "booking.arrival"/></th>
-			<th class="col-sm-2"><spring:message code= "booking.leave"/></th>
-			<th class="col-sm-2"><spring:message code= "booking.cancel"/></th>
-		</thead>
-		<tbody>
+        <div class="header">
+			<th><spring:message code= "booking.childrens"/></th>
+			<th><spring:message code= "booking.time"/></th>
+			<th><spring:message code= "booking.arrival"/></th>
+			<th><spring:message code= "booking.leave"/></th>
+        </div>
+
 			<c:forEach var="booking" items="${listBooking}">
 				<tr id="${booking.idBook}" class="trbooking">
-					<div class="col-sm-4">
-						<td>
-							<a id="href-kids" href="profile?id=${booking.child.id}">${booking.child.getFullName()}</a>
+						<td class="del">
+                            <div class="input-group">
+                                    <a id="href-kids" href="profile?id=${booking.child.id}">${booking.child.getFullName()}</a>
+                            </div>
 						</td>
-					</div>
-					<td class="bookingTime" class="col-sm-4">
-						<fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/> -
-						<fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
-					</td>
+                        <td class="bookingTime">
+                            <div class="input-group">
+                                    <fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/> -
+                                    <fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
+                            </div>
+                        </td>
 					<form action="" method="POST">
-						<td class="col-sm-2">
+						<td>
 							<div class="input-group">
 								<input type="time" id="arrivalTime" class="form-control"/>
 								<span class="input-group-btn">
@@ -64,7 +44,7 @@
 						</td>
 					</form>
 					<form action="" method="POST">
-						<div class="col-sm-4">
+						<div>
 							<td>
 								<div class="input-group">
 									<input type="time" id="leaveTime" class="form-control"/>
@@ -78,16 +58,8 @@
 							</td>
 						</div>
 					</form>
-					<td class="cancelClass" class="col-sm-4">
-						<button class="btn btn-sm btn-warning"
-							data-toggle="modal" data-target="#cancelModal"
-							onclick="cancelBooking(${booking.idBook})">
-							<spring:message code= "booking.canceled"/>
-						</button>
-					</td>
 				</tr>
 			</c:forEach>
-		</tbody>
 	</table>
 	<div id="cancelModal" class="modal fade">
 		<div class="modal-dialog modal-sm">

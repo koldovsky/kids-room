@@ -32,6 +32,7 @@
                 <th><spring:message code= "booking.time"/></th>
                 <th><spring:message code= "button.edit"/></th>
                 <th><spring:message code= "booking.cancel"/></th>
+            </div>
                 <c:forEach var="booking" items="${listBooking}">
                     <tr id="${booking.idBook}" class="trbooking">
                         <div class="col-sm-4">

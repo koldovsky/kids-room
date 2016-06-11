@@ -70,8 +70,7 @@ public class BookingEditController {
     @RequestMapping (value = "manager-edit-booking/{date}/{id}",
             method = RequestMethod.GET)
     @ResponseBody
-    public String bookingsByDay(Principal principal,
-                                @PathVariable String date,
+    public String bookingsByDay(@PathVariable String date,
                                 @PathVariable Long id){
         Room room = roomService.findById(id);
         List<Booking> bookings = bookingService.getBookings(setStartTime(toDate(date)), setEndTime(toDate(date)), room);

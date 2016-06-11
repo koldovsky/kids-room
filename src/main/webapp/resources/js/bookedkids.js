@@ -76,7 +76,6 @@
           });
    }
 
-
    var dateNow = function(){
        var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
        $(this).val(date);
@@ -86,7 +85,6 @@
 
 
    $.getJSON("listBook", function( list ){
-
        $.each(list, function(index, value) {
        if(value.bookingState=="ACTIVE"){
            $('#'+value.id).addClass('highlight-active');
@@ -129,11 +127,52 @@
 
  }
 
+
  function selectRoomForManager(room) {
        localStorage["room"] = room;
-       // Vasyl code goes here
+       var idRoom = localStorage["room"];
+       var src = 'manager-dayle-booking/' +idRoom;
+       $.ajax({
+           url: src,
+           success: function(data){
+               var bookings = JSON.parse(data);
+               var tr = "";
+               $.each(bookings, function(i, booking){
+                   var startButton = 'onclick='+'"'+'setStartTime(' +booking.id +')"';
+                   var endButton = 'onclick='+'"'+'setEndTime(' +booking.id +')"';
+                   tr+='<tr id=' + booking.id +' class="trbooking"><td>'
+                   + '<a href=profile?id=' + booking.idChild +'>'
+                   + booking.kidName +'</td>'
+                   + '<td>' + booking.startTime + " -" + booking.endTime +  '</td>'
+                   + '<td><div class="input-group"><input type="time"' + 'id="arrivalTime"'+ 'class="form-control"/>'
+                   + '<span class="input-group-btn">'
+                   + '<input type="button"'+'class="btn btn-raised btn-sm btn-info"'
+                   + startButton +'value="Set"'+'</input></span></td></div>'
+                   + '<td><div class="input-group"><input type="time"' + 'id="leaveTime"'+ 'class="form-control"/>'
+                   + '<span class="input-group-btn">'
+                   + '<input type="button"'+'class="btn btn-raised btn-sm btn-info"'
+                   + endButton +'value="Set"'+'</input></span></td></div>'
+                   +'</tr>';
+
+               });
+               $('.trbooking').remove();
+               $('.table').append(tr);
+
+         $.each(bookings, function(index, value) {
+                        if(value.bookingState=="ACTIVE"){
+                            $('#'+value.id).addClass('highlight-active');
+                            $('#'+value.id).find('#arrivalTime').val(value.startTime);
+                        }else if(value.bookingState=="COMPLETED"){
+                            $('#'+value.id).addClass('highlight-complet');
+                            $('#'+value.id).find('#arrivalTime').val(value.startTime);
+                            $('#'+value.id).find('#leaveTime').val(value.endTime);
+                     }});
+
+           }
+       });
 
  }
+
 
 
 
