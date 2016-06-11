@@ -60,6 +60,7 @@ public class Room {
 
 
     public Room() {
+        //TODO add comment what do this constructor
     }
 
     public Room(RoomDto roomDto) {

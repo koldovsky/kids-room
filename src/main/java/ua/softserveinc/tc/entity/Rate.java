@@ -30,6 +30,7 @@ public class Rate {
     private Room room;
 
     public Rate() {
+        //TODO add comment what do this constructor
     }
 
     public Rate(Integer hourRate, Long priceRate) {

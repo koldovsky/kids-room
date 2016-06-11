@@ -38,7 +38,9 @@ public class BookingDto {
     private transient Date dateStartTime;
     private transient Date dateEndTime;
 
-    public BookingDto() {}
+    public BookingDto() {
+        //TODO add comment what do this constructor
+    }
 
     public BookingDto(Booking booking) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

@@ -30,4 +30,10 @@ public interface UserConstants {
         String RESEND_MAIL_VIEW = "resend-mail";
         String USER_DETAILS_SERVICE = "userDetailsService";
     }
+
+    interface Role {
+        String ROLE_USER= "USER";
+        String ROLE_MANAGER= "MANAGER";
+        String ROLE_ADMINISTRATOR= "ADMINISTRATOR";
+    }
 }

@@ -38,6 +38,7 @@ public class RoomDto {
     private Long sum;
 
     public RoomDto() {
+        //TODO add comment what do this constructor
     }
 
 

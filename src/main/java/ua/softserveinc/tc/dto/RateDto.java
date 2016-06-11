@@ -12,6 +12,7 @@ public class RateDto {
     private String priceRate;
 
     public RateDto() {
+        //TODO add comment what do this constructor
     }
 
     public RateDto(String hourRate, String priceRate) {
