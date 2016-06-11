@@ -381,8 +381,8 @@ insert into users (id_user, active, confirmed, email, first_name, last_name, pas
 
 
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (1, 'Pasternaka 8', 40, 'LV-3', '+380947715038', 'Lviv', 2);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, 'Antonycha 22', 30, 'LV-5', '+380938587190', 'Lviv', 58);
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, 'Nezalezhnosti 18', 50, 'Nebesna', '+380951789603', 'Kyiv', 61);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (2, 'Antonycha 22', 15, 'LV-5', '+380938587190', 'Lviv', 2);
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (3, 'Sadova 2a', 30, 'Nebesna', '+380951789603', 'Lviv', 2);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (4, 'Shevchenka 32', 35, 'Velyka', '+380936458634', 'Kyiv', 64);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (5, 'Franka 124', 30, 'Kvitkova', '+380938710134', 'Rivne', 67);
 insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, id_user) values (6, 'Tarasivka 27', 40, 'Zelena', '+380949441026', 'Lutsk', 69);

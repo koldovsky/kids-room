@@ -57,9 +57,10 @@ public class BookingEditController {
         Date date = toDate(dateNow());
         List<Child> children = childService.findAll();
         List<User> users = userService.findAll();
-        Set<Child> kid = userService.findById(1L).getChildren();
+        Set<Child> kids = userService.findById(1L).getChildren();
         model.addAttribute("rooms", listRoom);
         model.addAttribute("users", users);
+        model.addAttribute("kids", kids);
         model.addAttribute("listChild", children);
         model.addAttribute("today", date);
         model.addAttribute("listBooking", bookings);
