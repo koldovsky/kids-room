@@ -40,18 +40,6 @@
                 <th><spring:message code="report.bookings" /></th>
             </tr>
 
-            <c:forEach var="user" items="${activeUsers}">
-            <tr>
-                <td>${user.getFirstName()}</td>
-                <td>${user.getLastName()}</td>
-                <td>${user.getEmail()}</td>
-                <td>${user.getPhoneNumber()}</td>
-                <td class="parent" id="${user.getEmail()}">
-                    <a id="seeDetails"><spring:message code="report.details" /></a>
-                </td>
-            </tr>
-            </c:forEach>
-
         </table>
     </div>
 

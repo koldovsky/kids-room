@@ -1,4 +1,5 @@
 $(function(){
+    refreshView();
     localizedDetails = $("#seeDetails").html();
     addListener();
     $("#dateNow, #dateThen").change(refreshView);
