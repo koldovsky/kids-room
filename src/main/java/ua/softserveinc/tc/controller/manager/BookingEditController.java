@@ -19,6 +19,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static ua.softserveinc.tc.util.DateUtil.*;
 
@@ -55,7 +56,10 @@ public class BookingEditController {
                 room, BookingState.BOOKED);
         Date date = toDate(dateNow());
         List<Child> children = childService.findAll();
+        List<User> users = userService.findAll();
+        Set<Child> kid = userService.findById(1L).getChildren();
         model.addAttribute("rooms", listRoom);
+        model.addAttribute("users", users);
         model.addAttribute("listChild", children);
         model.addAttribute("today", date);
         model.addAttribute("listBooking", bookings);

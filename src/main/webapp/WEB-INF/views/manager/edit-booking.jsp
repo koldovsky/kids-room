@@ -3,13 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
+<link href='resources/css/formForCalendar.css' rel='stylesheet'/>
+<script src='resources/js/renderCalendar.js'></script>
 
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
-<script src="resources/js/bookedkids.js"></script>
-<script src="resources/js/changeroom.js"></script>
-
 <div>
+
+    <select id="selectRoom" onchange="selectRoomForManager(value);">
+        <c:forEach items="${rooms}" var="room">
+            <option value="${room.id}">${room.city}: ${room.address}</option>
+        </c:forEach>
+        <option value="2">Second</option>
+        <option value="3">Third</option>
+    </select>
+
+
     <div class="container">
         <div>
             <button class="btn btn-primary"
@@ -135,22 +144,30 @@
                         </div>
                         <div class="modal-body">
                             <div>
-                                <select id="selectChild" onchange="selectSelectKid(value);" class="form-control">
+                                <select id="selectUser" onchange="selectUser(value);" class="form-control">
                                     <lable> Please choose kid </lable>
                                    <option value=" " disabled selected hidden>  </option>
-                                   <c:forEach items="${listChild}" var="child">
-                                       <option value="${child.id}" >${child.getFullName()}</option>
+                                   <c:forEach items="${users}" var="user">
+                                       <option value="${user.children}" >${user.getFullName()}</option>
                                    </c:forEach>
                                 </select>
                             </div>
-                            <div>
-                                <input id="create-date" type="date" class="form-control"/>
+                            <label for="bookingStartDate">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                               <input type="text" class="form-control" id="create-date" placeholder="startDate"
+                                     readonly>
                             </div>
-                            <div>
-                                <input id="create-start-time" type="time" class="form-control"/>
-                            </div>
-                            <div>
-                                <input id="create-end-time" type="time" class="form-control"/>
+                            <div class="col-xs-5">
+                                    <input id="create-start-time" type="text" class="time form-control" size="6"/>
+                                </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="bookingEndDate">End date</label>
+                                <br>
+                                <div class="col-xs-5">
+                                    <input id="create-end-time" type="text" class="time form-control" size="6"/>
+                                </div>
                             </div>
                             <div>
                                 <textarea id ="create-comment" class="form-control"></textarea>
@@ -165,3 +182,6 @@
         </div>
     </div>
 </div>
+
+
+<script src="resources/js/bookedkids.js"></script>
