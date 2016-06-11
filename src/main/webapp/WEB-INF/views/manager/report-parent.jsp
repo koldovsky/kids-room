@@ -6,6 +6,7 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
+<link rel='stylesheet' href='resources/css/disable-room-picker.css'>
 
     <div class="tableDiv" id="parentDetails">
         <table>

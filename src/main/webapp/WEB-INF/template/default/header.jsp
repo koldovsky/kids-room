@@ -79,7 +79,7 @@
 
                             <sec:authorize access="hasRole('MANAGER')">
                                   <li><a href="report">
-                                  <span class="glyphicon glyphicon-pencil"></span>
+                                  <span class="glyphicon glyphicon-tasks"></span>
                                   <spring:message code="manager.report" /></a>
                                   </li>
                                   <li><a href="manager-confirm-booking">
@@ -91,16 +91,11 @@
                                   <spring:message code="button.edit" />
                                   </a></li>
 
-                                  <li><a href="allkidslist">
-                                  <span class="glyphicon glyphicon-user"></span>
-                                  <spring:message code="manager.kids" />
-                                  </a></li>
-
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
                                 <li><a href="statistics">
-                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <span class="glyphicon glyphicon-tasks"></span>
                                     <spring:message code="administrator.statistics" /></a>
                                 </li>
                                 <li><a href="adm-edit-room">

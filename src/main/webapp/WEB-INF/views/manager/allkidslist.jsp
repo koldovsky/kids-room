@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<link rel='stylesheet' href='resources/css/disable-room-picker.css'>
 
 <div id="all_kids_table_wrapper" ng-app="allKidsList">
     <all-kids-table></all-kids-table>
