@@ -7,12 +7,12 @@
 
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
 
-<%@ page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
+<%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
 <script src='resources/js/profile.js'></script>
 
-<div class="kidsCard" data-id="${kid.id}" modelAttribute="<%=MyKidsConst.MY_KIDS_LIST_ATTRIBUTE %>">
+<div class="kidsCard" data-id="${kid.id}" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
 
     <div class="left">
         <div id="Photo">

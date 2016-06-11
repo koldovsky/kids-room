@@ -2,13 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<%@ page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
+<%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 <%@ page import="ua.softserveinc.tc.constants.ValidationConst" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
 
 <form:form class = "registerkid"  enctype="application/x-www-form-urlencoded"
-modelAttribute="<%=MyKidsConst.KID_ATTRIBUTE %>" action="editmykid" method="post">
+modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" method="post">
 
       <h2><spring:message code="editkid.title" /></h2>
 

@@ -8,7 +8,7 @@
 <script src="resources/js/changeroom.js"></script>
 <script src="resources/js/report.js"></script>
 
-    <form id="generateAReport" action="report-all">
+    <form id="generateAReport" action="report-all" method="post">
         <input type="hidden" id="roomIdHidden" name="roomId"/>
 
         <div id="dateThenDiv">
@@ -60,7 +60,7 @@
          value=<spring:message code="report.generate" /> class="btn-primary">
     </div>
 
-    <form action="report-parent" id="allBookingsPerParentForm">
+    <form action="report-parent" id="allBookingsPerParentForm" method="post">
         <input type="hidden" id="parentEmailHidden" name="parentEmail"/>
         <input type="hidden" id="dateThenHidden" name="dateThen"/>
         <input type="hidden" id="dateNowHidden" name="dateNow"/>

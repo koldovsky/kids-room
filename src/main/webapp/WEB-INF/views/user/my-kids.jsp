@@ -5,7 +5,7 @@
 
 <c:url value="/j_spring_security_check" var="myKidsUrl" />
 
-<%@ page import="ua.softserveinc.tc.constants.ModelConstants.MyKidsConst" %>
+<%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
 
@@ -13,7 +13,7 @@
 </script>
 
 
-<div class="list" modelAttribute="<%=MyKidsConst.MY_KIDS_LIST_ATTRIBUTE %>">
+<div class="list" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
 <h2>
     <spring:message code="kid.list" />
 </h2>
