@@ -186,7 +186,7 @@ function renderingForUser(objects, id) {
                 },
 
                 eventClick: function (calEvent, jsEvent, view) {
-                    alert("DON'T TOUCH THIS!!!!!!");
+
                 },
 
                 header: {
