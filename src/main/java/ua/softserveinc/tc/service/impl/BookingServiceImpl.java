@@ -179,7 +179,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         List<BookingDto> bookingDtos = new LinkedList<>();
 
         for (Booking booking : bookings) {
-            if ((booking.getRoom().getId() == idRoom) && (booking.getUser().getId() == idUser)) {
+            if ((booking.getRoom().getId() == idRoom) && (booking.getUser().getId() == idUser) &&
+                    ((booking.getBookingState().toString() == "ACTIVE")
+                            || (booking.getBookingState().toString() == "BOOKED"))) {
                 bookingDtos.add(new BookingDto(booking));
             }
         }

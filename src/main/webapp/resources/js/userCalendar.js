@@ -189,6 +189,11 @@ function renderingForUser(objects, id) {
         $('#bookingUpdatingDialog').dialog('close');
     });
 
+    $('#deletingBooking').click(function() {
+        $('#bookingUpdatingDialog').dialog('close');
+       cancelBooking(info.id);
+
+    });
     var pathForUploadingAllBookingsForUsers = 'getallbookings/1/' + id;
 
     $.ajax({
@@ -417,6 +422,25 @@ function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
 
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
+            } else {
+                alert("NOOOOOOO");
+            }
+        }
+    });
+}
+
+function cancelBooking(bookingId) {
+    $.ajax({
+        type: 'get',
+        contentType: 'application/json',
+        url: 'cancelBook/' + bookingId,
+        dataType: 'json',
+        data: JSON.stringify({
+        }),
+        success: function (result) {
+            if (result) {
+                $('#user-calendar').fullCalendar('removeEvents', bookingId);
+
             } else {
                 alert("NOOOOOOO");
             }
