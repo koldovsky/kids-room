@@ -151,33 +151,12 @@
                             </div>
                         </div>
 
-
-                        <table>
-                            <c:forEach items="${kids}" var="kids" varStatus="loop">
-
-                                <tr>
-                                    <label><input type="checkbox" value=""
-                                                  id="checkboxUpdatingKid${kids.id}">${kids.firstName}</label>
-                                        ${loop.index} <br>
-                                </tr>
-
-                            </c:forEach>
-
-                            <c:forEach items="${kids}" var="kids" varStatus="loop">
-
-                                <tr>
-                                    <label for="child-updating-comment-${kids.id}">Comment for ${kids.id}:</label>
-
-                                    <input type="text" value="" id="child-updating-comment-${kids.id}">
-                                </tr>
-
-
-                            </c:forEach>
-                            <input id="kostilupdate" hidden value="${fn:length(kids)}">
-                        </table>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-success" id="updatingBooking">Update</button>
+                        </div>
 
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="updating">Update</button>
+                            <button type="button" class="btn btn-danger" id="deletingBooking">Delete</button>
                         </div>
 
                     </form>

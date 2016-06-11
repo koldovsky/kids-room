@@ -229,8 +229,8 @@ function rendering(objects, roomID) {
             var beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
-            $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
-            $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
+            $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
+            $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());

@@ -21,6 +21,23 @@ $(function () {
     });
 });
 
+$(function () {
+    $('#bookingUpdatingStartTimepicker').timepicker({
+        'timeFormat': 'H:i',
+        'step': 15,
+        'minTime': '15:00',
+        'maxTime': '22:00'
+    });
+});
+
+$(function () {
+    $('#bookingUpdatingEndTimepicker').timepicker({
+        'timeFormat': 'H:i',
+        'step': 15,
+        'minTime': '15:00',
+        'maxTime': '22:00'
+    });
+});
 function selectRoomForUser(id) {
     $('#user-calendar').fullCalendar('destroy');
 
@@ -36,6 +53,18 @@ function selectRoomForUser(id) {
     });
 
     $('#bookingForm').dialog({
+        autoOpen: false,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
+    $('#bookingUpdatingDialog').dialog({
         autoOpen: false,
         show: {
             effect: 'drop',
@@ -89,7 +118,7 @@ function selectRoomForUser(id) {
 function renderingForUser(objects, id) {
 
     var bookingDate = new Object();
-
+    var info = new Object();
     var bookingsArray = [];
 
     $('#booking').click(function () {
@@ -136,6 +165,28 @@ function renderingForUser(objects, id) {
         });
 
         $('#bookingForm').dialog('close');
+    });
+
+    $('#updatingBooking').click(function() {
+        var newStartDate = makeISOtime(info.calEvent.start.format(), 'bookingUpdatingStartTimepicker');
+        var newEndDate = makeISOtime(info.calEvent.end.format(), 'bookingUpdatingEndTimepicker');
+
+        var bookingForUpdate = {
+            id: info.calEvent.id,
+            title: info.calEvent.title,
+            start: newStartDate,
+            end: newEndDate
+        };
+
+        console.log(info.calEvent.id);
+
+        console.log(newStartDate);
+        console.log(newEndDate);
+
+
+        sendBookingToServerForUpdate(bookingForUpdate, info.roomID);
+
+        $('#bookingUpdatingDialog').dialog('close');
     });
 
     var pathForUploadingAllBookingsForUsers = 'getallbookings/1/' + id;
@@ -187,6 +238,36 @@ function renderingForUser(objects, id) {
 
                 eventClick: function (calEvent, jsEvent, view) {
 
+                    var beforeUpdate = calEvent.title;
+
+                    $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
+                    $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
+
+                    var date = new Date(calEvent.start.format());
+                    var endDate = new Date(calEvent.end.format());
+
+                    var newDate = new Date();
+                    var newDateForEnd = new Date();
+
+                    newDate.setHours(date.getUTCHours());
+                    newDate.setMinutes(date.getUTCMinutes());
+                    newDate.setSeconds(date.getUTCSeconds());
+
+                    newDateForEnd.setHours(endDate.getUTCHours());
+                    newDateForEnd.setMinutes(endDate.getUTCMinutes());
+                    newDateForEnd.setSeconds(endDate.getUTCSeconds());
+
+                    $('#bookingUpdatingStartTimepicker').timepicker('setTime', newDate);
+                    $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);
+
+                    $('#bookingUpdatingDialog').dialog('open');
+
+                    info.id = calEvent.id;
+                    info.beforeUpdate = beforeUpdate;
+                    info.endDate = endDate;
+                    info.calEvent = calEvent;
+                    info.roomID = id;
+                    info.date = date;
                 },
 
                 header: {
@@ -296,7 +377,7 @@ function makeISOtime(clickDate, idOfTimePicker) {
     if (timepickerMinutes == 0) {
         timepickerMinutes = '00';
     } else {
-        timepickerMinutes = '30';
+        timepickerMinutes = timepickerMinutes.toString();
     }
 
     if (timepickerHours < 10) {
@@ -315,4 +396,30 @@ function Booking(startTime, endTime, comment, kidId, roomId) {
     this.comment = comment;
     this.kidId = kidId;
     this.roomId = roomId;
+}
+
+function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'change-booking',
+        dataType: 'json',
+        data: JSON.stringify({
+            id: bookingForUpdate.id,
+        //    name: bookingForUpdate.title,
+            startTime: bookingForUpdate.start.substring(0,10) + " " + bookingForUpdate.start.substring(11, 16),
+            endTime: bookingForUpdate.end.substring(0,10) + " " + bookingForUpdate.end.substring(11, 16)
+        //    roomId: roomID
+        }),
+        success: function (result) {
+            if (result) {
+                bookingForUpdate.color = "#99ff33";
+
+                $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
+                $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
+            } else {
+                alert("NOOOOOOO");
+            }
+        }
+    });
 }
