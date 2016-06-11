@@ -1,33 +1,39 @@
-$(function(){
+$(function() {
     refreshView();
-    localizedDetails = $("#seeDetails").html();
-    addListener();
+    addListenerForDetails();
+    addListenerForGenerate();
     $("#dateNow, #dateThen").change(refreshView);
-    $("#generateAReport").submit(function(){
-        $("#roomIdHidden").val($("#selectRoom").val());
-    });
 });
 
-function addListener()
-{
-    $(".parent").each(function(){
-        $(this).click(function(){
-            $("#parentEmailHidden").val($(this).attr('id'));
-            $("#roomHidden").val($("#selectRoom").val());
-            $("#dateThenHidden").val($("#dateThen").val());
-            $("#dateNowHidden").val($("#dateNow").val());
-            $("#allBookingsPerParentForm").submit();
+function getObjectsToSent() {
+    var objects = {
+        roomId: $("#selectRoom").val(),
+        dateNow: $("#dateNow").val(),
+        dateThen: $("#dateThen").val()
+    }
+    return objects;
+}
+
+function addListenerForDetails() {
+    $(".parent").each(function() {
+        $(this).click(function() {
+            var objects = getObjectsToSent();
+            objects["parentEmail"] = $(this).attr("id");
+            $.redirect("/home/report-parent", objects);
         });
     });
 };
 
-function refreshView()
-{
-    var room = $("#selectRoom").val();
-    var dateNow = $("#dateNow").val();
-    var dateThen = $("#dateThen").val();
-	var request = "refreshParents/";
-    request += room + "/" + dateThen + "/" + dateNow;
+function addListenerForGenerate() {
+    $("#generate").click(function() {
+        $.redirect("/home/report-all", getObjectsToSent());
+    });
+};
+
+function refreshView() {
+    var objects = getObjectsToSent();
+	var request = "refreshParents/" + objects["roomId"] + "/";
+    request += objects["dateThen"] + "/" + objects["dateNow"];
 
     $.ajax({url: request, success: function(result)
     {
@@ -35,7 +41,7 @@ function refreshView()
 
         $('#date').remove();
         var caption = $('caption h2').html();
-        caption += '<span id="date">(' + dateThen + ' - ' + dateNow + ')</span>';
+        caption += '<span id="date">(' + objects["dateThen"] + ' - ' + objects["dateNow"] + ')</span>';
         $( 'caption h2' ).html(caption);
 
         var tr = "";
@@ -47,19 +53,18 @@ function refreshView()
             + '<td>' + user.email + '</td>'
             + '<td>' + user.phoneNumber + '</td>'
             + '<td class="parent" id="'
-            + user.email + '"><a>' + localizedDetails + '</a></td></tr>';
+            + user.email + '"><a>See details</a></td></tr>';
         });
 
         $('td').remove();
 
         $('#activeUsers').append(tr);
 
-        addListener();
+        addListenerForDetails();
     }});
 }
 
-function selectRoomForManager(room)
-{
+function selectRoomForManager(room) {
     localStorage["room"] = room;
     refreshView();
 }

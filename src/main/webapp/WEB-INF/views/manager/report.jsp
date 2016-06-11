@@ -5,22 +5,20 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
-<script src="resources/js/changeroom.js"></script>
+
 <script src="resources/js/report.js"></script>
+<script src="resources/js/changeroom.js"></script>
+<script src="resources/js/jquery.redirect.js"></script>
 
-    <form id="generateAReport" action="report-all" method="post">
-        <input type="hidden" id="roomIdHidden" name="roomId"/>
+    <div id="dateThenDiv">
+        <h3><spring:message code="report.from" /></h3>
+        <input type="date" value="${dateThen}" name="dateThen" id="dateThen">
+    </div>
 
-        <div id="dateThenDiv">
-            <h2><spring:message code="report.from" /></br>
-            <input type="date" value="${dateThen}" name="dateThen" id="dateThen"></h2>
-        </div>
-
-        <div id="dateNowDiv">
-            <h2><spring:message code="report.to" /></br>
-            <input type="date" value="${dateNow}" name="dateNow" id="dateNow"></h2>
-        </div>
-    </form>
+    <div id="dateNowDiv">
+        <h3><spring:message code="report.to" /></h3>
+        <input type="date" value="${dateNow}" name="dateNow" id="dateNow">
+    </div>
 
     <div class="tableDiv">
         <table id="activeUsers">
@@ -44,13 +42,5 @@
     </div>
 
     <div id="generateButton">
-        <input type="submit" form="generateAReport"
-         value=<spring:message code="report.generate" /> class="btn-primary">
+        <button id="generate" class="btn-primary"><spring:message code="report.generate" /></button>
     </div>
-
-    <form action="report-parent" id="allBookingsPerParentForm" method="post">
-        <input type="hidden" id="parentEmailHidden" name="parentEmail"/>
-        <input type="hidden" id="dateThenHidden" name="dateThen"/>
-        <input type="hidden" id="dateNowHidden" name="dateNow"/>
-        <input type="hidden" id="roomHidden" name="roomId"/>
-    </form>
