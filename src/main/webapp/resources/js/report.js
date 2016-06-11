@@ -22,8 +22,7 @@ function refreshView()
     var dateNow = $("#dateNow").val();
     var dateThen = $("#dateThen").val();
 	var request = "refreshParents/";
-    request += dateThen + "/" + dateNow;
-    alert(room);
+    request += room + "/" + dateThen + "/" + dateNow;
 
     $.ajax({url: request, success: function(result)
     {

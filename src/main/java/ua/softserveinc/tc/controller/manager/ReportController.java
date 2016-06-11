@@ -55,11 +55,14 @@ public class ReportController {
         return model;
     }
 
-    @RequestMapping(value = "/refreshParents/{startDate}/{endDate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/refreshParents/{roomId}/{startDate}/{endDate}", method = RequestMethod.GET)
     @ResponseBody
-    public String refreshView(@PathVariable String startDate,
-                              @PathVariable String endDate, Principal principal) {
-        Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
+    public String refreshView(@PathVariable Long roomId,
+                              @PathVariable String startDate,
+                              @PathVariable String endDate) {
+
+        Room room = roomService.findById(roomId);
+
         List<User> users = userService.getActiveUsers(toDate(startDate), toDate(endDate), room);
         Gson gson = new Gson();
 
