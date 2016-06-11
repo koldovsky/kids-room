@@ -67,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/adm-update-manager").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.GET, "/adm-update-room").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.POST, "/adm-update-room").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.GET, "/adm-config").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.POST, "/adm-config").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
                 .antMatchers(HttpMethod.GET, "/api/**").hasRole(UserConstants.Role.ROLE_MANAGER)
                 .antMatchers(HttpMethod.GET, "/api/user/{id}").hasRole(UserConstants.Role.ROLE_MANAGER)
                 .antMatchers(HttpMethod.GET, "/api/child").hasRole(UserConstants.Role.ROLE_MANAGER)
