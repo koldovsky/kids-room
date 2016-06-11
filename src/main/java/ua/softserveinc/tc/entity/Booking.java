@@ -55,10 +55,12 @@ public class Booking {
     @Enumerated(EnumType.ORDINAL)
     private BookingState bookingState;
 
-    @Column(name = BookingConstants.DB.DURATION, columnDefinition = "bigint default 0")
+    @NotNull
+    @Column(name = BookingConstants.DB.DURATION)
     private Long duration;
 
-    @Column(name = BookingConstants.DB.SUM, columnDefinition = "bigint default 0")
+    @NotNull
+    @Column(name = BookingConstants.DB.SUM)
     private Long sum;
 
     public Long getIdBook() {
