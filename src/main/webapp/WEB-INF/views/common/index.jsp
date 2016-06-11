@@ -134,17 +134,6 @@
 
     </c:forEach>
 
-
-    <select id="selectRoom" onchange="changeFunc(value);">
-
-        <c:forEach items="${rooms}" var="r">
-            <option value="${r.id}">${r.city}: ${r.address}</option>
-        </c:forEach>
-        <option value="2">Second</option>
-        <option value="3">Third</option>
-    </select>
-
-
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">

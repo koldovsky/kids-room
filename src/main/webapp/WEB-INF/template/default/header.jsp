@@ -50,6 +50,15 @@
                             </sec:authorize>
 
                             <sec:authorize access="hasRole('MANAGER')">
+
+                                <select id="selectRoom" onchange="selectRoomForManager(value);">
+                                    <c:forEach items="${rooms}" var="r">
+                                        <option value="${r.id}">${r.city}: ${r.address}</option>
+                                    </c:forEach>
+                                    <option value="2">Second</option>
+                                    <option value="3">Third</option>
+                                </select>
+
                                 <li><a href="/home">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                     <spring:message code="user.calendar" />

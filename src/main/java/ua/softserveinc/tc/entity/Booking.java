@@ -4,9 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import ua.softserveinc.tc.constants.BookingConstants;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.constants.column.ChildConst;
 import ua.softserveinc.tc.constants.column.RoomConst;
-import ua.softserveinc.tc.constants.UserConstants;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

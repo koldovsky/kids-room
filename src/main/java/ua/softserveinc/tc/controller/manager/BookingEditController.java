@@ -53,7 +53,7 @@ public class BookingEditController {
         List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
                 workingHours().get(1),
                 room, BookingState.BOOKED);
-        Date date = currentDate().getTime();
+        Date date = toDate(dateNow());
         List<Child> children = childService.findAll();
         model.addAttribute("rooms", listRoom);
         model.addAttribute("listChild", children);
@@ -64,8 +64,8 @@ public class BookingEditController {
 
     @RequestMapping (value = "manager-edit-booking/{date}",
             method = RequestMethod.GET)
-    @ResponseBody public
-        String bookingsByDay(Principal principal,@PathVariable String date){
+    @ResponseBody
+    public String bookingsByDay(Principal principal,@PathVariable String date){
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> listRoom = roomService.findByManger(currentManager);
         Room room = listRoom.get(0);
@@ -85,9 +85,8 @@ public class BookingEditController {
 
     @RequestMapping(value = "change-booking", method = RequestMethod.POST,
             consumes = "application/json")
-    public
     @ResponseBody
-    Boolean change(@RequestBody BookingDto bookingDto) {
+    public Boolean change(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.findById(bookingDto.getId());
         Room room = booking.getRoom();
         Date startTime = toDateAndTime(bookingDto.getStartTime());
@@ -101,9 +100,8 @@ public class BookingEditController {
         return false;
     }
     @RequestMapping(value = "create-booking", method = RequestMethod.POST,  consumes = "application/json")
-    public
     @ResponseBody
-    Boolean createBooking (Principal principal, @RequestBody BookingDto bookingDto){
+    public Boolean createBooking (Principal principal, @RequestBody BookingDto bookingDto){
         User manager = userService.getUserByEmail(principal.getName());
         Room room = roomService.findByManger(manager).get(0);
         Date dateLo = toDateAndTime(bookingDto.getStartTime());

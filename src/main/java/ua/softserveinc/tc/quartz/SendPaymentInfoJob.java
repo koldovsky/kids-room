@@ -27,14 +27,14 @@ public class SendPaymentInfoJob {
     private BookingService bookingService;
 
     private void task() {
-        Date startDate = toDate(getStringDate(dateMonthAgo()));
-        Date endDate = toDate(getStringDate(currentDate()));
+        Date startDate = toDate(dateMonthAgo());
+        Date endDate = toDate(dateNow());
 
         List<Booking> bookings = bookingService.getBookings(startDate, endDate);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         report.forEach((user, sum) -> {
-            if (user.getEmail().equals("bahrianyi@ukr.net"))
+            if ("bahrianyi@ukr.net".equals(user.getEmail()))
                 mailService.sendPaymentInfo(user, MailConstants.PAYMENT_INFO_SUBJECT, sum);
         });
     }

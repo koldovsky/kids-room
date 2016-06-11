@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.util;
 
-import ua.softserveinc.tc.constants.model.DateConst;
+import ua.softserveinc.tc.constants.DateConstants;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit;
  * Created by Demian on 07.06.2016.
  */
 public final class DateUtil {
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConst.DATE_AND_TIME_FORMAT);
-    private static DateFormat ISODateFormat = new SimpleDateFormat(DateConst.DATE_FORMAT);
+    private static DateFormat dateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
+    private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
+    private static DateFormat ISODateFormat = new SimpleDateFormat(DateConstants.DATE_FORMAT);
 
     // Suppresses default constructor, ensuring non-instantiability.
     private DateUtil() {
@@ -27,7 +27,7 @@ public final class DateUtil {
         try {
             return dateFormat.parse(date);
         } catch (ParseException e) {
-            System.err.println("Wrong format of date. " + e.getMessage());
+            //TODO: log
             return null;
         }
     }
@@ -36,18 +36,39 @@ public final class DateUtil {
         try {
             return dateAndTimeFormat.parse(date);
         } catch (ParseException e) {
-            System.err.println("Wrong format of date. " + e.getMessage());
+            //TODO: log
             return null;
         }
     }
 
-    public static Date toDateISOFormat(String dateToParse){
-        try{
+    public static Date toDateISOFormat(String dateToParse) {
+        try {
             return ISODateFormat.parse(dateToParse);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             //TODO: log
             return null;
         }
+    }
+
+    public static Date toDate(Calendar calendar) {
+        return calendar.getTime();
+    }
+
+    public static Calendar dateNow() {
+        return Calendar.getInstance();
+    }
+
+    public static Calendar dateMonthAgo() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        return calendar;
+    }
+
+    public static String getStringDate(Calendar calendar) {
+        String result = calendar.get(Calendar.YEAR) + "-";
+        result += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
+        result += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
+        return result;
     }
 
     private static int getHoursFromMilliseconds(long milliseconds) {
@@ -79,24 +100,6 @@ public final class DateUtil {
         return hoursAndMinutes;
     }
 
-
-    public static Calendar currentDate() {
-        return Calendar.getInstance();
-    }
-
-    public static Calendar dateMonthAgo() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1);
-        return calendar;
-    }
-
-    public static String getStringDate(Calendar calendar) {
-        String result = calendar.get(Calendar.YEAR) + "-";
-        result += String.format("%02d", calendar.get(Calendar.MONTH) + 1) + "-";
-        result += String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH));
-        return result;
-    }
-
     public static List<Date> workingHours() {
         Calendar toDay = Calendar.getInstance();
         toDay.set(Calendar.AM_PM, 0);
@@ -113,6 +116,7 @@ public final class DateUtil {
         list.add(endTime);
         return list;
     }
+
     public static List<Date> workingHours(Date date) {
         Calendar toDay = Calendar.getInstance();
         toDay.setTime(date);
@@ -130,7 +134,8 @@ public final class DateUtil {
         list.add(endTime);
         return list;
     }
-    public static Date setStartTime (Date date){
+
+    public static Date setStartTime(Date date) {
         Calendar toDay = Calendar.getInstance();
         toDay.setTime(date);
         toDay.set(Calendar.AM_PM, 0);
@@ -140,7 +145,7 @@ public final class DateUtil {
         return toDay.getTime();
     }
 
-    public static Date setEndTime (Date date){
+    public static Date setEndTime(Date date) {
         Calendar toDay = Calendar.getInstance();
         toDay.setTime(date);
         toDay.set(Calendar.AM_PM, 0);
@@ -151,7 +156,7 @@ public final class DateUtil {
     }
 
     public static String convertDateToString(Date date) {
-        DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
+        DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
         return df.format(date);
     }
 }

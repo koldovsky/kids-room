@@ -18,10 +18,7 @@ import org.springframework.stereotype.Component;
 @PropertySource(value = "classpath:properties/application.properties")
 public class ApplicationConfiguratorPropertiesBased implements ApplicationConfigurator {
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+
 
     @Value("#{'${allowed.domains}'.split(',')}")
     private String[] allowedDomains;
@@ -52,6 +49,11 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
     @Value("${server.name}")
     private String serverName;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     @Override
     public Integer getKidsMinAge() {

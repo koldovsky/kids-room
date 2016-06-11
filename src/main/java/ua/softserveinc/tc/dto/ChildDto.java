@@ -17,6 +17,16 @@ public class ChildDto {
     private long age;
     private String comment;
 
+    public ChildDto(Child child) {
+        this.id = child.getId();
+        this.firstName = child.getFirstName();
+        this.lastName = child.getLastName();
+        this.parentId = new UserDto(child.getParentId());
+        this.dateOfBirth = child.getDateOfBirth();
+        this.age = child.getAge();
+        this.comment = child.getComment();
+    }
+
     public Long getId() {
         return id;
     }
@@ -73,14 +83,6 @@ public class ChildDto {
         this.comment = comment;
     }
 
-    public ChildDto(Child child) {
-        this.id = child.getId();
-        this.firstName = child.getFirstName();
-        this.lastName = child.getLastName();
-        this.parentId = new UserDto(child.getParentId());
-        this.dateOfBirth = child.getDateOfBirth();
-        this.age = child.getAge();
-        this.comment = child.getComment();
-    }
+
 
 }

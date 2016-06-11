@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.util;
 
-import java.util.List;
-
 /**
  * Created by Nestor on 04.06.2016.
  */

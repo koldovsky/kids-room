@@ -23,7 +23,6 @@ public interface BookingService extends BaseService<Booking> {
     List<Booking> getBookings(Date startDate, Date endDate, User user, BookingState... bookingStates);
     List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates);
     List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates);
-    List<Booking> filterBySum(List<Booking> bookings, Long sum);
 
     Booking confirmBooking(BookingDto bookingDto);
     Booking confirmBookingEndTime(BookingDto bookingDto);

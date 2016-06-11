@@ -8,14 +8,6 @@
 <script src="resources/js/report.js"></script>
 <script src="resources/js/changeroom.js"></script>
 
-    <select id="selectRoom" onchange="selectRoomForManager(value);">
-        <c:forEach items="${rooms}" var="room">
-            <option value="${room.id}">${room.city}: ${room.address}</option>
-        </c:forEach>
-        <option value="2">Second</option>
-        <option value="3">Third</option>
-    </select>
-
     <form id="generateAReport" action="report-all">
 
         <div id="dateThenDiv">

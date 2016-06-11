@@ -8,10 +8,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.config.AppConfig;
-import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 

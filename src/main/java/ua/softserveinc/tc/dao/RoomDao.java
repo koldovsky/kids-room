@@ -1,9 +1,9 @@
 package ua.softserveinc.tc.dao;
 
-import java.util.List;
-
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+
+import java.util.List;
 
 public interface RoomDao extends BaseDao<Room> {
 

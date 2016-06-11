@@ -2,7 +2,7 @@ package ua.softserveinc.tc.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.softserveinc.tc.constants.model.DateConst;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.RoomService;
@@ -34,11 +34,11 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         Date startDate = null;
         Date endDate = null;
         try {
-            DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
+            DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
             startDate = df.parse(eventDto.getStartTime());
         } catch (ParseException pe) {
             try {
-                DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+                DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
                 startDate = df.parse(eventDto.getStartTime());
             } catch (ParseException e) {
                 startDate = null;
@@ -47,11 +47,11 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         }
 
         try {
-            DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
+            DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
             endDate = df.parse(eventDto.getEndTime());
         } catch (ParseException pe) {
             try {
-                DateFormat df = new SimpleDateFormat(DateConst.SHORT_DATE_FORMAT);
+                DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
                 endDate = df.parse(eventDto.getEndTime());
             } catch (ParseException e) {
                 endDate = null;
@@ -74,7 +74,7 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         eventDto.setDescription(event.getDescription());
         eventDto.setId(event.getId());
 
-        DateFormat df = new SimpleDateFormat(DateConst.DATE_FORMAT);
+        DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
 
         eventDto.setStartTime(df.format(event.getStartTime()));
         eventDto.setEndTime(df.format(event.getEndTime()));
