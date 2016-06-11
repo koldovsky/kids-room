@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.controller.util;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,12 +13,14 @@ import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -87,7 +88,7 @@ public class ImagesController {
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     @ResponseBody
     public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
-            throws IOException,
+            throws
             AccessDeniedException,
             ResourceNotFoundException {
 
@@ -113,17 +114,21 @@ public class ImagesController {
             path = "src/main/resources/images/default-boy.jpg";
 
         File imgPath = new File(path);
+        String base64String;
 
-        BufferedImage bufferedImage = ImageIO.read(imgPath);//TODO: ------
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
-        ImageIO.write(bufferedImage, "jpg", baos);
-        baos.flush();
-        String base64String = Base64.encode(baos.toByteArray());
-        baos.close();
-        //TODO: Better make this part of code with try-finally, where you will close stream in finally block
-        //TODO: (for 100% close stream). /Revived by Taras/
+        try {
+            BufferedImage bufferedImage = ImageIO.read(imgPath);
+            ImageIO.write(bufferedImage, "jpg", baos);
+            baos.flush();
+            base64String =  DatatypeConverter.printBase64Binary(baos.toByteArray());;
+            baos.close();
+        }catch(IOException ioe){
+            //TODO: log
+            throw new BadUploadException();
+        }
 
-        return Base64.decode(base64String);
+        return DatatypeConverter.parseBase64Binary(base64String);
 
     }
 
@@ -134,7 +139,7 @@ public class ImagesController {
      * @return "Bad Upload" view
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(JpaSystemException.class)
+    @ExceptionHandler({JpaSystemException.class, })
     public String badUpload() {
         return "error-bad-upload";
     }
