@@ -2,6 +2,9 @@ $(function(){
     localizedDetails = $("#seeDetails").html();
     addListener();
     $("#dateNow, #dateThen").change(refreshView);
+    $("#generateAReport").submit(function(){
+        $("#roomIdHidden").val($("#selectRoom").val());
+    });
 });
 
 function addListener()

@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import ua.softserveinc.tc.constants.column.RoomConst;
+import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -33,7 +33,7 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
     @Override
     public Room getRoomByName(String name) {
         TypedQuery<Room> query = getEntityManager().createNamedQuery("", Room.class);
-        return query.setParameter(RoomConst.NAME_ROOM, name).getSingleResult();
+        return query.setParameter(RoomConstants.NAME_ROOM, name).getSingleResult();
     }
 
     @Override

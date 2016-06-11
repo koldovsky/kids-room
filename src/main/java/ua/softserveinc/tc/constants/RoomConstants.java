@@ -1,9 +1,9 @@
-package ua.softserveinc.tc.constants.column;
+package ua.softserveinc.tc.constants;
 
 /**
  * Created by Chak on 05.05.2016.
  */
-public interface RoomConst {
+public interface RoomConstants {
 
     String TABLE_NAME_ROOMS = "rooms";
 
@@ -25,9 +25,8 @@ public interface RoomConst {
 
     String WORKING_END_HOUR = "working_end_hour";
 
-    String ACTIVE = "active";
+    interface View {
 
-    String HOUR = "hour";
-
-    String PRICE = "price";
+        String ROOM_ID = "roomId";
+    }
 }

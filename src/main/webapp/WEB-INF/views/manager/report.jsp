@@ -9,6 +9,7 @@
 <script src="resources/js/report.js"></script>
 
     <form id="generateAReport" action="report-all">
+        <input type="hidden" id="roomIdHidden" name="roomId"/>
 
         <div id="dateThenDiv">
             <h2><spring:message code="report.from" /></br>
@@ -19,7 +20,6 @@
             <h2><spring:message code="report.to" /></br>
             <input type="date" value="${dateNow}" name="dateNow" id="dateNow"></h2>
         </div>
-
     </form>
 
     <div class="tableDiv">

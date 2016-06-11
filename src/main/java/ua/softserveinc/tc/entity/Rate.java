@@ -1,8 +1,8 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.constants.column.RateConst;
-import ua.softserveinc.tc.constants.column.RoomConst;
 
 import javax.persistence.*;
 
@@ -26,7 +26,7 @@ public class Rate {
     private Long priceRate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = RoomConst.ID_ROOM)
+    @JoinColumn(name = RoomConstants.ID_ROOM)
     private Room room;
 
     public Rate() {

@@ -1,8 +1,8 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.column.RoomConst;
 import ua.softserveinc.tc.dto.RoomDto;
 
 import javax.persistence.*;
@@ -15,28 +15,28 @@ import java.util.Objects;
  * Created by Chak on 30.04.2016.
  */
 @Entity
-@Table(name = RoomConst.TABLE_NAME_ROOMS)
+@Table(name = RoomConstants.TABLE_NAME_ROOMS)
 public class Room {
 
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = RoomConst.ID_ROOM, unique = true, nullable = false)
+    @Column(name = RoomConstants.ID_ROOM, unique = true, nullable = false)
     private Long id;
 
-    @Column(name = RoomConst.NAME_ROOM)
+    @Column(name = RoomConstants.NAME_ROOM)
     private String name;
 
-    @Column(name = RoomConst.ADDRESS_ROOM)
+    @Column(name = RoomConstants.ADDRESS_ROOM)
     private String address;
 
-    @Column(name = RoomConst.CITY_ROOM)
+    @Column(name = RoomConstants.CITY_ROOM)
     private String city;
 
-    @Column(name = RoomConst.PHONE_ROOM)
+    @Column(name = RoomConstants.PHONE_ROOM)
     private String phoneNumber;
 
-    @Column(name = RoomConst.CAPACITY_ROOM)
+    @Column(name = RoomConstants.CAPACITY_ROOM)
     private Integer capacity;
 
     @OneToOne
@@ -49,10 +49,10 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
     private List<Rate> rates = new LinkedList<>();
 
-    @Column(name = RoomConst.WORKING_START_HOUR)
+    @Column(name = RoomConstants.WORKING_START_HOUR)
     private String workingHoursStart;
 
-    @Column(name = RoomConst.WORKING_END_HOUR)
+    @Column(name = RoomConstants.WORKING_END_HOUR)
     private String workingHoursEnd;
 
     @ManyToMany

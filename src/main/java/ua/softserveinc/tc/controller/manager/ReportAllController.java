@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
+import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.service.UserService;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -29,27 +29,25 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 public class ReportAllController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private RoomService roomService;
 
     @Autowired
     private BookingService bookingService;
 
-    @RequestMapping(value = "/report-all", method = RequestMethod.GET,
-            params = {ReportConstants.DATE_THEN, ReportConstants.DATE_NOW})
     @ResponseBody
-    public ModelAndView allParentsBookings(@RequestParam(value = ReportConstants.DATE_THEN) String dateThen,
-                                           @RequestParam(value = ReportConstants.DATE_NOW) String dateNow,
-                                           Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(ReportConstants.ALL_VIEW);
+    @RequestMapping(value = "/report-all", method = RequestMethod.GET)
+    public ModelAndView allParentsBookings(@RequestParam(value = RoomConstants.View.ROOM_ID) Long roomId,
+                                           @RequestParam(value = ReportConstants.DATE_THEN) String dateThen,
+                                           @RequestParam(value = ReportConstants.DATE_NOW) String dateNow) {
+
+        ModelAndView modelAndView = new ModelAndView(ReportConstants.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
-        Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
+        Room room = roomService.findById(roomId);
 
-        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), room);
+        List<Booking> bookings = bookingService.getBookings(
+                toDate(dateThen), toDate(dateNow), room, BookingConstants.States.NOT_CANCELLED);
+
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         modelMap.addAttribute(ReportConstants.REPORT, report);

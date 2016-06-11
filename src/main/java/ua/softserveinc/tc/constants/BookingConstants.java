@@ -11,6 +11,7 @@ public interface BookingConstants {
         BookingState[] NOT_CANCELLED = {
                 BookingState.ACTIVE,
                 BookingState.BOOKED,
+                BookingState.CALCULATE_SUM,
                 BookingState.COMPLETED
         };
 

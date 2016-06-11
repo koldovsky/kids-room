@@ -5,8 +5,8 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.column.RoomConst;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,7 +35,7 @@ public class Booking {
     private Child child;
 
     @ManyToOne(optional = false)//(fetch = FetchType.LAZY)
-    @JoinColumn(name = RoomConst.ID_ROOM)
+    @JoinColumn(name = RoomConstants.ID_ROOM)
     private Room room;
 
     @ManyToOne(optional = false)
