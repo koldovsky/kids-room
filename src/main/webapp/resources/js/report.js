@@ -18,10 +18,12 @@ function addListener()
 
 function refreshView()
 {
-    var dateThen = $("#dateThen").val();
+    var room = $("#selectRoom").val();
     var dateNow = $("#dateNow").val();
+    var dateThen = $("#dateThen").val();
 	var request = "refreshParents/";
     request += dateThen + "/" + dateNow;
+    alert(room);
 
     $.ajax({url: request, success: function(result)
     {
@@ -50,4 +52,10 @@ function refreshView()
 
         addListener();
     }});
+}
+
+function selectRoomForManager(room)
+{
+    localStorage["room"] = room;
+    refreshView();
 }

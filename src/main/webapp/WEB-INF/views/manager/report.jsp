@@ -5,8 +5,8 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
-<script src="resources/js/report.js"></script>
 <script src="resources/js/changeroom.js"></script>
+<script src="resources/js/report.js"></script>
 
     <form id="generateAReport" action="report-all">
 

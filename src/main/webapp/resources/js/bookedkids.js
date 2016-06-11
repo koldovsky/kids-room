@@ -195,6 +195,11 @@
     alert(user);
  }
 
+ function selectRoomForManager(room) {
+     localStorage["room"] = room;
+     // Vasyl code goes here
+ }
+
 
 
 

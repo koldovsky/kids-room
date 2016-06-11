@@ -5,7 +5,3 @@ $(function(){
 
     $("#selectRoom").val(localStorage['room']);
 });
-
-function selectRoomForManager(room) {
-    localStorage["room"] = room;
-}
