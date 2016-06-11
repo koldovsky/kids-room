@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.util;
 
+import ua.softserveinc.tc.dto.ConfigurationDto;
+
 /**
  * Created by Nestor on 04.06.2016.
  */
@@ -15,11 +17,6 @@ public interface ApplicationConfigurator {
      */
     Integer getKidsMaxAge();
 
-    /**
-     * @return List of allowed e-mail domains
-     */
-    String[] getAllowedDomainsList();
-
     Integer getMinPeriodSize();
 
     String getServerName();
@@ -33,5 +30,9 @@ public interface ApplicationConfigurator {
     int getHourToSendEmailReport();
 
     int getDayToSendEmailReport();
+
+    ConfigurationDto getObjectDto();
+
+    void acceptConfiguration(ConfigurationDto cDto);
 
 }

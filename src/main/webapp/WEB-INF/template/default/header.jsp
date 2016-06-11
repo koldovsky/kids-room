@@ -111,6 +111,10 @@
                                  <span class="glyphicon glyphicon-user"></span>
                                 <spring:message code="administrator.editManagers" />
                                 </a></li>
+                                <li><a href="adm-config">
+                                <span class="glyphicon glyphicon-cog"></span>
+                                <spring:message code="administrator.configuration" />
+                                </a></li>
                             </sec:authorize>
 
                                 <li>
@@ -127,7 +131,7 @@
             <ul class="nav navbar-nav navbar-right">
            <li class="dropdown menu-item">       
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="glyphicon glyphicon-cog"></span>
+              <span class="glyphicon glyphicon-globe"></span>
               <spring:message code="user.language" />
               </a>
                 <ul class="dropdown-menu">

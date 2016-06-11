@@ -29,4 +29,21 @@ public interface ValidationConst {
     String EMAIL_ERROR_MSG = "registration.email";
     String EMAIL_ALREADY_IN_USE_MSG = "registration.emailExist";
     String USER_NOT_EXIST = "user.notExist";
+
+
+    interface CONFIG_FIELDS{
+        String MIN_AGE = "kidsMinAge";
+        String MAX_AGE = "kidsMaxAge";
+
+        String CALCULATION_HOUR = "hourToCalculateBookingsEveryDay";
+        String CALCULATION_MINUTE = "minutesToCalculateBookingsEveryDay";
+        String EMAIL_REPORT_DAY = "dayToSendEmailReport";
+        String EMAIL_REPORT_HOUR = "hourToSendEmailReport";
+        String EMAIL_REPORT_MINUTE = "minutesToSendEmailReport";
+        String MIN_PERIOD = "minPeriodSize";
+        String SERVER_NAME = "serverName";
+
+        String NOT_VALID_DATE_MSG = "date.not.valid";
+        String NOT_VALID_TIME_MSG = "time.not.valid";
+    }
 }

@@ -95,6 +95,10 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/update-room.jsp"/>
     </definition>
 
+    <definition name="adm-config" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/adm-config.jsp"/>
+    </definition>
+
     <!-- Manager -->
     <definition name="allkidslist" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager/allkidslist.jsp"/>

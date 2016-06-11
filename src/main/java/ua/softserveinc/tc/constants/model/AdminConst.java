@@ -23,6 +23,8 @@ public interface AdminConst {
 
 
     String CONFIRM_MANAGER = "adm-confirm-manager";
+
+    String EDIT_CONFIG = "adm-config";
     ///////////////////////////////////////
 
 
@@ -36,6 +38,8 @@ public interface AdminConst {
     String ATR_MANAGER = "manager";
 
     String ATR_ROOM = "room";
+
+    String ATR_CONFIG = "config";
 
     ///////////////////////////////////////
 

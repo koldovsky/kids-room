@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.util;
 
+import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.dto.ConfigurationDto;
 
 /**
  * Created by Nestor on 04.06.2016.
@@ -9,8 +11,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
-
-    String[] allowedDomains = {"softserveinc.com"};
 
     private Integer kidsMinAge = 3;
     private Integer kidsMaxAge = 8;
@@ -23,6 +23,26 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
     private String serverName = "localhost:8080/home";
 
     @Override
+    public ConfigurationDto getObjectDto(){
+        return new ConfigurationDto(this);
+    }
+
+    @Override
+    public void acceptConfiguration(ConfigurationDto cDto){
+        this.kidsMinAge = cDto.getKidsMinAge();
+        this.kidsMaxAge = cDto.getKidsMaxAge();
+        this.minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();
+        this.hourToCalculateBookingsEveryDay = cDto.getHourToCalculateBookingsEveryDay();
+        this.minutesToSendEmailReport = cDto.getMinutesToSendEmailReport();
+        this.hourToSendEmailReport = cDto.getHourToSendEmailReport();
+        this.dayToSendEmailReport = cDto.getDayToSendEmailReport();
+        this.minPeriodSize = cDto.getMinPeriodSize();
+        this.serverName = cDto.getServerName();
+        System.out.println("??????????????????????????????????????????????????????????????????????????");
+
+    }
+
+    @Override
     public Integer getKidsMinAge() {
         return kidsMinAge;
     }
@@ -32,10 +52,6 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
         return kidsMaxAge;
     }
 
-    @Override
-    public String[] getAllowedDomainsList() {
-        return allowedDomains;
-    }
 
     @Override
     public Integer getMinPeriodSize() {

@@ -59,7 +59,7 @@ public class RegisterNewKidController {
      * @param principal A Spring Security interface implementation
      *                  that represents currently logged in account
      * @param bindingResult A result holder for object binding
-     * @return redirects to My Kids view if successful
+     * @return redirects to profile view if successful
      *         or current view if failed
      */
     @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
@@ -79,7 +79,7 @@ public class RegisterNewKidController {
         }
 
         childService.create(child);
-        return "redirect:/" + ChildConstants.View.MY_KIDS;
+        return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + child.getId();
     }
 
     /**
