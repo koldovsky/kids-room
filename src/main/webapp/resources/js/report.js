@@ -7,7 +7,7 @@ $(function() {
 
 function getObjectsToSent() {
     var objects = {
-        roomId: $("#selectRoom").val(),
+        roomId: localStorage["room"],
         dateNow: $("#dateNow").val(),
         dateThen: $("#dateThen").val()
     }

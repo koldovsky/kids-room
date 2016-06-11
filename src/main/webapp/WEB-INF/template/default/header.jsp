@@ -50,14 +50,25 @@
                             </sec:authorize>
 
                             <sec:authorize access="hasRole('MANAGER')">
-
-                                <select id="selectRoom" onchange="selectRoomForManager(value);">
+                                <li class="dropdown menu-item">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                        Choose a room
+                                    </a>
+                                    <ul class="dropdown-menu">
                                     <c:forEach items="${rooms}" var="r">
-                                        <option value="${r.id}">${r.city}: ${r.address}</option>
+                                        <li><a onclick="selectRoomForManager(this.id);" id="${r.id}">
+                                            ${r.city}: ${r.address}
+                                        </a></li>
+                                        <li><a onclick="selectRoomForManager(this.id);" id="2">
+                                            Second
+                                        </a></li>
+                                        <li><a onclick="selectRoomForManager(this.id);" id="3">
+                                            Third
+                                        </a></li>
                                     </c:forEach>
-                                    <option value="2">Second</option>
-                                    <option value="3">Third</option>
-                                </select>
+                                    </ul>
+                                </li>
 
                                 <li><a href="/home">
                                     <span class="glyphicon glyphicon-calendar"></span>
