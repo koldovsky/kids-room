@@ -11,6 +11,7 @@
 <form:form enctype="application/x-www-form-urlencoded" action="registerkid"
 method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
 
+<img class="icon-png" src="resources/img/edit.png" />
       <h2>
         <spring:message code="kid.register" />
       </h2>

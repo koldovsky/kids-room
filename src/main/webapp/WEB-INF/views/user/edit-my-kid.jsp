@@ -10,6 +10,7 @@
 <form:form class = "registerkid"  enctype="application/x-www-form-urlencoded"
 modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" method="post">
 
+      <img class="icon-png" src="resources/img/edit.png" />
       <h2><spring:message code="editkid.title" /></h2>
 
       <form:hidden path="id" />

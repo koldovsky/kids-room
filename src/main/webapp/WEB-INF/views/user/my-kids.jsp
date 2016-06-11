@@ -14,6 +14,8 @@
 
 
 <div class="list" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
+
+<img id="icon-png" src="resources/img/kids_icon.png" />
 <h2>
     <spring:message code="kid.list" />
 </h2>

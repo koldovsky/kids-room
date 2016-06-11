@@ -7,7 +7,7 @@
 <div class="tophead">
     <div class="logo">
         <a href="/home">
-        <img src="resources/logo.png" width="300"  />
+        <img src="resources/img/logo.png" width="300"  />
         </a>
     </div>
 </div>
