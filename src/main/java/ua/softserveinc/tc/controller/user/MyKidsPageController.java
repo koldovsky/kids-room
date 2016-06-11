@@ -8,7 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.MyKidsConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
@@ -44,7 +44,7 @@ public class MyKidsPageController {
     throws AccessDeniedException{
 
         ModelAndView model = new ModelAndView();
-        model.setViewName(MyKidsConst.MY_KIDS_VIEW);
+        model.setViewName(ChildConstants.View.MY_KIDS);
         User current =  userService.getUserByEmail(principal.getName());
         if(current.getRole()!= Role.USER) {
             throw new AccessDeniedException("Only parents have access to this page");
@@ -53,8 +53,8 @@ public class MyKidsPageController {
         List<Child> myKids = current.getEnabledChildren();
         ModelMap modelMap = model.getModelMap();
 
-        if(!modelMap.containsAttribute(MyKidsConst.MY_KIDS_LIST_ATTRIBUTE)) {
-            modelMap.addAttribute(MyKidsConst.MY_KIDS_LIST_ATTRIBUTE, myKids);
+        if(!modelMap.containsAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE)) {
+            modelMap.addAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE, myKids);
         }
 
         return model;

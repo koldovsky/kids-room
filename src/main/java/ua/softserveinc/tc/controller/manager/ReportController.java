@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.ReportConst;
+import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -36,7 +36,7 @@ public class ReportController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public ModelAndView report(Principal principal) {
         ModelAndView model = new ModelAndView();
-        model.setViewName(ReportConst.REPORT_VIEW);
+        model.setViewName(ReportConstants.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
 
         String dateNow = getStringDate(dateNow());
@@ -47,9 +47,9 @@ public class ReportController {
 
         List<User> users = userService.getActiveUsers(toDate(dateMonthAgo()), toDate(dateNow()), room);
 
-        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
-        modelMap.addAttribute(ReportConst.ACTIVE_USERS, users);
+        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConstants.ACTIVE_USERS, users);
         modelMap.addAttribute("rooms", rooms);
 
         return model;

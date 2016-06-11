@@ -8,7 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.MyKidsConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
@@ -69,9 +69,9 @@ public class EditMyKidPageController {
         }
 
         ModelAndView model = new ModelAndView();
-        model.setViewName(MyKidsConst.KID_EDITING_VIEW);
+        model.setViewName(ChildConstants.View.KID_EDITING);
         model.getModelMap()
-                .addAttribute(MyKidsConst.KID_ATTRIBUTE, kidToEdit);
+                .addAttribute(ChildConstants.View.KID_ATTRIBUTE, kidToEdit);
         return model;
     }
 
@@ -87,7 +87,7 @@ public class EditMyKidPageController {
     @RequestMapping(value="/editmykid",
             method = RequestMethod.POST)
     public String submit(
-            @ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child kidToEdit,
+            @ModelAttribute(value = ChildConstants.View.KID_ATTRIBUTE) Child kidToEdit,
             Principal principal,
             BindingResult bindingResult)
     {
@@ -97,14 +97,14 @@ public class EditMyKidPageController {
         validator.validate(kidToEdit, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            return MyKidsConst.KID_EDITING_VIEW;
+            return ChildConstants.View.KID_EDITING;
         }
 
         //if there was a profile pic, we will keep it
         kidToEdit.setImage(childService.findById(kidToEdit.getId()).getImage());
 
         childService.update(kidToEdit);
-        return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
+        return "redirect:/" + ChildConstants.View.MY_KIDS;
     }
 
     /**
@@ -133,7 +133,7 @@ public class EditMyKidPageController {
 
         kidToRemove.setEnabled(false);
         childService.update(kidToRemove);
-        return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
+        return "redirect:/" + ChildConstants.View.MY_KIDS;
     }
 
     @InitBinder

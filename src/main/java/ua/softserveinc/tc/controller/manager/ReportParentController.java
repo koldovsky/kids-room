@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.ReportConst;
+import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -37,14 +37,14 @@ public class ReportParentController {
     private BookingService bookingService;
 
     @RequestMapping(value = "/report-parent", method = RequestMethod.GET,
-            params = {ReportConst.PARENT_EMAIL, ReportConst.DATE_THEN, ReportConst.DATE_NOW})
+            params = {ReportConstants.PARENT_EMAIL, ReportConstants.DATE_THEN, ReportConstants.DATE_NOW})
     @ResponseBody
     public ModelAndView parentBookings(Principal principal,
-                                @RequestParam(value = ReportConst.PARENT_EMAIL) String parentEmail,
-                                @RequestParam(value = ReportConst.DATE_THEN) String dateThen,
-                                @RequestParam(value = ReportConst.DATE_NOW) String dateNow) {
+                                @RequestParam(value = ReportConstants.PARENT_EMAIL) String parentEmail,
+                                @RequestParam(value = ReportConstants.DATE_THEN) String dateThen,
+                                @RequestParam(value = ReportConstants.DATE_NOW) String dateNow) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(ReportConst.PARENT_VIEW);
+        modelAndView.setViewName(ReportConstants.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         User parent = userService.getUserByEmail(parentEmail);
@@ -52,11 +52,11 @@ public class ReportParentController {
         List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), parent, room, BookingState.COMPLETED);
         Long sumTotal = bookingService.getSumTotal(bookings);
 
-        modelMap.addAttribute(ReportConst.PARENT, parent);
-        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConst.BOOKINGS, bookings);
-        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
-        modelMap.addAttribute(ReportConst.SUM_TOTAL, sumTotal);
+        modelMap.addAttribute(ReportConstants.PARENT, parent);
+        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConstants.BOOKINGS, bookings);
+        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConstants.SUM_TOTAL, sumTotal);
 
         return modelAndView;
     }

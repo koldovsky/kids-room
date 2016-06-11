@@ -3,7 +3,7 @@ package ua.softserveinc.tc.controller.util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.softserveinc.tc.constants.ErrorPages;
+import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 
 /**
@@ -19,7 +19,7 @@ public class UserController {
 
     @RequestMapping("/accessDenied")
     public String handleError403() {
-        return  ErrorPages.ACCESS_DENIED_VIEW;
+        return  ErrorConstants.ACCESS_DENIED_VIEW;
     }
 }
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.softserveinc.tc.constants.model.MyKidsConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
@@ -43,10 +43,10 @@ public class RegisterNewKidController {
      */
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
     public String registerKid(Model model){
-        if(!model.containsAttribute(MyKidsConst.KID_ATTRIBUTE)) {
-            model.addAttribute(MyKidsConst.KID_ATTRIBUTE, new Child());
+        if(!model.containsAttribute(ChildConstants.View.KID_ATTRIBUTE)) {
+            model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, new Child());
         }
-        return MyKidsConst.KID_REGISTRATION_VIEW;
+        return ChildConstants.View.KID_REGISTRATION;
     }
 
 
@@ -64,7 +64,7 @@ public class RegisterNewKidController {
      */
     @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
     public String submit(
-            @ModelAttribute(value = MyKidsConst.KID_ATTRIBUTE) Child child,
+            @ModelAttribute(value = ChildConstants.View.KID_ATTRIBUTE) Child child,
             Principal principal,
             BindingResult bindingResult) {
 
@@ -75,11 +75,11 @@ public class RegisterNewKidController {
         childValidator.validate(child, bindingResult);
 
         if(bindingResult.hasErrors()) {
-            return MyKidsConst.KID_REGISTRATION_VIEW;
+            return ChildConstants.View.KID_REGISTRATION;
         }
 
         childService.create(child);
-        return "redirect:/" + MyKidsConst.MY_KIDS_VIEW;
+        return "redirect:/" + ChildConstants.View.MY_KIDS;
     }
 
     /**

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.ReportConst;
+import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -38,13 +38,13 @@ public class ReportAllController {
     private BookingService bookingService;
 
     @RequestMapping(value = "/report-all", method = RequestMethod.GET,
-            params = {ReportConst.DATE_THEN, ReportConst.DATE_NOW})
+            params = {ReportConstants.DATE_THEN, ReportConstants.DATE_NOW})
     @ResponseBody
-    public ModelAndView allParentsBookings(@RequestParam(value = ReportConst.DATE_THEN) String dateThen,
-                                           @RequestParam(value = ReportConst.DATE_NOW) String dateNow,
+    public ModelAndView allParentsBookings(@RequestParam(value = ReportConstants.DATE_THEN) String dateThen,
+                                           @RequestParam(value = ReportConstants.DATE_NOW) String dateNow,
                                            Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(ReportConst.ALL_VIEW);
+        modelAndView.setViewName(ReportConstants.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         Room room = roomService.getRoomByManager(userService.getUserByEmail(principal.getName()));
@@ -52,9 +52,9 @@ public class ReportAllController {
         List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), room);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
-        modelMap.addAttribute(ReportConst.REPORT, report);
-        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConstants.REPORT, report);
+        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
 
         return modelAndView;
     }

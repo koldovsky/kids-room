@@ -6,7 +6,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.springframework.format.annotation.DateTimeFormat;
-import ua.softserveinc.tc.constants.column.ChildConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -16,7 +16,7 @@ import java.util.Date;
  * Created by Demian on 29.04.2016.
  */
 @Entity
-@Table(name = ChildConst.TABLE_NAME)
+@Table(name = ChildConstants.TABLE_NAME)
 @Indexed
 @Embeddable
 public class Child implements Comparable<Child>
@@ -24,45 +24,45 @@ public class Child implements Comparable<Child>
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = ChildConst.ID_CHILD, nullable = false)
+    @Column(name = ChildConstants.ID_CHILD, nullable = false)
     private Long id;
 
-    @Column(name = ChildConst.FIRST_NAME)
+    @Column(name = ChildConstants.FIRST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String firstName;
 
-    @Column(name = ChildConst.LAST_NAME)
+    @Column(name = ChildConstants.LAST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = ChildConst.ID_PARENT,
+    @JoinColumn(name = ChildConstants.ID_PARENT,
     nullable = false)
     @Embedded
     @IndexedEmbedded
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)
-    @DateTimeFormat(pattern=ChildConst.DATE_FORMAT)
-    @Column(name = ChildConst.DATE_OF_BIRTH, nullable = false)
+    @DateTimeFormat(pattern= ChildConstants.DATE_FORMAT)
+    @Column(name = ChildConstants.DATE_OF_BIRTH, nullable = false)
     private Date dateOfBirth;
 
-    @Column(name = ChildConst.COMMENT)
+    @Column(name = ChildConstants.COMMENT)
     private String comment;
 
-    @Column(name = ChildConst.ENABLED,
+    @Column(name = ChildConstants.ENABLED,
             nullable = false,
             columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled = true;
 
-    @Column(name = ChildConst.GENDER)
+    @Column(name = ChildConstants.GENDER)
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
 
     @Lob
-    @Column(name = ChildConst.PROFILE_IMG)
+    @Column(name = ChildConstants.PROFILE_IMG)
     private byte[] image;
 
     public Gender getGender() {

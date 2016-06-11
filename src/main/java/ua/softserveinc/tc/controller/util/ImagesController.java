@@ -8,7 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ua.softserveinc.tc.constants.model.MyKidsConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
@@ -71,7 +71,7 @@ public class ImagesController {
                 throw new ResourceNotFoundException();
             }
         }
-        return "redirect:/" + MyKidsConst.KID_PROFILE_VIEW + "?id=" + kidId;
+        return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }
 
     /**

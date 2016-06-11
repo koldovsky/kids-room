@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.AllKidsConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 
 /**
  * Created by edward on 5/8/16.
@@ -12,10 +12,10 @@ import ua.softserveinc.tc.constants.model.AllKidsConst;
 @Controller
 public class AllKidsListController {
 
-    @RequestMapping(value = AllKidsConst.ALL_KIDS_URL, method = RequestMethod.GET)
+    @RequestMapping(value = ChildConstants.View.ALL_KIDS_URL, method = RequestMethod.GET)
     public ModelAndView getKidsList() {
         ModelAndView model = new ModelAndView();
-        model.setViewName(AllKidsConst.ALL_KIDS_VIEW);
+        model.setViewName(ChildConstants.View.ALL_KIDS);
 
         return model;
     }

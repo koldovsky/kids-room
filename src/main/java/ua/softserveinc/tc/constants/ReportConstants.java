@@ -1,9 +1,9 @@
-package ua.softserveinc.tc.constants.model;
+package ua.softserveinc.tc.constants;
 
 /**
  * Created by Demian on 13.05.2016.
  */
-public interface ReportConst
+public interface ReportConstants
 {
     String PARENT = "parent";
     String REPORT = "report";

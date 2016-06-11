@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.model.ReportConst;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -83,7 +83,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal) {
         Map<String, Object> model = getModelWithUser(user);
-        model.put(ReportConst.SUM_TOTAL, sumTotal);
+        model.put(ReportConstants.SUM_TOTAL, sumTotal);
         model.put(MailConstants.LINK, MailConstants.HTTP +
                 configurator.getServerName() + MailConstants.MY_BOOKINGS_LINK);
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.MyKidsConst;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
@@ -61,8 +61,8 @@ public class KidsProfileController {
         }
 
         ModelAndView model = new ModelAndView();
-        model.setViewName(MyKidsConst.KID_PROFILE_VIEW);
-        model.getModelMap().addAttribute(MyKidsConst.KID_ATTRIBUTE, kid);
+        model.setViewName(ChildConstants.View.KID_PROFILE);
+        model.getModelMap().addAttribute(ChildConstants.View.KID_ATTRIBUTE, kid);
         return model;
     }
 }

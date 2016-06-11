@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.ReportConst;
+import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
@@ -32,7 +32,7 @@ public class StatisticsController {
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public ModelAndView statistics() {
         ModelAndView model = new ModelAndView();
-        model.setViewName(ReportConst.STATISTICS_VIEW);
+        model.setViewName(ReportConstants.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
         String dateNow = getStringDate(dateNow());
@@ -41,9 +41,9 @@ public class StatisticsController {
         List<Booking> bookings = bookingService.getBookings(toDate(dateMonthAgo()), toDate(dateNow()));
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
-        modelMap.addAttribute(ReportConst.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConst.DATE_THEN, dateThen);
-        modelMap.addAttribute(ReportConst.STATISTICS, statistics);
+        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConstants.STATISTICS, statistics);
 
         return model;
     }

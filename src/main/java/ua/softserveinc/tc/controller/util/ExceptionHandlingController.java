@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import ua.softserveinc.tc.constants.ErrorPages;
+import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
 /**
@@ -26,7 +26,7 @@ public class ExceptionHandlingController {
             ResourceNotFoundException.class
     })
     public String handleError404() {
-        return ErrorPages.NOT_FOUND_VIEW;
+        return ErrorConstants.NOT_FOUND_VIEW;
     }
 
     /**
@@ -37,7 +37,7 @@ public class ExceptionHandlingController {
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleError403(Exception e){
-        ModelAndView mav = new ModelAndView(ErrorPages.ACCESS_DENIED_VIEW);
+        ModelAndView mav = new ModelAndView(ErrorConstants.ACCESS_DENIED_VIEW);
         mav.addObject("exception", e);
         return mav;
     }
@@ -45,7 +45,7 @@ public class ExceptionHandlingController {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ModelAndView handleError500(Exception e) {
-        ModelAndView mav = new ModelAndView(ErrorPages.NOT_FOUND_VIEW);
+        ModelAndView mav = new ModelAndView(ErrorConstants.NOT_FOUND_VIEW);
         mav.addObject("exception", e);
         return mav;
     }
