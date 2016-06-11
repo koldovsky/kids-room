@@ -1,45 +1,48 @@
 package ua.softserveinc.tc.constants;
 
-public interface ChildConstants {
+public final class ChildConstants {
 
-    String TABLE_NAME = "children";
+    public static final String TABLE_NAME = "children";
 
-    String ID_CHILD = "id_child";
+    public static final String ID_CHILD = "id_child";
 
-    String FIRST_NAME = "first_name_child";
+    public static final String FIRST_NAME = "first_name_child";
 
-    String LAST_NAME = "last_name_child";
+    public static final String LAST_NAME = "last_name_child";
 
-    String DATE_OF_BIRTH = "date_of_birth_child";
+    public static final String DATE_OF_BIRTH = "date_of_birth_child";
 
-    String COMMENT = "comment";
+    public static final String COMMENT = "comment";
 
-    String ID_PARENT = UserConstants.Entity.ID_USER;
+    public static final String ID_PARENT = UserConstants.Entity.ID_USER;
 
-    String ENABLED = "enabled";
+    public static final String ENABLED = "enabled";
 
-    String DATE_FORMAT = "dd.MM.yyyy";
+    public static final String DATE_FORMAT = "dd.MM.yyyy";
 
-    String PROFILE_IMG = "profile_image";
+    public static final String PROFILE_IMG = "profile_image";
 
-    String GENDER = "gender";
+    public static final String GENDER = "gender";
 
-    interface View {
+    private ChildConstants() {
+    }
 
-        String ALL_KIDS_URL = "/allkidslist";
+    public static final class View {
 
-        String ALL_KIDS = "allkidslist";
+        public static final String ALL_KIDS_URL = "/allkidslist";
 
-        String MY_KIDS = "mykids";
+        public static final String ALL_KIDS = "allkidslist";
 
-        String KID_REGISTRATION = "registerkid";
+        public static final String MY_KIDS = "mykids";
 
-        String KID_EDITING = "editmykid";
+        public static final String KID_REGISTRATION = "registerkid";
 
-        String MY_KIDS_LIST_ATTRIBUTE = "kids";
+        public static final String KID_EDITING = "editmykid";
 
-        String KID_ATTRIBUTE = "kid";
+        public static final String MY_KIDS_LIST_ATTRIBUTE = "kids";
 
-        String KID_PROFILE = "profile";
+        public static final String KID_ATTRIBUTE = "kid";
+
+        public static final String KID_PROFILE = "profile";
     }
 }

@@ -3,32 +3,35 @@ package ua.softserveinc.tc.constants;
 /**
  * Created by Chak on 05.05.2016.
  */
-public interface RoomConstants {
+public final class RoomConstants {
 
-    String TABLE_NAME_ROOMS = "rooms";
+    public static final String TABLE_NAME_ROOMS = "rooms";
 
-    String TABLE_NAME_PRICES = "prices";
+    public static final String TABLE_NAME_PRICES = "prices";
 
-    String ID_ROOM = "id_room";
+    public static final String ID_ROOM = "id_room";
 
-    String NAME_ROOM = "name_room";
+    public static final String NAME_ROOM = "name_room";
 
-    String ADDRESS_ROOM = "address_room";
+    public static final String ADDRESS_ROOM = "address_room";
 
-    String CITY_ROOM = "city_room";
+    public static final String CITY_ROOM = "city_room";
 
-    String PHONE_ROOM = "phone_room";
+    public static final String PHONE_ROOM = "phone_room";
 
-    String CAPACITY_ROOM = "capacity_room";
+    public static final String CAPACITY_ROOM = "capacity_room";
 
-    String WORKING_START_HOUR = "working_start_hour";
+    public static final String WORKING_START_HOUR = "working_start_hour";
 
-    String WORKING_END_HOUR = "working_end_hour";
+    public static final String WORKING_END_HOUR = "working_end_hour";
 
-    interface View {
+    private RoomConstants() {
+    }
 
-        String ROOMS = "rooms";
+    public static final class View {
 
-        String ROOM_ID = "roomId";
+        public static final String ROOMS = "rooms";
+
+        public static final String ROOM_ID = "roomId";
     }
 }

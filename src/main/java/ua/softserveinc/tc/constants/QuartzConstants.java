@@ -3,15 +3,18 @@ package ua.softserveinc.tc.constants;
 /**
  * Created by Demian on 07.06.2016.
  */
-public interface QuartzConstants {
+public final class QuartzConstants {
 
-    String TASK = "task";
+    public static final String TASK = "task";
 
-    String CALCULATE_SUM = "calculateSum";
-    String CALCULATE_SUM_TRIGGER = "calculateSumTrigger";
+    public static final String CALCULATE_SUM = "calculateSum";
+    public static final String CALCULATE_SUM_TRIGGER = "calculateSumTrigger";
 
-    String SEND_PAYMENT_INFO = "sendPaymentInfo";
-    String SEND_PAYMENT_INFO_TRIGGER = "sendPaymentInfoTrigger";
+    public static final String SEND_PAYMENT_INFO = "sendPaymentInfo";
+    public static final String SEND_PAYMENT_INFO_TRIGGER = "sendPaymentInfoTrigger";
 
-    String QUARTZ_PACKAGE = "ua.softserveinc.tc/quartz";
+    public static final String QUARTZ_PACKAGE = "ua.softserveinc.tc/quartz";
+
+    private QuartzConstants() {
+    }
 }

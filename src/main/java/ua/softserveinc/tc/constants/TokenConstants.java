@@ -3,10 +3,14 @@ package ua.softserveinc.tc.constants;
 /**
  * Created by Chak on 20.05.2016.
  */
-public interface TokenConstants {
-    String TABLE_NAME_TOKEN = "tokens";
+public final class TokenConstants {
 
-    String ID_TOKEN = "id_token";
+    public static final String TABLE_NAME_TOKEN = "tokens";
 
-    String TOKEN = "token";
+    public static final String ID_TOKEN = "id_token";
+
+    public static final String TOKEN = "token";
+
+    private TokenConstants() {
+    }
 }
