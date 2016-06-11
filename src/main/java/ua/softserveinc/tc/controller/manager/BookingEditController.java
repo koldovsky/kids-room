@@ -16,10 +16,10 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.*;
 
@@ -67,25 +67,18 @@ public class BookingEditController {
         return modelAndView;
     }
 
-    @RequestMapping (value = "manager-edit-booking/{date}",
+    @RequestMapping (value = "manager-edit-booking/{date}/{id}",
             method = RequestMethod.GET)
     @ResponseBody
-    public String bookingsByDay(Principal principal,@PathVariable String date){
-        User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> listRoom = roomService.findByManger(currentManager);
-        Room room = listRoom.get(0);
+    public String bookingsByDay(Principal principal,
+                                @PathVariable String date,
+                                @PathVariable Long id){
+        Room room = roomService.findById(id);
         List<Booking> bookings = bookingService.getBookings(setStartTime(toDate(date)), setEndTime(toDate(date)), room);
         Gson gson = new Gson();
-        List<BookingDto> bokDto = new ArrayList<>();
-        for (Booking booking: bookings) {
-            bokDto.add(new BookingDto(booking));
-        }
-     /*   List<User> lst = userService.findAll();
-          return   gson.toJson(lst.stream()
-                    .map(UserDto::new)
-                    .collect(Collectors.toList()));*/
-
-        return  gson.toJson(bokDto);
+        return  gson.toJson(bookings.stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList()));
     }
 
     @RequestMapping(value = "change-booking", method = RequestMethod.POST,

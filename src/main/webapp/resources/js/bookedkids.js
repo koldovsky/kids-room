@@ -1,3 +1,4 @@
+
    function cancelBooking(idBook){
         $('#'+idBook).addClass('highlightedRed');
         $('#cancelModal').find('#closeCencel').click(function(){
@@ -97,44 +98,6 @@
         }});
    });
 
- $('#data-booking').on('change', function(){
-        var time = $(this).val();
-
-        var src = 'manager-edit-booking/'+time;
-        $.ajax({
-                url: src,
-                success: function(result){
-                    var bookings = JSON.parse(result);
-                    var tr = "";
-                    var cancel = '<spring:message code= "booking.canceled"/>';
-                    $.each(bookings, function(i, booking){
-                    var changeButton = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
-                    var cancelButton = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
-                        tr+= '<tr id=' + booking.id +'><td>'
-                        + '<a href=profile?id=' + booking.idChild +'>'
-                        + booking.kidName +'</td>'
-                        + '<td>' + booking.startTime + " -" + booking.endTime +  '</td>'
-                        +'<td class="change-booking">'
-                        +'<button class="btn btn-sm btn-primary"'
-                        + 'data-toggle="modal"'
-                        + 'data-target="#change-booking-modal"'
-                        + changeButton  +'> Edit </button>'
-                        + '</td>'
-                        + '<td class="cancelClass">'
-                        + '<button class="btn btn-sm btn-warning"'
-                        + 'data-toggle="modal"'
-                        + 'data-target="#cancelModal"'
-                        + cancelButton +'> Cancel </button>'
-                        + '</td>'
-                        + '</tr>';
-                    });
-                    $('td').remove();
-                    $('.table-edit').append(tr);
-                }
-       });
- });
-
-
  function changeBooking(id){
 
              $('#wrong-interval').hide();
@@ -166,38 +129,10 @@
 
  }
 
- function selectSelectKid(id){
-
-        $('#send-button').click(function(){
-            var date = $('#create-date').val();
-            var stTime = date+ " "+$('#create-start-time').val();
-            var enTime = date+ " "+$('#create-end-time').val();
-            var comment = $('#create-comment').val();
-            var inputDate = {
-                startTime:  stTime,
-                endTime: enTime,
-                idChild: id,
-                comment: comment,
-            };
-
-            $.ajax({
-                url: 'create-booking',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(inputDate),
-                success: function(data){
-                }
-            });
-        });
- }
-
- function selectUser(user){
-    alert(user);
- }
-
  function selectRoomForManager(room) {
-     localStorage["room"] = room;
-     // Vasyl code goes here
+       localStorage["room"] = room;
+       // Vasyl code goes here
+
  }
 
 

@@ -289,5 +289,5 @@
 </div>
 
 
-<script src="resources/js/bookedkids.js"></script>
+<script src="resources/js/edit-booking.js"></script>
 <script src="resources/js/changeroom.js"></script>
