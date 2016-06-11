@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page import="ua.softserveinc.tc.constants.ModelConstants.UsersConst" %>
+<%@ page import="ua.softserveinc.tc.constants.UserConstants" %>
 
 <div class="col-sm-offset-4 col-xs-4">
-    <form:form action="changePassword" method="post" modelAttribute="<%=UsersConst.USER %>">
+    <form:form action="changePassword" method="post" modelAttribute="<%=UserConstants.Entity.USER %>">
         <div class="form-group">
             <label for="password" class="required"><spring:message code="user.email" /></label>
             <form:password path="password" class="form-control"/>

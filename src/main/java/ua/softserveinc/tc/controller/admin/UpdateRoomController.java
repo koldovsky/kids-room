@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.AdminConst;
+import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
@@ -29,21 +29,21 @@ public class UpdateRoomController {
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.GET)
     public ModelAndView getUpdateRoomForm(@RequestParam("id") Long id) {
-        ModelAndView model = new ModelAndView(AdminConst.UPDATE_ROOM);
+        ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);
 
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
-        model.addObject(AdminConst.MANAGER_LIST, managers);
+        model.addObject(AdminConstants.MANAGER_LIST, managers);
 
         Room room = roomService.findById(id);
         RoomDto roomDto = new RoomDto(room);
 
-        model.getModelMap().addAttribute(AdminConst.ATR_ROOM, roomDto);
+        model.getModelMap().addAttribute(AdminConstants.ATR_ROOM, roomDto);
 
         return model;
     }
 
     @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
-    public String submitRoomUpdate(@ModelAttribute(AdminConst.ATR_ROOM) RoomDto roomDto,
+    public String submitRoomUpdate(@ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                    @RequestParam("managers") Long id) {
 
         User managerForRoom = userService.findById(id);
@@ -52,6 +52,6 @@ public class UpdateRoomController {
         Room room = new Room(roomDto);
         roomService.create(room);
 
-        return "redirect:/" + AdminConst.EDIT_ROOM;
+        return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

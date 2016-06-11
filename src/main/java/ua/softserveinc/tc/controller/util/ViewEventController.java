@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.model.EventConst;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
@@ -39,18 +39,18 @@ public class ViewEventController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
 
-        if(principal == null) {
+        if (principal == null) {
             return UserConstants.Model.LOGIN_VIEW;
         } else {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
-            if(userService.getUserByEmail(email).getRole() == Role.USER) {
+            if (userService.getUserByEmail(email).getRole() == Role.USER) {
                 model.addAttribute("rooms", roomServiceImpl.findAll());
                 model.addAttribute("kids", childService.getChildrenByUser(user));
             } else {
                 model.addAttribute("rooms", roomServiceImpl.findByManger(user));
             }
-            return EventConst.MAIN_PAGE;
+            return EventConstants.View.MAIN_PAGE;
         }
     }
 

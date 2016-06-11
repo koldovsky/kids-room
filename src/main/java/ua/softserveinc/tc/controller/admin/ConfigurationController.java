@@ -7,9 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.softserveinc.tc.constants.model.AdminConst;
+import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.ConfigurationDto;
-import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.validator.ConfigValidator;
 
@@ -28,18 +27,18 @@ public class ConfigurationController {
 
     @RequestMapping(value = "/adm-config", method = RequestMethod.GET)
     public String getConfiguration(Model model){
-        model.addAttribute(AdminConst.ATR_CONFIG, appConfig.getObjectDto());
-        return AdminConst.EDIT_CONFIG;
+        model.addAttribute(AdminConstants.ATR_CONFIG, appConfig.getObjectDto());
+        return AdminConstants.EDIT_CONFIG;
     }
 
     @RequestMapping(value = "/adm-config", method = RequestMethod.POST)
-    public String setConfiguration(@ModelAttribute(value = AdminConst.ATR_CONFIG) ConfigurationDto cDto,
+    public String setConfiguration(@ModelAttribute(value = AdminConstants.ATR_CONFIG) ConfigurationDto cDto,
                                    BindingResult bindingResult){
         configValidator.validate(cDto, bindingResult);
         if(bindingResult.hasErrors()){
-            return AdminConst.EDIT_CONFIG;
+            return AdminConstants.EDIT_CONFIG;
         }
         appConfig.acceptConfiguration(cDto);
-        return AdminConst.EDIT_CONFIG;
+        return AdminConstants.EDIT_CONFIG;
     }
 }

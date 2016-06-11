@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
-<%@ page import="ua.softserveinc.tc.constants.ValidationConst" %>
+<%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
 

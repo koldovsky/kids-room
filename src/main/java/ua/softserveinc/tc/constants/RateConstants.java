@@ -1,9 +1,9 @@
-package ua.softserveinc.tc.constants.column;
+package ua.softserveinc.tc.constants;
 
 /**
  * Created by TARAS on 21.05.2016.
  */
-public interface RateConst {
+public interface RateConstants {
 
     String TABLE_RATES = "rates";
 

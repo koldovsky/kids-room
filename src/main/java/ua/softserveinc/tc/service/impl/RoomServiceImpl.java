@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
-import ua.softserveinc.tc.constants.column.EventConst;
+import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
@@ -84,7 +84,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> query = builder.createQuery(Event.class);
         Root<Event> root = query.from(Event.class);
-        query.select(root).where(builder.equal(root.get(EventConst.ID_ROOM), room.getId()));
+        query.select(root).where(builder.equal(root.get(EventConstants.Entity.ID_ROOM), room.getId()));
 
         return entityManager
                 .createQuery(query)

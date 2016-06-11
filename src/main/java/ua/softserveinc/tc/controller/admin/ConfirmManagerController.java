@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.model.AdminConst;
-import ua.softserveinc.tc.constants.model.TokenConst;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.TokenService;
@@ -45,7 +45,7 @@ public class ConfirmManagerController {
     private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.GET)
-    public String confirmRegistration(Model model, @RequestParam(TokenConst.TOKEN) String sToken) {
+    public String confirmRegistration(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
 
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
@@ -57,7 +57,7 @@ public class ConfirmManagerController {
 
         tokenService.delete(token);
 
-        return AdminConst.CONFIRM_MANAGER;//"adm-confirm-manager"
+        return AdminConstants.CONFIRM_MANAGER;//"adm-confirm-manager"
     }
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
@@ -70,7 +70,7 @@ public class ConfirmManagerController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()){
-            return AdminConst.CONFIRM_MANAGER;//"adm-confirm-manager"
+            return AdminConstants.CONFIRM_MANAGER;//"adm-confirm-manager"
         }
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
         user.setConfirmed(true);

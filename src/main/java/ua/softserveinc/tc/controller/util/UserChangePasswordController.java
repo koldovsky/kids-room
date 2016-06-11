@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.model.TokenConst;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
@@ -73,7 +73,7 @@ public class UserChangePasswordController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
-    public String changePassword(Model model, @RequestParam(TokenConst.TOKEN) String token) {
+    public String changePassword(Model model, @RequestParam(TokenConstants.TOKEN) String token) {
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         Authentication auth = new UsernamePasswordAuthenticationToken(

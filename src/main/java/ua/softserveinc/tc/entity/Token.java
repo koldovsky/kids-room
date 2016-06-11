@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
+import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.model.TokenConst;
 
 import javax.persistence.*;
 
@@ -10,15 +10,15 @@ import javax.persistence.*;
  * Created by Chak on 17.05.2016.
  */
 @Entity
-@Table(name = TokenConst.TABLE_NAME_TOKEN)
+@Table(name = TokenConstants.TABLE_NAME_TOKEN)
 public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = TokenConst.ID_TOKEN, nullable = false)
+    @Column(name = TokenConstants.ID_TOKEN, nullable = false)
     private Long id;
 
-    @Column(name = TokenConst.TOKEN, nullable = false)
+    @Column(name = TokenConstants.TOKEN, nullable = false)
     private String token;
 
     @OneToOne(fetch = FetchType.EAGER)

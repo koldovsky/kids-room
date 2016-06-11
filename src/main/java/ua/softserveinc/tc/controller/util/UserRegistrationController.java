@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.model.TokenConst;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
@@ -68,7 +68,7 @@ public class UserRegistrationController {
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
-    public String confirmRegistration(@RequestParam(TokenConst.TOKEN) String sToken) {
+    public String confirmRegistration(@RequestParam(TokenConstants.TOKEN) String sToken) {
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
         user.setConfirmed(true);

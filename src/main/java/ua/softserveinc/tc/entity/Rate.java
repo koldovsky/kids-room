@@ -1,8 +1,8 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.constants.RateConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
-import ua.softserveinc.tc.constants.column.RateConst;
 
 import javax.persistence.*;
 
@@ -10,19 +10,19 @@ import javax.persistence.*;
  * Created by TARAS on 19.05.2016.
  */
 @Entity
-@Table(name = RateConst.TABLE_RATES)
+@Table(name = RateConstants.TABLE_RATES)
 public class Rate {
 
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = RateConst.ID_RATE, nullable = false)
+    @Column(name = RateConstants.ID_RATE, nullable = false)
     private Long idRate;
 
-    @Column(name = RateConst.HOUR_RATE, nullable = false)
+    @Column(name = RateConstants.HOUR_RATE, nullable = false)
     private Integer hourRate;
 
-    @Column(name = RateConst.PRICE_RATE, nullable = false)
+    @Column(name = RateConstants.PRICE_RATE, nullable = false)
     private Long priceRate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

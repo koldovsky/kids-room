@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import ua.softserveinc.tc.constants.column.EventConst;
+import ua.softserveinc.tc.constants.EventConstants;
 
 import javax.persistence.*;
 import java.text.DateFormat;
@@ -13,34 +13,34 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = EventConst.TABLENAME)
+@Table(name = EventConstants.Entity.TABLENAME)
 public class Event {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = EventConst.ID, unique = true, nullable = false)
+    @Column(name = EventConstants.Entity.ID, unique = true, nullable = false)
     private Long id;
 
-    @Column(name = EventConst.NAME, nullable = false)
+    @Column(name = EventConstants.Entity.NAME, nullable = false)
     private String name;
 
-    @Column(name = EventConst.START_TIME, nullable = false)
+    @Column(name = EventConstants.Entity.START_TIME, nullable = false)
     private Date startTime;
 
-    @Column(name = EventConst.END_TIME, nullable = false)
+    @Column(name = EventConstants.Entity.END_TIME, nullable = false)
     private Date endTime;
 
-    @Column(name = EventConst.AGE_LOW)
+    @Column(name = EventConstants.Entity.AGE_LOW)
     private Integer ageLow;
 
-    @Column(name = EventConst.AGE_HIGH)
+    @Column(name = EventConstants.Entity.AGE_HIGH)
     private Integer ageHigh;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = EventConst.ID_ROOM, nullable = false)
+    @JoinColumn(name = EventConstants.Entity.ID_ROOM, nullable = false)
     private Room room;
 
-    @Column(name = EventConst.DESCRIPTION)
+    @Column(name = EventConstants.Entity.DESCRIPTION)
     private String description;
 
     public Long getId() {

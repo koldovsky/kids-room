@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.AdminConst;
+import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
@@ -42,8 +42,8 @@ public class AddRoomController {
     public ModelAndView showCreateRoomForm() {
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
 
-        ModelAndView mav = new ModelAndView(AdminConst.ADD_ROOM);
-        mav.addObject(AdminConst.MANAGER_LIST, managers);
+        ModelAndView mav = new ModelAndView(AdminConstants.ADD_ROOM);
+        mav.addObject(AdminConstants.MANAGER_LIST, managers);
 
         return mav;
     }
@@ -64,6 +64,6 @@ public class AddRoomController {
         Room room = new Room(roomDto);
         roomService.create(room);
 
-        return "redirect:/" + AdminConst.EDIT_ROOM;
+        return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

@@ -2,12 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
-<%@ page import="ua.softserveinc.tc.constants.model.AdminConst" %>
+<%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
 <link rel='stylesheet' href='resources/css/admin-config.css'>
 
 <form:form class = "config"  enctype="application/x-www-form-urlencoded"
-modelAttribute="<%=AdminConst.ATR_CONFIG %>" action="adm-config" method="post">
+modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="post">
 
 <img id="config-logo"src="resources/img/config.png"/>
 <h3 id="title"><spring:message code="administrator.configuration" /></h3>

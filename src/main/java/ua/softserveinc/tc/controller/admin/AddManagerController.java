@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.model.AdminConst;
+import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
@@ -46,25 +46,25 @@ public class AddManagerController {
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public ModelAndView showCreateManagerForm() {
-        ModelAndView model = new ModelAndView(AdminConst.ADD_MANAGER);
-        model.addObject(AdminConst.ATR_MANAGER, new User());
+        ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
+        model.addObject(AdminConstants.ATR_MANAGER, new User());
 
         return model;
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
-    public String saveManager(@ModelAttribute(AdminConst.ATR_MANAGER) User manager, BindingResult bindingResult,
+    public String saveManager(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult,
                               SessionStatus status) {
 
         Set<ConstraintViolation<User>> violations = validator.validate(manager);
         for (ConstraintViolation<User> violation : violations) {
             String propertyPath = violation.getPropertyPath().toString();
             String message = violation.getMessage();
-            bindingResult.addError(new FieldError(AdminConst.ATR_MANAGER, propertyPath, "Invalid " + propertyPath
+            bindingResult.addError(new FieldError(AdminConstants.ATR_MANAGER, propertyPath, "Invalid " + propertyPath
                     + "(" + message + ")"));
         }
         if (bindingResult.hasErrors()) {
-            return AdminConst.ADD_MANAGER;
+            return AdminConstants.ADD_MANAGER;
         }
         status.setComplete();
 
@@ -77,7 +77,7 @@ public class AddManagerController {
         tokenService.createToken(token, manager);
         mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
 
-        return "redirect:/" + AdminConst.EDIT_MANAGER;
+        return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 
 }

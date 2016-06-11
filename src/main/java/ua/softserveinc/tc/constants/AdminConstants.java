@@ -1,9 +1,9 @@
-package ua.softserveinc.tc.constants.model;
+package ua.softserveinc.tc.constants;
 
 /**
  * Created by TARAS on 12.05.2016.
  */
-public interface AdminConst {
+public interface AdminConstants {
 
     //Name of *.jsp files of ADMINISTRATOR
 
@@ -19,7 +19,6 @@ public interface AdminConst {
     String ADD_ROOM = "adm-add-room";
 
     String UPDATE_ROOM = "adm-update-room";
-
 
 
     String CONFIRM_MANAGER = "adm-confirm-manager";

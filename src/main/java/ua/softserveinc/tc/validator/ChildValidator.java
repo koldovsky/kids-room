@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import ua.softserveinc.tc.constants.ValidationConst;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
@@ -34,14 +34,14 @@ public class ChildValidator implements Validator{
     public void validate(Object o, Errors errors) {
         Child kidToValidate = (Child) o;
 
-        ValidationUtils.rejectIfEmpty(errors, ValidationConst.FIRST_NAME, ValidationConst.EMPTY_FIELD_MSG);
-        ValidationUtils.rejectIfEmpty(errors, ValidationConst.LAST_NAME, ValidationConst.EMPTY_FIELD_MSG);
-        ValidationUtils.rejectIfEmpty(errors, ValidationConst.CHILD_DATE_OF_BIRTH, ValidationConst.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.FIRST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.EMPTY_FIELD_MSG);
 
         int age = kidToValidate.getAge();
 
         if(age < configurator.getKidsMinAge() || age> configurator.getKidsMaxAge()){
-            errors.rejectValue(ValidationConst.CHILD_DATE_OF_BIRTH, ValidationConst.DATE_ERROR_MSG);
+            errors.rejectValue(ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.DATE_ERROR_MSG);
         }
     }
 }

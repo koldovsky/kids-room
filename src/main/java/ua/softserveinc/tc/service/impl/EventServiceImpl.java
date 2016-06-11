@@ -3,7 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.softserveinc.tc.constants.column.EventConst;
+import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.EventService;
@@ -45,7 +45,7 @@ public class EventServiceImpl extends BaseServiceImpl<Event> implements EventSer
         CriteriaQuery<Event> query = builder.createQuery(Event.class);
         Root<Event> root = query.from(Event.class);
         ParameterExpression<Date> dateParam = builder.parameter(Date.class);
-        builder.between(dateParam, root.<Date>get(EventConst.START_TIME), root.<Date>get(EventConst.END_TIME));
+        builder.between(dateParam, root.<Date>get(EventConstants.Entity.START_TIME), root.<Date>get(EventConstants.Entity.END_TIME));
         return entityManager
                 .createQuery(query)
                 .setParameter(dateParam, searchDate, TemporalType.DATE)
