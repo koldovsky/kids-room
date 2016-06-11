@@ -1,6 +1,10 @@
 /**
  * Created by dima- on 12.05.2016.
  */
+var info;
+var bookingsArray;
+var bookingDate;
+var roomIdForHandler;
 
 $(function () {
     $('#bookingStartTimepicker').timepicker({
@@ -38,7 +42,83 @@ $(function () {
         'maxTime': '22:00'
     });
 });
+
+
+$( document ).ready(function() {
+    $('#deletingBooking').click(function() {
+        $('#bookingUpdatingDialog').dialog('close');
+        cancelBooking(info.id);
+    });
+});
+
+$( document ).ready(function() {
+    $('#updatingBooking').click(function() {
+        var newStartDate = makeISOtime(info.calEvent.start.format(), 'bookingUpdatingStartTimepicker');
+        var newEndDate = makeISOtime(info.calEvent.end.format(), 'bookingUpdatingEndTimepicker');
+
+        var bookingForUpdate = {
+            id: info.calEvent.id,
+            title: info.calEvent.title,
+            start: newStartDate,
+            end: newEndDate
+        };
+
+        sendBookingToServerForUpdate(bookingForUpdate, info.roomID);
+
+        $('#bookingUpdatingDialog').dialog('close');
+    });
+});
+
+$( document ).ready(function() {
+    $('#booking').click(function () {
+        for (var i = 0; i < ($('#kostil').val()) + 1; i++) {
+            if ($('#checkboxKid' + i).is(':checked')) {
+
+                bookingsArray.push(
+                    new Booking(makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker'),
+                        makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'), "NO", i, roomIdForHandler));
+
+                $('#user-calendar').fullCalendar('renderEvent', {
+                    id: -1,
+                    title: "",
+                    start: makeISOtime(bookingDate.clickDate, 'bookingStartTimepicker'),
+                    end:  makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'),
+                    editable: false
+                });
+            }
+        }
+        sendBookingToServerForCreate(bookingsArray);
+        /*  $.ajax({
+         type: 'post',
+         contentType: 'application/json',
+         url: 'makenewbooking',
+         dataType: 'json',
+         data: JSON.stringify(bookingsArray),
+         success: function (result) {
+
+         var refresh = result;
+
+         $('#user-calendar').fullCalendar('removeEvents', -1);
+
+         refresh.forEach(function (item, i, refresh) {
+         $('#user-calendar').fullCalendar('renderEvent', {
+         id: item.id,
+         title: item.kidName,
+         start: item.startTime,
+         end: item.endTime,
+         color: "#99ff33",
+         editable: false
+         });
+         });
+         }
+         });*/
+
+        $('#bookingForm').dialog('close');
+    });
+});
+
 function selectRoomForUser(id) {
+    roomIdForHandler = id;
     $('#user-calendar').fullCalendar('destroy');
 
     $('input').on('click', function () {
@@ -117,11 +197,11 @@ function selectRoomForUser(id) {
 
 function renderingForUser(objects, id) {
 
-    var bookingDate = new Object();
-    var info = new Object();
-    var bookingsArray = [];
+    bookingDate = new Object();
+    info = new Object();
+    bookingsArray = [];
 
-    $('#booking').click(function () {
+  /*  $('#booking').click(function () {
         for (var i = 0; i < ($('#kostil').val()) + 1; i++) {
             if ($('#checkboxKid' + i).is(':checked')) {
 
@@ -138,8 +218,8 @@ function renderingForUser(objects, id) {
                 });
             }
         }
-
-        $.ajax({
+        sendBookingToServerForCreate(bookingsArray);
+      /!*  $.ajax({
             type: 'post',
             contentType: 'application/json',
             url: 'makenewbooking',
@@ -162,12 +242,12 @@ function renderingForUser(objects, id) {
                     });
                 });
             }
-        });
+        });*!/
 
         $('#bookingForm').dialog('close');
-    });
+    });*/
 
-    $('#updatingBooking').click(function() {
+    /*$('#updatingBooking').click(function() {
         var newStartDate = makeISOtime(info.calEvent.start.format(), 'bookingUpdatingStartTimepicker');
         var newEndDate = makeISOtime(info.calEvent.end.format(), 'bookingUpdatingEndTimepicker');
 
@@ -187,13 +267,13 @@ function renderingForUser(objects, id) {
         sendBookingToServerForUpdate(bookingForUpdate, info.roomID);
 
         $('#bookingUpdatingDialog').dialog('close');
-    });
+    });*/
 
-    $('#deletingBooking').click(function() {
+/*    $('#deletingBooking').click(function() {
         $('#bookingUpdatingDialog').dialog('close');
        cancelBooking(info.id);
 
-    });
+    });*/
     var pathForUploadingAllBookingsForUsers = 'getallbookings/1/' + id;
 
     $.ajax({
@@ -425,6 +505,33 @@ function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
             } else {
                 alert("NOOOOOOO");
             }
+        }
+    });
+}
+
+function sendBookingToServerForCreate(bookingsArray) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'makenewbooking',
+        dataType: 'json',
+        data: JSON.stringify(bookingsArray),
+        success: function (result) {
+
+            var refresh = result;
+
+            $('#user-calendar').fullCalendar('removeEvents', -1);
+
+            refresh.forEach(function (item, i, refresh) {
+                $('#user-calendar').fullCalendar('renderEvent', {
+                    id: item.id,
+                    title: item.kidName,
+                    start: item.startTime,
+                    end: item.endTime,
+                    color: "#99ff33",
+                    editable: false
+                });
+            });
         }
     });
 }

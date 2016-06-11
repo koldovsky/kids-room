@@ -5,6 +5,8 @@
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 
+<script src='resources/js/renderCalendar.js'></script>
+
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 <div>
