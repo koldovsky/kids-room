@@ -27,6 +27,8 @@ public interface RoomConstants {
 
     interface View {
 
+        String ROOMS = "rooms";
+
         String ROOM_ID = "roomId";
     }
 }

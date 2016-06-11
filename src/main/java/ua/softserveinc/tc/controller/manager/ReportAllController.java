@@ -35,7 +35,7 @@ public class ReportAllController {
     private BookingService bookingService;
 
     @ResponseBody
-    @RequestMapping(value = "/report-all", method = RequestMethod.GET)
+    @RequestMapping(value = "/report-all", method = RequestMethod.POST)
     public ModelAndView allParentsBookings(@RequestParam(value = RoomConstants.View.ROOM_ID) Long roomId,
                                            @RequestParam(value = ReportConstants.DATE_NOW) String dateNow,
                                            @RequestParam(value = ReportConstants.DATE_THEN) String dateThen) {
