@@ -91,7 +91,7 @@
 
                                 <tr>
                                     <label><input type="checkbox" value=""
-                                                  id="checkboxKid${loop.index}">${kids.firstName}</label>
+                                                  id="checkboxKid${kids.id}">${kids.firstName}</label>
                                         ${loop.index} <br>
                                 </tr>
 
@@ -100,9 +100,9 @@
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                 <tr>
-                                    <label for="child-comment-${loop.index}">Comment for ${kids.firstName}:</label>
+                                    <label for="child-comment-${kids.id}">Comment for ${kids.id}:</label>
 
-                                    <input type="text" value="" id="child-comment-${loop.index}">
+                                    <input type="text" value="" id="child-comment-${kids.id}">
                                 </tr>
 
 
@@ -120,6 +120,71 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="bookingUpdatingDialog" hidden>
+                    <form id="bookingUpdatingForm">
+                        <div class="form-group">
+                            <label for="bookingUpdatingStartDate">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="bookingUpdatingStartDate" placeholder="startDate"
+                                       readonly>
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control" size="6"/>
+                            </div>
+                        </div>
+                        <br>
+
+
+                        <div class="form-group">
+                            <label for="bookingUpdatingEndDate">End date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="bookingUpdatingEndDate" placeholder="endDate"
+                                       readonly>
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control" size="6"/>
+                            </div>
+                        </div>
+
+
+                        <table>
+                            <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                <tr>
+                                    <label><input type="checkbox" value=""
+                                                  id="checkboxUpdatingKid${kids.id}">${kids.firstName}</label>
+                                        ${loop.index} <br>
+                                </tr>
+
+                            </c:forEach>
+
+                            <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                <tr>
+                                    <label for="child-updating-comment-${kids.id}">Comment for ${kids.id}:</label>
+
+                                    <input type="text" value="" id="child-updating-comment-${kids.id}">
+                                </tr>
+
+
+                            </c:forEach>
+                            <input id="kostilupdate" hidden value="${fn:length(kids)}">
+                        </table>
+
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-success" id="updating">Update</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id='user-calendar'></div>
 

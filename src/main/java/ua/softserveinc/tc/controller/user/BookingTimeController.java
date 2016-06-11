@@ -42,6 +42,7 @@ public class BookingTimeController {
             dto.setChild(childService.findById(dto.getKidId()));
             dto.setRoom(roomService.findById(dto.getRoomId()));
             dto.setBookingState(BookingState.BOOKED);
+            dto.setKidName(childService.findById(dto.getKidId()).getFullName());
             dto.setDateStartTime(DateUtil.toDateISOFormat(dto.getStartTime()));
             dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
         });
