@@ -3,11 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
+<link href='resources/css/formForCalendar.css' rel='stylesheet'/>
+<script src='resources/js/renderCalendar.js'></script>
 
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
-
-<script src="resources/js/bookedkids.js"></script>
-<script src="resources/js/changeroom.js"></script>
 
 <div>
     <div class="container">
@@ -17,6 +16,7 @@
             <spring:message code="button.add"/>
             </button>
         </div>
+    </div>
 
     <table class="table-edit">
             <div id="set-time">
@@ -135,22 +135,30 @@
                         </div>
                         <div class="modal-body">
                             <div>
-                                <select id="selectChild" onchange="selectSelectKid(value);" class="form-control">
+                                <select id="selectUser" onchange="selectUser(value);" class="form-control">
                                     <lable> Please choose kid </lable>
                                    <option value=" " disabled selected hidden>  </option>
-                                   <c:forEach items="${listChild}" var="child">
-                                       <option value="${child.id}" >${child.getFullName()}</option>
+                                   <c:forEach items="${users}" var="user">
+                                       <option value="${user.children}" >${user.getFullName()}</option>
                                    </c:forEach>
                                 </select>
                             </div>
-                            <div>
-                                <input id="create-date" type="date" class="form-control"/>
+                            <label for="bookingStartDate">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                               <input type="text" class="form-control" id="create-date" placeholder="startDate"
+                                     readonly>
                             </div>
-                            <div>
-                                <input id="create-start-time" type="time" class="form-control"/>
-                            </div>
-                            <div>
-                                <input id="create-end-time" type="time" class="form-control"/>
+                            <div class="col-xs-5">
+                                    <input id="create-start-time" type="text" class="time form-control" size="6"/>
+                                </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="bookingEndDate">End date</label>
+                                <br>
+                                <div class="col-xs-5">
+                                    <input id="create-end-time" type="text" class="time form-control" size="6"/>
+                                </div>
                             </div>
                             <div>
                                 <textarea id ="create-comment" class="form-control"></textarea>
@@ -164,4 +172,122 @@
             </div>
         </div>
     </div>
+    <div class="container">
+            <div class="vertical-center-row">
+                <div align="center">
+                    <div id="dialog" hidden>
+                        <form id="form">
+                            <div class="form-group">
+                                <label for="startDate">Event title</label>
+                                <input type="text" class="form-control" id="startDate" placeholder="title">
+                            </div>
+                            <div class="allDay">
+                                <label><input type="checkbox" id="checkbox" value=""> All day</label>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Start date</label>
+                                <br>
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" id="title" placeholder="startDate" readonly>
+                                </div>
+                                <div class="col-xs-5">
+                                    <input id="basicExample" type="text" class="time form-control" size="6"/>
+                                </div>
+                            </div>
+                            <br>
+
+
+                            <div class="form-group">
+                                <label for="endDate">End date</label>
+                                <br>
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" id="endDate" placeholder="endDate" readonly>
+                                </div>
+                                <div class="col-xs-5">
+                                    <input id="ender" type="text" class="time form-control" size="6"/>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="Description">Description</label>
+                                <textarea type="text" class="form-control" id="description"
+                                          placeholder="description"></textarea>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-success" id="creating">Create</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+        <div class="container">
+                <div class="vertical-center-row">
+                    <div align="center">
+                        <div id="bookingDialog" hidden>
+                            <form id="bookingForm">
+                                <div class="form-group">
+                                    <label for="bookingStartDate">Start date</label>
+                                    <br>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="bookingStartDate" placeholder="startDate"
+                                               readonly>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"/>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group">
+                                    <label for="bookingEndDate">End date</label>
+                                    <br>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="bookingEndDate" placeholder="endDate"
+                                               readonly>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"/>
+                                    </div>
+                                </div>
+
+
+                                <table>
+                                    <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                        <tr>
+                                            <label><input type="checkbox" value=""
+                                                          id="checkboxKid${kids.id}">${kids.firstName}</label>
+                                                ${loop.index} <br>
+                                        </tr>
+
+                                    </c:forEach>
+
+                                    <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                        <tr>
+                                            <label for="child-comment-${kids.id}">Comment for ${kids.id}:</label>
+
+                                            <input type="text" value="" id="child-comment-${kids.id}">
+                                        </tr>
+                                    </c:forEach>
+
+                                </table>
+
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-success" id="booking">Book</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </div>
+
+
+<script src="resources/js/bookedkids.js"></script>

@@ -1,6 +1,5 @@
    function cancelBooking(idBook){
         $('#'+idBook).addClass('highlightedRed');
-
         $('#cancelModal').find('#closeCencel').click(function(){
               $('#'+idBook).removeClass('highlightedRed');
         });
@@ -190,7 +189,11 @@
                 }
             });
         });
-    }
+ }
+
+ function selectUser(user){
+    alert(user);
+ }
 
 
 

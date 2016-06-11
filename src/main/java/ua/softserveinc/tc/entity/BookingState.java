@@ -8,5 +8,5 @@ public enum BookingState {
     ACTIVE,
     CALCULATE_SUM,
     COMPLETED,
-    CANCELLED
+    CANCELLED,
 }
