@@ -12,8 +12,9 @@ function addListener()
     $(".parent").each(function(){
         $(this).click(function(){
             $("#parentEmailHidden").val($(this).attr('id'));
-            $("#dateNowHidden").val($("#dateNow").val());
+            $("#roomHidden").val($("#selectRoom").val());
             $("#dateThenHidden").val($("#dateThen").val());
+            $("#dateNowHidden").val($("#dateNow").val());
             $("#allBookingsPerParentForm").submit();
         });
     });

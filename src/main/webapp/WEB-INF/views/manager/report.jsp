@@ -64,4 +64,5 @@
         <input type="hidden" id="parentEmailHidden" name="parentEmail"/>
         <input type="hidden" id="dateThenHidden" name="dateThen"/>
         <input type="hidden" id="dateNowHidden" name="dateNow"/>
+        <input type="hidden" id="roomHidden" name="roomId"/>
     </form>

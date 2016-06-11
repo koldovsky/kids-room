@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
@@ -37,17 +37,15 @@ public class ReportAllController {
     @ResponseBody
     @RequestMapping(value = "/report-all", method = RequestMethod.GET)
     public ModelAndView allParentsBookings(@RequestParam(value = RoomConstants.View.ROOM_ID) Long roomId,
-                                           @RequestParam(value = ReportConstants.DATE_THEN) String dateThen,
-                                           @RequestParam(value = ReportConstants.DATE_NOW) String dateNow) {
+                                           @RequestParam(value = ReportConstants.DATE_NOW) String dateNow,
+                                           @RequestParam(value = ReportConstants.DATE_THEN) String dateThen) {
 
         ModelAndView modelAndView = new ModelAndView(ReportConstants.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
         Room room = roomService.findById(roomId);
 
-        List<Booking> bookings = bookingService.getBookings(
-                toDate(dateThen), toDate(dateNow), room, BookingConstants.States.NOT_CANCELLED);
-
+        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow), room, BookingState.COMPLETED);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         modelMap.addAttribute(ReportConstants.REPORT, report);
