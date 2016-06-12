@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
-import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -39,24 +38,24 @@ public class ReportController {
         ModelAndView model = new ModelAndView(ReportConstants.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = getStringDate(dateNow());
-        String dateThen = getStringDate(dateMonthAgo());
+        String endDate = getStringDate(dateNow());
+        String startDate = getStringDate(dateMonthAgo());
 
         User manager = userService.getUserByEmail(principal.getName());
         List<Room> rooms = roomService.findByManager(manager);
 
-        modelMap.addAttribute(RoomConstants.View.ROOMS, rooms);
-        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
+        modelMap.addAttribute(ReportConstants.ROOMS, rooms);
+        modelMap.addAttribute(ReportConstants.END_DATE, endDate);
+        modelMap.addAttribute(ReportConstants.START_DATE, startDate);
 
         return model;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/refreshParents/{roomId}/{startDate}/{endDate}", method = RequestMethod.GET)
-    public String refreshView(@PathVariable Long roomId,
-                              @PathVariable String startDate,
-                              @PathVariable String endDate) {
+    @RequestMapping(value = "/refreshParents/{startDate}/{endDate}/{roomId}", method = RequestMethod.GET)
+    public String refreshView(@PathVariable String startDate,
+                              @PathVariable String endDate,
+                              @PathVariable Long roomId) {
 
         Room room = roomService.findById(roomId);
 

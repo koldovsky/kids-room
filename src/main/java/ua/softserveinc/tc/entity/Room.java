@@ -56,8 +56,10 @@ public class Room {
     private String workingHoursEnd;
 
     @ManyToMany
+    @JoinTable(name = RoomConstants.MANAGERS,
+            joinColumns = @JoinColumn(name = RoomConstants.ROOM),
+            inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
     private List<User> managers = new ArrayList<>();
-
 
     public Room() {
         //TODO add comment what do this constructor

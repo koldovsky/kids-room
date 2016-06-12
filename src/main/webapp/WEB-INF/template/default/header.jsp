@@ -50,21 +50,15 @@
                             </sec:authorize>
 
                             <sec:authorize access="hasRole('MANAGER')">
-                                <li class="dropdown menu-item">
+                                <li id="roompicker" class="dropdown menu-item">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-cog"></span>
                                         Choose a room
                                     </a>
                                     <ul id="selectRoom" class="dropdown-menu">
-                                    <c:forEach items="${rooms}" var="r">
-                                        <li><a id="${r.id}">
-                                            ${r.city}: ${r.address}
-                                        </a></li>
-                                        <li><a id="2">
-                                            Second
-                                        </a></li>
-                                        <li><a id="3">
-                                            Third
+                                    <c:forEach items="${rooms}" var="room">
+                                        <li><a id="${room.id}">
+                                            ${room.name}: ${room.address}
                                         </a></li>
                                     </c:forEach>
                                     </ul>

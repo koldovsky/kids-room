@@ -1,35 +1,32 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/j_spring_security_check" var="reportURL" />
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
 
+<script src="resources/js/report.js"></script>
+<script src="resources/js/changeroom.js"></script>
 <script src="resources/js/jquery.redirect.js"></script>
 
-<script src="resources/js/changeroom.js"></script>
-<script src="resources/js/report.js"></script>
-
-
-    <div id="dateThenDiv">
+    <div id="startDateDiv">
         <h3><spring:message code="report.from" /></h3>
-        <input type="date" value="${dateThen}" name="dateThen" id="dateThen">
+        <input type="date" value="${startDate}" id="startDate">
     </div>
 
-    <div id="dateNowDiv">
+    <div id="endDateDiv">
         <h3><spring:message code="report.to" /></h3>
-        <input type="date" value="${dateNow}" name="dateNow" id="dateNow">
+        <input type="date" value="${endDate}" id="endDate">
     </div>
 
     <div class="tableDiv">
         <table id="activeUsers">
 
             <caption>
-                <h2>
+                <h3>
                     <spring:message code="report.activeParents" /></br>
-                    <span id="date">(${dateThen} - ${dateNow})</span>
-                </h2>
+                </h3>
             </caption>
 
             <tr>

@@ -37,11 +37,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private BookingService bookingService;
 
     @Override
-    public Room findById(Object id) {
-        return roomDao.findById(id);
-    }
-
-    @Override
     public List<Room> findByManager(User manager) {
         return roomDao.findByManager(manager);
     }

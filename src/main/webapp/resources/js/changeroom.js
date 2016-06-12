@@ -1,4 +1,4 @@
-$(function(){
+$(function() {
     if(localStorage["room"] == null) {
         localStorage["room"] = $("#selectRoom li a").first().attr("id");
     }

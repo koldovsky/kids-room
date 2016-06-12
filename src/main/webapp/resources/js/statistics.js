@@ -1,22 +1,18 @@
 $(function(){
-    $("#dateNowInput, #dateThenInput").change(refreshView);
+    refreshView();
+    $("#startDate, #endDate").change(refreshView);
 });
 
 function refreshView()
 {
-    var dateThen = $("#dateThenInput").val();
-    var dateNow = $("#dateNowInput").val();
+    var startDate = $("#startDate").val();
+    var endDate = $("#endDate").val();
 	var request = "refreshRooms/";
-    request += dateThen + "/" + dateNow;
+    request += startDate + "/" + endDate;
 
     $.ajax({url: request, success: function(result)
     {
         var rooms = JSON.parse(result);
-
-        $('#date').remove();
-        var caption = $('caption h2').html();
-        caption += '<span id="date">(' + dateThen + ' - ' + dateNow + ')</span>';
-        $( 'caption h2' ).html(caption);
 
         var tr = "";
 
@@ -32,7 +28,5 @@ function refreshView()
         $('td').remove();
 
         $('#activeUsers').append(tr);
-
-        addListener();
     }});
 }

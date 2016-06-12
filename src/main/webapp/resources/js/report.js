@@ -1,14 +1,14 @@
 $(function() {
     addListenerForDetails();
     addListenerForGenerate();
-    $("#dateNow, #dateThen").change(refreshView);
+    $("#startDate, #endDate").change(refreshView);
 });
 
 function getObjectsToSent() {
     var objects = {
-        roomId: localStorage["room"],
-        dateNow: $("#dateNow").val(),
-        dateThen: $("#dateThen").val()
+        startDate: $("#startDate").val(),
+        endDate: $("#endDate").val(),
+        roomId: localStorage["room"]
     }
     return objects;
 }
@@ -17,7 +17,7 @@ function addListenerForDetails() {
     $(".parent").each(function() {
         $(this).click(function() {
             var objects = getObjectsToSent();
-            objects["parentEmail"] = $(this).attr("id");
+            objects["email"] = $(this).attr("id");
             $.redirect("/home/report-parent", objects);
         });
     });
@@ -31,17 +31,12 @@ function addListenerForGenerate() {
 
 function refreshView() {
     var objects = getObjectsToSent();
-	var request = "refreshParents/" + objects["roomId"] + "/";
-    request += objects["dateThen"] + "/" + objects["dateNow"];
+	var request = "refreshParents/" + objects["startDate"] + "/";
+    request += objects["endDate"] + "/" + objects["roomId"];
 
     $.ajax({url: request, success: function(result)
     {
         var users = JSON.parse(result);
-
-        $('#date').remove();
-        var caption = $('caption h2').html();
-        caption += '<span id="date">(' + objects["dateThen"] + ' - ' + objects["dateNow"] + ')</span>';
-        $( 'caption h2' ).html(caption);
 
         var tr = "";
 

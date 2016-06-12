@@ -26,14 +26,14 @@ caption h2  {
     font-size: 18px;
 }
 
-#dateThenDiv, #dateNowDiv, .tableDiv, #generateButton, #exportButton, #parentDetails, #generated, #statistics {
+#startDateDiv, #endDateDiv, .tableDiv, #generateButton, #exportButton, #parentDetails, #generated, #statistics {
     margin: 10px auto;
 }
 
 .tableDiv {
     width: 715px;
 }
-#dateThenDiv, #dateNowDiv {
+#startDateDiv, #endDateDiv {
     width: 290px;
 }
 
