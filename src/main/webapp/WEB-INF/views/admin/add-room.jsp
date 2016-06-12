@@ -1,6 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
@@ -10,91 +11,118 @@
 <body>
     <div class="for-table">
         <table class="for-table-fields">
-        <form  class="for-table" action="adm-add-room" method="post" modelAttribute="city">
+        <form:form class="for-table" action="adm-add-room" method="post" modelAttribute="room">
 
            <tr><th>
-               <legend class="for-field"><strong>Add room</strong></legend>
+               <legend class="for-field"><strong><spring:message code="administrator.addRoom"/></strong></legend>
            </th></tr>
 
            <tr><td>
-               <input hidden type="text" name="rate" path="rate" id="for-json"/>
+               <form:hidden path="rate" name="rate" id="rates-json"/>
+               <form:hidden path="managers" name="managers" id="managers-json"/>
 
                <div class="form-group">
-                  <label class="for-field"> Room name <input type="text" name="name" required
-                                                       class="form-control"/></label>
+                  <label for="name" class="required">
+                     <spring:message code="administrator.room.name"/></label>
+                     <form:input path="name" id="name" class="form-control" />
+                     <form:errors path="name" cssClass="error"/>
                </div>
 
                <div class="form-group">
-                  <label class="for-field"> Room capacity <input type="number" name="capacity" required
-                                                           class="form-control"/></label>
+                  <label for="address" class="required">
+                     <spring:message code="administrator.room.address"/></label>
+                     <form:input path="address" id="address" class="form-control" />
+                     <form:errors path="address" cssClass="error" />
                </div>
 
                <div class="form-group">
-                  <label class="for-field"> Room address <input type="text" name="address" required
-                                                          class="form-control"/></label>
+                  <label for="city" class="required">
+                     <spring:message code="administrator.room.city"/></label>
+                     <form:input path="city" id="city"  class="form-control"/>
+                     <form:errors path="city" cssClass="error"/>
                </div>
 
                <div class="form-group">
-                  <label class="for-field"> City <input type="text" name="city" required class="form-control"/></label>
+                  <label for="phoneNumber" class="required">
+                     <spring:message code="administrator.phoneNumber"/></label>
+                     <form:input path="phoneNumber" id="phoneNumber" class="form-control"/>
+                     <form:errors path="phoneNumber" cssClass="error"/>
                </div>
 
                <div class="form-group">
-                  <label class="for-field"> Begin of working <input type="time" name="workingHoursStart"
-                                                              class="form-control"/></label>
-               </div>
-
-              <div class="form-group">
-                 <label class="for-field"> End of working <input type="time" name="workingHoursEnd"
-                                                           class="form-control"/></label>
-              </div>
-
-               <div class="form-group">
-                  <label class="for-field"> Room phone number <input type="text" name="phoneNumber"
-                                                               pattern="^(\+38|8|)(\W*\d){10}\W*$"
-                                                               required class="form-control"/></label>
+                  <label for="capacity" class="required">
+                     <spring:message code="administrator.room.capacity"/></label>
+                     <form:input path="capacity" id="capacity" class="form-control"/>
+                     <form:errors path="capacity" cssClass="error"/>
                </div>
 
                <div class="form-group">
-                  <label class="for-field"> Room-manager
-                     <select name="managers" required class="form-control" id="mySelect" id="sel1">
-                        <c:forEach var="manager" items="${managerList}" >
-                           <option value="${manager.id}">${manager.firstName} ${room.manager.lastName}</option>
-                        </c:forEach>
-                     </select>
-                  </label>
+                  <label for="workingHoursStart" class="required">
+                     <spring:message code="administrator.room.workingHoursStart"/></label>
+                     <form:input type="time" path="workingHoursStart" id="workingHoursStart" class="form-control"/>
+                     <form:errors path="workingHoursStart" cssClass="error"/>
                </div>
 
+               <div class="form-group">
+                  <label for="workingHoursEnd" class="required">
+                     <spring:message code="administrator.room.workingHoursEnd"/></label>
+                     <form:input type="time" path="workingHoursEnd" id="workingHoursEnd" class="form-control"/>
+                     <form:errors path="workingHoursEnd" cssClass="error"/>
+               </div>
 
-              <div ng-app="angularjs-starter" ng-controller="MainCtrl">
-              <div class="form-group">
-                 <label class="for-field">Room rates
-                     <fieldset  data-ng-repeat="choice in choices">
-                     <label class="for-field1">
-                        <input id="myText" type="text" ng-model="choice.hourRate" hourRate="" placeholder="Hour" class="form-control"/>
+               <div ng-app="angularjs-starter" ng-controller="MainCtrl">
+                   <div class="form-group">
+                       <label class="for-field">
+                          <spring:message code="administrator.room.manager"/></label>
+                          <fieldset  data-ng-repeat="manager in managers">
+                              <label class="for-field">
+                                 <select name="managers" class="form-control" ng-model="manager.managerId" managerId=""
+                                         placeholder="manager">
+                                    <c:forEach var="manager" items="${managerList}">
+                                       <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
+                                    </c:forEach>
+                                 </select>
+                              </label>
+                              <button class="remove" ng-show="$last" ng-click="removeManager()">-</button>
+                          </fieldset>
+                       </label>
+
+                       <button type="button" class="addfields" ng-click="addNewManager()" >+</button>
+                   </div>
+
+                   <div class="form-group">
+                      <label class="for-field">
+                         <spring:message code="administrator.room.rate"/>
+                         <fieldset  data-ng-repeat="rate in rates">
+                         <label class="for-field1">
+                            <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control"
+                                   placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
+                         </label>
+                         <label class="for-field2">
+                            <input id="myText" type="text" ng-model="rate.priceRate" priceRate="" class="form-control"
+                                   placeholder=<spring:message code="administrator.room.rate.priceRate" /> />
+                         </label>
+
+                            <button class="remove" ng-show="$last" ng-click="removeRate()">-</button>
+                         </fieldset>
                      </label>
-                     <label class="for-field2">
-                        <input id="myText" type="text" ng-model="choice.priceRate" priceRate="" placeholder="Price" class="form-control"/>
-                     </label>
-                        <button class="remove" ng-show="$last" ng-click="removeChoice()">-</button>
-                     </fieldset>
-                 </label>
 
-                 <button type="button" class="addfields" ng-click="addNewChoice()" >+</button>
+                     <button type="button" class="addfields" ng-click="addNewRate()" >+</button>
+                     <form:errors path="rate" cssClass="error"/>
+                  </div>
 
-                 <div id="choicesDisplay">
-                    {{ choices }}
-                 </div>
-              </div>
+                   <div class="form-group">
+                      <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"
+                              ng-click="submit()"></button>
+                      <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                              onclick="window.location.href='/home/adm-edit-room'"></button>
+                   </div>
 
-              <div class="form-group">
-                 <button class="btn btn-raised btn-info glyphicon glyphicon-ok" type="submit" name="submit" ng-click="submit()"></button>
-                 <button class="btn btn-raised btn-danger glyphicon glyphicon-remove" type="reset" name="reset" ></button>
-              </div>
+                   <script src="resources/js/room-add-for-rates.js"></script>
+               </div>
 
-                 <script src="resources/js/room-add-for-rates.js"></script>
-              </div>
-           </td></tr>
-        </form>
+            </td></tr>
+        </form:form>
         </table>
     </div>
 </body>
