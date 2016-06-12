@@ -57,6 +57,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
+    public void saveOrUpdate(Room room) {
+        roomDao.saveOrUpdate(room);
+    }
+
+    @Override
     public List<Event> getAllEventsInRoom(Room room) {
         EntityManager entityManager = roomDao.getEntityManager();
 

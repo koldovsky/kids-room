@@ -13,6 +13,8 @@ import java.util.Map;
 @Component
 public interface RoomService extends BaseService<Room> {
 
+    void saveOrUpdate(Room room);
+
     List<Event> getAllEventsInRoom(Room room);
 
     List<Room> findByManager(User manager);
