@@ -7,8 +7,6 @@ public final class RoomConstants {
 
     public static final String TABLE_NAME_ROOMS = "rooms";
 
-    public static final String TABLE_NAME_PRICES = "prices";
-
     public static final String ID_ROOM = "id_room";
 
     public static final String NAME_ROOM = "name_room";
@@ -25,13 +23,12 @@ public final class RoomConstants {
 
     public static final String WORKING_END_HOUR = "working_end_hour";
 
+    public static final String MANAGER = "manager";
+
+    public static final String MANAGERS = "managers";
+
+    public static final String ROOM = "room";
+
     private RoomConstants() {
-    }
-
-    public static final class View {
-
-        public static final String ROOMS = "rooms";
-
-        public static final String ROOM_ID = "roomId";
     }
 }

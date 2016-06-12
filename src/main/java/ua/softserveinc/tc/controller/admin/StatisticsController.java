@@ -35,21 +35,17 @@ public class StatisticsController {
         ModelAndView model = new ModelAndView(ReportConstants.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
-        String dateNow = getStringDate(dateNow());
-        String dateThen = getStringDate(dateMonthAgo());
+        String endDate = getStringDate(dateNow());
+        String startDate = getStringDate(dateMonthAgo());
 
-        List<Booking> bookings = bookingService.getBookings(toDate(dateMonthAgo()), toDate(dateNow()), BookingState.COMPLETED);
-        Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
-
-        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
-        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
-        modelMap.addAttribute(ReportConstants.STATISTICS, statistics);
+        modelMap.addAttribute(ReportConstants.END_DATE, endDate);
+        modelMap.addAttribute(ReportConstants.START_DATE, startDate);
 
         return model;
     }
 
-    @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
     @ResponseBody
+    @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
     public String refreshView(@PathVariable String startDate,
                               @PathVariable String endDate) {
         List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate), BookingState.COMPLETED);

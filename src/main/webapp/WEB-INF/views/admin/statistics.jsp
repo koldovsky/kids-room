@@ -1,31 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/j_spring_security_check" var="reportURL" />
 
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
+
 <script src="resources/js/statistics.js"></script>
 
-
-    <div id="dateThenDiv">
-        <h2><spring:message code="report.from" /></br>
-        <input type="date" value="${dateThen}" name="dateThen" id="dateThenInput"></h2>
+    <div id="startDateDiv">
+        <h3><spring:message code="report.from" /></h3>
+        <input type="date" value="${startDate}" id="startDate">
     </div>
 
-    <div id="dateNowDiv">
-        <h2><spring:message code="report.to" /></br>
-        <input type="date" value="${dateNow}" name="dateNow" id="dateNowInput"></h2>
+    <div id="endDateDiv">
+        <h3><spring:message code="report.to" /></h3>
+        <input type="date" value="${endDate}" id="endDate">
     </div>
 
     <div class="tableDiv" id="statistics">
         <table id="activeUsers">
 
             <caption>
-                <h2>
+                <h3>
                     <spring:message code="statistics.rooms" /></br>
-                    <span id="date">(${dateThen} - ${dateNow})</span>
-                </h2>
+                </h3>
             </caption>
 
             <tr>
@@ -35,16 +34,6 @@
                 <th><spring:message code="statistics.manager" /></th>
                 <th><spring:message code="statistics.sum" /></th>
             </tr>
-
-            <c:forEach var="room" items="${statistics.keySet()}">
-            <tr>
-                <td>${room.name}</td>
-                <td>${room.city}</td>
-                <td>${room.address}</td>
-                <td>${room.manager}</td>
-                <td>${statistics.get(room)}</td>
-            </tr>
-            </c:forEach>
 
         </table>
     </div>

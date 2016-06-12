@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
-import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -38,10 +37,10 @@ public class ReportParentController {
 
     @ResponseBody
     @RequestMapping(value = "/report-parent", method = RequestMethod.POST)
-    public ModelAndView parentBookings(@RequestParam(value = ReportConstants.PARENT_EMAIL) String email,
-                                       @RequestParam(value = ReportConstants.DATE_THEN) String dateThen,
-                                       @RequestParam(value = ReportConstants.DATE_NOW) String dateNow,
-                                       @RequestParam(value = RoomConstants.View.ROOM_ID) Long roomId) {
+    public ModelAndView parentBookings(@RequestParam(value = ReportConstants.START_DATE) String startDate,
+                                       @RequestParam(value = ReportConstants.END_DATE) String endDate,
+                                       @RequestParam(value = ReportConstants.ROOM_ID) Long roomId,
+                                       @RequestParam(value = ReportConstants.EMAIL) String email) {
 
         ModelAndView modelAndView = new ModelAndView(ReportConstants.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
@@ -49,15 +48,15 @@ public class ReportParentController {
         Room room = roomService.findById(roomId);
         User parent = userService.getUserByEmail(email);
 
-        List<Booking> bookings = bookingService.getBookings(toDate(dateThen), toDate(dateNow),
+        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate),
                 parent, room, BookingState.COMPLETED);
         Long sumTotal = bookingService.getSumTotal(bookings);
 
         modelMap.addAttribute(ReportConstants.PARENT, parent);
-        modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
+        modelMap.addAttribute(ReportConstants.END_DATE, endDate);
         modelMap.addAttribute(ReportConstants.BOOKINGS, bookings);
-        modelMap.addAttribute(ReportConstants.DATE_THEN, dateThen);
         modelMap.addAttribute(ReportConstants.SUM_TOTAL, sumTotal);
+        modelMap.addAttribute(ReportConstants.START_DATE, startDate);
 
         return modelAndView;
     }

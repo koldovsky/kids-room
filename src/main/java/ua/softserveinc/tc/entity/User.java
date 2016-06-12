@@ -80,24 +80,12 @@ public class User {
     @Analyzer(definition = "ngram")
     private String phoneNumber;
 
-    @ManyToMany(mappedBy = "managers")
-    private List<Room> rooms = new ArrayList<>();
-
     @Column(name = UserConstants.Entity.ROLE)
     @Enumerated(EnumType.ORDINAL)
     private Role role;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
     private Set<Child> children;
-
-
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
 
     public String getConfirm() {
         return confirm;
@@ -107,12 +95,12 @@ public class User {
         this.confirm = confirm;
     }
 
-    public void setChildren(Set<Child> children) {
-        this.children = children;
-    }
-
     public Set<Child> getChildren() {
         return children;
+    }
+
+    public void setChildren(Set<Child> children) {
+        this.children = children;
     }
 
     public String getPassword() {

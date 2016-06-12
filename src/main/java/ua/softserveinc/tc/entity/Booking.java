@@ -56,11 +56,11 @@ public class Booking {
     private BookingState bookingState;
 
     @NotNull
-    @Column(name = BookingConstants.DB.DURATION)
+    @Column(name = BookingConstants.DB.DURATION, columnDefinition = "bigint default 0")
     private Long duration;
 
     @NotNull
-    @Column(name = BookingConstants.DB.SUM)
+    @Column(name = BookingConstants.DB.SUM, columnDefinition = "bigint default 0")
     private Long sum;
 
     public Long getIdBook() {
