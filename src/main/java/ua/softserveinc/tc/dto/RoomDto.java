@@ -2,10 +2,12 @@ package ua.softserveinc.tc.dto;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,20 +19,29 @@ public class RoomDto {
 
     private Long id;
 
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String address;
 
+    @NotEmpty
     private String city;
 
+    @NotEmpty
     private String phoneNumber;
 
+    @NotNull
     private Integer capacity;
 
     private User manager;
 
+    private String managers;
+
+    @NotEmpty
     private String workingHoursStart;
 
+    @NotEmpty
     private String workingHoursEnd;
 
     private String rate;
@@ -155,6 +166,14 @@ public class RoomDto {
         this.sum = sum;
     }
 
+    public String getManagers() {
+        return managers;
+    }
+
+    public void setManagers(String managers) {
+        this.managers = managers;
+    }
+
     @Override
     public String toString() {
         return "RoomDto{" +
@@ -187,7 +206,22 @@ public class RoomDto {
                 result.add(new Rate(Integer.parseInt(rateDto.getHourRate()), Long.parseLong(rateDto.getPriceRate())));
             }
         }
+        return result;
+    }
 
+    public List<Long> fromJsonToListOfManagersId() {
+        List<Long> result = new ArrayList<>();
+
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+        final Gson gson = gsonBuilder.create();
+
+        ManagerDto[] managerList = gson.fromJson(this.managers, ManagerDto[].class);
+
+        for (ManagerDto manager : managerList) {
+            if (manager != null) {
+                result.add(Long.parseLong(manager.getManagerId()));
+            }
+        }
         return result;
     }
 }
