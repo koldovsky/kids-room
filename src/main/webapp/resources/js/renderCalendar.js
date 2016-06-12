@@ -42,8 +42,6 @@ $(function () {
 
 function selectRoomForManager(id) {
 
-    localStorage["room"] = id;
-
     $('#calendar').fullCalendar('destroy');
 
     $('#dialog').dialog({

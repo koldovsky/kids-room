@@ -55,15 +55,15 @@
                                         <span class="glyphicon glyphicon-cog"></span>
                                         Choose a room
                                     </a>
-                                    <ul class="dropdown-menu">
+                                    <ul id="selectRoom" class="dropdown-menu">
                                     <c:forEach items="${rooms}" var="r">
-                                        <li><a onclick="selectRoomForManager(this.id);" id="${r.id}">
+                                        <li><a id="${r.id}">
                                             ${r.city}: ${r.address}
                                         </a></li>
-                                        <li><a onclick="selectRoomForManager(this.id);" id="2">
+                                        <li><a id="2">
                                             Second
                                         </a></li>
-                                        <li><a onclick="selectRoomForManager(this.id);" id="3">
+                                        <li><a id="3">
                                             Third
                                         </a></li>
                                     </c:forEach>

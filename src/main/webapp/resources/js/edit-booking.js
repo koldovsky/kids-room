@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
     $('#data-booking').change(refresh);
 });
 
@@ -101,7 +101,5 @@ function selectUser(user) {
 }
 
 function selectRoomForManager(room) {
-    localStorage["room"] = room;
-    // Vasyl code goes here
     refresh();
 }

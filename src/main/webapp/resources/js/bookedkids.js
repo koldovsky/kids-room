@@ -129,9 +129,7 @@
 
 
  function selectRoomForManager(room) {
-       localStorage["room"] = room;
-       var idRoom = localStorage["room"];
-       var src = 'manager-dayle-booking/' +idRoom;
+       var src = 'manager-dayle-booking/' + room;
        $.ajax({
            url: src,
            success: function(data){

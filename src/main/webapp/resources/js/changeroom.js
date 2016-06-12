@@ -1,7 +1,15 @@
 $(function(){
     if(localStorage["room"] == null) {
-        localStorage["room"] = $("#selectRoom option").first().val();
+        localStorage["room"] = $("#selectRoom li a").first().attr("id");
     }
 
-    $("#selectRoom").val(localStorage['room']);
+    $("#selectRoom li a").each(function() {
+        $(this).click(function() {
+            var id = $(this).attr("id");
+            localStorage["room"] = id;
+            selectRoomForManager(id);
+        });
+    });
+
+    selectRoomForManager(localStorage["room"]);
 });

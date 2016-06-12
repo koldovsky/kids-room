@@ -1,5 +1,4 @@
 $(function() {
-    refreshView();
     addListenerForDetails();
     addListenerForGenerate();
     $("#dateNow, #dateThen").change(refreshView);
@@ -65,6 +64,5 @@ function refreshView() {
 }
 
 function selectRoomForManager(room) {
-    localStorage["room"] = room;
     refreshView();
 }

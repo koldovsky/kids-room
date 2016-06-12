@@ -6,9 +6,11 @@
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/bookings.css'>
 
-<script src="resources/js/report.js"></script>
-<script src="resources/js/changeroom.js"></script>
 <script src="resources/js/jquery.redirect.js"></script>
+
+<script src="resources/js/changeroom.js"></script>
+<script src="resources/js/report.js"></script>
+
 
     <div id="dateThenDiv">
         <h3><spring:message code="report.from" /></h3>
