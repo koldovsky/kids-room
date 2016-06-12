@@ -29,7 +29,7 @@ public final class ChildConstants {
 
     public static final class View {
 
-        public static final String ALL_KIDS_URL = "/allkidslist";
+        public static final String ALL_KIDS_URL = "/manager-allkidslist";
 
         public static final String ALL_KIDS = "allkidslist";
 

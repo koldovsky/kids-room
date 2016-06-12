@@ -33,7 +33,7 @@ public class ReportController {
     @Autowired
     private RoomService roomService;
 
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
     public ModelAndView report(Principal principal) {
         ModelAndView model = new ModelAndView(ReportConstants.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();

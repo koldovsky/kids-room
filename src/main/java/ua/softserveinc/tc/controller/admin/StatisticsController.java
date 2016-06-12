@@ -30,7 +30,7 @@ public class StatisticsController {
     @Autowired
     private BookingService bookingService;
 
-    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
+    @RequestMapping(value = "/adm-statistics", method = RequestMethod.GET)
     public ModelAndView statistics() {
         ModelAndView model = new ModelAndView(ReportConstants.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();

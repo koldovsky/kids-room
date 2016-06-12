@@ -18,14 +18,14 @@ function addListenerForDetails() {
         $(this).click(function() {
             var objects = getObjectsToSent();
             objects["email"] = $(this).attr("id");
-            $.redirect("/home/report-parent", objects);
+            $.redirect("manager-report-parent", objects);
         });
     });
 };
 
 function addListenerForGenerate() {
     $("#generate").click(function() {
-        $.redirect("/home/report-all", getObjectsToSent());
+        $.redirect("manager-report-all", getObjectsToSent());
     });
 };
 

@@ -83,7 +83,7 @@
 
 
                             <sec:authorize access="hasRole('MANAGER')">
-                                  <li><a href="report">
+                                  <li><a href="manager-report">
                                   <span class="glyphicon glyphicon-tasks"></span>
                                   <spring:message code="manager.report" /></a>
                                   </li>
@@ -99,7 +99,7 @@
                               </sec:authorize>
 
                             <sec:authorize access="hasRole('ADMINISTRATOR')">
-                                <li><a href="statistics">
+                                <li><a href="adm-statistics">
                                     <span class="glyphicon glyphicon-tasks"></span>
                                     <spring:message code="administrator.statistics" /></a>
                                 </li>
