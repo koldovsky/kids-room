@@ -1,35 +1,54 @@
 
-    var ratesList = $("#for-json").val();
-    var ratesJson = JSON.parse(ratesList);
+var ratesList = $("#rates-json").val();
+var ratesJson = JSON.parse(ratesList);
 
-    var app = angular.module('angularjs-starter', []);
+var managersList = $("#managers-json").val();
+var managersJson = JSON.parse(managersList);
+
+var app = angular.module('angularjs-starter', []);
 
 app.controller('MainCtrl', function($scope) {
 
-   $scope.choices = [];
+   $scope.rates = [];
+   $scope.managers = [];
 
-   if(ratesJson.length > 0 ){
+
+   if (managersJson.length > 0) {
+       for (var i = 0; i < managersJson.length; ++i){
+           var newItemNo = $scope.managers.length+1;
+           $scope.managers.push({id: 'manager'+(i+1), managerId: managersJson[i].id.toString()});
+       }
+   }
+
+   if (ratesJson.length > 0 ) {
        for (var i = 0; i < ratesJson.length; ++i){
-           var newItemNo = $scope.choices.length+1;
-           $scope.choices.push({id: 'choice'+(i+1), hourRate: ratesJson[i].hourRate, priceRate: ratesJson[i].priceRate});
+           var newItemNo = $scope.rates.length+1;
+           $scope.rates.push({id: 'rate'+(i+1), hourRate: ratesJson[i].hourRate, priceRate: ratesJson[i].priceRate});
        }
    }
 
 
-   $scope.addNewChoice = function() {
-       var newItemNo = $scope.choices.length+1;
-       $scope.choices.push({'id':'choice'+newItemNo});
+   $scope.addNewManager = function() {
+       var newItemNo = $scope.managers.length+1;
+       $scope.managers.push({'id':'manager'+newItemNo})
+   }
+   $scope.removeManager = function() {
+       var lastItem = $scope.managers.length-1;
+       $scope.managers.splice(lastItem);
    };
 
-   $scope.removeChoice = function() {
-       var lastItem = $scope.choices.length-1;
-       $scope.choices.splice(lastItem);
+   $scope.addNewRate = function() {
+       var newItemNo = $scope.rates.length+1;
+       $scope.rates.push({'id':'rate'+newItemNo});
+   };
+
+   $scope.removeRate = function() {
+       var lastItem = $scope.rates.length-1;
+       $scope.rates.splice(lastItem);
    };
 
    $scope.submit = function(){
-       var size = $scope.choices.length;
-       $("#for-json").val(JSON.stringify($scope.choices));
-
-       document.getElementById("for-json").value = JSON.stringify($scope.choices);
+       $("#rates-json").val(JSON.stringify($scope.rates));
+       $("#managers-json").val(JSON.stringify($scope.managers));
    };
 });
