@@ -2,10 +2,10 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.RoomDto;
@@ -15,6 +15,9 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,6 +46,7 @@ public class AddRoomController {
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
 
         ModelAndView mav = new ModelAndView(AdminConstants.ADD_ROOM);
+        mav.getModelMap().addAttribute("room", new RoomDto());
         mav.addObject(AdminConstants.MANAGER_LIST, managers);
 
         return mav;
@@ -53,16 +57,28 @@ public class AddRoomController {
      * Method send built Room object into Service layer with  method create().
      *
      * @param roomDto (Data Transfer Object for Room, needed to get json of rate's in String type)
-     * @param id      (chosen on view manager id from list)
      * @return string, witch redirect on other view
      */
     @RequestMapping(value = "/adm-add-room", method = RequestMethod.POST)
-    public String saveRoom(@ModelAttribute RoomDto roomDto, @RequestParam("managers") Long id) {
-        User managerForRoom = userService.findById(id);
-        roomDto.setManager(managerForRoom);
+    public String saveRoom(@Valid @ModelAttribute("room") RoomDto roomDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "adm-add-room";
+        }
+
+        List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
+        List<User> managers = new ArrayList<>();
+        for (Long elem : idManagers) {
+            managers.add(userService.findById(elem));
+        }
 
         Room room = new Room(roomDto);
-        roomService.create(room);
+
+        room.setManagers(managers);
+        for (User elem : managers) {
+            elem.setRooms(Arrays.asList(room));
+            userService.update(elem);
+        }
+        roomService.saveOrUpdate(room);
 
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
