@@ -11,40 +11,48 @@
    <div class="for-table">
        <table class="for-table-fields">
            <tr><th>
-               <legend class="for-field"><strong>Add manager</strong></legend>
+               <legend class="for-field"><strong><spring:message code="administrator.addManager"/></strong></legend>
            </th></tr>
 
            <tr><td>
                <form:form id="userform" action="adm-add-manager" method="post"  modelAttribute="manager">
 
                   <form:input path="role" type="hidden" value="MANAGER" />
-                  <form:input  path="password" type="hidden" name="password"/>
+                  <form:input path="password" type="hidden" name="password"/>
 
                   <div class="form-group">
-                          <label for="firstname" class="required"><spring:message code="user.firstname" /></label>
-                          <form:input path="firstName"   class="form-control" style="text-transform: capitalize"/>
-                          <form:errors path="firstName" cssClass="error"  />
+                      <label for="email" class="required">
+                      <spring:message code="administrator.manager.email"/></label>
+                      <form:input path="email" type="email" id="userEmail" class="form-control"
+                                  style="text-transform: lowercase" />
+                      <form:errors path="email" cssClass="error"/>
                   </div>
+
                   <div class="form-group">
-                          <label for="lastname" class="required"><spring:message code="user.lastname" /></label>
-                          <form:input path="lastName"   class="form-control" style="text-transform: capitalize"  />
-                          <form:errors path="lastName" cssClass="error" />
+                      <label for="firstname" class="required">
+                      <spring:message code="administrator.manager.firstName"/></label>
+                      <form:input path="firstName" class="form-control" style="text-transform: capitalize"/>
+                      <form:errors path="firstName" cssClass="error"/>
                   </div>
+
                   <div class="form-group">
-                              <label for="email" class="required"><spring:message code="user.email" /></label>
-                              <form:input path="email" type="email" id="userEmail" class="form-control"
-                                            style="text-transform: lowercase"  />
-                              <form:errors path="email" cssClass="error"  />
+                      <label for="lastname" class="required">
+                      <spring:message code="administrator.manager.lastName" /></label>
+                      <form:input path="lastName" class="form-control" style="text-transform: capitalize"  />
+                      <form:errors path="lastName" cssClass="error"/>
                   </div>
+
                   <div class="form-group">
-                          <label for="phonenumber" class="required"><spring:message code="user.phone" /></label>
-                          <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"/>
-                          <form:errors path="phoneNumber" cssClass="error"  />
+                      <label for="phoneNumber" class="required">
+                      <spring:message code="administrator.phoneNumber"/></label>
+                      <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"/>
+                      <form:errors path="phoneNumber" cssClass="error"/>
                   </div>
+
                   <div class="form-group">
-                         <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
-                         <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
-                                 onclick="window.location.href='/home/adm-edit-manager'"></button>
+                      <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
+                      <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                              onclick="window.location.href='/home/adm-edit-manager'"></button>
                   </div>
 
                 </form:form>
@@ -53,3 +61,4 @@
        </table>
     </div>
 </body>
+</html>
