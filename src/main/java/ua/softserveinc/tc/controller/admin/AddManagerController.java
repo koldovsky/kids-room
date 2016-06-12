@@ -3,11 +3,9 @@ package ua.softserveinc.tc.controller.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.entity.Role;
@@ -16,10 +14,7 @@ import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
+import javax.validation.Valid;
 import java.util.UUID;
 
 
@@ -35,38 +30,21 @@ public class AddManagerController {
     @Autowired
     private TokenService tokenService;
 
-    private javax.validation.Validator validator;
-
-
-    public AddManagerController() {
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        validator = validatorFactory.getValidator();
-    }
-
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public ModelAndView showCreateManagerForm() {
         ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
-        model.addObject(AdminConstants.ATR_MANAGER, new User());
+        model.addObject("manager", new User());
 
         return model;
     }
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
-    public String saveManager(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult,
-                              SessionStatus status) {
-
-        Set<ConstraintViolation<User>> violations = validator.validate(manager);
-        for (ConstraintViolation<User> violation : violations) {
-            String propertyPath = violation.getPropertyPath().toString();
-            String message = violation.getMessage();
-            bindingResult.addError(new FieldError(AdminConstants.ATR_MANAGER, propertyPath, "Invalid " + propertyPath
-                    + "(" + message + ")"));
-        }
+    public String saveManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
+                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_MANAGER;
         }
-        status.setComplete();
 
         manager.setRole(Role.MANAGER);
         manager.setActive(true);
@@ -76,7 +54,6 @@ public class AddManagerController {
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, manager);
         mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
-
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 

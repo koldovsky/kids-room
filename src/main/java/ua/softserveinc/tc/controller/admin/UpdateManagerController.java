@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,8 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 
+import javax.validation.Valid;
+
 
 @Controller
 public class UpdateManagerController {
@@ -19,9 +22,8 @@ public class UpdateManagerController {
     @Autowired
     private UserService userService;
 
-
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.GET)
-    public ModelAndView updateManager(@RequestParam("id") Long id) {
+    public ModelAndView showUpdateManagerForm(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
 
         User manager = userService.findById(id);
@@ -31,7 +33,11 @@ public class UpdateManagerController {
     }
 
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.POST)
-    public String submitManagerUpdate(@ModelAttribute("manager") User manager) {
+    public String submitManagerUpdate(@Valid @ModelAttribute("manager") User manager, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "adm-update-manager";
+        }
+
         manager.setRole(Role.MANAGER);
         manager.setConfirmed(true);
         manager.setActive(true);
