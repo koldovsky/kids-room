@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.MailService;
@@ -30,7 +31,7 @@ public class SendPaymentInfoJob {
         Date startDate = toDate(dateMonthAgo());
         Date endDate = toDate(dateNow());
 
-        List<Booking> bookings = bookingService.getBookings(startDate, endDate);
+        List<Booking> bookings = bookingService.getBookings(startDate, endDate, BookingState.COMPLETED);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         report.forEach((user, sum) -> {

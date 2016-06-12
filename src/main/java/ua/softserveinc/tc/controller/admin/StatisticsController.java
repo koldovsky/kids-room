@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 
@@ -31,14 +32,13 @@ public class StatisticsController {
 
     @RequestMapping(value = "/statistics", method = RequestMethod.GET)
     public ModelAndView statistics() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName(ReportConstants.STATISTICS_VIEW);
+        ModelAndView model = new ModelAndView(ReportConstants.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
 
         String dateNow = getStringDate(dateNow());
         String dateThen = getStringDate(dateMonthAgo());
 
-        List<Booking> bookings = bookingService.getBookings(toDate(dateMonthAgo()), toDate(dateNow()));
+        List<Booking> bookings = bookingService.getBookings(toDate(dateMonthAgo()), toDate(dateNow()), BookingState.COMPLETED);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
 
         modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
@@ -52,7 +52,7 @@ public class StatisticsController {
     @ResponseBody
     public String refreshView(@PathVariable String startDate,
                               @PathVariable String endDate) {
-        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate));
+        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate), BookingState.COMPLETED);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
         Gson gson = new Gson();
 

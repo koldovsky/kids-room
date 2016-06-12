@@ -13,15 +13,9 @@ import java.util.Map;
 @Component
 public interface RoomService extends BaseService<Room> {
 
-    Room getRoomByName(String name);
-
     List<Event> getAllEventsInRoom(Room room);
 
-    Room getRoomByManager(User currentManager);
-
-    List<Room> findByCity(String city);
-
-    List<Room> findByManger(User manager);
+    List<Room> findByManager(User manager);
 
     Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
 

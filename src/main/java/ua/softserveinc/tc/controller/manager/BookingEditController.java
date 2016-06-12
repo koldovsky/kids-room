@@ -49,7 +49,7 @@ public class BookingEditController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> listRoom = roomService.findByManger(currentManager);
+        List<Room> listRoom = roomService.findByManager(currentManager);
         Room room = listRoom.get(0);
         List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
                 workingHours().get(1),
@@ -100,7 +100,7 @@ public class BookingEditController {
     @ResponseBody
     public Boolean createBooking (Principal principal, @RequestBody BookingDto bookingDto){
         User manager = userService.getUserByEmail(principal.getName());
-        Room room = roomService.findByManger(manager).get(0);
+        Room room = roomService.findByManager(manager).get(0);
         Date dateLo = toDateAndTime(bookingDto.getStartTime());
         Date dateHi = toDateAndTime(bookingDto.getEndTime());
 

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
@@ -91,7 +92,7 @@ public class MyBookingsController {
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo), toDate(dateHi), currentUser);
+        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo), toDate(dateHi), currentUser, BookingState.COMPLETED);
         List<BookingDto> dtos = new ArrayList<>();
         myBookings.forEach((booking -> dtos.add(new BookingDto(booking))));
 

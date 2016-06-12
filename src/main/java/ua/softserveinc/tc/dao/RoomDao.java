@@ -9,11 +9,5 @@ public interface RoomDao extends BaseDao<Room> {
 
     void saveOrUpdate(Room room);
 
-    Room getRoomByName(String name);
-
-    Room getRoombyManager(User manager);
-
-    List<Room> findByCity(String city);
-
     List<Room> findByManager(User user);
 }

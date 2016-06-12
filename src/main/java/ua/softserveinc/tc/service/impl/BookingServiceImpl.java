@@ -61,7 +61,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 BookingConstants.Entity.START_TIME), startDate, endDate));
 
         if (bookingStates.length > 0)
-            criteria.where(root.get(BookingConstants.Entity.STATE).in(Arrays.asList(bookingStates)));
+            restrictions.add(root.get(BookingConstants.Entity.STATE).in(Arrays.asList(bookingStates)));
         if (user != null)
             restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
         if (room != null)

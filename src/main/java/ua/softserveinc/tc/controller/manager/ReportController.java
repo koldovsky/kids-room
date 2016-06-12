@@ -43,7 +43,7 @@ public class ReportController {
         String dateThen = getStringDate(dateMonthAgo());
 
         User manager = userService.getUserByEmail(principal.getName());
-        List<Room> rooms = roomService.findByManger(manager);
+        List<Room> rooms = roomService.findByManager(manager);
 
         modelMap.addAttribute(RoomConstants.View.ROOMS, rooms);
         modelMap.addAttribute(ReportConstants.DATE_NOW, dateNow);
