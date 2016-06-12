@@ -72,12 +72,7 @@ public class AddRoomController {
         }
 
         Room room = new Room(roomDto);
-
         room.setManagers(managers);
-        for (User elem : managers) {
-            elem.setRooms(Arrays.asList(room));
-            userService.update(elem);
-        }
         roomService.saveOrUpdate(room);
 
         return "redirect:/" + AdminConstants.EDIT_ROOM;
