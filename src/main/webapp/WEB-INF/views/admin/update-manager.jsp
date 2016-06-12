@@ -1,7 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
@@ -13,7 +13,7 @@
     <form:form class = "adm-edit-manager" modelAttribute="manager" action="adm-update-manager" method="post">
 
         <tr><th>
-            <legend class="for-field"><strong>Update manager</strong></legend>
+            <legend class="for-field"><strong><spring:message code="administrator.updateManager"/></strong></legend>
         </th></tr>
 
         <tr><td>
@@ -21,30 +21,32 @@
             <form:hidden path="password" id="password" value="${manager.password}"/>
 
             <div class="form-group">
-               <label for="email" class="for-field">Email
-                  <form:input path="email" id="email" value="${manager.email}" class="form-control" required="required"/>
-               </label>
+               <label for="email" class="required">
+                  <spring:message code="administrator.manager.email"/></label>
+                  <form:input path="email" id="email" value="${manager.email}" class="form-control" />
+                  <form:errors path="email" cssClass="error"/>
             </div>
 
             <div class="form-group">
-               <label for="firstName" class="for-field">First Name
-                  <form:input path="firstName" id="firstName" value="${manager.firstName}" class="form-control"
-                                                              required="required"/>
-               </label>
+               <label for="firstName" class="required">
+                  <spring:message code="administrator.manager.firstName"/></label>
+                  <form:input path="firstName" id="firstName" value="${manager.firstName}" class="form-control"/>
+                  <form:errors path="firstName" cssClass="error"/>
             </div>
 
             <div class="form-group">
-               <label for="lastName" class="for-field">Last Name
-                  <form:input path="lastName" id="lastName" value="${manager.lastName}" class="form-control"
-                                                            required="required"/>
-               </label>
+               <label for="lastName" class="required">
+                  <spring:message code="administrator.manager.lastName"/></label>
+                  <form:input path="lastName" id="lastName" value="${manager.lastName}" class="form-control"/>
+                  <form:errors path="lastName" cssClass="error" />
             </div>
 
             <div class="form-group">
-               <label for="phoneNumber" class="for-field">Phone number
+               <label for="phoneNumber" class="required">
+                  <spring:message code="administrator.phoneNumber"/></label>
                   <form:input path="phoneNumber" id="phoneNumber" value="${manager.phoneNumber}"
-                              pattern="^(\+38|8|)(\W*\d){10}\W*$" class="form-control" required="required"/>
-               </label>
+                              pattern="^(\+38|8|)(\W*\d){10}\W*$" class="form-control"/>
+                  <form:errors path="phoneNumber" cssClass="error"  />
             </div>
 
             <div class="form-group">

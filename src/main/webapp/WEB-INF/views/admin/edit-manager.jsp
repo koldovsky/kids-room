@@ -13,19 +13,19 @@
        <table class="for-table">
           <tr class="hide-border">
              <th colspan="8"  class="set-standard-color">
-                <legend class="for-table"><strong>Manager list</strong></legend>
+                <legend class="for-table"><strong><spring:message code="administrator.editManagers"/></strong></legend>
              </th>
           </tr>
           <tr></tr>
           <tr>
-             <th><strong>Email</strong></th>
-             <th><strong>First Name</strong></th>
-             <th><strong>Last Name</strong></th>
-             <th><strong>Phone number</strong></th>
-             <th><strong>Confirmed account</strong></th>
-             <th><strong>Active account</strong></th>
-             <th><strong>EDIT</strong></th>
-             <th><strong>BLOCK</strong></th>
+             <th><strong><spring:message code="administrator.manager.email"/></strong></th>
+             <th><strong><spring:message code="administrator.manager.firstName"/></strong></th>
+             <th><strong><spring:message code="administrator.manager.lastName"/></strong></th>
+             <th><strong><spring:message code="administrator.phoneNumber"/></strong></th>
+             <th><strong><spring:message code="administrator.manager.confirmedAccount"/></strong></th>
+             <th><strong><spring:message code="administrator.manager.activeAccount"/></strong></th>
+             <th><strong><spring:message code="administrator.edit"/></strong></th>
+             <th><strong><spring:message code="administrator.block"/></strong></th>
           </tr>
 
           <c:forEach var="manager" items="${managerList}">
@@ -53,7 +53,7 @@
           <tr></tr>
           <tr>
              <td colspan="8" class="hide-border set-standard-color">
-                <a href="adm-add-manager"><input type="button" value="Add"
+                <a href="adm-add-manager"><input type="button" value=<spring:message code="administrator.add"/>
                                            class="btn btn-raised btn-primary waves-effect waves-light"/></a>
              </td>
           </tr>
