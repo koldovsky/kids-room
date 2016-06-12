@@ -34,7 +34,7 @@ public class AddManagerController {
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public ModelAndView showCreateManagerForm() {
         ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
-        model.addObject("manager", new User());
+        model.addObject(AdminConstants.ATR_MANAGER, new User());
 
         return model;
     }

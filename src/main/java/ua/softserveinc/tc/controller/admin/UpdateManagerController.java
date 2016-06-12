@@ -22,6 +22,7 @@ public class UpdateManagerController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.GET)
     public ModelAndView showUpdateManagerForm(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
@@ -33,9 +34,10 @@ public class UpdateManagerController {
     }
 
     @RequestMapping(value = "/adm-update-manager", method = RequestMethod.POST)
-    public String submitManagerUpdate(@Valid @ModelAttribute("manager") User manager, BindingResult bindingResult) {
+    public String submitManagerUpdate(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
+                                      BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "adm-update-manager";
+            return AdminConstants.UPDATE_MANAGER;
         }
 
         manager.setRole(Role.MANAGER);

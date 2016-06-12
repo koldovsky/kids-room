@@ -62,7 +62,7 @@ public class UpdateRoomController {
     public String submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "adm-update-room";
+            return AdminConstants.UPDATE_ROOM;
         }
 
         List<Long> idManagers = roomDto.fromJsonToListOfManagersId();

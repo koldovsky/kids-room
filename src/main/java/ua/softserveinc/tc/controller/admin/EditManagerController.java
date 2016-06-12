@@ -42,5 +42,4 @@ public class EditManagerController {
 
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
-
 }

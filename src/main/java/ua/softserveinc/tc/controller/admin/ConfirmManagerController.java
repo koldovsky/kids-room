@@ -37,12 +37,14 @@ public class ConfirmManagerController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserValidator userValidator;
 
     @Autowired
     @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
+
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.GET)
     public String confirmRegistration(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
@@ -56,7 +58,6 @@ public class ConfirmManagerController {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         tokenService.delete(token);
-
         return AdminConstants.CONFIRM_MANAGER;//"adm-confirm-manager"
     }
 

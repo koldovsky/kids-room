@@ -46,7 +46,7 @@ public class AddRoomController {
         List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
 
         ModelAndView mav = new ModelAndView(AdminConstants.ADD_ROOM);
-        mav.getModelMap().addAttribute("room", new RoomDto());
+        mav.getModelMap().addAttribute(AdminConstants.ATR_ROOM, new RoomDto());
         mav.addObject(AdminConstants.MANAGER_LIST, managers);
 
         return mav;
@@ -60,9 +60,10 @@ public class AddRoomController {
      * @return string, witch redirect on other view
      */
     @RequestMapping(value = "/adm-add-room", method = RequestMethod.POST)
-    public String saveRoom(@Valid @ModelAttribute("room") RoomDto roomDto, BindingResult bindingResult) {
+    public String saveRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
+                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "adm-add-room";
+            return AdminConstants.ADD_ROOM;
         }
 
         List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
