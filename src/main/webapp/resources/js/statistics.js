@@ -27,6 +27,6 @@ function refreshView()
 
         $('td').remove();
 
-        $('#activeUsers').append(tr);
+        $('#statistics').append(tr);
     }});
 }

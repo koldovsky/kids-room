@@ -1,15 +1,22 @@
 $(function() {
-    if(localStorage["room"] == null) {
-        localStorage["room"] = $("#selectRoom li a").first().attr("id");
+    if(localStorage["roomId"] == null) {
+        localStorage["room"] = $("#selectRoom li a").first().text();
+        localStorage["roomId"] = $("#selectRoom li a").first().attr("id");
     }
 
     $("#selectRoom li a").each(function() {
         $(this).click(function() {
-            var id = $(this).attr("id");
-            localStorage["room"] = id;
-            selectRoomForManager(id);
+            var room = $(this).text();
+            var roomId = $(this).attr("id");
+
+            localStorage["room"] = room;
+            localStorage["roomId"] = roomId;
+
+            $("#room").text(room);
+            selectRoomForManager(roomId);
         });
     });
 
-    selectRoomForManager(localStorage["room"]);
+    $("#room").text(localStorage["room"]);
+    selectRoomForManager(localStorage["roomId"]);
 });

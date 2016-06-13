@@ -10,15 +10,15 @@
 
     <div id="startDateDiv">
         <h3><spring:message code="report.from" /></h3>
-        <input disabled type="date" value="${startDate}" id="startDate">
+        <input disabled type="date" value="${startDate}">
     </div>
 
     <div id="endDateDiv">
         <h3><spring:message code="report.to" /></h3>
-        <input disabled type="date" value="${endDate}" id="endDate">
+        <input disabled type="date" value="${endDate}">
     </div>
 
-    <div class="tableDiv" id="parentDetails">
+    <div class="tableDiv">
         <table>
 
             <caption>

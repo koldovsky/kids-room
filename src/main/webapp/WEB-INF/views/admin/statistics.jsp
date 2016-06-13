@@ -18,8 +18,8 @@
         <input type="date" value="${endDate}" id="endDate">
     </div>
 
-    <div class="tableDiv" id="statistics">
-        <table id="activeUsers">
+    <div class="tableDiv">
+        <table id="statistics">
 
             <caption>
                 <h3>

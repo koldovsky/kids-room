@@ -52,8 +52,7 @@
                             <sec:authorize access="hasRole('MANAGER')">
                                 <li id="roompicker" class="dropdown menu-item">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-cog"></span>
-                                        Choose a room
+                                        <span id="room">Choose a room</span>
                                     </a>
                                     <ul id="selectRoom" class="dropdown-menu">
                                     <c:forEach items="${rooms}" var="room">

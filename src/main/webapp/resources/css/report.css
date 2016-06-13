@@ -26,7 +26,7 @@ caption h2  {
     font-size: 18px;
 }
 
-#startDateDiv, #endDateDiv, .tableDiv, #generateButton, #exportButton, #parentDetails, #generated, #statistics {
+#startDateDiv, #endDateDiv, .tableDiv, #generateButton, #exportButton, #parentDetails, #statistics {
     margin: 10px auto;
 }
 
@@ -43,16 +43,4 @@ caption h2  {
 
 #exportButton {
     width: 205px;
-}
-
-#parentDetails {
-    width: 520px;
-}
-
-#generated {
-    width: 540px;
-}
-
-#statistics {
-    width: 485px;
 }
