@@ -48,7 +48,7 @@ public class ViewEventController {
                 model.addAttribute("rooms", roomServiceImpl.findAll());
                 model.addAttribute("kids", childService.getChildrenByUser(user));
             } else {
-                model.addAttribute("rooms", roomServiceImpl.findByManager(user));
+                model.addAttribute("rooms", user.getRooms());
             }
             return EventConstants.View.MAIN_PAGE;
         }

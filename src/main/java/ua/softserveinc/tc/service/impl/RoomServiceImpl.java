@@ -8,7 +8,6 @@ import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -35,11 +34,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Autowired
     private BookingService bookingService;
-
-    @Override
-    public List<Room> findByManager(User manager) {
-        return roomDao.findByManager(manager);
-    }
 
     @Override
     public void create(Room room) {

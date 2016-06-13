@@ -49,7 +49,7 @@ public class UserRepositoryTest {
     @Test
     public void testFindByEmail(){
         User u = userRepository.findByEmail("user@softserveinc.com");
-        assertEquals("Should be equal", "Alan Bom", u.getFullName());
+        assertEquals("Should be equal", "Alan Bom", u);
     }
 
     @Test

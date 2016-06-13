@@ -48,7 +48,7 @@ public class ConfirmBookingController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> rooms = roomService.findByManager(currentManager);
+        List<Room> rooms = currentManager.getRooms();
         List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1), rooms.get(0), BookingConstants.States.getNotCancelled());
         model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, bookings);
         model.addAttribute("rooms", rooms);
@@ -94,7 +94,7 @@ public class ConfirmBookingController {
      @ResponseBody
      public String listBookigs(Principal principal) {
          User currentManager = userService.getUserByEmail(principal.getName());
-         Room currentRoom = roomService.findByManager(currentManager).get(0);
+         Room currentRoom = currentManager.getRooms().get(0);
          List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom, BookingConstants.States.getNotCancelled());
          List<BookingDto> listBookingDto = new ArrayList<>();
          bookings.forEach(booking -> listBookingDto.add(new BookingDto(booking)));

@@ -42,7 +42,7 @@ public class ReportController {
         String startDate = getStringDate(dateMonthAgo());
 
         User manager = userService.getUserByEmail(principal.getName());
-        List<Room> rooms = roomService.findByManager(manager);
+        List<Room> rooms = manager.getRooms();
 
         modelMap.addAttribute(ReportConstants.ROOMS, rooms);
         modelMap.addAttribute(ReportConstants.END_DATE, endDate);

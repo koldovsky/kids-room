@@ -3,7 +3,6 @@ package ua.softserveinc.tc.service;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +15,6 @@ public interface RoomService extends BaseService<Room> {
     void saveOrUpdate(Room room);
 
     List<Event> getAllEventsInRoom(Room room);
-
-    List<Room> findByManager(User manager);
 
     Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
 

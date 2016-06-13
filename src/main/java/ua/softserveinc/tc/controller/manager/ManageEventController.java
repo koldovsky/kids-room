@@ -34,7 +34,7 @@ public class ManageEventController {
     public ModelAndView getRoomsForManager(Principal principal) {
         User user = userDao.getUserByEmail(principal.getName());
 
-        List<Room> managersRooms = roomDao.findByManager(user);
+        List<Room> managersRooms = user.getRooms();
         System.out.println("SEEEEEEEEEEEEEEEEEEEEEEEEEEE:" + managersRooms);
 
         ModelAndView model = new ModelAndView();

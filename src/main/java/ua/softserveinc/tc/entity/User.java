@@ -87,45 +87,8 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parentId")
     private Set<Child> children;
 
-    public String getConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(String confirm) {
-        this.confirm = confirm;
-    }
-
-    public Set<Child> getChildren() {
-        return children;
-    }
-
-    public void setChildren(Set<Child> children) {
-        this.children = children;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(boolean comfirmed) {
-        this.confirmed = comfirmed;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    @ManyToMany(mappedBy = "managers")
+    private List<Room> rooms = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -159,6 +122,38 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -175,20 +170,31 @@ public class User {
         this.role = role;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
+    public Set<Child> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Child> children) {
+        this.children = children;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public List<Child> getEnabledChildren() {
+        return children.stream()
+                .filter(Child::isEnabled)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
         return firstName + " " + lastName;
-    }
-
-    public List<Child> getEnabledChildren() {
-        List<Child> li = new ArrayList<>(children);
-        return li.stream()
-                .filter(Child::isEnabled)
-                .collect(Collectors.toList());
     }
 
     @Override
