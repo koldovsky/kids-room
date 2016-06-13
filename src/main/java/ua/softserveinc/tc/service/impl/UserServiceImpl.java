@@ -75,14 +75,5 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userDao.update(manager);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<User> getAllParents() {
-        EntityManager entityManager = userDao.getEntityManager();
-        return entityManager
-                .createQuery("from User" +
-                        " where role = 0")
-                .getResultList();
-    }
 
 }

@@ -15,16 +15,4 @@ import java.util.List;
 
 @Service
 public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildService {
-
-    @Autowired
-    private ChildDao childDao;
-
-
-    @SuppressWarnings("unchecked")
-    public List<Child> getChildrenByUser(User user) {
-        return childDao.getEntityManager().createQuery("from Child" +
-                " where parentId = " + user.getId()).getResultList();
-    }
-
-
 }
