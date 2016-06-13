@@ -192,6 +192,10 @@ public class User {
                 .collect(Collectors.toList());
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String toString() {
         return firstName + " " + lastName;
