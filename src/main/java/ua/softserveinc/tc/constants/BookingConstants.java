@@ -11,17 +11,30 @@ public final class BookingConstants {
     }
 
     public static final class States {
-        public static final BookingState[] NOT_CANCELLED = {
+
+        private static final BookingState[] NOT_CANCELLED = {
                 BookingState.ACTIVE,
                 BookingState.BOOKED,
                 BookingState.CALCULATE_SUM,
                 BookingState.COMPLETED
         };
 
-        public static final BookingState[] ACTIVE_AND_BOOKED = {
+        private static final BookingState[] ACTIVE_AND_BOOKED = {
                 BookingState.ACTIVE,
                 BookingState.BOOKED
         };
+
+        private States(){
+        }
+
+        public static BookingState[] getNotCancelled(){
+            return NOT_CANCELLED;
+        }
+
+        public static BookingState[] getActiveAndBooked(){
+            return ACTIVE_AND_BOOKED;
+        }
+
     }
 
     public static final class Entity {
@@ -36,6 +49,7 @@ public final class BookingConstants {
 
         public static final String START_TIME = "bookingStartTime";
 
+        private Entity(){}
     }
 
     public static final class Model {
@@ -55,6 +69,8 @@ public final class BookingConstants {
         public static final String BOOK_DURATION = "/BookDuration";
 
         public static final String LIST_BOOKING = "/listBook";
+
+        private Model() {}
     }
 
     public static final class DB {
@@ -74,5 +90,7 @@ public final class BookingConstants {
         public static final String SUM = "sum";
 
         public static final String BOOKING_STATE = "booking_state";
+
+        private DB(){}
     }
 }

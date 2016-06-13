@@ -111,7 +111,7 @@ public class ApiController {
     public String getLocale(@RequestParam("locale") String locale) {
         Map<String, String> messages = new HashMap<>();
         Locale localeObj = new Locale(locale);
-        for (String message : LocaleConstants.messages) {
+        for (String message : LocaleConstants.getMessages()) {
             messages.put(message, messageSource.getMessage(message, null, localeObj));
         }
         Gson gson = new Gson();

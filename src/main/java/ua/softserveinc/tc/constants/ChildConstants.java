@@ -44,5 +44,7 @@ public final class ChildConstants {
         public static final String KID_ATTRIBUTE = "kid";
 
         public static final String KID_PROFILE = "profile";
+
+        private View(){}
     }
 }

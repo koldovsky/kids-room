@@ -217,9 +217,9 @@ public class RoomDto {
 
         ManagerDto[] managerList = gson.fromJson(this.managers, ManagerDto[].class);
 
-        for (ManagerDto manager : managerList) {
-            if (manager != null) {
-                result.add(Long.parseLong(manager.getManagerId()));
+        for (ManagerDto managerDto : managerList) {
+            if (managerDto != null) {
+                result.add(Long.parseLong(managerDto.getManagerId()));
             }
         }
         return result;

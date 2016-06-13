@@ -76,10 +76,11 @@ public class Room {
         this.workingHoursEnd = roomDto.getWorkingHoursEnd();
         this.manager = roomDto.getManager();
 
-        List<Rate> rates = roomDto.fromJsonToListOfRates();
-        for (Rate rate : rates) {
-            this.addRate(rate);
-        }
+//        List<Rate> rates = roomDto.fromJsonToListOfRates();
+//        for (Rate rate : rates) {
+//            this.addRate(rate);
+//        }
+        this.setRates(roomDto.fromJsonToListOfRates());
     }
 
     public List<User> getManagers() {

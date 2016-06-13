@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
-    private static DateFormat ISODateFormat = new SimpleDateFormat(DateConstants.DATE_FORMAT);
+    private static DateFormat isoDateFormat = new SimpleDateFormat(DateConstants.DATE_FORMAT);
 
     // Suppresses default constructor, ensuring non-instantiability.
     private DateUtil() {
@@ -43,7 +43,7 @@ public final class DateUtil {
 
     public static Date toDateISOFormat(String dateToParse) {
         try {
-            return ISODateFormat.parse(dateToParse);
+            return isoDateFormat.parse(dateToParse);
         } catch (ParseException e) {
             //TODO: log
             return null;
@@ -85,8 +85,9 @@ public final class DateUtil {
         int minutes = getMinutesFromMilliseconds(milliseconds);
 
         // 02:00 hours - 2 hours; 02:01 hours - 3 hours
-        if (minutes > 0) hours++;
-
+        if (minutes > 0) {
+            hours++;
+        }
         return hours;
     }
 

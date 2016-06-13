@@ -49,7 +49,7 @@ public class ConfirmBookingController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> rooms = roomService.findByManager(currentManager);
-        List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1), rooms.get(0), BookingConstants.States.NOT_CANCELLED);
+        List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1), rooms.get(0), BookingConstants.States.getNotCancelled());
         model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, bookings);
         model.addAttribute("rooms", rooms);
         return modelAndView;
@@ -95,7 +95,7 @@ public class ConfirmBookingController {
      public String listBookigs(Principal principal) {
          User currentManager = userService.getUserByEmail(principal.getName());
          Room currentRoom = roomService.findByManager(currentManager).get(0);
-         List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom, BookingConstants.States.NOT_CANCELLED);
+         List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1),currentRoom, BookingConstants.States.getNotCancelled());
          List<BookingDto> listBookingDto = new ArrayList<>();
          bookings.forEach(booking -> listBookingDto.add(new BookingDto(booking)));
          Gson gson = new Gson();
@@ -120,7 +120,7 @@ public class ConfirmBookingController {
     public String bookingsByDay(@PathVariable Long id){
         Date toDay= new Date();
         Room room = roomService.findById(id);
-        List<Booking> bookings = bookingService.getBookings(setStartTime(toDay), setEndTime(toDay), room, BookingConstants.States.NOT_CANCELLED);
+        List<Booking> bookings = bookingService.getBookings(setStartTime(toDay), setEndTime(toDay), room, BookingConstants.States.getNotCancelled());
         Gson gson = new Gson();
         return  gson.toJson(bookings.stream()
                 .map(BookingDto::new)

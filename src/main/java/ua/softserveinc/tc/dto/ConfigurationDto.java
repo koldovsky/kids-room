@@ -19,7 +19,9 @@ public class ConfigurationDto {
     private Integer minPeriodSize;
     private String serverName;
 
-    public ConfigurationDto(){}
+    public ConfigurationDto(){
+        // TODO: 13.06.2016 add coment, what do this constructor
+    }
 
     public ConfigurationDto(ApplicationConfigurator appConfig){
         this.kidsMinAge = appConfig.getKidsMinAge();

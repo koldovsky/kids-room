@@ -6,7 +6,6 @@ import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.ChildService;
-import ua.softserveinc.tc.util.ApplicationConfiguratorImpl;
 
 import java.util.List;
 
@@ -22,9 +21,9 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
 
 
     @SuppressWarnings("unchecked")
-    public List<Child> getChildrenByUser(User user){
+    public List<Child> getChildrenByUser(User user) {
         return childDao.getEntityManager().createQuery("from Child" +
-                        " where parentId = " + user.getId()).getResultList();
+                " where parentId = " + user.getId()).getResultList();
     }
 
 

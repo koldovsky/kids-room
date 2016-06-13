@@ -10,8 +10,8 @@ import ua.softserveinc.tc.entity.Booking;
 @Repository
 public class BookingSearch extends BaseSearch<Booking> {
 
-    {
-        searchFields = SearchConstants.BOOKING_SEARCH_FIELDS;
+    public BookingSearch() {
+        searchFields = SearchConstants.getBookingSearchFields();
     }
 
     @Override

@@ -5,9 +5,6 @@ package ua.softserveinc.tc.validator;
  */
 public class LogicalRequestsValidator {
     public static boolean isRequestValid(String requestParam){
-        if(requestParam.matches("[0-9]+") && !requestParam.isEmpty()) {
-            return true;
-        }
-        else return false;
+        return (requestParam.matches("[0-9]+") && !requestParam.isEmpty());
     }
 }

@@ -31,7 +31,7 @@ public final class ValidationConstants {
     private ValidationConstants() {
     }
 
-    public static final class CONFIG_FIELDS {
+    public static final class ConfigFields {
         public static final String MIN_AGE = "kidsMinAge";
         public static final String MAX_AGE = "kidsMaxAge";
 
@@ -45,5 +45,7 @@ public final class ValidationConstants {
 
         public static final String NOT_VALID_DATE_MSG = "date.not.valid";
         public static final String NOT_VALID_TIME_MSG = "time.not.valid";
+
+        private ConfigFields(){}
     }
 }

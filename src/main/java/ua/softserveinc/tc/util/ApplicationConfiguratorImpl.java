@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.util;
 
-import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.dto.ConfigurationDto;
 
@@ -23,12 +22,12 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
     private String serverName = "localhost:8080/home";
 
     @Override
-    public ConfigurationDto getObjectDto(){
+    public ConfigurationDto getObjectDto() {
         return new ConfigurationDto(this);
     }
 
     @Override
-    public void acceptConfiguration(ConfigurationDto cDto){
+    public void acceptConfiguration(ConfigurationDto cDto) {
         this.kidsMinAge = cDto.getKidsMinAge();
         this.kidsMaxAge = cDto.getKidsMaxAge();
         this.minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();

@@ -5,14 +5,26 @@ package ua.softserveinc.tc.constants;
  */
 public final class SearchConstants {
 
-    public static final String[] CHILD_SEARCH_FIELDS = {"firstName", "lastName", "parentId.firstName", "parentId.lastName"};
-    public static final String[] USER_SEARCH_FIELDS = {"firstName", "lastName", "email", "phoneNumber"};
-    public static final String[] BOOKING_SEARCH_FIELDS = {"idChild.firstName", "idChild.lastName"};
+    private static final String[] CHILD_SEARCH_FIELDS = {"firstName", "lastName", "parentId.firstName", "parentId.lastName"};
+    private static final String[] USER_SEARCH_FIELDS = {"firstName", "lastName", "email", "phoneNumber"};
+    private static final String[] BOOKING_SEARCH_FIELDS = {"idChild.firstName", "idChild.lastName"};
 
     public static final String CHILD_SEARCH_URL = "api/child/search";
     public static final String USER_SEARCH_URL = "api/user/search";
     public static final String BOOKING_SEARCH_URL = "api/booking/search";
 
     private SearchConstants() {
+    }
+
+    public static String[] getChildSearchFields() {
+        return CHILD_SEARCH_FIELDS;
+    }
+
+    public static String[] getUserSearchFields() {
+        return USER_SEARCH_FIELDS;
+    }
+
+    public static String[] getBookingSearchFields() {
+        return BOOKING_SEARCH_FIELDS;
     }
 }
