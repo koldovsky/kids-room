@@ -11,4 +11,5 @@ import java.util.List;
 
 public interface ChildService extends BaseService<Child> {
     List<Child> getChildrenByUser(User user);
+
 }

@@ -31,23 +31,18 @@ public class ExceptionHandlingController {
 
     /**
      * Responds to user with AccessDenied view
-     * @param e Exception
      * @return AccessDenied view
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
-    public ModelAndView handleError403(Exception e){
-        ModelAndView mav = new ModelAndView(ErrorConstants.ACCESS_DENIED_VIEW);
-        mav.addObject("exception", e);
-        return mav;
+    public String handleError403(){
+        return ErrorConstants.ACCESS_DENIED_VIEW;
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ModelAndView handleError500(Exception e) {
-        ModelAndView mav = new ModelAndView(ErrorConstants.NOT_FOUND_VIEW);
-        mav.addObject("exception", e);
-        return mav;
+    public String handleError500() {
+        return ErrorConstants.NOT_FOUND_VIEW;
     }
 
 }

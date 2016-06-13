@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller.admin;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.ConfigurationDto;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.ConfigValidator;
 
 import java.io.IOException;
@@ -28,6 +30,8 @@ public class ConfigurationController {
     @Autowired
     private ConfigValidator configValidator;
 
+    private static @Log Logger log;
+
     @RequestMapping(value = "/adm-config", method = RequestMethod.GET)
     public String getConfiguration(Model model){
         model.addAttribute(AdminConstants.ATR_CONFIG, appConfig.getObjectDto());
@@ -43,7 +47,7 @@ public class ConfigurationController {
         }
         try {appConfig.acceptConfiguration(cDto);}
         catch(IOException ioe){
-            ioe.printStackTrace();
+            log.error("Failed to write to config file", ioe);
             bindingResult.rejectValue("errorMsg", ValidationConstants.PROPERTIES_WRITE_FAILED);
             return AdminConstants.EDIT_CONFIG;
         }

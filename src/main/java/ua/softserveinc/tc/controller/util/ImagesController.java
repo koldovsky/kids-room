@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller.util;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import javax.imageio.ImageIO;
@@ -42,6 +44,8 @@ public class ImagesController {
     @Autowired
     private UserService userService;
 
+    @Log
+    private Logger log;
     /**
      * Uploading a new profile picture for a Child
      *
@@ -60,16 +64,16 @@ public class ImagesController {
         Long id = Long.parseLong(kidId);
 
         if (!file.isEmpty()) {
+            byte[] bytes;
             try {
-                byte[] bytes = file.getBytes();
-                Child kid = childService.findById(id);
-                kid.setImage(bytes);
-                childService.update(kid);
+                bytes = file.getBytes();
             } catch (IOException ioe) {
-                ioe.printStackTrace();
-                //TODO: need more appropriate exception
-                throw new ResourceNotFoundException();
+                log.error("Failed converting image", ioe);
+                throw new BadUploadException();
             }
+            Child kid = childService.findById(id);
+            kid.setImage(bytes);
+            childService.update(kid);
         }
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }
@@ -124,8 +128,8 @@ public class ImagesController {
             base64String =  DatatypeConverter.printBase64Binary(baos.toByteArray());;
             baos.close();
         }catch(IOException ioe){
-            //TODO: log
-            throw new BadUploadException();
+            log.error("Failed to load child's profile pic", ioe);
+            throw new ResourceNotFoundException();
         }
 
         return DatatypeConverter.parseBase64Binary(base64String);

@@ -4,6 +4,7 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 /**
  * Created by Nestor on 11.06.2016.
+ * transfer object to pass application configs to and from Administrator
  */
 public class ConfigurationDto {
     private Integer kidsMinAge;
@@ -22,7 +23,7 @@ public class ConfigurationDto {
     private String errorMsg;
 
     public ConfigurationDto(){
-        //for transfering to controller
+        //empty constructor for instantiating in controller
     }
 
     public ConfigurationDto(ApplicationConfigurator appConfig){
