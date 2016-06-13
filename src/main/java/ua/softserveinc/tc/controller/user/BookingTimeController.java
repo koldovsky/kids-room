@@ -47,8 +47,8 @@ public class BookingTimeController {
             dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
         });
 
-        dtos = bookingService.persistBookingsFromDtoAndSetId(dtos);
-        return new Gson().toJson(dtos);
+        List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
+        return new Gson().toJson(dto);
     }
 
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")

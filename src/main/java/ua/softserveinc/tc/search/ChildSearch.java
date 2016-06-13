@@ -10,8 +10,8 @@ import ua.softserveinc.tc.entity.Child;
 @Repository
 public class ChildSearch extends BaseSearch<Child> {
 
-    {
-        searchFields = SearchConstants.CHILD_SEARCH_FIELDS;
+    public ChildSearch() {
+        searchFields = SearchConstants.getChildSearchFields();
     }
 
     @Override

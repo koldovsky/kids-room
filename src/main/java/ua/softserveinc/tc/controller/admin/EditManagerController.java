@@ -33,7 +33,7 @@ public class EditManagerController {
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
     public String managerBlockUnblock(@RequestParam Long id) {
         User manager = userService.findById(id);
-        if (manager.isActive() == true) {
+        if (manager.isActive()) {
             manager.setActive(false);
         } else {
             manager.setActive(true);

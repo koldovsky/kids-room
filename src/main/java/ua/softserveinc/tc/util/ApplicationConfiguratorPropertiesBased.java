@@ -8,10 +8,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DefaultPropertiesPersister;
 import ua.softserveinc.tc.dto.ConfigurationDto;
-import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
-import java.io.*;
-import java.util.Calendar;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Properties;
 
 
@@ -58,12 +59,12 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     }
 
     @Override
-    public ConfigurationDto getObjectDto(){
+    public ConfigurationDto getObjectDto() {
         return new ConfigurationDto(this);
     }
 
     @Override
-    public void acceptConfiguration(ConfigurationDto cDto){
+    public void acceptConfiguration(ConfigurationDto cDto) {
         Properties properties = new Properties();
 
         this.kidsMinAge = cDto.getKidsMinAge();
@@ -98,7 +99,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
             OutputStream out = new FileOutputStream(propsFile);
             DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
             persister.store(properties, out, "Last changed");
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             //TODO: log
         }

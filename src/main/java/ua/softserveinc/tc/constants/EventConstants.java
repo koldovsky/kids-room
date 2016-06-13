@@ -6,6 +6,7 @@ public final class EventConstants {
     }
 
     public static final class Entity {
+
         public static final String TABLENAME = "events";
 
         public static final String ID = "id_event";
@@ -18,9 +19,14 @@ public final class EventConstants {
         public static final String ID_ROOM = "room";
 
         public static final String REPOSITORY = "eventDao";
+
+        private Entity(){}
     }
 
     public static final class View {
+
         public static final String MAIN_PAGE = "index";
+
+        private View(){}
     }
 }

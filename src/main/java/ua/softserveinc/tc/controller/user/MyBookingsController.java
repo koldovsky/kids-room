@@ -70,7 +70,7 @@ public class MyBookingsController {
      * Handles HTTP GET request for bookings in custom range of time
      *
      * @param dateLo time range lower limit
-     * @param dateHi time range upper limit
+     * @param dateHi time range upp er limit
      * @param principal User principal
      *
      * @return A list of DTOs containing all valuable info in JSON
@@ -86,7 +86,7 @@ public class MyBookingsController {
                        @RequestParam(value = "dateLo") String dateLo,
                        @RequestParam(value = "dateHi") String dateHi,
                        Principal principal)
-    throws AccessDeniedException, ResourceNotFoundException{
+    throws ResourceNotFoundException{
 
         User currentUser = userService.getUserByEmail(principal.getName());
         if(currentUser.getRole() != Role.USER){
@@ -94,7 +94,7 @@ public class MyBookingsController {
         }
         List<Booking> myBookings = bookingService.getBookings(toDate(dateLo), toDate(dateHi), currentUser, BookingState.COMPLETED);
         List<BookingDto> dtos = new ArrayList<>();
-        myBookings.forEach((booking -> dtos.add(new BookingDto(booking))));
+        myBookings.forEach(booking -> dtos.add(new BookingDto(booking)));
 
         Gson gson = new Gson();
         return gson.toJson(dtos);

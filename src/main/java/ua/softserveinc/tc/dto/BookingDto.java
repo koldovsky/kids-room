@@ -3,6 +3,7 @@ package ua.softserveinc.tc.dto;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.entity.*;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
  * Created by Петришак on 14.05.2016.
  */
 
-public class BookingDto {
+public class BookingDto implements Serializable{
 
     private Long id;
     private String date;

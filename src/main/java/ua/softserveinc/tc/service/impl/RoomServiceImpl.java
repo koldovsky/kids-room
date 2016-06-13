@@ -90,6 +90,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return blockedPeriods;
     }
 
+    /**
+     * @deprecated
+     */
+
     @Override
     @Deprecated
     public Map<String, String> getBlockedPeriodsForWeek(Room room) {
@@ -153,7 +157,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room) {
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.ACTIVE_AND_BOOKED);
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.getActiveAndBooked());
         return room.getCapacity() > bookings.size();
     }
 
@@ -164,7 +168,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      * @return number of places available in the room for the period
      */
     public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.ACTIVE_AND_BOOKED);
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.getActiveAndBooked());
         return room.getCapacity() - bookings.size();
     }
 }

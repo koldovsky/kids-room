@@ -24,52 +24,52 @@ public class ConfigValidator implements Validator {
         ConfigurationDto dto = (ConfigurationDto) o;
         //TODO: try reflection
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.CALCULATION_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.CALCULATION_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.CALCULATION_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.CALCULATION_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.EMAIL_REPORT_DAY, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.EMAIL_REPORT_DAY, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.EMAIL_REPORT_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.EMAIL_REPORT_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.EMAIL_REPORT_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.EMAIL_REPORT_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.MAX_AGE, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.MAX_AGE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.MIN_AGE, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.MIN_AGE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.MIN_PERIOD, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.MIN_PERIOD, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
-                ValidationConstants.CONFIG_FIELDS.SERVER_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+                ValidationConstants.ConfigFields.SERVER_NAME, ValidationConstants.EMPTY_FIELD_MSG);
 
         if(dto.getDayToSendEmailReport() > 28 || dto.getDayToSendEmailReport() < 1){
-            errors.rejectValue(ValidationConstants.CONFIG_FIELDS.EMAIL_REPORT_DAY,
-                    ValidationConstants.CONFIG_FIELDS.NOT_VALID_DATE_MSG);
+            errors.rejectValue(ValidationConstants.ConfigFields.EMAIL_REPORT_DAY,
+                    ValidationConstants.ConfigFields.NOT_VALID_DATE_MSG);
         }
 
         if(dto.getHourToSendEmailReport() > 23 || dto.getHourToSendEmailReport() < 0){
-            errors.rejectValue(ValidationConstants.CONFIG_FIELDS.EMAIL_REPORT_HOUR,
-                    ValidationConstants.CONFIG_FIELDS.NOT_VALID_TIME_MSG);
+            errors.rejectValue(ValidationConstants.ConfigFields.EMAIL_REPORT_HOUR,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
         }
 
         if (dto.getMinutesToSendEmailReport() > 59 || dto.getMinutesToSendEmailReport() < 0) {
-            errors.rejectValue(ValidationConstants.CONFIG_FIELDS.EMAIL_REPORT_MINUTE,
-                    ValidationConstants.CONFIG_FIELDS.NOT_VALID_TIME_MSG);
+            errors.rejectValue(ValidationConstants.ConfigFields.EMAIL_REPORT_MINUTE,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
         }
 
         if(dto.getHourToCalculateBookingsEveryDay() > 23 || dto.getHourToCalculateBookingsEveryDay() < 0){
-            errors.rejectValue(ValidationConstants.CONFIG_FIELDS.CALCULATION_HOUR,
-                    ValidationConstants.CONFIG_FIELDS.NOT_VALID_TIME_MSG);
+            errors.rejectValue(ValidationConstants.ConfigFields.CALCULATION_HOUR,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
         }
 
         if (dto.getMinutesToCalculateBookingsEveryDay() > 59 || dto.getMinutesToCalculateBookingsEveryDay() < 0) {
-            errors.rejectValue(ValidationConstants.CONFIG_FIELDS.CALCULATION_MINUTE,
-                    ValidationConstants.CONFIG_FIELDS.NOT_VALID_TIME_MSG);
+            errors.rejectValue(ValidationConstants.ConfigFields.CALCULATION_MINUTE,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
         }
 
         if(dto.getMinPeriodSize() < 1){
-            errors.rejectValue(ValidationConstants.CONFIG_FIELDS.MIN_PERIOD,
-                    ValidationConstants.CONFIG_FIELDS.NOT_VALID_TIME_MSG);
+            errors.rejectValue(ValidationConstants.ConfigFields.MIN_PERIOD,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
         }
 
     }

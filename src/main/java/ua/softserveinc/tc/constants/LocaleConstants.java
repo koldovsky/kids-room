@@ -5,8 +5,11 @@ package ua.softserveinc.tc.constants;
  */
 public final class LocaleConstants {
 
-    public static final String[] messages = {"kids.name", "kids.parentsName", "kids.age", "kids.phone", "kids."};
+    private static final String[] messages = {"kids.name", "kids.parentsName", "kids.age", "kids.phone", "kids."};
 
-    private LocaleConstants() {
+    private LocaleConstants(){}
+
+    public static String[] getMessages(){
+        return messages;
     }
 }
