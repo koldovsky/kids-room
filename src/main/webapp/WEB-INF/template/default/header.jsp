@@ -52,13 +52,13 @@
                             <sec:authorize access="hasRole('MANAGER')">
                                 <li id="roompicker" class="dropdown menu-item">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span id="room">Choose a room</span>
+                                        <span id="room"></span>
                                     </a>
                                     <ul id="selectRoom" class="dropdown-menu">
                                     <c:forEach items="${rooms}" var="room">
-                                        <li><a id="${room.id}">
-                                            ${room.name}: ${room.address}
-                                        </a></li>
+                                        <li>
+                                            <a id="${room.id}">${room.address}</a>
+                                        </li>
                                     </c:forEach>
                                     </ul>
                                 </li>

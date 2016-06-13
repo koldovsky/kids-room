@@ -4,35 +4,31 @@ $(function() {
     $("#startDate, #endDate").change(refreshView);
 });
 
-function getObjectsToSent() {
-    var objects = {
-        startDate: $("#startDate").val(),
-        endDate: $("#endDate").val(),
-        roomId: localStorage["room"]
-    }
-    return objects;
-}
-
 function addListenerForDetails() {
     $(".parent").each(function() {
         $(this).click(function() {
-            var objects = getObjectsToSent();
-            objects["email"] = $(this).attr("id");
-            $.redirect("manager-report-parent", objects);
+            window.location.replace("manager-report-parent"
+            + "?startDate=" + $("#startDate").val()
+            + "&endDate=" + $("#endDate").val()
+            + "&roomId=" + localStorage["roomId"]
+            + "&email=" + $(this).attr("id"));
         });
     });
 };
 
 function addListenerForGenerate() {
     $("#generate").click(function() {
-        $.redirect("manager-report-all", getObjectsToSent());
+        window.location.replace("manager-report-all"
+        + "?startDate=" + $("#startDate").val()
+        + "&endDate=" + $("#endDate").val()
+        + "&roomId=" + localStorage["roomId"]
+        + "&email=" + $(this).attr("id"));
     });
 };
 
 function refreshView() {
-    var objects = getObjectsToSent();
-	var request = "refreshParents/" + objects["startDate"] + "/";
-    request += objects["endDate"] + "/" + objects["roomId"];
+	var request = "refreshParents/" + $("#startDate").val() + "/";
+    request += $("#endDate").val() + "/" + localStorage["roomId"];
 
     $.ajax({url: request, success: function(result)
     {

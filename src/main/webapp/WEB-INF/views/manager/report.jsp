@@ -8,7 +8,6 @@
 
 <script src="resources/js/report.js"></script>
 <script src="resources/js/changeroom.js"></script>
-<script src="resources/js/jquery.redirect.js"></script>
 
     <div id="startDateDiv">
         <h3><spring:message code="report.from" /></h3>

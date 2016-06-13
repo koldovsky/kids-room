@@ -36,7 +36,7 @@ public class ReportParentController {
     private BookingService bookingService;
 
     @ResponseBody
-    @RequestMapping(value = "/manager-report-parent", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager-report-parent", method = RequestMethod.GET)
     public ModelAndView parentBookings(@RequestParam(value = ReportConstants.START_DATE) String startDate,
                                        @RequestParam(value = ReportConstants.END_DATE) String endDate,
                                        @RequestParam(value = ReportConstants.ROOM_ID) Long roomId,
