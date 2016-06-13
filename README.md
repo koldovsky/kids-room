@@ -42,3 +42,27 @@ hibernate.search.indexing_strategy = event
 |user@softserveinc.com|user|
 |admin@softserveinc.com|admin|
 |manager@softserveinc.com|manager|
+
+Logging
+-------
+For logging combination of SLF4J and Logback is used. Example of logging usage:
+```java
+@Component
+public class HelloLog {
+
+    // Get logger instance
+    private static @Log Logger LOG;
+
+    public void doSomething() {
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            LOG.error("Sample Exception", e);
+        }
+    }
+
+}
+```
+Logger is configured to output to console and file in tomcat directory:
+` /CATALINA_HOME/logs/kids_room.log`. For more information consult
+[SLF4J Logger Interface](http://www.slf4j.org/apidocs/org/slf4j/Logger.html)
