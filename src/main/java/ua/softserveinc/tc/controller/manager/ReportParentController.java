@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.controller.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 import static ua.softserveinc.tc.util.DateUtil.toDate;
@@ -40,17 +42,24 @@ public class ReportParentController {
     public ModelAndView parentBookings(@RequestParam(value = ReportConstants.START_DATE) String startDate,
                                        @RequestParam(value = ReportConstants.END_DATE) String endDate,
                                        @RequestParam(value = ReportConstants.ROOM_ID) Long roomId,
-                                       @RequestParam(value = ReportConstants.EMAIL) String email) {
+                                       @RequestParam(value = ReportConstants.EMAIL) String email,
+                                       Principal principal) {
+
+        Room room = roomService.findById(roomId);
+        User manager = userService.getUserByEmail(principal.getName());
+
+        if (!room.getManagers().contains(manager)) {
+            throw new AccessDeniedException("You don't have access to this page");
+        }
+
+        User parent = userService.getUserByEmail(email);
+        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate),
+                parent, room, BookingState.COMPLETED);
+
+        Long sumTotal = bookingService.getSumTotal(bookings);
 
         ModelAndView modelAndView = new ModelAndView(ReportConstants.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
-
-        Room room = roomService.findById(roomId);
-        User parent = userService.getUserByEmail(email);
-
-        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate),
-                parent, room, BookingState.COMPLETED);
-        Long sumTotal = bookingService.getSumTotal(bookings);
 
         modelMap.addAttribute(ReportConstants.PARENT, parent);
         modelMap.addAttribute(ReportConstants.END_DATE, endDate);

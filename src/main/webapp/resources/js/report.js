@@ -21,8 +21,7 @@ function addListenerForGenerate() {
         window.location.replace("manager-report-all"
         + "?startDate=" + $("#startDate").val()
         + "&endDate=" + $("#endDate").val()
-        + "&roomId=" + localStorage["roomId"]
-        + "&email=" + $(this).attr("id"));
+        + "&roomId=" + localStorage["roomId"]);
     });
 };
 
