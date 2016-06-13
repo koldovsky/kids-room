@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.ConfigurationDto;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.validator.ConfigValidator;
+
+import java.io.IOException;
 
 /**
  * Created by Nestor on 11.06.2016.
@@ -38,7 +41,12 @@ public class ConfigurationController {
         if(bindingResult.hasErrors()){
             return AdminConstants.EDIT_CONFIG;
         }
-        appConfig.acceptConfiguration(cDto);
+        try {appConfig.acceptConfiguration(cDto);}
+        catch(IOException ioe){
+            ioe.printStackTrace();
+            bindingResult.rejectValue("errorMsg", ValidationConstants.PROPERTIES_WRITE_FAILED);
+            return AdminConstants.EDIT_CONFIG;
+        }
         return AdminConstants.EDIT_CONFIG;
     }
 }

@@ -2,6 +2,8 @@ package ua.softserveinc.tc.util;
 
 import ua.softserveinc.tc.dto.ConfigurationDto;
 
+import java.io.IOException;
+
 /**
  * Created by Nestor on 04.06.2016.
  */
@@ -33,6 +35,6 @@ public interface ApplicationConfigurator {
 
     ConfigurationDto getObjectDto();
 
-    void acceptConfiguration(ConfigurationDto cDto);
+    void acceptConfiguration(ConfigurationDto cDto) throws IOException;
 
 }

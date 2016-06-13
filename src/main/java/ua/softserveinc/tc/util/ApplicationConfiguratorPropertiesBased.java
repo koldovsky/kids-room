@@ -64,7 +64,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     }
 
     @Override
-    public void acceptConfiguration(ConfigurationDto cDto) {
+    public void acceptConfiguration(ConfigurationDto cDto) throws IOException {
         Properties properties = new Properties();
 
         this.kidsMinAge = cDto.getKidsMinAge();
@@ -93,16 +93,12 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
         this.serverName = cDto.getServerName();
         properties.setProperty("server.name", serverName);
-        try {
-            //TODO: loading from classpath fails for whatever reason; try to fix
-            File propsFile = new File("src/main/resources/properties/application.properties");
-            OutputStream out = new FileOutputStream(propsFile);
-            DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
-            persister.store(properties, out, "Last changed");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            //TODO: log
-        }
+
+        File propsFile = new File("src/main/resources/properties/application.properties");
+        OutputStream out = new FileOutputStream(propsFile);
+        DefaultPropertiesPersister persister = new DefaultPropertiesPersister();
+        persister.store(properties, out, "Last changed");
+
     }
 
     @Override

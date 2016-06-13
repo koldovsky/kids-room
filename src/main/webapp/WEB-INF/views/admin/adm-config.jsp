@@ -12,7 +12,8 @@ modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="pos
 <img id="config-logo"src="resources/img/config.png"/>
 <h3 id="title"><spring:message code="administrator.configuration" /></h3>
 
-</span>
+<form:errors path="errorMsg" cssClass="error" />
+
 <div class="form-group">
              <label for="kidsMinAge" class="required"><spring:message code="properties.kidsMinAge" /></label>
               <form:input path="kidsMinAge" id="" value="${config.kidsMinAge}"

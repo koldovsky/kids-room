@@ -19,8 +19,10 @@ public class ConfigurationDto {
     private Integer minPeriodSize;
     private String serverName;
 
+    private String errorMsg;
+
     public ConfigurationDto(){
-        // TODO: 13.06.2016 add coment, what do this constructor
+        //for transfering to controller
     }
 
     public ConfigurationDto(ApplicationConfigurator appConfig){
@@ -106,4 +108,14 @@ public class ConfigurationDto {
     public void setServerName(String serverName) {
         this.serverName = serverName;
     }
+
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
 }

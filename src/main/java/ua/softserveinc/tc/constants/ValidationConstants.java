@@ -27,6 +27,7 @@ public final class ValidationConstants {
     public static final String EMAIL_ERROR_MSG = "registration.email";
     public static final String EMAIL_ALREADY_IN_USE_MSG = "registration.emailExist";
     public static final String USER_NOT_EXIST = "user.notExist";
+    public static final String PROPERTIES_WRITE_FAILED = "properties.update.failed";
 
     private ValidationConstants() {
     }
