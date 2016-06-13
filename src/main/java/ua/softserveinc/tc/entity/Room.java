@@ -200,7 +200,14 @@ public class Room {
 
     @Override
     public int hashCode() {
-        return Objects.hash(city, address);
+        int result = name.hashCode();
+        result = 31 * result + address.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + phoneNumber.hashCode();
+        result = 31 * result + capacity.hashCode();
+        result = 31 * result + (workingHoursStart != null ? workingHoursStart.hashCode() : 0);
+        result = 31 * result + (workingHoursEnd != null ? workingHoursEnd.hashCode() : 0);
+        return result;
     }
 
     @Override

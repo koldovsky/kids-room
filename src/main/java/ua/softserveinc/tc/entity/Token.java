@@ -26,12 +26,9 @@ public class Token {
     private User user;
 
 
-    public Token() {
-        super();
-    }
+    public Token() {}
 
     public Token(String token, User user) {
-        super();
         this.token = token;
         this.user = user;
     }

@@ -33,8 +33,18 @@ public interface ApplicationConfigurator {
 
     int getDayToSendEmailReport();
 
+    /**
+     * Returns an object suitable for transferring (DTO)
+     * contains all configuration values
+     * @return dto
+     */
     ConfigurationDto getObjectDto();
 
+    /**
+     * updates the configuration to the values contained in the parameter
+     * @param cDto dto
+     * @throws IOException
+     */
     void acceptConfiguration(ConfigurationDto cDto) throws IOException;
 
 }

@@ -2,6 +2,7 @@ package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.EventConstants;
+import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.*;
 import java.text.DateFormat;
@@ -108,9 +109,36 @@ public class Event {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        if (!name.equals(event.name)) return false;
+        if (!startTime.equals(event.startTime)) return false;
+        if (!endTime.equals(event.endTime)) return false;
+        if (ageLow != null ? !ageLow.equals(event.ageLow) : event.ageLow != null) return false;
+        if (ageHigh != null ? !ageHigh.equals(event.ageHigh) : event.ageHigh != null) return false;
+        return room.equals(event.room);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + startTime.hashCode();
+        result = 31 * result + endTime.hashCode();
+        result = 31 * result + (ageLow != null ? ageLow.hashCode() : 0);
+        result = 31 * result + (ageHigh != null ? ageHigh.hashCode() : 0);
+        result = 31 * result + room.hashCode();
+        return result;
+    }
+
+    @Override
+
     public String toString() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        return " " + name + " " + df.format(startTime) +
-                " " + df.format(endTime) + " ";
+        return " " + name + " " + DateUtil.toIsoString(startTime) +
+                " " + DateUtil.toIsoString(endTime) + " ";
     }
 }

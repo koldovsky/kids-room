@@ -11,6 +11,7 @@ import ua.softserveinc.tc.constants.ChildConstants;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Demian on 29.04.2016.
@@ -64,14 +65,6 @@ public class Child implements Comparable<Child>
     @Lob
     @Column(name = ChildConstants.PROFILE_IMG)
     private byte[] image;
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
 
     public Long getId() {
         return id;
@@ -129,6 +122,14 @@ public class Child implements Comparable<Child>
         this.enabled = enabled;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public byte[] getImage() {
         return image;
     }
@@ -136,6 +137,8 @@ public class Child implements Comparable<Child>
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+
 
     @Override
     public String toString() {
@@ -158,34 +161,43 @@ public class Child implements Comparable<Child>
     }
 
     @Override
-    public int compareTo(Child o) {
-        if(this.getId()>o.getId())
-            return 1;
-        else if(this.getId()<o.getId())
-            return -1;
-        return 0;
+    public int compareTo(Child that) {
+        int res = this.dateOfBirth.compareTo(that.getDateOfBirth());
+        if(res != 0) return res;
+
+        res = this.firstName.compareTo(that.getFirstName());
+        if(res != 0) return res;
+
+        res = this.lastName.compareTo(that.getLastName());
+        if(res != 0) return res;
+        return this.gender.compareTo(that.getGender());
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(this==obj){
-            return true;
-        }
-        if(obj==null){
-            return false;
-        }
-        if(this.getClass()!=obj.getClass()){
-            return false;
-        }
-        Child other = (Child) obj;
-        if(this.getId()!=other.getId()){
-            return false;
-        }
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Child child = (Child) o;
+
+        if (enabled != child.enabled) return false;
+        if (!firstName.equals(child.firstName)) return false;
+        if (!lastName.equals(child.lastName)) return false;
+        if (!parentId.equals(child.parentId)) return false;
+        if (!dateOfBirth.equals(child.dateOfBirth)) return false;
+        if (comment != null ? !comment.equals(child.comment) : child.comment != null) return false;
+        return gender == child.gender;
+
     }
 
     @Override
     public int hashCode() {
-        return 13 * id.hashCode();
+        int result = 1;
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + dateOfBirth.hashCode();
+        result = 31 * result + (enabled ? 1 : 0);
+        return result;
     }
+
 }

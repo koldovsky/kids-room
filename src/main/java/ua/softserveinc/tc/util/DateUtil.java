@@ -50,6 +50,10 @@ public final class DateUtil {
         }
     }
 
+    public static String toIsoString(Date date){
+        return isoDateFormat.format(date);
+    }
+
     public static Date toDate(Calendar calendar) {
         return calendar.getTime();
     }

@@ -82,12 +82,16 @@ public class Rate {
 
         Rate rate = (Rate) o;
 
-        return hourRate.equals(rate.hourRate);
+        return hourRate.equals(rate.hourRate)
+                && priceRate.equals(rate.getPriceRate());
     }
 
     @Override
     public int hashCode() {
-        return hourRate.hashCode();
+        int a = 17;
+        a = 31 * a + hourRate.hashCode();
+        a = 31 * a + priceRate.hashCode();
+        return a;
     }
 
     @Override

@@ -119,4 +119,36 @@ public class ConfigurationDto {
         this.errorMsg = errorMsg;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ConfigurationDto that = (ConfigurationDto) o;
+
+        if (!kidsMinAge.equals(that.kidsMinAge)) return false;
+        if (!kidsMaxAge.equals(that.kidsMaxAge)) return false;
+        if (!minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)) return false;
+        if (!hourToCalculateBookingsEveryDay.equals(that.hourToCalculateBookingsEveryDay)) return false;
+        if (!minutesToSendEmailReport.equals(that.minutesToSendEmailReport)) return false;
+        if (!hourToSendEmailReport.equals(that.hourToSendEmailReport)) return false;
+        if (!dayToSendEmailReport.equals(that.dayToSendEmailReport)) return false;
+        if (!minPeriodSize.equals(that.minPeriodSize)) return false;
+        return serverName.equals(that.serverName);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = kidsMinAge.hashCode();
+        result = 31 * result + kidsMaxAge.hashCode();
+        result = 31 * result + minutesToCalculateBookingsEveryDay.hashCode();
+        result = 31 * result + hourToCalculateBookingsEveryDay.hashCode();
+        result = 31 * result + minutesToSendEmailReport.hashCode();
+        result = 31 * result + hourToSendEmailReport.hashCode();
+        result = 31 * result + dayToSendEmailReport.hashCode();
+        result = 31 * result + minPeriodSize.hashCode();
+        result = 31 * result + serverName.hashCode();
+        return result;
+    }
 }
