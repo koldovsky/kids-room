@@ -149,16 +149,30 @@ public class Booking {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Booking booking = (Booking) o;
 
-        if (!child.equals(booking.child)) return false;
-        if (!room.equals(booking.room)) return false;
-        if (!user.equals(booking.user)) return false;
-        if (!bookingStartTime.equals(booking.bookingStartTime)) return false;
-        if (!bookingEndTime.equals(booking.bookingEndTime)) return false;
+        if (!child.equals(booking.child)) {
+            return false;
+        }
+        if (!room.equals(booking.room)) {
+            return false;
+        }
+        if (!user.equals(booking.user)) {
+            return false;
+        }
+        if (!bookingStartTime.equals(booking.bookingStartTime)) {
+            return false;
+        }
+        if (!bookingEndTime.equals(booking.bookingEndTime)) {
+            return false;
+        }
         return bookingState == booking.bookingState;
 
     }

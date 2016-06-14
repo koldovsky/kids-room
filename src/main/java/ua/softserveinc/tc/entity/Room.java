@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.entity;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.constants.UserConstants;
@@ -11,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Chak on 30.04.2016.

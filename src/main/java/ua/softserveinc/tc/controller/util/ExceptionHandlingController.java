@@ -6,14 +6,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
 /**
  * Created by Nestor on 18.05.2016.
- *
+ * <p>
  * Class serves for global exception handling
  */
 
@@ -31,11 +30,12 @@ public class ExceptionHandlingController {
 
     /**
      * Responds to user with AccessDenied view
+     *
      * @return AccessDenied view
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
-    public String handleError403(){
+    public String handleError403() {
         return ErrorConstants.ACCESS_DENIED_VIEW;
     }
 
