@@ -49,8 +49,8 @@ public class ConfirmBookingController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> rooms = currentManager.getRooms();
-        List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1), rooms.get(0), BookingConstants.States.getNotCancelled());
-        model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, bookings);
+//        List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1), rooms.get(0), BookingConstants.States.getNotCancelled());
+ //       model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, bookings);
         model.addAttribute("rooms", rooms);
         return modelAndView;
     }
@@ -62,6 +62,7 @@ public class ConfirmBookingController {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
+        booking.setDuration(0L);
         bookingService.update(booking);
         BookingDto bookingDto = new BookingDto(booking);
         Gson gson = new Gson();
@@ -114,7 +115,7 @@ public class ConfirmBookingController {
          return  gson.toJson(bookingDTOtoJson);
     }
 
-    @RequestMapping (value = "manager-dayle-booking/{id}",
+    @RequestMapping (value = "manager-daily-booking/{id}",
             method = RequestMethod.GET)
     @ResponseBody
     public String bookingsByDay(@PathVariable Long id){
@@ -126,5 +127,6 @@ public class ConfirmBookingController {
                 .map(BookingDto::new)
                 .collect(Collectors.toList()));
     }
+
 
 }

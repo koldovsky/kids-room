@@ -165,6 +165,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 bdto.getRoom()) >= listDTO.size()) {
             listDTO.forEach(bookingDTO -> {
                 Booking booking = bookingDTO.getBookingObject();
+                booking.setSum(0L);
+                booking.setDuration(0L);
                 bookingDao.create(booking);
                 bookingDTO.setId(booking.getIdBook());
             });
