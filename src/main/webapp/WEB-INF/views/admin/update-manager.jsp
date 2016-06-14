@@ -18,7 +18,9 @@
 
         <tr><td>
             <form:hidden path="id" />
-            <form:hidden path="password" id="password" value="${manager.password}"/>
+            <form:hidden path="password" value="${manager.password}"/>
+            <form:hidden path="active" value="${manager.active}"/>
+            <form:hidden path="confirmed" value="${manager.confirmed}"/>
 
             <div class="form-group">
                <label for="email" class="required">

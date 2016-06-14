@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
@@ -36,8 +37,15 @@ public class EditRoomController {
 
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.POST)
     public String roomBlockUnblock(@RequestParam Long id) {
-        //TODO: block&unblock room
-        userService.deleteUserById(id);
+
+        Room room = roomService.findById(id);
+        if (room.isActive()) {
+            room.setActive(false);
+        } else {
+            room.setActive(true);
+        }
+        roomService.update(room);
+
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

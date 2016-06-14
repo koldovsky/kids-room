@@ -14,11 +14,11 @@ public final class AdminConstants {
     public static final String UPDATE_ROOM = "adm-update-room";
     public static final String CONFIRM_MANAGER = "adm-confirm-manager";
     public static final String EDIT_CONFIG = "adm-config";
-    public static final String MANAGER_LIST = "managerList";
     ///////////////////////////////////////
 
 
     //Used for mark a different Collections of objects
+    public static final String MANAGER_LIST = "managerList";
     public static final String ROOM_LIST = "roomList";
     public static final String ATR_MANAGER = "manager";
     public static final String ATR_ROOM = "room";

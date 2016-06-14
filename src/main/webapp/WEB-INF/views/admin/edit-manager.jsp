@@ -40,11 +40,11 @@
                     <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
 
              <td>
-                <c:url var="deleteUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                <form:form id="${managerFormId}" action="${deleteUrl}" method="POST" >
+                <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
+                <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                    <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                   <button type="submit" value="Delete" onClick="return confirm('sure?')"
-                            class="btn btn-raised btn-danger glyphicon glyphicon-trash for-delete-button"></button>
+                   <button type="submit" value="lock" onClick="return confirm('sure?')"
+                            class="btn btn-raised btn-danger glyphicon glyphicon-trash for-lock-button"></button>
                 </form:form>
              </td>
           </tr>

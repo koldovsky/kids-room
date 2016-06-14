@@ -18,8 +18,9 @@
 
        <tr><td>
            <form:hidden path="id" value="${room.id}"/>
-           <form:hidden path="rate" name="rate" value="${room.rate}" id="rates-json"/>
-           <form:hidden path="managers" name="managers" value="${room.managers}" id="managers-json"/>
+           <form:hidden path="rate" value="${room.rate}" id="rates-json"/>
+           <form:hidden path="managers" value="${room.managers}" id="managers-json"/>
+           <form:hidden path="active" value="${room.active}"/>
 
            <div class="form-group">
               <label for="name" class="required">

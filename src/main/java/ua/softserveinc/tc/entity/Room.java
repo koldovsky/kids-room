@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.constants.UserConstants;
@@ -56,10 +58,11 @@ public class Room {
     private String workingHoursEnd;
 
     @ManyToMany
-    @JoinTable(name = RoomConstants.MANAGERS,
-            joinColumns = @JoinColumn(name = RoomConstants.ROOM),
-            inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
+
     private List<User> managers = new ArrayList<>();
+
+    @Column(name = "active")
+    private boolean active;
 
     public Room() {
         //TODO add comment what do this constructor
@@ -75,12 +78,21 @@ public class Room {
         this.workingHoursStart = roomDto.getWorkingHoursStart();
         this.workingHoursEnd = roomDto.getWorkingHoursEnd();
         this.manager = roomDto.getManager();
+        this.active = roomDto.isActive();
 
-//        List<Rate> rates = roomDto.fromJsonToListOfRates();
-//        for (Rate rate : rates) {
-//            this.addRate(rate);
-//        }
-        this.setRates(roomDto.fromJsonToListOfRates());
+        List<Rate> rates = roomDto.fromJsonToListOfRates();
+        for (Rate rate : rates) {
+            this.addRate(rate);
+        }
+        //this.setRates(roomDto.fromJsonToListOfRates());
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public List<User> getManagers() {

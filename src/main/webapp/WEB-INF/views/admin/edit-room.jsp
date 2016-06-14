@@ -12,7 +12,7 @@
   <div class="tableDiv  for-table">
       <table class="for-table">
          <tr class="hide-border">
-            <th colspan="10" class="set-standard-color">
+            <th colspan="11" class="set-standard-color">
                <legend class="for-table"><strong><spring:message code="administrator.editRooms"/></strong></legend>
             </th>
          </tr>
@@ -26,6 +26,7 @@
             <th><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
             <th><strong><spring:message code="administrator.room.manager"/></strong></th>
             <th><strong><spring:message code="administrator.room.rate"/></strong></th>
+            <th><strong><spring:message code="administrator.room.active"/></strong></th>
             <th><strong><spring:message code="administrator.edit"/></strong></th>
             <th><strong><spring:message code="administrator.block"/></strong></th>
          </tr>
@@ -59,17 +60,24 @@
                     </c:forEach>
                 </table>
             </td>
+            <td>${room.isActive()}</td>
             <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                                                         </button></a></td>
-
-            <td><button class="btn btn-raised btn-danger glyphicon glyphicon-trash"/></td>
+            <td>
+                <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
+                <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
+                   <input id="room" name="room" type="hidden" value="${room.id}" />
+                   <button type="submit" value="lock" onClick="return confirm('sure?')"
+                            class="btn btn-raised btn-danger glyphicon glyphicon-trash for-lock-button"></button>
+                </form:form>
+            </td>
          </tr>
          </c:forEach>
 
          <tr></tr>
 
          <tr>
-            <th colspan="10" class="hide-border set-standard-color">
+            <th colspan="11" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value=<spring:message code="administrator.add"/>
                                         class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
             </th>

@@ -64,6 +64,7 @@ public class AddRoomController {
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_ROOM;
         }
+        System.err.println(roomDto.getRate());
 
         List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
         List<User> managers = new ArrayList<>();
@@ -73,6 +74,7 @@ public class AddRoomController {
 
         Room room = new Room(roomDto);
         room.setManagers(managers);
+        room.setActive(true);
         roomService.saveOrUpdate(room);
 
         return "redirect:/" + AdminConstants.EDIT_ROOM;

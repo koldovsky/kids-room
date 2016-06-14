@@ -39,12 +39,8 @@ public class UpdateManagerController {
         if (bindingResult.hasErrors()) {
             return AdminConstants.UPDATE_MANAGER;
         }
-
         manager.setRole(Role.MANAGER);
-        manager.setConfirmed(true);
-        manager.setActive(true);
         userService.update(manager);
-
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 }

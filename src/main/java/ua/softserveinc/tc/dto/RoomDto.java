@@ -46,6 +46,8 @@ public class RoomDto {
 
     private String rate;
 
+    private boolean active;
+
     private Long sum;
 
     public RoomDto() {
@@ -63,6 +65,7 @@ public class RoomDto {
         this.manager = room.getManager();
         this.workingHoursStart = room.getWorkingHoursStart();
         this.workingHoursEnd = room.getWorkingHoursEnd();
+        this.active = room.isActive();
 
         Gson gson = new Gson();
         this.setRate(gson.toJson(room.getRates().stream()
@@ -172,6 +175,14 @@ public class RoomDto {
 
     public void setManagers(String managers) {
         this.managers = managers;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
