@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.controller.util;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.MailSendException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.UserValidator;
 
+import javax.mail.MessagingException;
 import java.util.UUID;
 
 /**
@@ -52,6 +57,9 @@ public class UserChangePasswordController {
     @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
 
+    @Log
+    private static Logger log;
+
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
     public String changePassword(Model model) {
         model.addAttribute(UserConstants.Entity.USER, new User());
@@ -68,7 +76,13 @@ public class UserChangePasswordController {
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
-        mailService.sendChangePassword(MailConstants.CHANGE_PASS, user, token);
+        try {
+            mailService.sendChangePassword(MailConstants.CHANGE_PASS, user, token);
+        } catch (MessagingException | MailSendException e) {
+            log.error("Error! Sending email!!!", e);
+            bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
+            return UserConstants.Model.FORGOT_PASSWORD_VIEW;
+        }
         return UserConstants.Model.SUCCESS_VIEW;
     }
 

@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.controller.util;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.UserValidator;
 
+import javax.mail.MessagingException;
 import java.util.UUID;
 
 /**
@@ -31,12 +36,18 @@ public class UserRegistrationController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private MailService mailService;
+
     @Autowired
     private UserValidator userValidator;
+
     @Autowired
     private TokenService tokenService;
+
+    @Log
+    private static Logger log;
 
     @Secured({"ROLE_ANONYMOUS"})
     @RequestMapping(value = "/login ", method = RequestMethod.GET)
@@ -59,11 +70,20 @@ public class UserRegistrationController {
         user.setRole(Role.USER);
         user.setConfirmed(false);
         user.setActive(true);
-        userService.createWithEncoder(user);
 
         String token = UUID.randomUUID().toString();
+
+        try {
+            mailService.sendRegisterMessage(MailConstants.CONFIRM_REGISTRATION, user, token);
+        } catch (MessagingException | MailSendException e) {
+            log.error("Error! Sending email!!!", e);
+            bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
+            return UserConstants.Model.REGISTRATION_VIEW;
+        }
+
+        userService.createWithEncoder(user);
         tokenService.createToken(token, user);
-        mailService.sendRegisterMessage(MailConstants.CONFIRM_REGISTRATION, user, token);
+
         return UserConstants.Model.SUCCESS_VIEW;
     }
 
@@ -93,7 +113,13 @@ public class UserRegistrationController {
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
         tokenService.createToken(token, user);
-        mailService.sendRegisterMessage(MailConstants.CONFIRM_REGISTRATION, user, token);
+        try {
+            mailService.sendRegisterMessage(MailConstants.CONFIRM_REGISTRATION, user, token);
+        } catch (MessagingException | MailSendException e) {
+            log.error("Error! Sending email!!!", e);
+            bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
+            return UserConstants.Model.RESEND_MAIL_VIEW;
+        }
         return UserConstants.Model.SUCCESS_VIEW;
     }
 }

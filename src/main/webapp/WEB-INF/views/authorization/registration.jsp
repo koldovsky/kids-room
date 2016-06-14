@@ -6,7 +6,7 @@
 <div class="col-sm-offset-4 col-sm-3">
     <form:form id="userform" action="registration" method="post"  modelAttribute="user">
       <form:input path="role" type="hidden" value="USER" />
-
+        <form:errors path="firstName" cssClass="error"  />
       <div class="form-group">
               <label for="firstname" class="required"><spring:message code="user.firstname" /></label>
               <form:input path="firstName"   class="form-control" style="text-transform: capitalize"/>

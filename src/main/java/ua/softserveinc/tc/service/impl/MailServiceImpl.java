@@ -2,7 +2,6 @@ package ua.softserveinc.tc.service.impl;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -38,32 +37,29 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ApplicationConfigurator configurator;
 
+
     @Async()
     @Override
-    public void sendMessage(String email, String subject, String text) {
+    public void sendMessage(String email, String subject, String text) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         boolean sended = false;
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-        try {
-            helper.setTo(email);
-            helper.setSubject(subject);
-            helper.setText(text, true);
 
-            while (!sended) {
-                synchronized (message) {
-                    mailSender.send(message);
-                    sended = true;
-                }
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setTo(email);
+        helper.setSubject(subject);
+        helper.setText(text, true);
+
+        while (!sended) {
+            synchronized (message) {
+                mailSender.send(message);
+                sended = true;
             }
-        } catch (MailException e) {
-            //TODO
-        } catch (MessagingException e) {
-            //TODO
         }
+
     }
 
     @Override
-    public void sendRegisterMessage(String subject, User user, String token) {
+    public void sendRegisterMessage(String subject, User user, String token) throws MessagingException {
 
         Map<String, Object> model = getModelWithUser(user);
         model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_USER_LINK, token));
@@ -72,7 +68,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendChangePassword(String subject, User user, String token) {
+    public void sendChangePassword(String subject, User user, String token) throws MessagingException {
 
         Map<String, Object> model = getModelWithUser(user);
         model.put(MailConstants.LINK, getLink(MailConstants.CHANGE_PASS_LINK, token));
@@ -81,7 +77,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendPaymentInfo(User user, String subject, Long sumTotal) {
+    public void sendPaymentInfo(User user, String subject, Long sumTotal) throws MessagingException {
         Map<String, Object> model = getModelWithUser(user);
         model.put(ReportConstants.SUM_TOTAL, sumTotal);
         model.put(MailConstants.LINK, MailConstants.HTTP +
@@ -91,7 +87,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void buildConfirmRegisterManager(String subject, User user, String token) {
+    public void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException {
 
         Map<String, Object> model = getModelWithUser(user);
         model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_MANAGER_LINK, token));

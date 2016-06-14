@@ -25,6 +25,10 @@ public class Token {
     @JoinColumn(name = UserConstants.Entity.ID_USER)
     private User user;
 
+    public Token() {
+
+    }
+
     public Token(String token, User user) {
         this.token = token;
         this.user = user;
