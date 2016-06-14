@@ -42,7 +42,7 @@ function refreshView() {
             + '<td>' + user.email + '</td>'
             + '<td>' + user.phoneNumber + '</td>'
             + '<td class="parent" id="'
-            + user.email + '"><a>See details</a></td></tr>';
+            + user.email + '"><a>' + $("#localizedDetails").val() + '</a></td></tr>';
         });
 
         $('td').remove();

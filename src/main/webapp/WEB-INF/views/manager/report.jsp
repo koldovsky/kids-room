@@ -45,4 +45,5 @@
         <button id="generate" class="btn btn-raised btn-primary waves-effect waves-light">
         <spring:message code="report.generate" /></button>
     </div>
+    <input type="hidden" id="localizedDetails" value=<spring:message code="report.details" />>
 </div>

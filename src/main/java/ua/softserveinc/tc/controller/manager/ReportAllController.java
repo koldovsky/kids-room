@@ -58,6 +58,7 @@ public class ReportAllController {
         ModelAndView modelAndView = new ModelAndView(ReportConstants.ALL_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
+        modelMap.addAttribute(ReportConstants.ROOM, room);
         modelMap.addAttribute(ReportConstants.REPORT, report);
         modelMap.addAttribute(ReportConstants.END_DATE, endDate);
         modelMap.addAttribute(ReportConstants.START_DATE, startDate);

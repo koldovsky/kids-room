@@ -25,7 +25,7 @@
 
             <caption>
                 <h2>
-                    <spring:message code="report.parentBookings" /> ${parent}</br>
+                    ${parent} <spring:message code="report.in" /> ${room}
                 </h2>
             </caption>
 

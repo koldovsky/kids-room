@@ -24,7 +24,7 @@
 
             <caption>
                 <h2>
-                    <spring:message code="report.allBookings" /></br>
+                    <spring:message code="report.allBookings" /> ${room}
                 </h2>
             </caption>
 

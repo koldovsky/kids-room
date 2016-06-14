@@ -33,7 +33,7 @@
                 <th><spring:message code="statistics.name" /></th>
                 <th><spring:message code="statistics.city" /></th>
                 <th><spring:message code="statistics.address" /></th>
-                <th><spring:message code="statistics.manager" /></th>
+                <th><spring:message code="statistics.managers" /></th>
                 <th><spring:message code="statistics.sum" /></th>
             </tr>
 
