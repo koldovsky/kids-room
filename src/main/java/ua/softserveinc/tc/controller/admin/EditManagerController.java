@@ -39,7 +39,6 @@ public class EditManagerController {
             manager.setActive(true);
         }
         userService.update(manager);
-
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 }

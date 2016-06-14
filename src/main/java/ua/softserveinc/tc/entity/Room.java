@@ -82,12 +82,10 @@ public class Room {
         this.manager = roomDto.getManager();
         this.active = roomDto.isActive();
 
-//        List<Rate> rates = roomDto.fromJsonToListOfRates();
-//        for (Rate rate : rates) {
-//            this.addRate(rate);
-//        }
-
-        this.setRates(roomDto.fromJsonToListOfRates());
+        List<Rate> rates = roomDto.fromJsonToListOfRates();
+        for (Rate rate : rates) {
+            this.addRate(rate);
+        }
     }
 
     public boolean isActive() {

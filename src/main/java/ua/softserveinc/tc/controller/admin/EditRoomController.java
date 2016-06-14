@@ -37,7 +37,6 @@ public class EditRoomController {
 
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.POST)
     public String roomBlockUnblock(@RequestParam Long id) {
-
         Room room = roomService.findById(id);
         if (room.isActive()) {
             room.setActive(false);
@@ -45,7 +44,6 @@ public class EditRoomController {
             room.setActive(true);
         }
         roomService.update(room);
-
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

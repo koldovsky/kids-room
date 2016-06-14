@@ -51,14 +51,14 @@ public class ConfirmManagerController {
 
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
-        model.addAttribute(UserConstants.Entity.USER, user);//"user"
+        model.addAttribute(UserConstants.Entity.USER, user);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         tokenService.delete(token);
-        return AdminConstants.CONFIRM_MANAGER;//"adm-confirm-manager"
+        return AdminConstants.CONFIRM_MANAGER;
     }
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
@@ -71,7 +71,7 @@ public class ConfirmManagerController {
         userValidator.validate(user, bindingResult);
 
         if (bindingResult.hasErrors()){
-            return AdminConstants.CONFIRM_MANAGER;//"adm-confirm-manager"
+            return AdminConstants.CONFIRM_MANAGER;
         }
         user.setPassword(passwordEncoder.encode(manager.getPassword()));
         user.setConfirmed(true);
