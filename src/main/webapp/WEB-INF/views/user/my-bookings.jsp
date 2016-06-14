@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
 
-<link rel='stylesheet' href='resources/css/mybookings.css'>
+<link rel='stylesheet' href='resources/css/report.css'>
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
 

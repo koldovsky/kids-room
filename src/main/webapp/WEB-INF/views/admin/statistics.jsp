@@ -4,18 +4,20 @@
 <c:url value="/j_spring_security_check" var="reportURL" />
 
 <link rel='stylesheet' href='resources/css/report.css'>
-<link rel='stylesheet' href='resources/css/bookings.css'>
 
 <script src="resources/js/statistics.js"></script>
 
-    <div id="startDateDiv">
-        <h3><spring:message code="report.from" /></h3>
-        <input type="date" value="${startDate}" id="startDate">
-    </div>
+<div id="scroller">
+    <div class="dateSelector">
+        <div id="from-div">
+            <h3><spring:message code="report.from" /></h3>
+            <input type="date" value="${startDate}" id="startDate">
+        </div>
 
-    <div id="endDateDiv">
-        <h3><spring:message code="report.to" /></h3>
-        <input type="date" value="${endDate}" id="endDate">
+        <div id="to-div">
+            <h3><spring:message code="report.to" /></h3>
+            <input type="date" value="${endDate}" id="endDate">
+        </div>
     </div>
 
     <div class="tableDiv">
@@ -37,3 +39,4 @@
 
         </table>
     </div>
+</div>
