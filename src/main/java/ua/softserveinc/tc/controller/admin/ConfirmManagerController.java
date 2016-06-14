@@ -50,11 +50,11 @@ public class ConfirmManagerController {
     public String confirmRegistration(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
 
         Token token = tokenService.findByToken(sToken);
-        User user = token.getUser();
-        model.addAttribute(UserConstants.Entity.USER, user);
+        User manager = token.getUser();
+        model.addAttribute("manager", manager);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
-                user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
+                manager, null, userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         tokenService.delete(token);
@@ -62,20 +62,19 @@ public class ConfirmManagerController {
     }
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
-    public String confirmPassword(@ModelAttribute(UserConstants.Entity.USER) User manager, BindingResult bindingResult) {
+    public String confirmPassword(@ModelAttribute("manager") User manager, BindingResult bindingResult) {
+        User managerToSave = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        managerToSave.setPassword(manager.getPassword());
+        managerToSave.setConfirm(manager.getConfirm());
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        user.setPassword(manager.getPassword());
-        user.setConfirm(manager.getConfirm());
-
-        userValidator.validate(user, bindingResult);
-
-        if (bindingResult.hasErrors()){
+        userValidator.validatePassword(managerToSave, bindingResult);
+        if (bindingResult.hasErrors()) {
             return AdminConstants.CONFIRM_MANAGER;
         }
-        user.setPassword(passwordEncoder.encode(manager.getPassword()));
-        user.setConfirmed(true);
-        userService.update(user);
+
+        managerToSave.setPassword(passwordEncoder.encode(manager.getPassword()));
+        managerToSave.setConfirmed(true);
+        userService.update(managerToSave);
 
         return UserConstants.Model.LOGIN_VIEW;
     }
