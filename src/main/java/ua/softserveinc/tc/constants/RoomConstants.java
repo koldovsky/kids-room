@@ -23,6 +23,8 @@ public final class RoomConstants {
 
     public static final String WORKING_END_HOUR = "working_end_hour";
 
+    public static final String ACTIVE = "active";
+
     public static final String MANAGER = "manager";
 
     public static final String MANAGERS = "managers";

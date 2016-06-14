@@ -13,6 +13,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -30,6 +31,9 @@ public class AddManagerController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserValidator userValidator;
+
 
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
     public ModelAndView showCreateManagerForm() {
@@ -42,6 +46,7 @@ public class AddManagerController {
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                               BindingResult bindingResult) {
+        userValidator.validateIfEmailExist(manager, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_MANAGER;
         }
