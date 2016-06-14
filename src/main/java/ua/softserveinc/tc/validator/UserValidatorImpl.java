@@ -86,4 +86,12 @@ public class UserValidatorImpl implements UserValidator {
         }
     }
 
+    public void validateIfEmailExist(Object o, Errors errors){
+        User user = (User) o;
+
+        if (userService.getUserByEmail(user.getEmail()) != null) {
+            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
+        }
+    }
+
 }
