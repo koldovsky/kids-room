@@ -47,6 +47,16 @@ public class QuartzConfig {
     }
 
     @Bean
+    public CronTriggerFactoryBean calculateSumTriggerTemporary() {
+        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
+        stFactory.setJobDetail(invokeCalculateSum().getObject());
+        stFactory.setName("temporaryTrigger");
+        stFactory.setCronExpression("0 0/10 * 1/1 * ? *");
+
+        return stFactory;
+    }
+
+    @Bean
     public CronTriggerFactoryBean sendPaymentInfoTrigger() {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeSendPaymentInfo().getObject());
@@ -61,7 +71,8 @@ public class QuartzConfig {
     @Bean
     public SchedulerFactoryBean scheduler() {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        scheduler.setTriggers(calculateSumTrigger().getObject(), sendPaymentInfoTrigger().getObject());
+        scheduler.setTriggers(calculateSumTrigger().getObject(), sendPaymentInfoTrigger().getObject()
+                , calculateSumTriggerTemporary().getObject());
         return scheduler;
     }
 }

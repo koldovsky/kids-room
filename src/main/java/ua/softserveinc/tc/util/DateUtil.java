@@ -88,8 +88,8 @@ public final class DateUtil {
         int hours = getHoursFromMilliseconds(milliseconds);
         int minutes = getMinutesFromMilliseconds(milliseconds);
 
-        // 02:00 hours - 2 hours; 02:01 hours - 3 hours
-        if (minutes > 0) {
+        // 02:10 hours - 2 hours; 02:10 hours - 3 hours
+        if (minutes > 11) {
             hours++;
         }
         return hours;
