@@ -58,7 +58,9 @@ public class Room {
     private String workingHoursEnd;
 
     @ManyToMany
-
+    @JoinTable(name = RoomConstants.MANAGERS,
+            joinColumns = @JoinColumn(name = RoomConstants.ROOM),
+            inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
     private List<User> managers = new ArrayList<>();
 
     @Column(name = "active")
@@ -80,11 +82,12 @@ public class Room {
         this.manager = roomDto.getManager();
         this.active = roomDto.isActive();
 
-        List<Rate> rates = roomDto.fromJsonToListOfRates();
-        for (Rate rate : rates) {
-            this.addRate(rate);
-        }
-        //this.setRates(roomDto.fromJsonToListOfRates());
+//        List<Rate> rates = roomDto.fromJsonToListOfRates();
+//        for (Rate rate : rates) {
+//            this.addRate(rate);
+//        }
+
+        this.setRates(roomDto.fromJsonToListOfRates());
     }
 
     public boolean isActive() {
