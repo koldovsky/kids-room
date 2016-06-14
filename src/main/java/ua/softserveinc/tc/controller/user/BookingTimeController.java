@@ -38,7 +38,8 @@ public class BookingTimeController {
     @ResponseBody
     public String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
         dtos.forEach(dto -> {
-            dto.setUser(userService.getUserByEmail(principal.getName()));
+            dto.setUser(userService.findById(dto.getUserId()));
+//            dto.setUser(userService.getUserByEmail(principal.getName()));
             dto.setChild(childService.findById(dto.getKidId()));
             dto.setRoom(roomService.findById(dto.getRoomId()));
             dto.setBookingState(BookingState.BOOKED);

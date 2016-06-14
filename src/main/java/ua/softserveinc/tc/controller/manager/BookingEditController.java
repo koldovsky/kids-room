@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
@@ -50,20 +51,20 @@ public class BookingEditController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> listRoom = currentManager.getRooms();
-        Room room = listRoom.get(0);
-        List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
-                workingHours().get(1),
-                room, BookingState.BOOKED);
-        Date date = toDate(dateNow());
-        List<Child> children = childService.findAll();
-        List<User> users = userService.findAll();
-        Set<Child> kids = userService.findById(1L).getChildren();
+//        Room room = listRoom.get(0);
+//        List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
+//                workingHours().get(1),
+//                room, BookingState.BOOKED);
+//        Date date = toDate(dateNow());
+//        List<Child> children = childService.findAll();
+       List<User> users = userService.findAllUsersByRole(Role.USER);
+//        Set<Child> kids = userService.findById(1L).getChildren();
         model.addAttribute("rooms", listRoom);
         model.addAttribute("users", users);
-        model.addAttribute("kids", kids);
-        model.addAttribute("listChild", children);
-        model.addAttribute("today", date);
-        model.addAttribute("listBooking", bookings);
+//        model.addAttribute("kids", kids);
+//        model.addAttribute("listChild", children);
+//        model.addAttribute("today", date);
+//        model.addAttribute("listBooking", bookings);
         return modelAndView;
     }
 
@@ -123,6 +124,13 @@ public class BookingEditController {
             return false;
         }
     }
-
-
+    @RequestMapping(value = "get-kids/{id}")
+    @ResponseBody
+    public String listKids (@PathVariable Long id){
+        Set<Child> kids = userService.findById(id).getChildren();
+        Gson gson = new Gson();
+        return  gson.toJson(kids.stream()
+                .map(ChildDto::new)
+                .collect(Collectors.toList()));
+    }
 }

@@ -52,7 +52,7 @@ public class BookingDto implements Serializable{
 
         this.kidName = booking.getChild().getFullName();
         this.roomName = booking.getRoom().getAddress();
-     //   this.duration = booking.formatDuration();
+        this.duration = booking.formatDuration();
         this.sum = booking.getSum();
         this.id = booking.getIdBook();
         this.bookingState = booking.getBookingState();

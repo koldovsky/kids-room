@@ -1,5 +1,5 @@
 
-   function cancelBooking(idBook){
+ function cancelBooking(idBook){
         $('#'+idBook).addClass('highlightedRed');
         $('#cancelModal').find('#closeCencel').click(function(){
               $('#'+idBook).removeClass('highlightedRed');
@@ -16,7 +16,7 @@
               }});
               $('#cancelModal').modal('hide');
         });
-   }
+}
 
 
    function setStartTime(idBooking){
@@ -76,10 +76,9 @@
           });
    }
 
-   var dateNow = function(){
-       var date = new Date().toString().match(/\d{2}:\d{2}/)[0];
-       $(this).val(date);
-   };
+
+      //todo: set value
+
    $('.input-group').find('#leaveTime').on('click', dateNow);
    $('.input-group').find('#arrivalTime').on('click', dateNow);
 
@@ -128,8 +127,8 @@
  }
 
 
- function selectRoomForManager(room) {
-       var src = 'manager-dayle-booking/' + room;
+ function selectRoomForManager(roomId) {
+       var src = 'manager-daily-booking/' +roomId;
        $.ajax({
            url: src,
            success: function(data){
@@ -156,7 +155,7 @@
                $('.trbooking').remove();
                $('.table').append(tr);
 
-         $.each(bookings, function(index, value) {
+               $.each(bookings, function(index, value) {
                         if(value.bookingState=="ACTIVE"){
                             $('#'+value.id).addClass('highlight-active');
                             $('#'+value.id).find('#arrivalTime').val(value.startTime);
@@ -164,7 +163,8 @@
                             $('#'+value.id).addClass('highlight-complet');
                             $('#'+value.id).find('#arrivalTime').val(value.startTime);
                             $('#'+value.id).find('#leaveTime').val(value.endTime);
-                     }});
+                        }
+               });
 
            }
        });
