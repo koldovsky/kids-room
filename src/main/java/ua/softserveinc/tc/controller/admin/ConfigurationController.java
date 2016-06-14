@@ -30,23 +30,25 @@ public class ConfigurationController {
     @Autowired
     private ConfigValidator configValidator;
 
-    private static @Log Logger log;
+    @Log
+    private static Logger log;
 
     @RequestMapping(value = "/adm-config", method = RequestMethod.GET)
-    public String getConfiguration(Model model){
+    public String getConfiguration(Model model) {
         model.addAttribute(AdminConstants.ATR_CONFIG, appConfig.getObjectDto());
         return AdminConstants.EDIT_CONFIG;
     }
 
     @RequestMapping(value = "/adm-config", method = RequestMethod.POST)
     public String setConfiguration(@ModelAttribute(value = AdminConstants.ATR_CONFIG) ConfigurationDto cDto,
-                                   BindingResult bindingResult){
+                                   BindingResult bindingResult) {
         configValidator.validate(cDto, bindingResult);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return AdminConstants.EDIT_CONFIG;
         }
-        try {appConfig.acceptConfiguration(cDto);}
-        catch(IOException ioe){
+        try {
+            appConfig.acceptConfiguration(cDto);
+        } catch (IOException ioe) {
             log.error("Failed to write to config file", ioe);
             bindingResult.rejectValue("errorMsg", ValidationConstants.PROPERTIES_WRITE_FAILED);
             return AdminConstants.EDIT_CONFIG;

@@ -171,7 +171,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 bookingDTO.setId(booking.getIdBook());
             });
             return listDTO;
-        } else return null;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {

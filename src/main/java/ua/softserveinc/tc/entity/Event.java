@@ -5,8 +5,6 @@ import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -110,16 +108,30 @@ public class Event {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Event event = (Event) o;
 
-        if (!name.equals(event.name)) return false;
-        if (!startTime.equals(event.startTime)) return false;
-        if (!endTime.equals(event.endTime)) return false;
-        if (ageLow != null ? !ageLow.equals(event.ageLow) : event.ageLow != null) return false;
-        if (ageHigh != null ? !ageHigh.equals(event.ageHigh) : event.ageHigh != null) return false;
+        if (!name.equals(event.name)) {
+            return false;
+        }
+        if (!startTime.equals(event.startTime)) {
+            return false;
+        }
+        if (!endTime.equals(event.endTime)) {
+            return false;
+        }
+        if (ageLow != null ? !ageLow.equals(event.ageLow) : event.ageLow != null) {
+            return false;
+        }
+        if (ageHigh != null ? !ageHigh.equals(event.ageHigh) : event.ageHigh != null) {
+            return false;
+        }
         return room.equals(event.room);
 
     }

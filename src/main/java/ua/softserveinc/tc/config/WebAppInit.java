@@ -40,7 +40,7 @@ public class WebAppInit extends AbstractAnnotationConfigDispatcherServletInitial
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return null;
+        return new Class[0];
     }
 
     @Override

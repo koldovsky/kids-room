@@ -13,7 +13,6 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import java.security.Principal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,10 +35,9 @@ public class BookingTimeController {
 
     @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
     @ResponseBody
-    public String getBooking(@RequestBody List<BookingDto> dtos, Principal principal) {
+    public String getBooking(@RequestBody List<BookingDto> dtos) {
         dtos.forEach(dto -> {
             dto.setUser(userService.findById(dto.getUserId()));
-//            dto.setUser(userService.getUserByEmail(principal.getName()));
             dto.setChild(childService.findById(dto.getKidId()));
             dto.setRoom(roomService.findById(dto.getRoomId()));
             dto.setBookingState(BookingState.BOOKED);
@@ -61,8 +59,8 @@ public class BookingTimeController {
     @RequestMapping(value = "/disabled")
     @ResponseBody
     public String getDisabledTime(@RequestParam Long roomID,
-                           @RequestParam String dateLo,
-                           @RequestParam String dateHi) {
+                                  @RequestParam String dateLo,
+                                  @RequestParam String dateHi) {
         Room room = roomService.findById(roomID);
 
         Calendar start = Calendar.getInstance();

@@ -121,19 +121,39 @@ public class ConfigurationDto {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ConfigurationDto that = (ConfigurationDto) o;
 
-        if (!kidsMinAge.equals(that.kidsMinAge)) return false;
-        if (!kidsMaxAge.equals(that.kidsMaxAge)) return false;
-        if (!minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)) return false;
-        if (!hourToCalculateBookingsEveryDay.equals(that.hourToCalculateBookingsEveryDay)) return false;
-        if (!minutesToSendEmailReport.equals(that.minutesToSendEmailReport)) return false;
-        if (!hourToSendEmailReport.equals(that.hourToSendEmailReport)) return false;
-        if (!dayToSendEmailReport.equals(that.dayToSendEmailReport)) return false;
-        if (!minPeriodSize.equals(that.minPeriodSize)) return false;
+        if (!kidsMinAge.equals(that.kidsMinAge)) {
+            return false;
+        }
+        if (!kidsMaxAge.equals(that.kidsMaxAge)) {
+            return false;
+        }
+        if (!minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)) {
+            return false;
+        }
+        if (!hourToCalculateBookingsEveryDay.equals(that.hourToCalculateBookingsEveryDay)) {
+            return false;
+        }
+        if (!minutesToSendEmailReport.equals(that.minutesToSendEmailReport)) {
+            return false;
+        }
+        if (!hourToSendEmailReport.equals(that.hourToSendEmailReport)) {
+            return false;
+        }
+        if (!dayToSendEmailReport.equals(that.dayToSendEmailReport)) {
+            return false;
+        }
+        if (!minPeriodSize.equals(that.minPeriodSize)) {
+            return false;
+        }
         return serverName.equals(that.serverName);
 
     }

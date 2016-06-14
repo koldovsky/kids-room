@@ -162,27 +162,45 @@ public class Child implements Comparable<Child>
     @Override
     public int compareTo(Child that) {
         int res = this.dateOfBirth.compareTo(that.getDateOfBirth());
-        if(res != 0) return res;
+        if(res != 0) {
+            return res;
+        }
 
         res = this.firstName.compareTo(that.getFirstName());
-        if(res != 0) return res;
+        if(res != 0) {
+            return res;
+        }
 
         res = this.lastName.compareTo(that.getLastName());
-        if(res != 0) return res;
+        if(res != 0) {
+            return res;
+        }
         return this.gender.compareTo(that.getGender());
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Child child = (Child) o;
 
-        if (enabled != child.enabled) return false;
-        if (firstName != null ? !firstName.equals(child.firstName) : child.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(child.lastName) : child.lastName != null) return false;
-        if (parentId != null ? !parentId.equals(child.parentId) : child.parentId != null) return false;
+        if (enabled != child.enabled) {
+            return false;
+        }
+        if (firstName != null ? !firstName.equals(child.firstName) : child.firstName != null) {
+            return false;
+        }
+        if (lastName != null ? !lastName.equals(child.lastName) : child.lastName != null) {
+            return false;
+        }
+        if (parentId != null ? !parentId.equals(child.parentId) : child.parentId != null) {
+            return false;
+        }
         return dateOfBirth != null ? dateOfBirth.equals(child.dateOfBirth) : child.dateOfBirth == null;
 
     }
