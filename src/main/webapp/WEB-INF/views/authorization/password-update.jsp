@@ -6,7 +6,7 @@
 <div class="col-sm-offset-4 col-xs-4">
     <form:form action="changePassword" method="post" modelAttribute="<%=UserConstants.Entity.USER %>">
         <div class="form-group">
-            <label for="password" class="required"><spring:message code="user.email" /></label>
+            <label for="password" class="required"><spring:message code="user.password" /></label>
             <form:password path="password" class="form-control"/>
             <form:errors path="password" cssClass="error"  />
         </div>
