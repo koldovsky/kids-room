@@ -21,6 +21,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -122,6 +123,7 @@ public class ConfirmBookingController {
         Date toDay= new Date();
         Room room = roomService.findById(id);
         List<Booking> bookings = bookingService.getBookings(setStartTime(toDay), setEndTime(toDay), room, BookingConstants.States.getNotCancelled());
+        Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
         Gson gson = new Gson();
         return  gson.toJson(bookings.stream()
                 .map(BookingDto::new)
