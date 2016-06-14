@@ -80,6 +80,7 @@ function refresh(){
 function changeBooking(id){
       $('#bookingUpdatingDialog').dialog();
       idBooking = id;
+
 }
 function createBooking(){
  $('#bookingDialog').dialog();

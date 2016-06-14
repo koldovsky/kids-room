@@ -4,6 +4,7 @@ package ua.softserveinc.tc.constants;
  * Created by Demian on 13.05.2016.
  */
 public final class ReportConstants {
+    public static final String ROOM = "room";
     public static final String EMAIL = "email";
     public static final String ROOMS = "rooms";
     public static final String PARENT = "parent";

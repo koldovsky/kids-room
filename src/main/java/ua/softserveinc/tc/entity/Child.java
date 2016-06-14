@@ -11,7 +11,6 @@ import ua.softserveinc.tc.constants.ChildConstants;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Created by Demian on 29.04.2016.
@@ -181,23 +180,20 @@ public class Child implements Comparable<Child>
         Child child = (Child) o;
 
         if (enabled != child.enabled) return false;
-        if (!firstName.equals(child.firstName)) return false;
-        if (!lastName.equals(child.lastName)) return false;
-        if (!parentId.equals(child.parentId)) return false;
-        if (!dateOfBirth.equals(child.dateOfBirth)) return false;
-        if (comment != null ? !comment.equals(child.comment) : child.comment != null) return false;
-        return gender == child.gender;
+        if (firstName != null ? !firstName.equals(child.firstName) : child.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(child.lastName) : child.lastName != null) return false;
+        if (parentId != null ? !parentId.equals(child.parentId) : child.parentId != null) return false;
+        return dateOfBirth != null ? dateOfBirth.equals(child.dateOfBirth) : child.dateOfBirth == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = 1;
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + dateOfBirth.hashCode();
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
         result = 31 * result + (enabled ? 1 : 0);
         return result;
     }
-
 }

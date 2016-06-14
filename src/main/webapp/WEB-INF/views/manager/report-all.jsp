@@ -4,26 +4,28 @@
 <c:url value="/j_spring_security_check" var="allURL" />
 
 <link rel='stylesheet' href='resources/css/report.css'>
-<link rel='stylesheet' href='resources/css/bookings.css'>
 <link rel='stylesheet' href='resources/css/disable-room-picker.css'>
 
-    <div id="startDateDiv">
-        <h3><spring:message code="report.from" /></h3>
-        <input disabled type="date" value="${startDate}">
-    </div>
+<div id="scroller">
+    <div class="dateSelector">
+        <div id="from-div">
+            <h3><spring:message code="report.from" /></h3>
+            <input disabled type="date" value="${startDate}">
+        </div>
 
-    <div id="endDateDiv">
-        <h3><spring:message code="report.to" /></h3>
-        <input disabled type="date" value="${endDate}">
+        <div id="to-div">
+            <h3><spring:message code="report.to" /></h3>
+            <input disabled type="date" value="${endDate}">
+        </div>
     </div>
 
     <div class="tableDiv">
         <table>
 
             <caption>
-                <h3>
-                    <spring:message code="report.allBookings" /></br>
-                </h3>
+                <h2>
+                    <spring:message code="report.allBookings" /> ${room}
+                </h2>
             </caption>
 
             <tr>
@@ -43,6 +45,8 @@
         </table>
     </div>
 
-    <div id="exportButton">
-        <button class="btn-primary exportButton"><spring:message code="report.download" /></button>
+    <div>
+        <button class="btn btn-raised btn-primary waves-effect waves-light">
+        <spring:message code="report.download" /></button>
     </div>
+</div>

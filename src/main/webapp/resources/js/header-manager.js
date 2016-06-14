@@ -14,9 +14,19 @@ $(function() {
 
             $("#room").text(room);
             selectRoomForManager(roomId);
+            getAmountOfChildren();
         });
     });
 
     $("#room").text(localStorage["room"]);
     selectRoomForManager(localStorage["roomId"]);
+    getAmountOfChildren();
 });
+
+function getAmountOfChildren() {
+    $.ajax({
+        url: "getAmountOfChildren/" + localStorage["roomId"],
+        success: function(result) {
+        $("#amountOfChildren").text(result)
+    }});
+}

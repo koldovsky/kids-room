@@ -58,6 +58,7 @@
                 <th class="col-xs-3"><spring:message code= "booking.childrens"/></th>
                 <th class="col-xs-3"><spring:message code= "booking.time"/></th>
                 <th class="col-xs-3"><spring:message code= "button.edit"/></th>
+                <th class="col-xs-3"><spring:message code= "button.edit"/></th>
             </div>
                 <c:forEach var="booking" items="${listBooking}">
                     <tr id="${booking.idBook}" class="trbooking">
@@ -117,15 +118,15 @@
                         <div class="form-group">
                             <div class="input-group">
                                  <label><spring:message code="booking.createDate"/></label>
-                                 <input type="date" id="data" class="form-control"/>
+                                 <input type="date" id="data" class="form-control" required/>
                             </div>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
-                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control"/>
+                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control" required/>
                             <br>
                             <div>
                                 <label><spring:message code="booking.createEndTime"/></label>
-                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control" >
+                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control" required />
                             </div>
                         </div>
                         <div class="col-xs-6">
@@ -158,7 +159,7 @@
                             <label for="bookingStartDate">Choose date</label>
                             <br>
                             <div>
-                                <input type="date" class="form-control" id="bookingStartDate" placeholder="booking date">
+                                <input type="date" class="form-control" id="bookingStartDate" placeholder="booking date"/>
                             </div>
                             <input id="kostil" hidden/>
                             <div class="col-xs-5">
@@ -194,4 +195,4 @@
 
 
 <script src="resources/js/edit-booking.js"></script>
-<script src="resources/js/changeroom.js"></script>
+<script src="resources/js/header-manager.js"></script>

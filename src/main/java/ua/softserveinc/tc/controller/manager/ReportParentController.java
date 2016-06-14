@@ -61,6 +61,7 @@ public class ReportParentController {
         ModelAndView modelAndView = new ModelAndView(ReportConstants.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();
 
+        modelMap.addAttribute(ReportConstants.ROOM, room);
         modelMap.addAttribute(ReportConstants.PARENT, parent);
         modelMap.addAttribute(ReportConstants.END_DATE, endDate);
         modelMap.addAttribute(ReportConstants.BOOKINGS, bookings);

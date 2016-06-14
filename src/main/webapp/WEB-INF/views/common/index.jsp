@@ -12,7 +12,7 @@
 
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.js'></script>
-<script src='resources/js/changeroom.js'></script>
+<script src='resources/js/header-manager.js'></script>
 
 <script src='resources/js/userCalendar.js'></script>
 
