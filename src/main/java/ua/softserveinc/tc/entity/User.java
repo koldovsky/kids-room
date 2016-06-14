@@ -13,7 +13,6 @@ import ua.softserveinc.tc.constants.UserConstants;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -209,6 +208,7 @@ public class User {
         result = 31 * result + (confirmed ? 1 : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + role.hashCode();
         return result;
     }
 
