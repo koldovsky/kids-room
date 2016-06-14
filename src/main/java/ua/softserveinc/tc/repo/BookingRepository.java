@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
+    Long countByRoomAndBookingState(Room room, BookingState bookingState);
+
     List<Booking> findByBookingState(BookingState bookingState);
 
     List<Booking> findByBookingEndTimeBetween(Date start, Date end);

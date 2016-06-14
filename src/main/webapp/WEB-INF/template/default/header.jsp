@@ -89,6 +89,7 @@
                                   <li><a href="manager-confirm-booking">
                                   <span class="glyphicon glyphicon-list"></span>
                                   <spring:message code="manager.listbooking" />
+                                  <span id="amountOfChildren"></span>
                                   </a></li>
                                   <li><a href="manager-edit-booking">
                                   <span class="glyphicon glyphicon-edit"></span>
