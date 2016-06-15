@@ -38,10 +38,10 @@ public class UpdateRoomController {
     public ModelAndView showUpdateRoomForm(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);
 
-        List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
+        List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
         model.addObject(AdminConstants.MANAGER_LIST, managers);
 
-        Room room = roomService.findById(id);
+        Room room = this.roomService.findById(id);
         RoomDto roomDto = new RoomDto(room);
 
         Gson gson = new Gson();
@@ -67,13 +67,13 @@ public class UpdateRoomController {
         List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
         List<User> managers = new ArrayList<>();
         for (Long elem : idManagers) {
-            managers.add(userService.findById(elem));
+            managers.add(this.userService.findById(elem));
         }
 
         Room room = new Room(roomDto);
         room.setManagers(managers);
 
-        roomService.saveOrUpdate(room);
+        this.roomService.saveOrUpdate(room);
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

@@ -18,15 +18,12 @@ import java.util.List;
 public class EditRoomController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private RoomService roomService;
 
 
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.GET)
     public ModelAndView getRoomMenu() {
-        List<Room> rooms = roomService.findAll();
+        List<Room> rooms = this.roomService.findAll();
 
         ModelAndView mav = new ModelAndView(AdminConstants.EDIT_ROOM);
         mav.addObject(AdminConstants.ROOM_LIST, rooms);
@@ -36,13 +33,13 @@ public class EditRoomController {
 
     @RequestMapping(value = "/adm-edit-room", method = RequestMethod.POST)
     public String roomBlockUnblock(@RequestParam Long id) {
-        Room room = roomService.findById(id);
+        Room room = this.roomService.findById(id);
         if (room.isActive()) {
             room.setActive(false);
         } else {
             room.setActive(true);
         }
-        roomService.update(room);
+        this.roomService.update(room);
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

@@ -27,8 +27,10 @@ import static ua.softserveinc.tc.util.DateUtil.*;
  */
 @Controller
 public class StatisticsController {
+
     @Autowired
     private BookingService bookingService;
+
 
     @RequestMapping(value = "/adm-statistics", method = RequestMethod.GET)
     public ModelAndView statistics() {

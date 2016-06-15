@@ -42,7 +42,7 @@ public class AddRoomController {
      */
     @RequestMapping(value = "/adm-add-room", method = RequestMethod.GET)
     public ModelAndView showCreateRoomForm() {
-        List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
+        List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
         ModelAndView mav = new ModelAndView(AdminConstants.ADD_ROOM);
         mav.getModelMap().addAttribute(AdminConstants.ATR_ROOM, new RoomDto());
@@ -69,13 +69,13 @@ public class AddRoomController {
         List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
         List<User> managers = new ArrayList<>();
         for (Long elem : idManagers) {
-            managers.add(userService.findById(elem));
+            managers.add(this.userService.findById(elem));
         }
 
         Room room = new Room(roomDto);
         room.setManagers(managers);
         room.setActive(true);
-        roomService.saveOrUpdate(room);
+        this.roomService.saveOrUpdate(room);
 
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }

@@ -37,7 +37,8 @@ public class AddManagerController {
     private TokenService tokenService;
 
     @Log
-    private static Logger log;
+    private static Logger LOG;
+
     @Autowired
     private UserValidator userValidator;
 
@@ -53,7 +54,7 @@ public class AddManagerController {
     @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
     public String saveManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                               BindingResult bindingResult) {
-        userValidator.validateIfEmailExist(manager, bindingResult);
+        this.userValidator.validateIfEmailExist(manager, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_MANAGER;
         }
@@ -63,16 +64,16 @@ public class AddManagerController {
         manager.setConfirmed(false);
 
         String token = UUID.randomUUID().toString();
-
         try {
-            mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
+            this.mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
         } catch (MessagingException | MailSendException e) {
-            log.error("Error! Sending email!!!", e);
+            this.LOG.error("Error! Sending email!!!", e);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
             return AdminConstants.ADD_MANAGER;
         }
-        userService.create(manager);
-        tokenService.createToken(token, manager);
+
+        this.userService.create(manager);
+        this.tokenService.createToken(token, manager);
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 

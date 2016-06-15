@@ -22,7 +22,7 @@ public class EditManagerController {
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.GET)
     public ModelAndView getManagerMenu() {
-        List<User> managers = userService.findAllUsersByRole(Role.MANAGER);
+        List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
         ModelAndView mav = new ModelAndView(AdminConstants.EDIT_MANAGER);
         mav.addObject(AdminConstants.MANAGER_LIST, managers);
@@ -32,13 +32,13 @@ public class EditManagerController {
 
     @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
     public String managerBlockUnblock(@RequestParam Long id) {
-        User manager = userService.findById(id);
+        User manager = this.userService.findById(id);
         if (manager.isActive()) {
             manager.setActive(false);
         } else {
             manager.setActive(true);
         }
-        userService.update(manager);
+        this.userService.update(manager);
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 }

@@ -49,15 +49,15 @@ public class ConfirmManagerController {
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.GET)
     public String confirmRegistration(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
 
-        Token token = tokenService.findByToken(sToken);
+        Token token = this.tokenService.findByToken(sToken);
         User manager = token.getUser();
         model.addAttribute(AdminConstants.ATR_MANAGER, manager);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
-                manager, null, userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
+                manager, null, this.userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        tokenService.delete(token);
+        this.tokenService.delete(token);
         return AdminConstants.CONFIRM_MANAGER;
     }
 
@@ -67,14 +67,14 @@ public class ConfirmManagerController {
         managerToSave.setPassword(manager.getPassword());
         managerToSave.setConfirm(manager.getConfirm());
 
-        userValidator.validatePassword(managerToSave, bindingResult);
+        this.userValidator.validatePassword(managerToSave, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.CONFIRM_MANAGER;
         }
 
-        managerToSave.setPassword(passwordEncoder.encode(manager.getPassword()));
+        managerToSave.setPassword(this.passwordEncoder.encode(manager.getPassword()));
         managerToSave.setConfirmed(true);
-        userService.update(managerToSave);
+        this.userService.update(managerToSave);
 
         return UserConstants.Model.LOGIN_VIEW;
     }

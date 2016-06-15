@@ -27,7 +27,7 @@ public class UpdateManagerController {
     public ModelAndView showUpdateManagerForm(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
 
-        User manager = userService.findById(id);
+        User manager = this.userService.findById(id);
         model.getModelMap().addAttribute(AdminConstants.ATR_MANAGER, manager);
 
         return model;
@@ -40,7 +40,7 @@ public class UpdateManagerController {
             return AdminConstants.UPDATE_MANAGER;
         }
         manager.setRole(Role.MANAGER);
-        userService.update(manager);
+        this.userService.update(manager);
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
 }
