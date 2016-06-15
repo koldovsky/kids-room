@@ -6,6 +6,7 @@
 <link rel='stylesheet' href='resources/css/report.css'>
 
 <script src="resources/js/report.js"></script>
+<script src="resources/js/pagination.js"></script>
 <script src="resources/js/header-manager.js"></script>
 
 <div id="scroller">
@@ -22,7 +23,7 @@
     </div>
 
     <div class="tableDiv">
-        <table id="activeUsers">
+        <table id="bookings">
 
             <caption>
                 <h2>
@@ -30,7 +31,7 @@
                 </h2>
             </caption>
 
-            <tr>
+            <tr id="header">
                 <th><spring:message code="report.name" /></th>
                 <th><spring:message code="report.surname" /></th>
                 <th><spring:message code="report.email" /></th>
@@ -46,4 +47,6 @@
         <spring:message code="report.generate" /></button>
     </div>
     <input type="hidden" id="localizedDetails" value=<spring:message code="report.details" />>
+    <input id="itemsPerPage" type="hidden" value="10"></input>
+    <a id="dlink"  style="display:none;"></a>
 </div>

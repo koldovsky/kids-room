@@ -12,15 +12,15 @@ $(function() {
             localStorage["room"] = room;
             localStorage["roomId"] = roomId;
 
+            getAmountOfChildren();
             $("#room").text(room);
             selectRoomForManager(roomId);
-            getAmountOfChildren();
         });
     });
 
+    getAmountOfChildren();
     $("#room").text(localStorage["room"]);
     selectRoomForManager(localStorage["roomId"]);
-    getAmountOfChildren();
 });
 
 function getAmountOfChildren() {
