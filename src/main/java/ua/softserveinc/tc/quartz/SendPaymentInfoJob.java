@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.quartz;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
@@ -9,7 +10,9 @@ import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.MailService;
+import ua.softserveinc.tc.util.Log;
 
+import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,9 @@ public class SendPaymentInfoJob {
     @Autowired
     private MailService mailService;
 
+    @Log
+    private static Logger log;
+
     @Autowired
     private BookingService bookingService;
 
@@ -36,7 +42,11 @@ public class SendPaymentInfoJob {
 
         report.forEach((user, sum) -> {
             if ("bahrianyi@ukr.net".equals(user.getEmail()))
-                mailService.sendPaymentInfo(user, MailConstants.PAYMENT_INFO_SUBJECT, sum);
+                try {
+                    mailService.sendPaymentInfo(user, MailConstants.PAYMENT_INFO_SUBJECT, sum);
+                } catch (MessagingException e) {
+                    log.error("Error! Sending email!!!", e);
+                }
         });
     }
 }

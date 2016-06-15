@@ -18,14 +18,16 @@ function refreshView()
 
         $.each(rooms, function(i, room)
         {
+            var managers = room.namesOfManagers.join('</br>');;
+
             tr += '<tr><td>' + room.name + '</td>'
             + '<td>' + room.city + '</td>'
             + '<td>' + room.address + '</td>'
-            + '<td>' + room.manager.firstName + " " + room.manager.lastName + '</td>'
+            + '<td>' + managers + '</td>'
             + '<td>' + room.sum + '</td></tr>'
         });
 
-        $('td').remove();
+        $("tr:not(#header)").remove();
 
         $('#statistics').append(tr);
     }});

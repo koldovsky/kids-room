@@ -6,21 +6,23 @@
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/disable-room-picker.css'>
 
+<script src="resources/js/pagination.js"></script>
+
 <div id="scroller">
     <div class="dateSelector">
         <div id="from-div">
             <h3><spring:message code="report.from" /></h3>
-            <input disabled type="date" value="${startDate}">
+            <input disabled type="date" value="${startDate}" id="startDate">
         </div>
 
         <div id="to-div">
             <h3><spring:message code="report.to" /></h3>
-            <input disabled type="date" value="${endDate}">
+            <input disabled type="date" value="${endDate}" id="endDate">
         </div>
     </div>
 
     <div class="tableDiv">
-        <table>
+        <table id="bookings">
 
             <caption>
                 <h2>
@@ -45,8 +47,9 @@
         </table>
     </div>
 
-    <div>
-        <button class="btn btn-raised btn-primary waves-effect waves-light">
-        <spring:message code="report.download" /></button>
-    </div>
+    <input id="itemsPerPage" type="hidden" value="10"></input>
+    <a id="dlink"  style="display:none;"></a>
+    <button id="export" onclick= "tableToExcel('bookings', 'name')" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
+        &nbsp; <spring:message code="report.download" /> Excel
+    </button>
 </div>

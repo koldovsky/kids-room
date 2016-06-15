@@ -86,14 +86,10 @@
                                   <span class="glyphicon glyphicon-tasks"></span>
                                   <spring:message code="manager.report" /></a>
                                   </li>
-                                  <li><a href="manager-confirm-booking">
-                                  <span class="glyphicon glyphicon-list"></span>
-                                  <spring:message code="manager.listbooking" />
-                                  <span id="amountOfChildren"></span>
-                                  </a></li>
                                   <li><a href="manager-edit-booking">
-                                  <span class="glyphicon glyphicon-edit"></span>
-                                  <spring:message code="button.edit" />
+                                  <span class="glyphicon glyphicon-list"></span>
+                                  <spring:message code="manager.listbooking"/>
+                                  <span id="amountOfChildren"></span>
                                   </a></li>
 
                               </sec:authorize>

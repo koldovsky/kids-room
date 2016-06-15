@@ -45,11 +45,13 @@ function refreshView() {
             + user.email + '"><a>' + $("#localizedDetails").val() + '</a></td></tr>';
         });
 
-        $('td').remove();
 
-        $('#activeUsers').append(tr);
+        $("tr:not(#header)").remove();
+
+        $("#bookings").append(tr);
 
         addListenerForDetails();
+        paginate();
     }});
 }
 

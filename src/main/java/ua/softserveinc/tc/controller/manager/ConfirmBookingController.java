@@ -25,13 +25,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.*;
+import static ua.softserveinc.tc.util.DateUtil.setTime;
 
 /**
  * Created by Петришак on 08.05.2016.
  */
 @Controller
 public class ConfirmBookingController {
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -47,8 +48,6 @@ public class ConfirmBookingController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> rooms = currentManager.getRooms();
-//        List<Booking> bookings =  bookingService.getBookings(workingHours().get(0), workingHours().get(1), rooms.get(0), BookingConstants.States.getNotCancelled());
-        //       model.addAttribute(BookingConstants.Model.LIST_BOOKINGS, bookings);
         model.addAttribute("rooms", rooms);
         return modelAndView;
     }
@@ -56,7 +55,7 @@ public class ConfirmBookingController {
 
     @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
     @ResponseBody
-    public String cancelBooking(@PathVariable Long idBooking) {
+    public String cancelBooking (@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
@@ -64,7 +63,7 @@ public class ConfirmBookingController {
         bookingService.update(booking);
         BookingDto bookingDto = new BookingDto(booking);
         Gson gson = new Gson();
-        return gson.toJson(bookingDto);
+        return  gson.toJson(bookingDto);
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
@@ -75,7 +74,7 @@ public class ConfirmBookingController {
         bookingService.update(booking);
         BookingDto bookingDTOtoJson = new BookingDto(booking);
         Gson gson = new Gson();
-        return gson.toJson(bookingDTOtoJson);
+        return  gson.toJson(bookingDTOtoJson);
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
@@ -86,40 +85,42 @@ public class ConfirmBookingController {
         bookingService.update(booking);
         BookingDto bookingDTOtoJson = new BookingDto(booking);
         Gson gson = new Gson();
-        return gson.toJson(bookingDTOtoJson);
+        return  gson.toJson(bookingDTOtoJson);
     }
 
-    @RequestMapping(value = BookingConstants.Model.LIST_BOOKING, method = RequestMethod.GET)
-    @ResponseBody
-    public String listBookigs(Principal principal) {
-        User currentManager = userService.getUserByEmail(principal.getName());
-        Room currentRoom = currentManager.getRooms().get(0);
-        List<Booking> bookings = bookingService.getBookings(workingHours().get(0), workingHours().get(1), currentRoom, BookingConstants.States.getNotCancelled());
-        List<BookingDto> listBookingDto = new ArrayList<>();
-        bookings.forEach(booking -> listBookingDto.add(new BookingDto(booking)));
-        Gson gson = new Gson();
-        return gson.toJson(listBookingDto);
+     @RequestMapping(value = BookingConstants.Model.LIST_BOOKING, method = RequestMethod.GET)
+     @ResponseBody
+     public String listBookigs(Principal principal) {
+         User manager = userService.getUserByEmail(principal.getName());
+         Room room = manager.getRooms().get(0);
+         Date dateLo = setTime(room.getWorkingHoursStart());
+         Date dateHi = setTime(room.getWorkingHoursEnd());
+         List<Booking> bookings =  bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.getNotCancelled());
+         List<BookingDto> listBookingDto = new ArrayList<>();
+         bookings.forEach(booking -> listBookingDto.add(new BookingDto(booking)));
+         Gson gson = new Gson();
+         return  gson.toJson(listBookingDto);
     }
 
-    @RequestMapping(value = BookingConstants.Model.BOOK_DURATION, method = RequestMethod.POST, consumes = "application/json")
-    @ResponseBody
-    public String bookinkDuration(@RequestBody BookingDto bookingDto) throws ParseException {
-        Booking booking = bookingService.findById(bookingDto.getId());
-        Date date = bookingService.replaceBookingTime(booking, bookingDto.getEndTime());
-        booking.setBookingEndTime(date);
-        bookingService.calculateAndSetDuration(booking);
-        BookingDto bookingDTOtoJson = new BookingDto(booking);
-        Gson gson = new Gson();
-        return gson.toJson(bookingDTOtoJson);
+     @RequestMapping(value = BookingConstants.Model.BOOK_DURATION, method = RequestMethod.POST, consumes = "application/json")
+     @ResponseBody
+     public String bookinkDuration(@RequestBody BookingDto bookingDto) throws ParseException{
+         Booking booking = bookingService.findById(bookingDto.getId());
+         Date date = bookingService.replaceBookingTime(booking, bookingDto.getEndTime());
+         booking.setBookingEndTime(date);
+         bookingService.calculateAndSetDuration(booking);
+         BookingDto bookingDTOtoJson = new BookingDto(booking);
+         Gson gson = new Gson();
+         return  gson.toJson(bookingDTOtoJson);
     }
 
-    @RequestMapping(value = "manager-daily-booking/{id}",
-            method = RequestMethod.GET)
+    @RequestMapping(value = "manager-daily-booking/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String bookingsByDay(@PathVariable Long id) {
-        Date toDay = new Date();
         Room room = roomService.findById(id);
-        List<Booking> bookings = bookingService.getBookings(setStartTime(toDay), setEndTime(toDay), room, BookingConstants.States.getNotCancelled());
+        Date dateLo = setTime(room.getWorkingHoursStart());
+        Date dateHi = setTime(room.getWorkingHoursEnd());
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.getNotCancelled());
         Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
         Gson gson = new Gson();
         return gson.toJson(bookings.stream()
@@ -134,3 +135,4 @@ public class ConfirmBookingController {
         return bookingRepository.countByRoomAndBookingState(room, BookingState.ACTIVE);
     }
 }
+

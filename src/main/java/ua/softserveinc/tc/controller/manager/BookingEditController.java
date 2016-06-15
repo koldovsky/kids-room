@@ -17,12 +17,13 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.*;
+import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 /**
  * Created by Петришак on 04.06.2016.
@@ -51,20 +52,9 @@ public class BookingEditController {
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> listRoom = currentManager.getRooms();
-//        Room room = listRoom.get(0);
-//        List<Booking> bookings = bookingService.getBookings(workingHours().get(0),
-//                workingHours().get(1),
-//                room, BookingState.BOOKED);
-//        Date date = toDate(dateNow());
-//        List<Child> children = childService.findAll();
-       List<User> users = userService.findAllUsersByRole(Role.USER);
-//        Set<Child> kids = userService.findById(1L).getChildren();
+        List<User> users = userService.findAllUsersByRole(Role.USER);
         model.addAttribute("rooms", listRoom);
         model.addAttribute("users", users);
-//        model.addAttribute("kids", kids);
-//        model.addAttribute("listChild", children);
-//        model.addAttribute("today", date);
-//        model.addAttribute("listBooking", bookings);
         return modelAndView;
     }
 
@@ -74,7 +64,10 @@ public class BookingEditController {
     public String bookingsByDay(@PathVariable String date,
                                 @PathVariable Long id){
         Room room = roomService.findById(id);
-        List<Booking> bookings = bookingService.getBookings(setStartTime(toDate(date)), setEndTime(toDate(date)), room);
+        Date dateLo = toDateAndTime(date + " " +room.getWorkingHoursStart());
+        Date dateHi = toDateAndTime(date + " " +room.getWorkingHoursEnd());
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.getNotCancelled());
+        Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
         Gson gson = new Gson();
         return  gson.toJson(bookings.stream()
                 .map(BookingDto::new)
@@ -104,10 +97,8 @@ public class BookingEditController {
         Room room = manager.getRooms().get(0);
         Date dateLo = toDateAndTime(bookingDto.getStartTime());
         Date dateHi = toDateAndTime(bookingDto.getEndTime());
-
         bookingDto.setDateStartTime(dateLo);
         bookingDto.setDateEndTime(dateHi);
-
         Child child = childService.findById(bookingDto.getIdChild());
 
         // TODO: 10.06.2016  get booking by child

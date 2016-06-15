@@ -2,8 +2,8 @@ var bookingsArray = [];
 var idBooking;
 var dateNow = new Date();
 
-$('#data-booking').val(dateNow.toISOString().substr(0,10));
 
+$('#data-booking').val(dateNow.toISOString().substr(0,10));
 
 $(function(){
     $('#data-booking').change(refresh);
@@ -46,7 +46,6 @@ $(function () {
 
 
 function refresh(){
-
             var time = $('#data-booking').val();
             var idRoom = localStorage["roomId"];
             var src = 'manager-edit-booking/'+time + "/" +idRoom;
@@ -57,22 +56,45 @@ function refresh(){
                         var tr = "";
                         var cancel = '<spring:message code= "booking.canceled"/>';
                         $.each(bookings, function(i, booking){
+                            var index = i+1;
+                            var startButton = 'onclick='+'"'+'setStartTime(' +booking.id +')"';
+                            var endButton = 'onclick='+'"'+'setEndTime(' +booking.id +')"';
                             var changeButton = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
                             var cancelButton = 'onclick='+'"'+'changeBooking(' +booking.id +')"';
                             tr+= '<tr id=' + booking.id +'><td>'
+                            + index
+                            +'</td><td>'
                             + '<a href=profile?id=' + booking.idChild +'>'
                             + booking.kidName +'</td>'
-                            + '<td>' + booking.startTime + " -" + booking.endTime +  '</td>'
-                            +'<td class="change-booking">'
+                            + '<td >' + booking.startTime + " - " + booking.endTime  + " "
+                            + '<button class="btn btn-sm glyphicon glyphicon-edit" '
+                            + changeButton + '></button></td>'
+                           /* +'<td class="change-booking">'
                             +'<button class="btn btn-sm btn-primary"'
-                            + 'data-toggle="modal"'
-                            + 'data-target="#change-booking-modal"'
                             + changeButton  +'> Edit </button>'
-                            + '</td>'
+                            + '</td>'*/
+                            + '<td><div class="input-group"><input type="time"' + 'id="arrivalTime"'+ 'class="form-control"/>'
+                            + '<span class="input-group-btn">'
+                            + '<input required type="button"'+'class="btn btn-raised btn-sm btn-info"'
+                            + startButton +'value="Set"'+'</input></span></td></div>'
+                            + '<td><div class="input-group"><input required type="time"' + 'id="leaveTime"'+ 'class="form-control"/>'
+                            + '<span class="input-group-btn">'
+                            + '<input required type="button"'+'class="btn btn-raised btn-sm btn-info"'
+                            + endButton +'value="Set"'+'</input></span></td></div>'
                             + '</tr>';
                         });
                         $('td').remove();
                         $('.table-edit').append(tr);
+                        $.each(bookings, function(index, value) {
+                            if(value.bookingState=="ACTIVE"){
+                                $('#'+value.id).addClass('highlight-active');
+                                $('#'+value.id).find('#arrivalTime').val(value.startTime);
+                            }else if(value.bookingState=="COMPLETED"){
+                                $('#'+value.id).addClass('highlight-complet');
+                                $('#'+value.id).find('#arrivalTime').val(value.startTime);
+                                $('#'+value.id).find('#leaveTime').val(value.endTime);
+                            }
+                        });
                     }
            });
 }
@@ -80,7 +102,6 @@ function refresh(){
 function changeBooking(id){
       $('#bookingUpdatingDialog').dialog();
       idBooking = id;
-
 }
 function createBooking(){
  $('#bookingDialog').dialog();
@@ -110,8 +131,11 @@ function edit(idBooking, stTime, edTime) {
                         data: JSON.stringify(inputDate),
                         success: function(data){
                             if(data){
-                                alert(data);
-                            } else{alert("Noooo"); }
+                                refresh();
+                                alert("Updating success");
+
+                                $('#bookingUpdatingDialog').dialog('close');
+                            } else{alert("Try another time"); }
                         }
                     });
 
@@ -125,7 +149,7 @@ $( document ).ready(function() {
             success: function(result){
                 var text = result;
                 var bookings = JSON.parse(text);
-                $('#' + idBooking).hide();
+                refresh();
                 $('#bookingUpdatingDialog').dialog('close');
             }
         });
@@ -159,6 +183,7 @@ $( document ).ready(function() {
   }*/
 $( document ).ready(function() {
   $('#selectUser').on('change', function(){
+        $('#kids').empty();
        var idUser = $(this).val();
        var url = "get-kids/"+idUser;
        $.ajax({
