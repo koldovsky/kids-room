@@ -17,6 +17,10 @@ public class ConfigurationDto {
     private Integer hourToSendEmailReport;
     private Integer dayToSendEmailReport;
 
+    private Integer daysToCleanUpBookings;
+    private Integer hourToCleanUpBookings;
+    private Integer minutesToCleanUpBookings;
+
     private Integer minPeriodSize;
     private String serverName;
 
@@ -34,6 +38,9 @@ public class ConfigurationDto {
         this.minutesToSendEmailReport = appConfig.getMinutesToSendEmailReport();
         this.hourToSendEmailReport = appConfig.getHourToSendEmailReport();
         this.dayToSendEmailReport = appConfig.getDayToSendEmailReport();
+        this.daysToCleanUpBookings = appConfig.getDaysToCleanUpBookings();
+        this.hourToCleanUpBookings = appConfig.getHourToCleanUpBookings();
+        this.minutesToCleanUpBookings = appConfig.getMinutesToCleanUpBookings();
         this.minPeriodSize = appConfig.getMinPeriodSize();
         this.serverName = appConfig.getServerName();
     }
@@ -92,6 +99,18 @@ public class ConfigurationDto {
 
     public void setDayToSendEmailReport(Integer dayToSendEmailReport) {
         this.dayToSendEmailReport = dayToSendEmailReport;
+    }
+
+    public Integer getDaysToCleanUpBookings() {
+        return daysToCleanUpBookings;
+    }
+
+    public Integer getHourToCleanUpBookings() {
+        return hourToCleanUpBookings;
+    }
+
+    public Integer getMinutesToCleanUpBookings() {
+        return minutesToCleanUpBookings;
     }
 
     public Integer getMinPeriodSize() {

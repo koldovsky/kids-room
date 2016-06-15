@@ -18,6 +18,9 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
     private Integer minutesToSendEmailReport = 30;
     private Integer hourToSendEmailReport = 19;
     private Integer dayToSendEmailReport = 20;
+    private Integer daysToCleanUpBookings = 3;
+    private Integer hourToCleanUpBookings = 21;
+    private Integer minutesToCleanUpBookings = 00;
     private Integer minPeriodSize = 15;
     private String serverName = "localhost:8080/home";
 
@@ -35,6 +38,9 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
         this.minutesToSendEmailReport = cDto.getMinutesToSendEmailReport();
         this.hourToSendEmailReport = cDto.getHourToSendEmailReport();
         this.dayToSendEmailReport = cDto.getDayToSendEmailReport();
+        this.daysToCleanUpBookings = cDto.getDaysToCleanUpBookings();
+        this.hourToCleanUpBookings = cDto.getHourToCleanUpBookings();
+        this.minutesToCleanUpBookings = cDto.getMinutesToCleanUpBookings();
         this.minPeriodSize = cDto.getMinPeriodSize();
         this.serverName = cDto.getServerName();
         System.out.println("??????????????????????????????????????????????????????????????????????????");
@@ -63,27 +69,42 @@ public class ApplicationConfiguratorImpl implements ApplicationConfigurator {
     }
 
     @Override
-    public int getMinutesToCalculateBookingsEveryDay() {
+    public Integer getMinutesToCalculateBookingsEveryDay() {
         return minutesToCalculateBookingsEveryDay;
     }
 
     @Override
-    public int getHourToCalculateBookingsEveryDay() {
+    public Integer getHourToCalculateBookingsEveryDay() {
         return hourToCalculateBookingsEveryDay;
     }
 
     @Override
-    public int getMinutesToSendEmailReport() {
+    public Integer getMinutesToSendEmailReport() {
         return minutesToSendEmailReport;
     }
 
     @Override
-    public int getHourToSendEmailReport() {
+    public Integer getHourToSendEmailReport() {
         return hourToSendEmailReport;
     }
 
     @Override
-    public int getDayToSendEmailReport() {
+    public Integer getDayToSendEmailReport() {
         return dayToSendEmailReport;
+    }
+
+    @Override
+    public Integer getDaysToCleanUpBookings() {
+        return daysToCleanUpBookings;
+    }
+
+    @Override
+    public Integer getHourToCleanUpBookings() {
+        return hourToCleanUpBookings;
+    }
+
+    @Override
+    public Integer getMinutesToCleanUpBookings() {
+        return minutesToCleanUpBookings;
     }
 }

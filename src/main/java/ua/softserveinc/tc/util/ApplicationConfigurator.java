@@ -23,15 +23,21 @@ public interface ApplicationConfigurator {
 
     String getServerName();
 
-    int getMinutesToCalculateBookingsEveryDay();
+    Integer getMinutesToCalculateBookingsEveryDay();
 
-    int getHourToCalculateBookingsEveryDay();
+    Integer getHourToCalculateBookingsEveryDay();
 
-    int getMinutesToSendEmailReport();
+    Integer getMinutesToSendEmailReport();
 
-    int getHourToSendEmailReport();
+    Integer getHourToSendEmailReport();
 
-    int getDayToSendEmailReport();
+    Integer getDayToSendEmailReport();
+
+    Integer getDaysToCleanUpBookings();
+
+    Integer getHourToCleanUpBookings();
+
+    Integer getMinutesToCleanUpBookings();
 
     /**
      * Returns an object suitable for transferring (DTO)

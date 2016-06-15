@@ -36,22 +36,20 @@ public class QuartzConfig {
     }
 
     @Bean
+    public MethodInvokingJobDetailFactoryBean invokeCleanUpBookings() {
+        MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
+        obj.setTargetBeanName(QuartzConstants.CLEAN_UP_BOOKINGS);
+        obj.setTargetMethod(QuartzConstants.TASK);
+        return obj;
+    }
+
+    @Bean
     public CronTriggerFactoryBean calculateSumTrigger() {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeCalculateSum().getObject());
         stFactory.setName(QuartzConstants.CALCULATE_SUM_TRIGGER);
         stFactory.setCronExpression("0 " + configurator.getMinutesToCalculateBookingsEveryDay() +
                 " " + configurator.getHourToCalculateBookingsEveryDay() + " 1/1 * ? *");
-
-        return stFactory;
-    }
-
-    @Bean
-    public CronTriggerFactoryBean calculateSumTriggerTemporary() {
-        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
-        stFactory.setJobDetail(invokeCalculateSum().getObject());
-        stFactory.setName("temporaryTrigger");
-        stFactory.setCronExpression("0 0/10 * 1/1 * ? *");
 
         return stFactory;
     }
@@ -69,10 +67,20 @@ public class QuartzConfig {
     }
 
     @Bean
+    public CronTriggerFactoryBean cleanUpBookingsTrigger() {
+        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
+        stFactory.setJobDetail(invokeCleanUpBookings().getObject());
+        stFactory.setName(QuartzConstants.CLEAN_UP_BOOKINGS_TRIGGER);
+        stFactory.setCronExpression("0 0/1 * 1/1 * ? *");
+
+        return stFactory;
+    }
+
+    @Bean
     public SchedulerFactoryBean scheduler() {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        scheduler.setTriggers(calculateSumTrigger().getObject(), sendPaymentInfoTrigger().getObject()
-                , calculateSumTriggerTemporary().getObject());
+        scheduler.setTriggers(calculateSumTrigger().getObject(), sendPaymentInfoTrigger().getObject(),
+                cleanUpBookingsTrigger().getObject());
         return scheduler;
     }
 }
