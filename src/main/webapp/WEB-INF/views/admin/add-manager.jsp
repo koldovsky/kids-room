@@ -2,6 +2,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
+<%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
+
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
@@ -15,7 +17,7 @@
            </th></tr>
 
            <tr><td>
-               <form:form id="userform" action="adm-add-manager" method="post"  modelAttribute="manager">
+               <form:form action="adm-add-manager" method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>">
 
                   <form:input path="role" type="hidden" value="MANAGER" />
                   <form:input path="password" type="hidden" name="password"/>

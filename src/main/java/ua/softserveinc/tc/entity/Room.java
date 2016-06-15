@@ -38,10 +38,6 @@ public class Room {
     @Column(name = RoomConstants.CAPACITY_ROOM)
     private Integer capacity;
 
-//    @OneToOne
-//    @JoinColumn(name = UserConstants.Entity.ID_USER)
-//    private User manager;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
 
@@ -54,17 +50,13 @@ public class Room {
     @Column(name = RoomConstants.WORKING_END_HOUR)
     private String workingHoursEnd;
 
-    //    @JoinTable(name = RoomConstants.MANAGERS,
-//            joinColumns = @JoinColumn(name = RoomConstants.ID_ROOM),
-//            inverseJoinColumns = @JoinColumn(name = UserConstants.Entity.ID_USER))
-
     @ManyToMany
     @JoinTable(name = RoomConstants.MANAGERS,
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
     private List<User> managers = new ArrayList<>();
 
-    @Column(name = "active")
+    @Column(name = RoomConstants.ACTIVE)
     private boolean active;
 
     public Room() {

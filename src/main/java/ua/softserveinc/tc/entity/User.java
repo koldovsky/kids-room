@@ -208,7 +208,6 @@ public class User {
         result = 31 * result + (confirmed ? 1 : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + role.hashCode();
         return result;
     }
 

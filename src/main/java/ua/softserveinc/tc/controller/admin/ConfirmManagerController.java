@@ -51,7 +51,7 @@ public class ConfirmManagerController {
 
         Token token = tokenService.findByToken(sToken);
         User manager = token.getUser();
-        model.addAttribute("manager", manager);
+        model.addAttribute(AdminConstants.ATR_MANAGER, manager);
 
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 manager, null, userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
@@ -62,7 +62,7 @@ public class ConfirmManagerController {
     }
 
     @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
-    public String confirmPassword(@ModelAttribute("manager") User manager, BindingResult bindingResult) {
+    public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult) {
         User managerToSave = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         managerToSave.setPassword(manager.getPassword());
         managerToSave.setConfirm(manager.getConfirm());

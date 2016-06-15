@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
+<%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
@@ -10,7 +11,7 @@
 
 <div class="for-table">
    <table class="for-table-fields">
-   <form:form modelAttribute="room" action="adm-update-room" method="post">
+   <form:form modelAttribute="<%=AdminConstants.ATR_ROOM%>" action="adm-update-room" method="post">
 
        <tr><th>
            <legend class="for-field"><strong><spring:message code="administrator.updateRoom"/></strong></legend>

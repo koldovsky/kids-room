@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
+<%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
@@ -9,7 +10,7 @@
 
 <div class="for-table">
     <table class="for-table-fields">
-    <form:form modelAttribute="manager" action="confirm-manager" method="post">
+    <form:form modelAttribute="<%=AdminConstants.ATR_MANAGER%>" action="confirm-manager" method="post">
 
         <tr><th>
            <strong>${manager.email}<strong><br>
