@@ -29,7 +29,7 @@
                 </h3>
             </caption>
 
-            <tr>
+            <tr id="header">
                 <th><spring:message code="statistics.name" /></th>
                 <th><spring:message code="statistics.city" /></th>
                 <th><spring:message code="statistics.address" /></th>

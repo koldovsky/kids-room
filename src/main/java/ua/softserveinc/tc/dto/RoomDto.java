@@ -38,6 +38,8 @@ public class RoomDto {
 
     private String managers;
 
+    private List<String> namesOfManagers;
+
     @NotEmpty
     private String workingHoursStart;
 
@@ -77,8 +79,10 @@ public class RoomDto {
         this.name = room.getName();
         this.city = room.getCity();
         this.address = room.getAddress();
-        this.manager = room.getManager();
         this.sum = sum;
+        this.namesOfManagers = room.getManagers().stream()
+                .map(User::getFullName)
+                .collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -183,6 +187,14 @@ public class RoomDto {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<String> getNamesOfManagers() {
+        return namesOfManagers;
+    }
+
+    public void setNamesOfManagers(List<String> namesOfManagers) {
+        this.namesOfManagers = namesOfManagers;
     }
 
     @Override
