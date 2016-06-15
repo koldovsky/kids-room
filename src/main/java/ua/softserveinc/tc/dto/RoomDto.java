@@ -34,8 +34,6 @@ public class RoomDto {
     @NotNull
     private Integer capacity;
 
-    private User manager;
-
     private String managers;
 
     @NotEmpty
@@ -62,7 +60,6 @@ public class RoomDto {
         this.city = room.getCity();
         this.phoneNumber = room.getPhoneNumber();
         this.capacity = room.getCapacity();
-        this.manager = room.getManager();
         this.workingHoursStart = room.getWorkingHoursStart();
         this.workingHoursEnd = room.getWorkingHoursEnd();
         this.active = room.isActive();
@@ -77,7 +74,6 @@ public class RoomDto {
         this.name = room.getName();
         this.city = room.getCity();
         this.address = room.getAddress();
-        this.manager = room.getManager();
         this.sum = sum;
     }
 
@@ -127,14 +123,6 @@ public class RoomDto {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
-    }
-
-    public User getManager() {
-        return manager;
-    }
-
-    public void setManager(User manager) {
-        this.manager = manager;
     }
 
     public String getWorkingHoursStart() {
@@ -194,7 +182,6 @@ public class RoomDto {
                 ", city='" + city + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", capacity=" + capacity +
-                ", manager=" + manager +
                 ", rate='" + rate + '\'' +
                 '}';
     }

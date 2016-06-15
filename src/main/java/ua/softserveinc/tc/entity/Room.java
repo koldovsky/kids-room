@@ -38,9 +38,9 @@ public class Room {
     @Column(name = RoomConstants.CAPACITY_ROOM)
     private Integer capacity;
 
-    @OneToOne
-    @JoinColumn(name = UserConstants.Entity.ID_USER)
-    private User manager;
+//    @OneToOne
+//    @JoinColumn(name = UserConstants.Entity.ID_USER)
+//    private User manager;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
@@ -53,6 +53,10 @@ public class Room {
 
     @Column(name = RoomConstants.WORKING_END_HOUR)
     private String workingHoursEnd;
+
+    //    @JoinTable(name = RoomConstants.MANAGERS,
+//            joinColumns = @JoinColumn(name = RoomConstants.ID_ROOM),
+//            inverseJoinColumns = @JoinColumn(name = UserConstants.Entity.ID_USER))
 
     @ManyToMany
     @JoinTable(name = RoomConstants.MANAGERS,
@@ -76,7 +80,6 @@ public class Room {
         this.capacity = roomDto.getCapacity();
         this.workingHoursStart = roomDto.getWorkingHoursStart();
         this.workingHoursEnd = roomDto.getWorkingHoursEnd();
-        this.manager = roomDto.getManager();
         this.active = roomDto.isActive();
 
         List<Rate> rates = roomDto.fromJsonToListOfRates();
@@ -163,14 +166,6 @@ public class Room {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public User getManager() {
-        return manager;
-    }
-
-    public void setManager(User manager) {
-        this.manager = manager;
     }
 
     public List<Event> getEvents() {
