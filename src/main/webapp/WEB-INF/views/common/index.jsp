@@ -42,7 +42,7 @@
     </c:forEach>
 
 
-    <select id="selectBoxUser" onchange="selectRoomForUser(value);">
+    <select id="selectBoxUser" onchange="selectRoomForUser(value, '${userId}');">
 
         <option value=" "></option>
 
@@ -89,10 +89,13 @@
                         <table>
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
+                                <c:set var="kidsArray" value="${kids}"/>
+
+
                                 <tr>
                                     <label><input type="checkbox" value=""
                                                   id="checkboxKid${kids.id}">${kids.firstName}</label>
-                                        ${loop.index} <br>
+                                    <br>
                                 </tr>
 
                             </c:forEach>
@@ -100,9 +103,11 @@
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                 <tr>
-                                    <label for="child-comment-${kids.id}">Comment for ${kids.id}:</label>
+                                    <label for="child-comment-${kids.id}">Comment for ${kids.firstName}:</label>
 
-                                    <input type="text" value="" id="child-comment-${kids.id}">
+                                    <input type="text" id="child-comment-${kids.id}">
+
+                                    <input type="text" id="costil-for-comment-${loop.index}" value="${kids.id}" hidden>
                                 </tr>
 
 
@@ -129,11 +134,13 @@
                             <label for="bookingUpdatingStartDate">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="bookingUpdatingStartDate" placeholder="startDate"
+                                <input type="text" class="form-control" id="bookingUpdatingStartDate"
+                                       placeholder="startDate"
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control" size="6"/>
+                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control"
+                                       size="6"/>
                             </div>
                         </div>
                         <br>
@@ -143,11 +150,13 @@
                             <label for="bookingUpdatingEndDate">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="bookingUpdatingEndDate" placeholder="endDate"
+                                <input type="text" class="form-control" id="bookingUpdatingEndDate"
+                                       placeholder="endDate"
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control" size="6"/>
+                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control"
+                                       size="6"/>
                             </div>
                         </div>
 

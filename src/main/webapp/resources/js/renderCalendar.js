@@ -75,7 +75,7 @@ function selectRoomForManager(id) {
 
         success: function (result) {
 
-            if (result.length != 0) {
+            if (result.length !== 0) {
                 var objects = [];
                 result = result.split(', ');
 

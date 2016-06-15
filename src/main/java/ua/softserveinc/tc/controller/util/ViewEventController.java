@@ -47,6 +47,7 @@ public class ViewEventController {
             if (userService.getUserByEmail(email).getRole() == Role.USER) {
                 model.addAttribute("rooms", roomServiceImpl.findAll());
                 model.addAttribute("kids", user.getEnabledChildren());
+                model.addAttribute("userId", user.getId());
             } else {
                 model.addAttribute("rooms", user.getRooms());
             }

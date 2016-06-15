@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dao.RoomDao;
+import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
@@ -33,6 +35,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private RoomDao roomDao;
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
@@ -178,14 +186,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
 
-        List<Booking> bookings = bookingDao.findAll();
+        List<Booking> bookings ;
+
+        bookings = bookingDao.getBookingsByUserAndRoom(userDao.findById(idUser), roomDao.findById(idRoom));
 
         List<BookingDto> bookingDtos = new LinkedList<>();
 
         for (Booking booking : bookings) {
-            if ((booking.getRoom().getId() == idRoom) && (booking.getUser().getId() == idUser) &&
-                    ((booking.getBookingState().toString() == "ACTIVE")
-                            || (booking.getBookingState().toString() == "BOOKED"))) {
+            if (((booking.getBookingState().toString() == "ACTIVE")
+                    || (booking.getBookingState().toString() == "BOOKED"))) {
                 bookingDtos.add(new BookingDto(booking));
             }
         }
