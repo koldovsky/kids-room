@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
@@ -21,8 +23,9 @@ import java.util.List;
  */
 @Controller
 public class BookingTimeController {
+
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @Autowired
     private ChildService childService;
@@ -37,7 +40,7 @@ public class BookingTimeController {
     @ResponseBody
     public String getBooking(@RequestBody List<BookingDto> dtos) {
         dtos.forEach(dto -> {
-            dto.setUser(userService.findById(dto.getUserId()));
+            dto.setUser(userDao.findById(dto.getUserId()));
             dto.setChild(childService.findById(dto.getKidId()));
             dto.setRoom(roomService.findById(dto.getRoomId()));
             dto.setBookingState(BookingState.BOOKED);
@@ -53,7 +56,15 @@ public class BookingTimeController {
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllBookings(@PathVariable Long idUser, @PathVariable Long idRoom) {
-        return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
+        List <BookingDto> buf = bookingService.getAllBookingsByUserAndRoom(idUser, idRoom);
+
+        for(int i = 0; i < buf.size(); i++) {
+            if(buf.get(i).getComment() == null) {
+                buf.get(i).setComment("");
+            }
+        }
+    //    return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
+        return new Gson().toJson(buf);
     }
 
     @RequestMapping(value = "/disabled")

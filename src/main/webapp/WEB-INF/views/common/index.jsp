@@ -160,6 +160,8 @@
                             </div>
                         </div>
 
+                        <input type="text" id="child-comment-update">
+
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Update</button>
                         </div>
