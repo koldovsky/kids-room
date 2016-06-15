@@ -5,7 +5,8 @@ var info;
 var bookingsArray;
 var bookingDate;
 var roomIdForHandler;
-
+var bookingsForRendering;
+var usersID;
 $(function () {
 
     $('body').on('click', 'button.fc-prev-button', function () {
@@ -25,7 +26,6 @@ $(function () {
     });
 });
 
-
 $(function () {
     $('#bookingStartTimepicker').timepicker({
         'timeFormat': 'H:i',
@@ -34,7 +34,6 @@ $(function () {
         'maxTime': '22:00'
     });
 });
-
 
 $(function () {
     $('#bookingEndTimepicker').timepicker({
@@ -76,11 +75,13 @@ $(document).ready(function () {
         var newStartDate = makeISOtime(info.calEvent.start.format(), 'bookingUpdatingStartTimepicker');
         var newEndDate = makeISOtime(info.calEvent.end.format(), 'bookingUpdatingEndTimepicker');
 
+
         var bookingForUpdate = {
             id: info.calEvent.id,
             title: info.calEvent.title,
             start: newStartDate,
-            end: newEndDate
+            end: newEndDate,
+            comment : $('#child-comment-update').val()
         };
 
         sendBookingToServerForUpdate(bookingForUpdate, info.roomID);
@@ -102,7 +103,8 @@ $(document).ready(function () {
                         makeISOtime(bookingDate.clickDate, 'bookingEndTimepicker'),
                         getComment("child-comment-" + $('#costil-for-comment-' + i).val()),
                         $('#costil-for-comment-' + i).val(),
-                        roomIdForHandler));
+                        roomIdForHandler,
+                        usersID));
 
                 $('#user-calendar').fullCalendar('renderEvent', {
                     id: -1,
@@ -145,6 +147,7 @@ $(document).ready(function () {
 
 function selectRoomForUser(id, userId) {
     roomIdForHandler = id;
+    usersID = userId;
 
     $('#user-calendar').fullCalendar('destroy');
 
@@ -203,7 +206,8 @@ function selectRoomForUser(id, userId) {
                         start: stringToArray[1],
                         end: stringToArray[2],
                         editable: false,
-                        color: '#ffff00'
+                        color: '#ffff00',
+                        type: 'event'
                     }
                 }
                 renderingForUser(objects, id, userId);
@@ -236,10 +240,11 @@ function renderingForUser(objects, id, userId) {
         url: pathForUploadingAllBookingsForUsers, success: function (result) {
             result = JSON.parse(result);
 
+
             var objectsLen = objects.length;
 
             result.forEach(function (item, i, result) {
-                console.log(item.date + item.startTime + ':00');
+                console.log(item.comment);
                 objects[objectsLen + i] = {
                     id: item.id,
                     title: item.kidName,
@@ -247,8 +252,11 @@ function renderingForUser(objects, id, userId) {
                     end: item.date + 'T' + item.endTime + ':00',
                     color: '#99ff33',
                     borderColor : "#000000",
-                    editable: false
+                    editable: false,
+                    type: 'booking',
+                    comment: item.comment
                 }
+
             });
 
             $('#user-calendar').fullCalendar({
@@ -281,6 +289,11 @@ function renderingForUser(objects, id, userId) {
                 eventClick: function (calEvent, jsEvent, view) {
 
                     if (calEvent.color === '#ffff00') return;
+
+                    if(calEvent.type === 'booking') {
+                        $('#child-comment-update').val(calEvent.comment);
+                    }
+
                     var beforeUpdate = calEvent.title;
 
                     $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
@@ -348,66 +361,6 @@ function renderingForUser(objects, id, userId) {
             });
         }
     });
-
-    /* $('#user-calendar').fullCalendar({
-     minTime: '10:00:00',
-     maxTime: '22:00:00',
-     eventBackgroundColor: '#068000',
-     eventColor: 'transparent',
-     eventBorderColor: 'transparent',
-     eventTextColor: '#000',
-     slotDuration: '00:15:00',
-
-     dayClick: function f(date, jsEvent, view) {
-     $('#bookingForm').dialog('open');
-
-     var clickDate = date.format();
-
-     $('#bookingStartDate').val(clickDate.substring(0, 10));
-     $('#bookingEndDate').val(clickDate.substring(0, 10));
-
-
-     if (clickDate.length < 12) {
-     clickDate = clickDate + 'T00:00:00';
-     }
-
-     bookingDate.clickDate = clickDate;                  //цей об'єкт переносить дату у ф-цію для створення букігу
-
-     $('#dialog').dialog('open');
-     },
-
-     header: {
-     left: 'prev,next today',
-     center: 'title',
-     right: 'month,agendaWeek,agendaDay'
-     },
-     defaultDate: $('#user-calendar').fullCalendar('getDate'),
-
-     select: function (start, end) {
-     var title = prompt('Event Title:');
-     var eventData;
-     if (title) {
-     eventData = {
-     title: title,
-     start: start,
-     end: end
-     };
-     $('#user-calendar').fullCalendar('renderEvent', eventData, false);
-     }
-     $('#user-calendar').fullCalendar('unselect');
-     },
-
-     eventRender: function (event, element) {
-     if (event.rendering == 'background') {
-     element.append(event.title);
-     element.css('background-color', 'yellow');
-     element.css('color', 'black');
-     }
-     },
-     editable: false,
-     eventLimit: true,
-     events: objects
-     });*/
 }
 
 function makeISOtime(clickDate, idOfTimePicker) {
@@ -433,15 +386,17 @@ function makeISOtime(clickDate, idOfTimePicker) {
         timepickerMinutes + clickDate.substring(16);
 }
 
-function Booking(startTime, endTime, comment, kidId, roomId) {
+function Booking(startTime, endTime, comment, kidId, roomId, usersID) {
     this.startTime = startTime;
     this.endTime = endTime;
     this.comment = comment;
     this.kidId = kidId;
     this.roomId = roomId;
+    this.userId = usersID
 }
 
 function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
+
     $.ajax({
         type: 'post',
         contentType: 'application/json',
@@ -451,8 +406,9 @@ function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
             id: bookingForUpdate.id,
             //    name: bookingForUpdate.title,
             startTime: bookingForUpdate.start.substring(0, 10) + ' ' + bookingForUpdate.start.substring(11, 16),
-            endTime: bookingForUpdate.end.substring(0, 10) + ' ' + bookingForUpdate.end.substring(11, 16)
+            endTime: bookingForUpdate.end.substring(0, 10) + ' ' + bookingForUpdate.end.substring(11, 16),
             //    roomId: roomID
+            comment: bookingForUpdate.comment
         }),
         success: function (result) {
             if (result) {
@@ -487,7 +443,9 @@ function sendBookingToServerForCreate(bookingsArray) {
                     start: item.startTime,
                     end: item.endTime,
                     color: '#99ff33',
-                    editable: false
+                    editable: false,
+                    type: 'booking',
+                    comment: item.comment
                 });
             });
         }

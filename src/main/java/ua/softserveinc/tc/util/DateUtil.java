@@ -38,6 +38,7 @@ public final class DateUtil {
             return null;
         }
     }
+
     public static Date toDateISOFormat(String dateToParse) {
         try {
             return isoDateFormat.parse(dateToParse);
@@ -47,7 +48,7 @@ public final class DateUtil {
         }
     }
 
-    public static String toIsoString(Date date){
+    public static String toIsoString(Date date) {
         return isoDateFormat.format(date);
     }
 
@@ -57,6 +58,12 @@ public final class DateUtil {
 
     public static Calendar dateNow() {
         return Calendar.getInstance();
+    }
+
+    public static Calendar dateDayAgo() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        return calendar;
     }
 
     public static Calendar dateMonthAgo() {
@@ -101,13 +108,14 @@ public final class DateUtil {
 
         return hoursAndMinutes;
     }
-    public static Date setTime(String time){
+
+    public static Date setTime(String time) {
         Calendar day = Calendar.getInstance();
-        String toDay = getStringDate(day) +" " +time;
+        String toDay = getStringDate(day) + " " + time;
         try {
             Date date = dateAndTimeFormat.parse(toDay);
             return date;
-        }catch (ParseException e){
+        } catch (ParseException e) {
             //TODO: log
             return null;
         }

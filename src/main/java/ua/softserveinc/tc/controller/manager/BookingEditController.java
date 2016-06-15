@@ -85,6 +85,7 @@ public class BookingEditController {
         if(roomService.isPeriodAvailable(startTime, endTime, room)) {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
+            booking.setComment(bookingDto.getComment());
             bookingService.update(booking);
             return true;
         }

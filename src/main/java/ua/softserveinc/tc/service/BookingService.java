@@ -24,7 +24,6 @@ public interface BookingService extends BaseService<Booking> {
     List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates);
     List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates);
 
-    Booking confirmBooking(BookingDto bookingDto);
     Booking confirmBookingEndTime(BookingDto bookingDto);
     Booking confirmBookingStartTime(BookingDto bookingDto);
 

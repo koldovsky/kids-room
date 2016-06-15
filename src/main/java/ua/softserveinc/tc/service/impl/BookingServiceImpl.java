@@ -140,15 +140,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return booking;
     }
 
-    @Override
-    public Booking confirmBooking(BookingDto bookingDto) {
-        Booking booking = findById(bookingDto.getId());
-        booking.setBookingStartTime(replaceBookingTime(booking, bookingDto.getStartTime()));
-        booking.setBookingStartTime(replaceBookingTime(booking, bookingDto.getEndTime()));
-        resetSumAndDuration(booking);
-        return booking;
-    }
-
     private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);
         booking.setSum(0L);
