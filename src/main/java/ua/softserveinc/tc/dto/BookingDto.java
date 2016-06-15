@@ -58,7 +58,7 @@ public class BookingDto implements Serializable{
         this.bookingState = booking.getBookingState();
         this.durationLong = booking.getDuration();
         this.idChild = booking.getChild().getId();
-
+        this.comment = booking.getComment();
     }
 
     public Booking getBookingObject() {
