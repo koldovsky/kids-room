@@ -29,13 +29,13 @@
             <div class="form-group">
                 <label for="password" class="required">
                 <spring:message code="user.password" /></label>
-                <form:password path="password" id="password" class="form-control" required="required"/>
+                <form:password path="password" class="form-control" required="required"/>
                 <form:errors path="password" cssClass="error"/>
             </div>
 
             <div class="form-group">
                 <label for="confirm" class="required">
-                <spring:message code="user.confirm" /></label>
+                <spring:message code="user.confirm"/></label>
                 <form:password path="confirm" class="form-control" />
                 <form:errors path="confirm" cssClass="error" />
             </div>
@@ -44,7 +44,7 @@
         <tr></tr>
         <tr><td class="hide-border">
             <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok"></button>
+                <button type="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok"></button>
             </div>
         </td></tr>
 

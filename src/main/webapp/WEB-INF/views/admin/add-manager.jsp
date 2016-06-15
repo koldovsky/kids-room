@@ -25,13 +25,12 @@
                   <div class="form-group">
                       <label for="email" class="required">
                       <spring:message code="administrator.manager.email"/></label>
-                      <form:input path="email" type="email" id="userEmail" class="form-control"
-                                  style="text-transform: lowercase" />
+                      <form:input path="email" type="email" class="form-control" style="text-transform: lowercase" />
                       <form:errors path="email" cssClass="error"/>
                   </div>
 
                   <div class="form-group">
-                      <label for="firstname" class="required">
+                      <label for="firstName" class="required">
                       <spring:message code="administrator.manager.firstName"/></label>
                       <form:input path="firstName" class="form-control" style="text-transform: capitalize"/>
                       <form:errors path="firstName" cssClass="error"/>
@@ -40,20 +39,20 @@
                   <div class="form-group">
                       <label for="lastname" class="required">
                       <spring:message code="administrator.manager.lastName" /></label>
-                      <form:input path="lastName" class="form-control" style="text-transform: capitalize"  />
+                      <form:input path="lastName" class="form-control" style="text-transform: capitalize"/>
                       <form:errors path="lastName" cssClass="error"/>
                   </div>
 
                   <div class="form-group">
                       <label for="phoneNumber" class="required">
                       <spring:message code="administrator.phoneNumber"/></label>
-                      <form:input path="phoneNumber"  id="phonenumber" type="text" class="form-control"/>
+                      <form:input path="phoneNumber" type="text" class="form-control"/>
                       <form:errors path="phoneNumber" cssClass="error"/>
                   </div>
 
                   <div class="form-group">
-                      <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
-                      <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                      <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
+                      <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
                               onclick="window.location.href='/home/adm-edit-manager'"></button>
                   </div>
 

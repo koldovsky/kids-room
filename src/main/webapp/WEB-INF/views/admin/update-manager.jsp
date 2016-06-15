@@ -26,35 +26,35 @@
             <div class="form-group">
                <label for="email" class="required">
                   <spring:message code="administrator.manager.email"/></label>
-                  <form:input path="email" id="email" value="${manager.email}" class="form-control" />
+                  <form:input path="email" value="${manager.email}" class="form-control" />
                   <form:errors path="email" cssClass="error"/>
             </div>
 
             <div class="form-group">
                <label for="firstName" class="required">
                   <spring:message code="administrator.manager.firstName"/></label>
-                  <form:input path="firstName" id="firstName" value="${manager.firstName}" class="form-control"/>
+                  <form:input path="firstName" value="${manager.firstName}" class="form-control"/>
                   <form:errors path="firstName" cssClass="error"/>
             </div>
 
             <div class="form-group">
                <label for="lastName" class="required">
                   <spring:message code="administrator.manager.lastName"/></label>
-                  <form:input path="lastName" id="lastName" value="${manager.lastName}" class="form-control"/>
+                  <form:input path="lastName" value="${manager.lastName}" class="form-control"/>
                   <form:errors path="lastName" cssClass="error" />
             </div>
 
             <div class="form-group">
                <label for="phoneNumber" class="required">
                   <spring:message code="administrator.phoneNumber"/></label>
-                  <form:input path="phoneNumber" id="phoneNumber" value="${manager.phoneNumber}"
+                  <form:input path="phoneNumber" value="${manager.phoneNumber}"
                               pattern="^(\+38|8|)(\W*\d){10}\W*$" class="form-control"/>
                   <form:errors path="phoneNumber" cssClass="error"  />
             </div>
 
             <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
-                <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
+                <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
                         onclick="window.location.href='/home/adm-edit-manager'"></button>
             </div>
         </th></tr>

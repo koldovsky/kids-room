@@ -26,35 +26,35 @@
                <div class="form-group">
                   <label for="name" class="required">
                      <spring:message code="administrator.room.name"/></label>
-                     <form:input path="name" id="name" class="form-control" />
+                     <form:input path="name" class="form-control" />
                      <form:errors path="name" cssClass="error"/>
                </div>
 
                <div class="form-group">
                   <label for="address" class="required">
                      <spring:message code="administrator.room.address"/></label>
-                     <form:input path="address" id="address" class="form-control" />
+                     <form:input path="address" class="form-control" />
                      <form:errors path="address" cssClass="error" />
                </div>
 
                <div class="form-group">
                   <label for="city" class="required">
                      <spring:message code="administrator.room.city"/></label>
-                     <form:input path="city" id="city"  class="form-control"/>
+                     <form:input path="city" class="form-control"/>
                      <form:errors path="city" cssClass="error"/>
                </div>
 
                <div class="form-group">
                   <label for="phoneNumber" class="required">
                      <spring:message code="administrator.phoneNumber"/></label>
-                     <form:input path="phoneNumber" id="phoneNumber" class="form-control"/>
+                     <form:input path="phoneNumber" class="form-control"/>
                      <form:errors path="phoneNumber" cssClass="error"/>
                </div>
 
                <div class="form-group">
                   <label for="capacity" class="required">
                      <spring:message code="administrator.room.capacity"/></label>
-                     <form:input path="capacity" id="capacity" class="form-control"/>
+                     <form:input path="capacity" class="form-control"/>
                      <form:errors path="capacity" cssClass="error"/>
                </div>
 
@@ -62,14 +62,14 @@
                    <label class="for-field1">
                    <label for="workingHoursStart" class="required">
                        <spring:message code="administrator.room.workingHoursStart"/></label>
-                       <form:input type="time" path="workingHoursStart" id="workingHoursStart" class="form-control"/>
+                       <form:input type="time" path="workingHoursStart" class="form-control"/>
                        <form:errors path="workingHoursStart" cssClass="error"/>
                    </label>
 
                    <label class="for-field2">
                    <label for="workingHoursEnd" class="required">
                       <spring:message code="administrator.room.workingHoursEnd"/></label>
-                      <form:input type="time" path="workingHoursEnd" id="workingHoursEnd" class="form-control"/>
+                      <form:input type="time" path="workingHoursEnd" class="form-control"/>
                       <form:errors path="workingHoursEnd" cssClass="error"/>
                    </label>
                </div>
@@ -98,14 +98,13 @@
                           <spring:message code="administrator.room.rate"/></label>
                        <fieldset  data-ng-repeat="rate in rates">
                           <label class="for-field1">
-                             <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control"
+                             <input type="text" ng-model="rate.hourRate" hourRate="" class="form-control"
                                     placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
                           </label>
                           <label class="for-field2">
-                             <input id="myText" type="text" ng-model="rate.priceRate" priceRate="" class="form-control"
+                             <input type="text" ng-model="rate.priceRate" priceRate="" class="form-control"
                                     placeholder=<spring:message code="administrator.room.rate.priceRate" /> />
                           </label>
-
                               <button class="remove" ng-show="$last" ng-click="removeRate()">-</button>
                        </fieldset>
 
@@ -114,9 +113,9 @@
                    </div>
 
                    <div class="form-group">
-                      <button type="submit" name="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"
+                      <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"
                               ng-click="submit()"></button>
-                      <button type="reset" name="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                      <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
                               onclick="window.location.href='/home/adm-edit-room'"></button>
                    </div>
 
