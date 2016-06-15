@@ -26,6 +26,7 @@ public class CleanUpBookingsJob {
     private void task() {
         List<Booking> bookings = bookingRepository
                 .findByBookingStateAndBookingStartTimeLessThan(BookingState.ACTIVE, toDate(dateDayAgo()));
+
         bookings.forEach(booking -> {
             booking.setBookingState(BookingState.CALCULATE_SUM);
             bookingService.update(booking);
