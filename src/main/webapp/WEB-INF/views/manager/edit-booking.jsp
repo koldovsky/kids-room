@@ -17,71 +17,31 @@
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="choose-time">
-     <div>
-        <button class="btn btn-primary" onclick="createBooking()">
-            <spring:message code="button.add"/>
-        </button>
-     </div>
- </div>
- <div class="choose-time">
-                <div class="input-group" id="chose-data">
-                    <form action="", method="POST">
-                        <h3><spring:message code="booking.createDate"/></h3>
-                        <input id="data-booking" name="date" class ="form-control" type = "date"/>
-                    </form>
-                </div>
-
-</div>
 <div class="container">
-    <table class="table-edit">
-
-            <div id ="body-booking">
-                <th class="col-xs-3"><spring:message code= "booking.childrens"/></th>
-                <th class="col-xs-3"><spring:message code= "booking.time"/></th>
-                <th class="col-xs-3"><spring:message code= "button.edit"/></th>
-                <th class="col-xs-3"><spring:message code= "button.edit"/></th>
+             <div id="choose-time-inp">
+                 <form action="", method="POST">
+                    <input id="data-booking" class ="form-control" type = "date"/>
+                  </form>
+             </div>
+            <div id="create-booking-btn">
+                 <button class="btn btn-primary" onclick="createBooking()">
+                    New booking
+                 </button>
             </div>
-                <c:forEach var="booking" items="${listBooking}">
-                    <tr id="${booking.idBook}" class="trbooking">
-                        <div class="col-sm-4">
-                            <td  class="kidsName">
-                                <a href="profile?id=${booking.child.id}">${booking.child.getFullName()}</a>
-                            </td>
-                        </div>
-                        <td class="bookingTime" class="col-sm-4">
-                            <fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}"/> -
-                            <fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}"/>
-                        </td>
-                        <td class="change-booking" class="col-sm-4">
-                            <button class="btn btn-sm btn-primary"
-                                data-toggle="modal" data-target="#change-booking-modal"
-                                onclick="changeBooking(${booking.idBook})">
-                                <spring:message code= "button.edit"/>
-                            </button>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </div>
-    </table>
+    <div class = "tableDiv">
+        <table class="table-edit">
+                <div id ="body-booking">
+                    <thead>
+                        <th class="col-xs-1"> № </th>
+                        <th class="col-xs-3"><spring:message code= "booking.childrens"/></th>
+                        <th class="col-xs-2"><spring:message code= "booking.time"/></th>
+                        <th class="col-xs-2"><spring:message code= "booking.arrival"/></th>
+                        <th class="col-xs-2"><spring:message code= "booking.leave"/></th>
+                    </thead>
+                </div>
+        </table>
+    </div>
+</div>
 
 
     <div id="cancelModal" class="modal fade">

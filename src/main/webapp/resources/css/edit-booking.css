@@ -8,6 +8,15 @@
     background-color: white;
 
 }
+.tableDiv{
+    margin: auto;
+    width: 70%;
+    min-width: 950px;
+    background-color: white;
+    box-shadow: 8px 11px 20px 12px #c8c6d7;
+}
+
+
 .table-edit th, td{
     border: 2px solid #ddd;
     text-align:center;
@@ -36,8 +45,34 @@ html, body, .container {
     display: table-cell;
     vertical-align: middle;
 }
-.choose-time{
- text-align:center;
-    margin: auto;
+
+
+.highlighted{
+        background-color:  #FFFFFF;
+}
+
+.highlight-active{
+    background-color: #C4DAF4;
+}
+
+.highlightedRed {
+    background-color: red;
+}
+
+.highlight-complet {
+    background-color: #C0C0C0;
+}
+#create-booking-btn{
+      width:150px;
+      margin-right: 150px;
+      float:right;
+
+}
+#choose-time-inp{
+       width:150px;
+       margin-left: 150px;
+       margin-top: 20px;
+       float:left;
+
 }
 

@@ -79,6 +79,7 @@
 
       //todo: set value
 
+
    $('.input-group').find('#leaveTime').on('click', dateNow);
    $('.input-group').find('#arrivalTime').on('click', dateNow);
 
@@ -141,7 +142,7 @@
                    + '<a href=profile?id=' + booking.idChild +'>'
                    + booking.kidName +'</td>'
                    + '<td>' + booking.startTime + " -" + booking.endTime +  '</td>'
-                   + '<td><div class="input-group"><input type="time"' + 'id="arrivalTime"'+ 'class="form-control"/>'
+                   + '<td><div class="input-group">' +" " +'<input type="time"' + 'id="arrivalTime"'+ 'class="form-control"/>'
                    + '<span class="input-group-btn">'
                    + '<input type="button"'+'class="btn btn-raised btn-sm btn-info"'
                    + startButton +'value="Set"'+'</input></span></td></div>'
@@ -150,11 +151,9 @@
                    + '<input type="button"'+'class="btn btn-raised btn-sm btn-info"'
                    + endButton +'value="Set"'+'</input></span></td></div>'
                    +'</tr>';
-
                });
                $('.trbooking').remove();
                $('.table').append(tr);
-
                $.each(bookings, function(index, value) {
                         if(value.bookingState=="ACTIVE"){
                             $('#'+value.id).addClass('highlight-active');
