@@ -5,10 +5,8 @@ import ua.softserveinc.tc.constants.DateConstants;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,7 +38,6 @@ public final class DateUtil {
             return null;
         }
     }
-
     public static Date toDateISOFormat(String dateToParse) {
         try {
             return isoDateFormat.parse(dateToParse);
@@ -104,46 +101,21 @@ public final class DateUtil {
 
         return hoursAndMinutes;
     }
-
-    public static List<Date> workingHours() {
-        Calendar toDay = Calendar.getInstance();
-        toDay.set(Calendar.AM_PM, 0);
-        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
-        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
-        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
-        Date startTime = toDay.getTime();
-        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
-        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
-        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
-        Date endTime = toDay.getTime();
-        List<Date> list = new ArrayList<>();
-        list.add(startTime);
-        list.add(endTime);
-        return list;
-    }
-
-    public static Date setStartTime(Date date) {
-        Calendar toDay = Calendar.getInstance();
-        toDay.setTime(date);
-        toDay.set(Calendar.AM_PM, 0);
-        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_START_HOUR);
-        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_START_MINUTE);
-        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_START_SECOND);
-        return toDay.getTime();
-    }
-
-    public static Date setEndTime(Date date) {
-        Calendar toDay = Calendar.getInstance();
-        toDay.setTime(date);
-        toDay.set(Calendar.AM_PM, 0);
-        toDay.set(Calendar.HOUR, BookingUtil.BOOKING_END_HOUR);
-        toDay.set(Calendar.MINUTE, BookingUtil.BOOKING_END_MINUTE);
-        toDay.set(Calendar.SECOND, BookingUtil.BOOKING_END_SECOND);
-        return toDay.getTime();
+    public static Date setTime(String time){
+        Calendar day = Calendar.getInstance();
+        String toDay = getStringDate(day) +" " +time;
+        try {
+            Date date = dateAndTimeFormat.parse(toDay);
+            return date;
+        }catch (ParseException e){
+            //TODO: log
+            return null;
+        }
     }
 
     public static String convertDateToString(Date date) {
         DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
         return df.format(date);
     }
+
 }
