@@ -59,44 +59,44 @@
            </div>
 
            <div class="form-group">
+              <label class="for-field1">
               <label for="workingHoursStart" class="required">
                  <spring:message code="administrator.room.workingHoursStart"/></label>
                  <form:input type="time" path="workingHoursStart" id="workingHoursStart" value="${room.workingHoursStart}"
                                                       class="form-control" required="required"/>
                  <form:errors path="workingHoursStart" cssClass="error"/>
-           </div>
+              </label>
 
-           <div class="form-group">
+              <label class="for-field2">
               <label for="workingHoursEnd" class="required">
                  <spring:message code="administrator.room.workingHoursEnd"/></label>
                  <form:input type="time" path="workingHoursEnd" id="workingHoursEnd" value="${room.workingHoursEnd}"
                                                     class="form-control" required="required"/>
                  <form:errors path="workingHoursEnd" cssClass="error"/>
+              </label>
            </div>
 
            <div ng-app="angularjs-starter" ng-controller="MainCtrl">
                <div class="form-group">
                    <label class="for-field">
                       <spring:message code="administrator.room.manager"/></label>
-                      <fieldset  data-ng-repeat="manager in managers">
-                          <label class="for-field">
-                             <select name="managers" class="form-control" ng-model="manager.managerId" managerId="" placeholder="manager">
-                                <c:forEach var="manager" items="${managerList}">
-                                   <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
-                                </c:forEach>
-                             </select>
-                          </label>
-                          <button class="remove" ng-show="$last" ng-click="removeManager()">-</button>
-                      </fieldset>
-                   </label>
-
+                   <fieldset  data-ng-repeat="manager in managers">
+                       <label class="for-field">
+                           <select name="managers" class="form-control" ng-model="manager.managerId" managerId="" placeholder="manager">
+                              <c:forEach var="manager" items="${managerList}">
+                                 <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
+                              </c:forEach>
+                           </select>
+                       </label>
+                       <button class="remove" ng-show="$last" ng-click="removeManager()">-</button>
+                   </fieldset>
                    <button type="button" class="addfields" ng-click="addNewManager()" >+</button>
                </div>
 
                <div class="form-group">
                   <label class="for-field">
-                     <spring:message code="administrator.room.rate"/>
-                     <fieldset  data-ng-repeat="rate in rates">
+                     <spring:message code="administrator.room.rate"/></label>
+                  <fieldset  data-ng-repeat="rate in rates">
                      <label class="for-field1">
                         <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control"
                                placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
@@ -106,8 +106,7 @@
                                placeholder=<spring:message code="administrator.room.rate.priceRate"/> />
                      </label>
                         <button class="remove" ng-show="$last" ng-click="removeRate()">-</button>
-                     </fieldset>
-                  </label>
+                  </fieldset>
 
                   <button type="button" class="addfields" ng-click="addNewRate()" >+</button>
                   <form:errors path="rate" cssClass="error"/>
