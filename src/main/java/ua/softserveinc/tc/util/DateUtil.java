@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.util;
 
+import org.slf4j.Logger;
 import ua.softserveinc.tc.constants.DateConstants;
 
 import java.text.DateFormat;
@@ -17,15 +18,18 @@ public final class DateUtil {
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
     private static DateFormat isoDateFormat = new SimpleDateFormat(DateConstants.DATE_FORMAT);
 
-    // Suppresses default constructor, ensuring non-instantiability.
+    @Log
+    private static Logger log;
+
     private DateUtil() {
+        // Suppresses default constructor, ensuring non-instantiability.
     }
 
     public static Date toDate(String date) {
         try {
             return dateFormat.parse(date);
         } catch (ParseException e) {
-            //TODO: log
+            log.error("Error convert to date", e);
             return null;
         }
     }
@@ -34,7 +38,7 @@ public final class DateUtil {
         try {
             return dateAndTimeFormat.parse(date);
         } catch (ParseException e) {
-            //TODO: log
+            log.error("Error convert to date and time", e);
             return null;
         }
     }
@@ -43,7 +47,7 @@ public final class DateUtil {
         try {
             return isoDateFormat.parse(dateToParse);
         } catch (ParseException e) {
-            //TODO: log
+            log.error("Error convert to date ISO format", e);
             return null;
         }
     }
@@ -113,10 +117,9 @@ public final class DateUtil {
         Calendar day = Calendar.getInstance();
         String toDay = getStringDate(day) + " " + time;
         try {
-            Date date = dateAndTimeFormat.parse(toDay);
-            return date;
+            return dateAndTimeFormat.parse(toDay);
         } catch (ParseException e) {
-            //TODO: log
+            log.error("Error. Set time", e);
             return null;
         }
     }

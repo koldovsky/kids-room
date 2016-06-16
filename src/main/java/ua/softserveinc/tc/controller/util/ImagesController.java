@@ -48,6 +48,7 @@ public class ImagesController {
 
     @Log
     private Logger log;
+
     /**
      * Uploading a new profile picture for a Child
      *
@@ -59,7 +60,7 @@ public class ImagesController {
     public String uploadImage(@ModelAttribute FileUploadFormObject form,
                               BindingResult bindingResult,
                               @PathVariable String kidId)
-            throws ResourceNotFoundException, AccessDeniedException {
+            throws AccessDeniedException {
         if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
@@ -132,9 +133,9 @@ public class ImagesController {
             BufferedImage bufferedImage = ImageIO.read(imgPath);
             ImageIO.write(bufferedImage, "jpg", baos);
             baos.flush();
-            base64String =  DatatypeConverter.printBase64Binary(baos.toByteArray());;
+            base64String = DatatypeConverter.printBase64Binary(baos.toByteArray());
             baos.close();
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
             throw new ResourceNotFoundException();
         }

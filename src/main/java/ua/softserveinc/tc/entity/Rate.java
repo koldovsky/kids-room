@@ -30,7 +30,7 @@ public class Rate {
     private Room room;
 
     public Rate() {
-        //TODO add comment what do this constructor
+        //empty constructor for instantiating in controller
     }
 
     public Rate(Integer hourRate, Long priceRate) {

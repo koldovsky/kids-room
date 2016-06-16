@@ -8,11 +8,9 @@ import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.Calendar;
@@ -50,22 +48,22 @@ public class BookingTimeController {
         });
 
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
-        if(dto != null)
-        return new Gson().toJson(dto);
+        if (dto != null) {
+            return new Gson().toJson(dto);
+        }
         return null;
     }
 
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getAllBookings(@PathVariable Long idUser, @PathVariable Long idRoom) {
-        List <BookingDto> buf = bookingService.getAllBookingsByUserAndRoom(idUser, idRoom);
+        List<BookingDto> buf = bookingService.getAllBookingsByUserAndRoom(idUser, idRoom);
 
-        for(int i = 0; i < buf.size(); i++) {
-            if(buf.get(i).getComment() == null) {
+        for (int i = 0; i < buf.size(); i++) {
+            if (buf.get(i).getComment() == null) {
                 buf.get(i).setComment("");
             }
         }
-    //    return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
         return new Gson().toJson(buf);
     }
 

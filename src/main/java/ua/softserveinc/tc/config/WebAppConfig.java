@@ -19,11 +19,12 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 public class WebAppConfig extends WebMvcConfigurerAdapter {
-@Override
-public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-}
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();

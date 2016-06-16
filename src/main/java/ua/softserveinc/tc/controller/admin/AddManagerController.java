@@ -37,7 +37,7 @@ public class AddManagerController {
     private TokenService tokenService;
 
     @Log
-    private static Logger LOG;
+    private static Logger log;
 
     @Autowired
     private UserValidator userValidator;
@@ -67,7 +67,7 @@ public class AddManagerController {
         try {
             this.mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
         } catch (MessagingException | MailSendException e) {
-            this.LOG.error("Error! Sending email!!!", e);
+            log.error("Error! Sending email!!!", e);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
             return AdminConstants.ADD_MANAGER;
         }

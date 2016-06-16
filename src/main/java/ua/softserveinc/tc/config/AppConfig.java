@@ -36,8 +36,8 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("ua.softserveinc.tc")
-@PropertySource(value = { "classpath:properties/mail.properties",
-                          "classpath:properties/hibernate.properties" })
+@PropertySource(value = {"classpath:properties/mail.properties",
+        "classpath:properties/hibernate.properties"})
 @EnableJpaRepositories(basePackages = "ua.softserveinc.tc.repo")
 public class AppConfig {
 
@@ -101,7 +101,7 @@ public class AppConfig {
     }
 
     @Bean
-    public UserDetailsService getUserDetailsService(){
+    public UserDetailsService getUserDetailsService() {
         return new UserDetailsServiceImpl();
     }
 
@@ -142,7 +142,7 @@ public class AppConfig {
     }
 
     @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver createMultipartResolver(){
+    public CommonsMultipartResolver createMultipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("utf-8");
         return resolver;

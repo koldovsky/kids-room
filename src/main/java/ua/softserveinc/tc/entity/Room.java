@@ -2,7 +2,6 @@ package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
-import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 
 import javax.persistence.*;
@@ -60,7 +59,7 @@ public class Room {
     private boolean active;
 
     public Room() {
-        //TODO add comment what do this constructor
+        //empty constructor for instantiating in controller
     }
 
     public Room(RoomDto roomDto) {

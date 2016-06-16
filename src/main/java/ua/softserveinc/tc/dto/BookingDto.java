@@ -40,7 +40,7 @@ public class BookingDto implements Serializable{
     private transient Date dateEndTime;
 
     public BookingDto() {
-        //TODO add comment what do this constructor
+        //empty constructor for instantiating in controller
     }
 
     public BookingDto(Booking booking) {
