@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
@@ -67,21 +68,26 @@ public class ImagesController {
 
         MultipartFile file = form.getFile();
         Long id = Long.parseLong(kidId);
+        Child kid = childService.findById(id);
         if (!file.isEmpty()) {
             byte[] bytes;
             long sizeMb = file.getSize()/1024/1024;
             try {
                 if(sizeMb > 10){
-                    bindingResult.rejectValue("file", "kid.image.tooBig");
+                    bindingResult.rejectValue("file", ValidationConstants.FILE_TOO_BIG);
+                    return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
                 bytes = file.getBytes();
+                kid.setImage(bytes);
+                childService.update(kid);
             } catch (IOException ioe) {
                 log.error("Failed converting image", ioe);
-                throw new BadUploadException();
+                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
-            Child kid = childService.findById(id);
-            kid.setImage(bytes);
-            childService.update(kid);
+            catch (JpaSystemException jpae){
+                log.error("Database persistence exception", jpae);
+                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+            }
         }
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }
