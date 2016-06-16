@@ -112,7 +112,7 @@ public class UserRegistrationController {
         }
         User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
-        tokenService.createToken(token, user);
+
         try {
             mailService.sendRegisterMessage(MailConstants.CONFIRM_REGISTRATION, user, token);
         } catch (MessagingException | MailSendException e) {
@@ -120,6 +120,7 @@ public class UserRegistrationController {
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
             return UserConstants.Model.RESEND_MAIL_VIEW;
         }
+        tokenService.createToken(token, user);
         return UserConstants.Model.SUCCESS_VIEW;
     }
 }

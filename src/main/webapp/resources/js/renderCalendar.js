@@ -77,21 +77,18 @@ function selectRoomForManager(id) {
 
             if (result.length !== 0) {
                 var objects = [];
-                result = result.split(', ');
+                result = JSON.parse(result);
 
                 for (var i = 0; i < result.length; i++) {
-
-                    var string = result[i];
-                    var stringToArray = string.split('|');
-
                     objects[i] = {
-                        id: parseInt(stringToArray[3]),
-                        title: stringToArray[0],
-                        start: stringToArray[1],
-                        end: stringToArray[2]
+                        id: result[i].id,
+                        title: result[i].name,
+                        start: result[i].startTime,
+                        end: result[i].endTime,
+                        editable: false,
+                        color: '#ffff00',
+                        type: 'event'
                     }
-
-
                 }
                 rendering(objects, id);
             } else {
@@ -301,28 +298,3 @@ function sendToServerForDelete(event) {
     });
 }
 
-/*
-function makeISOtime(clickDate, idOfTimePicker) {
-    var element = '#' + idOfTimePicker;
-    var installedTime = $(element).timepicker('getTime');
-
-    var timepickerMinutes = installedTime.getMinutes();
-    var timepickerHours = installedTime.getHours();
-
-    if (timepickerMinutes == 0) {
-        timepickerMinutes = '00';
-    } else {
-        timepickerMinutes = '30';
-    }
-
-    if (timepickerHours < 10) {
-        timepickerHours = '0' + timepickerHours.toString();
-    } else {
-        timepickerHours = timepickerHours.toString();
-    }
-
-    return '' + clickDate.substring(0, 11) + timepickerHours + ':' +
-        timepickerMinutes + clickDate.substring(16);
-}
-
-*/

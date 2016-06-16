@@ -34,10 +34,12 @@ public class CalendarServiceImpl implements CalendarService {
         eventDao.create(event);
         return event.getId();
     }
+/*
 
     public final String eventsToString(final long id) {
         return findByRoomId(id).toString().substring(1, findByRoomId(id).toString().length() - 1);
     }
+*/
 
     public final List<EventDto> findByRoomId(final long roomId) {
         return eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));

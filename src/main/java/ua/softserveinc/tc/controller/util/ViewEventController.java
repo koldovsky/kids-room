@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller.util;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,7 @@ public class ViewEventController {
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
-        return calendarService.eventsToString(id);
+        return new Gson().toJson(calendarService.findByRoomId(id));
     }
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")

@@ -5,8 +5,8 @@ var info;
 var bookingsArray;
 var bookingDate;
 var roomIdForHandler;
-var bookingsForRendering;
 var usersID;
+
 $(function () {
 
     $('body').on('click', 'button.fc-prev-button', function () {
@@ -75,13 +75,12 @@ $(document).ready(function () {
         var newStartDate = makeISOtime(info.calEvent.start.format(), 'bookingUpdatingStartTimepicker');
         var newEndDate = makeISOtime(info.calEvent.end.format(), 'bookingUpdatingEndTimepicker');
 
-
         var bookingForUpdate = {
             id: info.calEvent.id,
             title: info.calEvent.title,
             start: newStartDate,
             end: newEndDate,
-            comment : $('#child-comment-update').val()
+            comment: $('#child-comment-update').val()
         };
 
         sendBookingToServerForUpdate(bookingForUpdate, info.roomID);
@@ -92,8 +91,6 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#booking').click(function () {
-
-
 
         for (var i = 0; i < ($('#kostil').val()); i++) {
             if ($('#checkboxKid' + ($('#costil-for-comment-' + i).val() )).is(':checked')) {
@@ -189,22 +186,17 @@ function selectRoomForUser(id, userId) {
 
     $.ajax({
         url: path, success: function (result) {
-            //TODO: Use JSON for events
+
             if (result.length !== 0) {
                 var objects = [];
-                result = result.split(', ');
-
-                result[0] = ' ' + result[0];
+                result = JSON.parse(result);
 
                 for (var i = 0; i < result.length; i++) {
-                    var string = result[i];
-                    var stringToArray = string.split('|');
-
                     objects[i] = {
-                        id: parseInt(stringToArray[3]),
-                        title: stringToArray[0],
-                        start: stringToArray[1],
-                        end: stringToArray[2],
+                        id: result[i].id,
+                        title: result[i].name,
+                        start: result[i].startTime,
+                        end: result[i].endTime,
                         editable: false,
                         color: '#ffff00',
                         type: 'event'
@@ -240,18 +232,16 @@ function renderingForUser(objects, id, userId) {
         url: pathForUploadingAllBookingsForUsers, success: function (result) {
             result = JSON.parse(result);
 
-
             var objectsLen = objects.length;
 
             result.forEach(function (item, i, result) {
-                console.log(item.comment);
                 objects[objectsLen + i] = {
                     id: item.id,
                     title: item.kidName,
                     start: item.date + 'T' + item.startTime + ':00',
                     end: item.date + 'T' + item.endTime + ':00',
                     color: '#99ff33',
-                    borderColor : "#000000",
+                    borderColor: "#000000",
                     editable: false,
                     type: 'booking',
                     comment: item.comment
@@ -290,7 +280,7 @@ function renderingForUser(objects, id, userId) {
 
                     if (calEvent.color === '#ffff00') return;
 
-                    if(calEvent.type === 'booking') {
+                    if (calEvent.type === 'booking') {
                         $('#child-comment-update').val(calEvent.comment);
                     }
 
@@ -404,16 +394,14 @@ function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
         dataType: 'json',
         data: JSON.stringify({
             id: bookingForUpdate.id,
-            //    name: bookingForUpdate.title,
             startTime: bookingForUpdate.start.substring(0, 10) + ' ' + bookingForUpdate.start.substring(11, 16),
             endTime: bookingForUpdate.end.substring(0, 10) + ' ' + bookingForUpdate.end.substring(11, 16),
-            //    roomId: roomID
             comment: bookingForUpdate.comment
         }),
         success: function (result) {
             if (result) {
                 bookingForUpdate.color = '#99ff33';
-
+                bookingForUpdate.borderColor = '#000000';
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
             } else {
