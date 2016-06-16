@@ -25,6 +25,7 @@ import java.util.Map;
  */
 @Service
 public class MailServiceImpl implements MailService {
+
     @Autowired
     private ServletRequest request;
 
@@ -60,25 +61,29 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendRegisterMessage(String subject, User user, String token) throws MessagingException {
-
-        Map<String, Object> model = getModelWithUser(user);
-        model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_USER_LINK, token));
+        Map<String, Object> model = getModel(user, MailConstants.CONFIRM_USER_LINK, token);
 
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_USER_VM, model));
     }
 
     @Override
     public void sendChangePassword(String subject, User user, String token) throws MessagingException {
-
-        Map<String, Object> model = getModelWithUser(user);
-        model.put(MailConstants.LINK, getLink(MailConstants.CHANGE_PASS_LINK, token));
+        Map<String, Object> model = getModel(user, MailConstants.CHANGE_PASS_LINK, token);
 
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CHANGE_PASS_VM, model));
     }
 
     @Override
+    public void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException {
+        Map<String, Object> model = getModel(user, MailConstants.CONFIRM_MANAGER_LINK, token);
+
+        sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
+    }
+
+    @Override
     public void sendPaymentInfo(User user, String subject, Long sumTotal) throws MessagingException {
-        Map<String, Object> model = getModelWithUser(user);
+        Map<String, Object> model = new HashMap<>();
+        model.put(UserConstants.Entity.USER, user);
         model.put(ReportConstants.SUM_TOTAL, sumTotal);
         model.put(MailConstants.LINK, MailConstants.HTTP +
                 configurator.getServerName() + MailConstants.MY_BOOKINGS_LINK);
@@ -86,23 +91,15 @@ public class MailServiceImpl implements MailService {
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.PAYMENT_VM, model));
     }
 
-    @Override
-    public void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException {
-
-        Map<String, Object> model = getModelWithUser(user);
-        model.put(MailConstants.LINK, getLink(MailConstants.CONFIRM_MANAGER_LINK, token));
-
-        sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
-    }
-
     private String getTextMessage(String template, Map<String, Object> model) {
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 MailConstants.EMAIL_TEMPLATE + template, MailConstants.UTF_8, model);
     }
 
-    private Map<String, Object> getModelWithUser(User user) {
+    private Map<String, Object> getModel(User user, String partOfLink, String token) {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, user);
+        model.put(MailConstants.LINK, getLink(partOfLink, token));
         return model;
     }
 
