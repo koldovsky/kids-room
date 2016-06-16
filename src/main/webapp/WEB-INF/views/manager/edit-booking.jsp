@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                  <label><spring:message code="booking.createDate"/></label>
-                                 <input type="date" id="data" class="form-control" required/>
+                                 <input type="date" id="data-edit" class="form-control" required/>
                             </div>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
@@ -116,10 +116,10 @@
                                     <option value="${user.id}" >${user.getFullName()}</option>
                                  </c:forEach>
                             </select>
-                            <label for="bookingStartDate">Choose date</label>
+                            <label for="bookingStartDate">Booking date</label>
                             <br>
                             <div>
-                                <input type="date" class="form-control" id="bookingStartDate" placeholder="booking date"/>
+                                <input type="text" class="form-control" id="bookingStartDate" placeholder="booking date" readonly/>
                             </div>
                             <input id="kostil" hidden/>
                             <div class="col-xs-5">
@@ -146,6 +146,24 @@
     </div>
 
 
+	<div id="invalidTimeModal" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content" >
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<p>You enter leave time less then arrival time</p>
+				</div>
+				<div class="modal-body">
+					<p>Please enter a correct leaving time </p>
+					<div>
+						<button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
+							Ok
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
