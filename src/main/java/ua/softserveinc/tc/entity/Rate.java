@@ -12,19 +12,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = RateConstants.TABLE_RATES)
 public class Rate {
+    public static final Rate DEFAULT = new Rate(-1, -1L);
 
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
     @Column(name = RateConstants.ID_RATE, nullable = false)
     private Long idRate;
-
     @Column(name = RateConstants.HOUR_RATE, nullable = false)
     private Integer hourRate;
-
     @Column(name = RateConstants.PRICE_RATE, nullable = false)
     private Long priceRate;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = RoomConstants.ID_ROOM)
     private Room room;
@@ -101,5 +99,4 @@ public class Rate {
                 ", hourRate=" + hourRate +
                 '}';
     }
-
 }
