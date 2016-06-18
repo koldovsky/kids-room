@@ -6,7 +6,6 @@
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
 
 
 <body>

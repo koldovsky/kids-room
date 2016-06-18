@@ -5,7 +5,6 @@
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-<link rel="stylesheet" type="text/css" href="resources/css/bookings.css">
 
 
 <body>
@@ -60,7 +59,14 @@
                     </c:forEach>
                 </table>
             </td>
-            <td>${room.isActive()}</td>
+            <td>
+                <c:if test="${room.isActive() eq true}">
+                    <img src="resources/img/ok.png" class="img">
+                </c:if>
+                <c:if test="${room.isActive() ne true}">
+                   <img src="resources/img/no.png" class="img">
+                </c:if>
+            </td>
             <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                                                         </button></a></td>
             <td>
