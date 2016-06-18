@@ -16,7 +16,7 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
         <spring:message code="kid.register" />
       </h2>
       <form:hidden path="id" />
-
+<div class="form-group-material-blue-400">
       <div class="form-group">
              <label for="firstname" class="required">
              	<spring:message code="kid.firstname" />
@@ -49,12 +49,15 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
                     </div>
       </div>
 
+
       <div class="form-group">
                    <label class="required"><spring:message code="kid.gender" /></label>
                    <table>
                    <tr>
                    <td>
-                   <form:radiobutton required="required" name="Boy" path="gender" value="MALE"/><spring:message code="kid.boy" /></td>
+                   <form:radiobutton required="required" name="Boy" path="gender" value="MALE"/><spring:message code="kid.boy" />
+                   </td>
+                   </div>
                    <td>
                    <form:radiobutton required="required" path="gender" value="FEMALE" /><spring:message code="kid.girl" /></td>
                    </tr>
@@ -70,6 +73,8 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
                     <form:textarea path="comment" id="comment" rows="7" cols="50" class="form-control textarea"/>
       </div>
 
+
+
       <button class="btn btn-raised btn-success" type="submit" name="action">
       <spring:message code="user.submit" />
       </button>
@@ -77,4 +82,5 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
       <footer class="bottom-msg">
       <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
       </footer>
+      </div>
 </form:form>

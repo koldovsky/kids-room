@@ -54,6 +54,7 @@ function refresh(){
     url: src,
     success: function(result){
       var bookings = JSON.parse(result);
+
       var tr = "";
       $.each(bookings, function(i, booking){
         var index = i+1;
@@ -74,14 +75,14 @@ function refresh(){
         + '<td><div class="input-group">'
         + '<input type="time"' + 'id="arrivalTime"'+ 'class="form-control"'
         + setStatrTimeInput +'/>'
-        + '<span class="input-group-btn">'
+
         + '<input type="button"'+'class="btn btn-raised btn-sm btn-info"'
-        + startButton +'value="Set"'+'</input></span></td></div>'
+        + startButton +'value="Set"'+'</input></td></div>'
         + '<td><div class="input-group"><input required type="time"' + 'id="leaveTime"'+ 'class="form-control"'
         + setEndTimeInput + '/>'
-        + '<span class="input-group-btn">'
+
         + '<input required type="button"'+'class="btn btn-raised btn-sm btn-info"'
-        + endButton +'value="Set"'+'</input></span></td></div>'
+        + endButton +'value="Set"'+'</input></td></div>'
         + '</tr>';
       });
       $('td').remove();
@@ -280,7 +281,15 @@ function sendBookingToServerForCreate(bookingsArray) {
   dataType: 'json',
   data: JSON.stringify(bookingsArray),
   success: function (result) {
-    alert("You create new booking");
+
+
+    if(result==""){
+        alert(result=="");
+        alert("In the room doesn't have enough free places");
+    }else{
+        alert("You create new booking");
+    }
+
   },
   error: function(){
     alert("Unfortunately could not create new BOOKING");
