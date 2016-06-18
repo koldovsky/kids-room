@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = RateConstants.TABLE_RATES)
 public class Rate {
+
     public static final Rate DEFAULT = new Rate(-1, -1L);
 
     @Id
@@ -19,13 +20,17 @@ public class Rate {
     @GeneratedValue(generator = "generator")
     @Column(name = RateConstants.ID_RATE, nullable = false)
     private Long idRate;
+
     @Column(name = RateConstants.HOUR_RATE, nullable = false)
     private Integer hourRate;
+
     @Column(name = RateConstants.PRICE_RATE, nullable = false)
     private Long priceRate;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = RoomConstants.ID_ROOM)
     private Room room;
+
 
     public Rate() {
         //empty constructor for instantiating in controller
@@ -65,31 +70,23 @@ public class Rate {
     }
 
     public void setRoom(Room room) {
-        room.getRates().add(this);
         this.room = room;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Rate rate = (Rate) o;
 
-        return hourRate.equals(rate.hourRate)
-                && priceRate.equals(rate.getPriceRate());
+        return idRate != null ? idRate.equals(rate.idRate) : rate.idRate == null;
+
     }
 
     @Override
     public int hashCode() {
-        int a = 17;
-        a = 31 * a + hourRate.hashCode();
-        a = 31 * a + priceRate.hashCode();
-        return a;
+        return idRate != null ? idRate.hashCode() : 0;
     }
 
     @Override

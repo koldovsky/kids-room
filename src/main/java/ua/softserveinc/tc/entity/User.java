@@ -202,28 +202,18 @@ public class User implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int result = firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + (confirmed ? 1 : 0);
-        result = 31 * result + (active ? 1 : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id != null ? id.equals(user.id) : user.id == null;
+
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (that == null) {
-            return false;
-        }
-        if (this == that) {
-            return true;
-        }
-        if (!(that instanceof User)) {
-            return false;
-        }
-        User other = (User) that;
-        return email.equals(other.email);
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
