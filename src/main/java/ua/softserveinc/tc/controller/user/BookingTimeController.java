@@ -50,7 +50,9 @@ public class BookingTimeController {
         });
 
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
+        if(dto != null)
         return new Gson().toJson(dto);
+        return null;
     }
 
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")

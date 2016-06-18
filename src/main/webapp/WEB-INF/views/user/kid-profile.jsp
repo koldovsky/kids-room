@@ -24,9 +24,12 @@
 <sec:authorize access="hasRole('USER')">
          <form method="POST" action="uploadImage/${kid.id}" enctype="multipart/form-data">
                  <label class="btn btn-success glyphicon glyphicon-folder-open">
-                     &nbsp;<spring:message code="user.selectPhoto" /> <input type="file" accept=".jpg, .png" id="file-upload" name="file" style="display: none;">
+                     &nbsp;<spring:message code="user.selectPhoto" />  <input path="file" type="file" accept=".jpg, .png"
+                     id="file-upload" name="file" style="display: none;">
+                     <form:errors path="file" cssClass="error" />
                  </label>
                     <input id="file-submit" style="display: none;" type="submit" data-bfi-disabled>
+
          </form>
          </sec:authorize>
 

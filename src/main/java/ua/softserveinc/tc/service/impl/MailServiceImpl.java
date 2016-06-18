@@ -39,7 +39,7 @@ public class MailServiceImpl implements MailService {
     private ApplicationConfigurator configurator;
 
 
-    @Async()
+    @Async
     @Override
     public void sendMessage(String email, String subject, String text) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();

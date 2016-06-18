@@ -12,7 +12,6 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
 /**
  * Created by Nestor on 18.05.2016.
- * <p>
  * Class serves for global exception handling
  */
 

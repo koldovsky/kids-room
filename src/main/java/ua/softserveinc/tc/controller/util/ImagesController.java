@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ChildConstants;
@@ -18,6 +19,7 @@ import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.FileUploadFormObject;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
@@ -49,23 +51,28 @@ public class ImagesController {
     /**
      * Uploading a new profile picture for a Child
      *
-     * @param file  a MultipartFile that is being uploaded
+     * @param
      * @param kidId ID of a Child
      * @return redirects back to kid's profile view
      */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
-    public String uploadImage(@RequestParam("file") MultipartFile file,
+    public String uploadImage(@ModelAttribute FileUploadFormObject form,
+                              BindingResult bindingResult,
                               @PathVariable String kidId)
             throws ResourceNotFoundException, AccessDeniedException {
         if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
 
+        MultipartFile file = form.getFile();
         Long id = Long.parseLong(kidId);
-
         if (!file.isEmpty()) {
             byte[] bytes;
+            long sizeMb = file.getSize()/1024/1024;
             try {
+                if(sizeMb > 10){
+                    bindingResult.rejectValue("file", "kid.image.tooBig");
+                }
                 bytes = file.getBytes();
             } catch (IOException ioe) {
                 log.error("Failed converting image", ioe);
@@ -143,7 +150,7 @@ public class ImagesController {
      * @return "Bad Upload" view
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({JpaSystemException.class, })
+    @ExceptionHandler({JpaSystemException.class, BadUploadException.class})
     public String badUpload() {
         return "error-bad-upload";
     }
