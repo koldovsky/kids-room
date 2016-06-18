@@ -6,6 +6,7 @@ form{
     	min-width: 400px;
     	text-align: center;
     	background-color: white;
+    	margin-bottom: 0;
 }
 
 form input{

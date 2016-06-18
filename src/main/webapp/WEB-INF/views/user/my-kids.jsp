@@ -39,7 +39,7 @@
 
 
 <form action="registerkid">
-    <button class="btn btn-raised btn-primary waves-effect waves-light" type="submit">
+    <button class="btn btn-raised btn-success waves-effect waves-light" type="submit">
         <spring:message code="button.add" />
     </button>
 </form>

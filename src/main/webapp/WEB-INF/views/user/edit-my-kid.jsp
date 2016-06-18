@@ -14,17 +14,16 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       <h2><spring:message code="editkid.title" /></h2>
 
       <form:hidden path="id" />
-
+<div class="form-group-material-blue-400">
       <div class="form-group">
              <label for="firstname" class="required"><spring:message code="kid.firstname" /></label>
               <form:input path="firstName" id="firstname" value="${kid.getFirstName()}"
-              class="primary-color form-control" required="required"/>
+              class="form-control" required="required"/>
               <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
               <label for="lastname" class="required"><spring:message code="kid.lastname" /></label>
-              <form:input path="lastName" id="lastname" value="${kid.getLastName()}"
-              class="form-control" required="required" />
+              <form:input path="lastName" id="lastname" value="${kid.getLastName()}" class="form-control" required="required" />
               <form:errors path="lastName" cssClass="error" />
       </div>
 
@@ -69,5 +68,6 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       <spring:message code="editkid.footmsg2" />
       </a>
       </footer>
+      </div>
 
 </form:form>

@@ -23,7 +23,7 @@
 
 <sec:authorize access="hasRole('USER')">
          <form method="POST" action="uploadImage/${kid.id}" enctype="multipart/form-data">
-                 <label class="btn btn-success glyphicon glyphicon-folder-open">
+                 <label class="btn btn-raised btn-success glyphicon glyphicon-folder-open">
                      &nbsp;<spring:message code="user.selectPhoto" />  <input path="file" type="file" accept=".jpg, .png"
                      id="file-upload" name="file" style="display: none;">
                      <form:errors path="file" cssClass="error" />
@@ -42,15 +42,15 @@
  <h2> ${kid.firstName} ${kid.lastName} </h2>
   <sec:authorize access="hasRole('USER')">
 
-        <button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
-                &nbsp;<spring:message code="button.edit" />
-        </button>
+
   </sec:authorize>
 <hr></hr>
 <h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}<h3>
 <h3> <spring:message code="kids.age" />: ${kid.getAge()}<h3>
 <h4> <spring:message code="kid.comment" />: ${kid.comment} </h4>
-
+<button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
+                &nbsp;<spring:message code="button.edit" />
+        </button>
 <hr></hr>
 <div id="parent">
     <h3> <spring:message code="kid.parent" /> </h4>

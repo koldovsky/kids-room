@@ -13,7 +13,7 @@ modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="pos
 <h3 id="title"><spring:message code="administrator.configuration" /></h3>
 
 <form:errors path="errorMsg" cssClass="error" />
-
+<div class="form-group-material-blue-400">
 <div class="form-group">
              <label for="kidsMinAge" class="required"><spring:message code="properties.kidsMinAge" /></label>
               <form:input path="kidsMinAge" id="" value="${config.kidsMinAge}"
@@ -78,5 +78,6 @@ modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="pos
       <button class="btn btn-raised btn-success" type="submit" name="action">
         <spring:message code="user.submit" />
       </button>
+</div>
 
 </form:form>

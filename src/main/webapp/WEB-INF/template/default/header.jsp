@@ -12,11 +12,10 @@
     </div>
 </div>
 
-<nav class="navbar navbar-default navbar-static-top primary-color" id="topnavbar">
+<nav class="navbar navbar-material-blue-500">
     <div class="container">
         <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
             data-target="#top_navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -52,6 +51,7 @@
                             <sec:authorize access="hasRole('MANAGER')">
                                 <li id="roompicker" class="dropdown menu-item">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    Room
                                         <span id="room"></span>
                                     </a>
                                     <ul id="selectRoom" class="dropdown-menu">
