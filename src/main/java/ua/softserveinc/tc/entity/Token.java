@@ -26,7 +26,7 @@ public class Token {
     private User user;
 
     public Token() {
-
+        //empty constructor for instantiating in controller
     }
 
     public Token(String token, User user) {

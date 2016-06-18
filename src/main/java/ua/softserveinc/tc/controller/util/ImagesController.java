@@ -7,9 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
@@ -18,16 +20,20 @@ import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.FileUploadFormObject;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Iterator;
 
 /**
  * Created by Nestor on 22.05.2016.
@@ -46,34 +52,55 @@ public class ImagesController {
 
     @Log
     private Logger log;
+
     /**
      * Uploading a new profile picture for a Child
      *
-     * @param file  a MultipartFile that is being uploaded
+     * @param
      * @param kidId ID of a Child
      * @return redirects back to kid's profile view
      */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
-    public String uploadImage(@RequestParam("file") MultipartFile file,
+    public String uploadImage(@ModelAttribute FileUploadFormObject form,
+                              BindingResult bindingResult,
                               @PathVariable String kidId)
-            throws ResourceNotFoundException, AccessDeniedException {
+            throws AccessDeniedException {
         if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
 
+        MultipartFile file = form.getFile();
         Long id = Long.parseLong(kidId);
-
+        Child kid = childService.findById(id);
         if (!file.isEmpty()) {
             byte[] bytes;
+            long sizeMb = file.getSize()/1024/1024;
+
+
             try {
+                if(sizeMb > 10){
+                    bindingResult.rejectValue("file", ValidationConstants.FILE_TOO_BIG);
+                    return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+                }
+                String ext = file.getContentType().toLowerCase();
+                if(!(ext.equals("image/jpg") || ext.equals("image/jpeg")
+                        || ext.equals("image/png"))){
+                    bindingResult.rejectValue("file", ValidationConstants.FILE_WRONG_EXTENSION);
+                    System.out.println(ValidationConstants.FILE_WRONG_EXTENSION);
+                    return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+                }
                 bytes = file.getBytes();
+
+                kid.setImage(bytes);
+                childService.update(kid);
             } catch (IOException ioe) {
                 log.error("Failed converting image", ioe);
-                throw new BadUploadException();
+                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
-            Child kid = childService.findById(id);
-            kid.setImage(bytes);
-            childService.update(kid);
+            catch (JpaSystemException jpae){
+                log.error("Database persistence exception", jpae);
+                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+            }
         }
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }
@@ -84,7 +111,7 @@ public class ImagesController {
      * @param kidId
      * @param principal
      * @return
-     * @throws IOException
+     *
      * @throws ResourceNotFoundException
      * @throws AccessDeniedException
      */
@@ -125,9 +152,9 @@ public class ImagesController {
             BufferedImage bufferedImage = ImageIO.read(imgPath);
             ImageIO.write(bufferedImage, "jpg", baos);
             baos.flush();
-            base64String =  DatatypeConverter.printBase64Binary(baos.toByteArray());;
+            base64String = DatatypeConverter.printBase64Binary(baos.toByteArray());
             baos.close();
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
             throw new ResourceNotFoundException();
         }
@@ -143,7 +170,7 @@ public class ImagesController {
      * @return "Bad Upload" view
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({JpaSystemException.class, })
+    @ExceptionHandler({JpaSystemException.class, BadUploadException.class})
     public String badUpload() {
         return "error-bad-upload";
     }

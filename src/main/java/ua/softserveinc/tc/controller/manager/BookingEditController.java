@@ -47,7 +47,7 @@ public class BookingEditController {
     BookingDao bookingDao;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
-    public ModelAndView changeBooking(Model model, Principal principal) {
+    public ModelAndView editBookingModel (Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
@@ -56,6 +56,18 @@ public class BookingEditController {
         model.addAttribute("rooms", listRoom);
         model.addAttribute("users", users);
         return modelAndView;
+    }
+    @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
+    @ResponseBody
+    public String cancelBooking (@PathVariable Long idBooking) {
+        Booking booking = bookingService.findById(idBooking);
+        booking.setBookingState(BookingState.CANCELLED);
+        booking.setSum(0L);
+        booking.setDuration(0L);
+        bookingService.update(booking);
+        BookingDto bookingDto = new BookingDto(booking);
+        Gson gson = new Gson();
+        return  gson.toJson(bookingDto);
     }
 
     @RequestMapping (value = "manager-edit-booking/{date}/{id}",
@@ -82,6 +94,19 @@ public class BookingEditController {
         Room room = booking.getRoom();
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
+        System.out.println(startTime);
+        System.out.println(startTime);
+        System.out.println(startTime);
+        System.out.println(startTime);
+        System.out.println(startTime);
+        System.out.println(startTime);
+        System.out.println(endTime);
+        System.out.println(endTime);
+        System.out.println(endTime);
+        System.out.println(endTime);
+        System.out.println(endTime);
+        System.out.println(endTime);
+        System.out.println(endTime);
         if(roomService.isPeriodAvailable(startTime, endTime, room)) {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
@@ -101,8 +126,6 @@ public class BookingEditController {
         bookingDto.setDateStartTime(dateLo);
         bookingDto.setDateEndTime(dateHi);
         Child child = childService.findById(bookingDto.getIdChild());
-
-        // TODO: 10.06.2016  get booking by child
         if(roomService.isPeriodAvailable(dateLo, dateHi, room)){
             Booking booking = bookingDto.getBookingObject();
             booking.setRoom(room);

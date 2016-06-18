@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
 

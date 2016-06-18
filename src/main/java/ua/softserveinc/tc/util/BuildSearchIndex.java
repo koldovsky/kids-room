@@ -2,6 +2,7 @@ package ua.softserveinc.tc.util;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.slf4j.Logger;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,8 @@ import javax.persistence.PersistenceContext;
 public class BuildSearchIndex
         implements ApplicationListener<ContextRefreshedEvent> {
 
+    @Log
+    private static Logger log;
     // ------------------------
     // PRIVATE FIELDS
     // ------------------------
@@ -49,10 +52,10 @@ public class BuildSearchIndex
             fullTextEntityManager.createIndexer().startAndWait();
         }
         catch (InterruptedException e) {
-            System.out.println(
+            log.error(
                     "An error occurred trying to build the serach index: " +
                             e.toString());
-            // FIXME: 10.06.2016
+
             Thread.currentThread().interrupt();
         }
         return;

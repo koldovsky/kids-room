@@ -6,25 +6,25 @@ var bookingsArray;
 var bookingDate;
 var roomIdForHandler;
 var usersID;
+/*
+ $(function () {
 
-$(function () {
+ $('body').on('click', 'button.fc-prev-button', function () {
+ var moment = $('#user-calendar').fullCalendar('getDate');
+ alert('prev is clicked, do something  ' + moment.format());
+ });
+ $('body').on('click', 'button.fc-next-button', function () {
+ var moment = $('#user-calendar').fullCalendar('getDate');
+ alert('nextis clicked, do something  ' + moment.format());
+ });
 
-    $('body').on('click', 'button.fc-prev-button', function () {
-        var moment = $('#user-calendar').fullCalendar('getDate');
-        alert('prev is clicked, do something  ' + moment.format());
-    });
-    $('body').on('click', 'button.fc-next-button', function () {
-        var moment = $('#user-calendar').fullCalendar('getDate');
-        alert('nextis clicked, do something  ' + moment.format());
-    });
+ $('body').on('click', 'button.fc-agendaDay-button', function () {
 
-    $('body').on('click', 'button.fc-agendaDay-button', function () {
+ var moment = $('#user-calendar').fullCalendar('getDate');
 
-        var moment = $('#user-calendar').fullCalendar('getDate');
-
-        alert('CURRENT DAY  ' + moment.format());
-    });
-});
+ alert('CURRENT DAY  ' + moment.format());
+ });
+ });*/
 
 $(function () {
     $('#bookingStartTimepicker').timepicker({
@@ -91,7 +91,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#booking').click(function () {
-
+        bookingsArray = [];
         for (var i = 0; i < ($('#kostil').val()); i++) {
             if ($('#checkboxKid' + ($('#costil-for-comment-' + i).val() )).is(':checked')) {
 
@@ -113,30 +113,6 @@ $(document).ready(function () {
             }
         }
         sendBookingToServerForCreate(bookingsArray);
-        /*  $.ajax({
-         type: 'post',
-         contentType: 'application/json',
-         url: 'makenewbooking',
-         dataType: 'json',
-         data: JSON.stringify(bookingsArray),
-         success: function (result) {
-
-         var refresh = result;
-
-         $('#user-calendar').fullCalendar('removeEvents', -1);
-
-         refresh.forEach(function (item, i, refresh) {
-         $('#user-calendar').fullCalendar('renderEvent', {
-         id: item.id,
-         title: item.kidName,
-         start: item.startTime,
-         end: item.endTime,
-         color: '#99ff33',
-         editable: false
-         });
-         });
-         }
-         });*/
 
         $('#bookingForm').dialog('close');
     });
@@ -371,7 +347,6 @@ function makeISOtime(clickDate, idOfTimePicker) {
     } else {
         timepickerHours = timepickerHours.toString();
     }
-
     return '' + clickDate.substring(0, 11) + timepickerHours + ':' +
         timepickerMinutes + clickDate.substring(16);
 }
@@ -419,7 +394,6 @@ function sendBookingToServerForCreate(bookingsArray) {
         dataType: 'json',
         data: JSON.stringify(bookingsArray),
         success: function (result) {
-
             var refresh = result;
 
             $('#user-calendar').fullCalendar('removeEvents', -1);
@@ -436,6 +410,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                     comment: item.comment
                 });
             });
+
         }
     });
 }

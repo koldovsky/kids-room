@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.mapper;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.DateConstants;
@@ -7,6 +8,7 @@ import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,6 +28,11 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
 
     @Autowired
     RoomDao roomDao;
+
+    @Log
+    private static Logger log;
+
+
     @Override
     public final Event toEntity(final EventDto eventDto) {
 
@@ -38,32 +45,16 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         Date startDate = null;
         Date endDate = null;
 
-        //TODO: delete some try-catch
         try {
             DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
             startDate = df.parse(eventDto.getStartTime());
-        } catch (ParseException pe) {
-            try {
-                DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
-                startDate = df.parse(eventDto.getStartTime());
-            } catch (ParseException e) {
-                startDate = null;
-                e.printStackTrace();
-            }
+            endDate = df.parse(eventDto.getEndTime());
+        } catch (ParseException e) {
+            startDate = null;
+            endDate = null;
+            log.error("Error parse simpleDateFormat", e);
         }
 
-        try {
-            DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
-            endDate = df.parse(eventDto.getEndTime());
-        } catch (ParseException pe) {
-            try {
-                DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
-                endDate = df.parse(eventDto.getEndTime());
-            } catch (ParseException e) {
-                endDate = null;
-                e.printStackTrace();
-            }
-        }
 
         event.setStartTime(startDate);
         event.setEndTime(endDate);

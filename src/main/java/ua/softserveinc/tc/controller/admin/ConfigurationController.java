@@ -31,7 +31,7 @@ public class ConfigurationController {
     private ConfigValidator configValidator;
 
     @Log
-    private static Logger LOG;
+    private static Logger log;
 
     @RequestMapping(value = "/adm-config", method = RequestMethod.GET)
     public String getConfiguration(Model model) {
@@ -49,7 +49,7 @@ public class ConfigurationController {
         try {
             appConfig.acceptConfiguration(cDto);
         } catch (IOException ioe) {
-            LOG.error("Failed to write to config file", ioe);
+            log.error("Failed to write to config file", ioe);
             bindingResult.rejectValue("errorMsg", ValidationConstants.PROPERTIES_WRITE_FAILED);
             return AdminConstants.EDIT_CONFIG;
         }

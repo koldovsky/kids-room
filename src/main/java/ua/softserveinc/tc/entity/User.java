@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.constants.UserConstants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
                         })
         })
 @Embeddable
-public class User {
+public class User implements Serializable {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")

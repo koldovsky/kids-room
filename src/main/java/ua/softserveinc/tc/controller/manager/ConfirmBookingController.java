@@ -53,19 +53,6 @@ public class ConfirmBookingController {
     }
 
 
-    @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
-    @ResponseBody
-    public String cancelBooking (@PathVariable Long idBooking) {
-        Booking booking = bookingService.findById(idBooking);
-        booking.setBookingState(BookingState.CANCELLED);
-        booking.setSum(0L);
-        booking.setDuration(0L);
-        bookingService.update(booking);
-        BookingDto bookingDto = new BookingDto(booking);
-        Gson gson = new Gson();
-        return  gson.toJson(bookingDto);
-    }
-
     @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {

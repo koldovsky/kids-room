@@ -86,8 +86,8 @@ function selectRoomForManager(id) {
                         start: result[i].startTime,
                         end: result[i].endTime,
                         editable: false,
-                        color: '#ffff00',
-                        type: 'event'
+                        type: 'event',
+                        description: result[i].description
                     }
                 }
                 rendering(objects, id);
@@ -116,19 +116,14 @@ function rendering(objects, roomID) {
         var newStartDate = makeISOtime(info.calEvent.start.format(), 'startTimeUpdate');
         var newEndDate = makeISOtime(info.calEvent.end.format(), 'endTimeUpdate');
 
-        if ((info.date.toTimeString() === (new Date(newStartDate)).toTimeString()) &&
-            (info.endDate.toTimeString() === (new Date(newEndDate)).toTimeString()) &&
-            (info.beforeUpdate === $('#titleUpdate').val())) {
-            $('#updating').dialog('close');
-            return;
-        }
         $('#calendar').fullCalendar('removeEvents', info.calEvent.id);
 
         var eventForUpdate = {
             id: info.calEvent.id,
             title: $('#titleUpdate').val(),
             start: newStartDate,
-            end: newEndDate
+            end: newEndDate,
+            description: $('#descriptionUpdate').val()
         };
 
         $('#calendar').fullCalendar('renderEvent', eventForUpdate);
@@ -153,8 +148,9 @@ function rendering(objects, roomID) {
             end: makeISOtime(creatingEvent.clickDate, 'ender'),
             backgroundColor: NOT_ACTIVE_EVENT,
             borderColor: NOT_ACTIVE_EVENT,
-            editable: false
-        };
+            editable: false,
+            description : $('#description').val()
+    };
 
         $('#calendar').fullCalendar('renderEvent', ev, true);
 
@@ -167,7 +163,8 @@ function rendering(objects, roomID) {
                 name: ev.title,
                 startTime: ev.start,
                 endTime: ev.end,
-                roomId: creatingEvent.roomID
+                roomId: creatingEvent.roomID,
+                description: ev.description
             }),
             success: function (result) {
                 var newId = parseInt(result);
@@ -190,7 +187,7 @@ function rendering(objects, roomID) {
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
 
-        dayClick: function f(date, jsEvent, view) {
+        dayClick: function (date) {
 
             var clickDate = date.format();
             $('#startDate').val('');
@@ -219,13 +216,14 @@ function rendering(objects, roomID) {
             creatingEvent.roomID = roomID;
         },
 
-        eventClick: function (calEvent, jsEvent, view) {
+        eventClick: function (calEvent) {
 
             var beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
             $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
             $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
+            $('#descriptionUpdate').val(calEvent.description);
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
@@ -251,6 +249,7 @@ function rendering(objects, roomID) {
             info.calEvent = calEvent;
             info.roomID = roomID;
             info.date = date;
+            info.description = $('#descriptionUpdate').val();
         },
 
         header: {
@@ -278,7 +277,8 @@ function sendToServerForUpdate(event, roomID) {
             name: event.title,
             startTime: event.start,
             endTime: event.end,
-            roomId: roomID
+            roomId: roomID,
+            description: event.description
         })
     });
 }

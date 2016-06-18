@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.EventConstants;
+import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
@@ -14,7 +15,6 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
-import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
@@ -34,25 +34,25 @@ public class ViewEventController {
     private RoomService roomServiceImpl;
     @Autowired
     private UserService userService;
-    @Autowired
-    private ChildService childService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
-
         if (principal == null) {
             return UserConstants.Model.LOGIN_VIEW;
         } else {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
-            if (userService.getUserByEmail(email).getRole() == Role.USER) {
-                model.addAttribute("rooms", roomServiceImpl.findAll());
+            if (user.getRole() == Role.USER) {
+                model.addAttribute(UserConstants.Entity.ROOMS, roomServiceImpl.findAll());
                 model.addAttribute("kids", user.getEnabledChildren());
                 model.addAttribute("userId", user.getId());
+                return EventConstants.View.MAIN_PAGE;
+            } else if (user.getRole() == Role.MANAGER) {
+                model.addAttribute(UserConstants.Entity.ROOMS, user.getRooms());
+                return EventConstants.View.MAIN_PAGE;
             } else {
-                model.addAttribute("rooms", user.getRooms());
+                return ReportConstants.STATISTICS_VIEW;
             }
-            return EventConstants.View.MAIN_PAGE;
         }
     }
 

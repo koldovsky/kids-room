@@ -84,24 +84,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="invalidTimeModal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content" >
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<p>You enter leave time less then arrival time</p>
-				</div>
-				<div class="modal-body">
-					<p>Please enter a correct leaving time </p>
-					<div>
-						<button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
-							Ok
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 </div>
 
 

@@ -83,4 +83,5 @@ public class QuartzConfig {
                 cleanUpBookingsTrigger().getObject());
         return scheduler;
     }
+
 }

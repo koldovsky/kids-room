@@ -14,6 +14,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.FileUploadFormObject;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import java.security.Principal;
@@ -63,6 +64,7 @@ public class KidsProfileController {
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.KID_PROFILE);
         model.getModelMap().addAttribute(ChildConstants.View.KID_ATTRIBUTE, kid);
+        model.getModelMap().addAttribute("fileForm", new FileUploadFormObject());
         return model;
     }
 }
