@@ -25,12 +25,15 @@ import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Iterator;
 
 /**
  * Created by Nestor on 22.05.2016.
@@ -73,12 +76,21 @@ public class ImagesController {
             byte[] bytes;
             long sizeMb = file.getSize()/1024/1024;
 
+
             try {
                 if(sizeMb > 10){
                     bindingResult.rejectValue("file", ValidationConstants.FILE_TOO_BIG);
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
+                String ext = file.getContentType().toLowerCase();
+                if(!(ext.equals("image/jpg") || ext.equals("image/jpeg")
+                        || ext.equals("image/png"))){
+                    bindingResult.rejectValue("file", ValidationConstants.FILE_WRONG_EXTENSION);
+                    System.out.println(ValidationConstants.FILE_WRONG_EXTENSION);
+                    return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+                }
                 bytes = file.getBytes();
+
                 kid.setImage(bytes);
                 childService.update(kid);
             } catch (IOException ioe) {

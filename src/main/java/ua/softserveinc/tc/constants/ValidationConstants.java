@@ -30,6 +30,7 @@ public final class ValidationConstants {
     public static final String PROPERTIES_WRITE_FAILED = "properties.update.failed";
     public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
+    public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
 
     private ValidationConstants() {
     }
