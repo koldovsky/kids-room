@@ -25,6 +25,7 @@ import java.util.UUID;
 
 
 @Controller
+@RequestMapping(value = "/adm-add-manager")
 public class AddManagerController {
 
     @Autowired
@@ -43,7 +44,7 @@ public class AddManagerController {
     private UserValidator userValidator;
 
 
-    @RequestMapping(value = "/adm-add-manager", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCreateManagerForm() {
         ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
         model.addObject(AdminConstants.ATR_MANAGER, new User());
@@ -51,7 +52,7 @@ public class AddManagerController {
         return model;
     }
 
-    @RequestMapping(value = "/adm-add-manager", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String saveManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                               BindingResult bindingResult) {
         this.userValidator.validateIfEmailExist(manager, bindingResult);

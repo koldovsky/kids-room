@@ -14,13 +14,14 @@ import ua.softserveinc.tc.service.UserService;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/adm-edit-manager")
 public class EditManagerController {
 
     @Autowired
     private UserService userService;
 
 
-    @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView getManagerMenu() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
@@ -30,14 +31,11 @@ public class EditManagerController {
         return mav;
     }
 
-    @RequestMapping(value = "/adm-edit-manager", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String managerBlockUnblock(@RequestParam Long id) {
         User manager = this.userService.findById(id);
-        if (manager.isActive()) {
-            manager.setActive(false);
-        } else {
-            manager.setActive(true);
-        }
+        manager.setActive(!manager.isActive());
+
         this.userService.update(manager);
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }

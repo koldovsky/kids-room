@@ -17,13 +17,14 @@ import javax.validation.Valid;
 
 
 @Controller
+@RequestMapping(value = "/adm-update-manager")
 public class UpdateManagerController {
 
     @Autowired
     private UserService userService;
 
 
-    @RequestMapping(value = "/adm-update-manager", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showUpdateManagerForm(@RequestParam("id") Long id) {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
 
@@ -33,7 +34,7 @@ public class UpdateManagerController {
         return model;
     }
 
-    @RequestMapping(value = "/adm-update-manager", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String submitManagerUpdate(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
