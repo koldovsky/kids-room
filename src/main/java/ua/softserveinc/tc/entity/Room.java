@@ -3,15 +3,13 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.util.JsonUtil;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Chak on 30.04.2016.
- */
+
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
 public class Room {
@@ -40,8 +38,8 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Event> events;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "room")
-    private List<Rate> rates = new LinkedList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "room")
+    private List<Rate> rates;
 
     @Column(name = RoomConstants.WORKING_START_HOUR)
     private String workingHoursStart;
@@ -53,7 +51,7 @@ public class Room {
     @JoinTable(name = RoomConstants.MANAGERS,
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
-    private List<User> managers = new ArrayList<>();
+    private List<User> managers;
 
     @Column(name = RoomConstants.ACTIVE)
     private boolean active;
@@ -72,11 +70,13 @@ public class Room {
         this.workingHoursStart = roomDto.getWorkingHoursStart();
         this.workingHoursEnd = roomDto.getWorkingHoursEnd();
         this.active = roomDto.isActive();
+        this.rates = JsonUtil.fromJsonList(roomDto.getRate(), Rate[].class);
+    }
 
-        List<Rate> rates = roomDto.fromJsonToListOfRates();
-        for (Rate rate : rates) {
-            this.addRate(rate);
-        }
+    @PrePersist
+    @PreUpdate
+    private void preSave(){
+        this.rates.stream().forEach(r -> r.setRoom(this));
     }
 
     public boolean isActive() {
@@ -175,49 +175,24 @@ public class Room {
         this.rates = rates;
     }
 
-    /**
-     * Method check if there is no the same values in collection,
-     * and if collection does not contains input value (rate) - add new note into collection.
-     *
-     * @param rate
-     */
-    public void addRate(Rate rate) {
-        if (!this.rates.contains(rate)) {
-            rate.setRoom(this);
-            this.rates.add(rate);
-        }
-    }
-
     @Override
     public String toString() {
         return name;
     }
 
-
     @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + city.hashCode();
-        result = 31 * result + phoneNumber.hashCode();
-        result = 31 * result + capacity.hashCode();
-        result = 31 * result + (workingHoursStart != null ? workingHoursStart.hashCode() : 0);
-        result = 31 * result + (workingHoursEnd != null ? workingHoursEnd.hashCode() : 0);
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Room room = (Room) o;
+
+        return id != null ? id.equals(room.id) : room.id == null;
+
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (that == null) {
-            return false;
-        }
-        if (this == that) {
-            return true;
-        }
-        if (!(that instanceof Room)) {
-            return false;
-        }
-        Room other = (Room) that;
-        return city.equals(other.city) && address.equals(other.address);
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
