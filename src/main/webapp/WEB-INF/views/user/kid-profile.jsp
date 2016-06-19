@@ -27,16 +27,21 @@
                      &nbsp;<spring:message code="user.selectPhoto" />  <input path="file" type="file" accept=".jpg, .png"
                      id="file-upload" name="file" style="display: none;">
                      <form:errors path="file" cssClass="error" />
+
                  </label>
                     <input id="file-submit" style="display: none;" type="submit" data-bfi-disabled>
 
+
          </form>
+         <p id="image-msg" style="display: none;">
+         <spring:message code="kid.image.msg" /></p>
          </sec:authorize>
 
         </div>
 
  <h2> ${kid.firstName} ${kid.lastName} </h2>
   <sec:authorize access="hasRole('USER')">
+
         <button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                 &nbsp;<spring:message code="button.edit" />
         </button>

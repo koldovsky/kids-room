@@ -72,6 +72,7 @@ public class ImagesController {
         if (!file.isEmpty()) {
             byte[] bytes;
             long sizeMb = file.getSize()/1024/1024;
+
             try {
                 if(sizeMb > 10){
                     bindingResult.rejectValue("file", ValidationConstants.FILE_TOO_BIG);
@@ -98,7 +99,7 @@ public class ImagesController {
      * @param kidId
      * @param principal
      * @return
-     * @throws IOException
+     *
      * @throws ResourceNotFoundException
      * @throws AccessDeniedException
      */
