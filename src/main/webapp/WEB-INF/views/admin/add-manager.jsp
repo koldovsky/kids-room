@@ -21,28 +21,28 @@
                   <form:input path="role" type="hidden" value="MANAGER" />
                   <form:input path="password" type="hidden" name="password"/>
 
-                  <div class="form-group">
+                  <div class="form-group sizing-between">
                       <label for="email" class="required">
                       <spring:message code="administrator.manager.email"/></label>
                       <form:input path="email" type="email" class="form-control" style="text-transform: lowercase" />
                       <form:errors path="email" cssClass="error"/>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group sizing-between">
                       <label for="firstName" class="required">
                       <spring:message code="administrator.manager.firstName"/></label>
                       <form:input path="firstName" class="form-control" style="text-transform: capitalize"/>
                       <form:errors path="firstName" cssClass="error"/>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group sizing-between">
                       <label for="lastname" class="required">
                       <spring:message code="administrator.manager.lastName" /></label>
                       <form:input path="lastName" class="form-control" style="text-transform: capitalize"/>
                       <form:errors path="lastName" cssClass="error"/>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group sizing-between">
                       <label for="phoneNumber" class="required">
                       <spring:message code="administrator.phoneNumber"/></label>
                       <form:input path="phoneNumber" type="text" class="form-control"/>

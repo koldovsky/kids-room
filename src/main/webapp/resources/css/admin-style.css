@@ -1,5 +1,31 @@
 body, table{
     background-color: rgb(250, 250, 250);
+    margin:0px;
+}
+
+table, th, td {
+    text-align: center;
+    border: 2px solid #ddd;
+    border-collapse: collapse;
+    width: 35%;
+    padding: 10px;
+}
+
+td{
+    width: auto;
+    border-collapse: collapse;
+}
+
+tr{
+    border-collapse: collapse;
+    border: 2px solid #ddd;
+}
+
+th {
+    border: 2px solid #ddd;
+    height: 50px;
+    background-color: #4d94ff;
+    color: white;
 }
 
 .for-table{
@@ -16,11 +42,6 @@ body, table{
 	padding-bottom: 15px;
 }
 
-td{
-    width: auto;
-    border-collapse: collapse;
-}
-
 .hide-border{
     border: hidden;
 }
@@ -34,14 +55,14 @@ td{
 
 .for-field1{
     height: 30px;
-    width: 190px;
+    width: 160px;
     margin: auto;
     margin-bottom: 20px;
 }
 
 .for-field2{
     height: 30px;
-    width: 190px;
+    width: 160px;
     margin: auto;
     margin-bottom: 20px;
 }
@@ -70,27 +91,12 @@ td{
     height: 100%;
 }
 
-.img{
+.img-size{
     width:45px;
     height:45px;
 }
 
-/*Other*/
-table, th, td {
-    text-align: center;
-    border: 2px solid #ddd;
-    border-collapse: collapse;
-    width: 25%;
-    padding: 7px;
-}
-tr{
-   border-collapse: collapse;
-   border: 2px solid #ddd;
-}
-
-th {
-    border: 2px solid #ddd;
-    height: 50px;
-    background-color: #4d94ff;
-    color: white;
+.sizing-between{
+    margin: 0px;
+    margin-bottom: 35px;
 }

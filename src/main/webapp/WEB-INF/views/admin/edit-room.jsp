@@ -8,7 +8,7 @@
 
 
 <body>
-  <div class="tableDiv  for-table">
+  <div class="tableDiv for-table">
       <table class="for-table">
          <tr class="hide-border">
             <th colspan="11" class="set-standard-color">
@@ -37,7 +37,14 @@
             <td>${room.city}</td>
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
-            <td>${room.workingHoursStart} ${room.workingHoursEnd}</td>
+            <td class="td-full">
+                <table class="block-link hide-border">
+                    <tr><td class="hide-border">Start:</td></tr>
+                    <tr><td>${room.workingHoursStart}</td></tr>
+                    <tr><td>End:</td></tr>
+                    <tr><td class="hide-border">${room.workingHoursEnd}</td></tr>
+                </table>
+             </td>
             <td class="td-full">
                <table class="block-link hide-border">
                   <c:forEach var="manager" items="${room.managers}">
@@ -61,10 +68,10 @@
             </td>
             <td>
                 <c:if test="${room.isActive() eq true}">
-                    <img src="resources/img/ok.png" class="img">
+                    <img src="resources/img/ok.png" class="img-size">
                 </c:if>
                 <c:if test="${room.isActive() ne true}">
-                   <img src="resources/img/no.png" class="img">
+                   <img src="resources/img/no.png" class="img-size">
                 </c:if>
             </td>
             <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">

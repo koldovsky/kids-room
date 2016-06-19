@@ -22,42 +22,42 @@
            <form:hidden path="managers" value="${room.managers}" id="managers-json"/>
            <form:hidden path="active" value="${room.active}"/>
 
-           <div class="form-group">
+           <div class="form-group sizing-between">
               <label for="name" class="required">
                  <spring:message code="administrator.room.name"/></label>
                  <form:input path="name" value="${room.name}" class="form-control" />
                  <form:errors path="name" cssClass="error"/>
            </div>
 
-           <div class="form-group">
+           <div class="form-group sizing-between">
               <label for="address" class="required">
                  <spring:message code="administrator.room.address"/></label>
                  <form:input path="address" value="${room.address}" class="form-control"/>
                  <form:errors path="address" cssClass="error" />
            </div>
 
-           <div class="form-group">
+           <div class="form-group sizing-between">
               <label for="city" class="required">
                  <spring:message code="administrator.room.city"/></label>
                  <form:input path="city" value="${room.city}" class="form-control"/>
                  <form:errors path="city" cssClass="error"/>
            </div>
 
-           <div class="form-group">
+           <div class="form-group sizing-between">
               <label for="phoneNumber" class="required">
                  <spring:message code="administrator.phoneNumber"/></label>
                  <form:input path="phoneNumber" value="${room.phoneNumber}" class="form-control"/>
                  <form:errors path="phoneNumber" cssClass="error"/>
            </div>
 
-           <div class="form-group">
+           <div class="form-group sizing-between">
               <label for="capacity" class="required">
                  <spring:message code="administrator.room.capacity"/></label>
                  <form:input path="capacity" value="${room.capacity}" class="form-control"/>
                  <form:errors path="capacity" cssClass="error"/>
            </div>
 
-           <div class="form-group">
+           <div class="form-group sizing-between">
               <label class="for-field1">
               <label for="workingHoursStart" class="required">
                  <spring:message code="administrator.room.workingHoursStart"/></label>
@@ -76,12 +76,13 @@
            </div>
 
            <div ng-app="angularjs-starter" ng-controller="MainCtrl">
-               <div class="form-group">
+               <div class="form-group sizing-between">
                    <label class="for-field">
                       <spring:message code="administrator.room.manager"/></label>
                    <fieldset data-ng-repeat="manager in managers">
                        <label class="for-field">
-                           <select name="managers" class="form-control" ng-model="manager.managerId" managerId="" placeholder="manager">
+                           <select name="managers" class="form-control" ng-model="manager.managerId" managerId=""
+                                   placeholder="manager">
                               <c:forEach var="manager" items="${managerList}">
                                  <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
                               </c:forEach>
@@ -92,7 +93,7 @@
                    <button type="button" class="addfields" ng-click="addNewManager()" >+</button>
                </div>
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                   <label class="for-field">
                      <spring:message code="administrator.room.rate"/></label>
                   <fieldset  data-ng-repeat="rate in rates">

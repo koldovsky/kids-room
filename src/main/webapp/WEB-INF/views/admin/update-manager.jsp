@@ -22,28 +22,28 @@
             <form:hidden path="active" value="${manager.active}"/>
             <form:hidden path="confirmed" value="${manager.confirmed}"/>
 
-            <div class="form-group">
+            <div class="form-group sizing-between">
                <label for="email" class="required">
                   <spring:message code="administrator.manager.email"/></label>
                   <form:input path="email" value="${manager.email}" class="form-control" />
                   <form:errors path="email" cssClass="error"/>
             </div>
 
-            <div class="form-group">
+            <div class="form-group sizing-between">
                <label for="firstName" class="required">
                   <spring:message code="administrator.manager.firstName"/></label>
                   <form:input path="firstName" value="${manager.firstName}" class="form-control"/>
                   <form:errors path="firstName" cssClass="error"/>
             </div>
 
-            <div class="form-group">
+            <div class="form-group sizing-between">
                <label for="lastName" class="required">
                   <spring:message code="administrator.manager.lastName"/></label>
                   <form:input path="lastName" value="${manager.lastName}" class="form-control"/>
                   <form:errors path="lastName" cssClass="error" />
             </div>
 
-            <div class="form-group">
+            <div class="form-group sizing-between">
                <label for="phoneNumber" class="required">
                   <spring:message code="administrator.phoneNumber"/></label>
                   <form:input path="phoneNumber" value="${manager.phoneNumber}"
@@ -51,7 +51,7 @@
                   <form:errors path="phoneNumber" cssClass="error"  />
             </div>
 
-            <div class="form-group">
+            <div class="form-group sizing-between">
                 <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
                 <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
                         onclick="window.location.href='/home/adm-edit-manager'"></button>

@@ -35,18 +35,18 @@
              <td>${manager.phoneNumber}</td>
              <td>
                  <c:if test="${manager.confirmed eq true}">
-                    <img src="resources/img/ok.png" class="img">
+                    <img src="resources/img/ok.png" class="img-size">
                  </c:if>
                  <c:if test="${manager.confirmed ne true}">
-                    <img src="resources/img/no.png" class="img">
+                    <img src="resources/img/no.png" class="img-size">
                  </c:if>
              </td>
              <td>
                 <c:if test="${manager.active eq true}">
-                    <img src="resources/img/ok.png" class="img">
+                    <img src="resources/img/ok.png" class="img-size">
                  </c:if>
                  <c:if test="${manager.active ne true}">
-                    <img src="resources/img/no.png" class="img">
+                    <img src="resources/img/no.png" class="img-size">
                  </c:if>
              </td>
              <td><a href="adm-update-manager?id=${manager.id}">

@@ -22,42 +22,42 @@
                <form:hidden path="managers" name="managers" id="managers-json"/>
 
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                   <label for="name" class="required">
                      <spring:message code="administrator.room.name"/></label>
                      <form:input path="name" class="form-control" />
                      <form:errors path="name" cssClass="error"/>
                </div>
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                   <label for="address" class="required">
                      <spring:message code="administrator.room.address"/></label>
                      <form:input path="address" class="form-control" />
                      <form:errors path="address" cssClass="error" />
                </div>
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                   <label for="city" class="required">
                      <spring:message code="administrator.room.city"/></label>
                      <form:input path="city" class="form-control"/>
                      <form:errors path="city" cssClass="error"/>
                </div>
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                   <label for="phoneNumber" class="required">
                      <spring:message code="administrator.phoneNumber"/></label>
                      <form:input path="phoneNumber" class="form-control"/>
                      <form:errors path="phoneNumber" cssClass="error"/>
                </div>
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                   <label for="capacity" class="required">
                      <spring:message code="administrator.room.capacity"/></label>
-                     <form:input path="capacity" class="form-control"/>
+                     <form:input path="capacity" type="number" class="form-control"/>
                      <form:errors path="capacity" cssClass="error"/>
                </div>
 
-               <div class="form-group">
+               <div class="form-group sizing-between">
                    <label class="for-field1">
                    <label for="workingHoursStart" class="required">
                        <spring:message code="administrator.room.workingHoursStart"/></label>
@@ -74,7 +74,7 @@
                </div>
 
                <div ng-app="angularjs-starter" ng-controller="MainCtrl">
-                   <div class="form-group">
+                   <div class="form-group sizing-between">
                        <label class="for-field">
                           <spring:message code="administrator.room.manager"/></label>
                        <fieldset  data-ng-repeat="manager in managers">
@@ -92,7 +92,7 @@
                        <button type="button" class="addfields" ng-click="addNewManager()" >+</button>
                    </div>
 
-                   <div class="form-group">
+                   <div class="form-group sizing-between">
                        <label class="for-field">
                           <spring:message code="administrator.room.rate"/></label>
                        <fieldset  data-ng-repeat="rate in rates">
