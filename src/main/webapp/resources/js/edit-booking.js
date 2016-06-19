@@ -1,13 +1,14 @@
 var bookingsArray = [];
 var idBooking;
 var dateNow = new Date();
+var bookingsState= ['BOOKED'];
 
 
 $('#data-booking').val(dateNow.toISOString().substr(0,10));
 
 $(function(){
-  $('#data-booking').on('change', function(){
-    refresh();
+  $('#data-booking').change(function(){
+    refresh(bookingsState);
   });
 });
 $(function () {
@@ -46,15 +47,32 @@ $(function () {
   });
 });
 
-function refresh(){
+function bookedBooking(){
+    bookingsState= ['BOOKED'];
+    refresh(bookingsState);
+}
+function activeBooking(){
+    bookingsState = ['ACTIVE'];
+    refresh(bookingsState);
+}
+function leavedBooking(){
+    bookingsState = ['COMPLETED'];
+    refresh(bookingsState);
+}
+function allBooking(){
+    bookingsState = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
+    refresh(bookingsState);
+}
+
+
+function refresh(bookingsState){
   var time = $('#data-booking').val();
   var idRoom = localStorage["roomId"];
-  var src = 'manager-edit-booking/'+time + "/" +idRoom;
+  var src = 'dailyBookings/'+time + "/" +idRoom + "/" +bookingsState;
   $.ajax({
     url: src,
     success: function(result){
       var bookings = JSON.parse(result);
-
       var tr = "";
       $.each(bookings, function(i, booking){
         var index = i+1;
@@ -171,7 +189,7 @@ $( document ).ready(function() {
         var text = result;
         var bookings = JSON.parse(text);
         $('#bookingUpdatingDialog').dialog('close');
-        refresh();
+        refresh(bookingsState);
       }
     });
   });
@@ -231,7 +249,7 @@ $( document ).ready(function() {
 });
 
 function selectRoomForManager(roomId) {
- refresh();
+ refresh(bookingsState);
 }
 
 function Booking(startTime, endTime, comment, kidId, roomId, userId) {
@@ -281,10 +299,7 @@ function sendBookingToServerForCreate(bookingsArray) {
   dataType: 'json',
   data: JSON.stringify(bookingsArray),
   success: function (result) {
-
-
     if(result==""){
-        alert(result=="");
         alert("In the room doesn't have enough free places");
     }else{
         alert("You create new booking");
@@ -298,7 +313,7 @@ function sendBookingToServerForCreate(bookingsArray) {
 }
 
 function setStartTime(idBooking){
-  var idElement = "#"+idBooking;
+  alert(idBooking);  var idElement = "#"+idBooking;
   var inputData = {
     startTime: $(idElement).find('#arrivalTime').val(),
     id: idBooking,

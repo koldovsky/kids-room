@@ -17,10 +17,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -32,28 +29,29 @@ import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 @Controller
 public class BookingEditController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    RoomService roomService;
+    private RoomService roomService;
 
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
 
     @Autowired
-    ChildService childService;
+    private ChildService childService;
 
     @Autowired
-    BookingDao bookingDao;
+    private BookingDao bookingDao;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
     public ModelAndView editBookingModel (Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> listRoom = currentManager.getRooms();
+        List<Room> rooms = currentManager.getRooms();
         List<User> users = userService.findAllUsersByRole(Role.USER);
-        model.addAttribute("rooms", listRoom);
+        Collections.sort(users, (user1, user2)->user1.getFirstName().compareTo(user2.getFirstName()));
+        model.addAttribute("rooms", rooms);
         model.addAttribute("users", users);
         return modelAndView;
     }
@@ -70,44 +68,35 @@ public class BookingEditController {
         return  gson.toJson(bookingDto);
     }
 
-    @RequestMapping (value = "manager-edit-booking/{date}/{id}",
+    @RequestMapping (value = "dailyBookings/{date}/{id}/{state}",
             method = RequestMethod.GET)
     @ResponseBody
-    public String bookingsByDay(@PathVariable String date,
-                                @PathVariable Long id){
+    public String bookingsStateBooked(@PathVariable String date,
+                                      @PathVariable Long id,
+                                      @PathVariable BookingState[] state){
         Room room = roomService.findById(id);
         Date dateLo = toDateAndTime(date + " " +room.getWorkingHoursStart());
         Date dateHi = toDateAndTime(date + " " +room.getWorkingHoursEnd());
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, BookingConstants.States.getNotCancelled());
-        Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, state);
+        if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
+            Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
+        }
         Gson gson = new Gson();
         return  gson.toJson(bookings.stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList()));
     }
 
+
+
     @RequestMapping(value = "change-booking", method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseBody
-    public Boolean change(@RequestBody BookingDto bookingDto) {
+    public Boolean isPossableUpdate(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.findById(bookingDto.getId());
-        Room room = booking.getRoom();
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
-        System.out.println(startTime);
-        System.out.println(startTime);
-        System.out.println(startTime);
-        System.out.println(startTime);
-        System.out.println(startTime);
-        System.out.println(startTime);
-        System.out.println(endTime);
-        System.out.println(endTime);
-        System.out.println(endTime);
-        System.out.println(endTime);
-        System.out.println(endTime);
-        System.out.println(endTime);
-        System.out.println(endTime);
-        if(roomService.isPeriodAvailable(startTime, endTime, room)) {
+        if(roomService.isPossibleUpdate(bookingDto)){
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
             booking.setComment(bookingDto.getComment());
@@ -115,29 +104,6 @@ public class BookingEditController {
             return true;
         }
         return false;
-    }
-    @RequestMapping(value = "create-booking", method = RequestMethod.POST,  consumes = "application/json")
-    @ResponseBody
-    public Boolean createBooking (Principal principal, @RequestBody BookingDto bookingDto){
-        User manager = userService.getUserByEmail(principal.getName());
-        Room room = manager.getRooms().get(0);
-        Date dateLo = toDateAndTime(bookingDto.getStartTime());
-        Date dateHi = toDateAndTime(bookingDto.getEndTime());
-        bookingDto.setDateStartTime(dateLo);
-        bookingDto.setDateEndTime(dateHi);
-        Child child = childService.findById(bookingDto.getIdChild());
-        if(roomService.isPeriodAvailable(dateLo, dateHi, room)){
-            Booking booking = bookingDto.getBookingObject();
-            booking.setRoom(room);
-            booking.setChild(child);
-            booking.setUser(child.getParentId());
-            booking.setBookingState(BookingState.BOOKED);
-            bookingDao.create(booking);
-            bookingDao.update(booking);
-            return true;
-        }else {
-            return false;
-        }
     }
     @RequestMapping(value = "get-kids/{id}")
     @ResponseBody
@@ -148,4 +114,6 @@ public class BookingEditController {
                 .map(ChildDto::new)
                 .collect(Collectors.toList()));
     }
+
+
 }

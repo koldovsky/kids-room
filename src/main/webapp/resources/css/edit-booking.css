@@ -12,6 +12,7 @@
     margin: auto;
     width: 70%;
     min-width: 950px;
+    min-height: 400px;
     background-color: white;
     box-shadow: 8px 11px 20px 12px #c8c6d7;
 }
@@ -74,4 +75,11 @@ html, body, .container {
        margin-top: 20px;
        float:left;
 
+}
+
+#nav-group{
+     margin: auto;
+     width: 40%;
+     margin-top: 20px;
+     float:center;
 }

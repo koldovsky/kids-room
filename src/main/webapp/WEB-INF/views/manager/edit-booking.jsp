@@ -10,13 +10,11 @@
 
 
 <script src='resources/js/moment.min.js'></script>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type='text/javascript' src='resources/js/uk.js'></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
-
 
 
 <div class="container">
@@ -30,6 +28,15 @@
                     New booking
                  </button>
             </div>
+            <div id="nav-group">
+                <nav>
+                      <button class="btn btn-raised" onclick="allBooking()">All</button>
+                      <button class="btn btn-raised" onclick="bookedBooking()">Booked</button>
+                      <button class="btn btn-raised" onclick="activeBooking()">Active</button>
+                      <button class="btn btn-raised" onclick="leavedBooking()">Left</button>
+                </nav>
+            </div>
+
     <div class = "tableDiv">
         <table class="table-edit">
                 <div id ="body-booking">
