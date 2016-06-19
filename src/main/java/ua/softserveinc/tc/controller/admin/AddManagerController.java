@@ -23,10 +23,17 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.UUID;
 
-
+/**
+ * Controller class for "Add manager" view, which accompanies add new manager.
+ * <p>
+ * Created by TARAS on 18.05.2016.
+ */
 @Controller
 @RequestMapping(value = "/adm-add-manager")
 public class AddManagerController {
+
+    @Log
+    private static Logger log;
 
     @Autowired
     private UserService userService;
@@ -37,24 +44,35 @@ public class AddManagerController {
     @Autowired
     private TokenService tokenService;
 
-    @Log
-    private static Logger log;
-
     @Autowired
     private UserValidator userValidator;
 
 
+    /**
+     * Method open "Add manager" view. Send empty model into view.
+     * Mapped by AdminConstants.ADD_MANAGER constant.
+     *
+     * @return model
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showCreateManagerForm() {
+    public ModelAndView showAddManagerForm() {
         ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
         model.addObject(AdminConstants.ATR_MANAGER, new User());
 
         return model;
     }
 
+    /**
+     * Method saving model with values received from view. Check value validation.
+     * Redirect into view, witch mapped by AdminConstants.EDIT_MANAGER
+     *
+     * @param manager
+     * @param bindingResult
+     * @return String value
+     */
     @RequestMapping(method = RequestMethod.POST)
-    public String saveManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
-                              BindingResult bindingResult) {
+    public String saveNewManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
+                                 BindingResult bindingResult) {
         this.userValidator.validateIfEmailExist(manager, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_MANAGER;
@@ -77,5 +95,4 @@ public class AddManagerController {
         this.tokenService.createToken(token, manager);
         return "redirect:/" + AdminConstants.EDIT_MANAGER;
     }
-
 }

@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.controller.admin;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +22,12 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Controller class for "Update room" view, which accompanies room updates.
+ * <p>
+ * Created by TARAS on 18.05.2016.
+ */
 @Controller
 @RequestMapping(value = "/adm-update-room")
 public class UpdateRoomController {
@@ -34,8 +39,14 @@ public class UpdateRoomController {
     private RoomService roomService;
 
 
+    /**
+     * Method mapping into view, with update room form. Method send empty model into view
+     * with list of managers (view mapping by AdminConstants.UPDATE_ROOM const).
+     *
+     * @return mav (model into UI)
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showUpdateRoomForm(@RequestParam("id") Long id) throws JsonProcessingException {
+    public ModelAndView showUpdateRoomForm(@RequestParam Long id) {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);
 
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
@@ -48,6 +59,13 @@ public class UpdateRoomController {
         return model;
     }
 
+    /**
+     * Method build model based based on parameters received from view mapped by AdminConstants.UPDATE_ROOM.
+     * Method send built Room object into Service layer with method saveOrUpdate().
+     *
+     * @param roomDto (Data Transfer Object for Room, needed to get some fields in JSON)
+     * @return string, which redirect on other view
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                    BindingResult bindingResult) {

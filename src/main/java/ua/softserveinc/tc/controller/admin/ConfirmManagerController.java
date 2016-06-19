@@ -22,6 +22,9 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.UserValidator;
 
 /**
+ * Controller class for "Confirm manager registration" view,
+ * which accompanies accepting registration of manager.
+ * <p>
  * Created by TARAS on 18.05.2016.
  */
 @Controller
@@ -45,8 +48,16 @@ public class ConfirmManagerController {
     private UserDetailsService userDetailsService;
 
 
+    /**
+     * Method open "Confirm manager registration" view. Send model with values founded by token.
+     * Deleting used token. Mapped by AdminConstants.CONFIRM_MANAGER constant.
+     *
+     * @param model
+     * @param sToken
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public String confirmRegistration(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
+    public String showConfirmRegistrationForm(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
 
         Token token = this.tokenService.findByToken(sToken);
         User manager = token.getUser();
@@ -60,6 +71,15 @@ public class ConfirmManagerController {
         return AdminConstants.CONFIRM_MANAGER;
     }
 
+    /**
+     * Method build model based based on parameters received from view.
+     * Save built Manager object into Service layer with method update().
+     * Redirect into view, witch mapped by UserConstants.Model.LOGIN_VIEW
+     *
+     * @param manager
+     * @param bindingResult
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult) {
         User managerToSave = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -73,9 +93,8 @@ public class ConfirmManagerController {
 
         managerToSave.setPassword(this.passwordEncoder.encode(manager.getPassword()));
         managerToSave.setConfirmed(true);
-        this.userService.update(managerToSave);
 
+        this.userService.update(managerToSave);
         return UserConstants.Model.LOGIN_VIEW;
     }
-
 }

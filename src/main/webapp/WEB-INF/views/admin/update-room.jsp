@@ -62,7 +62,7 @@
               <label for="workingHoursStart" class="required">
                  <spring:message code="administrator.room.workingHoursStart"/></label>
                  <form:input type="time" path="workingHoursStart" value="${room.workingHoursStart}"
-                                                      class="form-control" required="required"/>
+                                         class="form-control" required="required"/>
                  <form:errors path="workingHoursStart" cssClass="error"/>
               </label>
 
@@ -70,7 +70,7 @@
               <label for="workingHoursEnd" class="required">
                  <spring:message code="administrator.room.workingHoursEnd"/></label>
                  <form:input type="time" path="workingHoursEnd" value="${room.workingHoursEnd}"
-                                                    class="form-control" required="required"/>
+                                         class="form-control" required="required"/>
                  <form:errors path="workingHoursEnd" cssClass="error"/>
               </label>
            </div>
@@ -78,7 +78,7 @@
            <div ng-app="angularjs-starter" ng-controller="MainCtrl">
                <div class="form-group sizing-between">
                    <label class="for-field">
-                      <spring:message code="administrator.room.manager"/></label>
+                       <spring:message code="administrator.room.manager"/></label>
                    <fieldset data-ng-repeat="manager in managers">
                        <label class="for-field">
                            <select name="managers" class="form-control" ng-model="manager.id" managerId=""

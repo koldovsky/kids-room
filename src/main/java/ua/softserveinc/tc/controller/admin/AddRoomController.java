@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by TARAS on 18.05.2016.
+ * Controller class for "Add manager" view, which accompanies add new manager.
  * <p>
- * Controller class for "adm-add-room", witch accompanies add new room's into system.
+ * Created by TARAS on 18.05.2016.
  */
 @Controller
 @RequestMapping(value = "/adm-add-room")
@@ -38,13 +38,13 @@ public class AddRoomController {
 
 
     /**
-     * Method call view, with form to add new room's. Method send model into that
-     * form with list of managers into form(form with action=adm-add-room).
+     * Method call view, for add new room. Method send model into that view
+     * with list of managers into (mapped by AdminConstants.UPDATE_ROOM const).
      *
      * @return mav (model into UI)
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView showCreateRoomForm() {
+    public ModelAndView showAddRoomForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
         ModelAndView mav = new ModelAndView(AdminConstants.ADD_ROOM);
@@ -55,15 +55,15 @@ public class AddRoomController {
     }
 
     /**
-     * Method build model based based on parameters received from view with action "adm-add-room".
-     * Method send built Room object into Service layer with  method create().
+     * Method build model based based on parameters received from view with action AdminConstants.ADD_ROOM const.
+     * Method send built Room object into Service layer with  method saveOrUpdate().
      *
-     * @param roomDto (Data Transfer Object for Room, needed to get json of rate's in String type)
+     * @param roomDto (Data Transfer Object for Room, needed to get some fields in JSON)
      * @return string, witch redirect on other view
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String saveRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
-                           BindingResult bindingResult) {
+    public String saveNewRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
+                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_ROOM;
         }
@@ -74,8 +74,8 @@ public class AddRoomController {
         Room room = new Room(roomDto);
         room.setManagers(managers);
         room.setActive(true);
-        this.roomService.saveOrUpdate(room);
 
+        this.roomService.saveOrUpdate(room);
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 }

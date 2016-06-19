@@ -1,12 +1,10 @@
 package ua.softserveinc.tc.service;
 
 import org.springframework.stereotype.Component;
-import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Component

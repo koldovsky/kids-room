@@ -13,6 +13,11 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
 
+/**
+ * Controller class for "Manager list" view. It's main controller for editing managers.
+ * <p>
+ * Created by TARAS on 18.05.2016.
+ */
 @Controller
 @RequestMapping(value = "/adm-edit-manager")
 public class EditManagerController {
@@ -21,8 +26,14 @@ public class EditManagerController {
     private UserService userService;
 
 
+    /**
+     * Method send  model with all managers into view.
+     * Mapped by AdminConstants.EDIT_MANAGER constant.
+     *
+     * @return model
+     */
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getManagerMenu() {
+    public ModelAndView showAllManagersForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
         ModelAndView mav = new ModelAndView(AdminConstants.EDIT_MANAGER);
@@ -31,6 +42,13 @@ public class EditManagerController {
         return mav;
     }
 
+    /**
+     * Method receive manager id from view. Set setActive() for manager opposite to previous value.
+     * This mean record will lock or unlock, based on the received state.
+     * Redirect into view, which mapped by AdminConstants.EDIT_MANAGER const
+     *
+     * @return String value
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String managerBlockUnblock(@RequestParam Long id) {
         User manager = this.userService.findById(id);

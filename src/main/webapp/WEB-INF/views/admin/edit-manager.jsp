@@ -51,7 +51,6 @@
              </td>
              <td><a href="adm-update-manager?id=${manager.id}">
                     <button class="btn btn-info btn-raised glyphicon glyphicon-pencil active"></button></a></td>
-
              <td>
                 <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
                 <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >

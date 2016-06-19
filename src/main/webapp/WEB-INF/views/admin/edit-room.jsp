@@ -90,7 +90,6 @@
          </c:forEach>
 
          <tr></tr>
-
          <tr>
             <th colspan="11" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value=<spring:message code="administrator.add"/>
