@@ -81,7 +81,7 @@
                       <spring:message code="administrator.room.manager"/></label>
                    <fieldset data-ng-repeat="manager in managers">
                        <label class="for-field">
-                           <select name="managers" class="form-control" ng-model="manager.managerId" managerId=""
+                           <select name="managers" class="form-control" ng-model="manager.id" managerId=""
                                    placeholder="manager">
                               <c:forEach var="manager" items="${managerList}">
                                  <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>

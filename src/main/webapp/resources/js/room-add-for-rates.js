@@ -9,7 +9,7 @@ app.controller('MainCtrl', function($scope) {
 
    $scope.addNewManager = function() {
        var newItemNo = $scope.managers.length+1;
-       $scope.managers.push({'id':'manager'+newItemNo})
+       $scope.managers.push({'idIns':'manager'+newItemNo})
    }
    $scope.removeManager = function() {
        var lastItem = $scope.managers.length-1;
@@ -18,7 +18,7 @@ app.controller('MainCtrl', function($scope) {
 
    $scope.addNewRate = function() {
        var newItemNo = $scope.rates.length+1;
-       $scope.rates.push({'id':'rate'+newItemNo});
+       $scope.rates.push({'idIns':'rate'+newItemNo});
    };
 
    $scope.removeRate = function() {
