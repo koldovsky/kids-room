@@ -1,48 +1,41 @@
 /**
  * Created by dima- on 12.05.2016.
  */
+var beforeUpdate;
+var info;
+var creatingEvent;
+
+var ACTIVE_EVENT = '#428bca';
+var NOT_ACTIVE_EVENT = '#33cc33';
 
 $(function () {
     $('#basicExample').timepicker({
-        'timeFormat': 'H:i',
-        'step': 15,
-        'minTime': '15:00',
-        'maxTime': '22:00'
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: '15:00',
+        maxTime: '22:00'
     });
-});
 
-$(function () {
     $('#ender').timepicker({
-        'timeFormat': 'H:i',
-        'step': 15,
-        'minTime': '15:00',
-        'maxTime': '22:00'
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: '15:00',
+        maxTime: '22:00'
     });
-});
 
-$(function () {
     $('#startTimeUpdate').timepicker({
-        'timeFormat': 'H:i',
-        'step': 15,
-        'minTime': '15:00',
-        'maxTime': '22:00'
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: '15:00',
+        maxTime: '22:00'
     });
-});
 
-
-$(function () {
     $('#endTimeUpdate').timepicker({
-        'timeFormat': 'H:i',
-        'step': 15,
-        'minTime': '15:00',
-        'maxTime': '22:00'
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: '15:00',
+        maxTime: '22:00'
     });
-});
-
-
-function selectRoomForManager(id) {
-
-    $('#calendar').fullCalendar('destroy');
 
     $('#dialog').dialog({
         autoOpen: false,
@@ -68,50 +61,6 @@ function selectRoomForManager(id) {
         }
     });
 
-    var path = 'getevents/' + id;
-
-    $.ajax({
-        url: path,
-
-        success: function (result) {
-
-            if (result.length !== 0) {
-                var objects = [];
-                result = JSON.parse(result);
-
-                for (var i = 0; i < result.length; i++) {
-                    objects[i] = {
-                        id: result[i].id,
-                        title: result[i].name,
-                        start: result[i].startTime,
-                        end: result[i].endTime,
-                        editable: false,
-                        type: 'event',
-                        description: result[i].description
-                    }
-                }
-                rendering(objects, id);
-            } else {
-                $('#calendar').fullCalendar('destroy');
-
-                var objects = [{
-                    title: '1',
-                    start: '1',
-                    end: '1'
-                }];
-                rendering(objects, id);
-            }
-        }
-    });
-}
-
-function rendering(objects, roomID) {
-
-    var info = new Object();
-    var creatingEvent = new Object();
-    var ACTIVE_EVENT = '#428bca';
-    var NOT_ACTIVE_EVENT = '#33cc33';
-
     $('#updatingButton').click(function () {
         var newStartDate = makeISOtime(info.calEvent.start.format(), 'startTimeUpdate');
         var newEndDate = makeISOtime(info.calEvent.end.format(), 'endTimeUpdate');
@@ -133,6 +82,7 @@ function rendering(objects, roomID) {
         $('#updating').dialog('close');
     });
 
+
     $('#deleting').click(function () {
         sendToServerForDelete(info.calEvent);
         $('#calendar').fullCalendar('removeEvents', info.calEvent.id);
@@ -150,7 +100,7 @@ function rendering(objects, roomID) {
             borderColor: NOT_ACTIVE_EVENT,
             editable: false,
             description : $('#description').val()
-    };
+        };
 
         $('#calendar').fullCalendar('renderEvent', ev, true);
 
@@ -183,6 +133,52 @@ function rendering(objects, roomID) {
         $('#title').val('');
         $('#dialog').dialog('close');
     });
+});
+
+function selectRoomForManager(id) {
+
+    $('#calendar').fullCalendar('destroy');
+
+    var path = 'getevents/' + id;
+
+    $.ajax({
+        url: path,
+
+        success: function (result) {
+
+            if (result.length !== 0) {
+                var objects = [];
+                result = JSON.parse(result);
+
+                for (var i = 0; i < result.length; i++) {
+                    objects[i] = {
+                        id: result[i].id,
+                        title: result[i].name,
+                        start: result[i].startTime,
+                        end: result[i].endTime,
+                        editable: false,
+                        type: 'event',
+                        description: result[i].description
+                    }
+                }
+                renderCalendarForManager(objects, id);
+            } else {
+                $('#calendar').fullCalendar('destroy');
+
+                var objects = [{
+                    title: '1',
+                    start: '1',
+                    end: '1'
+                }];
+                renderCalendarForManager(objects, id);
+            }
+        }
+    });
+}
+
+function renderCalendarForManager(objects, roomID) {
+    info = new Object();
+    creatingEvent = new Object();
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
@@ -218,7 +214,7 @@ function rendering(objects, roomID) {
 
         eventClick: function (calEvent) {
 
-            var beforeUpdate = calEvent.title;
+            beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
             $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));

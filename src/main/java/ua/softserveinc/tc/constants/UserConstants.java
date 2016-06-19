@@ -22,6 +22,8 @@ public final class UserConstants {
         public static final String ACTIVE = "active";
         public static final String USER = "user";
         public static final String ROOMS = "rooms";
+        public static final String KIDS = "kids";
+        public static final String USERID = "userId";
 
         private Entity (){}
     }

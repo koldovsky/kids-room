@@ -37,6 +37,7 @@ public class ViewEventController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
+        //TODO: use switch
         if (principal == null) {
             return UserConstants.Model.LOGIN_VIEW;
         } else {
@@ -44,8 +45,8 @@ public class ViewEventController {
             User user = userService.getUserByEmail(email);
             if (user.getRole() == Role.USER) {
                 model.addAttribute(UserConstants.Entity.ROOMS, roomServiceImpl.findAll());
-                model.addAttribute("kids", user.getEnabledChildren());
-                model.addAttribute("userId", user.getId());
+                model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
+                model.addAttribute(UserConstants.Entity.USERID, user.getId());
                 return EventConstants.View.MAIN_PAGE;
             } else if (user.getRole() == Role.MANAGER) {
                 model.addAttribute(UserConstants.Entity.ROOMS, user.getRooms());
