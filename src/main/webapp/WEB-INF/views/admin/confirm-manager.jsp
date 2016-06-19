@@ -44,7 +44,7 @@
         <tr></tr>
         <tr><td class="hide-border">
             <div class="form-group">
-                <button type="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok"></button>
+                <button type="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok active"></button>
             </div>
         </td></tr>
 

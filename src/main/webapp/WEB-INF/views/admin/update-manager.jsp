@@ -52,8 +52,8 @@
             </div>
 
             <div class="form-group sizing-between">
-                <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok"></button>
-                <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove"
+                <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"></button>
+                <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
                         onclick="window.location.href='/home/adm-edit-manager'"></button>
             </div>
         </th></tr>

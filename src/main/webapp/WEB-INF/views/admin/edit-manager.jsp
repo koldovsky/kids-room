@@ -50,14 +50,14 @@
                  </c:if>
              </td>
              <td><a href="adm-update-manager?id=${manager.id}">
-                    <button class="btn btn-raised btn-info glyphicon glyphicon-pencil"></button></a></td>
+                    <button class="btn btn-info btn-raised glyphicon glyphicon-pencil active"></button></a></td>
 
              <td>
                 <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
                 <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                    <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                    <button type="submit" value="lock" onClick="return confirm('sure?')"
-                            class="btn btn-raised btn-danger glyphicon glyphicon-trash for-lock-button"></button>
+                            class="btn btn-raised btn-warning glyphicon glyphicon-sort active for-lock-button"></button>
                 </form:form>
              </td>
           </tr>
@@ -67,7 +67,7 @@
           <tr>
              <td colspan="8" class="hide-border set-standard-color">
                 <a href="adm-add-manager"><input type="button" value=<spring:message code="administrator.add"/>
-                                           class="btn btn-raised btn-primary waves-effect waves-light"/></a>
+                                           class="btn btn-raised btn-primary waves-effect waves-light active"/></a>
              </td>
           </tr>
        </table>

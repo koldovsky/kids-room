@@ -74,14 +74,16 @@
                    <img src="resources/img/no.png" class="img-size">
                 </c:if>
             </td>
-            <td><a href="adm-update-room?id=${room.id}"><button class="btn btn-raised btn-info glyphicon glyphicon-pencil">
-                                                        </button></a></td>
+            <td><a href="adm-update-room?id=${room.id}">
+                   <button class="btn btn-raised btn-info glyphicon glyphicon-pencil active">
+                   </button></a></td>
             <td>
                 <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                 <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                    <input id="room" name="room" type="hidden" value="${room.id}" />
                    <button type="submit" value="lock" onClick="return confirm('sure?')"
-                            class="btn btn-raised btn-danger glyphicon glyphicon-trash for-lock-button"></button>
+                           class="btn btn-raised btn-warning glyphicon glyphicon-sort active for-lock-button active">
+                           </button>
                 </form:form>
             </td>
          </tr>
@@ -92,7 +94,7 @@
          <tr>
             <th colspan="11" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value=<spring:message code="administrator.add"/>
-                                        class="btn btn-raised btn-primary waves-effect waves-light hide-border"/></a>
+                                        class="btn btn-raised btn-primary waves-effect waves-light active hide-border"/></a>
             </th>
          </tr>
        </table>
