@@ -12,7 +12,7 @@
        <table class="for-table">
           <tr class="hide-border">
              <th colspan="8" class="set-standard-color">
-                <legend class="for-table"><strong><spring:message code="administrator.editManagers"/></strong></legend>
+                <legend class="for-table"><strong><spring:message code="administrator.listManagers"/></strong></legend>
              </th>
           </tr>
           <tr></tr>

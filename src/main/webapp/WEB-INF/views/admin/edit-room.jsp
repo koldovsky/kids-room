@@ -12,7 +12,7 @@
       <table class="for-table">
          <tr class="hide-border">
             <th colspan="11" class="set-standard-color">
-               <legend class="for-table"><strong><spring:message code="administrator.editRooms"/></strong></legend>
+               <legend class="for-table"><strong><spring:message code="administrator.listRooms"/></strong></legend>
             </th>
          </tr>
          <tr></tr>
