@@ -12,9 +12,17 @@ import java.util.Map;
 @Component
 public interface RoomService extends BaseService<Room> {
 
-    void saveOrUpdate(Room room);
+    @Override
+    default Room update(Room entity) {
+        return saveOrUpdate(entity);
+    }
 
-    List<Event> getAllEventsInRoom(Room room);
+    @Override
+    default void create(Room entity) {
+        saveOrUpdate(entity);
+    }
+
+    Room saveOrUpdate(Room room);
 
     Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
 

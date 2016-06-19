@@ -7,6 +7,7 @@ import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.UserService;
 
 import javax.persistence.EntityManager;
@@ -20,6 +21,9 @@ import java.util.List;
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BookingDao bookingDao;
@@ -46,6 +50,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Override
     public List<User> findAllUsersByRole(Role role) {
         return userDao.findAllUsersByRole(role);
+    }
+
+    @Override
+    public List<User> findAll(Iterable<Long> ids) {
+        return userRepository.findAll(ids);
     }
 
     @Override

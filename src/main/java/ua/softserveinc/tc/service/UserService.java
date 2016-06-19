@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface UserService extends BaseService<User> {
 
+    List<User> findAll(Iterable<Long> ids);
+
     void deleteUserById(Long id);
 
     User getUserByEmail(String email);

@@ -8,6 +8,7 @@ import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -27,7 +28,7 @@ import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
 
     @Autowired
-    private RoomDao roomDao;
+    private RoomRepository roomRepository;
 
     @Autowired
     private ApplicationConfigurator appConfigurator;
@@ -36,37 +37,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private BookingService bookingService;
 
     @Override
-    public void create(Room room) {
-        roomDao.saveOrUpdate(room);
-    }
-
-    @Override
     public List<Room> findAll() {
-        return roomDao.findAll();
+        return roomRepository.findAll();
     }
 
     @Override
-    public Room update(Room entity) {
-        return roomDao.update(entity);
-    }
-
-    @Override
-    public void saveOrUpdate(Room room) {
-        roomDao.saveOrUpdate(room);
-    }
-
-    @Override
-    public List<Event> getAllEventsInRoom(Room room) {
-        EntityManager entityManager = roomDao.getEntityManager();
-
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Event> query = builder.createQuery(Event.class);
-        Root<Event> root = query.from(Event.class);
-        query.select(root).where(builder.equal(root.get(EventConstants.Entity.ID_ROOM), room.getId()));
-
-        return entityManager
-                .createQuery(query)
-                .getResultList();
+    public Room saveOrUpdate(Room room) {
+        return roomRepository.save(room);
     }
 
     @Override

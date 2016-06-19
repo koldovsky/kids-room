@@ -19,9 +19,6 @@ import java.util.List;
 public class CalendarServiceImpl implements CalendarService {
 
     @Autowired
-    private RoomDao roomDao;
-
-    @Autowired
     private EventDao eventDao;
 
     @Autowired
@@ -36,7 +33,7 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     public final List<EventDto> findByRoomId(final long roomId) {
-        return eventMapper.toDto(roomService.getAllEventsInRoom(roomDao.findById(roomId)));
+        return eventMapper.toDto(roomService.findById(roomId).getEvents());
     }
 
     public final void updateEvent(Event event) {
