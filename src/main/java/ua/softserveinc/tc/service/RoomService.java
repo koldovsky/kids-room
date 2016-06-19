@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Room;
 
 import java.util.Calendar;
@@ -27,6 +28,8 @@ public interface RoomService extends BaseService<Room> {
     Map<String, String> getBlockedPeriodsForWeek(Room room);
 
     Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room);
+
+    Boolean isPossibleUpdate(BookingDto bookingDto);
 
     Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room);
 }
