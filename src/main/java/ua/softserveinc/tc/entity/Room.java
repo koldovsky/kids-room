@@ -6,7 +6,6 @@ import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.util.JsonUtil;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 

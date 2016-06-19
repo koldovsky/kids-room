@@ -15,11 +15,6 @@ public class RateDto {
         //empty constructor for instantiating in controller
     }
 
-    public RateDto(String hourRate, String priceRate) {
-        this.hourRate = hourRate;
-        this.priceRate = priceRate;
-    }
-
     public RateDto(Rate rate) {
         this.hourRate = rate.getHourRate().toString();
         this.priceRate = rate.getPriceRate().toString();

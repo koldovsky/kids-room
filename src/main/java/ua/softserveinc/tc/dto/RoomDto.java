@@ -1,20 +1,19 @@
 package ua.softserveinc.tc.dto;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.JsonUtil;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Created by TARAS on 24.05.2016.
  */
+
 public class RoomDto {
 
     private Long id;
@@ -66,10 +65,12 @@ public class RoomDto {
         this.workingHoursEnd = room.getWorkingHoursEnd();
         this.active = room.isActive();
 
-        Gson gson = new Gson();
-        this.setRate(gson.toJson(room.getRates().stream()
+        this.managers = JsonUtil.toJson(room.getManagers().stream()
+                .map(UserDto::new)
+                .collect(Collectors.toList()));
+        this.rate = JsonUtil.toJson(room.getRates().stream()
                 .map(RateDto::new)
-                .collect(Collectors.toList())));
+                .collect(Collectors.toList()));
     }
 
     public RoomDto(Room room, Long sum) {
@@ -80,6 +81,22 @@ public class RoomDto {
         this.namesOfManagers = room.getManagers().stream()
                 .map(User::getFullName)
                 .collect(Collectors.toList());
+    }
+
+
+    public static Room getRoomObjectFromDtoValues(RoomDto roomDto){
+        Room resultRoom = new Room();
+        resultRoom.setId(roomDto.id);
+        resultRoom.setName(roomDto.name);
+        resultRoom.setAddress(roomDto.address);
+        resultRoom.setCity(roomDto.city);
+        resultRoom.setPhoneNumber(roomDto.phoneNumber);
+        resultRoom.setCapacity(roomDto.capacity);
+        resultRoom.setWorkingHoursStart(roomDto.workingHoursStart);
+        resultRoom.setWorkingHoursEnd(roomDto.workingHoursEnd);
+        resultRoom.setActive(roomDto.active);
+        resultRoom.setRates(JsonUtil.fromJsonList(roomDto.getRate(), Rate[].class));
+        return resultRoom;
     }
 
     public Long getId() {
@@ -130,6 +147,22 @@ public class RoomDto {
         this.capacity = capacity;
     }
 
+    public String getManagers() {
+        return managers;
+    }
+
+    public void setManagers(String managers) {
+        this.managers = managers;
+    }
+
+    public List<String> getNamesOfManagers() {
+        return namesOfManagers;
+    }
+
+    public void setNamesOfManagers(List<String> namesOfManagers) {
+        this.namesOfManagers = namesOfManagers;
+    }
+
     public String getWorkingHoursStart() {
         return workingHoursStart;
     }
@@ -154,22 +187,6 @@ public class RoomDto {
         this.rate = rate;
     }
 
-    public Long getSum() {
-        return sum;
-    }
-
-    public void setSum(Long sum) {
-        this.sum = sum;
-    }
-
-    public String getManagers() {
-        return managers;
-    }
-
-    public void setManagers(String managers) {
-        this.managers = managers;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -178,12 +195,12 @@ public class RoomDto {
         this.active = active;
     }
 
-    public List<String> getNamesOfManagers() {
-        return namesOfManagers;
+    public Long getSum() {
+        return sum;
     }
 
-    public void setNamesOfManagers(List<String> namesOfManagers) {
-        this.namesOfManagers = namesOfManagers;
+    public void setSum(Long sum) {
+        this.sum = sum;
     }
 
     @Override
@@ -197,42 +214,5 @@ public class RoomDto {
                 ", capacity=" + capacity +
                 ", rate='" + rate + '\'' +
                 '}';
-    }
-
-    /**
-     * Method convert JSON format into list of Rate typed object's.
-     *
-     * @return List<Rate> (converted from JSON format)
-     */
-    public List<Rate> fromJsonToListOfRates() {
-        List<Rate> result = new ArrayList<>();
-
-        final GsonBuilder gsonBuilder = new GsonBuilder();
-        final Gson gson = gsonBuilder.create();
-
-        RateDto[] stringList = gson.fromJson(this.rate, RateDto[].class);
-
-        for (RateDto rateDto : stringList) {
-            if (rateDto.getHourRate() != null && rateDto.getPriceRate() != null) {
-                result.add(new Rate(Integer.parseInt(rateDto.getHourRate()), Long.parseLong(rateDto.getPriceRate())));
-            }
-        }
-        return result;
-    }
-
-    public List<Long> fromJsonToListOfManagersId() {
-        List<Long> result = new ArrayList<>();
-
-        final GsonBuilder gsonBuilder = new GsonBuilder();
-        final Gson gson = gsonBuilder.create();
-
-        ManagerDto[] managerList = gson.fromJson(this.managers, ManagerDto[].class);
-
-        for (ManagerDto managerDto : managerList) {
-            if (managerDto != null) {
-                result.add(Long.parseLong(managerDto.getManagerId()));
-            }
-        }
-        return result;
     }
 }
