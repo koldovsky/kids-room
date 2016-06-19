@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.controller.admin;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
-import ua.softserveinc.tc.dto.RateDto;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Role;
@@ -18,13 +17,14 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.JsonUtil;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping(value = "/adm-update-room")
 public class UpdateRoomController {
 
     @Autowired
@@ -34,8 +34,8 @@ public class UpdateRoomController {
     private RoomService roomService;
 
 
-    @RequestMapping(value = "/adm-update-room", method = RequestMethod.GET)
-    public ModelAndView showUpdateRoomForm(@RequestParam("id") Long id) {
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView showUpdateRoomForm(@RequestParam("id") Long id) throws JsonProcessingException {
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);
 
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
@@ -44,32 +44,20 @@ public class UpdateRoomController {
         Room room = this.roomService.findById(id);
         RoomDto roomDto = new RoomDto(room);
 
-        Gson gson = new Gson();
-        roomDto.setRate(gson.toJson(room.getRates().stream()
-                .map(RateDto::new)
-                .collect(Collectors.toList())));
-        roomDto.setManagers(gson.toJson(room.getManagers().stream()
-                .map(UserDto::new)
-                .collect(Collectors.toList())));
-
         model.getModelMap().addAttribute(AdminConstants.ATR_ROOM, roomDto);
-
         return model;
     }
 
-    @RequestMapping(value = "/adm-update-room", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return AdminConstants.UPDATE_ROOM;
         }
 
-        List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
-        List<User> managers = new ArrayList<>();
-        for (Long elem : idManagers) {
-            managers.add(this.userService.findById(elem));
-        }
-
+        List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
+                .map(UserDto::getId).collect(Collectors.toList());
+        List<User> managers = this.userService.findAll(idManagers);
         Room room = new Room(roomDto);
         room.setManagers(managers);
 

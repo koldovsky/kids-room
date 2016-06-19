@@ -9,15 +9,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.JsonUtil;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by TARAS on 18.05.2016.
@@ -25,6 +27,7 @@ import java.util.List;
  * Controller class for "adm-add-room", witch accompanies add new room's into system.
  */
 @Controller
+@RequestMapping(value = "/adm-add-room")
 public class AddRoomController {
 
     @Autowired
@@ -40,7 +43,7 @@ public class AddRoomController {
      *
      * @return mav (model into UI)
      */
-    @RequestMapping(value = "/adm-add-room", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showCreateRoomForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
@@ -58,20 +61,16 @@ public class AddRoomController {
      * @param roomDto (Data Transfer Object for Room, needed to get json of rate's in String type)
      * @return string, witch redirect on other view
      */
-    @RequestMapping(value = "/adm-add-room", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String saveRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_ROOM;
         }
-        System.err.println(roomDto.getRate());
 
-        List<Long> idManagers = roomDto.fromJsonToListOfManagersId();
-        List<User> managers = new ArrayList<>();
-        for (Long elem : idManagers) {
-            managers.add(this.userService.findById(elem));
-        }
-
+        List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
+                .map(UserDto::getId).collect(Collectors.toList());
+        List<User> managers = this.userService.findAll(idManagers);
         Room room = new Room(roomDto);
         room.setManagers(managers);
         room.setActive(true);

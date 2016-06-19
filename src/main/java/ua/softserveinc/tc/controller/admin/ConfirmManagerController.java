@@ -2,8 +2,6 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +25,7 @@ import ua.softserveinc.tc.validator.UserValidator;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
+@RequestMapping(value = "/confirm-manager")
 public class ConfirmManagerController {
 
     @Autowired
@@ -46,22 +45,22 @@ public class ConfirmManagerController {
     private UserDetailsService userDetailsService;
 
 
-    @RequestMapping(value = "/confirm-manager", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String confirmRegistration(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
 
         Token token = this.tokenService.findByToken(sToken);
         User manager = token.getUser();
         model.addAttribute(AdminConstants.ATR_MANAGER, manager);
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(
-                manager, null, this.userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
+//        Authentication auth = new UsernamePasswordAuthenticationToken(
+//                manager, null, this.userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
+        //SecurityContextHolder.getContext().setAuthentication(auth);
 
         this.tokenService.delete(token);
         return AdminConstants.CONFIRM_MANAGER;
     }
 
-    @RequestMapping(value = "/confirm-manager", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult) {
         User managerToSave = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         managerToSave.setPassword(manager.getPassword());
