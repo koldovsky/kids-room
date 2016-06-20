@@ -14,9 +14,9 @@ import java.util.List;
 public class CalculateSumJob
 {
     @Autowired
-    BookingService bookingService;
+    private BookingService bookingService;
 
-    public void task()
+    private void task()
     {
         List<Booking> bookings = bookingService.getBookingsWithZeroSum();
         bookings.forEach(bookingService::calculateAndSetSum);

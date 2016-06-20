@@ -24,20 +24,39 @@ public class QuartzConfig
     }
 
     @Bean
-    public CronTriggerFactoryBean cronTriggerFactoryBean(){
+    public MethodInvokingJobDetailFactoryBean invokeSendPaymentInfo()
+    {
+        MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
+        obj.setTargetBeanName("sendPaymentInfo");
+        obj.setTargetMethod("task");
+        return obj;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean calculateSumTrigger()
+    {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeCalculateSum().getObject());
-        stFactory.setName("mytrigger");
-        stFactory.setGroup("mygroup");
+        stFactory.setName("calculateSumTrigger");
         stFactory.setCronExpression("0 15 18 1/1 * ? *");
         return stFactory;
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean()
+    public CronTriggerFactoryBean sendPaymentInfoTrigger()
+    {
+        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
+        stFactory.setJobDetail(invokeSendPaymentInfo().getObject());
+        stFactory.setName("sendPaymentInfoTrigger");
+        stFactory.setCronExpression("0 30 19 20 1/1 ? *");
+        return stFactory;
+    }
+
+    @Bean
+    public SchedulerFactoryBean scheduler()
     {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        scheduler.setTriggers(cronTriggerFactoryBean().getObject());
+        scheduler.setTriggers(calculateSumTrigger().getObject(), sendPaymentInfoTrigger().getObject());
         return scheduler;
     }
 }
