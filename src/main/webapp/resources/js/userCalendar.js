@@ -99,9 +99,9 @@ function selectRoomForUser(id, userId) {
 
     $.ajax({
         url: path, success: function (result) {
-
+            var objects;
             if (result.length !== 0) {
-                var objects = [];
+                objects = [];
                 result = JSON.parse(result);
 
                 for (var i = 0; i < result.length; i++) {
@@ -119,7 +119,7 @@ function selectRoomForUser(id, userId) {
             } else {
                 $('#user-calendar').fullCalendar('destroy');
 
-                var objects = [{
+                objects = [{
                     title: '1',
                     start: '1',
                     end: '1',
@@ -133,9 +133,8 @@ function selectRoomForUser(id, userId) {
 
 function renderingForUser(objects, id, userId) {
 
-    bookingDate = new Object();
-
-    info = new Object();
+    bookingDate = {};
+    info = {};
 
     bookingsArray = [];
 
@@ -196,7 +195,7 @@ function Booking(startTime, endTime, comment, kidId, roomId, usersID) {
     this.userId = usersID
 }
 
-function sendBookingToServerForUpdate(bookingForUpdate, roomID) {
+function sendBookingToServerForUpdate(bookingForUpdate) {
 
     $.ajax({
         type: 'post',
@@ -345,7 +344,9 @@ function renderCalendar(objects, id) {
 
         eventClick: function (calEvent) {
 
-            if (calEvent.color === '#ffff00') return;
+            if (calEvent.color === '#ffff00') {
+                return;
+            }
 
             if (calEvent.type === 'booking') {
                 $('#child-comment-update').val(calEvent.comment);
