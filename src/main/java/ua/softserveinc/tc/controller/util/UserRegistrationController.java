@@ -3,7 +3,6 @@ package ua.softserveinc.tc.controller.util;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,11 +48,6 @@ public class UserRegistrationController {
     @Log
     private static Logger log;
 
-    @Secured({"ROLE_ANONYMOUS"})
-    @RequestMapping(value = "/login ", method = RequestMethod.GET)
-    public String login() {
-        return UserConstants.Model.LOGIN_VIEW;
-    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
