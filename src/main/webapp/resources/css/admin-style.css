@@ -1,6 +1,6 @@
 body, table{
     background-color: rgb(250, 250, 250);
-    margin:0px;
+    margin: 0px;
 }
 
 table, th, td {
@@ -76,7 +76,7 @@ th {
 }
 
 .for-lock-button {
-    margin-top:34%;
+    margin-top: 34%;
 }
 
 .td-full{
@@ -92,8 +92,8 @@ th {
 }
 
 .img-size{
-    width:45px;
-    height:45px;
+    width: 30px;
+    height: 30px;
 }
 
 .sizing-between{
