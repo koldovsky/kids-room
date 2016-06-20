@@ -1,21 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
-<link href='resources/css/formForCalendar.css' rel='stylesheet'/>
-<c:url value="/j_spring_security_check" var="listChildrenURL" />
 <link rel="stylesheet" href="http://jqueryvalidation.org/files/demo/site-demos.css">
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
-
-
-<script src='resources/js/moment.min.js'></script>
-<script type='text/javascript' src='resources/js/uk.js'></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
-
+<script src="resources/js/header-manager.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="resources/js/validator.js"></script>
 
 <div class="container">
              <div id="choose-time-inp">
@@ -32,7 +28,7 @@
                 <nav>
                       <button class="btn btn-raised" onclick="allBooking()">All</button>
                       <button class="btn btn-raised" onclick="bookedBooking()">Booked</button>
-                      <button class="btn btn-raised" onclick="activeBooking()">Active</button>
+                      <button class="btn btn-raised" onclick="activeBooking()">Arrived</button>
                       <button class="btn btn-raised" onclick="leavedBooking()">Left</button>
                 </nav>
             </div>
@@ -175,8 +171,6 @@
 
 
 
-<script src="resources/js/header-manager.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script src="resources/js/validator.js"></script>
+
+
 <script src="resources/js/edit-booking.js"></script>
