@@ -37,22 +37,23 @@ public class ViewEventController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
-        //TODO: use switch
         if (principal == null) {
             return UserConstants.Model.LOGIN_VIEW;
         } else {
             String email = principal.getName();
             User user = userService.getUserByEmail(email);
-            if (user.getRole() == Role.USER) {
-                model.addAttribute(UserConstants.Entity.ROOMS, roomServiceImpl.findAll());
-                model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
-                model.addAttribute(UserConstants.Entity.USERID, user.getId());
-                return EventConstants.View.MAIN_PAGE;
-            } else if (user.getRole() == Role.MANAGER) {
-                model.addAttribute(UserConstants.Entity.ROOMS, user.getRooms());
-                return EventConstants.View.MAIN_PAGE;
-            } else {
-                return ReportConstants.STATISTICS_VIEW;
+
+            switch (user.getRole()) {
+                case USER:
+                    model.addAttribute(UserConstants.Entity.ROOMS, roomServiceImpl.findAll());
+                    model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
+                    model.addAttribute(UserConstants.Entity.USERID, user.getId());
+                    return EventConstants.View.MAIN_PAGE;
+                case MANAGER:
+                    model.addAttribute(UserConstants.Entity.ROOMS, user.getRooms());
+                    return EventConstants.View.MAIN_PAGE;
+                default:
+                    return ReportConstants.STATISTICS_VIEW;
             }
         }
     }

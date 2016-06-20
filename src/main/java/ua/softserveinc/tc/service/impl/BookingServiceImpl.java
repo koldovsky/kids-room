@@ -40,10 +40,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Autowired
     private UserDao userDao;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
-
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
         return getBookings(startDate, endDate, null, null, bookingStates);
@@ -57,6 +53,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates) {
         return getBookings(startDate, endDate, null, room, bookingStates);
+    }
+
+    @Override
+    public List<Booking> getBookings(User user, Room room, BookingState... bookingStates) {
+        return getBookings(null, null, user, room, bookingStates);
     }
 
     @Override
@@ -179,17 +180,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
 
-        List<Booking> bookings ;
-
-        bookings = bookingDao.getBookingsByUserAndRoom(userDao.findById(idUser), roomRepository.findOne(idRoom));
+        List<Booking> bookings;
+        bookings = getBookings(userDao.findById(idUser),roomService.findById(idRoom),BookingConstants.States.getActiveAndBooked());
 
         List<BookingDto> bookingDtos = new LinkedList<>();
 
         for (Booking booking : bookings) {
-            if ((booking.getBookingState().toString() == "ACTIVE")
-                    || (booking.getBookingState().toString() == "BOOKED")) {
                 bookingDtos.add(new BookingDto(booking));
-            }
         }
         return bookingDtos;
     }

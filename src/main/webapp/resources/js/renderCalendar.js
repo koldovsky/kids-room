@@ -145,9 +145,9 @@ function selectRoomForManager(id) {
         url: path,
 
         success: function (result) {
-
+            var objects;
             if (result.length !== 0) {
-                var objects = [];
+                objects = [];
                 result = JSON.parse(result);
 
                 for (var i = 0; i < result.length; i++) {
@@ -165,7 +165,7 @@ function selectRoomForManager(id) {
             } else {
                 $('#calendar').fullCalendar('destroy');
 
-                var objects = [{
+                objects = [{
                     title: '1',
                     start: '1',
                     end: '1'
@@ -177,8 +177,8 @@ function selectRoomForManager(id) {
 }
 
 function renderCalendarForManager(objects, roomID) {
-    info = new Object();
-    creatingEvent = new Object();
+    info = {};
+    creatingEvent = {};
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',

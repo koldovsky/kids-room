@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.RoomDao;
@@ -11,6 +12,7 @@ import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.util.Log;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -39,6 +41,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Autowired
     private BookingService bookingService;
 
+    private static @Log
+    Logger log;
+
     @Override
     public List<Room> findAll() {
         return roomRepository.findAll();
@@ -64,28 +69,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return blockedPeriods;
     }
 
-    /**
-     * @deprecated
-     */
-
-    @Override
-    @Deprecated
-    public Map<String, String> getBlockedPeriodsForWeek(Room room) {
-        Calendar start = Calendar.getInstance();
-        start.set(Calendar.HOUR_OF_DAY, 0);
-        start.clear(Calendar.MINUTE);
-        start.clear(Calendar.SECOND);
-        start.clear(Calendar.MILLISECOND);
-        start.set(Calendar.DAY_OF_WEEK, start.getFirstDayOfWeek());
-
-        Map<String, String> blockedPeriods = getBlockedPeriodsForDay(room, start);
-        for (int i = 1; i < 7; i++) {
-            start.add(Calendar.DAY_OF_WEEK, 1);
-            blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
-        }
-
-        return blockedPeriods;
-    }
 
     private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -103,7 +86,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
             calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
         } catch (ParseException pe) {
-            //TODO: throw reasonable exception to Advice
+            log.error("Could not parse date", pe);
+            return null;
         }
 
         Calendar temp = Calendar.getInstance();
