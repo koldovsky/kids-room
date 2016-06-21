@@ -90,6 +90,7 @@
                        </fieldset>
 
                        <button type="button" class="addfields" ng-click="addNewManager()" >+</button>
+                       <form:errors path="managers" cssClass="error"/>
                    </div>
 
                    <div class="form-group sizing-between">
