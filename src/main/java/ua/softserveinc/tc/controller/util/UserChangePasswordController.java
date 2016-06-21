@@ -88,6 +88,7 @@ public class UserChangePasswordController {
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
     public String changePassword(Model model, @RequestParam(TokenConstants.TOKEN) String token) {
+
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         Authentication auth = new UsernamePasswordAuthenticationToken(

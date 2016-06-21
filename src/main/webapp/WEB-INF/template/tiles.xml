@@ -45,6 +45,10 @@
         <put-attribute name="body" value="/WEB-INF/views/authorization/success.jsp"/>
     </definition>
 
+    <definition name="token-not-valid" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/token-not-valid.jsp"/>
+    </definition>
+
     <!-- Errors -->
     <definition name="accessDenied" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/errors/access-denied.jsp"/>

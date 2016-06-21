@@ -18,7 +18,10 @@ public final class ValidationConstants {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String CONFIRM = "confirm";
 
+    public static final String EMPTY_NAME_MSG = "registration.emptyName";
+    public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
     public static final String EMPTY_FIELD_MSG = "registration.empty";
+
     public static final String NAME_ERROR_MSG = "registration.kid.name";
     public static final String DATE_ERROR_MSG = "registration.kid.date";
     public static final String PASSWORD_ERROR_MSG = "registration.password";
