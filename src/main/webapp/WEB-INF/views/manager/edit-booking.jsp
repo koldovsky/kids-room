@@ -8,10 +8,7 @@
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
-<script src="resources/js/header-manager.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script src="resources/js/validator.js"></script>
+
 
 <div class="container">
              <div id="choose-time-inp">
@@ -87,15 +84,15 @@
                             </div>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
-                                <input id="bookingUpdatingStartTimepicker" type="text" name="start" class="time form-control" />
+                                <input id="bookingUpdatingStartTimepicker" type="text" name="start" class="time form-control picker" />
                             <br>
                             <div>
                                 <label><spring:message code="booking.createEndTime"/></label>
-                                <input id="bookingUpdatingEndTimepicker" type="text" name="end" class="time form-control" />
+                                <input id="bookingUpdatingEndTimepicker" type="text" name="end" class="time form-control picker" />
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <input type="submit" class="btn btn-success" id="updatingBooking" value="Update"></input>
+                            <input type="button" class="btn btn-success" id="updatingBooking" value="Update"></input>
                         </div>
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-danger" id="deletingBooking">Delete</button>
@@ -127,18 +124,19 @@
                             </div>
                             <input id="kostil" hidden/>
                             <div>
-                                <input id="bookingStartTimepicker" type="text" name="started" class="form-control"
+                                <input id="bookingStartTimepicker" type="text" name="started" class="form-control picker"
                                 placeholder="start time"/>
                             </div>
                             <br>
                             <div>
-                                <input id="bookingEndTimepicker" type="text" name="ended" class="form-control"
+                                <input id="bookingEndTimepicker" type="text" name="ended" class="form-control picker"
                                 placeholder="end time"/>
+                                <br>
                             </div>
                              <div id="kids">
                              </div>
                              <br>
-                             <input type="submit" class="btn btn-success" id="booking" value="Book"></input>
+                             <input type="button" class="btn btn-success" id="booking" value="Book"></input>
                         </div>
                     </form>
                 </div>
@@ -152,10 +150,10 @@
 			<div class="modal-content" >
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<p>You enter leave time less then arrival time</p>
+					<p>Arrival time is greater than leave time</p>
 				</div>
 				<div class="modal-body">
-					<p>Please enter a correct leaving time </p>
+					<p>Please enter correct leave time </p>
 					<div>
 						<button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
 							Ok
@@ -174,3 +172,7 @@
 
 
 <script src="resources/js/edit-booking.js"></script>
+<script src="resources/js/header-manager.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="resources/js/validator.js"></script>

@@ -77,8 +77,6 @@
    }
 
 
-      //todo: set value
-
 
    $('.input-group').find('#leaveTime').on('click', dateNow);
    $('.input-group').find('#arrivalTime').on('click', dateNow);
