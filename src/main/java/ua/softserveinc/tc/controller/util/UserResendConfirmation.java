@@ -9,13 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.MailConstants;
-import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
-import ua.softserveinc.tc.entity.Role;
-import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
@@ -27,11 +23,10 @@ import javax.mail.MessagingException;
 import java.util.UUID;
 
 /**
- * Created by Chak on 27.05.2016.
+ * Created by Chack on 21.06.2016.
  */
-
 @Controller
-public class UserRegistrationController {
+public class UserResendConfirmation {
 
     @Autowired
     private UserService userService;
@@ -48,22 +43,20 @@ public class UserRegistrationController {
     @Log
     private static Logger log;
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
+    @RequestMapping(value = "/resendConfirmation", method = RequestMethod.GET)
+    public String sendConfirmation(Model model) {
         model.addAttribute(UserConstants.Entity.USER, new User());
-        return UserConstants.Model.REGISTRATION_VIEW;
+        return UserConstants.Model.RESEND_MAIL_VIEW;
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute(UserConstants.Entity.USER) User user, BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
+    @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
+    public String sendConfirmation(@ModelAttribute(UserConstants.Entity.USER) User modelUser, BindingResult bindingResult) {
+        String email = modelUser.getEmail();
+        userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
-            return UserConstants.Model.REGISTRATION_VIEW;
+            return UserConstants.Model.RESEND_MAIL_VIEW;
         }
-        user.setRole(Role.USER);
-        user.setConfirmed(false);
-        user.setActive(true);
-        System.out.println(user.getEmail());
+        User user = userService.getUserByEmail(email);
         String token = UUID.randomUUID().toString();
 
         try {
@@ -71,23 +64,9 @@ public class UserRegistrationController {
         } catch (MessagingException | MailSendException e) {
             log.error("Error! Sending email!!!", e);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
-            return UserConstants.Model.REGISTRATION_VIEW;
+            return UserConstants.Model.RESEND_MAIL_VIEW;
         }
-
-        userService.createWithEncoder(user);
         tokenService.createToken(token, user);
-
         return UserConstants.Model.SUCCESS_VIEW;
     }
-
-    @RequestMapping(value = "/confirm", method = RequestMethod.GET)
-    public String confirmRegistration(@RequestParam(TokenConstants.TOKEN) String sToken) {
-        Token token = tokenService.findByToken(sToken);
-        User user = token.getUser();
-        user.setConfirmed(true);
-        userService.update(user);
-        tokenService.delete(token);
-        return "redirect:/login";
-    }
 }
-
