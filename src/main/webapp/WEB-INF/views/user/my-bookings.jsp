@@ -23,14 +23,13 @@
     </div>
 
     <div class="tableDiv">
-        <table id="myBookings">
-            <caption>
-                <h2>
-                    <spring:message code="report.myBookings" /></br>
-                </h2>
-            </caption>
 
+    <h2>
+                                 <spring:message code="report.myBookings" /></br>
+                             </h2>
+        <table id="myBookings">
          <thead>
+
             <tr id="header">
                 <th><spring:message code="report.date" /></th>
                 <th><spring:message code="report.kid" /></th>

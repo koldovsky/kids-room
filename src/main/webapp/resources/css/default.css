@@ -93,3 +93,21 @@ select {
     color:#fff;
     text-shadow:0 1px 0 rgba(0,0,0,0.4);
 }
+
+#login-form{
+    margin-top: 50px;
+    min-width: 400px;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 5px 5px 20px grey;
+}
+
+#login-form a{
+    color: grey;
+}
+
+#login-form a:hover{
+    color: #4285F4;
+}
+
+

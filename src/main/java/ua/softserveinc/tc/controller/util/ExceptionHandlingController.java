@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
+import ua.softserveinc.tc.server.exception.TokenInvalidException;
 
 /**
  * Created by Nestor on 18.05.2016.
@@ -24,8 +25,15 @@ public class ExceptionHandlingController {
             ResourceNotFoundException.class
     })
     public String handleError404() {
-        return ErrorConstants.NOT_FOUND_VIEW;
+        return ErrorConstants.ACCESS_DENIED_VIEW;
     }
+
+    @ResponseStatus
+    @ExceptionHandler(TokenInvalidException.class)
+    public String handleError() {
+        return ErrorConstants.TOKEN_NOT_FOUND_VIEW;
+    }
+
 
     /**
      * Responds to user with AccessDenied view

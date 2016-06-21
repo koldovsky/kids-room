@@ -1,12 +1,15 @@
 package ua.softserveinc.tc.dao.impl;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dao.TokenDao;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.Log;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 
@@ -15,6 +18,9 @@ import javax.persistence.Query;
  */
 @Repository
 public class TokenDaoImpl extends BaseDaoImpl<Token> implements TokenDao {
+
+    @Log
+    private static Logger log;
 
     @Override
     public void delete(Token entity) {
@@ -30,8 +36,13 @@ public class TokenDaoImpl extends BaseDaoImpl<Token> implements TokenDao {
 
     @Override
     public Token findByToken(String token) {
-        Query query = getEntityManager().createQuery("from Token where token = :token");
-        query.setParameter(TokenConstants.TOKEN, token);
-        return (Token) query.getSingleResult();
+        try {
+            Query query = getEntityManager().createQuery("from Token where token = :token");
+            return (Token) query.setParameter(TokenConstants.TOKEN, token).getSingleResult();
+        } catch (NoResultException e) {
+            log.error("no exist", e);
+            return null;
+
+        }
     }
 }

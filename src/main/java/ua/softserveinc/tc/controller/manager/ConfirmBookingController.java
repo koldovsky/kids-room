@@ -57,7 +57,9 @@ public class ConfirmBookingController {
     @ResponseBody
     public String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
-        booking.setBookingState(BookingState.ACTIVE);
+        if(!(booking.getBookingState()==BookingState.COMPLETED)){
+            booking.setBookingState(BookingState.ACTIVE);
+        }
         bookingService.update(booking);
         BookingDto bookingDTOtoJson = new BookingDto(booking);
         Gson gson = new Gson();

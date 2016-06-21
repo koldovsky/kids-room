@@ -22,7 +22,7 @@ public class ConfigValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         ConfigurationDto dto = (ConfigurationDto) o;
-        //TODO: try reflection
+        //maybe should try reflection later
         ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.CALCULATION_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
@@ -33,6 +33,12 @@ public class ConfigValidator implements Validator {
                 ValidationConstants.ConfigFields.EMAIL_REPORT_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.EMAIL_REPORT_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.CLEAN_UP_DAY, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.CLEAN_UP_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.CLEAN_UP_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.MAX_AGE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
@@ -66,6 +72,22 @@ public class ConfigValidator implements Validator {
             errors.rejectValue(ValidationConstants.ConfigFields.CALCULATION_MINUTE,
                     ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
         }
+
+        if(dto.getDaysToCleanUpBookings() > 28 || dto.getDaysToCleanUpBookings() < 1){
+            errors.rejectValue(ValidationConstants.ConfigFields.CLEAN_UP_DAY,
+                    ValidationConstants.ConfigFields.NOT_VALID_DATE_MSG);
+        }
+
+        if(dto.getHourToCleanUpBookings() > 23 || dto.getHourToCleanUpBookings() < 0){
+            errors.rejectValue(ValidationConstants.ConfigFields.CLEAN_UP_HOUR,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
+        }
+
+        if (dto.getMinutesToCleanUpBookings() > 59 || dto.getMinutesToCleanUpBookings() < 0) {
+            errors.rejectValue(ValidationConstants.ConfigFields.CLEAN_UP_MINUTE,
+                    ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
+        }
+
 
         if(dto.getMinPeriodSize() < 1){
             errors.rejectValue(ValidationConstants.ConfigFields.MIN_PERIOD,
