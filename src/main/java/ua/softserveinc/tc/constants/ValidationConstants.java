@@ -8,6 +8,11 @@ public final class ValidationConstants {
     public static final String PASSWORD_REGEX = "^(\\S){8,24}$";
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
+    public static final String NO_SPACES_REGEX = "^\\S*$";
+
+    public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
+    public static final String NOT_EMPTY_MESSAGE = "May not be empty.";
+    public static final String NOT_VALID_MESSAGE = "Value is invalid. Enter right value.";
 
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";

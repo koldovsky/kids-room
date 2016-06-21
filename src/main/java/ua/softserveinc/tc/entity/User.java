@@ -9,8 +9,10 @@ import org.hibernate.search.annotations.Parameter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +43,20 @@ public class User implements Serializable {
     @Column(name = UserConstants.Entity.ID_USER, nullable = false)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     @Column(name = UserConstants.Entity.FIRST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String firstName;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     @Column(name = UserConstants.Entity.LAST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String lastName;
 
     @NotEmpty
-    @Email
+    @Email(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     @Column(name = UserConstants.Entity.EMAIL, unique = true)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
@@ -74,7 +76,8 @@ public class User implements Serializable {
     @Column(name = UserConstants.Entity.ACTIVE)
     private boolean active;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @Pattern(regexp = ValidationConstants.PHONE_NUMBER_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     @Column(name = UserConstants.Entity.PHONE)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")

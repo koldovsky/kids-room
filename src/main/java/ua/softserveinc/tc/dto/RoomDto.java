@@ -1,49 +1,64 @@
 package ua.softserveinc.tc.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.JsonUtil;
+import ua.softserveinc.tc.validator.annotation.RateValidation;
+import ua.softserveinc.tc.validator.annotation.UniqueManagerValidation;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Created by TARAS on 24.05.2016.
  */
-
 public class RoomDto {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @Pattern(regexp = ValidationConstants.NO_SPACES_REGEX, message = ValidationConstants.NO_SPACES_MESSAGE)
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @Pattern(regexp = ValidationConstants.NO_SPACES_REGEX, message = ValidationConstants.NO_SPACES_MESSAGE)
     private String address;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @Pattern(regexp = ValidationConstants.NO_SPACES_REGEX, message = ValidationConstants.NO_SPACES_MESSAGE)
     private String city;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @Pattern(regexp = ValidationConstants.PHONE_NUMBER_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String phoneNumber;
 
-    @NotNull
+    @NotNull(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @NumberFormat(style = NumberFormat.Style.NUMBER)
+    @Min(1)
+    @Max(200)
     private Integer capacity;
 
-    private String managers;
-
-    private List<String> namesOfManagers;
-
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     private String workingHoursStart;
 
-    @NotEmpty
+    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     private String workingHoursEnd;
 
+    @UniqueManagerValidation(message = "Need unique values. Managers value must be unique")
+    private String managers;
+
+    @RateValidation(message = "Hours must be unique. Hour must have value not more than '24' or less than '1'")
     private String rate;
+
+    private List<String> namesOfManagers;
 
     private boolean active;
 
@@ -84,7 +99,7 @@ public class RoomDto {
     }
 
 
-    public static Room getRoomObjectFromDtoValues(RoomDto roomDto){
+    public static Room getRoomObjectFromDtoValues(RoomDto roomDto) {
         Room resultRoom = new Room();
         resultRoom.setId(roomDto.id);
         resultRoom.setName(roomDto.name);
