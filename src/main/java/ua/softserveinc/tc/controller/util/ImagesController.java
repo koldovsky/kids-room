@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
@@ -62,8 +63,8 @@ public class ImagesController {
      */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
     public String uploadImage(@ModelAttribute FileUploadFormObject form,
-                              BindingResult bindingResult,
-                              @PathVariable String kidId)
+                                    BindingResult bindingResult,
+                                    @PathVariable String kidId)
             throws AccessDeniedException {
         if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
@@ -72,6 +73,7 @@ public class ImagesController {
         MultipartFile file = form.getFile();
         Long id = Long.parseLong(kidId);
         Child kid = childService.findById(id);
+
         if (!file.isEmpty()) {
             byte[] bytes;
             long sizeMb = file.getSize()/1024/1024;
@@ -86,7 +88,7 @@ public class ImagesController {
                 if(!(ext.equals("image/jpg") || ext.equals("image/jpeg")
                         || ext.equals("image/png"))){
                     bindingResult.rejectValue("file", ValidationConstants.FILE_WRONG_EXTENSION);
-                    System.out.println(ValidationConstants.FILE_WRONG_EXTENSION);
+
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
                 bytes = file.getBytes();
@@ -102,6 +104,11 @@ public class ImagesController {
                 return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
         }
+        return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+    }
+
+    @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.GET)
+    public String redirect(@PathVariable String kidId){
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }
 

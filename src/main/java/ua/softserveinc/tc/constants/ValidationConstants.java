@@ -47,6 +47,10 @@ public final class ValidationConstants {
         public static final String MIN_PERIOD = "minPeriodSize";
         public static final String SERVER_NAME = "serverName";
 
+        public static final String CLEAN_UP_DAY = "daysToCleanUpBookings";
+        public static final String CLEAN_UP_HOUR = "hourToCleanUpBookings";
+        public static final String CLEAN_UP_MINUTE = "minutesToCleanUpBookings";
+
         public static final String NOT_VALID_DATE_MSG = "date.not.valid";
         public static final String NOT_VALID_TIME_MSG = "time.not.valid";
 

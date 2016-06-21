@@ -18,6 +18,7 @@ public class ConfigurationDto {
     private Integer dayToSendEmailReport;
 
     private Integer daysToCleanUpBookings;
+
     private Integer hourToCleanUpBookings;
     private Integer minutesToCleanUpBookings;
 
@@ -105,12 +106,24 @@ public class ConfigurationDto {
         return daysToCleanUpBookings;
     }
 
+    public void setDaysToCleanUpBookings(Integer daysToCleanUpBookings) {
+        this.daysToCleanUpBookings = daysToCleanUpBookings;
+    }
+
     public Integer getHourToCleanUpBookings() {
         return hourToCleanUpBookings;
     }
 
+    public void setHourToCleanUpBookings(Integer hourToCleanUpBookings) {
+        this.hourToCleanUpBookings = hourToCleanUpBookings;
+    }
+
     public Integer getMinutesToCleanUpBookings() {
         return minutesToCleanUpBookings;
+    }
+
+    public void setMinutesToCleanUpBookings(Integer minutesToCleanUpBookings) {
+        this.minutesToCleanUpBookings = minutesToCleanUpBookings;
     }
 
     public Integer getMinPeriodSize() {
