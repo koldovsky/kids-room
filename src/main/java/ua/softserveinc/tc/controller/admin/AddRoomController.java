@@ -37,6 +37,7 @@ public class AddRoomController {
     private RoomService roomService;
 
 
+
     /**
      * Method call view, for add new room. Method send model into that view
      * with list of managers into (mapped by AdminConstants.UPDATE_ROOM const).
@@ -47,12 +48,13 @@ public class AddRoomController {
     public ModelAndView showAddRoomForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
-        ModelAndView mav = new ModelAndView(AdminConstants.ADD_ROOM);
-        mav.getModelMap().addAttribute(AdminConstants.ATR_ROOM, new RoomDto());
-        mav.addObject(AdminConstants.MANAGER_LIST, managers);
+        ModelAndView model = new ModelAndView(AdminConstants.ADD_ROOM);
+        model.getModelMap().addAttribute(AdminConstants.ATR_ROOM, new RoomDto());
+        model.addObject(AdminConstants.MANAGER_LIST, managers);
 
-        return mav;
+        return model;
     }
+
 
     /**
      * Method build model based based on parameters received from view with action AdminConstants.ADD_ROOM const.
@@ -62,10 +64,11 @@ public class AddRoomController {
      * @return string, witch redirect on other view
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String saveNewRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
-                              BindingResult bindingResult) {
+    public ModelAndView saveNewRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
+                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return AdminConstants.ADD_ROOM;
+            return new ModelAndView(AdminConstants.ADD_ROOM).addObject(AdminConstants.MANAGER_LIST,
+                    this.userService.findAllUsersByRole(Role.MANAGER));
         }
 
         List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
@@ -76,6 +79,6 @@ public class AddRoomController {
         room.setActive(true);
 
         this.roomService.saveOrUpdate(room);
-        return "redirect:/" + AdminConstants.EDIT_ROOM;
+        return new ModelAndView("redirect:/" + AdminConstants.EDIT_ROOM);
     }
 }

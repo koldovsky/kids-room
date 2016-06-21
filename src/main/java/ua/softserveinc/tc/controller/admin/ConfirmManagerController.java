@@ -48,6 +48,7 @@ public class ConfirmManagerController {
     private UserDetailsService userDetailsService;
 
 
+
     /**
      * Method open "Confirm manager registration" view. Send model with values founded by token.
      * Deleting used token. Mapped by AdminConstants.CONFIRM_MANAGER constant.
@@ -58,18 +59,14 @@ public class ConfirmManagerController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String showConfirmRegistrationForm(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
-
         Token token = this.tokenService.findByToken(sToken);
         User manager = token.getUser();
         model.addAttribute(AdminConstants.ATR_MANAGER, manager);
 
-//        Authentication auth = new UsernamePasswordAuthenticationToken(
-//                manager, null, this.userDetailsService.loadUserByUsername(manager.getEmail()).getAuthorities());
-        //SecurityContextHolder.getContext().setAuthentication(auth);
-
         this.tokenService.delete(token);
         return AdminConstants.CONFIRM_MANAGER;
     }
+
 
     /**
      * Method build model based based on parameters received from view.

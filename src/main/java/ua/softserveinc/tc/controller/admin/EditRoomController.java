@@ -25,6 +25,7 @@ public class EditRoomController {
     private RoomService roomService;
 
 
+
     /**
      * Method send  model with all rooms into view.
      * Mapped by AdminConstants.EDIT_ROOM constant.
@@ -35,11 +36,12 @@ public class EditRoomController {
     public ModelAndView showAllRoomsForm() {
         List<Room> rooms = this.roomService.findAll();
 
-        ModelAndView mav = new ModelAndView(AdminConstants.EDIT_ROOM);
-        mav.addObject(AdminConstants.ROOM_LIST, rooms);
+        ModelAndView model = new ModelAndView(AdminConstants.EDIT_ROOM);
+        model.addObject(AdminConstants.ROOM_LIST, rooms);
 
-        return mav;
+        return model;
     }
+
 
     /**
      * Method receive room id from view. Set setActive() for room opposite to previous value.

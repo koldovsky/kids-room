@@ -48,6 +48,7 @@ public class AddManagerController {
     private UserValidator userValidator;
 
 
+
     /**
      * Method open "Add manager" view. Send empty model into view.
      * Mapped by AdminConstants.ADD_MANAGER constant.
@@ -61,6 +62,7 @@ public class AddManagerController {
 
         return model;
     }
+
 
     /**
      * Method saving model with values received from view. Check value validation.
@@ -85,8 +87,8 @@ public class AddManagerController {
         String token = UUID.randomUUID().toString();
         try {
             this.mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
-        } catch (MessagingException | MailSendException e) {
-            log.error("Error! Sending email!!!", e);
+        } catch (MessagingException | MailSendException exeption) {
+            log.error("Error! Sending email!!!", exeption);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
             return AdminConstants.ADD_MANAGER;
         }

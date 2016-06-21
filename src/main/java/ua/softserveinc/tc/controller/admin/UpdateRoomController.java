@@ -39,6 +39,7 @@ public class UpdateRoomController {
     private RoomService roomService;
 
 
+
     /**
      * Method mapping into view, with update room form. Method send empty model into view
      * with list of managers (view mapping by AdminConstants.UPDATE_ROOM const).
@@ -59,6 +60,7 @@ public class UpdateRoomController {
         return model;
     }
 
+
     /**
      * Method build model based based on parameters received from view mapped by AdminConstants.UPDATE_ROOM.
      * Method send built Room object into Service layer with method saveOrUpdate().
@@ -67,10 +69,11 @@ public class UpdateRoomController {
      * @return string, which redirect on other view
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
-                                   BindingResult bindingResult) {
+    public ModelAndView submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
+                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return AdminConstants.UPDATE_ROOM;
+            return new ModelAndView(AdminConstants.UPDATE_ROOM).addObject(AdminConstants.MANAGER_LIST,
+                    this.userService.findAllUsersByRole(Role.MANAGER));
         }
 
         List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
@@ -80,6 +83,6 @@ public class UpdateRoomController {
         room.setManagers(managers);
 
         this.roomService.saveOrUpdate(room);
-        return "redirect:/" + AdminConstants.EDIT_ROOM;
+        return new ModelAndView("redirect:/" + AdminConstants.EDIT_ROOM);
     }
 }

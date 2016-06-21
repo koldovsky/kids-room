@@ -26,6 +26,7 @@ public class EditManagerController {
     private UserService userService;
 
 
+
     /**
      * Method send  model with all managers into view.
      * Mapped by AdminConstants.EDIT_MANAGER constant.
@@ -36,11 +37,12 @@ public class EditManagerController {
     public ModelAndView showAllManagersForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
-        ModelAndView mav = new ModelAndView(AdminConstants.EDIT_MANAGER);
-        mav.addObject(AdminConstants.MANAGER_LIST, managers);
+        ModelAndView model = new ModelAndView(AdminConstants.EDIT_MANAGER);
+        model.addObject(AdminConstants.MANAGER_LIST, managers);
 
-        return mav;
+        return model;
     }
+
 
     /**
      * Method receive manager id from view. Set setActive() for manager opposite to previous value.
