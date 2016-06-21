@@ -48,7 +48,6 @@ public class ConfirmManagerController {
     private UserDetailsService userDetailsService;
 
 
-
     /**
      * Method open "Confirm manager registration" view. Send model with values founded by token.
      * Deleting used token. Mapped by AdminConstants.CONFIRM_MANAGER constant.

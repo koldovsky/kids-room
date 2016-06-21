@@ -25,7 +25,6 @@ public class EditRoomController {
     private RoomService roomService;
 
 
-
     /**
      * Method send  model with all rooms into view.
      * Mapped by AdminConstants.EDIT_ROOM constant.

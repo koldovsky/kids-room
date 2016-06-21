@@ -37,7 +37,6 @@ public class AddRoomController {
     private RoomService roomService;
 
 
-
     /**
      * Method call view, for add new room. Method send model into that view
      * with list of managers into (mapped by AdminConstants.UPDATE_ROOM const).

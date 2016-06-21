@@ -48,7 +48,6 @@ public class AddManagerController {
     private UserValidator userValidator;
 
 
-
     /**
      * Method open "Add manager" view. Send empty model into view.
      * Mapped by AdminConstants.ADD_MANAGER constant.

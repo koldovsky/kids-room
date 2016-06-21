@@ -39,7 +39,6 @@ public class UpdateRoomController {
     private RoomService roomService;
 
 
-
     /**
      * Method mapping into view, with update room form. Method send empty model into view
      * with list of managers (view mapping by AdminConstants.UPDATE_ROOM const).

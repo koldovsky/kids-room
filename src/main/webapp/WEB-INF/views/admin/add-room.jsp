@@ -21,7 +21,6 @@
                <form:hidden path="rate" name="rate" id="rates-json"/>
                <form:hidden path="managers" name="managers" id="managers-json"/>
 
-
                <div class="form-group sizing-between">
                   <label for="name" class="required">
                      <spring:message code="administrator.room.name"/></label>
@@ -121,8 +120,8 @@
 
                    <script src="resources/js/room-add-for-rates.js"></script>
                </div>
+           </td></tr>
 
-            </td></tr>
         </form:form>
         </table>
     </div>

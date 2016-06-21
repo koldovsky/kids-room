@@ -26,7 +26,6 @@ public class EditManagerController {
     private UserService userService;
 
 
-
     /**
      * Method send  model with all managers into view.
      * Mapped by AdminConstants.EDIT_MANAGER constant.

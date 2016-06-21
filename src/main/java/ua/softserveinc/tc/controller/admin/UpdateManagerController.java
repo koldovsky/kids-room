@@ -28,7 +28,6 @@ public class UpdateManagerController {
     private UserService userService;
 
 
-
     /**
      * Method open "Update manager" view. Send model with values into view.
      * Mapped by AdminConstants.UPDATE_MANAGER constant.
