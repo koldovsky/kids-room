@@ -70,3 +70,4 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
+<script src="resources/js/registration.js"></script>
