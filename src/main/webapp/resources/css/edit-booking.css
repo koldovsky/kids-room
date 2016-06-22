@@ -11,7 +11,7 @@
 .tableDiv{
     margin: auto;
     width: 70%;
-    min-width: 950px;
+    min-width: 900px;
     min-height: 400px;
     background-color: white;
     box-shadow: 8px 11px 20px 12px #c8c6d7;
@@ -82,4 +82,14 @@ html, body, .container {
      width: 40%;
      margin-top: 20px;
      float:center;
+}
+#comment{
+    font-size: 1.3em;
+    color: #9F6000;
+}
+
+.leave-time{
+     margin-left: 15px;
+     margin-right: 15px;
+
 }
