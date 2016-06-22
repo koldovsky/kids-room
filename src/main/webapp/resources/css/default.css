@@ -134,4 +134,7 @@ select {
     font-size:18px;
 }
 
+#login-form .glyphicon{
+    color: rgb(160,160,160);
+}
 
