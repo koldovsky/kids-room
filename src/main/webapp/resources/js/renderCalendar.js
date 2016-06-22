@@ -82,7 +82,6 @@ $(function () {
         $('#updating').dialog('close');
     });
 
-
     $('#deleting').click(function () {
         sendToServerForDelete(info.calEvent);
         $('#calendar').fullCalendar('removeEvents', info.calEvent.id);
@@ -124,7 +123,6 @@ $(function () {
                 ev.id = newId;
                 ev.backgroundColor = ACTIVE_EVENT;
                 ev.borderColor = ACTIVE_EVENT;
-                ev.editable = true;
 
                 $('#calendar').fullCalendar('renderEvent', ev);
             }
@@ -214,11 +212,15 @@ function renderCalendarForManager(objects, roomID) {
 
         eventClick: function (calEvent) {
 
+            if (calEvent.color === NOT_ACTIVE_EVENT) {
+                return;
+            }
+
             beforeUpdate = calEvent.title;
 
             $('#titleUpdate').val(calEvent.title);
-            $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
-            $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
+            $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
+            $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
             $('#descriptionUpdate').val(calEvent.description);
 
             var date = new Date(calEvent.start.format());

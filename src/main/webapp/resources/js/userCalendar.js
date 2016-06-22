@@ -6,6 +6,10 @@ var bookingsArray;
 var bookingDate;
 var roomIdForHandler;
 var usersID;
+var EVENT = '#ffff00';
+var BORDER = '#000000';
+var BOOKING = '#99ff33';
+var NOT_SYNCHRONIZED = '#068000';
 
 $(function () {
 
@@ -20,6 +24,8 @@ $(function () {
             duration: 500
         }
     });
+
+
 
     $('#bookingUpdatingDialog').dialog({
         autoOpen: false,
@@ -82,12 +88,9 @@ function selectRoomForUser(id, userId) {
     usersID = userId;
 
     $('#user-calendar').fullCalendar('destroy');
-    //TODO: ADD "CREATE BOOKING" BUTTON
-    //TODO: Add variable for array length
-    //TODO: Add variable for childID
-    //TODO: FIX ALLLLLLLLLL 'COSTILS'
+
     $('input').on('click', function () {
-        var numberOfKids = $('#kostil').val();
+        var numberOfKids = $('#number-of-kids').val();
         var commentId;
 
         for (var i = 0; i < numberOfKids; i++) {
@@ -119,7 +122,7 @@ function selectRoomForUser(id, userId) {
                         start: result[i].startTime,
                         end: result[i].endTime,
                         editable: false,
-                        color: '#ffff00',
+                        color: EVENT,
                         type: 'event'
                     }
                 }
@@ -160,8 +163,8 @@ function renderingForUser(objects, id, userId) {
                     title: item.kidName,
                     start: item.date + 'T' + item.startTime + ':00',
                     end: item.date + 'T' + item.endTime + ':00',
-                    color: '#99ff33',
-                    borderColor: "#000000",
+                    color: BOOKING,
+                    borderColor: BORDER,
                     editable: false,
                     type: 'booking',
                     comment: item.comment
@@ -219,8 +222,8 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
         success: function (result) {
             if (result) {
 
-                bookingForUpdate.color = '#99ff33';
-                bookingForUpdate.borderColor = '#000000';
+                bookingForUpdate.color = BOOKING;
+                bookingForUpdate.borderColor = BORDER;
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
             } else {
@@ -249,13 +252,13 @@ function sendBookingToServerForCreate(bookingsArray) {
                     title: item.kidName,
                     start: item.startTime,
                     end: item.endTime,
-                    color: '#99ff33',
+                    color: BOOKING,
+                    borderColor: BORDER,
                     editable: false,
                     type: 'booking',
                     comment: item.comment
                 });
             });
-
         }
     });
 }
@@ -302,7 +305,7 @@ function createBooking() {
     bookingsArray = [];
     var kidsCommentId;
 
-    for (var i = 0; i < ($('#kostil').val()); i++) {
+    for (var i = 0; i < ($('#number-of-kids').val()); i++) {
         kidsCommentId = $('#comment-' + i).val();
         if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
 
@@ -321,6 +324,9 @@ function createBooking() {
                 end: makeISOTime(bookingDate.clickDate, 'bookingEndTimepicker'),
                 editable: false
             });
+            $('#checkboxKid'  + kidsCommentId).attr('checked', false);
+            $('#child-comment-' + kidsCommentId).prop('hidden', true);
+            $('#child-comment-' + kidsCommentId + '-1').prop('hidden', true);
         }
     }
     sendBookingToServerForCreate(bookingsArray);
@@ -330,7 +336,7 @@ function renderCalendar(objects, id) {
     $('#user-calendar').fullCalendar({
         minTime: '10:00:00',
         maxTime: '22:00:00',
-        eventBackgroundColor: '#068000',
+        eventBackgroundColor: NOT_SYNCHRONIZED,
         eventColor: 'transparent',
         eventBorderColor: 'transparent',
         eventTextColor: '#000',
@@ -355,7 +361,7 @@ function renderCalendar(objects, id) {
 
         eventClick: function (calEvent) {
 
-            if (calEvent.color === '#ffff00') {
+            if (calEvent.color === EVENT || calEvent.color === NOT_SYNCHRONIZED) {
                 return;
             }
 
@@ -373,17 +379,6 @@ function renderCalendar(objects, id) {
 
             var newDate = makeUTCTime(new Date(), date);
             var newDateForEnd = makeUTCTime(new Date(), endDate);
-
-
-            /*
-             newDate.setHours(date.getUTCHours());
-             newDate.setMinutes(date.getUTCMinutes());
-             newDate.setSeconds(date.getUTCSeconds());
-
-             newDateForEnd.setHours(endDate.getUTCHours());
-             newDateForEnd.setMinutes(endDate.getUTCMinutes());
-             newDateForEnd.setSeconds(endDate.getUTCSeconds());
-             */
 
             $('#bookingUpdatingStartTimepicker').timepicker('setTime', newDate);
             $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);

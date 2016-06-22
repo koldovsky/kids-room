@@ -112,7 +112,7 @@
 
 
                             </c:forEach>
-                            <input id="kostil" hidden value="${fn:length(kids)}">
+                            <input id="number-of-kids" hidden value="${fn:length(kids)}">
                         </table>
 
                         <div class="col-xs-6">
@@ -160,7 +160,7 @@
                             </div>
                         </div>
 
-                        <input type="text" id="child-comment-update">
+                        <textarea type="text" id="child-comment-update"></textarea>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Update</button>
@@ -197,9 +197,6 @@
                         <div class="form-group">
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
-                        </div>
-                        <div class="allDay">
-                            <label><input type="checkbox" id="checkbox" value=""> All day</label>
                         </div>
 
                         <div class="form-group">
