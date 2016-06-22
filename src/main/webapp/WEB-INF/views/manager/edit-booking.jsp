@@ -1,29 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
-<link href='resources/css/formForCalendar.css' rel='stylesheet'/>
-<c:url value="/j_spring_security_check" var="listChildrenURL" />
-
-<script src='resources/js/renderCalendar.js'></script>
-<script src='resources/js/moment.min.js'></script>
-<script src='resources/js/jquery.min.js'></script>
-<script type='text/javascript' src='resources/js/uk.js'></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://jqueryvalidation.org/files/demo/site-demos.css">
+<link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 
 
 <div class="container">
-    <div id="all_kids_search" class="input-group">
-        <input type="text" class="form-control">
-    </div>
              <div id="choose-time-inp">
                  <form action="", method="POST">
-                    <input id="data-booking" class ="form-control" type = "date"/>
+                    <input id="date-booking" class ="form-control" type = "date"/>
                   </form>
              </div>
             <div id="create-booking-btn">
@@ -31,7 +21,16 @@
                     New booking
                  </button>
             </div>
-    <div class = "tableDiv">
+            <div id="nav-group">
+                <nav>
+                      <button class="btn btn-raised" onclick="allBooking()">All</button>
+                      <button class="btn btn-raised" onclick="bookedBooking()">Booked</button>
+                      <button class="btn btn-raised" onclick="activeBooking()">Arrived</button>
+                      <button class="btn btn-raised" onclick="leavedBooking()">Left</button>
+                </nav>
+            </div>
+
+    <div class = "tableDiv" hidden>
         <table class="table-edit">
                 <div id ="body-booking">
                     <thead>
@@ -45,7 +44,6 @@
         </table>
     </div>
 </div>
-
 
     <div id="cancelModal" class="modal fade">
         <div class="modal-dialog">
@@ -72,7 +70,6 @@
     </div>
 </div>
 
-
  <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -81,24 +78,23 @@
                         <div class="form-group">
                             <div class="input-group">
                                  <label><spring:message code="booking.createDate"/></label>
-                                 <input type="date" id="data-edit" class="form-control" required/>
+                                 <input type="date" id="data-edit" name="date" class="form-control"/>
                             </div>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
-                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control" required/>
+                                <input id="bookingUpdatingStartTimepicker" type="text" name="start" class="time form-control picker" />
                             <br>
                             <div>
                                 <label><spring:message code="booking.createEndTime"/></label>
-                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control" required />
+                                <input id="bookingUpdatingEndTimepicker" type="text" name="end" class="time form-control picker" />
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="updatingBooking">Update</button>
+                            <input type="button" class="btn btn-success" id="updatingBooking" value="Update"></input>
                         </div>
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-danger" id="deletingBooking">Delete</button>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -109,10 +105,10 @@
         <div class="vertical-center-row">
             <div align="center">
                 <div id="bookingDialog" hidden>
-                    <form id="bookingForm">
+                    <form id="bookings">
                         <div class="form-group">
                             <label for="selectUser">Choose parent</label>
-                             <select id="selectUser" onchange="selectUser();" class="form-control">
+                             <select id="selectUser" name="select" onchange="selectUser();" class="form-control">
                                  <lable> Please choose kid </lable>
                                  <option value=" " disabled selected hidden>  </option>
                                  <c:forEach items="${users}" var="user">
@@ -124,40 +120,37 @@
                             <div>
                                 <input type="text" class="form-control" id="bookingStartDate" placeholder="booking date" readonly/>
                             </div>
-                            <input id="kostil" hidden/>
-                            <div class="col-xs-5">
-                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"
+                            <input id="kids-count" hidden/>
+                            <div>
+                                <input id="bookingStartTimepicker" type="text" name="started" class="form-control picker"
                                 placeholder="start time"/>
                             </div>
-                            <div class="col-xs-5">
-                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"
+                            <br>
+                            <div>
+                                <input id="bookingEndTimepicker" type="text" name="ended" class="form-control picker"
                                 placeholder="end time"/>
+                                <br>
                             </div>
+                             <div id="kids">
+                             </div>
+                             <br>
+                             <input type="button" class="btn btn-success" id="booking" value="Book"></input>
                         </div>
-                        <br>
-                         <div id="kids">
-                         </div>
-
-                        <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="booking">Book</button>
-                        </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-
 	<div id="invalidTimeModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content" >
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<p>You enter leave time less then arrival time</p>
+					<p>Arrival time is greater than leave time</p>
 				</div>
 				<div class="modal-body">
-					<p>Please enter a correct leaving time </p>
+					<p>Please enter correct leave time </p>
 					<div>
 						<button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
 							Ok
@@ -168,12 +161,8 @@
 		</div>
 	</div>
 
-
-
-
-
-
-
-
 <script src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="resources/js/validator.js"></script>

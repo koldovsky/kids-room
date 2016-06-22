@@ -56,7 +56,7 @@ public class User implements Serializable {
     private String lastName;
 
     @NotEmpty
-    @Email(message = ValidationConstants.NOT_EMPTY_MESSAGE)
+    @Email
     @Column(name = UserConstants.Entity.EMAIL, unique = true)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")

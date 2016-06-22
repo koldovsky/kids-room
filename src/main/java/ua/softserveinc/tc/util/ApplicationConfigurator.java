@@ -39,6 +39,8 @@ public interface ApplicationConfigurator {
 
     Integer getMinutesToCleanUpBookings();
 
+    Integer getMaxUploadImgSizeMb();
+
     /**
      * Returns an object suitable for transferring (DTO)
      * contains all configuration values

@@ -71,10 +71,35 @@ public class BookingEditController {
         return  gson.toJson(bookingDto);
     }
 
+    @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
+        Booking booking = bookingService.confirmBookingStartTime(bookingDto);
+        System.out.println("booking" + booking.getBookingStartTime());
+        if(!(booking.getBookingState()==BookingState.COMPLETED)){
+            booking.setBookingState(BookingState.ACTIVE);
+        }
+        bookingService.update(booking);
+        BookingDto bookingDTOtoJson = new BookingDto(booking);
+        Gson gson = new Gson();
+        return  gson.toJson(bookingDTOtoJson);
+    }
+
+    @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public String setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
+        Booking booking = bookingService.confirmBookingEndTime(bookingDto);
+        booking.setBookingState(BookingState.COMPLETED);
+        bookingService.update(booking);
+        BookingDto bookingDTOtoJson = new BookingDto(booking);
+        Gson gson = new Gson();
+        return  gson.toJson(bookingDTOtoJson);
+    }
+
     @RequestMapping (value = "dailyBookings/{date}/{id}/{state}",
             method = RequestMethod.GET)
     @ResponseBody
-    public String bookingsStateBooked(@PathVariable String date,
+    public String dailyBookingsByState(@PathVariable String date,
                                       @PathVariable Long id,
                                       @PathVariable BookingState[] state){
         Room room = roomService.findById(id);
@@ -89,8 +114,6 @@ public class BookingEditController {
                 .map(BookingDto::new)
                 .collect(Collectors.toList()));
     }
-
-
 
     @RequestMapping(value = "change-booking", method = RequestMethod.POST,
             consumes = "application/json")
@@ -117,6 +140,5 @@ public class BookingEditController {
                 .map(ChildDto::new)
                 .collect(Collectors.toList()));
     }
-
 
 }
