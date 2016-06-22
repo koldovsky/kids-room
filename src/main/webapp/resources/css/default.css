@@ -110,4 +110,10 @@ select {
     color: #4285F4;
 }
 
+.message{
+    margin-top: 30px;
+    text-align: center;
+    font-size:18px;
+}
+
 

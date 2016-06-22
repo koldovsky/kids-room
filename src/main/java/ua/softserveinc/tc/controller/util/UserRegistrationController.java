@@ -63,8 +63,6 @@ public class UserRegistrationController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute(UserConstants.Entity.USER) User user, BindingResult bindingResult) {
-
-
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
             return UserConstants.Model.REGISTRATION_VIEW;
