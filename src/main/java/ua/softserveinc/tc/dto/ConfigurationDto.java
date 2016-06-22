@@ -7,6 +7,7 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
  * transfer object to pass application configs to and from Administrator
  */
 public class ConfigurationDto {
+
     private Integer kidsMinAge;
     private Integer kidsMaxAge;
 
@@ -24,6 +25,8 @@ public class ConfigurationDto {
 
     private Integer minPeriodSize;
     private String serverName;
+
+    private Integer maxUploadImgSizeMb;
 
     private String errorMsg;
 
@@ -44,6 +47,7 @@ public class ConfigurationDto {
         this.minutesToCleanUpBookings = appConfig.getMinutesToCleanUpBookings();
         this.minPeriodSize = appConfig.getMinPeriodSize();
         this.serverName = appConfig.getServerName();
+        this.maxUploadImgSizeMb = appConfig.getMaxUploadImgSizeMb();
     }
 
     public Integer getKidsMinAge() {
@@ -149,6 +153,14 @@ public class ConfigurationDto {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public Integer getMaxUploadImgSizeMb() {
+        return maxUploadImgSizeMb;
+    }
+
+    public void setMaxUploadImgSizeMb(Integer maxUploadImgSizeMb) {
+        this.maxUploadImgSizeMb = maxUploadImgSizeMb;
     }
 
     @Override

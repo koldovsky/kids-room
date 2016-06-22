@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
@@ -21,20 +21,15 @@ import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.FileUploadFormObject;
+import ua.softserveinc.tc.util.ImagesHolderUtil;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
-import javax.xml.bind.DatatypeConverter;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Iterator;
 
 /**
  * Created by Nestor on 22.05.2016.
@@ -54,10 +49,15 @@ public class ImagesController {
     @Log
     private Logger log;
 
+    @Autowired
+    private ApplicationConfigurator applicationConfigurator;
+
+
     /**
      * Uploading a new profile picture for a Child
      *
-     * @param
+     * @param form an object holding the uploaded MultiPartFile
+     * @param bindingResult
      * @param kidId ID of a Child
      * @return redirects back to kid's profile view
      */
@@ -76,11 +76,8 @@ public class ImagesController {
 
         if (!file.isEmpty()) {
             byte[] bytes;
-            long sizeMb = file.getSize()/1024/1024;
-
-
             try {
-                if(sizeMb > 10){
+                if(file.getSize()/1024/1024 > applicationConfigurator.getMaxUploadImgSizeMb()){
                     bindingResult.rejectValue("file", ValidationConstants.FILE_TOO_BIG);
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
@@ -115,8 +112,8 @@ public class ImagesController {
     /**
      * Returns profile pictures to client
      *
-     * @param kidId
-     * @param principal
+     * @param kidId id of the kid whose avatar is to be rendered
+     * @param principal authorization object
      * @return
      *
      * @throws ResourceNotFoundException
@@ -144,30 +141,10 @@ public class ImagesController {
         if (kid.getImage() != null) {
             return kid.getImage();
         }
-
-        String path;
-        if (kid.getGender() == Gender.FEMALE)
-            path = "src/main/resources/images/default-girl.jpg";
-        else
-            path = "src/main/resources/images/default-boy.jpg";
-
-        File imgPath = new File(path);
-        String base64String;
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
-        try {
-            BufferedImage bufferedImage = ImageIO.read(imgPath);
-            ImageIO.write(bufferedImage, "jpg", baos);
-            baos.flush();
-            base64String = DatatypeConverter.printBase64Binary(baos.toByteArray());
-            baos.close();
-        } catch (IOException ioe) {
-            log.error("Failed to load child's profile pic", ioe);
-            throw new ResourceNotFoundException();
+        if (kid.getGender() == Gender.FEMALE) {
+            return ImagesHolderUtil.getDefaultPictureGirl();
         }
-
-        return DatatypeConverter.parseBase64Binary(base64String);
-
+        return  ImagesHolderUtil.getDefaultPictureBoy();
     }
 
     /**

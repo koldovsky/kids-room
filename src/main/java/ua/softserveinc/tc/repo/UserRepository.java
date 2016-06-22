@@ -30,6 +30,4 @@ public interface UserRepository extends JpaRepository<User, Long>{
     @Modifying
     @Transactional
     void updateManagerPassword(User manager, String password);
-
-    //TODO: to implement other methods we should provide a class connected to this interface through another interface
 }
