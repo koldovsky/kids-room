@@ -10,7 +10,6 @@ import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.repo.BookingRepository;
-import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
@@ -61,11 +60,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates) {
         return getBookings(startDate, endDate, null, room, bookingStates);
-    }
-
-    @Override
-    public List<Booking> getBookings(User user, Room room, BookingState... bookingStates) {
-        return getBookings(null, null, user, room, bookingStates);
     }
 
     @Override
