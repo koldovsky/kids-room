@@ -109,7 +109,25 @@ select {
 #login-form a:hover{
     color: #4285F4;
 }
+#reg-form{
+    min-width: 400px;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 5px 5px 20px grey;
+    margin-bottom: 20px;
+}
 
+#reg-button{
+    text-align: center;
+}
+
+#reg-form a{
+    color: grey;
+}
+
+#reg-form a:hover{
+    color: #4285F4;
+}
 .message{
     margin-top: 30px;
     text-align: center;
