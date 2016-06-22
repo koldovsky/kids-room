@@ -43,19 +43,16 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendMessage(String email, String subject, String text) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
-        boolean sended = false;
 
         MimeMessageHelper helper = new MimeMessageHelper(message);
         helper.setTo(email);
         helper.setSubject(subject);
         helper.setText(text, true);
 
-        while (!sended) {
-            synchronized (message) {
-                mailSender.send(message);
-                sended = true;
-            }
+        synchronized (message) {
+            mailSender.send(message);
         }
+
 
     }
 
