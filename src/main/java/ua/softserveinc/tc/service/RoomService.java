@@ -25,8 +25,6 @@ public interface RoomService extends BaseService<Room> {
 
     Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
 
-    Map<String, String> getBlockedPeriodsForWeek(Room room);
-
     Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room);
 
     Boolean isPossibleUpdate(BookingDto bookingDto);
