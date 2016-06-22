@@ -62,6 +62,9 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${server.name}")
     private String serverName;
 
+    @Value("${img.maxSize}")
+    private Integer maxUploadImgSizeMb;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -115,6 +118,9 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
         this.serverName = cDto.getServerName();
         properties.setProperty("server.name", serverName);
+
+        this.maxUploadImgSizeMb = cDto.getMaxUploadImgSizeMb();
+        properties.setProperty("img.maxSize", maxUploadImgSizeMb.toString());
 
         File propsFile = new File("src/main/resources/properties/application.properties");
         OutputStream out = new FileOutputStream(propsFile);
@@ -181,5 +187,10 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Override
     public Integer getMinutesToCleanUpBookings() {
         return minutesToCleanUpBookings;
+    }
+
+    @Override
+    public Integer getMaxUploadImgSizeMb() {
+        return maxUploadImgSizeMb;
     }
 }
