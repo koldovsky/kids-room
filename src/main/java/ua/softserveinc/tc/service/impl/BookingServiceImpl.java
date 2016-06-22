@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
@@ -39,6 +41,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoomDao roomDao;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
@@ -181,12 +189,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
 
         List<Booking> bookings;
-        bookings = getBookings(userDao.findById(idUser),roomService.findById(idRoom),BookingConstants.States.getActiveAndBooked());
 
+        bookings = bookingRepository.findByRoomAndUserAndBookingState(roomDao.findById(idRoom),
+                userDao.findById(idUser), BookingState.BOOKED);
         List<BookingDto> bookingDtos = new LinkedList<>();
 
         for (Booking booking : bookings) {
-                bookingDtos.add(new BookingDto(booking));
+            bookingDtos.add(new BookingDto(booking));
         }
         return bookingDtos;
     }

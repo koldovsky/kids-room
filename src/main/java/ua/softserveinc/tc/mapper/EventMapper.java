@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.DateConstants;
+import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.RoomService;
@@ -25,6 +26,9 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
     @Autowired
     RoomService roomService;
 
+    @Autowired
+    RoomDao roomDao;
+
     @Log
     private static Logger log;
 
@@ -33,13 +37,14 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
     public final Event toEntity(final EventDto eventDto) {
 
         Event event = new Event();
+
         event.setDescription(eventDto.getDescription());
         event.setName(eventDto.getName());
         if (eventDto.getId() != 0) {
             event.setId(eventDto.getId());
         }
-        Date startDate = null;
-        Date endDate = null;
+        Date startDate;
+        Date endDate;
 
         try {
             DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
@@ -51,11 +56,10 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
             log.error("Error parse simpleDateFormat", e);
         }
 
-
         event.setStartTime(startDate);
         event.setEndTime(endDate);
 
-        event.setRoom(roomService.findById(eventDto.getRoomId()));
+        event.setRoom(roomDao.findById(eventDto.getRoomId()));
 
         return event;
     }

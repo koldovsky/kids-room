@@ -62,8 +62,8 @@ $(function () {
     });
 
     $('#updatingButton').click(function () {
-        var newStartDate = makeISOtime(info.calEvent.start.format(), 'startTimeUpdate');
-        var newEndDate = makeISOtime(info.calEvent.end.format(), 'endTimeUpdate');
+        var newStartDate = makeISOTime(info.calEvent.start.format(), 'startTimeUpdate');
+        var newEndDate = makeISOTime(info.calEvent.end.format(), 'endTimeUpdate');
 
         $('#calendar').fullCalendar('removeEvents', info.calEvent.id);
 
@@ -94,12 +94,12 @@ $(function () {
         var ev = {
             id: -1,
             title: $('#startDate').val(),
-            start: makeISOtime(creatingEvent.clickDate, 'basicExample'),
-            end: makeISOtime(creatingEvent.clickDate, 'ender'),
+            start: makeISOTime(creatingEvent.clickDate, 'basicExample'),
+            end: makeISOTime(creatingEvent.clickDate, 'ender'),
             backgroundColor: NOT_ACTIVE_EVENT,
             borderColor: NOT_ACTIVE_EVENT,
             editable: false,
-            description : $('#description').val()
+            description: $('#description').val()
         };
 
         $('#calendar').fullCalendar('renderEvent', ev, true);
@@ -224,16 +224,8 @@ function renderCalendarForManager(objects, roomID) {
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
 
-            var newDate = new Date();
-            var newDateForEnd = new Date();
-
-            newDate.setHours(date.getUTCHours());
-            newDate.setMinutes(date.getUTCMinutes());
-            newDate.setSeconds(date.getUTCSeconds());
-
-            newDateForEnd.setHours(endDate.getUTCHours());
-            newDateForEnd.setMinutes(endDate.getUTCMinutes());
-            newDateForEnd.setSeconds(endDate.getUTCSeconds());
+            var newDate =  makeUTCTime(new Date(), date);
+            var newDateForEnd = makeUTCTime(new Date(), endDate);
 
             $('#startTimeUpdate').timepicker('setTime', newDate);
             $('#endTimeUpdate').timepicker('setTime', newDateForEnd);

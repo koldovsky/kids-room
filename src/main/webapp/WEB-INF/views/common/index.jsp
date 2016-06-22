@@ -17,7 +17,6 @@
 <script src='resources/js/userCalendar.js'></script>
 
 <script src='resources/js/renderCalendar.js'></script>
-<script type='text/javascript' src='resources/js/uk.js'></script>
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -53,6 +52,7 @@
         </c:forEach>
 
     </select>
+
 
     <div class="container">
         <div class="vertical-center-row">
@@ -103,11 +103,11 @@
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                 <tr>
-                                    <label for="child-comment-${kids.id}">Comment for ${kids.firstName}:</label>
+                                    <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment for ${kids.firstName}:</label>
 
-                                    <input type="text" id="child-comment-${kids.id}">
+                                    <textarea  type="text" id="child-comment-${kids.id}" hidden></textarea>
 
-                                    <input type="text" id="costil-for-comment-${loop.index}" value="${kids.id}" hidden>
+                                    <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
                                 </tr>
 
 

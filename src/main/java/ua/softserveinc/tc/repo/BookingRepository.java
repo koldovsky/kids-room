@@ -28,4 +28,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByRoomAndUserAndBookingEndTimeBetween(Room room, User user, Date start, Date end);
 
+    List<Booking> findByRoomAndUserAndBookingState(Room room, User user, BookingState bookingState);
 }
