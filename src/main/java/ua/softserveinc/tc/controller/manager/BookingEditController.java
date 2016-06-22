@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.controller.manager;
 
 import com.google.gson.Gson;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.Log;
 
 import java.security.Principal;
 import java.util.*;

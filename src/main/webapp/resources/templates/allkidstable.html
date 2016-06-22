@@ -1,6 +1,6 @@
 <div class="span4">
     <div id="all_kids_search" class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." ng-model="childSearchField"
+        <input type="text" class="form-control" placeholder="{{locale['search']}}" ng-model="childSearchField"
             ng-change="searchChildren(childSearchField)">
     </div>
 </div>
@@ -17,17 +17,17 @@
 
         <div class="th span1"></div>
         <div class="th span3" ng-click="orderTable('parent.fullName')">
-            Parents Name
+            {{locale['kids.parentsName']}}
             <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true" ng-show="predicate == 'parent.fullName' && !reverse"></span>
             <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true" ng-show="predicate == 'parent.fullName' && reverse"></span>
         </div>
         <div class="th span3" ng-click="orderTable('fullName')">
-            Kid Name
+            {{locale['kids.name']}}
             <span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true" ng-show="predicate == 'fullName' && !reverse"></span>
             <span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true" ng-show="predicate == 'fullName' && reverse"></span>
         </div>
         <div class="th span3" ng-click="orderTable('age')">
-            Age
+            {{locale['kids.age']}}
             <span class="glyphicon glyphicon-sort-by-order" aria-hidden="true" ng-show="predicate == 'age' && !reverse"></span>
             <span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true" ng-show="predicate == 'age' && reverse"></span>
         </div>
@@ -58,7 +58,7 @@
                             md-item-text="parent.fullName"
                             md-min-length="0"
                             md-delay="2"
-                            placeholder="Search Parent...">
+                            placeholder={{locale['search']}}>
                         <md-item-template>
                             <span class="item-title">
                                 <md-icon md-svg-icon="img/icons/octicon-repo.svg"></md-icon>
@@ -103,7 +103,7 @@
                 <div class="span6 kid_info">
                     <div>
                         <div class="span10">
-                            <p>Gender</p>
+                            <p>{{locale['kids.gender']}}</p>
                         </div>
                         <md-select ng-model="newChild.gender" placeholder="Boy">
                             <md-option ng-repeat="key in genderKeys"
@@ -113,21 +113,21 @@
                     </div>
                     <div>
                         <div class="span24">
-                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"> Phone</i>
+                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"> {{locale['kids.phone']}}</i>
                         </div>
                         <div class="right-align">
                             <p>
-                                {{newChild.parent.phoneNumber || 'Empty'}}
+                                {{newChild.parent.phoneNumber || locale['empty']}}
                             </p>
                         </div>
                     </div>
                     <div>
                         <div class="span24">
-                            <i class="glyphicon glyphicon-comment" aria-hidden="true"> Comment</i>
+                            <i class="glyphicon glyphicon-comment" aria-hidden="true"> {{locale['kids.comment']}}</i>
                         </div>
                         <div>
                             <p>
-                                <input class="form-control" type="text" ng-model="newChild.comment">
+                                <textarea class="form-control" ng-model="newChild.comment"></textarea>
                             </p>
                         </div>
                     </div>
@@ -185,17 +185,17 @@
                 <div class="span6 kid_info">
                     <div>
                         <div class="span24">
-                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"> Phone</i>
+                            <i class="glyphicon glyphicon-earphone" aria-hidden="true"> {{locale['kids.phone']}}</i>
                         </div>
-                        <div class="right-align"><p>{{ child.parentId.phoneNumber || "Empty" }}</p></div>
+                        <div class="right-align"><p>{{ child.parentId.phoneNumber || locale['empty'] }}</p></div>
                     </div>
                     <div>
                         <div class="span24">
-                            <i class="glyphicon glyphicon-comment" aria-hidden="true"> Comment</i>
+                            <i class="glyphicon glyphicon-comment" aria-hidden="true"> {{locale['kids.comment']}}</i>
                         </div>
                         <div>
                             <p>
-                                {{ child.comment || "Empty" }}
+                                {{ child.comment || locale['empty'] }}
                             </p>
                         </div>
                     </div>
