@@ -50,8 +50,8 @@ public class UserResendConfirmation {
     }
 
     @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
-    public String sendConfirmation(@ModelAttribute(UserConstants.Entity.USER) User modelUser, BindingResult bindingResult) {
-        String email = modelUser.getEmail();
+    public String sendConfirmation(@ModelAttribute(UserConstants.Entity.USER) User currentUser, BindingResult bindingResult) {
+        String email = currentUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
             return UserConstants.Model.RESEND_MAIL_VIEW;
