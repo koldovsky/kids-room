@@ -60,7 +60,7 @@ img {
 .footer{
   display: table-row;
 }
-#validPassword, #validEmail, #validPhone, .error{
+.error{
     color:red;
 }
 
@@ -98,7 +98,7 @@ select {
 }
 
 #login-form{
-    margin-top: 50px;
+    margin-top: 30px;
     min-width: 400px;
     padding: 30px;
     background-color: white;
@@ -117,6 +117,7 @@ select {
     padding: 30px;
     background-color: white;
     box-shadow: 5px 5px 20px grey;
+    margin-top:15px;
     margin-bottom: 20px;
 }
 
