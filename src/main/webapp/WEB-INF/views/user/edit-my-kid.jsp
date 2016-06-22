@@ -63,6 +63,7 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       </button>
 
       <footer class="removekidmsg">
+      <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
       <spring:message code="editkid.footmsg1" />
       <a href="removemykid?id=${kid.getId()}">
       <spring:message code="editkid.footmsg2" />

@@ -17,6 +17,10 @@ body {
     width: 300px;
 }
 
+.navbar{
+    margin-bottom: 0;
+}
+
 .tophead{
     background-color: white;
 }
@@ -71,7 +75,6 @@ img {
 
 .navbar-brand{
   font-size: 30;
-  padding-bottom: 20px;
 }
 
 #topnavbar{

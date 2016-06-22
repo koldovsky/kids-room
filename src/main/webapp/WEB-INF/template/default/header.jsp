@@ -54,7 +54,7 @@
 
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
-                                    <spring:message code="manager.roompicker" />
+                                    <spring:message code="manager.roompicker" />:
                                         <span id="room"></span>
                                     </a>
                                     <ul id="selectRoom" class="dropdown-menu">
