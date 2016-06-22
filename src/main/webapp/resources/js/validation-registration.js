@@ -2,7 +2,7 @@ $(document).ready(function() {
     $(function() {
        $.validator.addMethod("regex", function(value, element, regexpr) {
          return regexpr.test(value);
-       }, "Please enter email with softserveinc.com daamain.");
+       }, "Please enter email with softserveinc.com domain.");
     $('#userform').validate({
             rules:{
                 lastName: {
@@ -31,7 +31,7 @@ $(document).ready(function() {
             },
 
         });
-        });
+});
 
 
 });

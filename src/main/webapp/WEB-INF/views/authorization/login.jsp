@@ -7,16 +7,16 @@
 <c:url value="/j_spring_security_check" var="loginUrl" />
 <div class="form-group-material-blue-400">
 <div class="col-sm-offset-4 col-xs-3" id="login-form">
-    <form method="post" >
+    <form method="post" id="loginForm" >
         <div class="form-group">
             <span class="glyphicon glyphicon-envelope"></span>
             <label for="email" ><spring:message code="user.email" /></label>
-            <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com" required  />
+            <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com"  />
         </div>
         <div class="form-group">
             <span class="glyphicon glyphicon-lock"></span>
             <label for="password" ><spring:message code="user.password"/></label>
-            <input type="password" name="j_password" class="form-control" required value="manager"/>
+            <input type="password" name="j_password" class="form-control"  value="manager"/>
 
         </div>
         <div class="clearfix">
@@ -46,3 +46,9 @@
 </div>
 
 
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
+</c:if>
+<script src="resources/js/validation-login.js"></script>

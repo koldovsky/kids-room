@@ -17,6 +17,10 @@ body {
     width: 300px;
 }
 
+.navbar{
+    margin-bottom: 0;
+}
+
 .tophead{
     background-color: white;
 }
@@ -56,7 +60,7 @@ img {
 .footer{
   display: table-row;
 }
-#validPassword, #validEmail, #validPhone, .error{
+.error{
     color:red;
 }
 
@@ -71,7 +75,6 @@ img {
 
 .navbar-brand{
   font-size: 30;
-  padding-bottom: 20px;
 }
 
 #topnavbar{
@@ -95,7 +98,7 @@ select {
 }
 
 #login-form{
-    margin-top: 50px;
+    margin-top: 30px;
     min-width: 400px;
     padding: 30px;
     background-color: white;
@@ -109,5 +112,33 @@ select {
 #login-form a:hover{
     color: #4285F4;
 }
+#reg-form{
+    min-width: 400px;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 5px 5px 20px grey;
+    margin-top:15px;
+    margin-bottom: 20px;
+}
 
+#reg-button{
+    text-align: center;
+}
+
+#reg-form a{
+    color: grey;
+}
+
+#reg-form a:hover{
+    color: #4285F4;
+}
+.message{
+    margin-top: 30px;
+    text-align: center;
+    font-size:18px;
+}
+
+#login-form .glyphicon{
+    color: rgb(160,160,160);
+}
 

@@ -35,7 +35,7 @@
                                 <li><a  href="<c:url value="/registration" />">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <spring:message code="user.registration" />
-                                  </a></li>
+                                </a></li>
                         </sec:authorize>
 
 
@@ -49,15 +49,18 @@
                             </sec:authorize>
 
                             <sec:authorize access="hasRole('MANAGER')">
+
                                 <li id="roompicker" class="dropdown menu-item">
+
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Room
+                                    <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
+                                    <spring:message code="manager.roompicker" />:
                                         <span id="room"></span>
                                     </a>
                                     <ul id="selectRoom" class="dropdown-menu">
                                     <c:forEach items="${rooms}" var="room">
                                         <li>
-                                            <a id="${room.id}">${room.address}</a>
+                                            <a class="langitem" id="${room.id}">${room.address}</a>
                                         </li>
                                     </c:forEach>
                                     </ul>
@@ -129,13 +132,16 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="glyphicon glyphicon-globe"></span>
               <spring:message code="user.language" />
+              <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
               </a>
                 <ul class="dropdown-menu">
                     <li> <a class="langitem" id="EN">EN</a></li>
                     <li> <a class="langitem" id="UA">UA</a></li>
                    </ul>
                  </li>
+
             </ul>
+
         </div>
     </div>
 </nav>

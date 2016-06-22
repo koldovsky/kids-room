@@ -13,7 +13,7 @@
 <div class="container">
              <div id="choose-time-inp">
                  <form action="", method="POST">
-                    <input id="data-booking" class ="form-control" type = "date"/>
+                    <input id="date-booking" class ="form-control" type = "date"/>
                   </form>
              </div>
             <div id="create-booking-btn">
@@ -30,7 +30,7 @@
                 </nav>
             </div>
 
-    <div class = "tableDiv">
+    <div class = "tableDiv" hidden>
         <table class="table-edit">
                 <div id ="body-booking">
                     <thead>
@@ -44,7 +44,6 @@
         </table>
     </div>
 </div>
-
 
     <div id="cancelModal" class="modal fade">
         <div class="modal-dialog">
@@ -70,7 +69,6 @@
         </div>
     </div>
 </div>
-
 
  <div class="container">
         <div class="vertical-center-row">
@@ -122,7 +120,7 @@
                             <div>
                                 <input type="text" class="form-control" id="bookingStartDate" placeholder="booking date" readonly/>
                             </div>
-                            <input id="kostil" hidden/>
+                            <input id="kids-count" hidden/>
                             <div>
                                 <input id="bookingStartTimepicker" type="text" name="started" class="form-control picker"
                                 placeholder="start time"/>
@@ -144,7 +142,6 @@
         </div>
     </div>
 
-
 	<div id="invalidTimeModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content" >
@@ -163,13 +160,6 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
 
 <script src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>

@@ -17,7 +17,6 @@
 <script src='resources/js/userCalendar.js'></script>
 
 <script src='resources/js/renderCalendar.js'></script>
-<script type='text/javascript' src='resources/js/uk.js'></script>
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -53,6 +52,7 @@
         </c:forEach>
 
     </select>
+
 
     <div class="container">
         <div class="vertical-center-row">
@@ -103,16 +103,16 @@
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                 <tr>
-                                    <label for="child-comment-${kids.id}">Comment for ${kids.firstName}:</label>
+                                    <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment for ${kids.firstName}:</label>
 
-                                    <input type="text" id="child-comment-${kids.id}">
+                                    <textarea  type="text" id="child-comment-${kids.id}" hidden></textarea>
 
-                                    <input type="text" id="costil-for-comment-${loop.index}" value="${kids.id}" hidden>
+                                    <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
                                 </tr>
 
 
                             </c:forEach>
-                            <input id="kostil" hidden value="${fn:length(kids)}">
+                            <input id="number-of-kids" hidden value="${fn:length(kids)}">
                         </table>
 
                         <div class="col-xs-6">
@@ -160,7 +160,7 @@
                             </div>
                         </div>
 
-                        <input type="text" id="child-comment-update">
+                        <textarea type="text" id="child-comment-update"></textarea>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Update</button>
@@ -197,9 +197,6 @@
                         <div class="form-group">
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
-                        </div>
-                        <div class="allDay">
-                            <label><input type="checkbox" id="checkbox" value=""> All day</label>
                         </div>
 
                         <div class="form-group">

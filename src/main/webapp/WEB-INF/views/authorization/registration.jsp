@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="col-sm-offset-4 col-sm-3">
+<div class="col-sm-offset-4 col-sm-3" id="reg-form">
     <form:form id="userform" action="registration" method="post"  modelAttribute="user">
       <form:input path="role" type="hidden" value="USER" />
 
@@ -41,7 +41,7 @@
       </div>
          <div class="form-group">
               <spring:message code="user.prerules"/> <a data-toggle="modal" data-target="#rules"> <spring:message code="user.rules" /></a>
-              <div class="col-sm-offset-3 col-sm-8">
+              <div id="reg-button">
                 <button type="submit" id="button" class="btn btn-primary btn-lg"><spring:message code="user.register" /></button>
               </div>
       </div>
@@ -70,4 +70,4 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
-<script src="resources/js/registration.js"></script>
+<script src="resources/js/validation-registration.js"></script>
