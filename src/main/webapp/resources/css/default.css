@@ -102,7 +102,7 @@ select {
     min-width: 400px;
     padding: 30px;
     background-color: white;
-    box-shadow: 5px 5px 20px grey;
+    box-shadow: 3px 3px 10px grey;
 }
 
 #login-form a{
@@ -116,7 +116,7 @@ select {
     min-width: 400px;
     padding: 30px;
     background-color: white;
-    box-shadow: 5px 5px 20px grey;
+    box-shadow: 3px 3px 10px grey;
     margin-top:15px;
     margin-bottom: 20px;
 }
