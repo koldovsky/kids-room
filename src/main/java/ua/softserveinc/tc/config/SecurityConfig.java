@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("resources/css/**").permitAll()
                 .antMatchers("resources/js/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/registration").anonymous()
+                .antMatchers(HttpMethod.GET, "/profile").authenticated()
                 .antMatchers(HttpMethod.GET, "/mykids").hasRole(UserConstants.Role.ROLE_USER)
                 .antMatchers(HttpMethod.GET, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
                 .antMatchers(HttpMethod.POST, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)

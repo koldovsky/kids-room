@@ -61,6 +61,10 @@ public class KidsProfileController {
             throw new AccessDeniedException("Have to be manager or parent");
         }
 
+        if(!kid.isEnabled()){
+            throw new ResourceNotFoundException();
+        }
+
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.KID_PROFILE);
         model.getModelMap().addAttribute(ChildConstants.View.KID_ATTRIBUTE, kid);

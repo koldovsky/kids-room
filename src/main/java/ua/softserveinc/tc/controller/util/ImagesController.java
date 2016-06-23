@@ -94,11 +94,11 @@ public class ImagesController {
                 childService.update(kid);
             } catch (IOException ioe) {
                 log.error("Failed converting image", ioe);
-                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+                throw new BadUploadException();
             }
             catch (JpaSystemException jpae){
                 log.error("Database persistence exception", jpae);
-                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+                throw jpae;
             }
         }
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
@@ -145,18 +145,6 @@ public class ImagesController {
             return ImagesHolderUtil.getDefaultPictureGirl();
         }
         return  ImagesHolderUtil.getDefaultPictureBoy();
-    }
-
-    /**
-     * Handles bad image upload if the uploaded file cannot be persisted
-     * to the database for any reason
-     *
-     * @return "Bad Upload" view
-     */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({JpaSystemException.class, BadUploadException.class})
-    public String badUpload() {
-        return "error-bad-upload";
     }
 
 }
