@@ -5,7 +5,6 @@ var bookingsState= ['BOOKED'];
 
 $('#date-booking').val(dateNow.toISOString().substr(0,10));
 
-
 $(function(){
   $('#date-booking').change(function(){
     refresh(bookingsState);
@@ -18,8 +17,11 @@ $(function(){
     });
 });
 
+function selectRoomForManager(roomId) {
+ refresh(bookingsState);
+}
+
 $().ready(function() {
-  $('.tableDiv').show();
   $('#deletingBooking').click(cancelBooking);
 
   $('#updatingBooking').click(function() {
@@ -31,6 +33,7 @@ $().ready(function() {
           roomId:  localStorage["roomId"],
       };
       updatingBooking(inputDate);
+      $('#'+id).removeClass('highlight-active');
   });
 
    $('#selectUser').on('change', function(){
@@ -69,10 +72,6 @@ $().ready(function() {
    $('#bookingDialog').dialog('close');
  });
 });
-
-function selectRoomForManager(roomId) {
- refresh(bookingsState);
-}
 
 function bookedBooking(){
     bookingsState= ['BOOKED'];
@@ -131,6 +130,7 @@ function refresh(bookingsState){
       });
       $('.tr-table').remove();
       $('.table-edit').append(tr);
+      $('.tableDiv').show();
       addHilighted(bookings);
     }
   });
@@ -190,7 +190,7 @@ function updatingBooking(inputDate) {
         refresh(bookingsState);
         alert("Updating success");
         $('#bookingUpdatingDialog').dialog('close');
-      } else{alert("Try selecting another time"); }
+      } else{alert("Try selecting another time, because in the room doesn't have enough free places"); }
     }
   });
 }
@@ -235,7 +235,7 @@ function sendBookingToServerForCreate(bookingsArray) {
   dataType: 'json',
   data: JSON.stringify(bookingsArray),
   success: function (result) {
-    if(result==""){
+    if(result){
         alert("In the room doesn't have enough free places");
     }else{
         refresh(bookingsState);
@@ -265,12 +265,10 @@ function setStartTime(idBooking){
     data:   JSON.stringify(inputData),
     type: 'POST',
     success: function(data){
-      var obj = JSON.parse(data);
-      var bookingTime = $(idElement).find('.bookingTime');
-      bookingTime.empty();
-      bookingTime.append(obj.startTime + " - " + obj.endTime);
+      refresh(bookingsState);
       $(idElement).addClass('highlight-active');
-    }});
+    }
+  });
 }
 
 function setEndTimeInput(id){
@@ -292,9 +290,8 @@ function setEndTime(idBooking){
          data:   JSON.stringify(inputData),
          type: 'POST',
          success: function(data){
-           var obj = JSON.parse(data);
-           var bookingTime = $(idElement).find('.bookingTime');
-           $(idElement).addClass('highlight-complet');
+            $(idElement).addClass('highlight-complet');
+            refresh(bookingsState);
          }
     });
   }else{
