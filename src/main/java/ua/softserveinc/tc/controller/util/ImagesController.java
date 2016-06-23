@@ -28,7 +28,11 @@ import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 
 /**
@@ -57,15 +61,12 @@ public class ImagesController {
      * Uploading a new profile picture for a Child
      *
      * @param form an object holding the uploaded MultiPartFile
-     * @param bindingResult
      * @param kidId ID of a Child
      * @return redirects back to kid's profile view
      */
     @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
     public String uploadImage(@ModelAttribute FileUploadFormObject form,
-                                    BindingResult bindingResult,
-                                    @PathVariable String kidId)
-            throws AccessDeniedException {
+                                    @PathVariable String kidId) throws AccessDeniedException {
         if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
@@ -78,27 +79,25 @@ public class ImagesController {
             byte[] bytes;
             try {
                 if(file.getSize()/1024/1024 > applicationConfigurator.getMaxUploadImgSizeMb()){
-                    bindingResult.rejectValue("file", ValidationConstants.FILE_TOO_BIG);
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
-                String ext = file.getContentType().toLowerCase();
-                if(!(ext.equals("image/jpg") || ext.equals("image/jpeg")
-                        || ext.equals("image/png"))){
-                    bindingResult.rejectValue("file", ValidationConstants.FILE_WRONG_EXTENSION);
 
+                bytes = file.getBytes();
+                if(ImageIO.read(new ByteArrayInputStream(bytes)) == null){
+
+                    log.error("Uploaded image has a wrong extension");
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
-                bytes = file.getBytes();
 
                 kid.setImage(bytes);
                 childService.update(kid);
             } catch (IOException ioe) {
                 log.error("Failed converting image", ioe);
-                throw new BadUploadException();
+                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
             catch (JpaSystemException jpae){
                 log.error("Database persistence exception", jpae);
-                throw jpae;
+                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
         }
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
