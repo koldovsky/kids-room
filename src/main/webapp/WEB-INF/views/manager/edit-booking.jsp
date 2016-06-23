@@ -160,6 +160,74 @@
 			</div>
 		</div>
 	</div>
+    <div id="updatingSuccess" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <p>Updating success!!!</p>
+                    </div>
+                    <div class="modal-body">
+                        <button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
+                            Ok
+                        </button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="updatingInvalid" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <p>Please try select another time, because in the room does not have enough free places!</p>
+                        </div>
+                        <div class="modal-body">
+                            <button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div id="createSuccess" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <p>You create new booking!</p>
+                        </div>
+                        <div class="modal-body">
+                            <button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div id="cancelModal" class="modal fade">
+        		<div class="modal-dialog">
+        			<div class="modal-content" >
+        				<div class="modal-header">
+        					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        					<h2><spring:message code= "booking.cancel"/></h2>
+        				</div>
+        				<div class="modal-body">
+        					<p class="cancelName">
+        						<spring:message code= "booking.confirmCencelQuestion"/>
+        					</p>
+        					<div>
+        						<button id="cancelButton" class="btn btn-raised btn-info">
+        							<spring:message code= "booking.confirmCancel"/>
+        						</button>
+                            <button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
+                                   <spring:message code= "booking.closeCencel"/>
+                            </button>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        </div>
 
 <script src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>

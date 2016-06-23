@@ -22,8 +22,12 @@ function selectRoomForManager(roomId) {
 }
 
 $().ready(function() {
-  $('#deletingBooking').click(cancelBooking);
-
+  $('#deletingBooking').on('click', function(){
+    $('#cancelModal').modal('show');
+    $('#cancelButton').on('click', function(){
+    cancelBooking();
+    });
+  });
   $('#updatingBooking').click(function() {
       var getData = $('#data-edit').val();
       var inputDate = {
@@ -173,6 +177,7 @@ function cancelBooking(){
       success: function(result){
         var text = result;
         var bookings = JSON.parse(text);
+        $('#cancelModal').modal('hide');
         $('#bookingUpdatingDialog').dialog('close');
         refresh(bookingsState);
       }
@@ -188,9 +193,9 @@ function updatingBooking(inputDate) {
     success: function(data){
       if(data){
         refresh(bookingsState);
-        alert("Updating success");
+        $('#updatingSuccess').modal('show');
         $('#bookingUpdatingDialog').dialog('close');
-      } else{alert("Try selecting another time, because in the room doesn't have enough free places"); }
+      } else{ $('#updatingInvalid').modal('show'); }
     }
   });
 }
@@ -235,11 +240,12 @@ function sendBookingToServerForCreate(bookingsArray) {
   dataType: 'json',
   data: JSON.stringify(bookingsArray),
   success: function (result) {
-    if(result){
-        alert("In the room doesn't have enough free places");
+    if(result==""){
+       $('#updatingInvalid').modal('show');
+       $('#bookingDialog').dialog();
     }else{
         refresh(bookingsState);
-        alert("You create new booking");
+        $('#createSuccess').modal('show');
     }
   },
   error: function(){
