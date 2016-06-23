@@ -36,8 +36,6 @@ public class MyKidsPageController {
      * @throws AccessDeniedException
      * if requesting user has no permissions
      * to access this page
-     * @throws ResourceNotFoundException
-     * if any of the requesting resources were not found
      */
     @RequestMapping(value = "/mykids", method = RequestMethod.GET)
     public ModelAndView myKids(Principal principal)
