@@ -52,7 +52,7 @@
                   <div class="form-group">
                       <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"></button>
                       <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
-                              onclick="window.location.href='/home/adm-edit-manager'"></button>
+                              onclick="window.location.href='adm-edit-manager'"></button>
                   </div>
 
                 </form:form>

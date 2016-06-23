@@ -115,7 +115,7 @@
                       <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"
                               ng-click="submit()"></button>
                       <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
-                              onclick="window.location.href='/home/adm-edit-room'"></button>
+                              onclick="window.location.href='adm-edit-room'"></button>
                    </div>
 
                    <script src="resources/js/room-add-for-rates.js"></script>

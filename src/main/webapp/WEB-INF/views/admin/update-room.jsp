@@ -9,8 +9,8 @@
 
 
 <div class="for-table">
-   <table class="for-table-fields">
-   <form:form modelAttribute="<%=AdminConstants.ATR_ROOM%>" action="adm-update-room" method="post">
+   <table class="col-sm-offset-4 col-sm-3" id="reg-form">
+   <form:form modelAttribute="<%=AdminConstants.ATR_ROOM%>" action="adm-update-room" method="post" id="userform">
 
        <tr><th>
            <legend class="for-field"><strong><spring:message code="administrator.updateRoom"/></strong></legend>
@@ -118,7 +118,7 @@
                   <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"
                           ng-click="submit()"></button>
                   <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
-                          onclick="window.location.href='/home/adm-edit-room'"></button>
+                          onclick="window.location.href='adm-edit-room'"></button>
                </div>
 
                <script src="resources/js/room-update-for-rates.js"></script>
