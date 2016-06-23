@@ -1,6 +1,7 @@
 /**
  * Created by dima- on 12.05.2016.
  */
+
 var info;
 var bookingsArray;
 var bookingDate;
@@ -94,7 +95,7 @@ function selectRoomForUser(id, userId) {
         var commentId;
 
         for (var i = 0; i < numberOfKids; i++) {
-        commentId = $('#comment-' + i).val()
+        commentId = $('#comment-' + i).val();
             if ($('#checkboxKid' + commentId).is(':checked')) {
                 $('#child-comment-' + commentId).prop('hidden', false);
                 $('#child-comment-' + commentId + '-1').prop('hidden', false);
@@ -111,7 +112,7 @@ function selectRoomForUser(id, userId) {
     $.ajax({
         url: path, success: function (result) {
             var objects;
-            if (result.length !== 0) {
+            if (result.length) {
                 objects = [];
                 result = JSON.parse(result);
 
@@ -129,7 +130,10 @@ function selectRoomForUser(id, userId) {
                 renderingForUser(objects, id, userId);
             } else {
                 $('#user-calendar').fullCalendar('destroy');
-
+                /**
+                 * This object is required for creating empty calendar
+                 * Without this object calendar will not be rendered
+                 */
                 objects = [{
                     title: '1',
                     start: '1',
@@ -143,7 +147,6 @@ function selectRoomForUser(id, userId) {
 }
 
 function renderingForUser(objects, id, userId) {
-
     bookingDate = {};
     info = {};
 
@@ -226,8 +229,6 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
                 bookingForUpdate.borderColor = BORDER;
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
-            } else {
-                alert('NOOOOOOO');
             }
         }
     });
@@ -273,9 +274,6 @@ function cancelBooking(bookingId) {
         success: function (result) {
             if (result) {
                 $('#user-calendar').fullCalendar('removeEvents', bookingId);
-
-            } else {
-                alert('NOOOOOOO');
             }
         }
     });
@@ -370,6 +368,8 @@ function renderCalendar(objects, id) {
             }
 
             var beforeUpdate = calEvent.title;
+
+            $( "#bookingUpdatingDialog" ).dialog( "option", "title", beforeUpdate );
 
             $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
             $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));

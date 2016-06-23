@@ -75,7 +75,6 @@ public class BookingEditController {
     @ResponseBody
     public String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
-        System.out.println("booking" + booking.getBookingStartTime());
         if(!(booking.getBookingState()==BookingState.COMPLETED)){
             booking.setBookingState(BookingState.ACTIVE);
         }
@@ -140,5 +139,4 @@ public class BookingEditController {
                 .map(ChildDto::new)
                 .collect(Collectors.toList()));
     }
-
 }

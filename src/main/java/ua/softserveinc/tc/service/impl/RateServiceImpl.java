@@ -19,7 +19,9 @@ import static ua.softserveinc.tc.util.DateUtil.getRoundedHours;
 public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateService {
     @Override
     public Rate calculateAppropriateRate(long milliseconds, List<Rate> rates) {
-        if (rates.isEmpty()) return Rate.DEFAULT;
+        if (rates.isEmpty()) {
+            return Rate.DEFAULT;
+        }
 
         int hours = getRoundedHours(milliseconds);
         Optional<Rate> min = rates.stream()

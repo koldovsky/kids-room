@@ -5,7 +5,6 @@ var bookingsState= ['BOOKED'];
 
 $('#date-booking').val(dateNow.toISOString().substr(0,10));
 
-
 $(function(){
   $('#date-booking').change(function(){
     refresh(bookingsState);
@@ -18,10 +17,17 @@ $(function(){
     });
 });
 
-$().ready(function() {
-  $('.tableDiv').show();
-  $('#deletingBooking').click(cancelBooking);
+function selectRoomForManager(roomId) {
+ refresh(bookingsState);
+}
 
+$().ready(function() {
+  $('#deletingBooking').on('click', function(){
+    $('#cancelModal').modal('show');
+    $('#cancelButton').on('click', function(){
+    cancelBooking();
+    });
+  });
   $('#updatingBooking').click(function() {
       var getData = $('#data-edit').val();
       var inputDate = {
@@ -31,6 +37,7 @@ $().ready(function() {
           roomId:  localStorage["roomId"],
       };
       updatingBooking(inputDate);
+      $('#'+id).removeClass('highlight-active');
   });
 
    $('#selectUser').on('change', function(){
@@ -69,10 +76,6 @@ $().ready(function() {
    $('#bookingDialog').dialog('close');
  });
 });
-
-function selectRoomForManager(roomId) {
- refresh(bookingsState);
-}
 
 function bookedBooking(){
     bookingsState= ['BOOKED'];
@@ -131,6 +134,7 @@ function refresh(bookingsState){
       });
       $('.tr-table').remove();
       $('.table-edit').append(tr);
+      $('.tableDiv').show();
       addHilighted(bookings);
     }
   });
@@ -173,6 +177,7 @@ function cancelBooking(){
       success: function(result){
         var text = result;
         var bookings = JSON.parse(text);
+        $('#cancelModal').modal('hide');
         $('#bookingUpdatingDialog').dialog('close');
         refresh(bookingsState);
       }
@@ -188,9 +193,9 @@ function updatingBooking(inputDate) {
     success: function(data){
       if(data){
         refresh(bookingsState);
-        alert("Updating success");
+        $('#updatingSuccess').modal('show');
         $('#bookingUpdatingDialog').dialog('close');
-      } else{alert("Try selecting another time"); }
+      } else{ $('#updatingInvalid').modal('show'); }
     }
   });
 }
@@ -236,10 +241,11 @@ function sendBookingToServerForCreate(bookingsArray) {
   data: JSON.stringify(bookingsArray),
   success: function (result) {
     if(result==""){
-        alert("In the room doesn't have enough free places");
+       $('#updatingInvalid').modal('show');
+       $('#bookingDialog').dialog();
     }else{
         refresh(bookingsState);
-        alert("You create new booking");
+        $('#createSuccess').modal('show');
     }
   },
   error: function(){
@@ -265,12 +271,10 @@ function setStartTime(idBooking){
     data:   JSON.stringify(inputData),
     type: 'POST',
     success: function(data){
-      var obj = JSON.parse(data);
-      var bookingTime = $(idElement).find('.bookingTime');
-      bookingTime.empty();
-      bookingTime.append(obj.startTime + " - " + obj.endTime);
+      refresh(bookingsState);
       $(idElement).addClass('highlight-active');
-    }});
+    }
+  });
 }
 
 function setEndTimeInput(id){
@@ -292,9 +296,8 @@ function setEndTime(idBooking){
          data:   JSON.stringify(inputData),
          type: 'POST',
          success: function(data){
-           var obj = JSON.parse(data);
-           var bookingTime = $(idElement).find('.bookingTime');
-           $(idElement).addClass('highlight-complet');
+            $(idElement).addClass('highlight-complet');
+            refresh(bookingsState);
          }
     });
   }else{
