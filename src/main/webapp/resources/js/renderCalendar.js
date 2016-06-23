@@ -72,6 +72,7 @@ $(function () {
             title: $('#titleUpdate').val(),
             start: newStartDate,
             end: newEndDate,
+            editable: false,
             description: $('#descriptionUpdate').val()
         };
 
@@ -144,7 +145,7 @@ function selectRoomForManager(id) {
 
         success: function (result) {
             var objects;
-            if (result.length !== 0) {
+            if (result.length) {
                 objects = [];
                 result = JSON.parse(result);
 
@@ -162,7 +163,10 @@ function selectRoomForManager(id) {
                 renderCalendarForManager(objects, id);
             } else {
                 $('#calendar').fullCalendar('destroy');
-
+            /**
+             * This object is required for creating empty calendar
+             * Without this object calendar will not be rendered
+             */
                 objects = [{
                     title: '1',
                     start: '1',
