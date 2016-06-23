@@ -29,6 +29,9 @@
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 
 
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
 <body>
 
 <sec:authorize access="hasRole('USER')">
@@ -67,7 +70,7 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"/>
+                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6" name="bookingStartTimepicker"/>
                             </div>
                         </div>
                         <br>
@@ -81,11 +84,11 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"/>
+                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6" name="bookingEndTimepicker"/>
                             </div>
                         </div>
 
-
+                        <br>Select children for bookings:<br>
                         <table>
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
@@ -108,6 +111,7 @@
                                     <textarea  type="text" id="child-comment-${kids.id}" hidden></textarea>
 
                                     <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
+                                    <br>
                                 </tr>
 
 
@@ -163,7 +167,7 @@
                         <textarea type="text" id="child-comment-update"></textarea>
 
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="updatingBooking">Update</button>
+                            <button type="button" class="btn btn-success" id="updatingBooking">Save</button>
                         </div>
 
                         <div class="col-xs-6">

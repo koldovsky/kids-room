@@ -24,11 +24,11 @@ import static ua.softserveinc.tc.util.DateUtil.*;
  */
 @Service(QuartzConstants.SEND_PAYMENT_INFO)
 public class SendPaymentInfoJob {
-    @Autowired
-    private MailService mailService;
-
     @Log
     private static Logger log;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private BookingService bookingService;
@@ -41,12 +41,11 @@ public class SendPaymentInfoJob {
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         report.forEach((user, sum) -> {
-            if ("bahrianyi@ukr.net".equals(user.getEmail()))
-                try {
-                    mailService.sendPaymentInfo(user, MailConstants.PAYMENT_INFO_SUBJECT, sum);
-                } catch (MessagingException e) {
-                    log.error("Error! Sending email!!!", e);
-                }
+            try {
+                mailService.sendPaymentInfo(user, MailConstants.PAYMENT_INFO_SUBJECT, sum);
+            } catch (MessagingException e) {
+                log.error("Error while sending email!", e);
+            }
         });
     }
 }

@@ -71,7 +71,9 @@ public class QuartzConfig {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeCleanUpBookings().getObject());
         stFactory.setName(QuartzConstants.CLEAN_UP_BOOKINGS_TRIGGER);
-        stFactory.setCronExpression("0 0/1 * 1/1 * ? *");
+        stFactory.setCronExpression("0 " + configurator.getMinutesToCleanUpBookings() +
+                " " + configurator.getHourToCleanUpBookings() + " 1/" +
+                configurator.getDaysToCleanUpBookings() + " * ? *");
 
         return stFactory;
     }

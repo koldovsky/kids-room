@@ -97,12 +97,11 @@ modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="pos
 
 </div>
 
-
 <div class="form-group">
-<label for="minPeriod" class="required"><spring:message code="properties.minPeriod" /></label>
-                          <form:input path="minPeriodSize" id="" value="${config.minPeriodSize}"
+<label for="maxUpload" class="required"><spring:message code="properties.imgMax" /></label>
+                          <form:input path="maxUploadImgSizeMb" id="" value="${config.maxUploadImgSizeMb}"
                           class="primary-color form-control" required="required"/>
-                          <form:errors path="minPeriodSize" cssClass="error" />
+                          <form:errors path="maxUploadImgSizeMb" cssClass="error" />
                           <br>
 </div>
 
