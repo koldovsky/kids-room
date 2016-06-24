@@ -6,17 +6,20 @@
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
 
 
 <div class="for-table">
-    <table class="for-table-fields">
-    <form:form modelAttribute="<%=AdminConstants.ATR_MANAGER%>" action="adm-update-manager" method="post">
+    <table class="col-sm-offset-4 col-sm-3 reg-form">
 
         <tr><th>
             <legend class="for-field"><strong><spring:message code="administrator.updateManager"/></strong></legend>
         </th></tr>
 
         <tr><td>
+        <form:form modelAttribute="<%=AdminConstants.ATR_MANAGER%>" action="adm-update-manager" method="post"
+                   id="managerForm">
+
             <form:hidden path="id" />
             <form:hidden path="password" value="${manager.password}"/>
             <form:hidden path="active" value="${manager.active}"/>
@@ -52,12 +55,20 @@
             </div>
 
             <div class="form-group sizing-between">
-                <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"></button>
-                <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
-                        onclick="window.location.href='adm-edit-manager'"></button>
+                <button type="submit" class="button button-confirm">OK</button>
+                <button type="reset" class="button button-cancel"
+                        onclick="window.location.href='adm-edit-manager'">Cancel</button>
             </div>
+
+         </form:form>
         </th></tr>
 
-    </form:form>
     </table>
 </div>
+
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
+</c:if>
+<script src="resources/js/validation-manager.js"></script>

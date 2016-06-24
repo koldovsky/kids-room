@@ -6,17 +6,19 @@
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
 
 
 <body>
    <div class="for-table">
-       <table class="for-table-fields">
+       <table class="col-sm-offset-4 col-sm-3 reg-form">
            <tr><th>
                <legend class="for-field"><strong><spring:message code="administrator.addManager"/></strong></legend>
            </th></tr>
 
            <tr><td>
-               <form:form action="adm-add-manager" method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>">
+           <form:form action="adm-add-manager" method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>"
+                      id="managerForm">
 
                   <form:input path="role" type="hidden" value="MANAGER" />
                   <form:input path="password" type="hidden" name="password"/>
@@ -50,14 +52,21 @@
                   </div>
 
                   <div class="form-group">
-                      <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"></button>
-                      <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
-                              onclick="window.location.href='adm-edit-manager'"></button>
+                      <button type="submit" class="button button-confirm">OK</button>
+                      <button type="reset" class="button button-cancel"
+                              onclick="window.location.href='adm-edit-manager'">Cancel</button>
                   </div>
 
-                </form:form>
+           </form:form>
            </td></tr>
 
        </table>
     </div>
 </body>
+
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
+</c:if>
+<script src="resources/js/validation-manager.js"></script>

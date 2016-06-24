@@ -6,20 +6,23 @@
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
 
 
 <body>
     <div class="for-table">
-        <table class="for-table-fields">
-        <form:form class="for-table" action="adm-add-room" method="post" modelAttribute="<%=AdminConstants.ATR_ROOM%>">
+        <table class="col-sm-offset-4 col-sm-3 reg-form">
 
            <tr><th>
                <legend class="for-field"><strong><spring:message code="administrator.addRoom"/></strong></legend>
            </th></tr>
 
            <tr><td>
-               <form:hidden path="rate" name="rate" id="rates-json"/>
-               <form:hidden path="managers" name="managers" id="managers-json"/>
+           <form:form class="for-table" action="adm-add-room" method="post" modelAttribute="<%=AdminConstants.ATR_ROOM%>"
+                      id="roomForm">
+
+               <form:hidden path="rate" id="rates-json"/>
+               <form:hidden path="managers" id="managers-json"/>
 
                <div class="form-group sizing-between">
                   <label for="name" class="required">
@@ -78,17 +81,18 @@
                           <spring:message code="administrator.room.manager"/></label>
                        <fieldset  data-ng-repeat="manager in managers">
                            <label class="for-field">
-                               <select name="managers" class="form-control" ng-model="manager.id" managerId=""
+                               <select class="form-control" ng-model="manager.id" managerId=""
                                        placeholder="manager">
                                    <c:forEach var="manager" items="${managerList}">
                                       <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
                                    </c:forEach>
                                </select>
                            </label>
-                           <button class="remove" ng-show="$last" ng-click="removeManager()">-</button>
                        </fieldset>
-
-                       <button type="button" class="addfields" ng-click="addNewManager()" >+</button>
+                       <br>
+                       <button type="button" ng-click="removeManager()">-</button>
+                       <button type="button" ng-click="addNewManager()" >+</button>
+                       <br>
                        <form:errors path="managers" cssClass="error"/>
                    </div>
 
@@ -104,26 +108,34 @@
                              <input type="text" ng-model="rate.priceRate" priceRate="" class="form-control"
                                     placeholder=<spring:message code="administrator.room.rate.priceRate" /> />
                           </label>
-                              <button class="remove" ng-show="$last" ng-click="removeRate()">-</button>
                        </fieldset>
-
-                       <button type="button" class="addfields" ng-click="addNewRate()" >+</button>
+                       <br>
+                       <button type="button" ng-click="removeRate()">-</button>
+                       <button type="button" ng-click="addNewRate()">+</button>
+                       <br>
                        <form:errors path="rate" cssClass="error"/>
                    </div>
 
                    <div class="form-group">
-                      <button type="submit" class="btn btn-raised btn-info glyphicon glyphicon-ok active"
-                              ng-click="submit()"></button>
-                      <button type="reset" class="btn btn-raised btn-danger glyphicon glyphicon-remove active"
-                              onclick="window.location.href='adm-edit-room'"></button>
+                      <button type="submit" class="button button-confirm"
+                              ng-click="submit()">OK</button>
+                      <button type="reset" class="button button-cancel"
+                              onclick="window.location.href='adm-edit-room'">Cancel</button>
                    </div>
 
-                   <script src="resources/js/room-add-for-rates.js"></script>
                </div>
+
+               <script src="resources/js/room-dynamic-managers-rates.js"></script>
+           </form:form>
            </td></tr>
 
-        </form:form>
         </table>
     </div>
 </body>
 
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
+</c:if>
+<script src="resources/js/validation-room.js"></script>

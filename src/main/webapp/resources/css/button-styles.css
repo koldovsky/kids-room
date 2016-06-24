@@ -1,0 +1,105 @@
+
+.buttons{
+    display: inline-block;
+    background: #eeeeee; /* Old browsers */
+    background: -moz-linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* W3C */
+    border: 1px solid #a1a1a1;
+    padding: 0 2em;
+    margin: 0.5em;
+    font: bold 1em/2em Arial, Helvetica;
+    text-decoration: none;
+    color: #333;
+    border-radius: .2em;
+}
+
+.buttons:before{
+    float: left;
+    width: 1em;
+    text-align: center;
+    font-size: 1.7em;
+    margin: 0 0.5em 0 -1em;
+    padding: 0 .2em;
+    pointer-events: none;
+}
+
+.button{
+    border-radius: 12px;
+    box-shadow: 2px 2px 1px grey;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.button-add {
+    height: 40px;
+    width: 120px;
+    background-color: rgb(51, 153, 255);
+}
+
+.button-confirm{
+    font-size: 16px;
+    margin: 10px;
+    height: 40px;
+    width: 70px;
+    background-color: rgb(0, 153, 255);
+}
+
+.button-cancel{
+    font-size: 16px;
+    margin: 10px;
+    height: 40px;
+    width: 70px;
+    background-color: rgb(255, 112, 77);
+}
+
+.button-size-default {
+    margin: 0px;
+    height: 40px;
+    width: 70px;
+    line-height : 24px;
+
+}
+
+.button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: rgb(242, 242, 242);
+    color: black;
+}
+
+.for-lock-button {
+    margin-top: 23%;
+}
+
+
+.delete:before {
+    color: red;
+    content: "\2718";
+}
+.save:before   {
+    color: green;
+    content: "\2714";
+}
+.edit:before   {
+    color: blue;
+    content: "\270E";
+}
+
+
+.add:before    { content: "\271A"; }
+.delete:before { content: "\2718";}
+.cross:before  { content: "\2716"; }

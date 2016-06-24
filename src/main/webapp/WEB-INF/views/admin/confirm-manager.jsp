@@ -6,6 +6,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
 
 
 <div class="for-table">
@@ -44,7 +45,7 @@
         <tr></tr>
         <tr><td class="hide-border">
             <div class="form-group">
-                <button type="submit" class="btn btn-raised btn-primary btn-lg glyphicon glyphicon-ok active"></button>
+                <button type="submit" class="button button-confirm">OK</button>
             </div>
         </td></tr>
 

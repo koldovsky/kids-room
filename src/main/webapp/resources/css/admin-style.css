@@ -1,14 +1,9 @@
-body, table{
-    background-color: rgb(250, 250, 250);
-    margin: 0px;
-}
 
 table, th, td {
     text-align: center;
     border: 2px solid #ddd;
     border-collapse: collapse;
-    width: 35%;
-    padding: 4px;
+    padding: 2px;
 }
 
 td{
@@ -28,12 +23,21 @@ th {
     color: white;
 }
 
+.reg-form{
+    min-width: 400px;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 3px 3px 10px grey;
+    margin-top:15px;
+    margin-bottom: 20px;
+}
+
 .for-table{
     block:fixed;
     margin: auto;
 	width: 90%;
 	padding-top: 10px;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 }
 
 .for-table-fields{
@@ -50,38 +54,33 @@ th {
     height: 30px;
     width: 350px;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .for-field1{
     height: 30px;
     width: 150px;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .for-field2{
     height: 30px;
     width: 150px;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-.tableDiv tr:hover {
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover {
     background-color: rgb(204, 204, 255);
+}
+
+.tr-not-active{
+    background-color: rgb(255, 214, 153);
 }
 
 .set-standard-color{
     background-color: rgb(238, 238, 238);
-}
-
-.for-lock-button {
-    margin-top: 34%;
-}
-
-.td-full{
-    padding: 0px;
-    margin: 0px;
 }
 
 .block-link{
