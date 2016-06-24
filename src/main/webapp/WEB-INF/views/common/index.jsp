@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
@@ -63,6 +64,7 @@
                 <div id="bookingDialog" hidden>
                     <form id="bookingForm">
                         <div class="form-group">
+
                             <label for="bookingStartDate">Start date</label>
                             <br>
                             <div class="col-xs-6">
@@ -70,7 +72,8 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6" name="bookingStartTimepicker"/>
+                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"
+                                       name="bookingStartTimepicker"/>
                             </div>
                         </div>
                         <br>
@@ -84,7 +87,8 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6" name="bookingEndTimepicker"/>
+                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"
+                                       name="bookingEndTimepicker"/>
                             </div>
                         </div>
 
@@ -106,9 +110,10 @@
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                 <tr>
-                                    <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment for ${kids.firstName}:</label>
+                                    <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment
+                                        for ${kids.firstName}:</label>
 
-                                    <textarea  type="text" id="child-comment-${kids.id}" hidden></textarea>
+                                    <textarea type="text" id="child-comment-${kids.id}" hidden></textarea>
 
                                     <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
                                     <br>
@@ -193,12 +198,48 @@
 
     </c:forEach>
 
+
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="dialog" hidden>
+                <div id="dialog-recurrently" class="modal-dialog-recurrently dialog" hidden>
+                    <form id="form-dialog-recurrently">
+                        <table class="table">
+                            <thead>Check required days</thead>
+                            <tbody>
+                            <tr>
+                                <td><label><input type="checkbox" id="Monday" value="">Monday </label><br></td>
+                                <td><label><input type="checkbox" id="Tuesday" value="">Tuesday</label><br></td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="checkbox" id="Wednesday" value="">Wednesday </label><br>
+                                </td>
+                                <td><label><input type="checkbox" id="Thursday" value="">Thursday</label><br></td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="checkbox" id="Friday" value="">Friday </label><br></td>
+                                <td><label><input type="checkbox" id="Saturday" value="">Saturday</label><br></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="dialog" class="dialog" hidden>
                     <form id="form">
                         <div class="form-group">
+
+                            <div class="text-center">
+                                <button type="button" class="btn btn-info" id="recurrent">Recurrent</button>
+                            </div>
+
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
@@ -210,7 +251,7 @@
                                 <input type="text" class="form-control" id="title" placeholder="startDate" readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="basicExample" type="text" class="time form-control" size="6"/>
+                                <input id="basicExample" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -223,7 +264,7 @@
                                 <input type="text" class="form-control" id="endDate" placeholder="endDate" readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="ender" type="text" class="time form-control" size="6"/>
+                                <input id="ender" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
 
@@ -247,7 +288,7 @@
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="updating" hidden>
+                <div id="updating" class="dialog" hidden>
                     <form id="updatingForm">
                         <div class="form-group">
                             <label for="titleUpdate">Event title</label>
@@ -263,7 +304,7 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="startTimeUpdate" type="text" class="time form-control" size="6"/>
+                                <input id="startTimeUpdate" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -277,7 +318,7 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="endTimeUpdate" type="text" class="time form-control" size="6"/>
+                                <input id="endTimeUpdate" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
 

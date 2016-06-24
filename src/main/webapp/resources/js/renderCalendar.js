@@ -9,47 +9,25 @@ var ACTIVE_EVENT = '#428bca';
 var NOT_ACTIVE_EVENT = '#33cc33';
 
 $(function () {
-    $('#basicExample').timepicker({
+
+    $(".modal-dialog-recurrently").dialog({
+        modal: true,
+        autoOpen: false
+    });
+
+    $('#dialog-recurrently').dialog({
+        title: 'Recurrent events',
+        width: 500
+    });
+
+    $('.timepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
         minTime: '15:00',
         maxTime: '22:00'
     });
 
-    $('#ender').timepicker({
-        timeFormat: 'H:i',
-        step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
-    });
-
-    $('#startTimeUpdate').timepicker({
-        timeFormat: 'H:i',
-        step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
-    });
-
-    $('#endTimeUpdate').timepicker({
-        timeFormat: 'H:i',
-        step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
-    });
-
-    $('#dialog').dialog({
-        autoOpen: false,
-        show: {
-            effect: 'drop',
-            duration: 500
-        },
-        hide: {
-            effect: 'clip',
-            duration: 500
-        }
-    });
-
-    $('#updating').dialog({
+    $('.dialog').dialog({
         autoOpen: false,
         show: {
             effect: 'drop',
@@ -90,7 +68,6 @@ $(function () {
     });
 
     $('#creating').click(function () {
-
         var ev = {
             id: -1,
             title: $('#startDate').val(),
@@ -103,7 +80,7 @@ $(function () {
         };
 
         $('#calendar').fullCalendar('renderEvent', ev, true);
-
+        $('#calendar').fullCalendar('unselect');
         $.ajax({
             type: 'post',
             contentType: 'application/json',
@@ -132,6 +109,10 @@ $(function () {
         $('#title').val('');
         $('#dialog').dialog('close');
     });
+
+    $('#recurrent').click(function () {
+        $('#dialog-recurrently').dialog('open');
+    })
 });
 
 function selectRoomForManager(id) {
@@ -163,10 +144,10 @@ function selectRoomForManager(id) {
                 renderCalendarForManager(objects, id);
             } else {
                 $('#calendar').fullCalendar('destroy');
-            /**
-             * This object is required for creating empty calendar
-             * Without this object calendar will not be rendered
-             */
+                /**
+                 * This object is required for creating empty calendar
+                 * Without this object calendar will not be rendered
+                 */
                 objects = [{
                     title: '1',
                     start: '1',
@@ -198,17 +179,17 @@ function renderCalendarForManager(objects, roomID) {
                 clickDate = clickDate + 'T00:00:00';
             }
 
-            var ckbox = $('#checkbox');
+            /*            var ckbox = $('#checkbox');
 
-            $('input').on('click', function () {
-                if (ckbox.is(':checked')) {
-                    $('#basicExample').prop('readonly', true);
-                    $('#ender').prop('readonly', true);
-                } else {
-                    $('#basicExample').prop('readonly', false);
-                    $('#ender').prop('readonly', false);
-                }
-            });
+             $('input').on('click', function () {
+             if (ckbox.is(':checked')) {
+             $('#basicExample').prop('readonly', true);
+             $('#ender').prop('readonly', true);
+             } else {
+             $('#basicExample').prop('readonly', false);
+             $('#ender').prop('readonly', false);
+             }
+             });*/
 
             creatingEvent.clickDate = clickDate;
             creatingEvent.roomID = roomID;
@@ -230,7 +211,7 @@ function renderCalendarForManager(objects, roomID) {
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
 
-            var newDate =  makeUTCTime(new Date(), date);
+            var newDate = makeUTCTime(new Date(), date);
             var newDateForEnd = makeUTCTime(new Date(), endDate);
 
             $('#startTimeUpdate').timepicker('setTime', newDate);
@@ -246,14 +227,49 @@ function renderCalendarForManager(objects, roomID) {
             info.description = $('#descriptionUpdate').val();
         },
 
+        selectable: true,
+        selectHelper: true,
+        select: function (start, end) {
+
+            $('#dialog').dialog('open');
+
+
+            creatingEvent.start = start;
+            creatingEvent.end = end;
+            creatingEvent.clickDate = start.format();
+            creatingEvent.roomID = roomID;
+
+            $('#title').val(start.format().substring(0, 10));
+            $('#endDate').val(end.format().substring(0, 10));
+
+
+            var timeStart = makeUTCTime(new Date(), new Date(start.format()));
+            var timeEnd = makeUTCTime(new Date(), new Date(end.format()));
+
+
+            $('#basicExample').timepicker('setTime', timeStart);
+            $('#ender').timepicker('setTime', timeEnd);
+
+            /*       var title = prompt('Event Title:');
+             var eventData;
+             if (title) {
+             eventData = {
+             title: title,
+             start: start,
+             end: end
+             };
+             $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+             }
+             $('#calendar').fullCalendar('unselect');
+             */
+        },
+
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
         defaultDate: $('#calendar').fullCalendar('getDate'),
-
-        selectHelper: true,
         editable: true,
         eventLimit: true,
         events: objects
@@ -292,3 +308,10 @@ function sendToServerForDelete(event) {
     });
 }
 
+
+function makeUTCTime(time, date) {
+    time.setHours(date.getUTCHours());
+    time.setMinutes(date.getUTCMinutes());
+    time.setSeconds(date.getUTCSeconds());
+    return time;
+}
