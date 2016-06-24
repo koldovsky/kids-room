@@ -1,9 +1,17 @@
 
+
+
 var ratesList = $("#rates-json").val();
-var ratesJson = JSON.parse(ratesList);
+var ratesJson = 0;
+if (ratesList.length != 0){
+    ratesJson = JSON.parse(ratesList);
+}
 
 var managersList = $("#managers-json").val();
-var managersJson = JSON.parse(managersList);
+var managersJson = 0;
+if (managersList.length != 0){
+    managersJson = JSON.parse(managersList);
+}
 
 var app = angular.module('angularjs-starter', []);
 
@@ -13,14 +21,14 @@ app.controller('MainCtrl', function($scope) {
    $scope.managers = [];
 
 
-   if (managersJson.length > 0) {
+   if (managersJson.length != 0) {
        for (var i = 0; i < managersJson.length; ++i){
            var newItemNo = $scope.managers.length+1;
            $scope.managers.push({idIns: 'manager'+(i+1), id: managersJson[i].id.toString()});
        }
    }
 
-   if (ratesJson.length > 0 ) {
+   if (ratesJson.length != 0 ) {
        for (var i = 0; i < ratesJson.length; ++i){
            var newItemNo = $scope.rates.length+1;
            $scope.rates.push({idIns: 'rate'+(i+1), hourRate: ratesJson[i].hourRate, priceRate: ratesJson[i].priceRate});
