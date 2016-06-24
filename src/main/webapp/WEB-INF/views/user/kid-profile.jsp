@@ -39,17 +39,18 @@
         </div>
 
  <h2> ${kid.firstName} ${kid.lastName} </h2>
-  <sec:authorize access="hasRole('USER')">
 
-
-  </sec:authorize>
 <hr></hr>
 <h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}<h3>
 <h3> <spring:message code="kids.age" />: ${kid.getAge()}<h3>
 <h4> <spring:message code="kid.comment" />: ${kid.comment} </h4>
+
+ <sec:authorize access="hasRole('USER')">
 <button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                 &nbsp;<spring:message code="button.edit" />
         </button>
+
+</sec:authorize>
 <hr></hr>
 <div id="parent">
     <h3> <spring:message code="kid.parent" /> </h4>

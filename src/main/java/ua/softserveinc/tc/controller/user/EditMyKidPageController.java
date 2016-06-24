@@ -75,6 +75,10 @@ public class EditMyKidPageController {
             throw new AccessDeniedException("You do not have access to this page");
         }
 
+        if(!kidToEdit.isEnabled()){
+            throw new ResourceNotFoundException();
+        }
+
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.KID_EDITING);
         model.getModelMap()

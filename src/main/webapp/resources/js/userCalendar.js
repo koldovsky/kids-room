@@ -369,7 +369,7 @@ function renderCalendar(objects, id) {
 
             var beforeUpdate = calEvent.title;
 
-            $( "#bookingUpdatingDialog" ).dialog( "option", "title", beforeUpdate );
+            $("#bookingUpdatingDialog").dialog( "option", "title", beforeUpdate );
 
             $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
             $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
