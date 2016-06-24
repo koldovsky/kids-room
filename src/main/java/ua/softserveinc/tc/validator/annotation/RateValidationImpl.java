@@ -24,6 +24,10 @@ public class RateValidationImpl implements ConstraintValidator<RateValidation, S
 
     }
 
+    public String message(){
+        return "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    }
+
 
     /**
      * Method checks for compliance requirements of input rate value.
@@ -35,11 +39,15 @@ public class RateValidationImpl implements ConstraintValidator<RateValidation, S
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         List<Rate> rates = JsonUtil.fromJsonList(value, Rate[].class);
-        Map<Integer, Long> map = rates.stream().collect(Collectors.groupingBy(Rate::getHourRate, Collectors.counting()));
 
         if (rates.stream().filter(rate -> (rate.getHourRate() > 24 || rate.getHourRate() < 1)).findFirst().isPresent()) {
             return false;
         }
+        if (rates.stream().filter(rate -> (rate.getPriceRate() < 0)).findFirst().isPresent()){
+            return false;
+        }
+
+        Map<Integer, Long> map = rates.stream().collect(Collectors.groupingBy(Rate::getHourRate, Collectors.counting()));
         return !map.values().stream().filter(en -> en > 1).findFirst().isPresent();
     }
 }
