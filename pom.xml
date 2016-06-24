@@ -35,13 +35,51 @@
     </build>
     <properties>
 
+        <!-- VERSION -->
+
         <java-version>1.8</java-version>
         <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
+        <org.springframework.data-version>1.10.1.RELEASE</org.springframework.data-version>
+        <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
+        <org.springframework.spring-test-version>4.3.0.RELEASE</org.springframework.spring-test-version>
+
         <org.hibernate-version>5.1.0.Final</org.hibernate-version>
+        <org.hibernate.hibernate-validator-version>5.2.4.Final</org.hibernate.hibernate-validator-version>
+        <org.hibernate.hibernate-search-orm>5.5.3.Final</org.hibernate.hibernate-search-orm>
+
+        <mysql-connector-java-version>5.0.8</mysql-connector-java-version>
+
+        <org.apache.taglibs-version>1.2.1</org.apache.taglibs-version>
+        <javax.servlet.jsp-version>2.3.1</javax.servlet.jsp-version>
+        <javax.jstl-version>1.2</javax.jstl-version>
+        <javax.servlet-api-version>3.1.0</javax.servlet-api-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
         <org.spring.securiry-version>4.0.4.RELEASE</org.spring.securiry-version>
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.1.7</logback.version>
+
+        <com.fasterxml.jackson.core.databind-version>2.7.4</com.fasterxml.jackson.core.databind-version>
+
+        <com.google.code.gson-version>2.6.2</com.google.code.gson-version>
+        <org.quartz-scheduler.quartz-version>2.2.1</org.quartz-scheduler.quartz-version>
+        <org.quarttz-scheduler.quartz-jobs-version>2.2.1</org.quarttz-scheduler.quartz-jobs-version>
+
+        <org.json-version>20160212</org.json-version>
+
+        <org.webjars.bootstrap-version>3.3.6</org.webjars.bootstrap-version>
+        <org.webjars.jquery-version>2.2.3</org.webjars.jquery-version>
+
+        <junit-version>4.12</junit-version>
+
+        <javax.mail-version>1.4.7</javax.mail-version>
+        <org.apache.velocity-version>1.7</org.apache.velocity-version>
+        <org.apache.commons-version>3.0</org.apache.commons-version>
+
+        <commons-codec-version>1.2</commons-codec-version>
+        <commons-io-version>2.5</commons-io-version>
+        <commons-fileupload-version>1.3.1</commons-fileupload-version>
+
+        <org.codehouse.jackson.jackson-mapper-asl-version>1.9.10</org.codehouse.jackson.jackson-mapper-asl-version>
 
     </properties>
     <dependencies>
@@ -106,7 +144,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>1.10.1.RELEASE</version>
+            <version>${org.springframework.data-version}</version>
         </dependency>
 
 
@@ -124,31 +162,31 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.3.2.Final</version>
+            <version>${org.hibernate.hibernate-validator-version}</version>
         </dependency>
 
         <!-- SERVLET JSP JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>${javax.servlet-api-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.1</version>
+            <version>${javax.servlet.jsp-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
+            <version>${javax.jstl-version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.taglibs</groupId>
             <artifactId>taglibs-standard-jstlel</artifactId>
-            <version>1.2.1</version>
+            <version>${org.apache.taglibs-version}</version>
         </dependency>
 
 
@@ -156,37 +194,38 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.0.8</version>
+            <version>${mysql-connector-java-version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.4</version>
+            <version>${com.fasterxml.jackson.core.databind-version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.6.2</version>
+            <version>${com.google.code.gson-version}</version>
         </dependency>
 
         <!-- QUARTZ JOB -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>4.2.6.RELEASE</version>
+            <version>${org.springframework.spring-tx-version}</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.2.1</version>
+            <version>${org.quartz-scheduler.quartz-version}</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz-jobs</artifactId>
-            <version>2.2.1</version>
+            <version>${org.quarttz-scheduler.quartz-jobs-version}</version>
         </dependency>
+
         <!-- APACHE TILES -->
         <dependency>
             <groupId>org.apache.tiles</groupId>
@@ -210,13 +249,13 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit-version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>RELEASE</version>
+            <version>${org.springframework.spring-test-version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -224,14 +263,14 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20160212</version>
+            <version>${org.json-version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.3.6</version>
+            <version>${org.webjars.bootstrap-version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.webjars</groupId>
@@ -242,13 +281,13 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>2.2.3</version>
+            <version>${org.webjars.jquery-version}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4.7</version>
+            <version>${javax.mail-version}</version>
         </dependency>
         <dependency>
                 <groupId>org.springframework.integration</groupId>
@@ -258,41 +297,41 @@
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
-            <version>1.7</version>
+            <version>${org.apache.velocity-version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
-            <version>5.5.3.Final</version>
+            <version>${org.hibernate.hibernate-search-orm}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.0</version>
+            <version>${org.apache.commons-version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.2</version>
+            <version>${commons-codec-version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.5</version>
+            <version>${commons-io-version}</version>
         </dependency>
 
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.3.1</version>
+            <version>${commons-fileupload-version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.10</version>
+            <version>${org.codehouse.jackson.jackson-mapper-asl-version}</version>
         </dependency>
 
         <dependency>

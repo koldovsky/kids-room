@@ -92,7 +92,7 @@
                                   <li><a href="manager-edit-booking">
                                   <span class="glyphicon glyphicon-list"></span>
                                   <spring:message code="manager.listbooking"/>
-                                  <span id="amountOfChildren"></span>
+                                  <span id="amountOfChildren" class="badge"></span>
                                   </a></li>
 
                               </sec:authorize>
