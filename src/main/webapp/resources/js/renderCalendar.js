@@ -242,26 +242,11 @@ function renderCalendarForManager(objects, roomID) {
             $('#title').val(start.format().substring(0, 10));
             $('#endDate').val(end.format().substring(0, 10));
 
-
             var timeStart = makeUTCTime(new Date(), new Date(start.format()));
             var timeEnd = makeUTCTime(new Date(), new Date(end.format()));
 
-
             $('#basicExample').timepicker('setTime', timeStart);
             $('#ender').timepicker('setTime', timeEnd);
-
-            /*       var title = prompt('Event Title:');
-             var eventData;
-             if (title) {
-             eventData = {
-             title: title,
-             start: start,
-             end: end
-             };
-             $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-             }
-             $('#calendar').fullCalendar('unselect');
-             */
         },
 
         header: {

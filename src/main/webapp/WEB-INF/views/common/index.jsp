@@ -204,6 +204,35 @@
             <div align="center">
                 <div id="dialog-recurrently" class="modal-dialog-recurrently dialog" hidden>
                     <form id="form-dialog-recurrently">
+
+                        <div class="form-group">
+                            <label for="recurrent-event-title">Event title</label>
+                            <input type="text" class="form-control" id="recurrent-event-title" placeholder="title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recurrent-event-start-date">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="date" class="form-control" id="recurrent-event-start-date" placeholder="startDate">
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="recurrent-event-start-time" type="text" class="time form-control timepicker" size="6"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recurrent-event-end-date">End date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="date" class="form-control" id="recurrent-event-end-date" placeholder="endDate">
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="recurrent-event-end-time" type="text" class="time form-control timepicker" size="6"/>
+                            </div>
+                        </div>
+
+                        <br><br>
                         <table class="table">
                             <thead>Check required days</thead>
                             <tbody>
@@ -222,6 +251,16 @@
                             </tr>
                             </tbody>
                         </table>
+
+                        <div class="form-group">
+                            <label for="recurrent-event-description">Description</label>
+                            <textarea type="text" class="form-control" id="recurrent-event-description"
+                                      placeholder="description"></textarea>
+                        </div>
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-success" id="recurrent-event-create">Create</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
