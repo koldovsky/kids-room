@@ -198,7 +198,6 @@
 
     </c:forEach>
 
-
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">

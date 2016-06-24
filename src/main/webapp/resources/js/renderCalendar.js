@@ -81,6 +81,7 @@ $(function () {
 
         $('#calendar').fullCalendar('renderEvent', ev, true);
         $('#calendar').fullCalendar('unselect');
+
         $.ajax({
             type: 'post',
             contentType: 'application/json',
@@ -112,13 +113,33 @@ $(function () {
 
     $('#recurrent').click(function () {
         $('#dialog-recurrently').dialog('open');
+
         $('#recurrent-event-start-date').val($('#title').val());
         $('#recurrent-event-end-date').val($('#endDate').val());
     });
 
     $('#recurrent-event-create').click(function () {
         var startDate = $('#recurrent-event-start-date').val();
-        alert(startDate);
+        var endDate = $('#recurrent-event-end-date').val();
+
+        startDate += "T00:00:00";
+        endDate += "T00:00:00";
+
+        startDate = makeISOTime(startDate, 'recurrent-event-start-time');
+        endDate = makeISOTime(endDate, 'recurrent-event-end-time');
+
+        var recurrentEvents = {
+            name: $('#recurrent-event-title').val(),
+            startTime: startDate,
+            endTime: endDate,
+            roomId: localStorage["roomId"],
+            description: $('#recurrent-event-description').val()
+        };
+
+        $('#dialog-recurrently').dialog('close');
+        $('#dialog').dialog('close');
+
+        sendRecurrentEventsForCreate(recurrentEvents);
     });
 });
 
@@ -240,6 +261,13 @@ function renderCalendarForManager(objects, roomID) {
 
             $('#dialog').dialog('open');
 
+            /**
+             * This if statement provide that click on day
+             * will have start date and end date the same
+             */
+            if(start.format().length < 11) {
+                end = end.add(-1, 'day');
+            }
 
             creatingEvent.start = start;
             creatingEvent.end = end;
@@ -305,4 +333,17 @@ function makeUTCTime(time, date) {
     time.setMinutes(date.getUTCMinutes());
     time.setSeconds(date.getUTCSeconds());
     return time;
+}
+
+function sendRecurrentEventsForCreate(recurrentEvents) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'getrecurrentevents',
+        dataType: 'json',
+        data: JSON.stringify(recurrentEvents),
+        success: function (result) {
+
+        }
+    });
 }

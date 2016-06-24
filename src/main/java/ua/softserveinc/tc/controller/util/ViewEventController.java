@@ -19,6 +19,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by dima- on 07.05.2016.
@@ -81,4 +82,13 @@ public class ViewEventController {
     public void getEventForDelete(@RequestBody EventDto eventDto) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDto));
     }
+
+    @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public String gerRecurrent(@RequestBody EventDto eventDto) {
+        System.out.println(eventDto.getName() + " " + eventDto.getStartTime() + " " + eventDto.getEndTime() + " " + eventDto.getDescription() + " " + eventDto.getRoomId());
+        return "ЗБС";
+    }
+
+
 }
