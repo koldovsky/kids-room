@@ -48,8 +48,8 @@
         <appender-ref ref="PROJECT_FILE" />
     </logger>
 
-    <logger name="debug">
+    <root level="DEBUG">
         <appender-ref ref="DEBUG_FILE" />
-    </logger>
+    </root>
 
 </configuration>
