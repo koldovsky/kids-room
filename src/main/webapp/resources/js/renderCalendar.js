@@ -112,7 +112,14 @@ $(function () {
 
     $('#recurrent').click(function () {
         $('#dialog-recurrently').dialog('open');
-    })
+        $('#recurrent-event-start-date').val($('#title').val());
+        $('#recurrent-event-end-date').val($('#endDate').val());
+    });
+
+    $('#recurrent-event-create').click(function () {
+        var startDate = $('#recurrent-event-start-date').val();
+        alert(startDate);
+    });
 });
 
 function selectRoomForManager(id) {
@@ -292,7 +299,6 @@ function sendToServerForDelete(event) {
         })
     });
 }
-
 
 function makeUTCTime(time, date) {
     time.setHours(date.getUTCHours());
