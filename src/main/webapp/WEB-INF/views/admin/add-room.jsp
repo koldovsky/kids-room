@@ -101,11 +101,11 @@
                           <spring:message code="administrator.room.rate"/></label>
                        <fieldset  data-ng-repeat="rate in rates">
                           <label class="for-field1">
-                             <input type="text" ng-model="rate.hourRate" hourRate="" class="form-control"
+                             <input type="number" ng-model="rate.hourRate" hourRate="" class="form-control"
                                     placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
                           </label>
                           <label class="for-field2">
-                             <input type="text" ng-model="rate.priceRate" priceRate="" class="form-control"
+                             <input type="number" ng-model="rate.priceRate" priceRate="" class="form-control"
                                     placeholder=<spring:message code="administrator.room.rate.priceRate" /> />
                           </label>
                        </fieldset>

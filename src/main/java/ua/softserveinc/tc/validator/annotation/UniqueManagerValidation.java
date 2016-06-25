@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = UniqueManagerValidationImpl.class)
 public @interface UniqueManagerValidation {
 
-    String message() default "There is duplicates of managers entered";
+    String message() default "Invalid value entered.";
 
     Class<?>[] groups() default {};
 

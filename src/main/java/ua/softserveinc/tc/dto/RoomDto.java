@@ -52,10 +52,10 @@ public class RoomDto {
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     private String workingHoursEnd;
 
-    @UniqueManagerValidation(message = "Need unique values. Managers value must be unique")
+    @UniqueManagerValidation(message = "All managers data must be unique.")
     private String managers;
 
-    @RateValidation(message = "Hours must be unique. Hour must have value not more than '24' or less than '1'")
+    @RateValidation
     private String rate;
 
     private List<String> namesOfManagers;
