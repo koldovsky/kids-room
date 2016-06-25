@@ -24,10 +24,6 @@ public class RateValidationImpl implements ConstraintValidator<RateValidation, S
 
     }
 
-    public String message(){
-        return "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-    }
-
 
     /**
      * Method checks for compliance requirements of input rate value.
