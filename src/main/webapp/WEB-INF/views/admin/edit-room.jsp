@@ -10,24 +10,24 @@
 
 <body>
   <div class="for-table table-responsive">
-      <table class="for-table table table-hover reg-form">
+      <table class="for-table table table-hover reg-form" style="width: 85%;">
          <tr class="hide-border">
             <th colspan="10" class="set-standard-color">
-               <legend class="for-table"><strong><spring:message code="administrator.listRooms"/></strong></legend>
+               <strong class="title-font"><spring:message code="administrator.listRooms"/></strong>
             </th>
          </tr>
-         <tr></tr>
+
          <tr>
-            <th><strong><spring:message code="administrator.room.name"/></strong></th>
-            <th><strong><spring:message code="administrator.room.address"/></strong></th>
-            <th><strong><spring:message code="administrator.room.city"/></strong></th>
-            <th><strong><spring:message code="administrator.phoneNumber"/></strong></th>
-            <th><strong><spring:message code="administrator.room.capacity"/></strong></th>
-            <th><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
-            <th><strong><spring:message code="administrator.room.manager"/></strong></th>
-            <th><strong><spring:message code="administrator.room.rate"/></strong></th>
-            <th><strong><spring:message code="administrator.edit"/></strong></th>
-            <th><strong><spring:message code="administrator.block"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.name"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.address"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.city"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.phoneNumber"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.capacity"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.manager"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.room.rate"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.edit"/></strong></th>
+            <th style="width: 10%;"><strong><spring:message code="administrator.block"/></strong></th>
          </tr>
 
          <c:forEach var="room" items="${roomList}">
@@ -39,22 +39,20 @@
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
             <td>
-                <table class="block-link hide-border">
-                    <tr><td class="hide-border">Start:</td></tr>
-                    <tr><td>${room.workingHoursStart}</td></tr>
-                    <tr><td>End:</td></tr>
-                    <tr><td class="hide-border">${room.workingHoursEnd}</td></tr>
+                <table class="hide-border">
+                    <tr><td><spring:message code="administrator.room.startTime"/> ${room.workingHoursStart}</td></tr>
+                    <tr><td><spring:message code="administrator.room.endTime"/> ${room.workingHoursEnd}</td></tr>
                 </table>
              </td>
             <td>
-               <table class="block-link hide-border">
+               <table class="hide-border">
                   <c:forEach var="manager" items="${room.managers}">
                      <tr><td >${manager.firstName} ${manager.lastName}</td></tr>
                   </c:forEach>
                </table>
             </td>
             <td>
-                <table class="block-link hide-border">
+                <table class="hide-border">
                     <tr>
                         <td><spring:message code="administrator.room.rate.hourRate"/></td>
                         <td><spring:message code="administrator.room.rate.priceRate"/></td>
@@ -90,13 +88,12 @@
          </tr>
          </c:forEach>
 
-         <tr></tr>
          <tr>
             <th colspan="10" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value=<spring:message code="administrator.add"/>
                                         class="button-add button"/></a>
             </th>
          </tr>
-       </table>
-    </div>
+      </table>
+  </div>
 </body>
