@@ -38,12 +38,13 @@
         <!-- VERSION -->
 
         <java-version>1.8</java-version>
-        <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
-        <org.springframework.data-version>1.10.1.RELEASE</org.springframework.data-version>
-        <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
+        <org.springframework-version>4.3.0.RELEASE</org.springframework-version>
+        <org.springframework.data-version>1.10.2.RELEASE</org.springframework.data-version>
+        <org.springframework.spring-tx-version>4.3.0.RELEASE</org.springframework.spring-tx-version>
         <org.springframework.spring-test-version>4.3.0.RELEASE</org.springframework.spring-test-version>
 
-        <org.hibernate-version>5.1.0.Final</org.hibernate-version>
+        <org.hibernate-version>5.2.0.Final</org.hibernate-version>
+        <org.hibernate.hibernate-entitymanager-version>5.1.0.Final</org.hibernate.hibernate-entitymanager-version>
         <org.hibernate.hibernate-validator-version>5.2.4.Final</org.hibernate.hibernate-validator-version>
         <org.hibernate.hibernate-search-orm>5.5.3.Final</org.hibernate.hibernate-search-orm>
 
@@ -54,7 +55,7 @@
         <javax.jstl-version>1.2</javax.jstl-version>
         <javax.servlet-api-version>3.1.0</javax.servlet-api-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
-        <org.spring.securiry-version>4.0.4.RELEASE</org.spring.securiry-version>
+        <org.spring.securiry-version>4.1.0.RELEASE</org.spring.securiry-version>
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.1.7</logback.version>
 
@@ -157,7 +158,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${org.hibernate-version}</version>
+            <version>${org.hibernate.hibernate-entitymanager-version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
