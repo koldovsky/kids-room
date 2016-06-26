@@ -13,7 +13,7 @@
        <table class="for-table table table-hover reg-form">
           <tr class="hide-border">
              <th colspan="7" class="set-standard-color">
-                <legend class="for-table"><strong><spring:message code="administrator.listManagers"/></strong></legend>
+                <legend class="for-table"><strong class="title-font"><spring:message code="administrator.listManagers"/></strong></legend>
              </th>
           </tr>
           <tr></tr>
