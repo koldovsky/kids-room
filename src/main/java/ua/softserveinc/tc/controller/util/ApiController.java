@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.controller.util;
 
 import com.google.gson.Gson;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.util.Log;
 
 import java.util.*;
 
@@ -34,6 +37,8 @@ public class ApiController {
 
     @Autowired
     private MessageSource messageSource;
+
+    private static @Log Logger LOG;
 
     @RequestMapping(value = ApiConstants.USER_REST_URL, method = RequestMethod.GET)
     @ResponseBody
@@ -69,6 +74,7 @@ public class ApiController {
         }
 
         Gson gson = new Gson();
+        LOG.info("Get children");
         return gson.toJson(result);
     }
 
