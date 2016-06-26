@@ -14,7 +14,7 @@
         <table class="col-sm-offset-4 col-sm-3 reg-form">
 
            <tr><th>
-               <legend class="for-field"><strong><spring:message code="administrator.addRoom"/></strong></legend>
+               <strong class="title-font"><spring:message code="administrator.addRoom"/></strong>
            </th></tr>
 
            <tr><td>
@@ -99,6 +99,8 @@
                    <div class="form-group sizing-between">
                        <label class="for-field">
                           <spring:message code="administrator.room.rate"/></label>
+                          <label class="for-field1"><spring:message code="administrator.room.rate.hourRate"/></label>
+                          <label class="for-field2"><spring:message code="administrator.room.rate.priceRate" /></label>
                        <fieldset  data-ng-repeat="rate in rates">
                           <label class="for-field1">
                              <input type="number" ng-model="rate.hourRate" hourRate="" class="form-control"

@@ -14,7 +14,7 @@
 
 
        <tr><th>
-           <legend class="for-field"><strong><spring:message code="administrator.updateRoom"/></strong></legend>
+           <strong class="title-font"><spring:message code="administrator.updateRoom"/></strong>
        </th></tr>
 
        <tr><td>
@@ -100,17 +100,19 @@
                </div>
 
                <div class="form-group sizing-between">
+                  <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
                   <label class="for-field">
                      <spring:message code="administrator.room.rate"/></label>
-                     <label class="for-field1">Hour</label>
-                     <label class="for-field2">Price</label>
+                     <label class="for-field1"><spring:message code="administrator.room.rate.hourRate"/></label>
+                     <label class="for-field2"><spring:message code="administrator.room.rate.priceRate" /></label>
                   <fieldset data-ng-repeat="rate in rates">
                      <label class="for-field1">
-                        <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control"
+                        <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control" ng-minlength="{ number }"
+                                                                                                                        ng-maxlength="{ number }" required
                                placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
                      </label>
                      <label class="for-field2">
-                        <input id="myText" type="text" ng-model="rate.priceRate" priceRate="" class="form-control"
+                        <input id="myText" type="text" ng-model="rate.priceRate" priceRate="" class="form-control"  ng-minlength="{ number }" ng-maxlength="{ number }" required
                                placeholder=<spring:message code="administrator.room.rate.priceRate"/> />
                      </label>
                   </fieldset>
@@ -128,6 +130,7 @@
                </div>
 
                <script src="resources/js/room-dynamic-managers-rates.js"></script>
+           </form>
            </div>
 
        </form:form>
