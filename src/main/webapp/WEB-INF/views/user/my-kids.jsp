@@ -39,6 +39,7 @@
 
 
 <form action="registerkid">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <button class="btn btn-raised btn-success waves-effect waves-light" type="submit">
         <spring:message code="button.add" />
     </button>

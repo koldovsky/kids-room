@@ -17,6 +17,7 @@ public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
     private static DateFormat isoDateFormat = new SimpleDateFormat(DateConstants.DATE_FORMAT);
+    private static DateFormat simpleTimeFormat = new SimpleDateFormat(DateConstants.TIME_FORMAT);
 
     @Log
     private static Logger log;
@@ -24,6 +25,8 @@ public final class DateUtil {
     private DateUtil() {
         // Suppresses default constructor, ensuring non-instantiability.
     }
+
+    //TODO: remove "return null" from all the methods
 
     public static Date toDate(String date) {
         try {

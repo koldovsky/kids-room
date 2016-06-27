@@ -63,6 +63,7 @@
             <div align="center">
                 <div id="bookingDialog" hidden>
                     <form id="bookingForm">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
 
                             <label for="bookingStartDate">Start date</label>
@@ -139,6 +140,7 @@
             <div align="center">
                 <div id="bookingUpdatingDialog" hidden>
                     <form id="bookingUpdatingForm">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="bookingUpdatingStartDate">Start date</label>
                             <br>
@@ -272,6 +274,7 @@
             <div align="center">
                 <div id="dialog" class="dialog" hidden>
                     <form id="form">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
 
                             <div class="text-center">
@@ -328,6 +331,7 @@
             <div align="center">
                 <div id="updating" class="dialog" hidden>
                     <form id="updatingForm">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="titleUpdate">Event title</label>
                             <input type="text" class="form-control" id="titleUpdate" placeholder="title">

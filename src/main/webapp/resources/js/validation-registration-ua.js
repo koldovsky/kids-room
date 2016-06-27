@@ -5,7 +5,7 @@ $(document).ready(function() {
        }, "Please enter email with softserveinc.com domain.");
        $.validator.addMethod("regexPhone", function(value, element, regexpr) {
           return regexpr.test(value);
-       }, "Please enter valid phone number. Example 098");
+       }, "Please enter valid phone number. Example 0981234567");
     $('#userform').validate({
             rules:{
 
@@ -34,23 +34,25 @@ $(document).ready(function() {
                 }
             }, messages: {
                 firstName: {
-                    required: "This field cannot be empty. Please enter your name"
+                    required: "Введіть, будь ласка, своє ім'я"
                 },
                 lastName: {
-                    required: "This field cannot be empty. Please enter your last name"
+                    required: "Введіть, будь ласка, своє прізвище"
                 },
                 email: {
-                    required: "This field cannot be empty. Please enter your email"
+                    required: "Введіть, будь ласка, свій емейл",
+                    regex: "Введіть емейл з softserveinc.com домейном"
                 },
                 phoneNumber:{
-                    required: "This field cannot be empty. Please enter your phone number"
+                    required: "Введіть, будь ласка, свій номер телефону",
+                    regexPhone: "Ви ввели невірний номер. Приклад: 0981234567"
                 },
                 password:{
-                    required: "This field cannot be empty. Please enter your password"
+                    required: "Введіть, будь ласка, пароль"
                 },
                 confirm:{
-                    required: "This field cannot be empty. Please enter your password",
-                    equalTo: "This password does not match the password in ‘Password’ field. Please enter the same password"
+                    required: "Введіть, будь ласка, пароль",
+                    equalTo: "Паролі не співпадають"
                 }
             }
 
