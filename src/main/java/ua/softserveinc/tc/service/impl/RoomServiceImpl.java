@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.PeriodDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -12,6 +13,7 @@ import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
 import javax.persistence.EntityManager;
@@ -55,26 +57,28 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
+    public List<PeriodDto> getBlockedPeriods(Room room, Calendar start, Calendar end) {
         if (start.equals(end)) {
             return getBlockedPeriodsForDay(room, start);
         }
 
-        Map<String, String> blockedPeriods = new HashMap<>();
+        List<PeriodDto> result = new ArrayList<>();
         while (start.compareTo(end) <= 0) {
-            blockedPeriods.putAll(getBlockedPeriodsForDay(room, start));
+            result.addAll(getBlockedPeriodsForDay(room, start));
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        return blockedPeriods;
+        return result;
     }
 
 
-    private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
+    private List<PeriodDto> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(calendarStart.getTime());
+
+        List<PeriodDto> result = new ArrayList<>();
 
         try {
             Calendar temp = Calendar.getInstance();
@@ -87,30 +91,29 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
         } catch (ParseException pe) {
             log.error("Could not parse date", pe);
-            return null;
+            return result;
         }
 
         Calendar temp = Calendar.getInstance();
-        Map<Date, Date> periods = new HashMap<>();
 
+        int minPeriod = appConfigurator.getMinPeriodSize();
         while (calendarStart.compareTo(calendarEnd) <= 0) {
-            temp.setTime(calendarStart.getTime());
-            temp.add(Calendar.MINUTE, appConfigurator.getMinPeriodSize());
-            periods.put(calendarStart.getTime(), temp.getTime());
-            calendarStart = temp;
+            temp.add(Calendar.MINUTE, minPeriod);
+
+            Date lo = calendarStart.getTime();
+            Date hi = temp.getTime();
+
+            if(isPeriodAvailable(lo, hi, room)) {
+                result.add(new PeriodDto(
+                        convertDateToString(lo),
+                        convertDateToString(hi)
+                ));
+            }
+            calendarStart.setTime(temp.getTime());
         }
 
-        Map<String, String> blockedPeriods = new HashMap<>();
-        periods.forEach((startDate, endDate) -> {
-            if (!isPeriodAvailable(startDate, endDate, room)) {
-                blockedPeriods.put(
-                        convertDateToString(startDate),
-                        convertDateToString(endDate)
-                );
-            }
-        });
 
-        return blockedPeriods;
+        return result;
     }
 
     @Override
