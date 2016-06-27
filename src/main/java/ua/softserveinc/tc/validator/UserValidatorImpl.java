@@ -86,7 +86,7 @@ public class UserValidatorImpl implements UserValidator {
         }
     }
 
-    public void validateIfEmailExist(Object o, Errors errors){
+    public void validateIfEmailExist(Object o, Errors errors) {
         User user = (User) o;
 
         if (userService.getUserByEmail(user.getEmail()) != null) {
@@ -94,4 +94,15 @@ public class UserValidatorImpl implements UserValidator {
         }
     }
 
+    public void validateManagerEmail(Object target, Errors errors) {
+        User manager = (User) target;
+
+        if (this.userService.getUserByEmail(manager.getEmail()) != null) {
+            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
+        }
+        if (!Pattern.compile(ValidationConstants.SIMPLE_EMAIL_REGEX)
+                .matcher(manager.getEmail()).matches()) {
+            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_NOT_VALID);
+        }
+    }
 }

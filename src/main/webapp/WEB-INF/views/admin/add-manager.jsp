@@ -13,7 +13,7 @@
    <div class="for-table">
        <table class="col-sm-offset-4 col-sm-3 reg-form">
            <tr><th>
-               <legend class="for-field"><strong><spring:message code="administrator.addManager"/></strong></legend>
+               <strong class="title-font"><spring:message code="administrator.addManager"/></strong>
            </th></tr>
 
            <tr><td>
