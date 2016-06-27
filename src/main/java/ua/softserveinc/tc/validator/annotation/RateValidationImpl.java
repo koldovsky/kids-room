@@ -35,7 +35,6 @@ public class RateValidationImpl implements ConstraintValidator<RateValidation, S
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         List<Rate> rates = JsonUtil.fromJsonList(value, Rate[].class);
-        System.out.println(rates);
 
         if (rates.stream().filter(rate -> (rate.getHourRate() == null || rate.getHourRate() == null))
                 .findFirst().isPresent()) {

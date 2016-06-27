@@ -97,12 +97,12 @@ public class UserValidatorImpl implements UserValidator {
     public void validateManagerEmail(Object target, Errors errors) {
         User manager = (User) target;
 
-        if (this.userService.getUserByEmail(manager.getEmail()) != null) {
-            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
-        }
         if (!Pattern.compile(ValidationConstants.SIMPLE_EMAIL_REGEX)
                 .matcher(manager.getEmail()).matches()) {
             errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_NOT_VALID);
+        }
+        if (this.userService.getUserByEmail(manager.getEmail()) != null) {
+            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
         }
     }
 }
