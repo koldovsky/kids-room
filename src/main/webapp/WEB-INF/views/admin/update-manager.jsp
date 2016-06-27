@@ -13,7 +13,7 @@
     <table class="col-sm-offset-4 col-sm-3 reg-form">
 
         <tr><th>
-            <legend class="for-field"><strong><spring:message code="administrator.updateManager"/></strong></legend>
+            <strong class="title-font"><spring:message code="administrator.updateManager"/></strong>
         </th></tr>
 
         <tr><td>
@@ -28,7 +28,7 @@
             <div class="form-group sizing-between">
                <label for="email" class="required">
                   <spring:message code="administrator.manager.email"/></label>
-                  <form:input path="email" value="${manager.email}" class="form-control" />
+                  <form:input path="email" value="${manager.email}" class="form-control" readonly="true"/>
                   <form:errors path="email" cssClass="error"/>
             </div>
 

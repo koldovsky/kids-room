@@ -1,17 +1,35 @@
 
+* {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 17px;
+}
+
+strong.title-font {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 22px;
+    color: black;
+}
+
+table{
+    width: 90%;
+}
+
 table, th, td {
+    padding: 0px;
+    margin: 0px;
     text-align: center;
     border: 2px solid #ddd;
     border-collapse: collapse;
     padding: 2px;
 }
 
-td{
-    width: auto;
+td {
     border-collapse: collapse;
 }
 
-tr{
+tr {
+    padding: 0px;
+    margin: 0px;
     border-collapse: collapse;
     border: 2px solid #ddd;
 }
@@ -19,52 +37,57 @@ tr{
 th {
     border: 2px solid #ddd;
     height: 50px;
+    width: auto;
     background-color: #4d94ff;
     color: white;
 }
 
-.reg-form{
+th.for-button{
+    width: 10%;
+}
+
+.reg-form {
     min-width: 400px;
     padding: 30px;
     background-color: white;
     box-shadow: 3px 3px 10px grey;
-    margin-top:15px;
+    margin-top: 15px;
     margin-bottom: 20px;
 }
 
-.for-table{
+.for-table {
     block:fixed;
     margin: auto;
-	width: 90%;
+	width: auto;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 
-.for-table-fields{
+.for-table-fields {
     margin: auto;
 	padding-top: 10px;
 	padding-bottom: 15px;
 }
 
-.hide-border{
+.hide-border {
     border: hidden;
 }
 
-.for-field{
+.for-field {
     height: 30px;
     width: 350px;
     margin: auto;
     margin-bottom: 15px;
 }
 
-.for-field1{
+.for-field1 {
     height: 30px;
     width: 150px;
     margin: auto;
     margin-bottom: 15px;
 }
 
-.for-field2{
+.for-field2 {
     height: 30px;
     width: 150px;
     margin: auto;
@@ -75,27 +98,20 @@ th {
     background-color: rgb(204, 204, 255);
 }
 
-.tr-not-active{
+.tr-not-active {
     background-color: rgb(255, 214, 153);
 }
 
-.set-standard-color{
+.set-standard-color {
     background-color: rgb(238, 238, 238);
 }
 
-.block-link{
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-}
-
-.img-size{
+.img-size {
     width: 30px;
     height: 30px;
 }
 
-.sizing-between{
+.sizing-between {
     margin: 0px;
     margin-bottom: 35px;
 }

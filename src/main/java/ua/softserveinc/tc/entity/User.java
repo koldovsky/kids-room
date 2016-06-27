@@ -77,7 +77,7 @@ public class User implements Serializable {
     private boolean active;
 
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.PHONE_NUMBER_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
+    @Pattern(regexp = ValidationConstants.SIMPLY_PHONE_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     @Column(name = UserConstants.Entity.PHONE)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
