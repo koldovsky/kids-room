@@ -23,7 +23,8 @@
 
 <sec:authorize access="hasRole('USER')">
          <form method="POST" modelAttribute="fileForm" action="uploadImage/${kid.id}" enctype="multipart/form-data">
-                 <label class="btn btn-raised btn-success glyphicon glyphicon-folder-open">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <label class="btn btn-raised btn-success glyphicon glyphicon-folder-open">
                      &nbsp;<spring:message code="user.selectPhoto" />  <input path="file" type="file" accept=".jpg, .png"
                      id="file-upload" name="file" style="display: none;">
 

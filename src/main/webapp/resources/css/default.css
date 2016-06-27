@@ -138,7 +138,20 @@ select {
     font-size:18px;
 }
 
+
 #login-form .glyphicon{
     color: rgb(160,160,160);
 }
+
+#logout{
+     background:none!important;
+     border:none;
+     cursor: pointer;
+}
+
+#command{
+     max-height: 0;
+}
+
+
 

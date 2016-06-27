@@ -13,6 +13,7 @@
 <div class="container">
              <div id="choose-time-inp">
                  <form action="", method="POST">
+                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input id="date-booking" class ="form-control" type = "date"/>
                   </form>
              </div>
@@ -75,6 +76,7 @@
             <div align="center">
                 <div id="bookingUpdatingDialog" hidden>
                     <form id="bookingUpdatingForm">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <div class="input-group">
                                  <label><spring:message code="booking.createDate"/></label>
@@ -106,6 +108,7 @@
             <div align="center">
                 <div id="bookingDialog" hidden>
                     <form id="bookings">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="selectUser">Choose parent</label>
                              <select id="selectUser" name="select" onchange="selectUser();" class="form-control">

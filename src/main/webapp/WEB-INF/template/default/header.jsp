@@ -117,10 +117,12 @@
                             </sec:authorize>
 
                                 <li>
-                                <a href="logout">
-                                <span class="glyphicon glyphicon-log-out"></span>
-                                <spring:message code="user.logout" />
-                                </a>
+                                    <a>
+                                    <form:form  action="logout" method="post">
+                                        <button id="logout" action="submit" type="submit"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></button>
+                                    </form:form>
+                                    </a>
+
                                 </li>
 
                         </sec:authorize>

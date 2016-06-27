@@ -31,6 +31,7 @@
                             </div>
                         </td>
 					<form action="" method="POST">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<td>
 							<div class="input-group">
 								<input type="time" id="arrivalTime" class="form-control"/>
@@ -44,6 +45,7 @@
 						</td>
 					</form>
 					<form action="" method="POST">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div>
 							<td>
 								<div class="input-group">
