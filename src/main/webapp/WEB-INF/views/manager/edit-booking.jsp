@@ -1,24 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
-<link rel="stylesheet" href="http://jqueryvalidation.org/files/demo/site-demos.css">
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 
-
 <div class="container">
-             <div id="choose-time-inp">
+ <div id="choose-time-inp">
                  <form action="", method="POST">
                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input id="date-booking" class ="form-control" type = "date"/>
                   </form>
              </div>
             <div id="create-booking-btn">
-                 <button class="btn btn-primary" onclick="createBooking()">
+                 <button class="btn btn-primary" onclick="createBookingss()">
                     New booking
                  </button>
             </div>
@@ -30,23 +32,23 @@
                       <button class="btn btn-raised" onclick="leavedBooking()">Left</button>
                 </nav>
             </div>
+    <table id="example" class ="table-edit">
+            <thead><tr>
 
-    <div class = "tableDiv" hidden>
-        <table class="table-edit">
-                <div id ="body-booking">
-                    <thead>
-                        <th class="col-xs-1"> № </th>
-                        <th class="col-xs-3"><spring:message code= "booking.childrens"/></th>
-                        <th class="col-xs-2"><spring:message code= "booking.time"/></th>
-                        <th class="col-xs-2"><spring:message code= "booking.arrival"/></th>
-                        <th class="col-xs-2"><spring:message code= "booking.leave"/></th>
-                    </thead>
-                </div>
-        </table>
-    </div>
+                    <th class="col-xs-1">#</th>
+                    <th><spring:message code= "booking.childrens"/></th>
+                    <th><spring:message code= "booking.time"/></th>
+                    <th><spring:message code= "booking.arrival"/></th>
+                    <th><spring:message code= "booking.leave"/></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+    </table>
+    <br>
 </div>
-
-    <div id="cancelModal" class="modal fade">
+<br>
+ <div id="cancelModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content" >
                 <div class="modal-header">
@@ -232,8 +234,5 @@
         		</div>
         </div>
 
-<script src="resources/js/edit-booking.js"></script>
+<script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script src="resources/js/validator.js"></script>
