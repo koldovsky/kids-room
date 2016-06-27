@@ -15,13 +15,13 @@
 <div class="container">
  <div id="choose-time-inp">
                  <form action="", method="POST">
-                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                 <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"/>
                     <input id="date-booking" class ="form-control" type = "date"/>
                   </form>
              </div>
             <div id="create-booking-btn">
                  <button class="btn btn-primary" onclick="createBookingss()">
-                    New booking
+                    Add a kid
                  </button>
             </div>
             <div id="nav-group">
