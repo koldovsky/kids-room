@@ -185,7 +185,7 @@
                     <div class="modal-content" >
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <p>Please try select another time, because in the room does not have enough free places!</p>
+                            <p>We regret to inform you that there are no available places left in the room.</p>
                         </div>
                         <div class="modal-body">
                             <button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
