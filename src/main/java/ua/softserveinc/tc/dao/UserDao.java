@@ -12,4 +12,6 @@ public interface UserDao extends BaseDao<User> {
     List<User> findAllUsersByRole(Role role) ;
 
     User getUserByEmail(String email);
+
+    List<User> findAll(List<Long> ids);
 }

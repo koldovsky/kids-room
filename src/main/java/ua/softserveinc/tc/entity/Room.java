@@ -57,12 +57,6 @@ public class Room {
         //empty constructor for instantiating in controller
     }
 
-    @PrePersist
-    @PreUpdate
-    private void preSave(){
-        this.rates.stream().forEach(r -> r.setRoom(this));
-    }
-
     public boolean isActive() {
         return active;
     }

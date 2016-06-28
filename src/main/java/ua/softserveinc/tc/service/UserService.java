@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService extends BaseService<User> {
 
-    List<User> findAll(Iterable<Long> ids);
+    List<User> findAll(List<Long> ids);
 
     void deleteUserById(Long id);
 

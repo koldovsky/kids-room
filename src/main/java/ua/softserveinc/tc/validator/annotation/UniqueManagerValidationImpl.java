@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Class validator for validation of input managers of room.
- *
+ * <p>
  * Created by TARAS on 17.06.2016.
  */
 @Component
@@ -35,6 +35,10 @@ public class UniqueManagerValidationImpl implements ConstraintValidator<UniqueMa
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         List<UserDto> managers = JsonUtil.fromJsonList(value, UserDto[].class);
+
+        if (managers.stream().filter(manager -> (manager.getId() == null)).findFirst().isPresent()) {
+            return false;
+        }
         Map<Long, Long> map = managers.stream().collect(Collectors.groupingBy(UserDto::getId, Collectors.counting()));
         return !map.values().stream().filter(en -> en > 1).findFirst().isPresent();
     }

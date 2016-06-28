@@ -53,8 +53,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public List<User> findAll(Iterable<Long> ids) {
-        return userRepository.findAll(ids);
+    public List<User> findAll(List<Long> ids) {
+        return userDao.findAll(ids);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class RoomDto {
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     private String workingHoursEnd;
 
-    @UniqueManagerValidation(message = "All managers data must be unique.")
+    @UniqueManagerValidation
     private String managers;
 
     @RateValidation
@@ -98,7 +98,6 @@ public class RoomDto {
                 .collect(Collectors.toList());
     }
 
-
     public static Room getRoomObjectFromDtoValues(RoomDto roomDto) {
         Room resultRoom = new Room();
         resultRoom.setId(roomDto.id);
@@ -111,6 +110,7 @@ public class RoomDto {
         resultRoom.setWorkingHoursEnd(roomDto.workingHoursEnd);
         resultRoom.setActive(roomDto.active);
         resultRoom.setRates(JsonUtil.fromJsonList(roomDto.getRate(), Rate[].class));
+        resultRoom.getRates().stream().forEach(r -> r.setRoom(resultRoom));
         return resultRoom;
     }
 

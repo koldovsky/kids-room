@@ -8,22 +8,11 @@ import ua.softserveinc.tc.entity.Room;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public interface RoomService extends BaseService<Room> {
 
-    @Override
-    default Room update(Room entity) {
-        return saveOrUpdate(entity);
-    }
-
-    @Override
-    default void create(Room entity) {
-        saveOrUpdate(entity);
-    }
-
-    Room saveOrUpdate(Room room);
+    void saveOrUpdate(Room room);
 
     List<PeriodDto> getBlockedPeriods(Room room, Calendar start, Calendar end);
 

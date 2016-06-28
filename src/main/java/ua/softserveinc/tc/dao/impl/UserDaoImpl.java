@@ -8,10 +8,8 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.Log;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -33,7 +31,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public void deleteUserById(Long id){
+    public void deleteUserById(Long id) {
         entityManager.createQuery("DELETE FROM User where id = " + id).executeUpdate();
     }
 
@@ -46,5 +44,17 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
             log.error("no exist", e);
             return null;
         }
+    }
+
+    @Override
+    public List<User> findAll(List<Long> ids) {
+        List<User> result = new ArrayList<>();
+
+        for (Long elem : ids) {
+            Query query = getEntityManager().createQuery("FROM User WHERE id = :id");
+            query.setParameter("id", elem);
+            result.add((User) query.getSingleResult());
+        }
+        return result;
     }
 }

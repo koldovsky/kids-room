@@ -10,7 +10,7 @@
 
 
 <div class="for-table">
-    <table class="for-table-fields">
+    <table class="col-sm-offset-4 col-sm-3 reg-form"">
     <form:form modelAttribute="<%=AdminConstants.ATR_MANAGER%>" action="confirm-manager" method="post">
 
         <tr><th>
@@ -19,12 +19,6 @@
         </th></tr>
 
         <form:hidden path="id"/>
-        <form:hidden path="email" value="${manager.email}"/>
-        <form:hidden path="firstName" value="${manager.firstName}"/>
-        <form:hidden path="lastName" value="${manager.lastName}"/>
-        <form:hidden path="phoneNumber" value="${manager.phoneNumber}"/>
-        <form:hidden path="role" value="${manager.role}"/>
-        <form:hidden path="active" value="${manager.active}"/>
 
         <tr><td>
             <div class="form-group">
@@ -41,8 +35,6 @@
                 <form:errors path="confirm" cssClass="error" />
             </div>
         </td></tr>
-
-        <tr></tr>
         <tr><td class="hide-border">
             <div class="form-group">
                 <button type="submit" class="button button-confirm">OK</button>

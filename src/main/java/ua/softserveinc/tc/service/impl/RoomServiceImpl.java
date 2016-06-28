@@ -9,11 +9,9 @@ import ua.softserveinc.tc.dto.PeriodDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
-import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
 import javax.persistence.EntityManager;
@@ -23,7 +21,10 @@ import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -32,13 +33,10 @@ import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
 
     @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
     private ApplicationConfigurator appConfigurator;
 
     @Autowired
-    RoomDao roomDao;
+    private RoomDao roomDao;
 
     @Autowired
     private BookingService bookingService;
@@ -46,14 +44,15 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private static @Log
     Logger log;
 
+
     @Override
     public List<Room> findAll() {
-        return roomRepository.findAll();
+        return roomDao.findAll();
     }
 
     @Override
-    public Room saveOrUpdate(Room room) {
-        return roomRepository.save(room);
+    public void saveOrUpdate(Room room){
+        roomDao.saveOrUpdate(room);
     }
 
     @Override
