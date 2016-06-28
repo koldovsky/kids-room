@@ -2,8 +2,6 @@ package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
-import ua.softserveinc.tc.dto.RoomDto;
-import ua.softserveinc.tc.util.JsonUtil;
 
 import javax.persistence.*;
 import java.util.List;
@@ -57,19 +55,6 @@ public class Room {
 
     public Room() {
         //empty constructor for instantiating in controller
-    }
-
-    public Room(RoomDto roomDto) {
-        this.id = roomDto.getId();
-        this.name = roomDto.getName();
-        this.address = roomDto.getAddress();
-        this.city = roomDto.getCity();
-        this.phoneNumber = roomDto.getPhoneNumber();
-        this.capacity = roomDto.getCapacity();
-        this.workingHoursStart = roomDto.getWorkingHoursStart();
-        this.workingHoursEnd = roomDto.getWorkingHoursEnd();
-        this.active = roomDto.isActive();
-        this.rates = JsonUtil.fromJsonList(roomDto.getRate(), Rate[].class);
     }
 
     @PrePersist

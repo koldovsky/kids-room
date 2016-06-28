@@ -73,7 +73,7 @@ public class AddRoomController {
         List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
                 .map(UserDto::getId).collect(Collectors.toList());
         List<User> managers = this.userService.findAll(idManagers);
-        Room room = new Room(roomDto);
+        Room room = RoomDto.getRoomObjectFromDtoValues(roomDto);
         room.setManagers(managers);
         room.setActive(true);
 
