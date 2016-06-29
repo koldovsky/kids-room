@@ -84,9 +84,9 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
     @Override
     public void acceptConfiguration(ConfigurationDto cDto) throws IOException {
-        /*if(this.getObjectDto().equals(cDto)) {
+        if(this.getObjectDto().equals(cDto)) {
             return;
-        }*/
+        }
 
         Properties properties = new Properties();
 
