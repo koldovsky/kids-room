@@ -49,6 +49,10 @@ public class ConfigValidator implements Validator {
                 ValidationConstants.ConfigFields.SERVER_NAME, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.MAX_UPLOAD_IMG_SIZE, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.REMINDER_HOUR, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.REMINDER_MINUTE, ValidationConstants.EMPTY_FIELD_MSG);
 
         if(dto.getKidsMinAge() != null && dto.getKidsMaxAge() != null){
             if(dto.getKidsMinAge() > dto.getKidsMaxAge()){
@@ -110,6 +114,20 @@ public class ConfigValidator implements Validator {
         if(dto.getMinutesToCleanUpBookings() != null) {
             if (dto.getMinutesToCleanUpBookings() > 59 || dto.getMinutesToCleanUpBookings() < 0) {
                 errors.rejectValue(ValidationConstants.ConfigFields.CLEAN_UP_MINUTE,
+                        ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
+            }
+        }
+
+        if(dto.getHourToSendEmailReminder() != null) {
+            if (dto.getHourToSendEmailReminder() > 23 || dto.getHourToSendEmailReminder() < 0) {
+                errors.rejectValue(ValidationConstants.ConfigFields.REMINDER_HOUR,
+                        ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
+            }
+        }
+
+        if(dto.getMinutesToSendEmailReminder() != null) {
+            if (dto.getMinutesToSendEmailReminder() > 59 || dto.getMinutesToSendEmailReminder() < 0) {
+                errors.rejectValue(ValidationConstants.ConfigFields.REMINDER_MINUTE,
                         ValidationConstants.ConfigFields.NOT_VALID_TIME_MSG);
             }
         }

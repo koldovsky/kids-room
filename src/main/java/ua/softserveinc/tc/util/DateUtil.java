@@ -73,6 +73,12 @@ public final class DateUtil {
         return calendar;
     }
 
+    public static Calendar dateTomorrow(){
+        Calendar result = Calendar.getInstance();
+        result.add(Calendar.DAY_OF_MONTH, 1);
+        return result;
+    }
+
     public static Calendar dateMonthAgo() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, -1);

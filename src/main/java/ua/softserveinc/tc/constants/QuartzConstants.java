@@ -16,6 +16,10 @@ public final class QuartzConstants {
     public static final String SEND_PAYMENT_INFO = "sendPaymentInfo";
     public static final String SEND_PAYMENT_INFO_TRIGGER = "sendPaymentInfoTrigger";
 
+    public static final String SEND_REMINDER = "sendReminder";
+    public static final String SEND_REMINDER_TRIGGER = "sendReminderTrigger";
+
+
     public static final String QUARTZ_PACKAGE = "ua.softserveinc.tc/quartz";
 
     private QuartzConstants() {

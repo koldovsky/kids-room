@@ -56,6 +56,12 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${cleaning.minutes}")
     private Integer minutesToCleanUpBookings;
 
+    @Value("${reminder.hour}")
+    private Integer hoursToSendEmailReminder;
+
+    @Value("${reminder.minutes}")
+    private Integer minutesToSendEmailReminder;
+
     @Value("${booking.minPeriod}")
     private Integer minPeriodSize;
 
@@ -64,6 +70,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
     @Value("${img.maxSize}")
     private Integer maxUploadImgSizeMb;
+
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
@@ -77,9 +84,9 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
     @Override
     public void acceptConfiguration(ConfigurationDto cDto) throws IOException {
-        if(this.getObjectDto().equals(cDto)) {
+        /*if(this.getObjectDto().equals(cDto)) {
             return;
-        }
+        }*/
 
         Properties properties = new Properties();
 
@@ -112,6 +119,12 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
         this.minutesToCleanUpBookings = cDto.getMinutesToCleanUpBookings();
         properties.setProperty("cleaning.minutes", minutesToCleanUpBookings.toString());
+
+        this.hoursToSendEmailReminder = cDto.getHourToSendEmailReminder();
+        properties.setProperty("reminder.hour", hoursToSendEmailReminder.toString());
+
+        this.minutesToSendEmailReminder = cDto.getMinutesToSendEmailReminder();
+        properties.setProperty("reminder.minutes", minutesToSendEmailReminder.toString());
 
         this.minPeriodSize = cDto.getMinPeriodSize();
         properties.setProperty("booking.minPeriod", minPeriodSize.toString());
@@ -192,5 +205,14 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Override
     public Integer getMaxUploadImgSizeMb() {
         return maxUploadImgSizeMb;
+    }
+
+    public Integer getHourToSendEmailReminder() {
+        return hoursToSendEmailReminder;
+    }
+
+    @Override
+    public Integer getMinutesToSendEmailReminder() {
+        return minutesToSendEmailReminder;
     }
 }

@@ -23,6 +23,9 @@ public class ConfigurationDto {
     private Integer hourToCleanUpBookings;
     private Integer minutesToCleanUpBookings;
 
+    private Integer hourToSendEmailReminder;
+    private Integer minutesToSendEmailReminder;
+
     private Integer minPeriodSize;
     private String serverName;
 
@@ -34,18 +37,27 @@ public class ConfigurationDto {
         //empty constructor for instantiating in controller
     }
 
+
     public ConfigurationDto(ApplicationConfigurator appConfig){
         this.kidsMinAge = appConfig.getKidsMinAge();
         this.kidsMaxAge = appConfig.getKidsMaxAge();
+
         this.minutesToCalculateBookingsEveryDay = appConfig.getMinutesToCalculateBookingsEveryDay();
         this.hourToCalculateBookingsEveryDay = appConfig.getHourToCalculateBookingsEveryDay();
+
         this.minutesToSendEmailReport = appConfig.getMinutesToSendEmailReport();
         this.hourToSendEmailReport = appConfig.getHourToSendEmailReport();
         this.dayToSendEmailReport = appConfig.getDayToSendEmailReport();
+
         this.daysToCleanUpBookings = appConfig.getDaysToCleanUpBookings();
         this.hourToCleanUpBookings = appConfig.getHourToCleanUpBookings();
         this.minutesToCleanUpBookings = appConfig.getMinutesToCleanUpBookings();
+
+        this.hourToSendEmailReminder = appConfig.getHourToSendEmailReminder();
+        this.minutesToSendEmailReminder = appConfig.getMinutesToSendEmailReminder();
+
         this.minPeriodSize = appConfig.getMinPeriodSize();
+
         this.serverName = appConfig.getServerName();
         this.maxUploadImgSizeMb = appConfig.getMaxUploadImgSizeMb();
     }
@@ -161,6 +173,22 @@ public class ConfigurationDto {
 
     public void setMaxUploadImgSizeMb(Integer maxUploadImgSizeMb) {
         this.maxUploadImgSizeMb = maxUploadImgSizeMb;
+    }
+
+    public Integer getHourToSendEmailReminder() {
+        return hourToSendEmailReminder;
+    }
+
+    public void setHourToSendEmailReminder(Integer hourToSendEmailReminder) {
+        this.hourToSendEmailReminder = hourToSendEmailReminder;
+    }
+
+    public Integer getMinutesToSendEmailReminder() {
+        return minutesToSendEmailReminder;
+    }
+
+    public void setMinutesToSendEmailReminder(Integer minutesToSendEmailReminder) {
+        this.minutesToSendEmailReminder = minutesToSendEmailReminder;
     }
 
     @Override

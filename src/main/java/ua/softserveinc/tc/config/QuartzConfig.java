@@ -44,6 +44,14 @@ public class QuartzConfig {
     }
 
     @Bean
+    public MethodInvokingJobDetailFactoryBean invokeSendReminder() {
+        MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
+        obj.setTargetBeanName(QuartzConstants.SEND_REMINDER);
+        obj.setTargetMethod(QuartzConstants.TASK);
+        return obj;
+    }
+
+    @Bean
     public CronTriggerFactoryBean calculateSumTrigger() {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
         stFactory.setJobDetail(invokeCalculateSum().getObject());
@@ -51,6 +59,16 @@ public class QuartzConfig {
         stFactory.setCronExpression("0 " + configurator.getMinutesToCalculateBookingsEveryDay() +
                 " " + configurator.getHourToCalculateBookingsEveryDay() + " 1/1 * ? *");
 
+        return stFactory;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean sendReminderTrigger() {
+        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
+        stFactory.setJobDetail(invokeSendReminder().getObject());
+        stFactory.setName(QuartzConstants.SEND_REMINDER_TRIGGER);
+        stFactory.setCronExpression("0 " + configurator.getMinutesToSendEmailReminder() +
+                " " + configurator.getHourToSendEmailReminder() + " 1/1 * ? *");
         return stFactory;
     }
 
@@ -81,8 +99,11 @@ public class QuartzConfig {
     @Bean
     public SchedulerFactoryBean scheduler() {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        scheduler.setTriggers(calculateSumTrigger().getObject(), sendPaymentInfoTrigger().getObject(),
-                cleanUpBookingsTrigger().getObject());
+        scheduler.setTriggers(
+                calculateSumTrigger().getObject(),
+                sendPaymentInfoTrigger().getObject(),
+                cleanUpBookingsTrigger().getObject(),
+                sendReminderTrigger().getObject());
         return scheduler;
     }
 
