@@ -1,4 +1,11 @@
 # KidsRoom
+==============================
+CONTRIBUTORS
+------------
+* **[Nestor Sokil](https://github.com/nestorsokil)**
+
+
+------------
 
 To run tests make sure test/java folder is highlighted with green color like on this pic: http://devcolibri.com/cp/wp-content/uploads/2013/03/junit-testing.png
 
