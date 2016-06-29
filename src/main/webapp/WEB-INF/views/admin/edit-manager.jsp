@@ -46,7 +46,7 @@
                     <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                        <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                       <button type="submit" value="lock" onClick="return confirm('sure?')"
+                       <button type="submit" value="lock" onClick="return confirm('Are you sure you want to make the manager active?')"
                                class="button-size-default button save"></button>
                     </form:form>
                 </c:if>
@@ -54,7 +54,7 @@
                     <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                        <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                       <button type="submit" value="lock" onClick="return confirm('sure?')"
+                       <button type="submit" value="lock" onClick="return confirm('Are you sure you want to make the manager inactive?')"
                                class="button-size-default button delete"></button>
                     </form:form>
                 </c:if>

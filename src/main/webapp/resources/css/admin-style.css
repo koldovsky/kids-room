@@ -95,15 +95,19 @@ th.for-button{
 }
 
 .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover {
-    background-color: rgb(204, 204, 255);
+    background-color: rgb(190, 190, 255);
 }
 
 .tr-not-active {
-    background-color: rgb(255, 214, 153);
+    background-color: rgb(230, 230, 230);
 }
 
 .set-standard-color {
     background-color: rgb(238, 238, 238);
+}
+
+th.th-size{
+    width: 10%;
 }
 
 .img-size {

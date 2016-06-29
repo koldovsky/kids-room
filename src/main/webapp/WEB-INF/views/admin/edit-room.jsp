@@ -18,16 +18,16 @@
          </tr>
 
          <tr>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.name"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.address"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.city"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.phoneNumber"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.capacity"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.manager"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.room.rate"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.edit"/></strong></th>
-            <th style="width: 10%;"><strong><spring:message code="administrator.block"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.name"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.address"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.city"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.phoneNumber"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.capacity"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.manager"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.room.rate"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.edit"/></strong></th>
+            <th class="th-size"><strong><spring:message code="administrator.block"/></strong></th>
          </tr>
 
          <c:forEach var="room" items="${roomList}">
@@ -71,7 +71,7 @@
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                        <input id="room" name="manager" type="hidden" value="${room.id}" />
-                       <button type="submit" value="lock" onClick="return confirm('sure?')"
+                       <button type="submit" value="lock" onClick="return confirm('Are you sure you want to make the room active??')"
                                class="button button-size-default save"></button>
                     </form:form>
                 </c:if>
@@ -79,7 +79,7 @@
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                        <input id="room" name="room" type="hidden" value="${room.id}" />
-                       <button type="submit" value="lock" onClick="return confirm('sure?')"
+                       <button type="submit" value="lock" onClick="return confirm('Are you sure you want to make the room inactive??')"
                                class="button button-size-default delete"></button>
                     </form:form>
                 </c:if>
