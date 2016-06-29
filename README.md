@@ -1,5 +1,4 @@
 # KidsRoom
-==============================
 CONTRIBUTORS
 ------------
 * **[Nestor Sokil](https://github.com/nestorsokil)**
