@@ -6,7 +6,7 @@ CONTRIBUTORS
 * **[Vasyl Petryshak](https://github.com/Petryshakvasyl)**
 * **[Dmytro Krupa](https://github.com/KrupaDmytro)**
 * **[Eduard Litvinchuck](https://github.com/litvinchuck)**
-
+* **[Taras Zyhmunt](https://github.com/EditedBoy)**
 
 ------------
 
