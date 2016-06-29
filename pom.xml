@@ -38,10 +38,10 @@
         <!-- VERSION -->
 
         <java-version>1.8</java-version>
-        <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
+        <org.springframework-version>4.2.6.RELEASE</org.springframework-version>
         <org.springframework.data-version>1.10.1.RELEASE</org.springframework.data-version>
         <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
-        <org.springframework.spring-test-version>4.3.0.RELEASE</org.springframework.spring-test-version>
+        <org.springframework.spring-test-version>4.2.6.RELEASE</org.springframework.spring-test-version>
 
         <org.hibernate-version>5.1.0.Final</org.hibernate-version>
         <org.hibernate.hibernate-validator-version>5.2.4.Final</org.hibernate.hibernate-validator-version>
@@ -236,6 +236,13 @@
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-template</artifactId>
             <version>${org.apache.tiles-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>2.2.4</version>
+            <scope>test</scope>
         </dependency>
 
 
