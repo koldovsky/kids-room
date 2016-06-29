@@ -8,6 +8,7 @@ import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.dto.BookingDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -148,6 +149,10 @@ public class Booking {
 
     public String formatDuration() {
         return toHoursAndMinutes(duration);
+    }
+
+    public BookingDto getDto(){
+        return new BookingDto(this);
     }
 
     @Override

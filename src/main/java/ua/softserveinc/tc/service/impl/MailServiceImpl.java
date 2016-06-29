@@ -10,6 +10,8 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -18,6 +20,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,7 +56,15 @@ public class MailServiceImpl implements MailService {
             mailSender.send(message);
         }
 
+    }
 
+    @Override
+    public void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException{
+        Map<String, Object> model = new HashMap<>();
+        model.put(UserConstants.Entity.USER, recipient);
+        model.put(ReportConstants.BOOKINGS, bookings);
+
+        sendMessage(recipient.getEmail(), subject, getTextMessage(MailConstants.REMINDER_VM, model));
     }
 
     @Override

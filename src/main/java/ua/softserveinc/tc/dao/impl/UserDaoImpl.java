@@ -39,7 +39,8 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     public User getUserByEmail(String email) {
         try {
             TypedQuery<User> query = getEntityManager().createNamedQuery(UserConstants.Entity.NQ_FIND_USER_BY_EMAIL, User.class);
-            return query.setParameter(UserConstants.Entity.EMAIL, email).getSingleResult();
+            return
+                    query.setParameter(UserConstants.Entity.EMAIL, email).getSingleResult();
         } catch (NoResultException e) {
             log.error("no exist", e);
             return null;

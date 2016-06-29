@@ -23,6 +23,9 @@ public class ConfigurationDto {
     private Integer hourToCleanUpBookings;
     private Integer minutesToCleanUpBookings;
 
+    private Integer hourToSendEmailReminder;
+    private Integer minutesToSendEmailReminder;
+
     private Integer minPeriodSize;
     private String serverName;
 
@@ -34,18 +37,27 @@ public class ConfigurationDto {
         //empty constructor for instantiating in controller
     }
 
+
     public ConfigurationDto(ApplicationConfigurator appConfig){
         this.kidsMinAge = appConfig.getKidsMinAge();
         this.kidsMaxAge = appConfig.getKidsMaxAge();
+
         this.minutesToCalculateBookingsEveryDay = appConfig.getMinutesToCalculateBookingsEveryDay();
         this.hourToCalculateBookingsEveryDay = appConfig.getHourToCalculateBookingsEveryDay();
+
         this.minutesToSendEmailReport = appConfig.getMinutesToSendEmailReport();
         this.hourToSendEmailReport = appConfig.getHourToSendEmailReport();
         this.dayToSendEmailReport = appConfig.getDayToSendEmailReport();
+
         this.daysToCleanUpBookings = appConfig.getDaysToCleanUpBookings();
         this.hourToCleanUpBookings = appConfig.getHourToCleanUpBookings();
         this.minutesToCleanUpBookings = appConfig.getMinutesToCleanUpBookings();
+
+        this.hourToSendEmailReminder = appConfig.getHourToSendEmailReminder();
+        this.minutesToSendEmailReminder = appConfig.getMinutesToSendEmailReminder();
+
         this.minPeriodSize = appConfig.getMinPeriodSize();
+
         this.serverName = appConfig.getServerName();
         this.maxUploadImgSizeMb = appConfig.getMaxUploadImgSizeMb();
     }
@@ -163,42 +175,81 @@ public class ConfigurationDto {
         this.maxUploadImgSizeMb = maxUploadImgSizeMb;
     }
 
+    public Integer getHourToSendEmailReminder() {
+        return hourToSendEmailReminder;
+    }
+
+    public void setHourToSendEmailReminder(Integer hourToSendEmailReminder) {
+        this.hourToSendEmailReminder = hourToSendEmailReminder;
+    }
+
+    public Integer getMinutesToSendEmailReminder() {
+        return minutesToSendEmailReminder;
+    }
+
+    public void setMinutesToSendEmailReminder(Integer minutesToSendEmailReminder) {
+        this.minutesToSendEmailReminder = minutesToSendEmailReminder;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         ConfigurationDto that = (ConfigurationDto) o;
 
-        if (!kidsMinAge.equals(that.kidsMinAge)) {
+        if (kidsMinAge != null ? !kidsMinAge.equals(that.kidsMinAge) : that.kidsMinAge != null) return false;
+        if (kidsMaxAge != null ? !kidsMaxAge.equals(that.kidsMaxAge) : that.kidsMaxAge != null) return false;
+
+        if (minutesToCalculateBookingsEveryDay != null
+                ? !minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)
+                : that.minutesToCalculateBookingsEveryDay != null)
             return false;
-        }
-        if (!kidsMaxAge.equals(that.kidsMaxAge)) {
+        if (hourToCalculateBookingsEveryDay != null
+                ? !hourToCalculateBookingsEveryDay.equals(that.hourToCalculateBookingsEveryDay)
+                : that.hourToCalculateBookingsEveryDay != null)
             return false;
-        }
-        if (!minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)) {
+        if (minutesToSendEmailReport != null
+                ? !minutesToSendEmailReport.equals(that.minutesToSendEmailReport)
+                : that.minutesToSendEmailReport != null)
             return false;
-        }
-        if (!hourToCalculateBookingsEveryDay.equals(that.hourToCalculateBookingsEveryDay)) {
+        if (hourToSendEmailReport != null
+                ? !hourToSendEmailReport.equals(that.hourToSendEmailReport)
+                : that.hourToSendEmailReport != null)
             return false;
-        }
-        if (!minutesToSendEmailReport.equals(that.minutesToSendEmailReport)) {
+        if (dayToSendEmailReport != null
+                ? !dayToSendEmailReport.equals(that.dayToSendEmailReport)
+                : that.dayToSendEmailReport != null)
             return false;
-        }
-        if (!hourToSendEmailReport.equals(that.hourToSendEmailReport)) {
+        if (daysToCleanUpBookings != null
+                ? !daysToCleanUpBookings.equals(that.daysToCleanUpBookings)
+                : that.daysToCleanUpBookings != null)
             return false;
-        }
-        if (!dayToSendEmailReport.equals(that.dayToSendEmailReport)) {
+        if (hourToCleanUpBookings != null
+                ? !hourToCleanUpBookings.equals(that.hourToCleanUpBookings)
+                : that.hourToCleanUpBookings != null)
             return false;
-        }
-        if (!minPeriodSize.equals(that.minPeriodSize)) {
+        if (minutesToCleanUpBookings != null
+                ? !minutesToCleanUpBookings.equals(that.minutesToCleanUpBookings)
+                : that.minutesToCleanUpBookings != null)
             return false;
-        }
-        return serverName.equals(that.serverName);
+        if (hourToSendEmailReminder != null
+                ? !hourToSendEmailReminder.equals(that.hourToSendEmailReminder)
+                : that.hourToSendEmailReminder != null)
+            return false;
+        if (minutesToSendEmailReminder != null
+                ? !minutesToSendEmailReminder.equals(that.minutesToSendEmailReminder)
+                : that.minutesToSendEmailReminder != null)
+            return false;
+        if (minPeriodSize != null
+                ? !minPeriodSize.equals(that.minPeriodSize)
+                : that.minPeriodSize != null)
+            return false;
+        if (serverName != null ? !serverName.equals(that.serverName)
+                : that.serverName != null) return false;
+        return maxUploadImgSizeMb != null
+                ? maxUploadImgSizeMb.equals(that.maxUploadImgSizeMb)
+                : that.maxUploadImgSizeMb == null;
 
     }
 

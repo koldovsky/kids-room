@@ -41,6 +41,10 @@ public interface ApplicationConfigurator {
 
     Integer getMaxUploadImgSizeMb();
 
+    Integer getHourToSendEmailReminder();
+
+    Integer getMinutesToSendEmailReminder();
+
     /**
      * Returns an object suitable for transferring (DTO)
      * contains all configuration values

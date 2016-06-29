@@ -19,8 +19,10 @@ public final class MailConstants {
     public static final String CONFIRM_USER_VM = "confirmEmail.vm";
     public static final String CHANGE_PASS_VM = "changePassword.vm";
     public static final String CONFIRM_MANAGER_VM = "confirmManager.vm";
+    public static final String REMINDER_VM = "reminder.vm";
 
     public static final String PAYMENT_INFO_SUBJECT = "Payment info";
+    public static final String REMINDER_SUBJECT = "You have a reservation for today!";
     public static final String CHANGE_PASS = "Change password";
     public static final String CONFIRM_REGISTRATION = "Confirmation registration";
 

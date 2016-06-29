@@ -64,6 +64,9 @@ public final class ValidationConstants {
         public static final String CLEAN_UP_HOUR = "hourToCleanUpBookings";
         public static final String CLEAN_UP_MINUTE = "minutesToCleanUpBookings";
 
+        public static final String REMINDER_HOUR = "hourToSendEmailReminder";
+        public static final String REMINDER_MINUTE = "minutesToSendEmailReminder";
+
         public static final String ERROR_MSG_PLACEHOLDER = "errorMsg";
 
         public static final String NOT_VALID_DATE_MSG = "date.not.valid";

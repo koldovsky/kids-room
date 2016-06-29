@@ -1,4 +1,4 @@
-package service;
+package repo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,6 @@ import java.util.List;
 
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
-//в мануалі була своя конфігурація під окрему тестову базу
 @ContextConfiguration(classes = AppConfig.class)
 @WebAppConfiguration
 public class BookingRepositoryTest {

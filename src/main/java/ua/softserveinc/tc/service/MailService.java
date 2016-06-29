@@ -1,8 +1,11 @@
 package ua.softserveinc.tc.service;
 
+import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 /**
  * Created by Chak on 10.05.2016.
@@ -18,4 +21,6 @@ public interface MailService {
     void sendChangePassword(String subject, User manager, String token) throws MessagingException;
 
     void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException;
+
+    void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException;
 }

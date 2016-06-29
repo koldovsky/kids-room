@@ -45,6 +45,24 @@ modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="pos
             <br>
   </div>
 
+<h4><spring:message code="properties.emailreminder" /></h4>
+<div class="form-group">
+            <label for="hourToSendEmailReminder" class="required"><spring:message code="properties.hours" />
+            </label>
+                          <form:input path="hourToSendEmailReminder" id=""
+                          value="${config.hourToSendEmailReminder}"
+                          class="primary-color form-control" required="required"/>
+                          <form:errors path="hourToSendEmailReminder" cssClass="error" />
+            <br>
+            <label for="minutesToSendEmailReminder" class="required"><spring:message code="properties.minutes"/>
+            </label>
+                          <form:input path="minutesToSendEmailReminder" id=""
+                          value="${config.minutesToSendEmailReminder}"
+                          class="primary-color form-control" required="required"/>
+                          <form:errors path="minutesToSendEmailReminder" cssClass="error" />
+            <br>
+</div>
+
 
 <div class="form-group">
 <h4><spring:message code="properties.emailreport" /></h4>
