@@ -2,6 +2,7 @@
 CONTRIBUTORS
 ------------
 * **[Nestor Sokil](https://github.com/nestorsokil)**
+* **[Vasyl Petryshak](https://github.com/Petryshakvasyl)**
 
 
 ------------
