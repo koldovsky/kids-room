@@ -1,5 +1,5 @@
-# lv-181java
-18.05.2016
+# KidsRoom
+
 To run tests make sure test/java folder is highlighted with green color like on this pic: http://devcolibri.com/cp/wp-content/uploads/2013/03/junit-testing.png
 
 To do so go to Project Structure -> Sources, select "test/java" and mark it as "test" folder.
