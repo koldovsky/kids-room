@@ -174,7 +174,7 @@ function ref(bookingsState){
                     cell.innerHTML = i+1;
                 });
          }).draw();
-
+        addHilighted(data);
 
 }
 
