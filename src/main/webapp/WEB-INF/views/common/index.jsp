@@ -280,7 +280,18 @@
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
-
+                        <select id="color-select">
+                            <option value="#ff0000" style="background:red"></option>
+                            <option value="#ffff00" style="background:yellow"></option>
+                            <option value="#800080" style="background:purple"></option>
+                            <option value="#0000ff" style="background:blue"></option>
+                            <option value="#6AA4C1" style="background:#6AA4C1" selected="selected"></option>
+                            <option value="#808080" style="background:grey"></option>
+                            <option value="#008000" style="background:green"></option>
+                            <option value="#ffa500" style="background:orange"></option>
+                            <option value="#00ffff" style="background:aqua"></option>
+                            <option value="#ffd700" style="background:gold"><br></option>
+                        </select>
                         <div class="form-group">
                             <label for="title">Start date</label>
                             <br>
@@ -449,7 +460,6 @@
 
     <button type="button" class="btn btn-info" id="create-new-event">New event</button>
     <div id='calendar'></div>
-
 
 </sec:authorize>
 <sec:authorize access="hasRole('ADMINISTRATOR')">

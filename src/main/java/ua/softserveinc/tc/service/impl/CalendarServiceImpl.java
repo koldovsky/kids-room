@@ -114,7 +114,7 @@ public class CalendarServiceImpl implements CalendarService {
 
                 newRecurrentEvent.setRecurrentId(newRecID);
                 newRecurrentEvent.setRoom(roomDao.findById(recurrentEventDto.getRoomId()));
-
+                newRecurrentEvent.setColor(recurrentEventDto.getColor());
                 res.add(this.create(newRecurrentEvent));
             }
             calendar.add(Calendar.WEEK_OF_YEAR, 1);

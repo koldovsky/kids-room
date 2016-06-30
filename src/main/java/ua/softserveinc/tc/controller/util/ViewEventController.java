@@ -66,7 +66,6 @@ public class ViewEventController {
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
-        System.out.println(eventDao.getMaxRecurrentId());
         return new Gson().toJson(calendarService.findByRoomId(id));
     }
 
@@ -91,7 +90,6 @@ public class ViewEventController {
     @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
-
         System.out.println(calendarService.createRecurrentEvents(recurrentEventDto));
         return null;
     }
