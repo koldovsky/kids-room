@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
@@ -35,6 +37,8 @@ public class ViewEventController {
     private RoomService roomServiceImpl;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EventDao eventDao;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
@@ -62,6 +66,7 @@ public class ViewEventController {
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
+        System.out.println(eventDao.getMaxRecurrentId());
         return new Gson().toJson(calendarService.findByRoomId(id));
     }
 
@@ -85,9 +90,10 @@ public class ViewEventController {
 
     @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public String gerRecurrent(@RequestBody EventDto eventDto) {
-        System.out.println(eventDto.getName() + " " + eventDto.getStartTime() + " " + eventDto.getEndTime() + " " + eventDto.getDescription() + " " + eventDto.getRoomId());
-        return "ЗБС";
+    public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
+
+        System.out.println(calendarService.createRecurrentEvents(recurrentEventDto));
+        return null;
     }
 
 

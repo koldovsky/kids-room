@@ -32,17 +32,16 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
     @Log
     private static Logger log;
 
-
     @Override
     public final Event toEntity(final EventDto eventDto) {
 
         Event event = new Event();
-
-        event.setDescription(eventDto.getDescription());
-        event.setName(eventDto.getName());
         if (eventDto.getId() != 0) {
             event.setId(eventDto.getId());
         }
+        event.setDescription(eventDto.getDescription());
+        event.setName(eventDto.getName());
+
         Date startDate;
         Date endDate;
 
@@ -58,9 +57,12 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
 
         event.setStartTime(startDate);
         event.setEndTime(endDate);
-
+        if(eventDto.getRecurrentId() != null) {
+            event.setRecurrentId(event.getRecurrentId());
+        }
+        event.setRecurrentId(eventDto.getRecurrentId());
         event.setRoom(roomDao.findById(eventDto.getRoomId()));
-
+        event.setColor(eventDto.getColor());
         return event;
     }
 
@@ -75,8 +77,18 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
 
         DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
 
+        /**
+         * The trick is to avoid calling the setter method itself
+         * in order to insert null value for that column instead of
+         * passing java Null as argument to the setter method.
+        */
+        if(event.getRecurrentId() != null) {
+            eventDto.setRecurrentId(event.getRecurrentId());
+        }
+
         eventDto.setStartTime(df.format(event.getStartTime()));
         eventDto.setEndTime(df.format(event.getEndTime()));
+        eventDto.setColor(event.getColor());
 
         return eventDto;
     }
@@ -87,7 +99,6 @@ public class EventMapper implements GenericMapper<Event, EventDto> {
         for (Event event : events) {
             result.add(this.toDto(event));
         }
-
         return result;
     }
 }

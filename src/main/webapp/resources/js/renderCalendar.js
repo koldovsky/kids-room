@@ -1,16 +1,17 @@
 /**
  * Created by dima- on 12.05.2016.
  */
+
 var beforeUpdate;
 var info;
 var creatingEvent;
 
-var ACTIVE_EVENT = '#428bca';
+var ACTIVE_EVENT = '#6AA4C1';
 var NOT_ACTIVE_EVENT = '#33cc33';
 
 $(function () {
 
-    $(".modal-dialog-recurrently").dialog({
+    $('.modal-dialog-recurrently').dialog({
         modal: true,
         autoOpen: false
     });
@@ -20,12 +21,20 @@ $(function () {
         width: 500
     });
 
+    $('#dialog').dialog({
+        title: 'New event',
+        width: 550,
+        autoOpen: false
+    });
+
+
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
         minTime: '15:00',
         maxTime: '22:00'
     });
+
 
     $('.dialog').dialog({
         autoOpen: false,
@@ -38,8 +47,19 @@ $(function () {
             duration: 500
         }
     });
+    $('#updating').dialog({
+        autoOpen: false,
+        title: 'Change event'
+    });
+
+    $('#choose-updating-type').dialog({
+        autoOpen: false
+    }).closest(".ui-dialog")
+        .find(".ui-dialog-title")
+        .html("This is one appointment <br> is a series.<br>What would you like to open");
 
     $('#updatingButton').click(function () {
+
         var newStartDate = makeISOTime(info.calEvent.start.format(), 'startTimeUpdate');
         var newEndDate = makeISOTime(info.calEvent.end.format(), 'endTimeUpdate');
 
@@ -68,16 +88,41 @@ $(function () {
     });
 
     $('#creating').click(function () {
+        creatingEvent.clickDate = $('#title').val();
+        creatingEvent.clickDate = creatingEvent.clickDate + 'T00:00:00';
+
+
+        var endDate = $('#endDate').val() +'T00:00:00';
         var ev = {
             id: -1,
             title: $('#startDate').val(),
             start: makeISOTime(creatingEvent.clickDate, 'basicExample'),
-            end: makeISOTime(creatingEvent.clickDate, 'ender'),
+            end: makeISOTime(endDate, 'ender'),
             backgroundColor: NOT_ACTIVE_EVENT,
             borderColor: NOT_ACTIVE_EVENT,
             editable: false,
             description: $('#description').val()
         };
+
+        if ($('#weekly').is(':checked')) {
+            var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var dayWhenEventIsRecurrent = [];
+            var indexForRecurrentDay = 0;
+
+            checkBoxesDays.forEach(function (item) {
+                var ckbox = $('#' + item);
+                if (ckbox.is(':checked')) {
+                    dayWhenEventIsRecurrent[indexForRecurrentDay] = ckbox.val();
+                    indexForRecurrentDay++;
+                }
+            });
+            sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent);
+
+            $('#title').val('');
+            $('#dialog').dialog('close');
+            closeDialog('dialog');
+            return;
+        }
 
         $('#calendar').fullCalendar('renderEvent', ev, true);
         $('#calendar').fullCalendar('unselect');
@@ -91,7 +136,7 @@ $(function () {
                 name: ev.title,
                 startTime: ev.start,
                 endTime: ev.end,
-                roomId: creatingEvent.roomID,
+                roomId: localStorage["roomId"],
                 description: ev.description
             }),
             success: function (result) {
@@ -109,6 +154,7 @@ $(function () {
 
         $('#title').val('');
         $('#dialog').dialog('close');
+        closeDialog('dialog');
     });
 
     $('#recurrent').click(function () {
@@ -118,6 +164,7 @@ $(function () {
         $('#recurrent-event-end-date').val($('#endDate').val());
     });
 
+    //Deprecated
     $('#recurrent-event-create').click(function () {
         var startDate = $('#recurrent-event-start-date').val();
         var endDate = $('#recurrent-event-end-date').val();
@@ -139,10 +186,53 @@ $(function () {
         $('#dialog-recurrently').dialog('close');
         $('#dialog').dialog('close');
 
-        sendRecurrentEventsForCreate(recurrentEvents);
+        var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayWhenEventIsRecurrent = [];
+        var indexForRecurrentDay = 0;
+
+        checkBoxesDays.forEach(function (item) {
+            var ckbox = $('#' + item);
+            if (ckbox.is(':checked')) {
+                dayWhenEventIsRecurrent[indexForRecurrentDay] = ckbox.val();
+                indexForRecurrentDay++;
+            }
+        });
+        sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent);
+    });
+
+    $('#create-new-event').click(function () {
+        $('#dialog').dialog('open');
+    });
+
+    $('.my-radio').click(function () {
+        if ($('#weekly').is(':checked')) {
+            $('#days-for-recurrent-form').attr('hidden', false);
+        } else {
+            $('#days-for-recurrent-form').attr('hidden', true);
+        }
+    });
+
+    $('#confirm-choose').click(function (){
+        if($('#single-update').is(':checked')) {
+            $('#choose-updating-type').dialog('close');
+            $('#updating').dialog('open');
+        }
+    });
+
+
+    $('#cancel-choose').click(function () {
+        $('#choose-updating-type').dialog('close');
+
+        $("#single-update").prop("checked", true);
+
+        $("#recurrent-update").prop("checked", false);
     });
 });
 
+/**
+ *  This function gets events from controller.
+ *  After that call renderCalendarForManager for rendering
+ */
 function selectRoomForManager(id) {
 
     $('#calendar').fullCalendar('destroy');
@@ -166,7 +256,8 @@ function selectRoomForManager(id) {
                         end: result[i].endTime,
                         editable: false,
                         type: 'event',
-                        description: result[i].description
+                        description: result[i].description,
+                        recurrentId: result[i].recurrentId
                     }
                 }
                 renderCalendarForManager(objects, id);
@@ -187,6 +278,10 @@ function selectRoomForManager(id) {
     });
 }
 
+/**
+ *  This function gets array of events and render calendar.
+ *  dayClick methods and eventClick methods implemented here
+ */
 function renderCalendarForManager(objects, roomID) {
     info = {};
     creatingEvent = {};
@@ -206,18 +301,6 @@ function renderCalendarForManager(objects, roomID) {
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
-
-            /*            var ckbox = $('#checkbox');
-
-             $('input').on('click', function () {
-             if (ckbox.is(':checked')) {
-             $('#basicExample').prop('readonly', true);
-             $('#ender').prop('readonly', true);
-             } else {
-             $('#basicExample').prop('readonly', false);
-             $('#ender').prop('readonly', false);
-             }
-             });*/
 
             creatingEvent.clickDate = clickDate;
             creatingEvent.roomID = roomID;
@@ -245,14 +328,19 @@ function renderCalendarForManager(objects, roomID) {
             $('#startTimeUpdate').timepicker('setTime', newDate);
             $('#endTimeUpdate').timepicker('setTime', newDateForEnd);
 
-            $('#updating').dialog('open');
 
+            //переніс info треба чекнути чи працює
             info.beforeUpdate = beforeUpdate;
             info.endDate = endDate;
             info.calEvent = calEvent;
             info.roomID = roomID;
             info.date = date;
             info.description = $('#descriptionUpdate').val();
+
+            if(!!calEvent.recurrentId)
+                $('#choose-updating-type').dialog('open');
+            else
+            $('#updating').dialog('open');
         },
 
         selectable: true,
@@ -265,7 +353,7 @@ function renderCalendarForManager(objects, roomID) {
              * This if statement provide that click on day
              * will have start date and end date the same
              */
-            if(start.format().length < 11) {
+            if (start.format().length < 11) {
                 end = end.add(-1, 'day');
             }
 
@@ -335,15 +423,39 @@ function makeUTCTime(time, date) {
     return time;
 }
 
-function sendRecurrentEventsForCreate(recurrentEvents) {
+function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
+    var stringWithDaysForRecurrent = '';
+
+    dayWhenEventIsRecurrent.forEach(function (item) {
+        stringWithDaysForRecurrent += item + ' ';
+    });
+    stringWithDaysForRecurrent.substring(0, stringWithDaysForRecurrent.length - 1);
+
     $.ajax({
         type: 'post',
         contentType: 'application/json',
         url: 'getrecurrentevents',
         dataType: 'json',
-        data: JSON.stringify(recurrentEvents),
+        data: JSON.stringify({
+            name: recurrentEvents.title,
+            startTime: recurrentEvents.start,
+            endTime: recurrentEvents.end,
+            daysOfWeek: stringWithDaysForRecurrent,
+            roomId: localStorage["roomId"],
+            description: recurrentEvents.description
+        }),
         success: function (result) {
-
+            alert(result);
         }
     });
+}
+
+/**
+ * This function using for unchecking all checkboxes
+ * and setting all fields in original state
+ */
+function closeDialog(divid) {
+    $('#' + divid + ' :checkbox:enabled').prop('checked', false);
+    $("#no-recurrent").prop("checked", true);
+    $('#days-for-recurrent-form').attr('hidden', true);
 }

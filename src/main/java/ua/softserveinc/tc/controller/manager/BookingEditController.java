@@ -133,7 +133,7 @@ public class BookingEditController {
     @RequestMapping(value = "get-kids/{id}")
     @ResponseBody
     public String listKids (@PathVariable Long id){
-        Set<Child> kids = userService.findById(id).getChildren();
+        List<Child> kids = userService.findById(id).getEnabledChildren();
         Gson gson = new Gson();
         return  gson.toJson(kids.stream()
                 .map(ChildDto::new)

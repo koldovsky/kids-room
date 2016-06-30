@@ -1,10 +1,18 @@
 package ua.softserveinc.tc.dto;
 
-/**
- * Created by dima- on 07.05.2016.
- */
-public class EventDto {
+import org.springframework.beans.factory.annotation.Autowired;
+import ua.softserveinc.tc.entity.Event;
+import ua.softserveinc.tc.mapper.GenericMapper;
 
+import java.util.List;
+
+/**
+ * Created by dima- on 28.06.2016.
+ */
+public class RecurrentEventDto {
+
+    @Autowired
+    private GenericMapper<Event, EventDto> genericMapper;
     private long id;
 
     private String name;
@@ -23,14 +31,31 @@ public class EventDto {
 
     private Long recurrentId;
 
-    private String color;
+    private String daysOfWeek;
 
-    public Long getRecurrentId() {
-        return recurrentId;
+    private transient Event event;
+
+    public Event toEvent() {
+        EventDto eventDto = new EventDto();
+        eventDto.setName(this.getName());
+        eventDto.setDescription(this.getDescription());
+        eventDto.setStartTime(this.getStartTime());
+        eventDto.setEndTime(this.getEndTime());
+        eventDto.setRoomId(this.getRoomId());
+
+        if (this.getId() != 0) {
+            eventDto.setId(this.getId());
+        }
+
+        return genericMapper.toEntity(eventDto);
     }
 
-    public void setRecurrentId(Long recurrentId) {
-        this.recurrentId = recurrentId;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -89,19 +114,19 @@ public class EventDto {
         this.description = description;
     }
 
-    public long getId() {
-        return id;
+    public Long getRecurrentId() {
+        return recurrentId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setRecurrentId(Long recurrentId) {
+        this.recurrentId = recurrentId;
     }
 
-    public String getColor() {
-        return color;
+    public String getDaysOfWeek() {
+        return daysOfWeek;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setDaysOfWeek(String daysOfWeek) {
+        this.daysOfWeek = daysOfWeek;
     }
 }
