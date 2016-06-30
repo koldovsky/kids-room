@@ -2,6 +2,9 @@ package service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,11 +15,13 @@ import ua.softserveinc.tc.config.AppConfig;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.UserService;
 
 import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Nestor on 29.06.2016.
@@ -29,6 +34,9 @@ import javax.annotation.Resource;
 public class UserServiceTest {
     @Resource
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     @Transactional
@@ -53,6 +61,55 @@ public class UserServiceTest {
         User afterPersist = userService.getUserByEmail("test@softserveinc.com");
         assertNotNull(afterPersist.getId());
         assertEquals("Tester", afterPersist.getLastName());
-
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testCreateWithEncoder(){
+        String password = "password";
+        String email = "test@softserveinc.com";
+
+
+        User u = new User();
+        u.setEmail(email);
+        u.setPassword(password);
+
+        u.setFirstName("Adam");
+        u.setLastName("Tester");
+        u.setRole(Role.USER);
+        u.setPhoneNumber("380679122354");
+
+        userService.createWithEncoder(u);
+
+        User after = userService.getUserByEmail(email);
+        assertEquals(passwordEncoder.encode(password), u.getPassword());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testDeleteAndFindAll(){
+        User toBeDeleted = userService.findById(1L);
+        userService.delete(toBeDeleted);
+        List<User> all = userService.findAll();
+
+        assertTrue(!all.contains(toBeDeleted));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testDeleteById(){
+        userService.deleteUserById(1L);
+        try{
+            userService.findById(1L);   //should throw an exception
+            fail();
+        }
+        catch (ResourceNotFoundException rfe){
+            //it's ok, test passed
+        }
+    }
+
+
 }
