@@ -6,6 +6,7 @@
     width: 70%;
     min-width: 900px;
     background-color: white;
+    border-top:1px solid #ddd;
 
 }
 .tableDiv{
@@ -17,12 +18,13 @@
     box-shadow: 8px 11px 20px 12px #c8c6d7;
 }
 
+.table-edit tbody td{
+border-top:1px solid #ddd;
 
-.table-edit th, td{
-    border: 2px solid #ddd;
-    text-align:center;
 }
+
 th{
+     text-align:center;
     height: 50px;
     background-color: #4285F4;
 }
@@ -83,7 +85,7 @@ html, body, .container {
      margin-top: 20px;
      float:center;
 }
-#comment{
+.glyphicon-warning-sign{
     font-size: 1.3em;
     color: #9F6000;
 }

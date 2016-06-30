@@ -108,6 +108,7 @@ function ref(bookingsState){
               async: false,
               success: function(data) {
                   result = data;
+
               }
           });
          return result;
@@ -173,7 +174,7 @@ function ref(bookingsState){
                     cell.innerHTML = i+1;
                 });
          }).draw();
-         addHilighted(data);
+
 
 }
 

@@ -5,12 +5,13 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 
-
-<link rel='stylesheet' href='resources/css/edit-booking.css'>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
+<link rel='stylesheet' href='resources/css/edit-booking.css'>
+
+
 
 <div class="container">
  <div id="choose-time-inp">
@@ -36,7 +37,7 @@
             <thead><tr>
 
                     <th class="col-xs-1">#</th>
-                    <th><spring:message code= "booking.childrens"/></th>
+                    <th class="col-xs-3"><spring:message code= "booking.childrens"/></th>
                     <th><spring:message code= "booking.time"/></th>
                     <th><spring:message code= "booking.arrival"/></th>
                     <th><spring:message code= "booking.leave"/></th>
@@ -236,3 +237,5 @@
 
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
+
+
