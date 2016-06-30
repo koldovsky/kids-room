@@ -13,8 +13,7 @@
 }
 
 .tableDiv tr:hover {
-    background-color: #3090FB;
-    color: white;
+    background-color: #D8BFD8
 }
 
 .parent:hover {
@@ -61,12 +60,7 @@ table{
 }
 
 td{
-    min-width: 120px;
-}
-
-#header th{
-    background-color: #aaa;
-    color: #111;
+min-width: 120px;
 }
 
 #scroller{
@@ -85,36 +79,35 @@ td{
  }
 
  #sum{
-     display:inline-block;
-     margin-right:10px;
+     display:inline-block;margin-right:10px;
      margin-left: 10px;
  }
 
   table, th, td {
      text-align: center;
-      border-top: 2px solid #aaa;
+      border: 2px solid #4285F4;
       border-collapse: collapse;
       width: 40%;
       padding: 10px;
       margin-left: 50 px;
-  }
 
+  }
   tr{
     border-collapse: collapse;
-    border: 2px solid #aaa;
+    border: 2px solid #ddd;
   }
 
 
   th {
-      border: 2px solid #aaa;
+     border: 2px solid #4285F4;
       height: 50px;
       background-color: 70AAFF;
       color: white;
   }
   caption {
     text-align: center;
-    background-color: #aaa;
-    color: black;
+    background-color: #4285F4;
+    color: white;
   }
 
   input{
@@ -133,13 +126,11 @@ td{
       line-height: 1.8;
       text-align: center;
       cursor: pointer;
-      background: #aaa;
-      color: black;
-      border: 1px solid black;
+      background: #4285F4;
+      color: #fff;
       margin-right: 0.5em;
   }
 
   div.pager span.active {
-      background: #3090FB;
-      color: black;
+      background: #c00;
   }
