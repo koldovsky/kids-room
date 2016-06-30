@@ -121,7 +121,7 @@ function ref(bookingsState){
       table.destroy();
   }
 
-  table = $('#example').DataTable( {
+    table = $('#example').DataTable( {
              rowId: 'id',
              "columnDefs": [ {
 

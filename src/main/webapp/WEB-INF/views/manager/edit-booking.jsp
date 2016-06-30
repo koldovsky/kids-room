@@ -234,7 +234,6 @@
         			</div>
         		</div>
         </div>
-
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
 
