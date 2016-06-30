@@ -92,7 +92,8 @@ public class MyBookingsController {
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo), toDate(dateHi), currentUser, BookingState.COMPLETED);
+        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo),
+                toDate(dateHi), currentUser, BookingState.COMPLETED);
         List<BookingDto> dtos = new ArrayList<>();
         myBookings.forEach(booking -> dtos.add(new BookingDto(booking)));
 
