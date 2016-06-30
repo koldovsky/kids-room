@@ -1,6 +1,4 @@
 
-
-
 var ratesList = $("#rates-json").val();
 var ratesJson = 0;
 if (ratesList.length != 0){
@@ -24,7 +22,8 @@ app.controller('MainCtrl', function($scope) {
    if (managersJson.length != 0) {
        for (var i = 0; i < managersJson.length; ++i){
            var newItemNo = $scope.managers.length+1;
-           $scope.managers.push({idIns: 'manager'+(i+1), id: managersJson[i].id.toString()});
+           var idManagerNew = parseInt(managersJson[i].id);
+           $scope.managers.push({idIns: 'manager'+(i+1), id: idManagerNew.toString()});
        }
    }
 
