@@ -1,10 +1,67 @@
 var bookingsArray = [];
 var idBooking;
 var dateNow = new Date();
-var bookingsState=['BOOKED'];
+var bookingsState=['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
 var table=null;
 
 $('#date-booking').val(dateNow.toISOString().substr(0,10));
+
+$().ready(function() {
+ $('[data-toggle="tooltip"]').tooltip();
+  $('#booking').click(function () {
+   bookingsArray = [];
+   var idUser = $('#selectUser :selected').val();
+   var date = $('#bookingStartDate').val();
+   var startTime = $('#bookingStartTimepicker').val();
+   var endTime = $('#bookingEndTimepicker').val();
+   var startISOtime = date + 'T'+ startTime + ':00';
+   var endISOtime = date + 'T'+ endTime + ':00';
+   var urlForKids = "get-kids/"+idUser;
+   $.ajax({
+    url: urlForKids,
+    success: function(result){
+     var kids = JSON.parse(result);
+     $.each(kids, function(i, kid){
+      var kidId = kid.id;
+      if ($('#checkboxKid' + kid.id).is(':checked')) {
+       var comment = ($('#child-comment-' +kid.id).val());
+       var booking = new Booking(startISOtime, endISOtime, comment, kidId, localStorage["roomId"], idUser);
+       bookingsArray.push(booking);
+     }
+   });
+     sendBookingToServerForCreate(bookingsArray);
+   }
+ });
+   $('#bookingDialog').dialog('close');
+ });
+});
+
+$().ready(function() {
+  $('#deletingBooking').on('click', function(){
+    $('#cancelModal').modal('show');
+    $('#cancelButton').on('click', function(){
+    cancelBooking();
+    });
+  });
+  $('#updatingBooking').click(function() {
+      var getData = $('#data-edit').val();
+      var inputDate = {
+          id: idBooking,
+          startTime: getData +" " + $('#bookingUpdatingStartTimepicker').val(),
+          endTime: getData +" " + $('#bookingUpdatingEndTimepicker').val(),
+          roomId:  localStorage["roomId"],
+      };
+      updatingBooking(inputDate);
+      $('#'+id).removeClass('highlight-active');
+  });
+
+   $('#selectUser').on('change', function(){
+          $('#kids').empty();
+          var idUser = $(this).val();
+          var getKidsUrl = "get-kids/"+idUser;
+          addKids(getKidsUrl);
+      });
+});
 
 $(function(){
   $('#date-booking').change(function(){
@@ -39,7 +96,6 @@ function allBooking(){
     ref(bookingsState);
 }
 
-
 function ref(bookingsState){
     var time = $('#date-booking').val();
     var idRoom = localStorage["roomId"];
@@ -65,20 +121,28 @@ function ref(bookingsState){
   }
 
   table = $('#example').DataTable( {
-            "processing": true,
+             rowId: 'id',
              "columnDefs": [ {
+
                     "searchable": false,
                     "orderable": false,
                     "targets": 0
                 } ],
-            "order": [[ 2, 'asc' ]],
+            "order": [[ 0, 'asc' ]],
             'data': data,
             'columns': [
                   { "data": null },
+
                   { "data": 'kidName',
                   "className": "kid-name",
                    "fnCreatedCell": function (nTd, sData, oData) {
-                               $(nTd).html('<a href=profile?id=' + oData.idChild +'>'+oData.kidName+"</a>");
+                                if (!(oData.comment == "")){
+                                  $(nTd).html('<a href=profile?id=' + oData.idChild +'>'+oData.kidName+'</a>' + " "
+                                  + '<span data-toggle="tooltip" class="glyphicon glyphicon-warning-sign"'
+                                  + 'title="' + oData.comment + '"></span>');
+                                }else{
+                                    $(nTd).html('<a href=profile?id=' + oData.idChild +'>'+oData.kidName+'</a>');
+                                }
                            }
                    },
                   {"data": "startTime",
@@ -92,45 +156,50 @@ function ref(bookingsState){
                   },
                   { "className":      'arrivalTime',
                     "defaultContent":
-                     '<input type="time" class="form-control" placeholder = "click here" >'
+                     '<input type="time" class="form-control inp-arrivalTime" >'
                      +'<button class="btn btn-sm btn-success glyphicon glyphicon-saved" id="arrival-btn" ></button>'
                     },
                   { "className":      'leaveTime',
                                    "defaultContent":
-                                   '<input type="time" class="form-control">'
+                                   '<input type="time" class="form-control inp-leaveTime">'
                                                         +'<button class="btn btn-sm btn-success glyphicon glyphicon-saved" id="leave-btn"></button>'
                   },
 
             ]
         });
+
          table.on( 'order.dt search.dt', function () {
                 table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;
-                } );
-            }).draw();
+                });
+         }).draw();
+         addHilighted(data);
+
 }
 
-
- $('#example tbody').on('click', '#arrival-btn',    function () {
+$('#example tbody').on('click', '#arrival-btn',    function () {
             var tr = $(this).closest('tr');
             var id =  table.row(tr).data().id;
             var time = $(this).closest('td').find('input').val();
+
            setStartTime(id, time);
-           ref(bookingsState);
     });
-    $('#example tbody').on('focus', 'input', function () {
+
+$('#example tbody').on('focus', 'input', function () {
         var time = dateNow.toString().match(/\d{2}:\d{2}/)[0];
         $(this).val(time);
     });
 
-     $('#example tbody').on('click', '#leave-btn',  function () {
+$('#example tbody').on('click', '#leave-btn',  function () {
                 var tr = $(this).closest('tr');
                 var id =  table.row(tr).data().id;
                 var time = $(this).closest('td').find('input').val();
+
+
                setEndTime(id, time);
-               ref(bookingsState);
      });
-     $('#example tbody').on('click', '.edit-button',  function () {
+
+$('#example tbody').on('click', '.edit-button',  function () {
             idBooking = $(this).closest('td').find('.book-id').attr('id');
             var kidsname = $(this).closest('tr').find('.kid-name').text();
 
@@ -141,22 +210,21 @@ function ref(bookingsState){
           $('#bookingUpdatingEndTimepicker').val(endTime);
           $('#data-edit').val(date);
         $('#bookingUpdatingDialog').dialog();
-
      });
-
-
 
 function setStartTime(id, startTime){
   var inputData = {
     startTime: startTime,
     id: id,
   };
+  $('#'+id).addClass('highlight-active');
   $.ajax({
     url: "setTime",
     contentType: 'application/json',
     data:   JSON.stringify(inputData),
     type: 'POST',
     success: function(data){
+        ref(bookingsState);
     }
   });
 }
@@ -166,20 +234,21 @@ function setEndTime(id, time){
         endTime: time,
         id: id,
   };
-  //if($(idElement).find('#arrivalTime').val()<$(idElement).find('#leaveTime').val()){
+  if($('#'+id).find('.inp-arrivalTime').val()<$('#'+id).find('.inp-leaveTime').val()){
+  $('#'+id).addClass('highlight-complet');
     $.ajax({
          url: "setEndTime",
          contentType: 'application/json',
          data:   JSON.stringify(inputData),
          type: 'POST',
          success: function(data){
+            ref(bookingsState);
          }
     });
-  /*}else{
+  }else{
       $('#invalidTimeModal').modal('show');
-  }*/
+  }
 }
-
 
 function createBookingss(){
   var date = $('#date-booking').val();
@@ -187,88 +256,16 @@ function createBookingss(){
   $('#bookingDialog').dialog();
 }
 
-$().ready(function() {
-  $('#booking').click(function () {
-   bookingsArray = [];
-   var idUser = $('#selectUser :selected').val();
-   var date = $('#bookingStartDate').val();
-   var startTime = $('#bookingStartTimepicker').val();
-   var endTime = $('#bookingEndTimepicker').val();
-   var startISOtime = date + 'T'+ startTime + ':00';
-   var endISOtime = date + 'T'+ endTime + ':00';
-   var urlForKids = "get-kids/"+idUser;
-   $.ajax({
-    url: urlForKids,
-    success: function(result){
-     var kids = JSON.parse(result);
-     $.each(kids, function(i, kid){
-      var kidId = kid.id;
-      if ($('#checkboxKid' + kid.id).is(':checked')) {
-       var comment = ($('#child-comment-' +kid.id).val());
-       var booking = new Booking(startISOtime, endISOtime, comment, kidId, localStorage["roomId"], idUser);
-       bookingsArray.push(booking);
-     }
-   });
-     sendBookingToServerForCreate(bookingsArray);
-   }
- });
-   $('#bookingDialog').dialog('close');
- });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$().ready(function() {
-  $('#deletingBooking').on('click', function(){
-    $('#cancelModal').modal('show');
-    $('#cancelButton').on('click', function(){
-    cancelBooking();
-    });
-  });
-  $('#updatingBooking').click(function() {
-      var getData = $('#data-edit').val();
-      var inputDate = {
-          id: idBooking,
-          startTime: getData +" " + $('#bookingUpdatingStartTimepicker').val(),
-          endTime: getData +" " + $('#bookingUpdatingEndTimepicker').val(),
-          roomId:  localStorage["roomId"],
-      };
-      updatingBooking(inputDate);
-      $('#'+id).removeClass('highlight-active');
-  });
-
-   $('#selectUser').on('change', function(){
-          $('#kids').empty();
-          var idUser = $(this).val();
-          var getKidsUrl = "get-kids/"+idUser;
-          addKids(getKidsUrl);
-      });
-});
-
-
 function addHilighted(bookings){
 
  $.each(bookings, function(index, value) {
   if(value.bookingState=="ACTIVE"){
-    $(this).find('tr').addClass('highlight-active');
-
-   // $('#'+value.id).find('#arrivalTime').val(value.startTime);
+    $('#'+value.id).addClass('highlight-active');
+    $('#'+value.id).find('.inp-arrivalTime').val(value.startTime);
   }else if(value.bookingState=="COMPLETED"){
     $('#'+value.id).addClass('highlight-complet');
-    $('#'+value.id).find('#arrivalTime').val(value.startTime);
-    $('#'+value.id).find('#leaveTime').val(value.endTime);
+    $('#'+value.id).find('.inp-arrivalTime').val(value.startTime);
+    $('#'+value.id).find('.inp-leaveTime').val(value.endTime);
   }
  });
 }
@@ -360,6 +357,7 @@ function sendBookingToServerForCreate(bookingsArray) {
   dataType: 'json',
   data: JSON.stringify(bookingsArray),
   success: function (result) {
+  alert(result=="")
     if(result==""){
        $('#updatingInvalid').modal('show');
        $('#bookingDialog').dialog();
@@ -373,6 +371,8 @@ function sendBookingToServerForCreate(bookingsArray) {
   }
 });
 }
+
+
 
 
 
