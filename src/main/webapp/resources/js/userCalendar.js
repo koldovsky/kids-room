@@ -26,8 +26,6 @@ $(function () {
         }
     });
 
-
-
     $('#bookingUpdatingDialog').dialog({
         autoOpen: false,
         show: {
@@ -84,7 +82,42 @@ $(function () {
     });
 });
 
-function selectRoomForUser(id, userId) {
+$(function () {
+    $('body').on('click', 'button.fc-prev-button', function () {
+        var moment = $('#user-calendar').fullCalendar('getDate');
+        console.log(moment.format());
+        getDisabledTime("2016-06-22", "2016-06-22", 2);
+
+    });
+    $('body').on('click', 'button.fc-next-button', function () {
+        var moment = $('#user-calendar').fullCalendar('getDate');
+        console.log('next is clicked, do something  ' + moment.format());
+        getDisabledTime("2016-06-22", "2016-06-22", 2);
+    });
+
+    $('body').on('click', 'button.fc-agendaDay-button', function () {
+
+        var moment = $('#user-calendar').fullCalendar('getDate');
+
+        console.log('CURRENT DAY  ' + moment.format());
+    });
+
+    $('body').on('click', 'button.fc-agendaWeek-button', function () {
+
+        var moment = $('#user-calendar').fullCalendar('getDate');
+
+        console.log('CURRENT DAY  ' + moment.format());
+    });
+});
+
+function selectRoomForUser(roomParam, userId) {
+    var id;
+    roomParam = roomParam.split(' ');
+
+    showRoomPhone(roomParam[1]);
+
+    id = roomParam[0];
+
     roomIdForHandler = id;
     usersID = userId;
 
@@ -196,6 +229,7 @@ function makeISOTime(clickDate, idOfTimePicker) {
     } else {
         timepickerHours = timepickerHours.toString();
     }
+
     return clickDate.substring(0, 11) + timepickerHours + ':' +
         timepickerMinutes + clickDate.substring(16);
 }
@@ -433,4 +467,20 @@ function makeUTCTime(time, date) {
     time.setMinutes(date.getUTCMinutes());
     time.setSeconds(date.getUTCSeconds());
     return time;
+}
+
+function getDisabledTime(dateLo, dateHi, roomId) {
+    var urls = 'disabled?roomID=' + roomId + '&dateLo=' + dateLo + '&dateHi=' + dateHi;
+    $.ajax({
+        url: urls,
+        contentType: 'application/json',
+        dataType: 'text',
+        success: function (result) {
+            alert(result.val());
+        }
+    });
+}
+
+function showRoomPhone(phone) {
+    $('#roomPhone').empty().append('Phone number: ' + phone);
 }

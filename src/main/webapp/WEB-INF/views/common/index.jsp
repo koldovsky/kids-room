@@ -19,9 +19,6 @@
 
 <script src='resources/js/renderCalendar.js'></script>
 
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
 
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 
@@ -29,33 +26,34 @@
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 
 <body>
 
 <sec:authorize access="hasRole('USER')">
-
     <spring:message code="user.selectRoom"/>
+
     <c:forEach items="${managersRoom}" var="r">
-
         ${r.id}
-
     </c:forEach>
 
-
     <select id="selectBoxUser" onchange="selectRoomForUser(value, '${userId}');">
-
         <option value=" "></option>
 
         <c:forEach items="${rooms}" var="r">
-
-            <option value="${r.id}">${r.city}: ${r.address}</option>
+            <option value="${r.id} ${r.phoneNumber}">${r.city}: ${r.address}</option>
 
         </c:forEach>
-
     </select>
+
+    <div>
+        Manager: <label id="roomManager"></label>
+    </div>
+    <div>
+        <label id="roomPhone"></label>
+    </div>
 
 
     <div class="container">
@@ -79,7 +77,6 @@
                         </div>
                         <br>
 
-
                         <div class="form-group">
                             <label for="bookingEndDate">End date</label>
                             <br>
@@ -98,8 +95,6 @@
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                 <c:set var="kidsArray" value="${kids}"/>
-
-
                                 <tr>
                                     <label><input type="checkbox" value=""
                                                   id="checkboxKid${kids.id}">${kids.firstName}</label>
@@ -109,7 +104,6 @@
                             </c:forEach>
 
                             <c:forEach items="${kids}" var="kids" varStatus="loop">
-
                                 <tr>
                                     <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment
                                         for ${kids.firstName}:</label>
@@ -119,8 +113,6 @@
                                     <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
                                     <br>
                                 </tr>
-
-
                             </c:forEach>
                             <input id="number-of-kids" hidden value="${fn:length(kids)}">
                         </table>
@@ -189,8 +181,8 @@
 
     <div id='user-calendar'></div>
 
-
 </sec:authorize>
+
 <sec:authorize access="hasRole('MANAGER')">
 
 
@@ -199,6 +191,7 @@
         ${r.id}
 
     </c:forEach>
+
 
     <div class="container">
         <div class="vertical-center-row">
@@ -215,10 +208,12 @@
                             <label for="recurrent-event-start-date">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-event-start-date" placeholder="startDate">
+                                <input type="date" class="form-control" id="recurrent-event-start-date"
+                                       placeholder="startDate">
                             </div>
                             <div class="col-xs-5">
-                                <input id="recurrent-event-start-time" type="text" class="time form-control timepicker" size="6"/>
+                                <input id="recurrent-event-start-time" type="text" class="time form-control timepicker"
+                                       size="6"/>
                             </div>
                         </div>
 
@@ -226,38 +221,44 @@
                             <label for="recurrent-event-end-date">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-event-end-date" placeholder="endDate">
+                                <input type="date" class="form-control" id="recurrent-event-end-date"
+                                       placeholder="endDate">
                             </div>
                             <div class="col-xs-5">
-                                <input id="recurrent-event-end-time" type="text" class="time form-control timepicker" size="6"/>
+                                <input id="recurrent-event-end-time" type="text" class="time form-control timepicker"
+                                       size="6"/>
                             </div>
                         </div>
 
                         <br><br>
-                        <table class="table">
-                            <thead>Check required days</thead>
-                            <tbody>
-                            <tr>
-                                <td><label><input type="checkbox" id="Monday" value="">Monday </label><br></td>
-                                <td><label><input type="checkbox" id="Tuesday" value="">Tuesday</label><br></td>
-                            </tr>
-                            <tr>
-                                <td><label><input type="checkbox" id="Wednesday" value="">Wednesday </label><br>
-                                </td>
-                                <td><label><input type="checkbox" id="Thursday" value="">Thursday</label><br></td>
-                            </tr>
-                            <tr>
-                                <td><label><input type="checkbox" id="Friday" value="">Friday </label><br></td>
-                                <td><label><input type="checkbox" id="Saturday" value="">Saturday</label><br></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                            <%--fefe
 
-                        <div class="form-group">
-                            <label for="recurrent-event-description">Description</label>
-                            <textarea type="text" class="form-control" id="recurrent-event-description"
-                                      placeholder="description"></textarea>
-                        </div>
+
+
+                            <table class="table">
+                                <thead>Check required days</thead>
+                                <tbody>
+                                <tr>
+                                    <td><label><input type="checkbox" id="Monday" value="Mon" class="day">Monday </label><br></td>
+                                    <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day">Tuesday</label><br></td>
+                                </tr>
+                                <tr>
+                                    <td><label><input type="checkbox" id="Wednesday" value="Wed" class="day">Wednesday </label><br>
+                                    </td>
+                                    <td><label><input type="checkbox" id="Thursday" value="Thu" class="day">Thursday</label><br></td>
+                                </tr>
+                                <tr>
+                                    <td><label><input type="checkbox" id="Friday" value="Fri" class="day">Friday </label><br></td>
+                                    <td><label><input type="checkbox" id="Saturday" value="Sat" class="day">Saturday</label><br></td>
+                                </tr>
+                                </tbody>
+                            </table>
+    --%>
+
+                        <label for="recurrent-event-description">Description</label>
+                            <textarea class="form-control" id="recurrent-event-description"
+                                      placeholder="description" cols="30"></textarea>
+
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="recurrent-event-create">Create</button>
                         </div>
@@ -276,20 +277,26 @@
                     <form id="form">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
-
-                            <div class="text-center">
-                                <button type="button" class="btn btn-info" id="recurrent">Recurrent</button>
-                            </div>
-
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
-
+                        <select id="color-select">
+                            <option value="#ff0000" style="background:red"></option>
+                            <option value="#ffff00" style="background:yellow"></option>
+                            <option value="#800080" style="background:purple"></option>
+                            <option value="#0000ff" style="background:blue"></option>
+                            <option value="#6AA4C1" style="background:#6AA4C1" selected="selected"></option>
+                            <option value="#808080" style="background:grey"></option>
+                            <option value="#008000" style="background:green"></option>
+                            <option value="#ffa500" style="background:orange"></option>
+                            <option value="#00ffff" style="background:aqua"></option>
+                            <option value="#ffd700" style="background:gold"><br></option>
+                        </select>
                         <div class="form-group">
                             <label for="title">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="title" placeholder="startDate" readonly>
+                                <input type="date" class="form-control" id="title" placeholder="startDate">
                             </div>
                             <div class="col-xs-5">
                                 <input id="basicExample" type="text" class="time form-control timepicker" size="6"/>
@@ -297,12 +304,11 @@
                         </div>
                         <br>
 
-
                         <div class="form-group">
                             <label for="endDate">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="text" class="form-control" id="endDate" placeholder="endDate" readonly>
+                                <input type="date" class="form-control" id="endDate" placeholder="endDate">
                             </div>
                             <div class="col-xs-5">
                                 <input id="ender" type="text" class="time form-control timepicker" size="6"/>
@@ -310,21 +316,71 @@
                         </div>
 
 
-                        <div class="form-group">
-                            <label for="Description">Description</label>
-                            <textarea type="text" class="form-control" id="description"
-                                      placeholder="description"></textarea>
-                        </div>
-                        <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="creating">Create</button>
-                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <form role="form">
+                                    <div class="row col-xs-2">
+                                        <br>
+                                        <div class="radio-button">
+                                            <label><input type="radio" name="optradio" id="no-recurrent"
+                                                          class="my-radio" checked>Single event</label>
+                                        </div>
+                                        <div class="radio-button">
+                                            <label><input type="radio" name="optradio" id="weekly" class="my-radio">Weekly</label>
+                                        </div>
+                                        <div class="radio-button" hidden>
+                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio">Monthly</label>
+                                        </div>
+                                    </div>
+                                    <div class="row col-xs-4" id="days-for-recurrent-form" hidden>
+                                        <table class="table" id="days-for-recurrent">
+                                            <br>
+                                            <thead>Check required days</thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><label><input type="checkbox" id="Monday" value="Mon" class="day">Monday</label><br>
+                                                </td>
+                                                <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day">Tuesday</label><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label><input type="checkbox" id="Wednesday" value="Wed"
+                                                                  class="day">Wednesday</label><br>
+                                                </td>
+                                                <td><label><input type="checkbox" id="Thursday" value="Thu" class="day">Thursday</label><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label><input type="checkbox" id="Friday" value="Fri" class="day">Friday</label><br>
+                                                </td>
+                                                <td><label><input type="checkbox" id="Saturday" value="Sat" class="day">Saturday</label><br>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
 
+
+                                <br><br><br><br><br><br><br><br><br><br>
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="description" placeholder="description">
+
+
+                                <div class="col-xs-3">
+                                    <button type="button" class="btn btn-success live" id="creating">Create</button>
+                                </div>
+                                <div align="right" class="col-xs-2">
+                                    <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="container">
         <div class="vertical-center-row">
@@ -336,7 +392,6 @@
                             <label for="titleUpdate">Event title</label>
                             <input type="text" class="form-control" id="titleUpdate" placeholder="title">
                         </div>
-
 
                         <div class="form-group">
                             <label for="startDayUpdate">Start date</label>
@@ -351,7 +406,6 @@
                         </div>
                         <br>
 
-
                         <div class="form-group">
                             <label for="endDateUpdate">End date</label>
                             <br>
@@ -363,7 +417,6 @@
                                 <input id="endTimeUpdate" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
-
 
                         <div class="form-group">
                             <label for="descriptionUpdate">Description</label>
@@ -381,8 +434,32 @@
     </div>
 
 
-    <div id='calendar'></div>
 
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="choose-updating-type" class="dialog" hidden>
+                    <form id="choose-updating-form">
+
+                        <div class="radio-button">
+                            <label><input type="radio" id="single-update"  name="radio" checked>Just this one</label>
+                        </div>
+                        <div class="radio-button">
+                            <label><input type="radio" id="recurrent-update" name="radio">The entire series</label>
+                        </div>
+
+                        <button type="button" class="btn btn-success" id="confirm-choose">Ok</button>
+                        <button type="button" class="btn btn-danger" id="cancel-choose">Cancel</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-info" id="create-new-event">New event</button>
+    <div id='calendar'></div>
 
 </sec:authorize>
 <sec:authorize access="hasRole('ADMINISTRATOR')">

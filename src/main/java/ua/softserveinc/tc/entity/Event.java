@@ -42,6 +42,20 @@ public class Event {
     @Column(name = EventConstants.Entity.DESCRIPTION)
     private String description;
 
+    @Column(name = EventConstants.Entity.ID_RECURRENT, columnDefinition = "bigint(20) default NULL")
+    private Long recurrentId;
+
+    @Column(name = EventConstants.Entity.COLOR, columnDefinition = "char(7) default '#6AA4C1'")
+    private String color;
+
+    public Long getRecurrentId() {
+        return recurrentId;
+    }
+
+    public void setRecurrentId(Long recurrentId) {
+        this.recurrentId = recurrentId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -106,6 +120,14 @@ public class Event {
         this.description = description;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -148,7 +170,6 @@ public class Event {
     }
 
     @Override
-
     public String toString() {
         return " " + name + " " + DateUtil.toIsoString(startTime) +
                 " " + DateUtil.toIsoString(endTime) + " ";

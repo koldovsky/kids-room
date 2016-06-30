@@ -44,7 +44,7 @@ public class MyKidsPageController {
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.MY_KIDS);
         User current =  userService.getUserByEmail(principal.getName());
-        if(current.getRole()!= Role.USER) {
+        if(current.getRole() != Role.USER) {
             throw new AccessDeniedException("Only parents have access to this page");
         }
 

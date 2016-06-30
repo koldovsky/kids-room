@@ -7,7 +7,6 @@ import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.*;
-import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.UserService;
 
 import javax.persistence.EntityManager;
@@ -21,9 +20,6 @@ import java.util.List;
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private BookingDao bookingDao;
@@ -59,6 +55,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public void deleteUserById(Long id) {
+        //TODO: unit-test fails on this method
         userDao.deleteUserById(id);
     }
 
