@@ -1,23 +1,35 @@
 
 $(document).ready(function() {
     $(function() {
+       $.validator.addMethod("regexName", function(value, element, regexpr) {
+          return regexpr.test(value);
+       }, "Invalid name.");
+       $.validator.addMethod("regexAddress", function(value, element, regexpr) {
+          return regexpr.test(value);
+       }, "Invalid address.");
        $.validator.addMethod("regexCity", function(value, element, regexpr) {
           return regexpr.test(value);
-       }, "Please enter valid phone number. Example 0123456789");
+       }, "Invalid city.");
+       $.validator.addMethod("regexPhone", function(value, element, regexpr) {
+          return regexpr.test(value);
+       }, "Invalid phone number.");
         $('#roomForm').validate({
             rules:{
                 name: {
-                    required: true
+                    required: true,
+                    regexName: /^\S*$/
                 },
                 address:{
-                    required: true
-                    regexCity: /^\w\S*$"/
+                    required: true,
+                    regexAddress: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\s]+$/
                 },
                 city: {
-                    required: true
+                    required: true,
+                    regexCity: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя]+$/
                 },
                 phoneNumber:{
-                    required: true
+                    required: true,
+                    regexPhone: /[0-9]{10,14}/
                 },
                 capacity: {
                     min: 1,
