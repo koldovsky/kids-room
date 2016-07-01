@@ -30,6 +30,9 @@ public final class ValidationConstants {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String CONFIRM = "confirm";
 
+    public static final String TIME_IS_NOT_VALID = "administrator.timeStartEnd";
+    public static final String TIME_FIELD = "timeStartEnd";
+
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
     public static final String EMPTY_FIELD_MSG = "registration.empty";

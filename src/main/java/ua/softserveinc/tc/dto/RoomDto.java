@@ -58,6 +58,8 @@ public class RoomDto {
     @RateValidation
     private String rate;
 
+    private String timeStartEnd;
+
     private List<String> namesOfManagers;
 
     private boolean active;
@@ -112,6 +114,14 @@ public class RoomDto {
         resultRoom.setRates(JsonUtil.fromJsonList(roomDto.getRate(), Rate[].class));
         resultRoom.getRates().stream().forEach(r -> r.setRoom(resultRoom));
         return resultRoom;
+    }
+
+    public String getTimeStartEnd() {
+        return timeStartEnd;
+    }
+
+    public void setTimeStartEnd(String timeStartEnd) {
+        this.timeStartEnd = timeStartEnd;
     }
 
     public Long getId() {

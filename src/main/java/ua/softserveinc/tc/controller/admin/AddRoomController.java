@@ -16,6 +16,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.JsonUtil;
+import ua.softserveinc.tc.validator.TimeValidator;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,6 +36,9 @@ public class AddRoomController {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private TimeValidator timeValidator;
 
 
     /**
@@ -65,6 +69,7 @@ public class AddRoomController {
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView saveNewRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                     BindingResult bindingResult) {
+        this.timeValidator.validate(roomDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return new ModelAndView(AdminConstants.ADD_ROOM).addObject(AdminConstants.MANAGER_LIST,
                     this.userService.findAllUsersByRole(Role.MANAGER));
