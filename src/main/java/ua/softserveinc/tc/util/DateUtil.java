@@ -2,6 +2,7 @@ package ua.softserveinc.tc.util;
 
 import org.slf4j.Logger;
 import ua.softserveinc.tc.constants.DateConstants;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,14 +27,12 @@ public final class DateUtil {
         // Suppresses default constructor, ensuring non-instantiability.
     }
 
-    //TODO: remove "return null" from all the methods
-
     public static Date toDate(String date) {
         try {
             return dateFormat.parse(date);
         } catch (ParseException e) {
             log.error("Error convert to date", e);
-            return null;
+            throw new ResourceNotFoundException();
         }
     }
 
@@ -42,7 +41,7 @@ public final class DateUtil {
             return dateAndTimeFormat.parse(date);
         } catch (ParseException e) {
             log.error("Error convert to date and time", e);
-            return null;
+            throw new ResourceNotFoundException();
         }
     }
 
@@ -51,7 +50,7 @@ public final class DateUtil {
             return isoDateFormat.parse(dateToParse);
         } catch (ParseException e) {
             log.error("Error convert to date ISO format", e);
-            return null;
+            throw new ResourceNotFoundException();
         }
     }
 
@@ -129,7 +128,7 @@ public final class DateUtil {
             return dateAndTimeFormat.parse(toDay);
         } catch (ParseException e) {
             log.error("Error. Set time", e);
-            return null;
+            throw new ResourceNotFoundException();
         }
     }
 
