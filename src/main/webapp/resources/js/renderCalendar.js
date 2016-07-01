@@ -5,11 +5,13 @@
 var beforeUpdate;
 var info;
 var creatingEvent;
-
+var allEvents;
 var ACTIVE_EVENT = '#6AA4C1';
 var NOT_ACTIVE_EVENT = '#33cc33';
 
 $(function () {
+
+    $('#update-recurrent').hide();
 
     $('.modal-dialog-recurrently').dialog({
         modal: true,
@@ -47,6 +49,7 @@ $(function () {
             duration: 500
         }
     });
+
     $('#updating').dialog({
         autoOpen: false,
         title: 'Change event'
@@ -88,7 +91,7 @@ $(function () {
     });
 
     $('#creating').click(function () {
-        creatingEvent.clickDate = $('#title').val();
+   /*     creatingEvent.clickDate = $('#title').val();
         creatingEvent.clickDate = creatingEvent.clickDate + 'T00:00:00';
 
         var endDate = $('#endDate').val() +'T00:00:00';
@@ -157,7 +160,9 @@ $(function () {
 
         $('#title').val('');
         $('#dialog').dialog('close');
-        closeDialog('dialog');
+        closeDialog('dialog');*/
+
+        createRecurrentEvents();
     });
 
     $('#recurrent').click(function () {
@@ -167,40 +172,10 @@ $(function () {
         $('#recurrent-event-end-date').val($('#endDate').val());
     });
 
-    //Deprecated
-    $('#recurrent-event-create').click(function () {
-        var startDate = $('#recurrent-event-start-date').val();
-        var endDate = $('#recurrent-event-end-date').val();
-
-        startDate += "T00:00:00";
-        endDate += "T00:00:00";
-
-        startDate = makeISOTime(startDate, 'recurrent-event-start-time');
-        endDate = makeISOTime(endDate, 'recurrent-event-end-time');
-
-        var recurrentEvents = {
-            name: $('#recurrent-event-title').val(),
-            startTime: startDate,
-            endTime: endDate,
-            roomId: localStorage["roomId"],
-            description: $('#recurrent-event-description').val()
-        };
-
-        $('#dialog-recurrently').dialog('close');
+    $('#cancel').click(function (){
+        $('#title').val('');
         $('#dialog').dialog('close');
-
-        var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var dayWhenEventIsRecurrent = [];
-        var indexForRecurrentDay = 0;
-
-        checkBoxesDays.forEach(function (item) {
-            var ckbox = $('#' + item);
-            if (ckbox.is(':checked')) {
-                dayWhenEventIsRecurrent[indexForRecurrentDay] = ckbox.val();
-                indexForRecurrentDay++;
-            }
-        });
-        sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent);
+        closeDialog('dialog');
     });
 
     $('#create-new-event').click(function () {
@@ -213,6 +188,10 @@ $(function () {
         } else {
             $('#days-for-recurrent-form').attr('hidden', true);
         }
+
+        if ($('#no-recurrent').is(':checked')) {
+            $('#endDate').val($('#title').val());
+        }
     });
 
     $('#confirm-choose').click(function (){
@@ -220,8 +199,14 @@ $(function () {
             $('#choose-updating-type').dialog('close');
             $('#updating').dialog('open');
         }
-    });
 
+        if($('#recurrent-update').is(':checked')) {
+            $('#choose-updating-type').dialog('close');
+            $('#update-recurrent').show();
+            $('#creating').hide();
+            $('#dialog').dialog('open');
+        }
+    });
 
     $('#cancel-choose').click(function () {
         $('#choose-updating-type').dialog('close');
@@ -229,6 +214,18 @@ $(function () {
         $("#single-update").prop("checked", true);
 
         $("#recurrent-update").prop("checked", false);
+    });
+
+    $('#update-recurrent').click(function (){
+
+        for(var i = 0; i < allEvents.length; i++) {
+            if(allEvents[i].recurrentId === info.calEvent.recurrentId) {
+                $('#calendar').fullCalendar('removeEvents', allEvents[i].id);
+                sendToServerForDelete(allEvents[i]);
+            }
+        }
+
+        createRecurrentEvents();
     });
 });
 
@@ -290,6 +287,7 @@ function selectRoomForManager(id) {
 function renderCalendarForManager(objects, roomID) {
     info = {};
     creatingEvent = {};
+    allEvents = objects;
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
@@ -319,10 +317,17 @@ function renderCalendarForManager(objects, roomID) {
 
             beforeUpdate = calEvent.title;
 
-            $('#titleUpdate').val(calEvent.title);
-            $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
-            $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
-            $('#descriptionUpdate').val(calEvent.description);
+            $('#titleUpdate').val(calEvent.title);                                  //назва
+            $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));     //дата початку
+            $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));        //дата кінця
+            $('#descriptionUpdate').val(calEvent.description);                      //опис
+
+
+            $('#startDate').val(calEvent.title);                                  //назва
+            $('#title').val(calEvent.start.format().substring(0, 10));     //дата початку
+            $('#endDate').val(calEvent.end.format().substring(0, 10));        //дата кінця
+            $('#description').val(calEvent.description);
+
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
@@ -330,11 +335,12 @@ function renderCalendarForManager(objects, roomID) {
             var newDate = makeUTCTime(new Date(), date);
             var newDateForEnd = makeUTCTime(new Date(), endDate);
 
-            $('#startTimeUpdate').timepicker('setTime', newDate);
-            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);
+            $('#startTimeUpdate').timepicker('setTime', newDate);                   //час початку
+            $('#endTimeUpdate').timepicker('setTime', newDateForEnd);               //час кінця
 
+            $('#basicExample').timepicker('setTime', newDate);                   //час початку
+            $('#ender').timepicker('setTime', newDateForEnd);               //час кінця
 
-            //переніс info треба чекнути чи працює
             info.beforeUpdate = beforeUpdate;
             info.endDate = endDate;
             info.calEvent = calEvent;
@@ -358,7 +364,7 @@ function renderCalendarForManager(objects, roomID) {
             $('#dialog').dialog('open');
 
             /**
-             * This if statement provide that click on day
+             * This 'if' statement provide that click on day
              * will have start date and end date the same
              */
             if (start.format().length < 11) {
@@ -460,6 +466,79 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
     });
 }
 
+function createRecurrentEvents() {
+    creatingEvent.clickDate = $('#title').val();
+    creatingEvent.clickDate = creatingEvent.clickDate + 'T00:00:00';
+
+    var endDate = $('#endDate').val() +'T00:00:00';
+
+    var eventColor = $('#color-select').val();
+
+    var ev = {
+        id: -1,
+        title: $('#startDate').val(),
+        start: makeISOTime(creatingEvent.clickDate, 'basicExample'),
+        end: makeISOTime(endDate, 'ender'),
+        backgroundColor: NOT_ACTIVE_EVENT,
+        borderColor: NOT_ACTIVE_EVENT,
+        editable: false,
+        description: $('#description').val()
+    };
+
+    if ($('#weekly').is(':checked')) {
+        var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayWhenEventIsRecurrent = [];
+        var indexForRecurrentDay = 0;
+
+        checkBoxesDays.forEach(function (item) {
+            var ckbox = $('#' + item);
+            if (ckbox.is(':checked')) {
+                dayWhenEventIsRecurrent[indexForRecurrentDay] = ckbox.val();
+                indexForRecurrentDay++;
+            }
+        });
+        sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor);
+
+        $('#title').val('');
+        $('#dialog').dialog('close');
+        closeDialog('dialog');
+        return;
+    }
+
+    $('#calendar').fullCalendar('renderEvent', ev, true);
+    $('#calendar').fullCalendar('unselect');
+
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'getnewevent',
+        dataType: 'json',
+        data: JSON.stringify({
+            name: ev.title,
+            startTime: ev.start,
+            endTime: ev.end,
+            roomId: localStorage["roomId"],
+            description: ev.description,
+            color: eventColor
+        }),
+        success: function (result) {
+            var newId = parseInt(result);
+
+            $('#calendar').fullCalendar('removeEvents', ev.id);
+
+            ev.id = newId;
+            ev.backgroundColor = eventColor;
+            ev.borderColor = '#000000';
+
+            $('#calendar').fullCalendar('renderEvent', ev);
+        }
+    });
+
+    $('#title').val('');
+    $('#dialog').dialog('close');
+    closeDialog('dialog');
+}
+
 /**
  * This function using for unchecking all checkboxes
  * and setting all fields in original state
@@ -468,4 +547,7 @@ function closeDialog(divid) {
     $('#' + divid + ' :checkbox:enabled').prop('checked', false);
     $("#no-recurrent").prop("checked", true);
     $('#days-for-recurrent-form').attr('hidden', true);
+    $('#update-recurrent').hide();
+    $('#creating').show();
+
 }

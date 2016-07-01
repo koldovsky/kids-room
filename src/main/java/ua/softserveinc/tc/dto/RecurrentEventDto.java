@@ -13,6 +13,7 @@ public class RecurrentEventDto {
 
     @Autowired
     private GenericMapper<Event, EventDto> genericMapper;
+
     private long id;
 
     private String name;
