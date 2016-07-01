@@ -6,9 +6,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import ua.softserveinc.tc.constants.ChildConstants;
 
 import javax.persistence.*;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,8 +21,7 @@ import java.util.Date;
 @Table(name = ChildConstants.TABLE_NAME)
 @Indexed
 @Embeddable
-public class Child implements Comparable<Child>
-{
+public class Child implements Comparable<Child> {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -39,13 +40,13 @@ public class Child implements Comparable<Child>
 
     @ManyToOne
     @JoinColumn(name = ChildConstants.ID_PARENT,
-    nullable = false)
+            nullable = false)
     @Embedded
     @IndexedEmbedded
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)
-    @DateTimeFormat(pattern= ChildConstants.DATE_FORMAT)
+    @DateTimeFormat(pattern = ChildConstants.DATE_FORMAT)
     @Column(name = ChildConstants.DATE_OF_BIRTH, nullable = false)
     private Date dateOfBirth;
 
@@ -138,13 +139,12 @@ public class Child implements Comparable<Child>
     }
 
 
-
     @Override
     public String toString() {
         return firstName;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 
@@ -159,20 +159,28 @@ public class Child implements Comparable<Child>
         return age;
     }
 
+    public boolean isBirthday() {
+        Calendar today = Calendar.getInstance();
+        Calendar dob = Calendar.getInstance();
+        dob.setTime(dateOfBirth);
+        return (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH))
+                && (today.get(Calendar.DAY_OF_MONTH) == dob.get(Calendar.DAY_OF_MONTH));
+    }
+
     @Override
     public int compareTo(Child that) {
         int res = this.dateOfBirth.compareTo(that.getDateOfBirth());
-        if(res != 0) {
+        if (res != 0) {
             return res;
         }
 
         res = this.firstName.compareTo(that.getFirstName());
-        if(res != 0) {
+        if (res != 0) {
             return res;
         }
 
         res = this.lastName.compareTo(that.getLastName());
-        if(res != 0) {
+        if (res != 0) {
             return res;
         }
         return this.gender.compareTo(that.getGender());

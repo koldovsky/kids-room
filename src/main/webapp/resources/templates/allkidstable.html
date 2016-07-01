@@ -1,3 +1,7 @@
+<ul class="nav nav-pills" id="child-picker">
+    <li role="presentation" class="active" id="room-children" ng-click="toggleInRoomChildren()"><a href="#">Room</a></li>
+    <li role="presentation" id="all-children" ng-click="toggleAllChildren()"><a href="#">All kids</a></li>
+</ul>
 <div class="span4">
     <div id="all_kids_search" class="input-group">
         <input type="text" class="form-control" placeholder="{{locale['search']}}" ng-model="childSearchField"
@@ -103,7 +107,7 @@
                 <div class="span6 kid_info">
                     <div>
                         <div class="span10">
-                            <p>{{locale['kids.gender']}}</p>
+                            <p>{{locale['kid.gender']}}</p>
                         </div>
                         <md-select ng-model="newChild.gender" placeholder="Boy">
                             <md-option ng-repeat="key in genderKeys"
@@ -160,6 +164,7 @@
             <div class="td span3">
                 <p>
                     {{ child.fullName }}
+                    <span ng-if="child.isBirthday" style="color: red;" class="glyphicon glyphicon-gift" aria-hidden="true"></span>
                 </p>
             </div>
 

@@ -361,13 +361,16 @@
                                     </div>
                                 </form>
 
-
-                                <br><br><br><br><br><br><br><br><br><br>
-                                <label for="description">Description</label>
-                                <input type="text" class="form-control" id="description" placeholder="description">
-
-
+                                <div class="clearfix"></div>
+                                <div class="col-sm-5">
+                                    <label for="description">Description</label>
+                                    <input type="text" size="15" class="form-control" id="description"
+                                           placeholder="description">
+                                </div>
+                                <br>
+                                <div class="clearfix"></div>
                                 <div class="col-xs-3">
+                                    <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="creating">Create</button>
                                 </div>
                                 <div align="right" class="col-xs-2">

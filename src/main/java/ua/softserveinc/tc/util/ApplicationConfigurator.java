@@ -29,7 +29,6 @@ public interface ApplicationConfigurator {
      */
     String getServerName();
 
-
     /**
      * Each day the COMPLETED bookings are (re)calculated
      * the next 2 methods return the time of this recalculation

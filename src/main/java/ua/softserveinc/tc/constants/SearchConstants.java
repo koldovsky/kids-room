@@ -5,7 +5,7 @@ package ua.softserveinc.tc.constants;
  */
 public final class SearchConstants {
 
-    private static final String[] CHILD_SEARCH_FIELDS = {"firstName", "lastName", "parentId.firstName", "parentId.lastName"};
+    private static final String[] CHILD_SEARCH_FIELDS = {"firstName", "lastName"};
     private static final String[] USER_SEARCH_FIELDS = {"firstName", "lastName", "email", "phoneNumber"};
     private static final String[] BOOKING_SEARCH_FIELDS = {"child.firstName", "child.lastName"};
 

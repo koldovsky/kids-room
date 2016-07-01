@@ -15,6 +15,7 @@ public class ChildDto {
     private UserDto parentId;
     private Date dateOfBirth;
     private long age;
+    private Boolean isBirthday;
     private String comment;
 
     public ChildDto(Child child) {
@@ -24,6 +25,7 @@ public class ChildDto {
         this.parentId = new UserDto(child.getParentId());
         this.dateOfBirth = child.getDateOfBirth();
         this.age = child.getAge();
+        this.isBirthday = child.isBirthday();
         this.comment = child.getComment();
     }
 
@@ -73,6 +75,14 @@ public class ChildDto {
 
     public void setAge(long age) {
         this.age = age;
+    }
+
+    public Boolean getBirthday() {
+        return isBirthday;
+    }
+
+    public void setBirthday(Boolean birthday) {
+        isBirthday = birthday;
     }
 
     public String getComment() {
