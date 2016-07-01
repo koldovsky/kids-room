@@ -25,19 +25,19 @@ public class RoomDto {
     private Long id;
 
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.NO_SPACES_REGEX, message = ValidationConstants.NO_SPACES_MESSAGE)
+    @Pattern(regexp = ValidationConstants.LETTERS_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String name;
 
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.NO_SPACES_REGEX, message = ValidationConstants.NO_SPACES_MESSAGE)
+    @Pattern(regexp = ValidationConstants.LETTERS_NUMBERS_SPACES_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String address;
 
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.NO_SPACES_REGEX, message = ValidationConstants.NO_SPACES_MESSAGE)
+    @Pattern(regexp = ValidationConstants.LETTERS_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String city;
 
     @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.PHONE_NUMBER_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
+    @Pattern(regexp = ValidationConstants.SIMPLY_PHONE_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String phoneNumber;
 
     @NotNull(message = ValidationConstants.NOT_EMPTY_MESSAGE)

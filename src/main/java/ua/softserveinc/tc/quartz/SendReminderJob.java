@@ -14,6 +14,7 @@ import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
 import javax.mail.MessagingException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +36,10 @@ public class SendReminderJob {
 
     private void task() {
         Date today = DateUtil.dateNow().getTime();
-        Date tomorrow = DateUtil.dateTomorrow().getTime();
+        Calendar calendar = DateUtil.dateNow();
+        calendar.add(Calendar.DAY_OF_MONTH, 2);
+        Date tomorrow = calendar.getTime();
+
         bookingService.getBookings(today, tomorrow, BookingState.BOOKED)
                 .stream()
                 .collect(Collectors.groupingBy(Booking::getUser))
@@ -44,10 +48,10 @@ public class SendReminderJob {
                         List<BookingDto> dtos = bookings
                                 .stream().map(Booking::getDto).collect(Collectors.toList());
                         mailService.sendReminder(recipient, MailConstants.REMINDER_SUBJECT, dtos);
+
                     } catch (MessagingException me){
                         logger.error("Error sending e-mail", me);
                     }
                 });
-
     }
 }

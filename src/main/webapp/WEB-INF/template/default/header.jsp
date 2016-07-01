@@ -60,7 +60,7 @@
                                     <ul id="selectRoom" class="dropdown-menu">
                                     <c:forEach items="${rooms}" var="room">
                                         <li>
-                                            <a class="langitem" id="${room.id}">${room.address}</a>
+                                            <a style="cursor: pointer;" id="${room.id}">${room.address}</a>
                                         </li>
                                     </c:forEach>
                                     </ul>

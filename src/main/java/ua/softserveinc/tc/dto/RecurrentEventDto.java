@@ -33,7 +33,7 @@ public class RecurrentEventDto {
 
     private String daysOfWeek;
 
-    private transient Event event;
+    private String color;
 
     public Event toEvent() {
         EventDto eventDto = new EventDto();
@@ -128,5 +128,13 @@ public class RecurrentEventDto {
 
     public void setDaysOfWeek(String daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

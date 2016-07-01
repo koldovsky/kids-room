@@ -6,14 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.EventConstants;
-import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
-import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
@@ -21,7 +20,6 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.List;
 
 /**
  * Created by dima- on 07.05.2016.
@@ -34,7 +32,7 @@ public class ViewEventController {
     @Autowired
     private CalendarService calendarService;
     @Autowired
-    private RoomService roomServiceImpl;
+    private RoomService roomService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -50,7 +48,7 @@ public class ViewEventController {
 
             switch (user.getRole()) {
                 case USER:
-                    model.addAttribute(UserConstants.Entity.ROOMS, roomServiceImpl.findAll());
+                    model.addAttribute(UserConstants.Entity.ROOMS, roomService.findAll());
                     model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
                     model.addAttribute(UserConstants.Entity.USERID, user.getId());
                     return EventConstants.View.MAIN_PAGE;
@@ -58,7 +56,8 @@ public class ViewEventController {
                     model.addAttribute(UserConstants.Entity.ROOMS, user.getRooms());
                     return EventConstants.View.MAIN_PAGE;
                 default:
-                    return ReportConstants.STATISTICS_VIEW;
+                    model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
+                    return AdminConstants.EDIT_ROOM;
             }
         }
     }
@@ -66,7 +65,6 @@ public class ViewEventController {
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
-        System.out.println(eventDao.getMaxRecurrentId());
         return new Gson().toJson(calendarService.findByRoomId(id));
     }
 
@@ -91,7 +89,6 @@ public class ViewEventController {
     @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
-
         System.out.println(calendarService.createRecurrentEvents(recurrentEventDto));
         return null;
     }

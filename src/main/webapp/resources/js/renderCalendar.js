@@ -91,8 +91,10 @@ $(function () {
         creatingEvent.clickDate = $('#title').val();
         creatingEvent.clickDate = creatingEvent.clickDate + 'T00:00:00';
 
-
         var endDate = $('#endDate').val() +'T00:00:00';
+
+        var eventColor = $('#color-select').val();
+
         var ev = {
             id: -1,
             title: $('#startDate').val(),
@@ -116,7 +118,7 @@ $(function () {
                     indexForRecurrentDay++;
                 }
             });
-            sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent);
+            sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor);
 
             $('#title').val('');
             $('#dialog').dialog('close');
@@ -137,7 +139,8 @@ $(function () {
                 startTime: ev.start,
                 endTime: ev.end,
                 roomId: localStorage["roomId"],
-                description: ev.description
+                description: ev.description,
+                color: eventColor
             }),
             success: function (result) {
                 var newId = parseInt(result);
@@ -145,8 +148,8 @@ $(function () {
                 $('#calendar').fullCalendar('removeEvents', ev.id);
 
                 ev.id = newId;
-                ev.backgroundColor = ACTIVE_EVENT;
-                ev.borderColor = ACTIVE_EVENT;
+                ev.backgroundColor = eventColor;
+                ev.borderColor = '#000000';
 
                 $('#calendar').fullCalendar('renderEvent', ev);
             }
@@ -257,6 +260,8 @@ function selectRoomForManager(id) {
                         editable: false,
                         type: 'event',
                         description: result[i].description,
+                        color: result[i].color,
+                        borderColor: '#000000',
                         recurrentId: result[i].recurrentId
                     }
                 }
@@ -337,10 +342,13 @@ function renderCalendarForManager(objects, roomID) {
             info.date = date;
             info.description = $('#descriptionUpdate').val();
 
-            if(!!calEvent.recurrentId)
+
+            if (!!calEvent.recurrentId) {
                 $('#choose-updating-type').dialog('open');
-            else
-            $('#updating').dialog('open');
+            }
+            else {
+                $('#updating').dialog('open');
+            }
         },
 
         selectable: true,
@@ -423,7 +431,7 @@ function makeUTCTime(time, date) {
     return time;
 }
 
-function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
+function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
     var stringWithDaysForRecurrent = '';
 
     dayWhenEventIsRecurrent.forEach(function (item) {
@@ -442,7 +450,9 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
             endTime: recurrentEvents.end,
             daysOfWeek: stringWithDaysForRecurrent,
             roomId: localStorage["roomId"],
-            description: recurrentEvents.description
+            description: recurrentEvents.description,
+            color: eventColor,
+            borderColor: '#000000'
         }),
         success: function (result) {
             alert(result);
