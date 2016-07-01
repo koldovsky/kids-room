@@ -8,15 +8,18 @@ public final class ValidationConstants {
     public static final String PASSWORD_REGEX = "^(\\S){8,24}$";
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
-    public static final String NO_SPACES_REGEX = "^\\S*$";
-    public static final String SIMPLY_PHONE_REGEX = "[0-9]{10,14}";
+    public static final String SIMPLY_PHONE_REGEX = "^([0-9]{10,14})*$";
+    public static final String LETTERS_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦц" +
+            "ЧчШшЩщЬьЮюЯя]*$";
+    public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОо" +
+            "ПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\\s]*$";
     public static final String SIMPLE_EMAIL_REGEX = "^[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@(([0-9]{1,3})|([a-zA-Z]{2,11})" +
             "|(aero|coop|info|museum|name))+(\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name)))*" +
             "\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))*$";
 
     public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
     public static final String NOT_EMPTY_MESSAGE = "May not be empty.";
-    public static final String NOT_VALID_MESSAGE = "Value is invalid. Enter right value.";
+    public static final String NOT_VALID_MESSAGE = "Value is invalid.";
 
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
@@ -31,7 +34,7 @@ public final class ValidationConstants {
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
     public static final String EMPTY_FIELD_MSG = "registration.empty";
 
-    public static final String EMAIL_NOT_VALID= "registration.manager.emailNotValid";
+    public static final String EMAIL_NOT_VALID = "registration.manager.emailNotValid";
     public static final String NAME_ERROR_MSG = "registration.kid.name";
     public static final String DATE_ERROR_MSG = "registration.kid.date";
     public static final String PASSWORD_ERROR_MSG = "registration.password";
@@ -76,6 +79,7 @@ public final class ValidationConstants {
 
         public static final String MAX_UPLOAD_IMG_SIZE = "maxUploadImgSizeMb";
 
-        private ConfigFields(){}
+        private ConfigFields() {
+        }
     }
 }

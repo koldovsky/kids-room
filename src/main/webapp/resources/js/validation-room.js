@@ -17,7 +17,7 @@ $(document).ready(function() {
             rules:{
                 name: {
                     required: true,
-                    regexName: /^\S*$/
+                    regexName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\s]+$/
                 },
                 address:{
                     required: true,
