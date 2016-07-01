@@ -1,14 +1,15 @@
 
 'use strict';
 
-function AllKidsTableController($scope, allKidsTableService) {
+function AllKidsTableController($scope, $window, $location, allKidsTableService) {
 
     $scope.children = [];
     $scope.parents = [];
     $scope.locale = [];
 
+    $scope.allChildren = false;
+
     $scope.newChildFormIsShown = false;
-    $scope.pageSize = 10;
     $scope.newChild = {};
 
     $scope.predicate = 'id';
@@ -17,8 +18,13 @@ function AllKidsTableController($scope, allKidsTableService) {
     $scope.genders = {'Boy': 'MALE', 'Girl': 'FEMALE'};
     $scope.genderKeys = ['Boy', 'Girl'];
 
-    loadRemoteData();
-    loadLocale("ua");
+    loadChildren();
+
+    if ($location.search().language) {
+        loadLocale($location.search().language);
+    } else {
+        loadLocale('en');
+    }
 
     function applyRemoteChildrenData( newChildren ) {
         for (var i = 0; i < newChildren.length; i++) {
@@ -33,22 +39,60 @@ function AllKidsTableController($scope, allKidsTableService) {
 
     function applyLocale( locale ) {
         $scope.locale = locale;
-        console.log(locale);
     }
 
     function emptyParents() {
         $scope.parents = [];
     }
 
-    function loadRemoteData() {
+    function loadChildrenInRoom() {
 
-        allKidsTableService.getChildren()
+        allKidsTableService.getActiveChildren($window.localStorage.roomId)
             .then(
                 function( children ) {
                     applyRemoteChildrenData( children );
                 }
             )
         ;
+    }
+
+    function loadAllChildren() {
+
+        allKidsTableService.getAllChildren()
+            .then(
+                function( children ) {
+                    applyRemoteChildrenData( children );
+                }
+            )
+        ;
+    }
+
+    function loadChildren() {
+        if ($scope.allChildren) {
+            loadAllChildren();
+        } else {
+            loadChildrenInRoom();
+        }
+    }
+
+    function toggleAllChildren() {
+        if (!$scope.allChildren) {
+            $scope.allChildren = !$scope.allChildren;
+            toggleChildrenButtonActive();
+        }
+    }
+
+    function toggleInRoomChildren() {
+        if ($scope.allChildren) {
+            $scope.allChildren = !$scope.allChildren;
+            toggleChildrenButtonActive();
+        }
+    }
+
+    function toggleChildrenButtonActive() {
+        loadChildren();
+        $('#all-children').toggleClass('active');
+        $('#room-children').toggleClass('active');
     }
 
     function searchChildren( field ) {
@@ -146,6 +190,8 @@ function AllKidsTableController($scope, allKidsTableService) {
         delete(child.parent);
     }
 
+    $scope.toggleAllChildren = toggleAllChildren;
+    $scope.toggleAllChildren = toggleAllChildren;
     $scope.searchChildren = searchChildren;
     $scope.searchParents = searchParents;
     $scope.toggleCollapseButton = toggleCollapseButton;

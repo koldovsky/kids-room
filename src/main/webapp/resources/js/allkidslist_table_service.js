@@ -4,7 +4,8 @@
 function AllKidsTableService($http, $q) {
 
     return({
-        getChildren: getChildren,
+        getActiveChildren: getActiveChildren,
+        getAllChildren: getAllChildren,
         addChild: addChild,
         searchChildren: searchChildren,
         searchParents: searchParents,
@@ -12,11 +13,11 @@ function AllKidsTableService($http, $q) {
         getLocale: getLocale
     });
 
-    function getChildren() {
+    function getActiveChildren(roomId) {
 
         var request = $http({
             method: "get",
-            url: "api/child",
+            url: "api/room/" + roomId + "/children",
             params: {
                 action: "get"
             }
@@ -24,6 +25,19 @@ function AllKidsTableService($http, $q) {
 
         return ( request.then( handleSuccess, handleError ) );
     }
+
+    function getAllChildren() {
+
+            var request = $http({
+                method: "get",
+                url: "api/child",
+                params: {
+                    action: "get"
+                }
+            });
+
+            return ( request.then( handleSuccess, handleError ) );
+        }
 
     function addChild( child ) {
 
@@ -78,10 +92,9 @@ function AllKidsTableService($http, $q) {
 
             var request = $http({
                 method: "get",
-                url: "api/localization",
+                url: "api/localization/" + locale,
                 params: {
-                    action: "get",
-                    locale: locale
+                    action: "get"
                 }
             });
 

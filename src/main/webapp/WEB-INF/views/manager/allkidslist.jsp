@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<link rel='stylesheet' href='resources/css/disable-room-picker.css'>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div id="all_kids_table_wrapper" ng-app="allKidsList">
     <all-kids-table></all-kids-table>
@@ -12,3 +12,4 @@
 <script src="resources/js/allkidslist_table_service.js"></script>
 <script src="resources/js/allkidslist_table_directive.js"></script>
 <script src="resources/js/allkidslist_app.js"></script>
+<script src="resources/js/header-manager.js"></script>

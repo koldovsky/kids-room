@@ -13,14 +13,10 @@ import ua.softserveinc.tc.util.Log;
 @Controller
 public class AllKidsListController {
 
-    private static @Log org.slf4j.Logger LOG;
-
     @RequestMapping(value = ChildConstants.View.ALL_KIDS_URL, method = RequestMethod.GET)
     public ModelAndView getKidsList() {
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.ALL_KIDS);
-        LOG.error("This is Error message", new Exception("Testing"));
-        LOG.debug("Hello");
 
         return model;
     }
