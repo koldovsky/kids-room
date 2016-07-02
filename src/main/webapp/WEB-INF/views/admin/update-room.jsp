@@ -76,6 +76,8 @@
                                          class="form-control" required="required"/>
                  <form:errors path="workingHoursEnd" cssClass="error"/>
               </label>
+
+              <br><form:errors path="timeStartEnd" cssClass="error"/>
            </div>
 
            <div ng-app="angularjs-starter" ng-controller="MainCtrl">
@@ -84,8 +86,8 @@
                        <spring:message code="administrator.room.manager"/></label>
                    <fieldset data-ng-repeat="manager in managers">
                        <label class="for-field">
-                           <select class="form-control" ng-model="manager.id" managerId=""
-                                   placeholder="manager">
+                           <select class="form-control" ng-model="manager.id" managerId="" placeholder="manager"
+                                   required>
                               <c:forEach var="manager" items="${managerList}">
                                  <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
                               </c:forEach>
@@ -100,19 +102,18 @@
                </div>
 
                <div class="form-group sizing-between">
-                  <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+                  <form name="roomForm" novalidate>
                   <label class="for-field">
                      <spring:message code="administrator.room.rate"/></label>
                      <label class="for-field1"><spring:message code="administrator.room.rate.hourRate"/></label>
                      <label class="for-field2"><spring:message code="administrator.room.rate.priceRate" /></label>
                   <fieldset data-ng-repeat="rate in rates">
                      <label class="for-field1">
-                        <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control" ng-minlength="{ number }"
-                                                                                                                        ng-maxlength="{ number }" required
+                        <input id="myText" type="text" ng-model="rate.hourRate" hourRate="" class="form-control" required
                                placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
                      </label>
                      <label class="for-field2">
-                        <input id="myText" type="text" ng-model="rate.priceRate" priceRate="" class="form-control"  ng-minlength="{ number }" ng-maxlength="{ number }" required
+                        <input id="myText" type="text" ng-model="rate.priceRate" priceRate="" class="form-control" required
                                placeholder=<spring:message code="administrator.room.rate.priceRate"/> />
                      </label>
                   </fieldset>

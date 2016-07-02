@@ -73,6 +73,8 @@
                       <form:input type="time" path="workingHoursEnd" class="form-control"/>
                       <form:errors path="workingHoursEnd" cssClass="error"/>
                    </label>
+
+                   <br><form:errors path="timeStartEnd" cssClass="error"/>
                </div>
 
                <div ng-app="angularjs-starter" ng-controller="MainCtrl">
@@ -81,7 +83,7 @@
                           <spring:message code="administrator.room.manager"/></label>
                        <fieldset  data-ng-repeat="manager in managers">
                            <label class="for-field">
-                               <select class="form-control" ng-model="manager.id" managerId=""
+                               <select class="form-control" ng-model="manager.id" managerId="" required
                                        placeholder="manager">
                                    <c:forEach var="manager" items="${managerList}">
                                       <option value="${manager.id}">${manager.firstName} ${manager.lastName}</option>
@@ -103,11 +105,11 @@
                           <label class="for-field2"><spring:message code="administrator.room.rate.priceRate" /></label>
                        <fieldset  data-ng-repeat="rate in rates">
                           <label class="for-field1">
-                             <input type="number" ng-model="rate.hourRate" hourRate="" class="form-control"
+                             <input type="number" ng-model="rate.hourRate" hourRate="" class="form-control" required
                                     placeholder=<spring:message code="administrator.room.rate.hourRate"/> />
                           </label>
                           <label class="for-field2">
-                             <input type="number" ng-model="rate.priceRate" priceRate="" class="form-control"
+                             <input type="number" ng-model="rate.priceRate" priceRate="" class="form-control" required
                                     placeholder=<spring:message code="administrator.room.rate.priceRate" /> />
                           </label>
                        </fieldset>

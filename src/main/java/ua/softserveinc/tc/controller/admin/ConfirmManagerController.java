@@ -2,7 +2,6 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -78,15 +77,11 @@ public class ConfirmManagerController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult) {
-        User managerToSave = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        managerToSave.setPassword(manager.getPassword());
-        managerToSave.setConfirm(manager.getConfirm());
-
-        this.userValidator.validatePassword(managerToSave, bindingResult);
+        this.userValidator.validatePassword(manager, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.CONFIRM_MANAGER;
         }
-
+        User managerToSave = this.userService.findById(manager.getId());
         managerToSave.setPassword(this.passwordEncoder.encode(manager.getPassword()));
         managerToSave.setConfirmed(true);
 
