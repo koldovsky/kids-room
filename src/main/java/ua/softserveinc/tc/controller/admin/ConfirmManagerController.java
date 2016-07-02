@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,9 +40,6 @@ public class ConfirmManagerController {
     @Autowired
     private UserValidator userValidator;
 
-    @Autowired
-    @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
-    private UserDetailsService userDetailsService;
 
 
     /**
@@ -71,21 +66,22 @@ public class ConfirmManagerController {
      * Save built Manager object into Service layer with method update().
      * Redirect into view, witch mapped by UserConstants.Model.LOGIN_VIEW
      *
-     * @param manager
+     * @param managerWithPassword
      * @param bindingResult
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User manager, BindingResult bindingResult) {
-        this.userValidator.validatePassword(manager, bindingResult);
+    public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User managerWithPassword,
+                                  BindingResult bindingResult) {
+        this.userValidator.validatePassword(managerWithPassword, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.CONFIRM_MANAGER;
         }
-        User managerToSave = this.userService.findById(manager.getId());
-        managerToSave.setPassword(this.passwordEncoder.encode(manager.getPassword()));
-        managerToSave.setConfirmed(true);
+        User manager = this.userService.findById(managerWithPassword.getId());
+        manager.setPassword(this.passwordEncoder.encode(managerWithPassword.getPassword()));
+        manager.setConfirmed(true);
 
-        this.userService.update(managerToSave);
+        this.userService.update(manager);
         return UserConstants.Model.LOGIN_VIEW;
     }
 }
