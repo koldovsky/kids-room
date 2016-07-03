@@ -65,12 +65,14 @@ public class ViewEventController {
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
+        System.out.println(eventDao.getMaxRecurrentId());
         return new Gson().toJson(calendarService.findByRoomId(id));
     }
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String getAjax(@RequestBody EventDto eventDto) {
+
         return calendarService.create(genericMapper.toEntity(eventDto)).toString();
     }
 
