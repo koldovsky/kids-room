@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface BookingDao extends BaseDao<Booking> {
     List<Booking> getBookingsByUserAndRoom(User user, Room room);
+
+    public Long getMaxRecurrentId();
 }

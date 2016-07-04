@@ -91,6 +91,7 @@ public final class BookingConstants {
 
         public static final String BOOKING_STATE = "booking_state";
 
+        public static final String ID_RECURRENT = "id_recurrent";
         private DB(){}
     }
 }
