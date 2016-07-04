@@ -11,7 +11,7 @@ CONTRIBUTORS
 
 PROJECT MANAGERS
 ------------
-* **[Vyacheslav Koldovskyy](https://github.com/koldovsky)
+* **[Vyacheslav Koldovskyy](https://github.com/koldovsky)**
 * **[Andriy Yurenya]
 
 ------------
