@@ -105,6 +105,11 @@ $(function () {
         }
 
         if ($('#no-recurrent-booking').is(':checked')) {
+            var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            checkBoxesDays.forEach(function (item) {
+                $('#' + item + '-booking').attr('checked', false);
+            });
             $('#recurrent-booking-end-date').val($('#recurrent-booking-start-date').val());
         }
     });
