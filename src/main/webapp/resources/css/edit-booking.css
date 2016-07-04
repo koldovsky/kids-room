@@ -104,3 +104,7 @@ html, body, .container {
          background-color: white;
          box-shadow: 8px 11px 20px 12px #c8c6d7;
 }
+
+.table-edit tr:hover {
+    background-color:  #D7D8DA;
+}
