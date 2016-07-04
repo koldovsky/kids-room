@@ -29,12 +29,16 @@ public class ViewEventController {
 
     @Autowired
     GenericMapper<Event, EventDto> genericMapper;
+
     @Autowired
     private CalendarService calendarService;
+
     @Autowired
     private RoomService roomService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private EventDao eventDao;
 
@@ -91,8 +95,7 @@ public class ViewEventController {
     @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
-        System.out.println(calendarService.createRecurrentEvents(recurrentEventDto));
-        return null;
+        return new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto));
     }
 
 

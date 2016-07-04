@@ -39,7 +39,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
                     .getSingleResult();
         }
 */
-   CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Long> q = cb.createQuery(Long.class);
         Root<Event> r = q.from(Event.class);
