@@ -66,6 +66,51 @@ $(function () {
         maxTime: '22:00'
     });
 
+    $('#recurrent-booking-start-time').timepicker({
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: '15:00',
+        maxTime: '22:00'
+    });
+
+    $('#recurrent-booking-end-time').timepicker({
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: '15:00',
+        maxTime: '22:00'
+    });
+
+    $('#make-recurrent-booking').dialog({
+        autoOpen: false,
+        title: 'New booking',
+        width: 550,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
+
+    $('.booking-radio').click(function () {
+        if ($('#weekly-booking').is(':checked')) {
+
+            $('#days-for-recurrent-booking-form').attr('hidden', false);
+        } else {
+
+            $('#days-for-recurrent-booking-form').attr('hidden', true);
+        }
+
+        if ($('#no-recurrent-booking').is(':checked')) {
+            $('#recurrent-booking-end-date').val($('#recurrent-booking-start-date').val());
+        }
+    });
+
+
+
     $('#updatingBooking').click(function () {
         updateBooking();
         $('#bookingUpdatingDialog').dialog('close');
@@ -76,38 +121,23 @@ $(function () {
         cancelBooking(info.id);
     });
 
-    $('#booking').click(function () {
-        createBooking();
-        $('#bookingForm').dialog('close');
-    });
-});
-
-$(function () {
-    $('body').on('click', 'button.fc-prev-button', function () {
-        var moment = $('#user-calendar').fullCalendar('getDate');
-        console.log(moment.format());
-        getDisabledTime("2016-06-22", "2016-06-22", 2);
-
-    });
-    $('body').on('click', 'button.fc-next-button', function () {
-        var moment = $('#user-calendar').fullCalendar('getDate');
-        console.log('next is clicked, do something  ' + moment.format());
-        getDisabledTime("2016-06-22", "2016-06-22", 2);
+    //create booking and close the dialog window
+    $('#book').click(function () {
+        if ($('#no-recurrent-booking').is(':checked')) {
+            closeBookingDialog();
+            createBooking();
+        }
     });
 
-    $('body').on('click', 'button.fc-agendaDay-button', function () {
-
-        var moment = $('#user-calendar').fullCalendar('getDate');
-
-        console.log('CURRENT DAY  ' + moment.format());
+    //open booking creating dialog
+    $('#create-new-booking').click(function () {
+        $('#make-recurrent-booking').dialog('open');
     });
 
-    $('body').on('click', 'button.fc-agendaWeek-button', function () {
-
-        var moment = $('#user-calendar').fullCalendar('getDate');
-
-        console.log('CURRENT DAY  ' + moment.format());
-    });
+    //close booking creating dialog
+    $('#cancel-changes').click(function (){
+        closeBookingDialog();
+    })
 });
 
 function selectRoomForUser(roomParam, userId) {
@@ -211,7 +241,12 @@ function renderingForUser(objects, id, userId) {
     });
 }
 
+//tested
 function makeISOTime(clickDate, idOfTimePicker) {
+    if (clickDate.length < 12) {
+        clickDate = clickDate + 'T00:00:00';
+    }
+
     var element = '#' + idOfTimePicker;
     var installedTime = $(element).timepicker('getTime');
 
@@ -282,6 +317,7 @@ function sendBookingToServerForCreate(bookingsArray) {
             $('#user-calendar').fullCalendar('removeEvents', -1);
 
             refresh.forEach(function (item) {
+
                 $('#user-calendar').fullCalendar('renderEvent', {
                     id: item.id,
                     title: item.kidName,
@@ -312,7 +348,7 @@ function cancelBooking(bookingId) {
         }
     });
 }
-
+//tested
 function getComment(commentInputId) {
     return $('#' + commentInputId).val();
 }
@@ -333,17 +369,18 @@ function updateBooking() {
 
 }
 
+//tested
 function createBooking() {
+    bookingDate.clickDate = $('#recurrent-booking-start-date').val();
     bookingsArray = [];
     var kidsCommentId;
 
     for (var i = 0; i < ($('#number-of-kids').val()); i++) {
         kidsCommentId = $('#comment-' + i).val();
         if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
-
             bookingsArray.push(
-                new Booking(makeISOTime(bookingDate.clickDate, 'bookingStartTimepicker'),
-                    makeISOTime(bookingDate.clickDate, 'bookingEndTimepicker'),
+                new Booking(makeISOTime(bookingDate.clickDate, 'recurrent-booking-start-time'),
+                    makeISOTime(bookingDate.clickDate, 'recurrent-booking-end-time'),
                     getComment("child-comment-" + kidsCommentId),
                     kidsCommentId,
                     roomIdForHandler,
@@ -352,8 +389,8 @@ function createBooking() {
             $('#user-calendar').fullCalendar('renderEvent', {
                 id: -1,
                 title: '',
-                start: makeISOTime(bookingDate.clickDate, 'bookingStartTimepicker'),
-                end: makeISOTime(bookingDate.clickDate, 'bookingEndTimepicker'),
+                start: makeISOTime(bookingDate.clickDate, 'recurrent-booking-start-time'),
+                end: makeISOTime(bookingDate.clickDate, 'recurrent-booking-end-time'),
                 editable: false
             });
             $('#checkboxKid'  + kidsCommentId).attr('checked', false);
@@ -375,7 +412,7 @@ function renderCalendar(objects, id) {
         slotDuration: '00:15:00',
 
         dayClick: function (date) {
-            $('#bookingForm').dialog('open');
+
 
             var clickDate = date.format();
 
@@ -383,12 +420,12 @@ function renderCalendar(objects, id) {
                 clickDate = clickDate + 'T00:00:00';
             }
 
-            $('#bookingStartDate').val(clickDate.substring(0, 10));
-            $('#bookingEndDate').val(clickDate.substring(0, 10));
+            $('#recurrent-booking-start-date').val(clickDate.substring(0, 10));
+            $('#recurrent-booking-end-date').val(clickDate.substring(0, 10));
 
             bookingDate.clickDate = clickDate;
 
-            $('#dialog').dialog('open');
+            $('#make-recurrent-booking').dialog('open');
         },
 
         eventClick: function (calEvent) {
@@ -481,6 +518,21 @@ function getDisabledTime(dateLo, dateHi, roomId) {
     });
 }
 
+//tested
 function showRoomPhone(phone) {
     $('#roomPhone').empty().append('Phone number: ' + phone);
+}
+
+function sendAjaxForRoomProperty(roomId) {
+
+}
+
+//tested
+function closeBookingDialog () {
+    $('#make-recurrent-booking').dialog('close');
+    var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    checkBoxesDays.forEach(function (item) {
+        $('#' + item + '-booking').attr('checked', false);
+    });
 }

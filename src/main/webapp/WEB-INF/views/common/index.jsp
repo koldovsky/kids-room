@@ -43,7 +43,7 @@
         <option value=" "></option>
 
         <c:forEach items="${rooms}" var="r">
-            <option value="${r.id} ${r.phoneNumber}">${r.city}: ${r.address}</option>
+            <option value="${r.id} ${r.phoneNumber} ">${r.city}: ${r.address}</option>
 
         </c:forEach>
     </select>
@@ -55,77 +55,8 @@
         <label id="roomPhone"></label>
     </div>
 
+    <button type="button" class="btn btn-info" id="create-new-booking">Book</button>
 
-    <div class="container">
-        <div class="vertical-center-row">
-            <div align="center">
-                <div id="bookingDialog" hidden>
-                    <form id="bookingForm">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <div class="form-group">
-
-                            <label for="bookingStartDate">Start date</label>
-                            <br>
-                            <div class="col-xs-6">
-                                <input type="text" class="form-control" id="bookingStartDate" placeholder="startDate"
-                                       readonly>
-                            </div>
-                            <div class="col-xs-5">
-                                <input id="bookingStartTimepicker" type="text" class="time form-control" size="6"
-                                       name="bookingStartTimepicker"/>
-                            </div>
-                        </div>
-                        <br>
-
-                        <div class="form-group">
-                            <label for="bookingEndDate">End date</label>
-                            <br>
-                            <div class="col-xs-6">
-                                <input type="text" class="form-control" id="bookingEndDate" placeholder="endDate"
-                                       readonly>
-                            </div>
-                            <div class="col-xs-5">
-                                <input id="bookingEndTimepicker" type="text" class="time form-control" size="6"
-                                       name="bookingEndTimepicker"/>
-                            </div>
-                        </div>
-
-                        <br>Select children for bookings:<br>
-                        <table>
-                            <c:forEach items="${kids}" var="kids" varStatus="loop">
-
-                                <c:set var="kidsArray" value="${kids}"/>
-                                <tr>
-                                    <label><input type="checkbox" value=""
-                                                  id="checkboxKid${kids.id}">${kids.firstName}</label>
-                                    <br>
-                                </tr>
-
-                            </c:forEach>
-
-                            <c:forEach items="${kids}" var="kids" varStatus="loop">
-                                <tr>
-                                    <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment
-                                        for ${kids.firstName}:</label>
-
-                                    <textarea type="text" id="child-comment-${kids.id}" hidden></textarea>
-
-                                    <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
-                                    <br>
-                                </tr>
-                            </c:forEach>
-                            <input id="number-of-kids" hidden value="${fn:length(kids)}">
-                        </table>
-
-                        <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="booking">Book</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container">
         <div class="vertical-center-row">
@@ -178,6 +109,137 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="make-recurrent-booking" class="dialog" hidden>
+                    <form id="recurrent-booking-form">
+                      <!--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
+
+
+                        <div class="form-group">
+                            <label for="recurrent-booking-start-date">Start date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="date" class="form-control" id="recurrent-booking-start-date" placeholder="startDate">
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="recurrent-booking-start-time" type="text" class="time form-control timepicker" size="6"/>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label for="recurrent-booking-end-date">End date</label>
+                            <br>
+                            <div class="col-xs-6">
+                                <input type="date" class="form-control" id="recurrent-booking-end-date" placeholder="endDate">
+                            </div>
+                            <div class="col-xs-5">
+                                <input id="recurrent-booking-end-time" type="text" class="time form-control timepicker" size="6"/>
+                            </div>
+                        </div>
+
+
+                        <div class="container">
+                            <div class="row">
+                                <form role="form">
+                                    <div class="row col-xs-2">
+                                        <br>
+                                        <div class="radio-button">
+                                            <label><input type="radio" name="optradio-bookingform" id="no-recurrent-booking"
+                                                          class="booking-radio" checked>Single event</label>
+                                        </div>
+                                        <div class="radio-button">
+                                            <label><input type="radio" name="optradio-bookingform" id="weekly-booking" class="booking-radio">Weekly</label>
+                                        </div>
+                                    </div>
+                                    <div class="row col-xs-4" id="days-for-recurrent-booking-form" hidden>
+                                        <table class="table" id="days-for-recurrent-booking">
+                                            <br>
+                                            <thead>Check required days</thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><label><input type="checkbox" id="Monday-booking" value="Mon" class="day">Monday</label><br>
+                                                </td>
+                                                <td><label><input type="checkbox" id="Tuesday-booking" value="Tue" class="day">Tuesday</label><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label><input type="checkbox" id="Wednesday-booking" value="Wed"
+                                                                  class="day">Wednesday</label><br>
+                                                </td>
+                                                <td><label><input type="checkbox" id="Thursday-booking" value="Thu" class="day">Thursday</label><br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><label><input type="checkbox" id="Friday-booking" value="Fri" class="day">Friday</label><br>
+                                                </td>
+                                                <td><label><input type="checkbox" id="Saturday-booking" value="Sat" class="day">Saturday</label><br>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+
+                                <div class="clearfix"></div>
+
+                                <br>Select children for bookings:<br>
+                                <table>
+                                    <c:forEach items="${kids}" var="kids" varStatus="loop">
+
+                                        <c:set var="kidsArray" value="${kids}"/>
+                                        <tr>
+                                            <label><input type="checkbox" value=""
+                                                          id="checkboxKid${kids.id}">${kids.firstName}</label>
+                                            <br>
+                                        </tr>
+
+                                    </c:forEach>
+
+                                    <c:forEach items="${kids}" var="kids" varStatus="loop">
+                                        <tr>
+                                            <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment
+                                                for ${kids.firstName}:</label>
+
+                                            <textarea type="text" id="child-comment-${kids.id}" hidden></textarea>
+
+                                            <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
+                                            <br>
+                                        </tr>
+                                    </c:forEach>
+                                    <input id="number-of-kids" hidden value="${fn:length(kids)}">
+                                </table>
+
+
+
+                                <br>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-3">
+                                    <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">Update</button>
+                                    <button type="button" class="btn btn-success live" id="book">Book</button>
+                                </div>
+                                <div align="right" class="col-xs-2">
+                                    <button type="button" class="btn btn-danger" id="cancel-changes">Cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div id='user-calendar'></div>
 

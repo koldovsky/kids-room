@@ -10,6 +10,7 @@ import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dao.EventDao;
+import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
@@ -41,6 +42,9 @@ public class ViewEventController {
 
     @Autowired
     private EventDao eventDao;
+
+    @Autowired
+    private RoomDao roomDao;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {

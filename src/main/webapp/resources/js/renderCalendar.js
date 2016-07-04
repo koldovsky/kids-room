@@ -12,7 +12,8 @@ var NOT_ACTIVE_EVENT = '#33cc33';
 $(function () {
 
     $('#update-recurrent').hide();
-
+    $('#update-recurrent-booking').hide();
+    
     $('.modal-dialog-recurrently').dialog({
         modal: true,
         autoOpen: false
