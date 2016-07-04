@@ -224,7 +224,6 @@ $(function () {
                 sendToServerForDelete(allEvents[i]);
             }
         }
-
         createRecurrentEvents();
     });
 });
@@ -461,7 +460,35 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
             borderColor: '#000000'
         }),
         success: function (result) {
-            alert(result);
+            var recurrentEventsForRender = [];
+
+            result.forEach(function(item, i) {
+                allEvents.push({ id: result[i].id,
+                    title: result[i].name,
+                    start: result[i].startTime,
+                    end: result[i].endTime,
+                    editable: false,
+                    type: 'event',
+                    description: result[i].description,
+                    color: result[i].color,
+                    borderColor: '#000000',
+                    recurrentId: result[i].recurrentId });
+
+                recurrentEventsForRender.push({
+                    id: result[i].id,
+                    title: result[i].name,
+                    start: result[i].startTime,
+                    end: result[i].endTime,
+                    editable: false,
+                    type: 'event',
+                    description: result[i].description,
+                    color: result[i].color,
+                    borderColor: '#000000',
+                    recurrentId: result[i].recurrentId
+                });
+
+                $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
+            });
         }
     });
 }

@@ -9,6 +9,7 @@ import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
+import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
@@ -36,6 +37,9 @@ public class CalendarServiceImpl implements CalendarService {
     @Autowired
     private RoomDao roomDao;
 
+    @Autowired
+    private GenericMapper<Event, EventDto> genericMapper;
+
     public Long create(final Event event) {
         eventDao.create(event);
         return event.getId();
@@ -55,7 +59,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     //TODO: Refactor this method
 
-    public final List<Long> createRecurrentEvents(RecurrentEventDto recurrentEventDto) {
+    public final List<EventDto> createRecurrentEvents(RecurrentEventDto recurrentEventDto) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
         String dateStart = recurrentEventDto.getStartTime();
@@ -64,7 +68,7 @@ public class CalendarServiceImpl implements CalendarService {
         Date dateForRecurrentStart;
         Date dateForRecurrentEnd;
 
-        List<Long> res = new ArrayList<>();
+        List<EventDto> res = new LinkedList<>();
 
         Map<String, Integer> daysOFWeek = new HashMap<>();
         daysOFWeek.put("Sun", 1);
@@ -115,7 +119,9 @@ public class CalendarServiceImpl implements CalendarService {
                 newRecurrentEvent.setRecurrentId(newRecID);
                 newRecurrentEvent.setRoom(roomDao.findById(recurrentEventDto.getRoomId()));
                 newRecurrentEvent.setColor(recurrentEventDto.getColor());
-                res.add(this.create(newRecurrentEvent));
+                eventDao.create(newRecurrentEvent);
+                System.out.println("New id: " + newRecurrentEvent.getId());
+                res.add(genericMapper.toDto(newRecurrentEvent));
             }
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
             calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));

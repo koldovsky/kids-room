@@ -18,5 +18,5 @@ public interface CalendarService {
 
     void deleteEvent(Event event);
 
-    List<Long> createRecurrentEvents(RecurrentEventDto recurrentEventDto);
+    List<EventDto> createRecurrentEvents(RecurrentEventDto recurrentEventDto);
 }

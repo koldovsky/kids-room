@@ -198,6 +198,43 @@
 								</td>
 							</tr>
 
+							<tr mc:hideable>
+                            								<td align="center" valign="top">
+                            									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            										<tr>
+                            											<td align="center" valign="top">
+                            												<table border="0" cellpadding="30" cellspacing="0" width="500" class="flexibleContainer">
+                            													<tr>
+                            														<td valign="top" width="500" class="flexibleContainerCell">
+
+                            															<table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            																			<tr>
+                            																				<td valign="top" class="textContent">
+                            																					<tr>
+                                                                                                                	<table>
+                                                                                                                		<tbody>
+                                                                                                                			<tr>
+                                                                                                                				<td>From</td>
+                                                                                                                				<td>To</td>
+                                                                                                                				<td>Name</td>
+                                                                                                                				<td>Room</td>
+                                                                                                                			</tr>
+                                                                                                                		</tbody>
+                                                                                                              </table>
+                                                                                                        </tr>
+                            																		</td>
+                            																	</tr>
+                            															</table>
+
+                            														</td>
+                            													</tr>
+                            												</table>
+                            											</td>
+                            										</tr>
+                            									</table>
+                            								</td>
+                            							</tr>
+
 <tr mc:hideable>
 								<td align="center" valign="top">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">

@@ -21,7 +21,7 @@
                   </form>
              </div>
             <div id="create-booking-btn">
-                 <button class="btn btn-primary" onclick="createBookingss()">
+                 <button class="btn btn-primary" onclick="openCreateBookingDialog()">
                     Add a kid
                  </button>
             </div>

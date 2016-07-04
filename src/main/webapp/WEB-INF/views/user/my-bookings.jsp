@@ -4,29 +4,32 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<link rel='stylesheet' href='resources/css/report.css'>
+<link rel='stylesheet' href='resources/css/user-my-report.css'>
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
 
-
 <div id="scroller">
-    <div class="dateSelector">
+    <div class="dateSelector form-group-material-blue-400">
+        <div id="msg">
+        <spring:message code="report.select.period"/>:
+        </div>
         <div id="from-div">
-            <h3><spring:message code="report.from" /></h3>
-            <input id="from" type="date"></input>
+          <label for="from"><spring:message code="report.from" /></label>
+          <input name="from" id="from" type="date" class="form-control"></input>
+
         </div>
         <div id="to-div">
-            <h3><spring:message code="report.to" /></h3>
-            <input id="to" type="date"></input>
+            <label for="from"><spring:message code="report.to" /></label>
+            <input id="to" type="date" class="form-control"></input>
         </div>
     </div>
 
     <div class="tableDiv">
-
-    <h2>
-                                 <spring:message code="report.myBookings" /></br>
-                             </h2>
+        <h2>
+           <spring:message code="report.myBookings" /></br>
+        </h2>
         <table id="myBookings">
          <thead>
 

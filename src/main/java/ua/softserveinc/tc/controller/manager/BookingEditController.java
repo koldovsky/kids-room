@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.controller.manager;
 
 import com.google.gson.Gson;
-
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +15,12 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.util.Log;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -60,39 +60,30 @@ public class BookingEditController {
     }
     @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
     @ResponseBody
-    public String cancelBooking (@PathVariable Long idBooking) {
+    public void cancelBooking (@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
         booking.setDuration(0L);
         bookingService.update(booking);
-        BookingDto bookingDto = new BookingDto(booking);
-        Gson gson = new Gson();
-        return  gson.toJson(bookingDto);
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public String setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
+    public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
         if(!(booking.getBookingState()==BookingState.COMPLETED)){
             booking.setBookingState(BookingState.ACTIVE);
         }
         bookingService.update(booking);
-        BookingDto bookingDTOtoJson = new BookingDto(booking);
-        Gson gson = new Gson();
-        return  gson.toJson(bookingDTOtoJson);
     }
 
     @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public String setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
+    public void setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDto);
         booking.setBookingState(BookingState.COMPLETED);
         bookingService.update(booking);
-        BookingDto bookingDTOtoJson = new BookingDto(booking);
-        Gson gson = new Gson();
-        return  gson.toJson(bookingDTOtoJson);
     }
 
     @RequestMapping (value = "dailyBookings/{date}/{id}/{state}",
