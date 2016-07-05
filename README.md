@@ -9,6 +9,11 @@ CONTRIBUTORS
 * **[Taras Zyhmunt](https://github.com/EditedBoy)**
 * **[Demian Bekesh](https://github.com/bahrianyi)**
 
+PROJECT MANAGERS
+------------
+* **[Vyacheslav Koldovskyy](https://github.com/koldovsky)**
+* **[Andriy Yurenya]**
+
 ------------
 
 To run tests make sure test/java folder is highlighted with green color like on this pic: http://devcolibri.com/cp/wp-content/uploads/2013/03/junit-testing.png

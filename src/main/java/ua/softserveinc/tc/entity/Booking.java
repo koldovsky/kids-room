@@ -67,6 +67,9 @@ public class Booking {
     @Column(name = BookingConstants.DB.SUM, columnDefinition = "bigint default 0")
     private Long sum;
 
+    @Column(name = BookingConstants.DB.ID_RECURRENT, columnDefinition = "bigint(20) default NULL")
+    private Long recurrentId;
+
     public Long getIdBook() {
         return idBook;
     }
@@ -153,6 +156,14 @@ public class Booking {
 
     public BookingDto getDto(){
         return new BookingDto(this);
+    }
+
+    public Long getRecurrentId() {
+        return recurrentId;
+    }
+
+    public void setRecurrentId(Long recurrentId) {
+        this.recurrentId = recurrentId;
     }
 
     @Override

@@ -42,10 +42,10 @@ public class Event {
     @Column(name = EventConstants.Entity.DESCRIPTION)
     private String description;
 
-    @Column(name = EventConstants.Entity.ID_RECURRENT, columnDefinition = "bigint(20) default NULL")
+    @Column(name = EventConstants.Entity.ID_RECURRENT, columnDefinition = "bigint default NULL")
     private Long recurrentId;
 
-    @Column(name = EventConstants.Entity.COLOR, columnDefinition = "char(7) default '#6AA4C1'")
+    @Column(name = EventConstants.Entity.COLOR, columnDefinition = "varchar default '#6AA4C1'")
     private String color;
 
     public Long getRecurrentId() {

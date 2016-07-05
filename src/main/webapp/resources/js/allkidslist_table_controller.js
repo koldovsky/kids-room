@@ -191,7 +191,7 @@ function AllKidsTableController($scope, $window, $location, allKidsTableService)
     }
 
     $scope.toggleAllChildren = toggleAllChildren;
-    $scope.toggleAllChildren = toggleAllChildren;
+    $scope.toggleInRoomChildren = toggleInRoomChildren;
     $scope.searchChildren = searchChildren;
     $scope.searchParents = searchParents;
     $scope.toggleCollapseButton = toggleCollapseButton;

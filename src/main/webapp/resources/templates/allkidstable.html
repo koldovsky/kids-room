@@ -2,14 +2,14 @@
     <li role="presentation" class="active" id="room-children" ng-click="toggleInRoomChildren()"><a href="#">Room</a></li>
     <li role="presentation" id="all-children" ng-click="toggleAllChildren()"><a href="#">All kids</a></li>
 </ul>
-<div class="span4">
+<div class="span4" ng-if="allChildren">
     <div id="all_kids_search" class="input-group">
         <input type="text" class="form-control" placeholder="{{locale['search']}}" ng-model="childSearchField"
             ng-change="searchChildren(childSearchField)">
     </div>
 </div>
 
-<div id="all_kids_add" class="input-group" ng-if="!newChildFormIsShown">
+<div id="all_kids_add" class="input-group" ng-if="!newChildFormIsShown && allChildren">
     <button type="button" class="btn btn-primary" ng-click="toggleNewChild()">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>

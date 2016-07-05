@@ -27,10 +27,13 @@ public class BookingDto implements Serializable{
     private Long durationLong;
     private BookingState bookingState;
     private String comment;
+    private Long recurrentId;
 
     private Long userId;
     private Long kidId;
     private Long roomId;
+
+    private String daysOfWeek;
 
     private transient Child child;
     private transient User user;
@@ -59,6 +62,8 @@ public class BookingDto implements Serializable{
         this.durationLong = booking.getDuration();
         this.idChild = booking.getChild().getId();
         this.comment = booking.getComment();
+
+        this.recurrentId = booking.getRecurrentId();
     }
 
     public Booking getBookingObject() {
@@ -70,6 +75,8 @@ public class BookingDto implements Serializable{
         booking.setChild(child);
         booking.setUser(user);
         booking.setBookingState(bookingState);
+        booking.setRecurrentId(recurrentId);
+
         return booking;
     }
 
@@ -240,5 +247,21 @@ public class BookingDto implements Serializable{
 
     public void setIdChild(Long idChild) {
         this.idChild = idChild;
+    }
+
+    public Long getRecurrentId() {
+        return recurrentId;
+    }
+
+    public void setRecurrentId(Long recurrentId) {
+        this.recurrentId = recurrentId;
+    }
+
+    public String getDaysOfWeek() {
+        return daysOfWeek;
+    }
+
+    public void setDaysOfWeek(String daysOfWeek) {
+        this.daysOfWeek = daysOfWeek;
     }
 }

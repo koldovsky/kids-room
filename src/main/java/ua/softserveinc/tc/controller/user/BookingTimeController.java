@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,13 @@ public class BookingTimeController {
     @Autowired
     private BookingService bookingService;
 
+    @RequestMapping(value = "gwtroomproperty", method = RequestMethod.POST)
+    @ResponseBody
+    public String getRoomProperty(@RequestBody Integer roomId){
+
+        return null;
+    }
+
     @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
     @ResponseBody
     public String getBooking(@RequestBody List<BookingDto> dtos) {
@@ -59,16 +67,11 @@ public class BookingTimeController {
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}",
             method = RequestMethod.GET,
             produces = "text/plain;charset=UTF-8")
-    @ResponseBody public String getAllBookings(@PathVariable Long idUser,
-                                               @PathVariable Long idRoom) {
-        List<BookingDto> buf = bookingService.getAllBookingsByUserAndRoom(idUser, idRoom);
-
-        for (int i = 0; i < buf.size(); i++) {
-            if (buf.get(i).getComment() == null) {
-                buf.get(i).setComment("");
-            }
-        }
-        return new Gson().toJson(buf);
+    @ResponseBody
+    public String getAllBookings(@PathVariable Long idUser,
+                                 @PathVariable Long idRoom) {
+        System.out.println();
+        return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
     @RequestMapping(value = "/disabled", method = RequestMethod.GET)

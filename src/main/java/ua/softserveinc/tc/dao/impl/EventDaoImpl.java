@@ -48,6 +48,12 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
         CriteriaQuery<Long> select = q.select(maxExpression);
 
         TypedQuery<Long> typedQuery = entityManager.createQuery(select);
-        return typedQuery.getSingleResult();
+
+        Long result = typedQuery.getSingleResult();
+        if (result == null) {
+            return new Long(0);
+        } else {
+            return result;
+        }
     }
 }

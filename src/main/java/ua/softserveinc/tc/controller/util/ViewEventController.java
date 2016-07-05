@@ -10,6 +10,7 @@ import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dao.EventDao;
+import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
@@ -42,6 +43,9 @@ public class ViewEventController {
     @Autowired
     private EventDao eventDao;
 
+    @Autowired
+    private RoomDao roomDao;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
         if (principal == null) {
@@ -69,7 +73,6 @@ public class ViewEventController {
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
-        System.out.println(eventDao.getMaxRecurrentId());
         return new Gson().toJson(calendarService.findByRoomId(id));
     }
 
