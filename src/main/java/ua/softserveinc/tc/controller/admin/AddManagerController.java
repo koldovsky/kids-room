@@ -86,8 +86,8 @@ public class AddManagerController {
         String token = UUID.randomUUID().toString();
         try {
             this.mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
-        } catch (MessagingException | MailSendException exeption) {
-            log.error("Error! Sending email!!!", exeption);
+        } catch (MessagingException | MailSendException ex) {
+            log.error("Error! There is problems with sending email!", ex);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
             return AdminConstants.ADD_MANAGER;
         }

@@ -77,6 +77,7 @@ public class ConfirmManagerController {
         if (bindingResult.hasErrors()) {
             return AdminConstants.CONFIRM_MANAGER;
         }
+
         User manager = this.userService.findById(managerWithPassword.getId());
         manager.setPassword(this.passwordEncoder.encode(managerWithPassword.getPassword()));
         manager.setConfirmed(true);

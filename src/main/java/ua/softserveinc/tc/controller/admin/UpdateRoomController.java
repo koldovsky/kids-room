@@ -51,15 +51,14 @@ public class UpdateRoomController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showUpdateRoomForm(@RequestParam Long id) {
-        ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);
-
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
-        model.addObject(AdminConstants.MANAGER_LIST, managers);
-
         Room room = this.roomService.findById(id);
         RoomDto roomDto = new RoomDto(room);
 
+        ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);
+        model.addObject(AdminConstants.MANAGER_LIST, managers);
         model.getModelMap().addAttribute(AdminConstants.ATR_ROOM, roomDto);
+
         return model;
     }
 

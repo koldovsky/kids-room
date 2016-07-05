@@ -36,9 +36,9 @@ public class UpdateManagerController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showUpdateManagerForm(@RequestParam Long id) {
-        ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
-
         User manager = this.userService.findById(id);
+
+        ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
         model.getModelMap().addAttribute(AdminConstants.ATR_MANAGER, manager);
 
         return model;
