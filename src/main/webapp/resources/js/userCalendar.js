@@ -132,6 +132,11 @@ $(function () {
             closeBookingDialog();
             createBooking();
         }
+
+        if($('#weekly-booking').is(':checked')) {
+            closeBookingDialog();
+            makeRecurrentBookings();
+        }
     });
 
     //open booking creating dialog
@@ -504,6 +509,11 @@ function renderCalendar(objects, id) {
     });
 }
 
+
+function makeRecurrentBookings() {
+
+}
+//tested
 function makeUTCTime(time, date) {
     time.setHours(date.getUTCHours());
     time.setMinutes(date.getUTCMinutes());
@@ -541,3 +551,4 @@ function closeBookingDialog () {
         $('#' + item + '-booking').attr('checked', false);
     });
 }
+

@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
@@ -20,18 +21,16 @@ import java.util.List;
  */
 @Repository
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
+
     public List<Booking> getBookingsByUserAndRoom(User user, Room room) {
-
-
         EntityManager entityManager = getEntityManager();
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
 
         Root<Booking> root = query.from(Booking.class);
-        query.select(root).where(builder.equal(root.get("user"), user),
-                builder.equal(root.get("room"), room)/*,
-                (builder.or((builder.equal(root.get("BookingState"), "ACTIVE")), (builder.equal(root.get("BookingState"), "ACTIVE"))))*/);
+        query.select(root).where(builder.equal(root.get(BookingConstants.Entity.USER), user),
+                builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         return entityManager.createQuery(query).getResultList();
     }
@@ -39,15 +38,19 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     public Long getMaxRecurrentId() {
 
         EntityManager entityManager = getEntityManager();
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
-        CriteriaQuery<Long> q = cb.createQuery(Long.class);
-        Root<Booking> r = q.from(Booking.class);
-        Expression maxExpression = cb.max(r.get("id_recurrent"));
-
-        CriteriaQuery<Long> select = q.select(maxExpression);
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Booking> root = criteriaQuery.from(Booking.class);
+        CriteriaQuery<Long> select = criteriaQuery.select(criteriaBuilder.max(root.get(BookingConstants.DB.ID_RECURRENT)));
 
         TypedQuery<Long> typedQuery = entityManager.createQuery(select);
-        return typedQuery.getSingleResult();
+
+        Long result = typedQuery.getSingleResult();
+        if (result == null) {
+            return new Long(0);
+        } else {
+            return result;
+        }
     }
 }

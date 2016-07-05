@@ -193,5 +193,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
         return bookingDtos;
     }
+
+    public Long getMaxRecurrentId(){
+        return bookingDao.getMaxRecurrentId();
+    }
 }
 

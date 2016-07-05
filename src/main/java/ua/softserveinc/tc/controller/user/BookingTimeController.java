@@ -67,16 +67,11 @@ public class BookingTimeController {
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}",
             method = RequestMethod.GET,
             produces = "text/plain;charset=UTF-8")
-    @ResponseBody public String getAllBookings(@PathVariable Long idUser,
-                                               @PathVariable Long idRoom) {
-        List<BookingDto> buf = bookingService.getAllBookingsByUserAndRoom(idUser, idRoom);
-
-        for (int i = 0; i < buf.size(); i++) {
-            if (buf.get(i).getComment() == null) {
-                buf.get(i).setComment("");
-            }
-        }
-        return new Gson().toJson(buf);
+    @ResponseBody
+    public String getAllBookings(@PathVariable Long idUser,
+                                 @PathVariable Long idRoom) {
+        System.out.println();
+        return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
     @RequestMapping(value = "/disabled", method = RequestMethod.GET)
