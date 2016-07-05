@@ -112,11 +112,6 @@
 
 
 
-
-
-
-
-
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -192,34 +187,40 @@
                                 </form>
 
                                 <div class="clearfix"></div>
+                                <div id="child-selector">
+                                    <br>Select children for bookings:<br>
+                                    <table>
+                                        <c:forEach items="${kids}" var="kids" varStatus="loop">
 
-                                <br>Select children for bookings:<br>
-                                <table>
-                                    <c:forEach items="${kids}" var="kids" varStatus="loop">
+                                            <c:set var="kidsArray" value="${kids}"/>
+                                            <tr>
+                                                <label><input type="checkbox" value=""
+                                                              id="checkboxKid${kids.id}">${kids.firstName}</label>
+                                                <br>
+                                            </tr>
 
-                                        <c:set var="kidsArray" value="${kids}"/>
-                                        <tr>
-                                            <label><input type="checkbox" value=""
-                                                          id="checkboxKid${kids.id}">${kids.firstName}</label>
-                                            <br>
-                                        </tr>
+                                        </c:forEach>
 
-                                    </c:forEach>
+                                        <c:forEach items="${kids}" var="kids" varStatus="loop">
+                                            <tr>
+                                                <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1"
+                                                       hidden>Comment
+                                                    for ${kids.firstName}:</label>
 
-                                    <c:forEach items="${kids}" var="kids" varStatus="loop">
-                                        <tr>
-                                            <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1" hidden>Comment
-                                                for ${kids.firstName}:</label>
+                                                <textarea type="text" id="child-comment-${kids.id}" hidden></textarea>
 
-                                            <textarea type="text" id="child-comment-${kids.id}" hidden></textarea>
+                                                <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
+                                                <br>
+                                            </tr>
+                                        </c:forEach>
+                                        <input id="number-of-kids" hidden value="${fn:length(kids)}">
+                                    </table>
 
-                                            <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
-                                            <br>
-                                        </tr>
-                                    </c:forEach>
-                                    <input id="number-of-kids" hidden value="${fn:length(kids)}">
-                                </table>
 
+                                    <div id="comment-for-one-child-updating" hidden>
+                                        <textarea class="form-control"  id="comment-for-update-recurrency"></textarea>
+                                    </div>
+                                </div>
 
 
                                 <br>
@@ -240,6 +241,30 @@
         </div>
     </div>
 
+
+
+
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="recurrent-change" class="dialog" hidden>
+                    <form id="choose-updating-booking-form">
+
+                        <div class="radio-button">
+                            <label><input type="radio" id="single-update-booking"  name="radio-check" checked>Just this one</label>
+                        </div>
+                        <div class="radio-button">
+                            <label><input type="radio" id="recurrent-update-booking" name="radio-check">The entire series</label>
+                        </div>
+
+                        <button type="button" class="btn btn-success" id="confirm-choose-booking">Ok</button>
+                        <button type="button" class="btn btn-danger" id="close-choose">Cancel</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id='user-calendar'></div>
 

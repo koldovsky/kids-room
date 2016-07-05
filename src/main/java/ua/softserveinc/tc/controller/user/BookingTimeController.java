@@ -96,7 +96,13 @@ public class BookingTimeController {
     @ResponseBody
     public String makeRecurrentBookings(@RequestBody List<BookingDto> bookingDtos) {
         for (BookingDto bookingDto : bookingDtos) {
-            bookingDto.setIdChild(bookingDto.getKidId());
+            if(bookingDto.getIdChild() == null) {
+                bookingDto.setIdChild(bookingDto.getKidId());
+            }
+
+            if(bookingDto.getKidId() == null) {
+                bookingDto.setKidId(bookingDto.getIdChild());
+            }
         }
         List<BookingDto> bookings = bookingService.makeRecurrentBookings(bookingDtos);
 
