@@ -19,6 +19,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -35,6 +36,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@EnableScheduling
 @ComponentScan("ua.softserveinc.tc")
 @PropertySource(value = {"classpath:properties/mail.properties",
         "classpath:properties/hibernate.properties"})
