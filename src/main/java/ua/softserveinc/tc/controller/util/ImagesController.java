@@ -76,15 +76,14 @@ public class ImagesController {
         Child kid = childService.findById(id);
 
         if (!file.isEmpty()) {
-            byte[] bytes;
+
             try {
                 if(file.getSize()/1024/1024 > applicationConfigurator.getMaxUploadImgSizeMb()){
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
 
-                bytes = file.getBytes();
+                byte[] bytes = file.getBytes();
                 if(ImageIO.read(new ByteArrayInputStream(bytes)) == null){
-
                     log.error("Uploaded image has a wrong extension");
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }

@@ -31,20 +31,17 @@ public class ImagesHolderUtil {
         File imgPathBoy = new File("src/main/resources/images/default-boy.jpg");
         File imgPathGirl = new File("src/main/resources/images/default-girl.jpg");
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(1000);
-        try {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(1000)){
             BufferedImage bufferedImage = ImageIO.read(imgPathBoy);
             ImageIO.write(bufferedImage, "jpg", baos);
             baos.flush();
             defaultPictureBoy = baos.toByteArray();
 
             baos.reset();
-
             bufferedImage = ImageIO.read(imgPathGirl);
             ImageIO.write(bufferedImage, "jpg", baos);
             baos.flush();
             defaultPictureGirl = baos.toByteArray();
-            baos.close();
 
         } catch (IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
