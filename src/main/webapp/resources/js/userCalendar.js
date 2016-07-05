@@ -159,6 +159,7 @@ function selectRoomForUser(roomParam, userId) {
 
     id = roomParam[0];
 
+    alert(id);
     roomIdForHandler = id;
     usersID = userId;
 
@@ -576,7 +577,35 @@ function makeRecurrentBookings() {
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
-                alert(result);
+
+                result.forEach(function (item, i) {
+                    allBookings[allBookings.length + i] = {
+                        id: item.id,
+                        title: item.kidName,
+                        start: item.date + 'T' + item.startTime + ':00',
+                        end: item.date + 'T' + item.endTime + ':00',
+                        color: BOOKING,
+                        borderColor: BORDER,
+                        editable: false,
+                        type: 'booking',
+                        comment: item.comment,
+                        recurrentId: item.recurrentId
+                    };
+
+                    $('#user-calendar').fullCalendar('renderEvent', {
+                        id: item.id,
+                        title: item.kidName,
+                        start: item.date + 'T' + item.startTime + ':00',
+                        end: item.date + 'T' + item.endTime + ':00',
+                        color: BOOKING,
+                        borderColor: BORDER,
+                        editable: false,
+                        type: 'booking',
+                        comment: item.comment,
+                        recurrentId: item.recurrentId
+                    });
+
+                });
             }
         }
     )

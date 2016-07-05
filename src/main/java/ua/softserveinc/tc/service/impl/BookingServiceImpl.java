@@ -169,9 +169,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
         BookingDto bdto = listDTO.get(0);
 
-        for(BookingDto b : listDTO){
-
-        }
         if (roomService.getAvailableSpaceForPeriod(
                 bdto.getDateStartTime(),
                 bdto.getDateEndTime(),
