@@ -11,6 +11,7 @@ var EVENT = '#ffff00';
 var BORDER = '#000000';
 var BOOKING = '#99ff33';
 var NOT_SYNCHRONIZED = '#068000';
+var allBookings;
 
 $(function () {
 
@@ -134,8 +135,8 @@ $(function () {
         }
 
         if($('#weekly-booking').is(':checked')) {
-            closeBookingDialog();
             makeRecurrentBookings();
+            closeBookingDialog();
         }
     });
 
@@ -158,6 +159,7 @@ function selectRoomForUser(roomParam, userId) {
 
     id = roomParam[0];
 
+    alert(id);
     roomIdForHandler = id;
     usersID = userId;
 
@@ -231,6 +233,7 @@ function renderingForUser(objects, id, userId) {
         url: pathForUploadingAllBookingsForUsers, success: function (result) {
             result = JSON.parse(result);
 
+            allBookings = result;
             var objectsLen = objects.length;
 
             result.forEach(function (item, i) {
@@ -243,7 +246,8 @@ function renderingForUser(objects, id, userId) {
                     borderColor: BORDER,
                     editable: false,
                     type: 'booking',
-                    comment: item.comment
+                    comment: item.comment,
+                    recurrentId: item.recurrentId
                 };
             });
             renderCalendar(objects, id);
@@ -358,6 +362,7 @@ function cancelBooking(bookingId) {
         }
     });
 }
+
 //tested
 function getComment(commentInputId) {
     return $('#' + commentInputId).val();
@@ -448,6 +453,7 @@ function renderCalendar(objects, id) {
                 $('#child-comment-update').val(calEvent.comment);
             }
 
+
             var beforeUpdate = calEvent.title;
 
             $("#bookingUpdatingDialog").dialog( "option", "title", beforeUpdate );
@@ -511,7 +517,98 @@ function renderCalendar(objects, id) {
 
 
 function makeRecurrentBookings() {
+    var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+    var checkedDays = '';
+
+    checkBoxesDays.forEach(function (item) {
+        if ($('#' + item  + '-booking' ).is(':checked')) {
+            checkedDays += $('#' + item  + '-booking').val() + ' ';
+        }
+    });
+    checkedDays = checkedDays.substring(0, checkedDays.length - 1);
+
+
+
+    bookingDate.clickDate = $('#recurrent-booking-start-date').val();
+
+    var recurrentStartDay = $('#recurrent-booking-start-date').val();
+
+    var recurrentEndDay = $('#recurrent-booking-end-date').val();
+
+    var bookingsRecurrentArray = [];
+    var kidsCommentId;
+
+    //TODO: REFACTOR THIS!!!
+    for (var i = 0; i < ($('#number-of-kids').val()); i++) {
+        kidsCommentId = $('#comment-' + i).val();
+        if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
+            bookingsRecurrentArray.push(
+                {
+                    startTime: makeISOTime(recurrentStartDay, 'recurrent-booking-start-time'),
+                    endTime: makeISOTime(recurrentEndDay, 'recurrent-booking-end-time'),
+                    comment: getComment('child-comment-' + kidsCommentId),
+                    kidId: kidsCommentId,
+                    roomId: roomIdForHandler,
+                    userId: usersID,
+                    daysOfWeek: checkedDays
+                }
+            );
+
+   /*         $('#user-calendar').fullCalendar('renderEvent', {
+                id: -1,
+                title: '',
+                start: makeISOTime(recurrentStartDay, 'recurrent-booking-start-time'),
+                end: makeISOTime(recurrentEndDay, 'recurrent-booking-end-time'),
+                editable: false
+            });*/
+            $('#checkboxKid'  + kidsCommentId).attr('checked', false);
+            $('#child-comment-' + kidsCommentId).prop('hidden', true);
+            $('#child-comment-' + kidsCommentId + '-1').prop('hidden', true);
+
+
+        }
+    }
+
+    $.ajax({
+            url: 'getrecurrentbookings',
+            type: 'post',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(bookingsRecurrentArray),
+            success: function (result) {
+
+                result.forEach(function (item, i) {
+                    allBookings[allBookings.length + i] = {
+                        id: item.id,
+                        title: item.kidName,
+                        start: item.date + 'T' + item.startTime + ':00',
+                        end: item.date + 'T' + item.endTime + ':00',
+                        color: BOOKING,
+                        borderColor: BORDER,
+                        editable: false,
+                        type: 'booking',
+                        comment: item.comment,
+                        recurrentId: item.recurrentId
+                    };
+
+                    $('#user-calendar').fullCalendar('renderEvent', {
+                        id: item.id,
+                        title: item.kidName,
+                        start: item.date + 'T' + item.startTime + ':00',
+                        end: item.date + 'T' + item.endTime + ':00',
+                        color: BOOKING,
+                        borderColor: BORDER,
+                        editable: false,
+                        type: 'booking',
+                        comment: item.comment,
+                        recurrentId: item.recurrentId
+                    });
+
+                });
+            }
+        }
+    )
 }
 //tested
 function makeUTCTime(time, date) {
@@ -551,4 +648,3 @@ function closeBookingDialog () {
         $('#' + item + '-booking').attr('checked', false);
     });
 }
-

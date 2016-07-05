@@ -4,6 +4,7 @@ import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.entity.*;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,6 +77,7 @@ public class BookingDto implements Serializable{
         booking.setUser(user);
         booking.setBookingState(bookingState);
         booking.setRecurrentId(recurrentId);
+
 
         return booking;
     }
@@ -264,4 +266,6 @@ public class BookingDto implements Serializable{
     public void setDaysOfWeek(String daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
+
+
 }

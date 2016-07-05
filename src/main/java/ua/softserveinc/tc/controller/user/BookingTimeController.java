@@ -70,7 +70,6 @@ public class BookingTimeController {
     @ResponseBody
     public String getAllBookings(@PathVariable Long idUser,
                                  @PathVariable Long idRoom) {
-        System.out.println();
         return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
@@ -93,5 +92,15 @@ public class BookingTimeController {
                     .collect(Collectors.toList()));
     }
 
+    @RequestMapping(value = "getrecurrentbookings", method = RequestMethod.POST)
+    @ResponseBody
+    public String makeRecurrentBookings(@RequestBody List<BookingDto> bookingDtos) {
+        for (BookingDto bookingDto : bookingDtos) {
+            bookingDto.setIdChild(bookingDto.getKidId());
+        }
+        List<BookingDto> bookings = bookingService.makeRecurrentBookings(bookingDtos);
+
+        return  new Gson().toJson(bookings);
+    }
 
 }
