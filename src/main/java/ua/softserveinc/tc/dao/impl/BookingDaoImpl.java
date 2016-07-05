@@ -9,6 +9,7 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -21,6 +22,9 @@ import java.util.List;
  */
 @Repository
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     public List<Booking> getBookingsByUserAndRoom(User user, Room room) {
         EntityManager entityManager = getEntityManager();
@@ -37,12 +41,13 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
     public Long getMaxRecurrentId() {
 
-        EntityManager entityManager = getEntityManager();
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Booking> root = criteriaQuery.from(Booking.class);
-        CriteriaQuery<Long> select = criteriaQuery.select(criteriaBuilder.max(root.get(BookingConstants.DB.ID_RECURRENT)));
+        CriteriaQuery<Long> q = cb.createQuery(Long.class);
+        Root<Booking> r = q.from(Booking.class);
+        Expression maxExpression = cb.max(r.get("recurrentId"));
+
+        CriteriaQuery<Long> select = q.select(maxExpression);
 
         TypedQuery<Long> typedQuery = entityManager.createQuery(select);
 

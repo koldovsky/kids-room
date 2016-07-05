@@ -196,13 +196,5 @@ public class Booking {
 
     }
 
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + room.hashCode();
-        result = 31 * result + user.hashCode();
-        result = 31 * result + bookingStartTime.hashCode();
-        result = 31 * result + bookingEndTime.hashCode();
-        return result;
-    }
+
 }

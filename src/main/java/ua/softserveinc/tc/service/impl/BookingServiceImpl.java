@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -13,6 +14,7 @@ import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -46,6 +48,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private ChildDao childDao;
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
@@ -163,6 +168,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
         BookingDto bdto = listDTO.get(0);
+
+        for(BookingDto b : listDTO){
+
+        }
         if (roomService.getAvailableSpaceForPeriod(
                 bdto.getDateStartTime(),
                 bdto.getDateEndTime(),
@@ -196,6 +205,112 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     public Long getMaxRecurrentId(){
         return bookingDao.getMaxRecurrentId();
+    }
+
+
+    public List<BookingDto> makeRecurrentBookings(List<BookingDto> bookingDtos) {
+        /**
+         * All recurrent bookings have the same date,
+         * this method use date only from first element in list
+         */
+
+
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+        String dateStart = bookingDtos.get(0).getStartTime();
+        String dateEnd = bookingDtos.get(0).getEndTime();
+
+        Date dateForRecurrentStart;
+        Date dateForRecurrentEnd;
+
+        List<BookingDto> res = new LinkedList<>();
+
+        Map<String, Integer> daysOFWeek = new HashMap<>();
+        daysOFWeek.put("Sun", 1);
+        daysOFWeek.put("Mon", 2);
+        daysOFWeek.put("Tue", 3);
+        daysOFWeek.put("Wed", 4);
+        daysOFWeek.put("Thu", 5);
+        daysOFWeek.put("Fri", 6);
+        daysOFWeek.put("Sat", 7);
+
+        try{
+            dateForRecurrentStart = sdf.parse(dateStart);
+            dateForRecurrentEnd = sdf.parse(dateEnd);
+        } catch (Exception e) {
+            dateForRecurrentStart = null;
+            dateForRecurrentEnd = null;
+        }
+
+        Calendar calendarEndTime = Calendar.getInstance();
+        calendarEndTime.setTime(dateForRecurrentEnd);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateForRecurrentStart);
+
+        String[] days = bookingDtos.get(0).getDaysOfWeek().split(" ");
+        Long newRecID = bookingDao.getMaxRecurrentId() + 1;
+
+        Room room = roomDao.findById(bookingDtos.get(0).getRoomId());
+
+        List<BookingDto> newRecurrentBooking = new LinkedList<>();
+
+        while (dateForRecurrentEnd.getTime() > calendar.getTimeInMillis()) {
+            for(int i = 0; i < days.length; i++) {
+
+                List<BookingDto> dailyBookings = new ArrayList<>();
+
+                calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get(days[i]));
+
+                if(dateForRecurrentEnd.getTime() < calendar.getTimeInMillis()) break;
+                if(dateForRecurrentStart.getTime() > calendar.getTimeInMillis()) continue;
+
+
+                for(int j = 0; j < bookingDtos.size(); j++){        //цикл бере усі букінги за день і формує з них список
+                    Booking booking = new Booking();
+
+                    booking.setBookingStartTime(calendar.getTime());
+
+                    Calendar calendar1 = Calendar.getInstance();
+                    calendar1.setTime(calendar.getTime());
+                    calendar1.set(Calendar.HOUR, calendarEndTime.get(Calendar.HOUR));
+                    calendar1.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
+
+                    booking.setBookingEndTime(calendar1.getTime());
+
+                    booking.setRecurrentId(newRecID);
+                    booking.setRoom(room);
+                    booking.setChild(childDao.findById(bookingDtos.get(j).getKidId()));
+                    booking.setComment(bookingDtos.get(j).getComment());
+                    booking.setDuration(new Long(0));
+
+                    booking.setUser(userDao.findById(bookingDtos.get(j).getUserId()));
+
+                    //FIXME: fix this 'buf'
+                    BookingDto buf = booking.getDto();
+                    buf.setRoom(room);
+                    buf.setRoomId(room.getId());
+
+                    buf.setDateStartTime(DateUtil.toDateISOFormat( DateUtil.toIsoString(calendar.getTime())));
+                    buf.setDateEndTime(DateUtil.toDateISOFormat( DateUtil.toIsoString(calendar1.getTime())));
+
+                    buf.setUser(userDao.findById(bookingDtos.get(j).getUserId()));
+                    buf.setBookingState(BookingState.BOOKED);
+                    buf.setChild(childDao.findById(buf.getIdChild()));
+                     dailyBookings.add(buf);
+
+
+                }
+                newRecurrentBooking.addAll(dailyBookings);
+
+            }
+
+            calendar.add(Calendar.WEEK_OF_YEAR, 1);
+            calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));
+        }
+
+        return persistBookingsFromDtoAndSetId(newRecurrentBooking);
     }
 }
 
