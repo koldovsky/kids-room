@@ -103,27 +103,18 @@
                                     <spring:message code="administrator.statistics" /></a>
                                 </li>
                                 <li><a href="adm-edit-room">
-                                <span class="glyphicon glyphicon-home"></span>
-                                <spring:message code="administrator.editRooms" />
+                                    <span class="glyphicon glyphicon-home"></span>
+                                    <spring:message code="administrator.editRooms" />
                                 </a></li>
                                 <li><a href="adm-edit-manager">
-                                 <span class="glyphicon glyphicon-user"></span>
-                                <spring:message code="administrator.editManagers" />
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <spring:message code="administrator.editManagers" />
                                 </a></li>
                                 <li><a href="adm-config">
-                                <span class="glyphicon glyphicon-cog"></span>
-                                <spring:message code="administrator.configuration" />
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    <spring:message code="administrator.configuration" />
                                 </a></li>
                             </sec:authorize>
-
-                                <li>
-                                    <a>
-                                    <form:form  action="logout" method="post">
-                                        <button id="logout" action="submit" type="submit"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></button>
-                                    </form:form>
-                                    </a>
-
-                                </li>
 
                         </sec:authorize>
 
@@ -141,6 +132,14 @@
                     <li> <a class="langitem" id="UA">UA</a></li>
                    </ul>
                  </li>
+
+                 <li><sec:authorize access="isAuthenticated()">
+                    <a>
+                       <form:form  action="logout" method="post">
+                           <button id="logout" action="submit" type="submit"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></button>
+                       </form:form>
+                    </a>
+                 </sec:authorize></li>
 
             </ul>
 
