@@ -82,9 +82,15 @@ public class BookingTimeController {
 
         Calendar start = Calendar.getInstance();
         start.setTime(DateUtil.toDate(dateLo));
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
 
         Calendar end = Calendar.getInstance();
         end.setTime(DateUtil.toDate(dateHi));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
 
         return new Gson().toJson(roomService.getBlockedPeriods(room, start, end));
     }

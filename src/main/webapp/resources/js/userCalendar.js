@@ -192,12 +192,16 @@ $(function () {
 });
 
 function selectRoomForUser(roomParam, userId) {
+
+
     var id;
     roomParam = roomParam.split(' ');
 
     showRoomPhone(roomParam[1]);
 
     id = roomParam[0];
+
+getDisabledTime("2016-07-06", "2016-08-06", id);
 
 
     roomIdForHandler = id;

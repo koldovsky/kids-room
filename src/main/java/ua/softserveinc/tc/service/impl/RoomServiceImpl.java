@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -55,10 +56,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
-        if (start.equals(end)) {
-            return getBlockedPeriodsForDay(room, start);
-        }
-
         Map<String, String> result = new HashMap<>();
         while (start.compareTo(end) <= 0) {
             result.putAll(getBlockedPeriodsForDay(room, start));
@@ -93,6 +90,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
         Calendar temp = Calendar.getInstance();
 
+        List<Booking> bookings = reservedBookings(calendarStart.getTime(),
+                calendarEnd.getTime(), room);
         int minPeriod = appConfigurator.getMinPeriodSize();
         while (calendarStart.compareTo(calendarEnd) <= 0) {
             temp.add(Calendar.MINUTE, minPeriod);
@@ -100,7 +99,12 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             Date lo = calendarStart.getTime();
             Date hi = temp.getTime();
 
-            if(isPeriodAvailable(lo, hi, room)) {
+            List<Booking> tempList = bookings.stream()
+                    .filter(booking ->
+                    booking.getBookingStartTime().compareTo(hi) <= 0
+                            && booking.getBookingEndTime().compareTo(lo) >= 0)
+                    .collect(Collectors.toList());
+            if(room.getCapacity() > tempList.size()) {
                 result.put(DateUtil.convertDateToString(lo),
                         DateUtil.convertDateToString(hi));
             }
@@ -139,7 +143,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         query.select(root).where
                 (builder.and(
                         builder.lessThan(root.get("bookingStartTime"), dateHi),
-                        builder.greaterThan(root.get("bookingEndTime"), dateLo)), builder.equal(root.get("room"), room),
+                        builder.greaterThan(root.get("bookingEndTime"), dateLo)),
+                        builder.equal(root.get("room"), room),
                         builder.or(
                                 builder.equal(root.get("bookingState"), BookingState.BOOKED),
                                 builder.equal(root.get("bookingState"), BookingState.ACTIVE)));
