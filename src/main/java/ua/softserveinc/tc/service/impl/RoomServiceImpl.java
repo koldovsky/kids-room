@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.quartz.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Calendar;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
@@ -57,7 +59,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Override
     public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
         Map<String, String> result = new HashMap<>();
-        while (start.compareTo(end) <= 0) {
+        while (start.compareTo(end) < 0) {
             result.putAll(getBlockedPeriodsForDay(room, start));
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
@@ -79,21 +81,25 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             temp.setTime(timeFormat.parse(room.getWorkingHoursStart()));
             calendarStart.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
             calendarStart.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
+            calendarStart.set(Calendar.SECOND, 0);
 
             temp.setTime(timeFormat.parse(room.getWorkingHoursEnd()));
             calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
             calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
+            calendarEnd.set(Calendar.SECOND, 0);
         } catch (ParseException pe) {
             log.error("Could not parse date", pe);
             return result;
         }
 
-        Calendar temp = Calendar.getInstance();
-
         List<Booking> bookings = reservedBookings(calendarStart.getTime(),
                 calendarEnd.getTime(), room);
+
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendarStart.getTime());
         int minPeriod = appConfigurator.getMinPeriodSize();
-        while (calendarStart.compareTo(calendarEnd) <= 0) {
+        while (calendarStart.compareTo(calendarEnd) < 0) {
+
             temp.add(Calendar.MINUTE, minPeriod);
 
             Date lo = calendarStart.getTime();
@@ -101,9 +107,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
             List<Booking> tempList = bookings.stream()
                     .filter(booking ->
-                    booking.getBookingStartTime().compareTo(hi) <= 0
-                            && booking.getBookingEndTime().compareTo(lo) >= 0)
+                    booking.getBookingStartTime().compareTo(hi) < 0
+                            && booking.getBookingEndTime().compareTo(lo) > 0)
                     .collect(Collectors.toList());
+
             if(room.getCapacity() > tempList.size()) {
                 result.put(DateUtil.convertDateToString(lo),
                         DateUtil.convertDateToString(hi));
