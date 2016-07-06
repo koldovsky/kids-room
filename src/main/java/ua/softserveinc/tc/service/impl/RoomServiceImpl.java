@@ -12,6 +12,7 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
 import javax.persistence.EntityManager;
@@ -21,10 +22,7 @@ import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -56,14 +54,14 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public List<PeriodDto> getBlockedPeriods(Room room, Calendar start, Calendar end) {
+    public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
         if (start.equals(end)) {
             return getBlockedPeriodsForDay(room, start);
         }
 
-        List<PeriodDto> result = new ArrayList<>();
+        Map<String, String> result = new HashMap<>();
         while (start.compareTo(end) <= 0) {
-            result.addAll(getBlockedPeriodsForDay(room, start));
+            result.putAll(getBlockedPeriodsForDay(room, start));
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
 
@@ -71,13 +69,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
 
-    private List<PeriodDto> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
+    private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(calendarStart.getTime());
 
-        List<PeriodDto> result = new ArrayList<>();
+        Map<String, String> result = new HashMap<>();
 
         try {
             Calendar temp = Calendar.getInstance();
@@ -103,14 +101,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             Date hi = temp.getTime();
 
             if(isPeriodAvailable(lo, hi, room)) {
-                result.add(new PeriodDto(
-                        convertDateToString(lo),
-                        convertDateToString(hi)
-                ));
+                result.put(DateUtil.convertDateToString(lo),
+                        DateUtil.convertDateToString(hi));
             }
             calendarStart.setTime(temp.getTime());
         }
-
 
         return result;
     }

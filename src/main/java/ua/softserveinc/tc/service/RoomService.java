@@ -8,13 +8,14 @@ import ua.softserveinc.tc.entity.Room;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public interface RoomService extends BaseService<Room> {
 
     void saveOrUpdate(Room room);
 
-    List<PeriodDto> getBlockedPeriods(Room room, Calendar start, Calendar end);
+    Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
 
     Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room);
 

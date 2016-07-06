@@ -30,7 +30,8 @@ public class PeriodDto {
         this.endDateTime = endDateTime;
     }
 
-    public String toJson() {
-        return "\"" + startDateTime + "\"" + ": " + "\"" + endDateTime + "\"";
+    @Override
+    public String toString(){
+        return startDateTime + ":" + endDateTime;
     }
 }
