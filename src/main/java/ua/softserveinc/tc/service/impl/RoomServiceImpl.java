@@ -129,12 +129,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public Boolean isPeriodAvailable(Date dateLo, Date dateHi, Room room) {
-        List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
-        return room.getCapacity() > bookings.size();
-    }
-
-    @Override
     public Boolean isPossibleUpdate(BookingDto bookingDto) {
         Booking booking = bookingService.findById(bookingDto.getId());
         Room room = booking.getRoom();
