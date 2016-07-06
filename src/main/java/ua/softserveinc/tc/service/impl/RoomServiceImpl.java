@@ -56,6 +56,12 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         roomDao.saveOrUpdate(room);
     }
 
+    /**
+     * @param room a requested room
+     * @param start start of period
+     * @param end end of period
+     * @return map containing start-end pairs representing time periods
+     */
     @Override
     public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
         Map<String, String> result = new HashMap<>();
@@ -97,6 +103,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
         Calendar temp = Calendar.getInstance();
         temp.setTime(calendarStart.getTime());
+
         int minPeriod = appConfigurator.getMinPeriodSize();
         while (calendarStart.compareTo(calendarEnd) < 0) {
 
@@ -111,7 +118,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                             && booking.getBookingEndTime().compareTo(lo) > 0)
                     .collect(Collectors.toList());
 
-            if(room.getCapacity() > tempList.size()) {
+            if(room.getCapacity() <= tempList.size()) {
                 result.put(DateUtil.convertDateToString(lo),
                         DateUtil.convertDateToString(hi));
             }
