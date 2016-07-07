@@ -10,7 +10,6 @@ import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
-import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
@@ -47,9 +46,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private RoomDao roomDao;
 
     @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
     private ChildDao childDao;
 
     @Override
@@ -75,8 +71,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>();
-        restrictions.add(builder.between(root.get(
-                BookingConstants.Entity.START_TIME), startDate, endDate));
+        if(startDate != null && endDate != null) {
+            restrictions.add(builder.between(root.get(
+                    BookingConstants.Entity.START_TIME), startDate, endDate));
+        }
 
         if (bookingStates.length > 0)
             restrictions.add(root.get(BookingConstants.Entity.STATE).in(Arrays.asList(bookingStates)));
@@ -187,17 +185,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
-
-        List<Booking> bookings;
-
-        bookings = bookingRepository.findByRoomAndUserAndBookingState(roomDao.findById(idRoom),
-                userDao.findById(idUser), BookingState.BOOKED);
-        List<BookingDto> bookingDtos = new LinkedList<>();
-
-        for (Booking booking : bookings) {
-            bookingDtos.add(new BookingDto(booking));
-        }
-        return bookingDtos;
+        User user = userDao.findById(idUser);
+        Room room = roomDao.findById(idRoom);
+        return getBookings(null, null, user, room, BookingState.BOOKED)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
     }
 
     public Long getMaxRecurrentId(){
@@ -264,7 +257,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 if(dateForRecurrentStart.getTime() > calendar.getTimeInMillis()) continue;
 
 
-                for(int j = 0; j < bookingDtos.size(); j++){        //цикл бере усі букінги за день і формує з них список
+                for(int j = 0; j < bookingDtos.size(); j++){
+                    //цикл бере усі букінги за день і формує з них список
                     Booking booking = new Booking();
 
                     booking.setBookingStartTime(calendar.getTime());

@@ -53,7 +53,6 @@ public class BookingDto implements Serializable{
         df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
         this.startTime = df.format(booking.getBookingStartTime());
         this.endTime = df.format(booking.getBookingEndTime());
-
         this.kidName = booking.getChild().getFullName();
         this.roomName = booking.getRoom().getAddress();
         this.duration = booking.formatDuration();
@@ -63,7 +62,6 @@ public class BookingDto implements Serializable{
         this.durationLong = booking.getDuration();
         this.idChild = booking.getChild().getId();
         this.comment = booking.getComment();
-
         this.recurrentId = booking.getRecurrentId();
     }
 

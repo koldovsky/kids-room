@@ -116,6 +116,7 @@ public class BookingEditController {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
             booking.setComment(bookingDto.getComment());
+            booking.setRecurrentId(null);
             bookingService.update(booking);
             return true;
         }

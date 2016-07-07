@@ -55,7 +55,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public void deleteUserById(Long id) {
-        //TODO: unit-test fails on this method
         userDao.deleteUserById(id);
     }
 

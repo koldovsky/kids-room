@@ -1,13 +1,11 @@
 package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.dto.PeriodDto;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
@@ -17,7 +15,6 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by dima- on 06.06.2016.
@@ -75,28 +72,34 @@ public class BookingTimeController {
 
     @RequestMapping(value = "/disabled", method = RequestMethod.GET)
     @ResponseBody
-    public String getDisabledTime(@RequestParam Long roomID,
-                                  @RequestParam String dateLo,
-                                  @RequestParam String dateHi) {
+    public String getDisabledTime(@RequestParam Long roomID) {
         Room room = roomService.findById(roomID);
 
         Calendar start = Calendar.getInstance();
-        start.setTime(DateUtil.toDate(dateLo));
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
 
         Calendar end = Calendar.getInstance();
-        end.setTime(DateUtil.toDate(dateHi));
+        end.set(Calendar.HOUR_OF_DAY, 0);
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.add(Calendar.MONTH, 1);
 
-        return new Gson().toJson(roomService.getBlockedPeriods(room, start, end)
-                    .stream()
-                    .map(PeriodDto::toJson)
-                    .collect(Collectors.toList()));
+        return new Gson().toJson(roomService.getBlockedPeriods(room, start, end));
     }
 
     @RequestMapping(value = "getrecurrentbookings", method = RequestMethod.POST)
     @ResponseBody
     public String makeRecurrentBookings(@RequestBody List<BookingDto> bookingDtos) {
         for (BookingDto bookingDto : bookingDtos) {
-            bookingDto.setIdChild(bookingDto.getKidId());
+            if(bookingDto.getIdChild() == null) {
+                bookingDto.setIdChild(bookingDto.getKidId());
+            }
+
+            if(bookingDto.getKidId() == null) {
+                bookingDto.setKidId(bookingDto.getIdChild());
+            }
         }
         List<BookingDto> bookings = bookingService.makeRecurrentBookings(bookingDtos);
 
