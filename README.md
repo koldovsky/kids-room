@@ -37,6 +37,24 @@ on Runner tab set VM Options:
 
 "Hello, it's kids room" page will be available on http://localhost:8080/home/
 
+To start project you need to:
+ 1. Download MySql 5.7 on your computer.
+ 2. Create new database with command: "CREATE DATABASE database_name;".
+ 3. Create file "hibernate.properties" with appropriate code.
+ 4. Set "jdbc.url = jdbc:mysql://localhost:3306/database_name"
+    Set jdbc.username = root (by default "root", check that name on your computer)
+    Set jdbc.password = root (by default "root", check that name on your computer)
+ 5. Create Tomcat configuration:
+    - Edit Configuration
+    - Add New Configuration (Alt+Insert)
+    - Chose "Maven":
+        + Set Name: enter name new configuration (for example "Tomcat")
+        + Set Working directory: enter path to project folder (for example "D:/KidsRoom/lv-181java")
+        + Set Command line: enter command to run project "tomcat7:run"
+    - Now chose button "Ok"
+ 6. Start project.
+ 7. Now you can access to "http://localhost:8080/home/" and try project from local host. Good luck!
+
 ` src/main/resources/properties/properties/hibernate.properties`:
 ```properties
 jdbc.driverClassName = com.mysql.jdbc.Driver
