@@ -41,9 +41,10 @@ To start project you need to:
  1. Download MySql 5.7 on your computer.
  2. Create new database with command: "CREATE DATABASE database_name;".
  3. Create file "hibernate.properties" with appropriate code.
- 4. Set "jdbc.url = jdbc:mysql://localhost:3306/database_name"
-    Set jdbc.username = root (by default "root", check that name on your computer)
-    Set jdbc.password = root (by default "root", check that name on your computer)
+ 4. Enter properties of your computer for that commands:
+    - Set "jdbc.url = jdbc:mysql://localhost:3306/database_name"
+    - Set jdbc.username = root (by default "root", check that name on your computer)
+    - Set jdbc.password = root (by default "root", check that name on your computer)
  5. Create Tomcat configuration:
     - Edit Configuration
     - Add New Configuration (Alt+Insert)
