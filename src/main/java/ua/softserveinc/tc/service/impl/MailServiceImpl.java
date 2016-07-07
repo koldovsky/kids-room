@@ -59,12 +59,14 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException{
+    public void sendReminder(User recipient, String subject, List<BookingDto> bookings)
+            throws MessagingException{
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, recipient);
         model.put(ReportConstants.BOOKINGS, bookings);
 
-        sendMessage(recipient.getEmail(), subject, getTextMessage(MailConstants.REMINDER_VM, model));
+        sendMessage(recipient.getEmail(), subject,
+                getTextMessage(MailConstants.REMINDER_VM, model));
     }
 
     @Override

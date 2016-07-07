@@ -80,9 +80,9 @@
 #Photo
 {
     position: relative;
-     width: 202px;
-     height: 202px;
-     overflow: hidden;
+    width: 202px;
+    height: 202px;
+    overflow: hidden;
     margin: 0 auto;
     border: 1px solid black;
     margin-bottom: 25px;

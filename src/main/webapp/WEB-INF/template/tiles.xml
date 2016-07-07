@@ -62,6 +62,10 @@
         <put-attribute name="body" value="/WEB-INF/views/errors/not-found.jsp"/>
     </definition>
 
+    <definition name="internalError" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/internal-error.jsp"/>
+    </definition>
+
     <!-- Admin -->
     <definition name="adm-add-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/add-manager.jsp"/>

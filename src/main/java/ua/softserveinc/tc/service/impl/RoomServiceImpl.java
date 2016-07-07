@@ -3,6 +3,7 @@ package ua.softserveinc.tc.service.impl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
@@ -72,7 +73,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
 
     private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        DateFormat timeFormat = new SimpleDateFormat(DateConstants.TIME_FORMAT);
 
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(calendarStart.getTime());

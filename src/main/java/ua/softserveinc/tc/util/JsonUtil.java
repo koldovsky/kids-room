@@ -11,7 +11,6 @@ import java.util.List;
  * Created by TARAS on 18.06.2016.
  */
 public class JsonUtil {
-
     /**
      * Generic type method, to convert JSON into list of needed object type.
      *
