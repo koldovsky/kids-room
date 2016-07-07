@@ -1,13 +1,11 @@
 package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.dto.PeriodDto;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
@@ -17,7 +15,6 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by dima- on 06.06.2016.

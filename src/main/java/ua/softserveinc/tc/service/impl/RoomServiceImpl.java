@@ -1,12 +1,10 @@
 package ua.softserveinc.tc.service.impl;
 
-import org.quartz.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.dto.PeriodDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -27,7 +25,6 @@ import java.util.*;
 import java.util.Calendar;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.convertDateToString;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 @Service
