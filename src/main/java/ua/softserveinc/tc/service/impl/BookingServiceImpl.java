@@ -257,7 +257,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 if(dateForRecurrentStart.getTime() > calendar.getTimeInMillis()) continue;
 
 
-                for(int j = 0; j < bookingDtos.size(); j++){        //цикл бере усі букінги за день і формує з них список
+                for(int j = 0; j < bookingDtos.size(); j++){
+                    //цикл бере усі букінги за день і формує з них список
                     Booking booking = new Booking();
 
                     booking.setBookingStartTime(calendar.getTime());

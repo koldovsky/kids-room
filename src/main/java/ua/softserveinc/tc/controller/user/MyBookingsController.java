@@ -23,6 +23,7 @@ import ua.softserveinc.tc.service.UserService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDate;
 
@@ -94,10 +95,11 @@ public class MyBookingsController {
         }
         List<Booking> myBookings = bookingService.getBookings(toDate(dateLo),
                 toDate(dateHi), currentUser, BookingState.COMPLETED);
-        List<BookingDto> dtos = new ArrayList<>();
-        myBookings.forEach(booking -> dtos.add(new BookingDto(booking)));
+        List<BookingDto> dtos = myBookings
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
 
-        Gson gson = new Gson();
-        return gson.toJson(dtos);
+        return new Gson().toJson(dtos);
     }
 }
