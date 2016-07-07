@@ -53,7 +53,7 @@ To start project you need to:
         + Set Working directory: enter path to project folder (for example "D:/KidsRoom/lv-181java")
         + Set Command line: enter command to run project "tomcat7:run"
     - Now chose button "Ok"
- 6. Start project.
+ 6. Run project.
  7. Now you can access to "http://localhost:8080/home/" and try project from local host. Good luck!
 
 ` src/main/resources/properties/properties/hibernate.properties`:
