@@ -11,15 +11,14 @@
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
 
-
-
 <div class="container">
- <div id="choose-time-inp">
+<div class="table-edit">
+            <div id="choose-time-inp">
                  <form action="", method="POST">
                  <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"/>
                     <input id="date-booking" class ="form-control" type = "date"/>
                   </form>
-             </div>
+            </div>
             <div id="create-booking-btn">
                  <button class="btn btn-primary" onclick="openCreateBookingDialog()">
                     Add a kid
@@ -27,13 +26,17 @@
             </div>
             <div id="nav-group">
                 <nav>
-                      <button class="btn btn-raised" onclick="allBooking()">All</button>
-                      <button class="btn btn-raised" onclick="bookedBooking()">Booked</button>
-                      <button class="btn btn-raised" onclick="activeBooking()">Arrived</button>
-                      <button class="btn btn-raised" onclick="leavedBooking()">Left</button>
+                    <ul class="nav nav-pills">
+                          <button id="btn-all" class="btn btn-raised" onclick="allBooking()">All</button>
+                          <button id="btn-booked" class="btn btn-raised" onclick="bookedBooking()">Booked</button>
+                          <button id="btn-active" class="btn btn-raised" onclick="activeBooking()">Arrived</button>
+                          <button id="btn-leaved" class="btn btn-raised" onclick="leavedBooking()">Left</button>
+                   </ul>
                 </nav>
             </div>
-    <table id="example" class ="table-edit">
+            <br>
+
+    <table id="booking-table">
             <thead><tr>
 
                     <th class="col-xs-1">#</th>
@@ -46,9 +49,10 @@
             <tbody>
             </tbody>
     </table>
-    <br>
 </div>
-<br>
+</div>
+
+
  <div id="cancelModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content" >
@@ -92,6 +96,10 @@
                             <div>
                                 <label><spring:message code="booking.createEndTime"/></label>
                                 <input id="bookingUpdatingEndTimepicker" type="text" name="end" class="time form-control picker" />
+                            </div>
+                            <div>
+
+                                 <textarea type="text" class="form-control" id="kid-comment" placeholder="Some comment"></textarea>
                             </div>
                         </div>
                         <div class="col-xs-6">

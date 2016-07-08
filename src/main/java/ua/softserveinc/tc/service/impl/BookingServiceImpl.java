@@ -135,6 +135,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getStartTime());
         booking.setBookingStartTime(date);
+        if(!(booking.getBookingState()==BookingState.COMPLETED)){
+            booking.setBookingState(BookingState.ACTIVE);
+        }
         resetSumAndDuration(booking);
         return booking;
     }

@@ -1,5 +1,4 @@
 
-
 .table-edit {
     text-align:center;
     margin: auto;
@@ -7,30 +6,21 @@
     min-width: 900px;
     background-color: white;
     border-top:1px solid #ddd;
-
-}
-.tableDiv{
-    margin: auto;
-    width: 70%;
-    min-width: 900px;
-    min-height: 400px;
-    background-color: white;
-    box-shadow: 8px 11px 20px 12px #c8c6d7;
+    height: 100%;
 }
 
 .table-edit tbody td{
-border-top:1px solid #ddd;
-
+    border-top:1px solid #ddd;
 }
 
 th{
-     text-align:center;
+    text-align:center;
     height: 50px;
     background-color: #4285F4;
 }
 .validate{
-display: none;
-color: red;
+    display: none;
+    color: red;
 }
 
 .highlighted-edit {
@@ -43,12 +33,12 @@ html, body, .container {
 .container {
     display: table;
     vertical-align: middle;
+
 }
 .vertical-center-row {
     display: table-cell;
     vertical-align: middle;
 }
-
 
 .highlighted{
         background-color:  #FFFFFF;
@@ -65,25 +55,26 @@ html, body, .container {
 .highlight-complet {
     background-color: #C0C0C0;
 }
+
 #create-booking-btn{
       width:150px;
       margin-right: 50px;
       float:right;
 
 }
+
 #choose-time-inp{
        width:150px;
        margin-left: 50px;
        margin-top: 20px;
        float:left;
-
 }
 
 #nav-group{
      margin: auto;
-     width: 40%;
-     margin-top: 20px;
+     width: 50%;
      float:center;
+     background-color: white;
 }
 .glyphicon-warning-sign{
     font-size: 1.3em;
@@ -96,15 +87,13 @@ html, body, .container {
 
 }
 
-.smart-table{
-         margin: auto;
-         width: 70%;
-         min-width: 900px;
-         min-height: 400px;
-         background-color: white;
-         box-shadow: 8px 11px 20px 12px #c8c6d7;
-}
-
 .table-edit tr:hover {
     background-color:  #D7D8DA;
 }
+
+.row{
+       margin: auto;
+}
+
+
+

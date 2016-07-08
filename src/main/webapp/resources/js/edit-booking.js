@@ -7,7 +7,6 @@ var table = null;
 $(function() {
     if(localStorage["bookingsState"] == null) {
         localStorage["bookingsState"] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
-
     }
     });
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
@@ -56,6 +55,7 @@ $().ready(function() {
             startTime: getData + " " + $('#bookingUpdatingStartTimepicker').val(),
             endTime: getData + " " + $('#bookingUpdatingEndTimepicker').val(),
             roomId: localStorage["roomId"],
+            comment: $('#kid-comment').val(),
         };
         updatingBooking(inputDate);
         $('#' + id).removeClass('highlight-active');
@@ -86,26 +86,48 @@ function selectRoomForManager(roomId) {
 }
 
 function bookedBooking() {
+//    $('.btn-raised').removeClass("btn-info");
+//    $('#btn-booked').addClass("btn-info");
     localStorage["bookingsState"] = ['BOOKED'];
     ref(localStorage["bookingsState"]);
 }
 
 function activeBooking() {
+//    $('.btn-raised').removeClass("btn-info");
+//    $('#btn-active').addClass("btn-info");
     localStorage["bookingsState"] = ['ACTIVE'];
     ref(localStorage["bookingsState"]);
 }
 
 function leavedBooking() {
+//    $('.btn-raised').removeClass("btn-info");
+//    $('#btn-leaved').addClass("btn-info");
     localStorage["bookingsState"] = ['COMPLETED'];
     ref(localStorage["bookingsState"]);
 }
 
 function allBooking() {
+   /* $('.btn-raised').removeClass("btn-info");
+    $('#btn-all').addClass("btn-info");*/
     localStorage["bookingsState"] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     ref(localStorage["bookingsState"]);
 }
 
+function chekBookingState(){
+    $('.btn-raised').removeClass("btn-info");
+    if(localStorage["bookingsState"] === 'ACTIVE,BOOKED,CALCULATE_SUM,COMPLETED'){
+       $('#btn-all').addClass("btn-info");
+    } else if(localStorage["bookingsState"] === 'ACTIVE'){
+        $('#btn-active').addClass("btn-info");
+    } else if(localStorage["bookingsState"] ==='COMPLETED'){
+        $('#btn-leaved').addClass("btn-info");
+    } else{
+        $('#btn-booked').addClass("btn-info");
+    }
+}
+
 function ref(bookingsState) {
+    chekBookingState();
     var time = $('#date-booking').val();
     var idRoom = localStorage["roomId"];
     src = 'dailyBookings/' + time + "/" + idRoom + "/" + bookingsState;
@@ -129,7 +151,7 @@ function ref(bookingsState) {
         table.destroy();
     }
 
-    table = $('#example').DataTable({
+    table = $('#booking-table').DataTable({
         rowId: 'id',
         "columnDefs": [{
 
@@ -151,7 +173,7 @@ function ref(bookingsState) {
                 "fnCreatedCell": function(nTd, sData, oData) {
                     if (!(oData.comment == "")) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
-                        + '<span data-toggle="tooltip" class="glyphicon glyphicon-info-sign"' + 'title="'
+                        + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id + '" class="glyphicon glyphicon-info-sign"' + 'title="'
                         + oData.comment + '"></span>');
                     } else {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>');
@@ -194,7 +216,7 @@ function ref(bookingsState) {
 
 }
 
-$('#example tbody').on('click', '#arrival-btn', function() {
+$('#booking-table tbody').on('click', '#arrival-btn', function() {
     var tr = $(this).closest('tr');
     var id = table.row(tr).data().id;
     var time = $(this).closest('td').find('input').val();
@@ -202,12 +224,12 @@ $('#example tbody').on('click', '#arrival-btn', function() {
     setStartTime(id, time);
 });
 
-$('#example tbody').on('focus', 'input', function() {
+$('#booking-table tbody').on('focus', 'input', function() {
     var time = dateNow.toString().match(/\d{2}:\d{2}/)[0];
     $(this).val(time);
 });
 
-$('#example tbody').on('click', '#leave-btn', function() {
+$('#booking-table tbody').on('click', '#leave-btn', function() {
     var tr = $(this).closest('tr');
     var id = table.row(tr).data().id;
     var time = $(this).closest('td').find('input').val();
@@ -216,11 +238,14 @@ $('#example tbody').on('click', '#leave-btn', function() {
     setEndTime(id, time);
 });
 
-$('#example tbody').on('click', '.edit-button-btn', function() {
+$('#booking-table tbody').on('click', '.edit-button-btn', function() {
     idBooking = $(this).closest('td').find('.book-id').attr('id');
+    var comment = $('#comment-'+idBooking).attr('title');
+
     var date = $('#date-booking').val();
     var startTime = $(this).closest('td').find('#book-start-time').text();
     var endTime = $(this).closest('td').find('#book-end-time').text();
+    $('#kid-comment').val(comment);
     $('#bookingUpdatingStartTimepicker').val(startTime);
     $('#bookingUpdatingEndTimepicker').val(endTime);
     $('#data-edit').val(date);
@@ -373,3 +398,15 @@ function sendBookingToServerForCreate(bookingsArray) {
         }
     });
 }
+
+function main(){
+  $(this).closest('li').addClass("active");
+}
+function prof(){
+$(this).closest('li').addClass("active");
+}
+
+function mess(){
+$(this).closest('li').addClass("active");
+}
+
