@@ -72,9 +72,6 @@ public class BookingEditController {
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
-        if(!(booking.getBookingState()==BookingState.COMPLETED)){
-            booking.setBookingState(BookingState.ACTIVE);
-        }
         bookingService.update(booking);
     }
 
@@ -99,8 +96,7 @@ public class BookingEditController {
         if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
             Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
         }
-        Gson gson = new Gson();
-        return  gson.toJson(bookings.stream()
+        return  new Gson().toJson(bookings.stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList()));
     }

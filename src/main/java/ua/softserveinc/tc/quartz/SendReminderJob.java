@@ -7,6 +7,7 @@ import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 
 import ua.softserveinc.tc.service.MailService;
@@ -17,6 +18,7 @@ import javax.mail.MessagingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,23 +37,29 @@ public class SendReminderJob {
     private MailService mailService;
 
     private void task() {
-        Date today = DateUtil.dateNow().getTime();
+        Date start = DateUtil.dateNow().getTime();
         Calendar calendar = DateUtil.dateNow();
+
+        //adding 2, because "getBookings" does NOT count the last day in
         calendar.add(Calendar.DAY_OF_MONTH, 2);
-        Date tomorrow = calendar.getTime();
+        Date end = calendar.getTime();
 
-        bookingService.getBookings(today, tomorrow, BookingState.BOOKED)
+        Map<User, List<Booking>> bookingsGrouped = bookingService
+                .getBookings(start, end, BookingState.BOOKED)
                 .stream()
-                .collect(Collectors.groupingBy(Booking::getUser))
-                .forEach((recipient, bookings) -> {
-                    try {
-                        List<BookingDto> dtos = bookings
-                                .stream().map(Booking::getDto).collect(Collectors.toList());
-                        mailService.sendReminder(recipient, MailConstants.REMINDER_SUBJECT, dtos);
+                .collect(Collectors.groupingBy(Booking::getUser));
+        bookingsGrouped.forEach((recipient, bookings) -> {
+            try {
+                List<BookingDto> infoToTransfer = bookings
+                        .stream()
+                        .map(Booking::getDto)
+                        .collect(Collectors.toList());
+                mailService.sendReminder(recipient,
+                        MailConstants.REMINDER_SUBJECT, infoToTransfer);
 
-                    } catch (MessagingException me){
-                        logger.error("Error sending e-mail", me);
-                    }
-                });
+            } catch (MessagingException me){
+                logger.error("Error sending e-mail", me);
+            }
+        });
     }
 }

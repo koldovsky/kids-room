@@ -51,7 +51,7 @@ public class ExceptionHandlingController {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public String handleError500() {
-        return ErrorConstants.NOT_FOUND_VIEW;
+        return ErrorConstants.INTERNAL_SERVER_ERROR_VIEW;
     }
 
     /**

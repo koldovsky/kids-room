@@ -12,6 +12,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
+import ua.softserveinc.tc.util.JsonUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -55,10 +56,9 @@ public class BookingTimeController {
         });
 
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
-        if (dto != null) {
-            return new Gson().toJson(dto);
-        }
-        return null;
+
+        return new Gson().toJson(dto);
+
     }
 
     @RequestMapping(value = "getallbookings/{idUser}/{idRoom}",
@@ -86,7 +86,7 @@ public class BookingTimeController {
         end.set(Calendar.SECOND, 0);
         end.add(Calendar.MONTH, 1);
 
-        return new Gson().toJson(roomService.getBlockedPeriods(room, start, end));
+        return JsonUtil.toJson(roomService.getBlockedPeriods(room, start, end));
     }
 
     @RequestMapping(value = "getrecurrentbookings", method = RequestMethod.POST)
@@ -103,7 +103,7 @@ public class BookingTimeController {
         }
         List<BookingDto> bookings = bookingService.makeRecurrentBookings(bookingDtos);
 
-        return  new Gson().toJson(bookings);
+        return new Gson().toJson(bookings);
     }
 
 }

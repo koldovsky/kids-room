@@ -135,6 +135,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getStartTime());
         booking.setBookingStartTime(date);
+        if(!(booking.getBookingState()==BookingState.COMPLETED)){
+            booking.setBookingState(BookingState.ACTIVE);
+        }
         resetSumAndDuration(booking);
         return booking;
     }
@@ -167,10 +170,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
         BookingDto bdto = listDTO.get(0);
 
-        if (roomService.getAvailableSpaceForPeriod(
+        int available = roomService.getAvailableSpaceForPeriod(
                 bdto.getDateStartTime(),
                 bdto.getDateEndTime(),
-                bdto.getRoom()) >= listDTO.size()) {
+                bdto.getRoom());
+
+        if (available >= listDTO.size()) {
             listDTO.forEach(bookingDTO -> {
                 Booking booking = bookingDTO.getBookingObject();
                 booking.setSum(0L);
@@ -180,7 +185,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             });
             return listDTO;
         } else {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
     }
 
