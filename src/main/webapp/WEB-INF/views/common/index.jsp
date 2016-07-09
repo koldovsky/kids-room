@@ -38,7 +38,7 @@
         ${r.id}
     </c:forEach>
 
-    <%-- Dima, now you can delete this part
+    <%-- Dima, now you can delete this part --%>
     <select id="selectBoxUser" onchange="selectRoomForUser(value, '${userId}');">
         <option value=" "></option>
 
@@ -55,7 +55,7 @@
         <label id="roomPhone"></label>
     </div>
 
-    --%>
+    <%-- --%>
 
 
 
