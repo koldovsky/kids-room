@@ -10,7 +10,7 @@
 
 <body>
 <div class="for-table table-responsive">
-    <table class="for-table table table-hover reg-form">
+    <table class="for-table table table-hover reg-form" style="width: 70%;">
         <tr class="hide-border">
             <th colspan="7" class="set-standard-color">
                 <legend class="for-table"><strong class="title-font">

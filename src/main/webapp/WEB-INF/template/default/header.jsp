@@ -42,7 +42,7 @@
                         <sec:authorize access="isAuthenticated()">
 
                             <sec:authorize access="hasRole('USER')">
-                                <li id="roompicker" class="dropdown menu-item">
+                                <li id="roompicker" class="dropdown menu-item" style="padding-right: 150px;">
 
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
@@ -66,7 +66,7 @@
 
                             <sec:authorize access="hasRole('MANAGER')">
 
-                                <li id="roompicker" class="dropdown menu-item">
+                                <li id="roompicker" class="dropdown menu-item" style="padding-right: 150px;">
 
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
