@@ -14,8 +14,8 @@
     <form:form modelAttribute="<%=AdminConstants.ATR_MANAGER%>" action="confirm-manager" method="post">
 
         <tr><th>
-           <strong class="title-font">${manager.email}<strong><br>
-           <spring:message code="administrator.manager.activationAccountMessage"/>
+            <strong class="title-font">${manager.email}<strong><br>
+            <spring:message code="administrator.manager.activationAccountMessage"/>
         </th></tr>
 
         <form:hidden path="id"/>

@@ -26,22 +26,19 @@
             <form:hidden path="confirmed" value="${manager.confirmed}"/>
 
             <div class="form-group sizing-between">
-               <label for="email" class="required">
-                  <spring:message code="administrator.manager.email"/></label>
-                  <form:input path="email" value="${manager.email}" class="form-control" readonly="true"/>
-                  <form:errors path="email" cssClass="error"/>
+                <label for="email" class="required"><spring:message code="administrator.manager.email"/></label>
+                <form:input path="email" value="${manager.email}" class="form-control" readonly="true"/>
+                <form:errors path="email" cssClass="error"/>
             </div>
 
             <div class="form-group sizing-between">
-               <label for="firstName" class="required">
-                  <spring:message code="administrator.manager.firstName"/></label>
-                  <form:input path="firstName" value="${manager.firstName}" class="form-control"/>
-                  <form:errors path="firstName" cssClass="error"/>
+                <label for="firstName" class="required"><spring:message code="administrator.manager.firstName"/></label>
+                <form:input path="firstName" value="${manager.firstName}" class="form-control"/>
+                <form:errors path="firstName" cssClass="error"/>
             </div>
 
             <div class="form-group sizing-between">
-               <label for="lastName" class="required">
-                  <spring:message code="administrator.manager.lastName"/></label>
+                <label for="lastName" class="required"><spring:message code="administrator.manager.lastName"/></label>
                   <form:input path="lastName" value="${manager.lastName}" class="form-control"/>
                   <form:errors path="lastName" cssClass="error" />
             </div>
@@ -49,8 +46,7 @@
             <div class="form-group sizing-between">
                <label for="phoneNumber" class="required">
                   <spring:message code="administrator.phoneNumber"/></label>
-                  <form:input path="phoneNumber" value="${manager.phoneNumber}"
-                              pattern="^(\+38|8|)(\W*\d){10}\W*$" class="form-control"/>
+                  <form:input path="phoneNumber" value="${manager.phoneNumber}" class="form-control"/>
                   <form:errors path="phoneNumber" cssClass="error"  />
             </div>
 

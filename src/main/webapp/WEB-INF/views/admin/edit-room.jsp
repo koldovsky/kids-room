@@ -9,15 +9,15 @@
 
 
 <body>
-  <div class="for-table table-responsive">
-      <table class="for-table table table-hover reg-form" style="width: 85%;">
-         <tr class="hide-border">
+<div class="for-table table-responsive">
+    <table class="for-table table table-hover reg-form" style="width: 85%;">
+        <tr class="hide-border">
             <th colspan="10" class="set-standard-color">
-               <strong class="title-font"><spring:message code="administrator.listRooms"/></strong>
+                <strong class="title-font"><spring:message code="administrator.listRooms"/></strong>
             </th>
-         </tr>
+        </tr>
 
-         <tr>
+        <tr>
             <th class="th-size"><strong><spring:message code="administrator.room.name"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.address"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.city"/></strong></th>
@@ -28,11 +28,11 @@
             <th class="th-size"><strong><spring:message code="administrator.room.rate"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.edit"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.block"/></strong></th>
-         </tr>
+        </tr>
 
-         <c:forEach var="room" items="${roomList}">
-         <c:if test="${room.active eq true}"><tr></c:if>
-         <c:if test="${room.active ne true}"><tr class="tr-not-active"></c:if>
+        <c:forEach var="room" items="${roomList}">
+        <c:if test="${room.active eq true}"><tr></c:if>
+        <c:if test="${room.active ne true}"><tr class="tr-not-active"></c:if>
             <td>${room.name}</td>
             <td>${room.address}</td>
             <td>${room.city}</td>
@@ -43,13 +43,13 @@
                     <tr><td><spring:message code="administrator.room.startTime"/> ${room.workingHoursStart}</td></tr>
                     <tr><td><spring:message code="administrator.room.endTime"/> ${room.workingHoursEnd}</td></tr>
                 </table>
-             </td>
+            </td>
             <td>
-               <table class="hide-border">
-                  <c:forEach var="manager" items="${room.managers}">
-                     <tr><td >${manager.firstName} ${manager.lastName}</td></tr>
-                  </c:forEach>
-               </table>
+                <table class="hide-border">
+                    <c:forEach var="manager" items="${room.managers}">
+                        <tr><td >${manager.firstName} ${manager.lastName}</td></tr>
+                    </c:forEach>
+                </table>
             </td>
             <td>
                 <table class="hide-border">
@@ -70,30 +70,31 @@
                 <c:if test="${room.active ne true}">
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
-                       <input id="room" name="manager" type="hidden" value="${room.id}" />
-                       <button type="submit" value="lock" onClick="return confirm('Are you sure you want to make the room active??')"
-                               class="button button-size-default save"></button>
+                        <input id="room" name="manager" type="hidden" value="${room.id}" />
+                        <button type="submit" value="lock"
+                                onClick="return confirm('Are you sure you want to make the room active?')"
+                                class="button button-size-default save"></button>
                     </form:form>
                 </c:if>
                 <c:if test="${room.active eq true}">
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                        <input id="room" name="room" type="hidden" value="${room.id}" />
-                       <button type="submit" value="lock" onClick="return confirm('Are you sure you want to make the room inactive??')"
+                       <button type="submit" value="lock"
+                               onClick="return confirm('Are you sure you want to make the room inactive?')"
                                class="button button-size-default delete"></button>
                     </form:form>
                 </c:if>
-
             </td>
          </tr>
          </c:forEach>
 
-         <tr>
+        <tr>
             <th colspan="10" class="hide-border set-standard-color">
                 <a href="adm-add-room"><input type="button" value=<spring:message code="administrator.add"/>
                                         class="button-add button"/></a>
             </th>
-         </tr>
-      </table>
-  </div>
+        </tr>
+    </table>
+</div>
 </body>
