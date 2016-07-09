@@ -42,6 +42,22 @@
                         <sec:authorize access="isAuthenticated()">
 
                             <sec:authorize access="hasRole('USER')">
+                                <li id="roompicker" class="dropdown menu-item">
+
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
+                                    <spring:message code="manager.roompicker" />:
+                                        <span id="room"></span>
+                                    </a>
+                                    <ul id="selectRoom" class="dropdown-menu">
+                                    <c:forEach items="${rooms}" var="room">
+                                        <li>
+                                            <a style="cursor: pointer;" id="${room.id}">${room.address}</a>
+                                        </li>
+                                    </c:forEach>
+                                    </ul>
+                                </li>
+
                                 <li><a href="/home">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                     <spring:message code="user.calendar" />

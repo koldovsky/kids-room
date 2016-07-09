@@ -33,12 +33,12 @@
 <body>
 
 <sec:authorize access="hasRole('USER')">
-    <spring:message code="user.selectRoom"/>
 
     <c:forEach items="${managersRoom}" var="r">
         ${r.id}
     </c:forEach>
 
+    <%-- Dima, now you can delete this part
     <select id="selectBoxUser" onchange="selectRoomForUser(value, '${userId}');">
         <option value=" "></option>
 
@@ -55,7 +55,9 @@
         <label id="roomPhone"></label>
     </div>
 
-    <button type="button" class="btn btn-info" id="create-new-booking">Book</button>
+    --%>
+
+
 
 
     <div class="container">
@@ -266,7 +268,8 @@
         </div>
     </div>
 
-    <div id='user-calendar'></div>
+    <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
+    <div id='calendar'></div>
 
 </sec:authorize>
 
@@ -548,7 +551,7 @@
     </div>
 
 
-    <button type="button" class="btn btn-info" id="create-new-event">New event</button>
+    <button type="button" class="btn btn-success" id="create-new-event">New event</button>
     <div id='calendar'></div>
 
 </sec:authorize>
