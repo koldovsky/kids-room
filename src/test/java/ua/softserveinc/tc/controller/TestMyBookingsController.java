@@ -1,4 +1,4 @@
-package controller;
+package ua.softserveinc.tc.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +26,9 @@ import ua.softserveinc.tc.service.UserService;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**

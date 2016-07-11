@@ -1,4 +1,4 @@
-package repo;
+package ua.softserveinc.tc.repo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,6 @@ import ua.softserveinc.tc.config.AppConfig;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 

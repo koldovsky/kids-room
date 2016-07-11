@@ -1,15 +1,13 @@
-package service;
+package ua.softserveinc.tc.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.SystemProfileValueSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.config.AppConfig;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.service.RoomService;
 
 import javax.annotation.Resource;
 import java.util.Calendar;

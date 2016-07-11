@@ -1,4 +1,4 @@
-package util;
+package ua.softserveinc.tc.util;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.config.AppConfig;
-import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 import javax.annotation.Resource;
 

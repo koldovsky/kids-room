@@ -1,4 +1,4 @@
-package service;
+package ua.softserveinc.tc.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,12 +14,11 @@ import ua.softserveinc.tc.config.AppConfig;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
-import ua.softserveinc.tc.service.UserService;
-
-import static org.junit.Assert.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Nestor on 29.06.2016.
