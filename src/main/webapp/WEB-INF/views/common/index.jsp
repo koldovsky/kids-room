@@ -269,7 +269,7 @@
     </div>
 
     <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
-    <div id='calendar'></div>
+    <div id='user-calendar'></div>
 
 </sec:authorize>
 
