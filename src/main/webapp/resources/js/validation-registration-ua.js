@@ -6,14 +6,22 @@ $(document).ready(function() {
        $.validator.addMethod("regexPhone", function(value, element, regexpr) {
           return regexpr.test(value);
        }, "Please enter valid phone number. Example 0981234567");
+       $.validator.addMethod("regexFirstName", function(value, element, regexpr) {
+          return regexpr.test(value);
+       }, "Ви ввели ім'я невірно");
+       $.validator.addMethod("regexLastName", function(value, element, regexpr) {
+          return regexpr.test(value);
+       }, "Ви ввели прізвище невірно");
     $('#userform').validate({
             rules:{
 
                 firstName: {
-                   required: true
+                   required: true,
+                   regexFirstName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя]+$/
                 },
                 lastName: {
-                   required: true
+                   required: true,
+                   regexLastName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя]+$/
                 },
                 email: {
                    required: true,
@@ -25,7 +33,6 @@ $(document).ready(function() {
                 },
                 confirm:{
                    required: true,
-                   minlength: 8,
                    equalTo: "#userPassword"
                 },
                 phoneNumber:{
@@ -34,10 +41,12 @@ $(document).ready(function() {
                 }
             }, messages: {
                 firstName: {
-                    required: "Введіть, будь ласка, своє ім'я"
+                    required: "Введіть, будь ласка, своє ім'я",
+                    regexFirstName: "Ви ввели ім'я невірно"
                 },
                 lastName: {
-                    required: "Введіть, будь ласка, своє прізвище"
+                    required: "Введіть, будь ласка, своє прізвище",
+                    regexLastName: "Ви ввели прізвище невірно"
                 },
                 email: {
                     required: "Введіть, будь ласка, свій емейл",

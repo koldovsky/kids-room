@@ -81,10 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout");
 
-        http.rememberMe()
-                .rememberMeParameter("remember-me")
-                .tokenRepository(persistentTokenRepository())
-                .tokenValiditySeconds(86400);
+        http.rememberMe().
+                key("rem-me-key").
+                rememberMeParameter("remember-me").
+                rememberMeCookieName("my-remember-me").
+                tokenValiditySeconds(286400);
     }
 
     @Bean
