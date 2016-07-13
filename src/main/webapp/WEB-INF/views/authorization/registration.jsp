@@ -40,7 +40,7 @@
               <form:errors path="phoneNumber" cssClass="error"  />
       </div>
          <div class="form-group">
-              <spring:message code="user.prerules"/> <a data-toggle="modal" data-target="#rules"> <spring:message code="user.rules" /></a>
+              <spring:message code="user.prerules"/> <a data-toggle="modal" data-target="#rules"> <spring:message code="user.ruless" /></a>
               <div id="reg-button">
                 <button type="submit" id="button" class="btn btn-primary btn-lg"><spring:message code="user.register" /></button>
               </div>
