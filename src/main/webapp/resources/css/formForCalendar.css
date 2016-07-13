@@ -9,3 +9,9 @@ html, body, .container {
     display: table-cell;
     vertical-align: middle;
 }
+
+
+.deleting-event:hover {
+    color: #800000;
+    text-decoration: underline;
+}
