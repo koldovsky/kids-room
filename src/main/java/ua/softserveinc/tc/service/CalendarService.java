@@ -12,11 +12,13 @@ import java.util.List;
 public interface CalendarService {
     Long create(final Event event);
 
-    List<EventDto> findByRoomId(final long roomId);
+    List<EventDto> findEventByRoomId(final long roomId);
 
-    void updateEvent(Event event);
+    void updateEvent(final Event event);
 
-    void deleteEvent(Event event);
+    void deleteEvent(final Event event);
 
-    List<EventDto> createRecurrentEvents(RecurrentEventDto recurrentEventDto);
+    List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto);
+
+    String getRoomWorkingHours(final long id);
 }

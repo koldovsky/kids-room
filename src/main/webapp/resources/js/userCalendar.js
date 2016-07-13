@@ -106,10 +106,19 @@ $(function () {
         hide: {
             effect: 'clip',
             duration: 500
+        },
+        beforeClose: function (){
+            $('#child-selector').show();
+
+            $('#deleting-recurrent-booking').hide();
+
+            $('#update-recurrent-booking').hide();
+            $('#book').show();
+            $("#make-recurrent-booking").dialog("option", "title", "New booking");
         }
     });
 
-    $('#update-recurrent-booking').click(function() {
+    $('#update-recurrent-booking').click(function () {
         updateRecurrentBooking();
     });
     $('#close-choose').click(function () {
@@ -119,7 +128,7 @@ $(function () {
     });
 
     $('#confirm-choose-booking').click(function () {
-        if($('#single-update-booking').is(':checked')){
+        if ($('#single-update-booking').is(':checked')) {
             $('#bookingUpdatingDialog').dialog('open');
         } else {
             $('#make-recurrent-booking').dialog('open');
@@ -128,6 +137,7 @@ $(function () {
 
             $('#child-selector').hide();
             $('#comment-for-one-child-updating').show();
+            $('#deleting-recurrent-booking').show();
         }
 
         $('#single-update-booking').prop('checked', true);
@@ -156,15 +166,21 @@ $(function () {
     });
 
 
-
     $('#updatingBooking').click(function () {
         updateBooking();
         $('#bookingUpdatingDialog').dialog('close');
     });
 
-    $('#deletingBooking').click(function () {
+
+    $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
         cancelBooking(info.id);
+    });
+
+
+    $('#deletingBooking').click(function () {
+        $('#bookingUpdatingDialog').dialog('close');
+        //cancelBooking(info.id);
     });
 
     //create booking and close the dialog window
@@ -174,7 +190,7 @@ $(function () {
             createBooking();
         }
 
-        if($('#weekly-booking').is(':checked')) {
+        if ($('#weekly-booking').is(':checked')) {
             makeRecurrentBookings();
             closeBookingDialog();
         }
@@ -186,9 +202,16 @@ $(function () {
     });
 
     //close booking creating dialog
-    $('#cancel-changes').click(function (){
+    $('#cancel-changes').click(function () {
         closeBookingDialog();
-    })
+    });
+
+    $('#deleting-recurrent-booking').click(function () {
+        $('#make-recurrent-booking').dialog('close');
+        cancelRecurrentBookings(info.calEvent.recurrentId);
+    });
+
+
 });
 
 function selectRoomForUser(roomParam, userId) {
@@ -201,7 +224,7 @@ function selectRoomForUser(roomParam, userId) {
 
     id = roomParam[0];
 
-getDisabledTime("2016-07-06", "2016-08-06", id);
+    getDisabledTime("2016-07-06", "2016-08-06", id);
 
 
     roomIdForHandler = id;
@@ -214,7 +237,7 @@ getDisabledTime("2016-07-06", "2016-08-06", id);
         var commentId;
 
         for (var i = 0; i < numberOfKids; i++) {
-        commentId = $('#comment-' + i).val();
+            commentId = $('#comment-' + i).val();
             if ($('#checkboxKid' + commentId).is(':checked')) {
                 $('#child-comment-' + commentId).prop('hidden', false);
                 $('#child-comment-' + commentId + '-1').prop('hidden', false);
@@ -229,43 +252,57 @@ getDisabledTime("2016-07-06", "2016-08-06", id);
     var path = 'getevents/' + id;
 
     $.ajax({
-        url: path, success: function (result) {
-            var objects;
-            if (result.length) {
-                objects = [];
-                result = JSON.parse(result);
+        url: 'getroomproperty/' + id,
+        success: function (result) {
 
-                for (var i = 0; i < result.length; i++) {
-                    objects[i] = {
-                        id: result[i].id,
-                        title: result[i].name,
-                        start: result[i].startTime,
-                        end: result[i].endTime,
-                        editable: false,
-                        color: EVENT,
-                        type: 'event'
+            result = result.split(' ');
+            result[0] += ":00";
+            result[1] += ":00";
+            var startTime = result[0];
+            var endTime = result[1];
+
+            $.ajax({
+                url: path, success: function (result) {
+                    var objects;
+                    if (result.length) {
+                        objects = [];
+                        result = JSON.parse(result);
+
+                        for (var i = 0; i < result.length; i++) {
+                            objects[i] = {
+                                id: result[i].id,
+                                title: result[i].name,
+                                start: result[i].startTime,
+                                end: result[i].endTime,
+                                editable: false,
+                                color: EVENT,
+                                type: 'event'
+                            }
+                        }
+                        renderingForUser(objects, id, userId, startTime, endTime);
+                    } else {
+                        $('#user-calendar').fullCalendar('destroy');
+                        /**
+                         * This object is required for creating empty calendar
+                         * Without this object calendar will not be rendered
+                         */
+                        objects = [{
+                            title: '1',
+                            start: '1',
+                            end: '1',
+                            editable: false
+                        }];
+                        renderingForUser(objects, id, userId, startTime, endTime);
                     }
                 }
-                renderingForUser(objects, id, userId);
-            } else {
-                $('#user-calendar').fullCalendar('destroy');
-                /**
-                 * This object is required for creating empty calendar
-                 * Without this object calendar will not be rendered
-                 */
-                objects = [{
-                    title: '1',
-                    start: '1',
-                    end: '1',
-                    editable: false
-                }];
-                renderingForUser(objects, id, userId);
-            }
+            });
         }
     });
+
+
 }
 
-function renderingForUser(objects, id, userId) {
+function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEnd) {
     bookingDate = {};
     info = {};
 
@@ -295,7 +332,7 @@ function renderingForUser(objects, id, userId) {
                     recurrentId: item.recurrentId
                 };
             });
-            renderCalendar(objects, id);
+            renderCalendar(objects, id, workingHoursStart, workingHoursEnd);
         }
     });
 }
@@ -396,17 +433,13 @@ function sendBookingToServerForCreate(bookingsArray) {
 }
 
 function cancelBooking(bookingId) {
+    $('#user-calendar').fullCalendar('removeEvents', bookingId);
     $.ajax({
         type: 'get',
         contentType: 'application/json',
         url: 'cancelBook/' + bookingId,
         dataType: 'json',
-        data: JSON.stringify({}),
-        success: function (result) {
-            if (result) {
-                $('#user-calendar').fullCalendar('removeEvents', bookingId);
-            }
-        }
+        data: JSON.stringify({})
     });
 }
 
@@ -455,7 +488,7 @@ function createBooking() {
                 end: makeISOTime(bookingDate.clickDate, 'recurrent-booking-end-time'),
                 editable: false
             });
-            $('#checkboxKid'  + kidsCommentId).attr('checked', false);
+            $('#checkboxKid' + kidsCommentId).attr('checked', false);
             $('#child-comment-' + kidsCommentId).prop('hidden', true);
             $('#child-comment-' + kidsCommentId + '-1').prop('hidden', true);
         }
@@ -464,10 +497,10 @@ function createBooking() {
 }
 
 //tested
-function renderCalendar(objects, id) {
+function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
     $('#user-calendar').fullCalendar({
-        minTime: '10:00:00',
-        maxTime: '22:00:00',
+        minTime: workingHoursStart,
+        maxTime: workingHoursEnd,
         eventBackgroundColor: NOT_SYNCHRONIZED,
         eventColor: 'transparent',
         eventBorderColor: 'transparent',
@@ -506,7 +539,7 @@ function renderCalendar(objects, id) {
 
             var beforeUpdate = calEvent.title;
 
-            $("#bookingUpdatingDialog").dialog( "option", "title", beforeUpdate );
+            $("#bookingUpdatingDialog").dialog("option", "title", beforeUpdate);
 
             $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
             $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
@@ -521,7 +554,7 @@ function renderCalendar(objects, id) {
             $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);
 
 
-            $("#make-recurrent-booking").dialog( "option", "title", beforeUpdate );
+            $("#make-recurrent-booking").dialog("option", "title", beforeUpdate);
 
             $('#recurrent-booking-start-date').val(calEvent.start.format().substring(0, 10));
             $('#recurrent-booking-end-date').val(calEvent.end.format().substring(0, 10));
@@ -577,18 +610,17 @@ function renderCalendar(objects, id) {
     });
 }
 
-function updateRecurrentBooking(){
+function updateRecurrentBooking() {
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     var checkedDays = '';
 
     checkBoxesDays.forEach(function (item) {
-        if ($('#' + item  + '-booking' ).is(':checked')) {
-            checkedDays += $('#' + item  + '-booking').val() + ' ';
+        if ($('#' + item + '-booking').is(':checked')) {
+            checkedDays += $('#' + item + '-booking').val() + ' ';
         }
     });
     checkedDays = checkedDays.substring(0, checkedDays.length - 1);
-
 
 
     bookingDate.clickDate = $('#recurrent-booking-start-date').val();
@@ -619,7 +651,7 @@ function updateRecurrentBooking(){
             success: function (result) {
 
                 result.forEach(function (item, i) {
-                    allBookings[allBookings.length + i] = {
+                    var newBooking = {
                         id: item.id,
                         title: item.kidName,
                         start: item.date + 'T' + item.startTime + ':00',
@@ -632,20 +664,9 @@ function updateRecurrentBooking(){
                         comment: item.comment,
                         recurrentId: item.recurrentId
                     };
+                    allBookings[allBookings.length + i] = newBooking;
 
-                    $('#user-calendar').fullCalendar('renderEvent', {
-                        id: item.id,
-                        title: item.kidName,
-                        start: item.date + 'T' + item.startTime + ':00',
-                        end: item.date + 'T' + item.endTime + ':00',
-                        color: BOOKING,
-                        borderColor: BORDER,
-                        editable: false,
-                        kidId: item.idChild,
-                        type: 'booking',
-                        comment: item.comment,
-                        recurrentId: item.recurrentId
-                    });
+                    $('#user-calendar').fullCalendar('renderEvent', newBooking);
 
                 });
             }
@@ -660,12 +681,11 @@ function makeRecurrentBookings() {
     var checkedDays = '';
 
     checkBoxesDays.forEach(function (item) {
-        if ($('#' + item  + '-booking' ).is(':checked')) {
-            checkedDays += $('#' + item  + '-booking').val() + ' ';
+        if ($('#' + item + '-booking').is(':checked')) {
+            checkedDays += $('#' + item + '-booking').val() + ' ';
         }
     });
     checkedDays = checkedDays.substring(0, checkedDays.length - 1);
-
 
 
     bookingDate.clickDate = $('#recurrent-booking-start-date').val();
@@ -693,14 +713,14 @@ function makeRecurrentBookings() {
                 }
             );
 
-   /*         $('#user-calendar').fullCalendar('renderEvent', {
-                id: -1,
-                title: '',
-                start: makeISOTime(recurrentStartDay, 'recurrent-booking-start-time'),
-                end: makeISOTime(recurrentEndDay, 'recurrent-booking-end-time'),
-                editable: false
-            });*/
-            $('#checkboxKid'  + kidsCommentId).attr('checked', false);
+            /*         $('#user-calendar').fullCalendar('renderEvent', {
+             id: -1,
+             title: '',
+             start: makeISOTime(recurrentStartDay, 'recurrent-booking-start-time'),
+             end: makeISOTime(recurrentEndDay, 'recurrent-booking-end-time'),
+             editable: false
+             });*/
+            $('#checkboxKid' + kidsCommentId).attr('checked', false);
             $('#child-comment-' + kidsCommentId).prop('hidden', true);
             $('#child-comment-' + kidsCommentId + '-1').prop('hidden', true);
 
@@ -717,33 +737,23 @@ function makeRecurrentBookings() {
             success: function (result) {
 
                 result.forEach(function (item, i) {
-                    allBookings[allBookings.length + i] = {
+                    var newBooking = {
                         id: item.id,
                         title: item.kidName,
                         start: item.date + 'T' + item.startTime + ':00',
                         end: item.date + 'T' + item.endTime + ':00',
                         color: BOOKING,
                         borderColor: BORDER,
-                        kidId: item.idChild,
                         editable: false,
+                        kidId: item.idChild,
                         type: 'booking',
                         comment: item.comment,
                         recurrentId: item.recurrentId
                     };
 
-                    $('#user-calendar').fullCalendar('renderEvent', {
-                        id: item.id,
-                        title: item.kidName,
-                        start: item.date + 'T' + item.startTime + ':00',
-                        end: item.date + 'T' + item.endTime + ':00',
-                        color: BOOKING,
-                        borderColor: BORDER,
-                        editable: false,
-                        kidId: item.idChild,
-                        type: 'booking',
-                        comment: item.comment,
-                        recurrentId: item.recurrentId
-                    });
+                    allBookings[allBookings.length + i] = newBooking;
+
+                    $('#user-calendar').fullCalendar('renderEvent', newBooking);
 
                 });
             }
@@ -780,7 +790,7 @@ function sendAjaxForRoomProperty(roomId) {
 }
 
 //tested
-function closeBookingDialog () {
+function closeBookingDialog() {
     $('#make-recurrent-booking').dialog('close');
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -803,17 +813,17 @@ function cancelRecurrentBookings(recurrentId) {
     var arrayForIndexesOfDeletingBookings = [];
 
     allBookings.forEach(function (item, i) {
-        if(item.recurrentId === recurrentId) {
+        if (item.recurrentId === recurrentId) {
             bookingsForDelete.push(item);
             arrayForIndexesOfDeletingBookings.push(i);
         }
     });
 
-    arrayForIndexesOfDeletingBookings.forEach(function (item){
+    arrayForIndexesOfDeletingBookings.forEach(function (item) {
         allBookings.splice(item, 1);
     });
 
-    bookingsForDelete.forEach(function (item){
+    bookingsForDelete.forEach(function (item) {
         $('#user-calendar').fullCalendar('removeEvents', item.id);
         cancelBooking(item.id);
     })

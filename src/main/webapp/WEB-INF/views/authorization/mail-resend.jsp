@@ -7,7 +7,7 @@
 
 
 <div class="col-sm-offset-4 col-xs-4">
-    <spring:message code="user.resetPass" />
+    <spring:message code="user.reConfirmation" />
     <form:form  action="resendConfirmation" method="post" modelAttribute="user">
         <div class="form-group">
             <label for="email"><spring:message code="user.email" /></label>

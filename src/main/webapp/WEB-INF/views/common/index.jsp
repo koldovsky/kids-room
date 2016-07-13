@@ -43,27 +43,20 @@
         <option value=" "></option>
 
         <c:forEach items="${rooms}" var="r">
-            <option value="${r.id} ${r.phoneNumber} ">${r.city}: ${r.address}</option>
+            <option value="${r.id} ${r.phoneNumber} ${r.city} ${r.address}">${r.city}: ${r.address}</option>
 
         </c:forEach>
     </select>
 
     <div>
-        Manager: <label id="roomManager"></label>
-    </div>
-    <div>
         <label id="roomPhone"></label>
     </div>
-
-    <%-- --%>
-
-
 
 
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="bookingUpdatingDialog" hidden>
+                <div id="bookingUpdatingDialog" class="dialog" hidden>
                     <form id="bookingUpdatingForm">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
@@ -75,7 +68,7 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control"
+                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control timepicker"
                                        size="6"/>
                             </div>
                         </div>
@@ -91,19 +84,21 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control"
+                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control timepicker"
                                        size="6"/>
                             </div>
                         </div>
 
                         <textarea type="text" id="child-comment-update"></textarea>
 
+                        <div class="deleting-event" id="deleting-single-booking" >Click here to delete this booking</div>
+
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Save</button>
                         </div>
 
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-danger" id="deletingBooking">Delete</button>
+                            <button type="button" class="btn btn-danger" id="deletingBooking">Cancel</button>
                         </div>
 
                     </form>
@@ -227,6 +222,7 @@
 
                                 <br>
                                 <div class="clearfix"></div>
+                                <div class="deleting-event" id="deleting-recurrent-booking" >Click here to delete this booking</div>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="book">Book</button>
@@ -269,7 +265,7 @@
     </div>
 
     <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
-    <div id='calendar'></div>
+    <div id='user-calendar'></div>
 
 </sec:authorize>
 
@@ -459,6 +455,7 @@
                                 </div>
                                 <br>
                                 <div class="clearfix"></div>
+                                <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete this event</div>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="creating">Create</button>
@@ -516,9 +513,9 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-
+                        <div class="deleting-event" id="deleting-single-event" >Click here to delete this event</div>
                         <button type="button" class="btn btn-success" id="updatingButton">Update</button>
-                        <button type="button" class="btn btn-danger" id="deleting">Delete</button>
+                        <button type="button" class="btn btn-danger" id="cancel-update">Cancel</button>
 
                     </form>
                 </div>

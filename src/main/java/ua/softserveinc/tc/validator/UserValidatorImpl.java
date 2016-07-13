@@ -50,13 +50,11 @@ public class UserValidatorImpl implements UserValidator {
                 .matches()) {
             errors.rejectValue(ValidationConstants.PHONE_NUMBER, ValidationConstants.PHONE_NUMBER_ERROR_MSG);
         }
-//  This code will be used when project will deploy
-//        if (!Pattern.compile(ValidationConstants.EMAIL_REGEX)
-//                .matcher(user.getEmail())
-//                .matches()) {
-//            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ERROR_MSG);
-//        }
-
+        if (!Pattern.compile(ValidationConstants.EMAIL_REGEX)
+                .matcher(user.getEmail())
+                .matches()) {
+            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ERROR_MSG);
+        }
         if (!user.getPassword().equals(user.getConfirm())) {
             errors.rejectValue(ValidationConstants.CONFIRM, ValidationConstants.NOT_CONFIRMED_MSG);
         }
