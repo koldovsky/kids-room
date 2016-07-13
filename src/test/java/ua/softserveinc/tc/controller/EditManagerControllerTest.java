@@ -55,7 +55,7 @@ public class EditManagerControllerTest {
 
 
     @Test
-    public void showAllManagersForm() throws Exception {
+    public void showAllManagersFormTest() throws Exception {
         Assert.assertNotNull(this.userService);
         Assert.assertNotNull(this.modelAndView);
         Assert.assertNotNull(this.managerList);
