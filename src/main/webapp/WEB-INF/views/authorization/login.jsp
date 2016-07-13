@@ -24,7 +24,7 @@
         <div class="clearfix">
             <label class="pull-left">
                 <fieldset class="form-group">
-                <input type="checkbox" name="remember-me"><spring:message code="user.remember" />
+                <input type="checkbox" name="remember-me">  <spring:message code="user.remember" />
                 </fieldset>
             </label>
 
