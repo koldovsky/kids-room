@@ -340,7 +340,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                 $('#bookingDialog').dialog();
             } else {
                 $('#createSuccess').modal('show');
-                refreshTable(bookingsState);
+                refreshTable(localStorage["bookingsState"]);
             }
         },
         error: function() {
