@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 

@@ -4,7 +4,6 @@ import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.entity.*;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

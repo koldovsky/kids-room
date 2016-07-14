@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.EventDao;
@@ -14,10 +13,7 @@ import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Calendar;
 
 /**
  * Created by dima- on 07.05.2016.

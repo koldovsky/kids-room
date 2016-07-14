@@ -3,7 +3,6 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
-
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
@@ -196,5 +195,14 @@ public class Booking {
 
     }
 
-
+    @Override
+    public int hashCode() {
+        int result = getIdBook() != null ? getIdBook().hashCode() : 0;
+        result = 31 * result + (getChild() != null ? getChild().hashCode() : 0);
+        result = 31 * result + (getRoom() != null ? getRoom().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
+        result = 31 * result + (getBookingStartTime() != null ? getBookingStartTime().hashCode() : 0);
+        result = 31 * result + (getBookingEndTime() != null ? getBookingEndTime().hashCode() : 0);
+        return result;
+    }
 }

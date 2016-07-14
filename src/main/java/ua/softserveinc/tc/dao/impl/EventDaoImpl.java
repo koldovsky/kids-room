@@ -1,8 +1,5 @@
 package ua.softserveinc.tc.dao.impl;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Property;
 import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;

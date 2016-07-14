@@ -1,15 +1,14 @@
 package ua.softserveinc.tc.controller.admin;
 
 
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.ConfigurationDto;
@@ -17,8 +16,6 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.ConfigValidator;
 
-
-import javax.validation.Valid;
 import java.io.IOException;
 
 

@@ -21,7 +21,6 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

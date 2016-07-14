@@ -12,7 +12,6 @@ import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;

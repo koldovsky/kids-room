@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.GenericMapper;
 
-import java.util.List;
-
 /**
  * Created by dima- on 28.06.2016.
  */

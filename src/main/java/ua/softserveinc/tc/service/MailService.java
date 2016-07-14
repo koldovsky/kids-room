@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;

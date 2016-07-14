@@ -2,22 +2,17 @@ package ua.softserveinc.tc.controller.util;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import ua.softserveinc.tc.constants.ChildConstants;
-import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
@@ -27,12 +22,9 @@ import ua.softserveinc.tc.util.ImagesHolderUtil;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 
-
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.Principal;
 
 /**

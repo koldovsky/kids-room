@@ -11,7 +11,6 @@ import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -72,21 +71,18 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendRegisterMessage(String subject, User user, String token) throws MessagingException {
         Map<String, Object> model = getModel(user, MailConstants.CONFIRM_USER_LINK, token);
-
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_USER_VM, model));
     }
 
     @Override
     public void sendChangePassword(String subject, User user, String token) throws MessagingException {
         Map<String, Object> model = getModel(user, MailConstants.CHANGE_PASS_LINK, token);
-
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CHANGE_PASS_VM, model));
     }
 
     @Override
     public void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException {
         Map<String, Object> model = getModel(user, MailConstants.CONFIRM_MANAGER_LINK, token);
-
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
     }
 
