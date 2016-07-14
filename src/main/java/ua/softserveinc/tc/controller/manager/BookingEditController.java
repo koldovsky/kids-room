@@ -72,6 +72,9 @@ public class BookingEditController {
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
+        if (!(booking.getBookingState() == BookingState.COMPLETED)) {
+            booking.setBookingState(BookingState.ACTIVE);
+        }
         bookingService.update(booking);
     }
 

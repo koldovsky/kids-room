@@ -55,6 +55,8 @@ public class BookingTimeController {
             dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
         });
 
+
+
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
 
         return new Gson().toJson(dto);

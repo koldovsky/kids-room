@@ -12,6 +12,7 @@ $(function() {
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
 
 $().ready(function() {
+    $('#booking-table').show();
     $('[data-toggle="tooltip"]').tooltip();
     $('#booking').click(function() {
         bookingsArray = [];
@@ -71,7 +72,7 @@ $().ready(function() {
 
 $(function() {
     $('#date-booking').change(function() {
-        ref(localStorage["bookingsState"]);
+        refreshTable(localStorage["bookingsState"]);
     });
     $('.picker').timepicker({
         timeFormat: 'H:i',
@@ -82,35 +83,27 @@ $(function() {
 });
 
 function selectRoomForManager(roomId) {
-    ref(localStorage["bookingsState"]);
+    refreshTable(localStorage["bookingsState"]);
 }
 
 function bookedBooking() {
-//    $('.btn-raised').removeClass("btn-info");
-//    $('#btn-booked').addClass("btn-info");
     localStorage["bookingsState"] = ['BOOKED'];
-    ref(localStorage["bookingsState"]);
+    refreshTable(localStorage["bookingsState"]);
 }
 
 function activeBooking() {
-//    $('.btn-raised').removeClass("btn-info");
-//    $('#btn-active').addClass("btn-info");
     localStorage["bookingsState"] = ['ACTIVE'];
-    ref(localStorage["bookingsState"]);
+    refreshTable(localStorage["bookingsState"]);
 }
 
 function leavedBooking() {
-//    $('.btn-raised').removeClass("btn-info");
-//    $('#btn-leaved').addClass("btn-info");
     localStorage["bookingsState"] = ['COMPLETED'];
-    ref(localStorage["bookingsState"]);
+    refreshTable(localStorage["bookingsState"]);
 }
 
 function allBooking() {
-   /* $('.btn-raised').removeClass("btn-info");
-    $('#btn-all').addClass("btn-info");*/
     localStorage["bookingsState"] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
-    ref(localStorage["bookingsState"]);
+    refreshTable(localStorage["bookingsState"]);
 }
 
 function chekBookingState(){
@@ -126,7 +119,7 @@ function chekBookingState(){
     }
 }
 
-function ref(bookingsState) {
+function refreshTable(bookingsState) {
     chekBookingState();
     var time = $('#date-booking').val();
     var idRoom = localStorage["roomId"];
@@ -154,7 +147,6 @@ function ref(bookingsState) {
     table = $('#booking-table').DataTable({
         rowId: 'id',
         "columnDefs": [{
-
             "searchable": false,
             "orderable": false,
             "targets": 0
@@ -173,7 +165,8 @@ function ref(bookingsState) {
                 "fnCreatedCell": function(nTd, sData, oData) {
                     if (!(oData.comment == "")) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
-                        + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id + '" class="glyphicon glyphicon-info-sign"' + 'title="'
+                        + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id
+                        + '" class="glyphicon glyphicon-info-sign"' + 'title="'
                         + oData.comment + '"></span>');
                     } else {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>');
@@ -216,47 +209,6 @@ function ref(bookingsState) {
 
 }
 
-$('#booking-table tbody').on('click', '#arrival-btn', function() {
-    var tr = $(this).closest('tr');
-    var id = table.row(tr).data().id;
-    var time = $(this).closest('td').find('input').val();
-
-    setStartTime(id, time);
-});
-
-$('#booking-table tbody').on('focus', 'input', function() {
-    var time = dateNow.toString().match(/\d{2}:\d{2}/)[0];
-    $(this).val(time);
-});
-
-$('#booking-table tbody').on('click', '#leave-btn', function() {
-    var tr = $(this).closest('tr');
-    var id = table.row(tr).data().id;
-    var time = $(this).closest('td').find('input').val();
-
-
-    setEndTime(id, time);
-});
-
-$('#booking-table tbody').on('click', '.edit-button-btn', function() {
-    idBooking = $(this).closest('td').find('.book-id').attr('id');
-    var comment = $('#comment-'+idBooking).attr('title');
-
-    var date = $('#date-booking').val();
-    var startTime = $(this).closest('td').find('#book-start-time').text();
-    var endTime = $(this).closest('td').find('#book-end-time').text();
-    $('#kid-comment').val(comment);
-    $('#bookingUpdatingStartTimepicker').val(startTime);
-    $('#bookingUpdatingEndTimepicker').val(endTime);
-    $('#data-edit').val(date);
-    $('#bookingUpdatingDialog').dialog();
-    $('#' + idBooking).addClass('highlight-active');
-});
-
-$("#bookingUpdatingDialog").on("dialogclose", function() {
-    $('#' + idBooking).removeClass('highlight-active');
-});
-
 function setStartTime(id, startTime) {
     var inputData = {
         startTime: startTime,
@@ -268,8 +220,8 @@ function setStartTime(id, startTime) {
         contentType: 'application/json',
         data: JSON.stringify(inputData),
         type: 'POST',
-        success: function(data) {
-            ref(localStorage["bookingsState"]);
+        success: function() {
+            refreshTable(localStorage["bookingsState"]);
         }
     });
 }
@@ -286,8 +238,8 @@ function setEndTime(id, time) {
             contentType: 'application/json',
             data: JSON.stringify(inputData),
             type: 'POST',
-            success: function(data) {
-                ref(localStorage["bookingsState"]);
+            success: function() {
+                refreshTable(localStorage["bookingsState"]);
             }
         });
     } else {
@@ -318,15 +270,14 @@ function openCreateBookingDialog() {
 }
 
 function cancelBooking() {
+
     var str = "cancelBook/" + idBooking;
     $.ajax({
         url: str,
-        success: function(result) {
-            var text = result;
-            var bookings = JSON.parse(text);
+        success: function() {
             $('#cancelModal').modal('hide');
             $('#bookingUpdatingDialog').dialog('close');
-            ref(localStorage["bookingsState"]);
+            refreshTable(localStorage["bookingsState"]);
         }
     });
 }
@@ -339,7 +290,7 @@ function updatingBooking(inputDate) {
         data: JSON.stringify(inputDate),
         success: function(data) {
             if (data) {
-                ref(localStorage["bookingsState"]);
+                refreshTable(localStorage["bookingsState"]);
                 $('#updatingSuccess').modal('show');
                 $('#bookingUpdatingDialog').dialog('close');
             } else {
@@ -384,29 +335,56 @@ function sendBookingToServerForCreate(bookingsArray) {
         dataType: 'json',
         data: JSON.stringify(bookingsArray),
         success: function(result) {
-            alert(result == "")
             if (result == "") {
                 $('#updatingInvalid').modal('show');
                 $('#bookingDialog').dialog();
             } else {
                 $('#createSuccess').modal('show');
-                ref(bookingsState);
+                refreshTable(bookingsState);
             }
         },
         error: function() {
-            alert("Unfortunately could not create new BOOKING");
+            alert("Unfortunately could not create new booking, please contact admin");
         }
     });
 }
 
-function main(){
-  $(this).closest('li').addClass("active");
-}
-function prof(){
-$(this).closest('li').addClass("active");
-}
+$('#booking-table tbody').on('click', '#arrival-btn', function() {
+    var tr = $(this).closest('tr');
+    var id = table.row(tr).data().id;
+    var time = $(this).closest('td').find('input').val();
+    setStartTime(id, time);
+});
 
-function mess(){
-$(this).closest('li').addClass("active");
-}
+$('#booking-table tbody').on('focus', 'input', function() {
+    var time = dateNow.toString().match(/\d{2}:\d{2}/)[0];
+    $(this).val(time);
+});
+
+$('#booking-table tbody').on('click', '#leave-btn', function() {
+    var tr = $(this).closest('tr');
+    var id = table.row(tr).data().id;
+    var time = $(this).closest('td').find('input').val();
+
+
+    setEndTime(id, time);
+});
+
+$('#booking-table tbody').on('click', '.edit-button-btn', function() {
+    idBooking = $(this).closest('td').find('.book-id').attr('id');
+    var comment = $('#comment-'+idBooking).attr('title');
+    var date = $('#date-booking').val();
+    var startTime = $(this).closest('td').find('#book-start-time').text();
+    var endTime = $(this).closest('td').find('#book-end-time').text();
+    $('#kid-comment').val(comment);
+    $('#bookingUpdatingStartTimepicker').val(startTime);
+    $('#bookingUpdatingEndTimepicker').val(endTime);
+    $('#data-edit').val(date);
+    $('#bookingUpdatingDialog').dialog();
+    $('#' + idBooking).addClass('highlight-active');
+});
+
+$("#bookingUpdatingDialog").on("dialogclose", function() {
+    $('#' + idBooking).removeClass('highlight-active');
+});
 

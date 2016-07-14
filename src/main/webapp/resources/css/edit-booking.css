@@ -95,5 +95,9 @@ html, body, .container {
        margin: auto;
 }
 
+#booking-table{
+    display: none;
+}
+
 
 
