@@ -12,12 +12,14 @@ import java.io.IOException;
 /**
  * Created by Nestor on 22.06.2016.
  */
+
 public class ImagesHolderUtil {
     @Log
     private static Logger log;
 
-    private static byte[] defaultPictureBoy;
-    private static byte[] defaultPictureGirl;
+    //default non-null values
+    private static byte[] defaultPictureBoy = "pic-boy".getBytes();
+    private static byte[] defaultPictureGirl = "pic-girl".getBytes();
 
     public static byte[] getDefaultPictureBoy() {
         return defaultPictureBoy;
@@ -45,7 +47,6 @@ public class ImagesHolderUtil {
 
         } catch (IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
-            throw new ResourceNotFoundException();
         }
 
     }

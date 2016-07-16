@@ -1,11 +1,10 @@
 package ua.softserveinc.tc.validator;
 
 /**
- * Created by Nestor on 05.06.2016.
+ * a "Validator" class that helps checking requests from client
  */
 public class LogicalRequestsValidator {
     private LogicalRequestsValidator(){
-
     }
 
     public static boolean isRequestValid(String requestParam){

@@ -29,7 +29,6 @@ import java.security.Principal;
 
 /**
  * Created by Nestor on 22.05.2016.
- * <p>
  * Controller handles all images-related work
  * Such as: request for images, uploads of new images
  */
@@ -71,10 +70,12 @@ public class ImagesController {
 
             try {
                 if(file.getSize()/1024/1024 > applicationConfigurator.getMaxUploadImgSizeMb()){
+                    log.error("Image size is too big");
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
                 }
 
                 byte[] bytes = file.getBytes();
+
                 if(ImageIO.read(new ByteArrayInputStream(bytes)) == null){
                     log.error("Uploaded image has a wrong extension");
                     return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
@@ -82,20 +83,11 @@ public class ImagesController {
 
                 kid.setImage(bytes);
                 childService.update(kid);
-            } catch (IOException ioe) {
-                log.error("Failed converting image", ioe);
-                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
-            }
-            catch (JpaSystemException jpae){
-                log.error("Database persistence exception", jpae);
+            } catch (IOException | JpaSystemException exc){
+                log.error("Failed to save image", exc);
                 return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
         }
-        return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
-    }
-
-    @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.GET)
-    public String redirect(@PathVariable String kidId){
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }
 
@@ -104,7 +96,7 @@ public class ImagesController {
      *
      * @param kidId id of the kid whose avatar is to be rendered
      * @param principal authorization object
-     * @return
+     * @return image as a byte array
      *
      * @throws ResourceNotFoundException
      * @throws AccessDeniedException
@@ -136,5 +128,11 @@ public class ImagesController {
         }
         return  ImagesHolderUtil.getDefaultPictureBoy();
     }
+
+    @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.GET)
+    public String redirect(@PathVariable String kidId){
+        return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+    }
+
 
 }
