@@ -8,23 +8,13 @@ import ua.softserveinc.tc.service.BaseService;
 
 import java.util.List;
 
-@Transactional
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
     private BaseDao<T> baseDao;
 
     @Override
-    public List<T> findAll() {
-        return baseDao.findAll();
-    }
-
-    @Override
-    public void create(T entity) {
-        baseDao.create(entity);
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public T findById(Object id) {
         T obj  = baseDao.findById(id);
         if(obj == null) {
@@ -34,18 +24,32 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<T> findAll() {
+        return baseDao.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void create(T entity) {
+        baseDao.create(entity);
+    }
+
+    @Override
+    @Transactional
     public void delete(T entity) {
         baseDao.delete(entity);
     }
 
     @Override
+    @Transactional
     public void deleteAll() {
         baseDao.deleteAll();
     }
 
     @Override
+    @Transactional
     public T update(T entity) {
         return baseDao.update(entity);
     }
-
 }

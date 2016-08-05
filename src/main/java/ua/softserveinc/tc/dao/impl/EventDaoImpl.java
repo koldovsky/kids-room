@@ -13,29 +13,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Root;
 
-/**
- * Created by Nestor on 30.04.2016.
- */
-
 @Repository(EventConstants.Entity.REPOSITORY)
-
 public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
 
     @PersistenceContext
     EntityManager entityManager;
 
     public Long getMaxRecurrentId() {
-
- /*       if ((Long) entityManager
-                .createQuery("select max(event.recurrentId) from Event event where event.recurrentId is not NULL")
-                .getSingleResult() == null) return new Long(0);
-        else {
-
-            return (Long) entityManager
-                    .createQuery("select max(event.recurrentId) from Event event where event.recurrentId is not NULL")
-                    .getSingleResult();
-        }
-*/
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<Long> q = cb.createQuery(Long.class);
@@ -48,9 +32,8 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
 
         Long result = typedQuery.getSingleResult();
         if (result == null) {
-            return new Long(0);
-        } else {
-            return result;
+            return 0L;
         }
+        return result;
     }
 }

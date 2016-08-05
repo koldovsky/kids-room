@@ -19,7 +19,5 @@ public interface UserService extends BaseService<User> {
 
     List<User> findAllUsersByRole(Role role);
 
-    void confirmManagerRegistrationUpdate(User manager);
-
     List<User> getActiveUsers(Date startDate, Date endDate, Room room);
 }

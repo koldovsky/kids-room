@@ -15,9 +15,6 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.*;
 
-/**
- * Created by dima- on 07.05.2016.
- */
 @Service
 public class CalendarServiceImpl implements CalendarService {
 

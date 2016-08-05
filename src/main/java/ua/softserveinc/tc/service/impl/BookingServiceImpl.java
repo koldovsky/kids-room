@@ -2,12 +2,8 @@ package ua.softserveinc.tc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.DateConstants;
-import ua.softserveinc.tc.dao.BookingDao;
-import ua.softserveinc.tc.dao.ChildDao;
-import ua.softserveinc.tc.dao.RoomDao;
-import ua.softserveinc.tc.dao.UserDao;
+import ua.softserveinc.tc.dao.*;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
@@ -15,11 +11,6 @@ import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -65,28 +56,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates) {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
-        Root<Booking> root = criteria.from(Booking.class);
-
-        List<Predicate> restrictions = new ArrayList<>();
-        if (startDate != null && endDate != null) {
-            restrictions.add(builder.between(root.get(
-                    BookingConstants.Entity.START_TIME), startDate, endDate));
-        }
-
-        if (bookingStates.length > 0)
-            restrictions.add(root.get(BookingConstants.Entity.STATE).in(Arrays.asList(bookingStates)));
-        if (user != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
-        if (room != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
-
-        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
-
-        return entityManager.createQuery(criteria).getResultList();
+        return bookingDao.getBookings(startDate, endDate, user, room, bookingStates);
     }
 
     @Override

@@ -56,7 +56,6 @@ public class AppConfig {
         return tilesConfigurer;
     }
 
-
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
