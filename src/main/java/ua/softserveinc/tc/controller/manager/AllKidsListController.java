@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ChildConstants;
 
-/**
- * Created by edward on 5/8/16.
- */
+
 @Controller
 public class AllKidsListController {
 

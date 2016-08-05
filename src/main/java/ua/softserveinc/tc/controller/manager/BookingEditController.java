@@ -47,20 +47,21 @@ public class BookingEditController {
     private BookingDao bookingDao;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
-    public ModelAndView editBookingModel (Model model, Principal principal) {
+    public ModelAndView editBookingModel(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
         User currentManager = userService.getUserByEmail(principal.getName());
         List<Room> rooms = currentManager.getRooms();
         List<User> users = userService.findAllUsersByRole(Role.USER);
-        Collections.sort(users, (user1, user2)->user1.getFirstName().compareTo(user2.getFirstName()));
+        Collections.sort(users, (user1, user2) -> user1.getFirstName().compareTo(user2.getFirstName()));
         model.addAttribute("rooms", rooms);
         model.addAttribute("users", users);
         return modelAndView;
     }
+
     @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
     @ResponseBody
-    public void cancelBooking (@PathVariable Long idBooking) {
+    public void cancelBooking(@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
@@ -86,20 +87,20 @@ public class BookingEditController {
         bookingService.update(booking);
     }
 
-    @RequestMapping (value = "dailyBookings/{date}/{id}/{state}",
+    @RequestMapping(value = "dailyBookings/{date}/{id}/{state}",
             method = RequestMethod.GET)
     @ResponseBody
     public String dailyBookingsByState(@PathVariable String date,
-                                      @PathVariable Long id,
-                                      @PathVariable BookingState[] state){
+                                       @PathVariable Long id,
+                                       @PathVariable BookingState[] state) {
         Room room = roomService.findById(id);
-        Date dateLo = toDateAndTime(date + " " +room.getWorkingHoursStart());
-        Date dateHi = toDateAndTime(date + " " +room.getWorkingHoursEnd());
+        Date dateLo = toDateAndTime(date + " " + room.getWorkingHoursStart());
+        Date dateHi = toDateAndTime(date + " " + room.getWorkingHoursEnd());
         List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, state);
         if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
             Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
         }
-        return  new Gson().toJson(bookings.stream()
+        return new Gson().toJson(bookings.stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList()));
     }
@@ -111,7 +112,7 @@ public class BookingEditController {
         Booking booking = bookingService.findById(bookingDto.getId());
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
-        if(roomService.isPossibleUpdate(bookingDto)){
+        if (roomService.isPossibleUpdate(bookingDto)) {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
             booking.setComment(bookingDto.getComment());
@@ -121,12 +122,13 @@ public class BookingEditController {
         }
         return false;
     }
+
     @RequestMapping(value = "get-kids/{id}")
     @ResponseBody
-    public String listKids (@PathVariable Long id){
+    public String listKids(@PathVariable Long id) {
         List<Child> kids = userService.findById(id).getEnabledChildren();
         Gson gson = new Gson();
-        return  gson.toJson(kids.stream()
+        return gson.toJson(kids.stream()
                 .map(ChildDto::new)
                 .collect(Collectors.toList()));
     }
