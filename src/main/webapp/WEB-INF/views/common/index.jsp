@@ -91,14 +91,14 @@
 
                         <textarea type="text" id="child-comment-update"></textarea>
 
-                        <div class="deleting-event" id="deleting-single-booking" >Click here to delete this booking</div>
+                        <%--<div class="deleting-event" id="deleting-single-booking" >Click here to delete this booking</div>--%>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Save</button>
                         </div>
 
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-danger" id="deletingBooking">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="deleting-single-booking">Delete</button>
                         </div>
 
                     </form>
@@ -222,13 +222,13 @@
 
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-booking" >Click here to delete this booking</div>
+                                <%--<div class="deleting-event" id="deleting-recurrent-booking" >Click here to delete this booking</div>--%>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="book">Book</button>
                                 </div>
                                 <div align="right" class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" id="cancel-changes">Cancel</button>
+                                    <button type="button" class="btn btn-danger" id="deleting-recurrent-booking">Delete</button>
                                 </div>
 
                             </div>
@@ -458,7 +458,7 @@
                                 </div>
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete this event</div>
+                                <%--<div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete this event</div>--%>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="creating">Create</button>
@@ -516,9 +516,9 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-                        <div class="deleting-event" id="deleting-single-event" >Click here to delete this event</div>
+                        <%--<div class="deleting-event" id="deleting-single-event" >Click here to delete this event</div>--%>
                         <button type="button" class="btn btn-success" id="updatingButton">Update</button>
-                        <button type="button" class="btn btn-danger" id="cancel-update">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="deleting-single-event">Delete</button>
 
                     </form>
                 </div>
