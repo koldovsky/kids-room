@@ -366,18 +366,21 @@
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
-                        <select id="color-select">
-                            <option value="#ff0000" style="background:red"></option>
-                            <option value="#ffff00" style="background:yellow"></option>
-                            <option value="#800080" style="background:purple"></option>
-                            <option value="#0000ff" style="background:blue"></option>
-                            <option value="#6AA4C1" style="background:#6AA4C1" selected="selected"></option>
-                            <option value="#808080" style="background:grey"></option>
-                            <option value="#008000" style="background:green"></option>
-                            <option value="#ffa500" style="background:orange"></option>
-                            <option value="#00ffff" style="background:aqua"></option>
-                            <option value="#ffd700" style="background:gold"><br></option>
-                        </select>
+                        <div class="form-group">
+                            <label for="title">Choose a color</label>
+                            <select id="color-select">
+                                <option value="#ff0000" style="background:red">red</option>
+                                <option value="#ffff00" style="background:yellow">yellow</option>
+                                <option value="#800080" style="background:purple">purple</option>
+                                <option value="#0000ff" style="background:blue">blue</option>
+                                <option value="#6AA4C1" style="background:#6AA4C1" selected="selected">light blue</option>
+                                <option value="#808080" style="background:grey">grey</option>
+                                <option value="#008000" style="background:green">green</option>
+                                <option value="#ffa500" style="background:orange">orange</option>
+                                <option value="#00ffff" style="background:aqua">aqua</option>
+                                <option value="#ffd700" style="background:gold">gold<br></option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="title">Start date</label>
                             <br>
