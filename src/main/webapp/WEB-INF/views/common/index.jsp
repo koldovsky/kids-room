@@ -6,26 +6,16 @@
 
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
-
-
 <script src='resources/js/moment.min.js'></script>
-
-
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.js'></script>
 <script src='resources/js/header-manager.js'></script>
-
 <script src='resources/js/userCalendar.js'></script>
-
+<script src='resources/js/header-user.js'></script>
 <script src='resources/js/renderCalendar.js'></script>
-
-
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
-
-
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
-
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
@@ -34,31 +24,13 @@
 
 <sec:authorize access="hasRole('USER')">
 
-    <c:forEach items="${managersRoom}" var="r">
-        ${r.id}
-    </c:forEach>
-
-    <%-- Dima, now you can delete this part --%>
-    <select id="selectBoxUser" onchange="selectRoomForUser(value, '${userId}');">
-        <option value=" "></option>
-
-        <c:forEach items="${rooms}" var="r">
-            <option value="${r.id} ${r.phoneNumber} ${r.city} ${r.address}">${r.city}: ${r.address}</option>
-
-        </c:forEach>
-    </select>
-
-    <div>
-        <label id="roomPhone"></label>
-    </div>
-
 
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="bookingUpdatingDialog" class="dialog" hidden>
                     <form id="bookingUpdatingForm">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="bookingUpdatingStartDate">Start date</label>
                             <br>
@@ -68,7 +40,8 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingUpdatingStartTimepicker" type="text" class="time form-control timepicker"
+                                <input id="bookingUpdatingStartTimepicker" type="text"
+                                       class="time form-control timepicker"
                                        size="6"/>
                             </div>
                         </div>
@@ -84,14 +57,15 @@
                                        readonly>
                             </div>
                             <div class="col-xs-5">
-                                <input id="bookingUpdatingEndTimepicker" type="text" class="time form-control timepicker"
+                                <input id="bookingUpdatingEndTimepicker" type="text"
+                                       class="time form-control timepicker"
                                        size="6"/>
                             </div>
                         </div>
 
                         <textarea type="text" id="child-comment-update"></textarea>
 
-                        <div class="deleting-event" id="deleting-single-booking" >Click here to delete this booking</div>
+                        <div class="deleting-event" id="deleting-single-booking">Click here to delete this booking</div>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Save</button>
@@ -108,23 +82,24 @@
     </div>
 
 
-
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="make-recurrent-booking" class="dialog" hidden>
                     <form id="recurrent-booking-form">
-                      <!--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
+                        <!--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
 
 
                         <div class="form-group">
                             <label for="recurrent-booking-start-date">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-booking-start-date" placeholder="startDate">
+                                <input type="date" class="form-control" id="recurrent-booking-start-date"
+                                       placeholder="startDate">
                             </div>
-                            <div class="col-xs-5">
-                                <input id="recurrent-booking-start-time" type="text" class="time form-control timepicker" size="6"/>
+                            <div class="col-xs-6">
+                                <input id="recurrent-booking-start-time" type="text"
+                                       class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -133,49 +108,61 @@
                             <label for="recurrent-booking-end-date">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-booking-end-date" placeholder="endDate">
+                                <input type="date" class="form-control" id="recurrent-booking-end-date"
+                                       placeholder="endDate">
                             </div>
-                            <div class="col-xs-5">
-                                <input id="recurrent-booking-end-time" type="text" class="time form-control timepicker" size="6"/>
+                            <div class="col-xs-6">
+                                <input id="recurrent-booking-end-time" type="text" class="time form-control timepicker"
+                                       size="6"/>
                             </div>
                         </div>
 
 
-                        <div class="container">
+                        <div class="col-xs-12">
                             <div class="row">
                                 <form role="form">
-                                    <div class="row col-xs-2">
+                                    <div class="row col-xs-4">
                                         <br>
                                         <div class="radio-button">
-                                            <label><input type="radio" name="optradio-bookingform" id="no-recurrent-booking"
+                                            <label><input type="radio" name="optradio-bookingform"
+                                                          id="no-recurrent-booking"
                                                           class="booking-radio" checked>Single event</label>
                                         </div>
                                         <div class="radio-button">
-                                            <label><input type="radio" name="optradio-bookingform" id="weekly-booking" class="booking-radio">Weekly</label>
+                                            <label><input type="radio" name="optradio-bookingform" id="weekly-booking"
+                                                          class="booking-radio">Weekly</label>
                                         </div>
                                     </div>
-                                    <div class="row col-xs-4" id="days-for-recurrent-booking-form" hidden>
+                                    <div class="col-xs-8 pull-right" id="days-for-recurrent-booking-form" hidden>
                                         <table class="table" id="days-for-recurrent-booking">
                                             <br>
                                             <thead>Check required days</thead>
                                             <tbody>
                                             <tr>
-                                                <td><label><input type="checkbox" id="Monday-booking" value="Mon" class="day">Monday</label><br>
+                                                <td><label><input type="checkbox" id="Monday-booking" value="Mon"
+                                                                  class="day"> Monday</label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Tuesday-booking" value="Tue" class="day">Tuesday</label><br>
+
+                                                <td><label><input type="checkbox" id="Tuesday-booking" value="Tue"
+                                                                  class="day"> Tuesday</label><br>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Wednesday-booking" value="Wed"
-                                                                  class="day">Wednesday</label><br>
+                                                                  class="day"> Wednesday</label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Thursday-booking" value="Thu" class="day">Thursday</label><br>
+
+                                                <td><label><input type="checkbox" id="Thursday-booking" value="Thu"
+                                                                  class="day"> Thursday</label><br>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label><input type="checkbox" id="Friday-booking" value="Fri" class="day">Friday</label><br>
+                                                <td><label><input type="checkbox" id="Friday-booking" value="Fri"
+                                                                  class="day"> Friday</label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Saturday-booking" value="Sat" class="day">Saturday</label><br>
+
+                                                <td><label><input type="checkbox" id="Saturday-booking" value="Sat"
+                                                                  class="day"> Saturday</label><br>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -215,19 +202,23 @@
 
 
                                     <div id="comment-for-one-child-updating" hidden>
-                                        <textarea class="form-control"  id="comment-for-update-recurrency"></textarea>
+                                        <textarea class="form-control" id="comment-for-update-recurrency"></textarea>
                                     </div>
                                 </div>
 
 
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-booking" >Click here to delete this booking</div>
+                                <div class="deleting-event" id="deleting-recurrent-booking">Click here to delete this
+                                    booking
+                                </div>
                                 <div class="col-xs-3">
-                                    <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">Update</button>
+                                    <button type="button" class="btn btn-success" id="update-recurrent-booking"
+                                            hidden="true">Update
+                                    </button>
                                     <button type="button" class="btn btn-success live" id="book">Book</button>
                                 </div>
-                                <div align="right" class="col-xs-2">
+                                <div align="right" class="col-xs-9">
                                     <button type="button" class="btn btn-danger" id="cancel-changes">Cancel</button>
                                 </div>
 
@@ -240,8 +231,6 @@
     </div>
 
 
-
-
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -249,10 +238,12 @@
                     <form id="choose-updating-booking-form">
 
                         <div class="radio-button">
-                            <label><input type="radio" id="single-update-booking"  name="radio-check" checked>Just this one</label>
+                            <label><input type="radio" id="single-update-booking" name="radio-check" checked>Just this
+                                one</label>
                         </div>
                         <div class="radio-button">
-                            <label><input type="radio" id="recurrent-update-booking" name="radio-check">The entire series</label>
+                            <label><input type="radio" id="recurrent-update-booking" name="radio-check">The entire
+                                series</label>
                         </div>
 
                         <button type="button" class="btn btn-success" id="confirm-choose-booking">Ok</button>
@@ -263,9 +254,18 @@
             </div>
         </div>
     </div>
+    <div class="container">
 
-    <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
-    <div id='user-calendar'></div>
+        <button type="button" class="btn btn-success  " id="create-new-booking">Make booking</button>
+
+
+        <div class="btn btn-material-blue-500 pull-right" style="cursor:default;" id="showRoomManagers">Managers</div>
+        <div class="btn btn-material-blue-500 pull-right" style="cursor:default;"  id="roomCapacity">Room capacity</div>
+        <div class="btn btn-disabled "   style="cursor:default;" id="roomPhone">Something</div>
+
+        <div id='user-calendar'></div>
+        <br>
+    </div>
 
 </sec:authorize>
 
@@ -342,8 +342,8 @@
     --%>
 
                         <label for="recurrent-event-description">Description</label>
-                            <textarea class="form-control" id="recurrent-event-description"
-                                      placeholder="description" cols="30"></textarea>
+                        <textarea class="form-control" id="recurrent-event-description"
+                                  placeholder="description" cols="30"></textarea>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="recurrent-event-create">Create</button>
@@ -361,7 +361,7 @@
             <div align="center">
                 <div id="dialog" class="dialog" hidden>
                     <form id="form">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
@@ -384,7 +384,7 @@
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="title" placeholder="startDate">
                             </div>
-                            <div class="col-xs-5">
+                            <div class="col-xs-6">
                                 <input id="basicExample" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
@@ -396,16 +396,16 @@
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="endDate" placeholder="endDate">
                             </div>
-                            <div class="col-xs-5">
+                            <div class="col-xs-6">
                                 <input id="ender" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
 
 
-                        <div class="container">
+                        <div class="col-xs-12">
                             <div class="row">
                                 <form role="form">
-                                    <div class="row col-xs-2">
+                                    <div class="row col-xs-5">
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="no-recurrent"
@@ -418,7 +418,7 @@
                                             <label><input type="radio" name="optradio" id="monthly" class="my-radio">Monthly</label>
                                         </div>
                                     </div>
-                                    <div class="row col-xs-4" id="days-for-recurrent-form" hidden>
+                                    <div class="row col-xs-8" id="days-for-recurrent-form" hidden>
                                         <table class="table" id="days-for-recurrent">
                                             <br>
                                             <thead>Check required days</thead>
@@ -446,21 +446,25 @@
                                         </table>
                                     </div>
                                 </form>
-
+                                <br/><br/><br/><br/><br/><br/> <br/> <br/> <br/> <br/>
                                 <div class="clearfix"></div>
-                                <div class="col-sm-5">
+                                <div class="col-xs-12">
                                     <label for="description">Description</label>
                                     <input type="text" size="15" class="form-control" id="description"
                                            placeholder="description">
                                 </div>
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete this event</div>
-                                <div class="col-xs-3">
-                                    <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">Update</button>
+                                <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete
+                                    this event
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">
+                                        Update
+                                    </button>
                                     <button type="button" class="btn btn-success live" id="creating">Create</button>
                                 </div>
-                                <div align="right" class="col-xs-2">
+                                <div align="right" class="col-xs-6">
                                     <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
                                 </div>
 
@@ -477,7 +481,7 @@
             <div align="center">
                 <div id="updating" class="dialog" hidden>
                     <form id="updatingForm">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="titleUpdate">Event title</label>
                             <input type="text" class="form-control" id="titleUpdate" placeholder="title">
@@ -513,7 +517,7 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-                        <div class="deleting-event" id="deleting-single-event" >Click here to delete this event</div>
+                        <div class="deleting-event" id="deleting-single-event">Click here to delete this event</div>
                         <button type="button" class="btn btn-success" id="updatingButton">Update</button>
                         <button type="button" class="btn btn-danger" id="cancel-update">Cancel</button>
 
@@ -524,7 +528,6 @@
     </div>
 
 
-
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -532,7 +535,7 @@
                     <form id="choose-updating-form">
 
                         <div class="radio-button">
-                            <label><input type="radio" id="single-update"  name="radio" checked>Just this one</label>
+                            <label><input type="radio" id="single-update" name="radio" checked>Just this one</label>
                         </div>
                         <div class="radio-button">
                             <label><input type="radio" id="recurrent-update" name="radio">The entire series</label>
