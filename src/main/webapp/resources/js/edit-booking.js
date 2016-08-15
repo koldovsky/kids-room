@@ -388,3 +388,11 @@ $("#bookingUpdatingDialog").on("dialogclose", function() {
     $('#' + idBooking).removeClass('highlight-active');
 });
 
+function handler() {
+    var selected = $(this).hasClass("highlight-row");
+    $("#booking-table > tbody > tr").removeClass("highlight-row");
+    if(!selected){
+        $(this).addClass("highlight-row");
+    }
+}
+$( "#booking-table > tbody").on( "click", "tr", handler);
