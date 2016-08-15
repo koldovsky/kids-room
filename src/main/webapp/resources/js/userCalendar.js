@@ -107,7 +107,7 @@ $(function () {
             effect: 'clip',
             duration: 500
         },
-        beforeClose: function (){
+        beforeClose: function () {
             $('#child-selector').show();
 
             $('#deleting-recurrent-booking').hide();
@@ -214,21 +214,24 @@ $(function () {
 
 });
 
-function selectRoomForUser(roomParam, userId) {
+
+function selectRoomForUser(roomParam, userId, capacity, phoneNumber, managers) {
 
 
-    var id;
+    var id = roomParam;
     roomParam = roomParam.split(' ');
-
-    showRoomPhone(roomParam[1]);
-
-    id = roomParam[0];
+    var roomAddress = $("#selectRoom li a").first().attr("id");
+    showRoomPhone(phoneNumber);
+    showRoomsAddress(roomAddress);
+    showRoomManagers(managers);
+    showRoomCapacity(capacity);
+    id = roomParam;
 
     getDisabledTime("2016-07-06", "2016-08-06", id);
 
 
     roomIdForHandler = id;
-    usersID = userId;
+    // usersID = userId;
 
     $('#user-calendar').fullCalendar('destroy');
 
@@ -768,6 +771,7 @@ function makeUTCTime(time, date) {
     return time;
 }
 
+
 function getDisabledTime(dateLo, dateHi, roomId) {
     var urls = 'disabled?roomID=' + roomId + '&dateLo=' + dateLo + '&dateHi=' + dateHi;
     $.ajax({
@@ -781,8 +785,21 @@ function getDisabledTime(dateLo, dateHi, roomId) {
 }
 
 //tested
-function showRoomPhone(phone) {
-    $('#roomPhone').empty().append('Phone number: ' + phone);
+
+function showRoomPhone(phoneNumber) {
+    $('#roomPhone').empty().append('<span class="glyphicon glyphicon-earphone"></span>' + ' ' + phoneNumber);
+}
+
+function showRoomsAddress(address) {
+    $('#usersRoom').empty().append(address);
+}
+
+
+function showRoomManagers(managers) {
+    $('#showRoomManagers').empty().append('Manager: ' + managers);
+}
+function showRoomCapacity(capacity) {
+    $('#roomCapacity').empty().append('capacity: ' + capacity);
 }
 
 function sendAjaxForRoomProperty(roomId) {

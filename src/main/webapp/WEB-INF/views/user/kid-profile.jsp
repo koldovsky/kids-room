@@ -41,9 +41,9 @@
 
  <h2> ${kid.firstName} ${kid.lastName} </h2>
 
-<hr></hr>
-<h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}<h3>
-<h3> <spring:message code="kids.age" />: ${kid.getAge()}<h3>
+<hr>
+<h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}</h3>
+<h3> <spring:message code="kids.age" />: ${kid.getAge()}</h3>
 <h4> <spring:message code="kid.comment" />: ${kid.comment} </h4>
 
  <sec:authorize access="hasRole('USER')">
@@ -52,12 +52,12 @@
         </button>
 
 </sec:authorize>
-<hr></hr>
+<hr>
 <div id="parent">
-    <h3> <spring:message code="kid.parent" /> </h4>
-    <h4> ${kid.getParentId().getFullName()}<h4>
-    <h4> ${kid.getParentId().getEmail()}<h4>
-    <h4> ${kid.getParentId().getPhoneNumber()}<h4>
+    <h4> <spring:message code="kid.parent" /> </h4>
+    <h4> ${kid.getParentId().getFullName()}</h4>
+    <h4> ${kid.getParentId().getEmail()}</h4>
+    <h4> ${kid.getParentId().getPhoneNumber()}</h4>
 </div>
 
 <div style="clear:both"></div>
