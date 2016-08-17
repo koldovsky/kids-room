@@ -4,12 +4,19 @@ var dateNow = new Date();
 var bookingsState = localStorage["bookingsState"];
 var table = null;
 
+
 $(function() {
     if(localStorage["bookingsState"] == null) {
         localStorage["bookingsState"] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }
     });
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
+$('#bookingStartTimepicker').val("15:00");
+$('#bookingEndTimepicker').val("22:00");
+function validateData(startTime, endTime) {
+    var isValid = startTime !== "" && endTime !== "";
+    return isValid;
+}
 
 $().ready(function() {
     $('#booking-table').show();
@@ -22,23 +29,29 @@ $().ready(function() {
         var endTime = $('#bookingEndTimepicker').val();
         var startISOtime = date + 'T' + startTime + ':00';
         var endISOtime = date + 'T' + endTime + ':00';
-        var urlForKids = "get-kids/" + idUser;
-        $.ajax({
-            url: urlForKids,
-            success: function(result) {
-                var kids = JSON.parse(result);
-                $.each(kids, function(i, kid) {
-                    var kidId = kid.id;
-                    if ($('#checkboxKid' + kid.id).is(':checked')) {
-                        var comment = ($('#child-comment-' + kid.id).val());
-                        var booking = new Booking(startISOtime, endISOtime, comment, kidId, localStorage["roomId"], idUser);
-                        bookingsArray.push(booking);
-                    }
-                });
-                sendBookingToServerForCreate(bookingsArray);
-            }
-        });
-        $('#bookingDialog').dialog('close');
+
+       if(validateData(startTime, endTime)){
+            var urlForKids = "get-kids/" + idUser;
+            $.ajax({
+                url: urlForKids,
+                success: function(result) {
+                    var kids = JSON.parse(result);
+                    $.each(kids, function(i, kid) {
+                        var kidId = kid.id;
+                        if ($('#checkboxKid' + kid.id).is(':checked')) {
+                            var comment = ($('#child-comment-' + kid.id).val());
+                            var booking = new Booking(startISOtime, endISOtime, comment, kidId, localStorage["roomId"], idUser);
+                            bookingsArray.push(booking);
+                        }
+                    });
+                    sendBookingToServerForCreate(bookingsArray);
+                }
+            });
+            $('#bookingDialog').dialog('close');
+        }else{
+            $('#bookingStartTimepicker').css("background-color", "red");
+        }
+
     });
 });
 
