@@ -73,7 +73,7 @@ html, body, .container {
 #nav-group{
      margin: auto;
      width: 50%;
-     float:center;
+     float:none;
      background-color: white;
 }
 .glyphicon-warning-sign{
@@ -99,5 +99,7 @@ html, body, .container {
     display: none;
 }
 
-
+.highlight-row{
+    background-color: #bababa;
+}
 
