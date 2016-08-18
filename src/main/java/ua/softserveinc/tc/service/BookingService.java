@@ -29,6 +29,8 @@ public interface BookingService extends BaseService<Booking> {
 
     Date replaceBookingTime(Booking booking, String time);
 
+    public Boolean checkForDuplicateBooking(List<BookingDto> listDto);
+
     List<BookingDto> persistBookingsFromDtoAndSetId (List<BookingDto> listDTO);
     List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom);
 
