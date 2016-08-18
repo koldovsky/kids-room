@@ -10,7 +10,6 @@
 
 <script src='resources/js/moment.min.js'></script>
 
-
 <script src='resources/js/jquery.min.js'></script>
 <script src='resources/js/fullcalendar.js'></script>
 <script src='resources/js/header-manager.js'></script>
@@ -264,6 +263,7 @@
         </div>
     </div>
 
+    <div class="error" id="error-dialog" ></div>
     <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
     <div id='user-calendar'></div>
 
