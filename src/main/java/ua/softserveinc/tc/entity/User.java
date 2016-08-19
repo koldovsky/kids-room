@@ -223,4 +223,5 @@ public class User implements Serializable {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
 }

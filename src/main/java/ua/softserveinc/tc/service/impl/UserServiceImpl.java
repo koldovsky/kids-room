@@ -12,6 +12,7 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
@@ -59,5 +60,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public void createWithEncoder(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.create(user);
+    }
+
+    @Override
+    public List<Room> getActiveRooms(User user) {
+        return  user.getRooms().stream()
+                .filter(Room::isActive)
+                .collect(Collectors.toList());
     }
 }

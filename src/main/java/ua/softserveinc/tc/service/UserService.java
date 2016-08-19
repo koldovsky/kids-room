@@ -20,4 +20,6 @@ public interface UserService extends BaseService<User> {
     List<User> findAllUsersByRole(Role role);
 
     List<User> getActiveUsers(Date startDate, Date endDate, Room room);
+
+    List<Room> getActiveRooms(User user);
 }
