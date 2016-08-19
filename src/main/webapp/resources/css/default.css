@@ -14,7 +14,7 @@ body {
     padding-left: 50px;
     padding-bottom: 20px;
     padding-top: 20px;
-    width: 300px;
+    width: 400px;
 }
 
 .navbar{
@@ -74,7 +74,7 @@ img {
 }
 
 .navbar-brand{
-  font-size: 30;
+  font-size: 30px;
 }
 
 #topnavbar{
@@ -133,7 +133,7 @@ select {
     color: #4285F4;
 }
 .message{
-    margin-top: 0 auto;
+    margin-top: auto;
     text-align: center;
     font-size:18px;
     padding-top: 40px;

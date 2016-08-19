@@ -90,14 +90,14 @@
 
                         <textarea type="text" id="child-comment-update"></textarea>
 
-                        <div class="deleting-event" id="deleting-single-booking" >Click here to delete this booking</div>
+                        <%--<div class="deleting-event" id="deleting-single-booking" >Click here to delete this booking</div>--%>
 
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-success" id="updatingBooking">Save</button>
                         </div>
 
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-danger" id="deletingBooking">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="deleting-single-booking">Delete</button>
                         </div>
 
                     </form>
@@ -221,13 +221,13 @@
 
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-booking" >Click here to delete this booking</div>
+                                <%--<div class="deleting-event" id="deleting-recurrent-booking" >Click here to delete this booking</div>--%>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="book">Book</button>
                                 </div>
                                 <div align="right" class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" id="cancel-changes">Cancel</button>
+                                    <button type="button" class="btn btn-danger" id="deleting-recurrent-booking">Delete</button>
                                 </div>
 
                             </div>
@@ -366,18 +366,21 @@
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
-                        <select id="color-select">
-                            <option value="#ff0000" style="background:red"></option>
-                            <option value="#ffff00" style="background:yellow"></option>
-                            <option value="#800080" style="background:purple"></option>
-                            <option value="#0000ff" style="background:blue"></option>
-                            <option value="#6AA4C1" style="background:#6AA4C1" selected="selected"></option>
-                            <option value="#808080" style="background:grey"></option>
-                            <option value="#008000" style="background:green"></option>
-                            <option value="#ffa500" style="background:orange"></option>
-                            <option value="#00ffff" style="background:aqua"></option>
-                            <option value="#ffd700" style="background:gold"><br></option>
-                        </select>
+                        <div class="form-group">
+                            <label for="title">Choose a color</label>
+                            <select id="color-select">
+                                <option value="#ff0000" style="background:red">red</option>
+                                <option value="#ffff00" style="background:yellow">yellow</option>
+                                <option value="#800080" style="background:purple">purple</option>
+                                <option value="#0000ff" style="background:blue">blue</option>
+                                <option value="#6AA4C1" style="background:#6AA4C1" selected="selected">light blue</option>
+                                <option value="#808080" style="background:grey">grey</option>
+                                <option value="#008000" style="background:green">green</option>
+                                <option value="#ffa500" style="background:orange">orange</option>
+                                <option value="#00ffff" style="background:aqua">aqua</option>
+                                <option value="#ffd700" style="background:gold">gold<br></option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="title">Start date</label>
                             <br>
@@ -455,7 +458,7 @@
                                 </div>
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete this event</div>
+                                <%--<div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete this event</div>--%>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">Update</button>
                                     <button type="button" class="btn btn-success live" id="creating">Create</button>
@@ -513,9 +516,9 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-                        <div class="deleting-event" id="deleting-single-event" >Click here to delete this event</div>
+                        <%--<div class="deleting-event" id="deleting-single-event" >Click here to delete this event</div>--%>
                         <button type="button" class="btn btn-success" id="updatingButton">Update</button>
-                        <button type="button" class="btn btn-danger" id="cancel-update">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="deleting-single-event">Delete</button>
 
                     </form>
                 </div>
