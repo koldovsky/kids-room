@@ -107,7 +107,7 @@ $(function () {
             effect: 'clip',
             duration: 500
         },
-        beforeClose: function (){
+        beforeClose: function () {
             $('#child-selector').show();
 
             $('#deleting-recurrent-booking').hide();
@@ -428,6 +428,10 @@ function sendBookingToServerForCreate(bookingsArray) {
                     comment: item.comment
                 });
             });
+        },
+        error: function () {
+            $('#user-calendar').fullCalendar('removeEvents', -1);
+            callErrorDialog('Duplicate booking. please contact the manager if you have any problems with booking ');
         }
     });
 }

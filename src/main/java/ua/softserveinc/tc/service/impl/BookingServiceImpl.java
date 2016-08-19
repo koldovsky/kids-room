@@ -15,11 +15,13 @@ import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.awt.print.Book;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -185,6 +187,29 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             return Collections.emptyList();
         }
     }
+
+    public Boolean checkForDuplicateBooking(List<BookingDto> listDto) {
+        User user = userDao.findById(listDto.get(0).getUserId());
+        Room room = roomDao.findById(listDto.get(0).getRoomId());
+
+        for (BookingDto x : listDto) {
+            for (Booking y : bookingDao.getBookingsByUserAndRoom(user, room)) {
+
+                if (y.getBookingEndTime().after(new Date()) && (y.getBookingState() != BookingState.CANCELLED)) {
+
+                    if (!(!(DateUtil.toDateISOFormat(x.getEndTime()).after(y.getBookingStartTime()))
+                            || !(DateUtil.toDateISOFormat(x.getStartTime()).before(y.getBookingEndTime())))
+                            && x.getKidId().equals(y.getChild().getId())) {
+                        return true;
+                    }
+                }
+
+            }
+        }
+
+        return false;
+    }
+
 
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
         User user = userDao.findById(idUser);

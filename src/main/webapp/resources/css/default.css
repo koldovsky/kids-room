@@ -180,6 +180,11 @@ select {
      text-align: center;
 }
 
-
+div .error {
+    color : #ff1200;
+}
+.error .ui-dialog-title{
+    color: #ff1200;
+}
 
 
