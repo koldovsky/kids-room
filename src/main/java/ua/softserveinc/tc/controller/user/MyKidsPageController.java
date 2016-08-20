@@ -19,7 +19,6 @@ import java.util.List;
 
 
 /**
- * Created by Nestor on 07.05.2016.
  * Controller handles request for "My Kids" view
  */
 
@@ -29,28 +28,26 @@ public class MyKidsPageController {
     private UserService userService;
 
     /**
-     *
      * @param principal
      * @return "My Kids" view
-     * @throws AccessDeniedException
-     * if requesting user has no permissions
-     * to access this page
+     * @throws AccessDeniedException if requesting user has no permissions
+     *                               to access this page
      */
     @RequestMapping(value = "/mykids", method = RequestMethod.GET)
     public ModelAndView myKids(Principal principal)
-    throws AccessDeniedException{
+            throws AccessDeniedException {
 
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.MY_KIDS);
-        User current =  userService.getUserByEmail(principal.getName());
-        if(current.getRole() != Role.USER) {
+        User current = userService.getUserByEmail(principal.getName());
+        if (current.getRole() != Role.USER) {
             throw new AccessDeniedException("Only parents have access to this page");
         }
 
         List<Child> myKids = current.getEnabledChildren();
         ModelMap modelMap = model.getModelMap();
 
-        if(!modelMap.containsAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE)) {
+        if (!modelMap.containsAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE)) {
             modelMap.addAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE, myKids);
         }
 
