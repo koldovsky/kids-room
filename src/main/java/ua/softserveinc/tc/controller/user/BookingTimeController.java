@@ -2,6 +2,8 @@ package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.dao.UserDao;
@@ -35,16 +37,21 @@ public class BookingTimeController {
     @Autowired
     private BookingService bookingService;
 
+
     @RequestMapping(value = "gwtroomproperty", method = RequestMethod.POST)
     @ResponseBody
-    public String getRoomProperty(@RequestBody Integer roomId){
+    public String getRoomProperty(@RequestBody Integer roomId) {
 
         return null;
     }
 
     @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
     @ResponseBody
-    public String getBooking(@RequestBody List<BookingDto> dtos) {
+    public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos) {
+        if (bookingService.checkForDuplicateBooking(dtos)) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
         dtos.forEach(dto -> {
             dto.setUser(userDao.findById(dto.getUserId()));
             dto.setChild(childService.findById(dto.getKidId()));
@@ -55,11 +62,8 @@ public class BookingTimeController {
             dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
         });
 
-
-
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
-
-        return new Gson().toJson(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dto));
 
     }
 
@@ -95,11 +99,11 @@ public class BookingTimeController {
     @ResponseBody
     public String makeRecurrentBookings(@RequestBody List<BookingDto> bookingDtos) {
         for (BookingDto bookingDto : bookingDtos) {
-            if(bookingDto.getIdChild() == null) {
+            if (bookingDto.getIdChild() == null) {
                 bookingDto.setIdChild(bookingDto.getKidId());
             }
 
-            if(bookingDto.getKidId() == null) {
+            if (bookingDto.getKidId() == null) {
                 bookingDto.setKidId(bookingDto.getIdChild());
             }
         }

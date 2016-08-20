@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 
-/**
- * Created by Chak on 07.05.2016.
- */
+
 @Controller
 public class UserController {
 
@@ -29,5 +27,3 @@ public class UserController {
         return  ErrorConstants.ACCESS_DENIED_VIEW;
     }
 }
-
-
