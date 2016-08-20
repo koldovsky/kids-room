@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.EventDto;
@@ -52,6 +53,9 @@ public class ViewEventController {
                 model.addAttribute(UserConstants.Entity.ROOMS, roomService.findAll());
                 model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
+                if(user.getChildren().isEmpty() | userService.getEnabledChildren(user).isEmpty()) {
+                    return ChildConstants.View.MY_KIDS;
+                }
                 return EventConstants.View.MAIN_PAGE;
             case MANAGER:
                 model.addAttribute(UserConstants.Entity.ROOMS, userService.getActiveRooms(user));

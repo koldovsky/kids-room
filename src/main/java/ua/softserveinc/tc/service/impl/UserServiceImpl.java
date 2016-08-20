@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
+import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -66,6 +67,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public List<Room> getActiveRooms(User user) {
         return  user.getRooms().stream()
                 .filter(Room::isActive)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Child> getEnabledChildren(User user) {
+        return user.getChildren().stream()
+                .filter(Child::isEnabled)
                 .collect(Collectors.toList());
     }
 }

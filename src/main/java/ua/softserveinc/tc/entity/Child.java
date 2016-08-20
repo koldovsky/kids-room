@@ -56,7 +56,7 @@ public class Child implements Comparable<Child> {
     @Column(name = ChildConstants.ENABLED,
             nullable = false,
             columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean enabled = true;
+    private boolean isEnabled = true;
 
     @Column(name = ChildConstants.GENDER)
     @Enumerated(EnumType.ORDINAL)
@@ -115,11 +115,11 @@ public class Child implements Comparable<Child> {
     }
 
     public boolean isEnabled() {
-        return enabled;
+        return isEnabled;
     }
 
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+        this.isEnabled = enabled;
     }
 
     public Gender getGender() {
@@ -197,7 +197,7 @@ public class Child implements Comparable<Child> {
 
         Child child = (Child) o;
 
-        if (enabled != child.enabled) {
+        if (isEnabled != child.isEnabled) {
             return false;
         }
         if (firstName != null ? !firstName.equals(child.firstName) : child.firstName != null) {
@@ -219,7 +219,7 @@ public class Child implements Comparable<Child> {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
         result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
-        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + (isEnabled ? 1 : 0);
         return result;
     }
 }
