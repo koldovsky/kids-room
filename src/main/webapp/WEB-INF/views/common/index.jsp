@@ -421,7 +421,7 @@
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="title" placeholder="startDate">
                             </div>
-                            <div class="col-xs-5">
+                            <div class="col-xs-6">
                                 <input id="basicExample" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
@@ -433,16 +433,16 @@
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="endDate" placeholder="endDate">
                             </div>
-                            <div class="col-xs-5">
+                            <div class="col-xs-6">
                                 <input id="ender" type="text" class="time form-control timepicker" size="6"/>
                             </div>
                         </div>
 
 
-                        <div class="container">
+                        <div class="col-xs-12">
                             <div class="row">
                                 <form role="form">
-                                    <div class="row col-xs-2">
+                                    <div class="row col-xs-4">
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="no-recurrent"
@@ -455,7 +455,7 @@
                                             <label><input type="radio" name="optradio" id="monthly" class="my-radio">Monthly</label>
                                         </div>
                                     </div>
-                                    <div class="row col-xs-4" id="days-for-recurrent-form" hidden>
+                                    <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                         <table class="table" id="days-for-recurrent">
                                             <br>
                                             <thead>Check required days</thead>
@@ -483,7 +483,7 @@
                                         </table>
                                     </div>
                                 </form>
-
+                                <br><br><br><br><br><br><br><br><br><br>
                                 <div class="clearfix"></div>
                                 <div class="col-sm-5">
                                     <label for="description">Description</label>
@@ -501,8 +501,8 @@
                                     </button>
                                     <button type="button" class="btn btn-success live" id="creating">Create</button>
                                 </div>
-                                <div align="right" class="col-xs-2">
-                                    <button type="button" class="btn btn-danger" id="cancel">Cancel</button>
+                                <div align="right" class="col-xs-9">
+                                    <button type="button" class="btn btn-danger pull-right" id="cancel">Cancel</button>
                                 </div>
 
                             </div>
