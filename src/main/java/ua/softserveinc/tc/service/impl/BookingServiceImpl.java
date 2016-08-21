@@ -133,6 +133,28 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return calendar.getTime();
     }
 
+    public Boolean checkForDuplicateBooking(List<BookingDto> listDto) {
+        User user = userDao.findById(listDto.get(0).getUserId());
+        Room room = roomDao.findById(listDto.get(0).getRoomId());
+
+        for (BookingDto x : listDto) {
+            for (Booking y : bookingDao.getBookingsByUserAndRoom(user, room)) {
+
+                if (y.getBookingEndTime().after(new Date()) && (y.getBookingState() != BookingState.CANCELLED)) {
+
+                    if (!(!(DateUtil.toDateISOFormat(x.getEndTime()).after(y.getBookingStartTime()))
+                            || !(DateUtil.toDateISOFormat(x.getStartTime()).before(y.getBookingEndTime())))
+                            && x.getKidId().equals(y.getChild().getId())) {
+                        return true;
+                    }
+                }
+
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
         BookingDto bdto = listDTO.get(0);

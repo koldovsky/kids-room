@@ -19,9 +19,7 @@ import ua.softserveinc.tc.util.JsonUtil;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by dima- on 06.06.2016.
- */
+
 @Controller
 public class BookingTimeController {
 
