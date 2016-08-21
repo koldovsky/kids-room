@@ -791,13 +791,9 @@ function showRoomPhone(phoneNumber) {
     $('#roomPhone').empty().append('<span class="glyphicon glyphicon-earphone"></span>' + ' ' + phoneNumber);
 }
 
-function showRoomsAddress(address) {
-    $('#usersRoom').empty().append(address);
-}
-
 
 function showRoomManagers(managers) {
-    $('#showRoomManagers').empty().append('Manager: ' + managers);
+    $('#showRoomManagers').empty().append('<span class="glyphicon glyphicon-user"></span>' + ' ' + managers);
 }
 
 
