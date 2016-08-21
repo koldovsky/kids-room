@@ -25,10 +25,6 @@ import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
-/**
- * Created by Петришак on 04.06.2016.
- */
-
 @Controller
 public class BookingEditController {
     @Autowired
@@ -50,10 +46,11 @@ public class BookingEditController {
     public ModelAndView editBookingModel(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
-        User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> rooms = currentManager.getRooms();
+
+        List<Room> rooms = userService.getActiveRooms(userService.getUserByEmail(principal.getName()));
         List<User> users = userService.findAllUsersByRole(Role.USER);
         Collections.sort(users, (user1, user2) -> user1.getFirstName().compareTo(user2.getFirstName()));
+
         model.addAttribute("rooms", rooms);
         model.addAttribute("users", users);
         return modelAndView;

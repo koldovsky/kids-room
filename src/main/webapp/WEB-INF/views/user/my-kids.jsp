@@ -16,9 +16,9 @@
 <div class="list" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
 
 <c:if test="${kids.isEmpty()}">
-    <div id = "start-page">
+    <div class="start-page">
         <h1>
-          <span class="label label-success">
+          <span class="label label-primary" id="radius">
           <spring:message code="kids.welcome" /></span>
         </h1>
         <h3><spring:message code="kids.emptyList" /></h3>

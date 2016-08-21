@@ -21,9 +21,6 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
 
-/**
- * Created by dima- on 07.05.2016.
- */
 @Controller
 public class ViewEventController {
 

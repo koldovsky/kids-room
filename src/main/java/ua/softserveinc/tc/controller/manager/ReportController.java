@@ -22,9 +22,7 @@ import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.*;
 
-/**
- * Created by Demian on 08.05.2016.
- */
+
 @Controller
 public class ReportController {
     @Autowired
@@ -41,8 +39,7 @@ public class ReportController {
         String endDate = getStringDate(dateNow());
         String startDate = getStringDate(dateMonthAgo());
 
-        User manager = userService.getUserByEmail(principal.getName());
-        List<Room> rooms = manager.getRooms();
+        List<Room> rooms = userService.getActiveRooms(userService.getUserByEmail(principal.getName()));
 
         modelMap.addAttribute(ReportConstants.ROOMS, rooms);
         modelMap.addAttribute(ReportConstants.END_DATE, endDate);
