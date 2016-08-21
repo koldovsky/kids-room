@@ -51,7 +51,7 @@
         <label id="roomPhone"></label>
     </div>
 
-
+    <%--id="bookingUpdatingDialog"--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -107,7 +107,7 @@
     </div>
 
 
-
+    <%--id="make-recurrent-booking"--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -240,7 +240,7 @@
 
 
 
-
+    <%--id="recurrent-change"--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -278,7 +278,7 @@
 
     </c:forEach>
 
-
+    <%-- id="dialog-recurrently"--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -355,7 +355,7 @@
         </div>
     </div>
 
-
+    <%--id="dialog"      create event--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -475,6 +475,7 @@
         </div>
     </div>
 
+    <%--id="updating"--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -526,8 +527,7 @@
         </div>
     </div>
 
-
-
+    <%--id="choose-updating-type"--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
