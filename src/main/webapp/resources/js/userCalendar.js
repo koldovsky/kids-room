@@ -214,15 +214,16 @@ $(function () {
 
 });
 
-function selectRoomForUser(roomParam, userId) {
+function selectRoomForUser(roomParam, userId,  phoneNumber, managers) {
 
 
-    var id;
-    roomParam = roomParam.split(' ');
+        var id = roomParam;
 
-    showRoomPhone(roomParam[1]);
 
-    id = roomParam[0];
+    showRoomPhone(phoneNumber);
+
+    showRoomManagers(managers);
+
 
     getDisabledTime("2016-07-06", "2016-08-06", id);
 
@@ -785,9 +786,20 @@ function getDisabledTime(dateLo, dateHi, roomId) {
 }
 
 //tested
-function showRoomPhone(phone) {
-    $('#roomPhone').empty().append('Phone number: ' + phone);
+
+function showRoomPhone(phoneNumber) {
+    $('#roomPhone').empty().append('<span class="glyphicon glyphicon-earphone"></span>' + ' ' + phoneNumber);
 }
+
+function showRoomsAddress(address) {
+    $('#usersRoom').empty().append(address);
+}
+
+
+function showRoomManagers(managers) {
+    $('#showRoomManagers').empty().append('Manager: ' + managers);
+}
+
 
 function sendAjaxForRoomProperty(roomId) {
 

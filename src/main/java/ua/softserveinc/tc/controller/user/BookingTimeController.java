@@ -36,7 +36,7 @@ public class BookingTimeController {
     private BookingService bookingService;
 
 
-    @RequestMapping(value = "gwtroomproperty", method = RequestMethod.POST)
+    @RequestMapping(value = "getroomproperty", method = RequestMethod.POST)
     @ResponseBody
     public String getRoomProperty(@RequestBody Integer roomId) {
 
