@@ -186,5 +186,26 @@ div .error {
 .error .ui-dialog-title{
     color: #ff1200;
 }
+.modal  {
+    border-radius: 4px;
+    padding-right: 0px;
+    background-color: rgba(4, 4, 4, 0.8);
+}
+
+
+.modal-content {
+
+
+    border: none;
+    top: 60%;
+}
+.modal-body {
+
+    margin-top:30%;
+    background-color: #2196f3;
+    color: white;
+
+}
+
 
 
