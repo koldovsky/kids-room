@@ -9,9 +9,6 @@ import ua.softserveinc.tc.entity.User;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Nestor on 09.06.2016.
- */
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     Long countByRoomAndBookingState(Room room, BookingState bookingState);
