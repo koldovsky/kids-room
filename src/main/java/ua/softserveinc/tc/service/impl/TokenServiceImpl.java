@@ -8,9 +8,6 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.TokenInvalidException;
 import ua.softserveinc.tc.service.TokenService;
 
-/**
- * Created by Chak on 17.05.2016.
- */
 @Service
 public class TokenServiceImpl extends BaseServiceImpl<Token> implements TokenService {
 

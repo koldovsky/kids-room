@@ -11,50 +11,36 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.BookingRepository;
-import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
 
-/**
- * Created by Петришак on 08.05.2016.
- */
+
 @Controller
 public class ConfirmBookingController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private RoomService roomService;
-    @Autowired
-    private BookingService bookingService;
+
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private RoomService roomService;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView listBookings(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
-        User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> rooms = currentManager.getRooms();
+
+        List<Room> rooms = userService.getActiveRooms(userService.getUserByEmail(principal.getName()));
+
         model.addAttribute("rooms", rooms);
         return modelAndView;
     }
-
-    /*@RequestMapping(value="manager-test")
-    public ModelAndView managersTest(Model model, Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("manager-test");
-        User currentManager = userService.getUserByEmail(principal.getName());
-        List<Room> listRoom = currentManager.getRooms();
-        model.addAttribute("rooms", listRoom);
-        return modelAndView;
-
-    }*/
 
     @ResponseBody
     @RequestMapping(value = "getAmountOfChildren/{roomId}", method = RequestMethod.GET)

@@ -19,9 +19,7 @@ import ua.softserveinc.tc.util.JsonUtil;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by dima- on 06.06.2016.
- */
+
 @Controller
 public class BookingTimeController {
 
@@ -38,7 +36,7 @@ public class BookingTimeController {
     private BookingService bookingService;
 
 
-    @RequestMapping(value = "gwtroomproperty", method = RequestMethod.POST)
+    @RequestMapping(value = "getroomproperty", method = RequestMethod.POST)
     @ResponseBody
     public String getRoomProperty(@RequestBody Integer roomId) {
 

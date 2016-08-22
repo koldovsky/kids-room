@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.EventDto;
@@ -20,9 +21,6 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;
 
-/**
- * Created by dima- on 07.05.2016.
- */
 @Controller
 public class ViewEventController {
 
@@ -40,25 +38,28 @@ public class ViewEventController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
+
         if (principal == null) {
             return UserConstants.Model.LOGIN_VIEW;
-        } else {
-            String email = principal.getName();
-            User user = userService.getUserByEmail(email);
+        }
+        String email = principal.getName();
+        User user = userService.getUserByEmail(email);
 
-            switch (user.getRole()) {
-                case USER:
-                    model.addAttribute(UserConstants.Entity.ROOMS, roomService.findAll());
-                    model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
-                    model.addAttribute(UserConstants.Entity.USERID, user.getId());
-                    return EventConstants.View.MAIN_PAGE;
-                case MANAGER:
-                    model.addAttribute(UserConstants.Entity.ROOMS, user.getRooms());
-                    return EventConstants.View.MAIN_PAGE;
-                default:
-                    model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
-                    return AdminConstants.EDIT_ROOM;
-            }
+        switch (user.getRole()) {
+            case USER:
+                model.addAttribute(UserConstants.Entity.ROOMS, roomService.findAll());
+                model.addAttribute(UserConstants.Entity.KIDS, user.getEnabledChildren());
+                model.addAttribute(UserConstants.Entity.USERID, user.getId());
+                if(user.getChildren().isEmpty() | userService.getEnabledChildren(user).isEmpty()) {
+                    return ChildConstants.View.MY_KIDS;
+                }
+                return EventConstants.View.MAIN_PAGE;
+            case MANAGER:
+                model.addAttribute(UserConstants.Entity.ROOMS, userService.getActiveRooms(user));
+                return EventConstants.View.MAIN_PAGE;
+            default:
+                model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
+                return AdminConstants.EDIT_ROOM;
         }
     }
 

@@ -3,21 +3,21 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.UserDao;
-import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.entity.Role;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+
     @Autowired
     private UserDao userDao;
 
@@ -29,18 +29,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public List<User> getActiveUsers(Date startDate, Date endDate, Room room) {
-        EntityManager entityManager = bookingDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        Root<Booking> root = query.from(Booking.class);
-
-        query.select(root.get(BookingConstants.Entity.USER)).distinct(true).where(
-                builder.between(root.get(
-                        BookingConstants.Entity.START_TIME), startDate, endDate),
-                builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED),
-                builder.equal(root.get(BookingConstants.Entity.ROOM), room));
-
-        return entityManager.createQuery(query).getResultList();
+        return userDao.findActiveUsers(startDate, endDate, room);
     }
 
     @Override
@@ -75,10 +64,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public void confirmManagerRegistrationUpdate(User manager) {
-        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
-        userDao.update(manager);
+    public List<Room> getActiveRooms(User user) {
+        return  user.getRooms().stream()
+                .filter(Room::isActive)
+                .collect(Collectors.toList());
     }
 
-
+    @Override
+    public List<Child> getEnabledChildren(User user) {
+        return user.getChildren().stream()
+                .filter(Child::isEnabled)
+                .collect(Collectors.toList());
+    }
 }

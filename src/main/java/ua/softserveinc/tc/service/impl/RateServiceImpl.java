@@ -1,9 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-/**
- * Created by TARAS on 19.05.2016.
- */
-
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.service.RateService;
@@ -17,6 +13,7 @@ import static ua.softserveinc.tc.util.DateUtil.getRoundedHours;
 
 @Service
 public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateService {
+
     @Override
     public Rate calculateAppropriateRate(long milliseconds, List<Rate> rates) {
         if (rates.isEmpty()) {

@@ -11,6 +11,7 @@ WebContent/
 *.ear
 .classpath
 .project
+.cfs
 .settings/
 KidsRoom.iml
 SpringMVC.iml

@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service;
 
+import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -19,7 +20,9 @@ public interface UserService extends BaseService<User> {
 
     List<User> findAllUsersByRole(Role role);
 
-    void confirmManagerRegistrationUpdate(User manager);
-
     List<User> getActiveUsers(Date startDate, Date endDate, Room room);
+
+    List<Room> getActiveRooms(User user);
+
+    List<Child> getEnabledChildren(User user);
 }

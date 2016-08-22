@@ -57,7 +57,6 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
                    <td>
                    <form:radiobutton required="required" name="Boy" path="gender" value="MALE"/><spring:message code="kid.boy" />
                    </td>
-                   </div>
                    <td>
                    <form:radiobutton required="required" path="gender" value="FEMALE" /><spring:message code="kid.girl" /></td>
                    </tr>

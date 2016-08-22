@@ -3,11 +3,11 @@ package ua.softserveinc.tc.service.impl;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
@@ -15,15 +15,10 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Calendar;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -40,9 +35,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Autowired
     private BookingService bookingService;
 
-    private static @Log
-    Logger log;
-
+    private static @Log Logger log;
 
     @Override
     public List<Room> findAll() {
@@ -50,14 +43,15 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public void saveOrUpdate(Room room){
+    @Transactional
+    public void saveOrUpdate(Room room) {
         roomDao.saveOrUpdate(room);
     }
 
     /**
-     * @param room a requested room
+     * @param room  a requested room
      * @param start start of period
-     * @param end end of period
+     * @param end   end of period
      * @return map containing start-end pairs representing time periods
      */
     @Override
@@ -70,7 +64,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
         return result;
     }
-
 
     private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat(DateConstants.TIME_FORMAT);
@@ -112,11 +105,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
             List<Booking> tempList = bookings.stream()
                     .filter(booking ->
-                    booking.getBookingStartTime().compareTo(hi) < 0
-                            && booking.getBookingEndTime().compareTo(lo) > 0)
+                            booking.getBookingStartTime().compareTo(hi) < 0
+                                    && booking.getBookingEndTime().compareTo(lo) > 0)
                     .collect(Collectors.toList());
 
-            if(room.getCapacity() <= tempList.size()) {
+            if (room.getCapacity() <= tempList.size()) {
                 result.put(DateUtil.convertDateToString(lo),
                         DateUtil.convertDateToString(hi));
             }
@@ -126,6 +119,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return result;
     }
 
+
     @Override
     public Boolean isPossibleUpdate(BookingDto bookingDto) {
         Booking booking = bookingService.findById(bookingDto.getId());
@@ -133,29 +127,16 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         Date dateLo = toDateAndTime(bookingDto.getStartTime());
         Date dateHi = toDateAndTime(bookingDto.getEndTime());
         List<Booking> list = reservedBookings(dateLo, dateHi, room);
-        if(list.contains(booking)){
+        if (list.contains(booking)) {
             list.remove(booking);
-            return room.getCapacity()> list.size();
+            return room.getCapacity() > list.size();
         } else {
             return room.getCapacity() > list.size();
         }
     }
 
     private List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room) {
-        EntityManager entityManager = roomDao.getEntityManager();
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-        query.select(root).where
-                (builder.and(
-                        builder.lessThan(root.get("bookingStartTime"), dateHi),
-                        builder.greaterThan(root.get("bookingEndTime"), dateLo)),
-                        builder.equal(root.get("room"), room),
-                        builder.or(
-                                builder.equal(root.get("bookingState"), BookingState.BOOKED),
-                                builder.equal(root.get("bookingState"), BookingState.ACTIVE)));
-        List<Booking> list = entityManager.createQuery(query).getResultList();
-        return list;
+        return roomDao.reservedBookings(dateLo, dateHi, room);
     }
 
     /**

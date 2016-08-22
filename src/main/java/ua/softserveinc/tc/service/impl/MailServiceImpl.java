@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Chak on 10.05.2016.
- */
 @Service
 public class MailServiceImpl implements MailService {
 

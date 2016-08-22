@@ -10,9 +10,6 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
-/**
- * Created by Demian on 03.06.2016.
- */
 @Configuration
 @ComponentScan(QuartzConstants.QUARTZ_PACKAGE)
 public class QuartzConfig {

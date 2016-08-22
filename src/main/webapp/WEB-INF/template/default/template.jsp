@@ -27,7 +27,7 @@ integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkz
 
 <link rel='stylesheet' href='resources/css/default.css'>
 <link rel='stylesheet' href='resources/css/allkidslist.css'>
-
+    <link rel="icon" href="resources/img/favicon.png">
 <!-- Material design -->
 
 <link rel="stylesheet"
