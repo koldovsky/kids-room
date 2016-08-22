@@ -264,11 +264,41 @@
 
 
         <button type="button" class="btn btn-success pull-right" data-toggle="modal"
-                data-target=".bs-example-modal-lg">
+                data-target=".bs-modal-lg-colourInfo">
+            &nbsp; <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+        </button>
+
+        <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+
+                        <div align="center">
+
+                            <br>
+                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means that</h2>
+                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
+                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
+                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
+                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
+                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
+                            <br>
+                            <span>SoftServe Inc</span>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-success pull-right" data-toggle="modal"
+                data-target=".bs-modal-lg-contact">
             Contact
         </button>
 
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
