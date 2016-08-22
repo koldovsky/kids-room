@@ -7,7 +7,8 @@ package ua.softserveinc.tc.constants;
 public final class ValidationConstants {
     public static final String PASSWORD_REGEX = "^(\\S){8,24}$";
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
-    public static final String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
+    public static final String EMAIL_REGEX = "^(\\w){1,60}[@].*[.]com$";
+    // public static final String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
     public static final String SIMPLY_PHONE_REGEX = "^([0-9]{5,14})*$";
     public static final String LETTERS_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦц" +
             "ЧчШшЩщЬьЮюЯя]*$";

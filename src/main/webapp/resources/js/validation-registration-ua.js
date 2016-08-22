@@ -25,7 +25,7 @@ $(document).ready(function() {
                 },
                 email: {
                    required: true,
-                   regex: /^(\w){1,60}[@][s]oft[s]erveinc[.]com$/
+                   //regex: /^(\w){1,60}[@][s]oft[s]erveinc[.]com$/
                 },
                 password: {
                    required: true,
