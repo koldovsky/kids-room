@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-xs-6   ">
                                 <input id="bookingUpdatingStartTimepicker" type="text"
-                                       class="time form-control timepicker"
+                                       class="text-center time form-control timepicker"
                                        size="6"/>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-xs-6  ">
                                 <input id="bookingUpdatingEndTimepicker" type="text"
-                                       class="time form-control timepicker pull-right"
+                                       class="text-center time form-control timepicker pull-right"
                                        size="6"/>
                             </div>
                         </div>
