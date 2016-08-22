@@ -101,12 +101,12 @@
                             <label for="recurrent-booking-start-date">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-booking-start-date"
+                                <input type="date" class="text-center form-control" id="recurrent-booking-start-date"
                                        placeholder="startDate">
                             </div>
                             <div class="col-xs-6">
                                 <input id="recurrent-booking-start-time" type="text"
-                                       class="time form-control timepicker" size="6"/>
+                                       class="text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -115,11 +115,11 @@
                             <label for="recurrent-booking-end-date">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-booking-end-date"
+                                <input type="date" class="text-center form-control" id="recurrent-booking-end-date"
                                        placeholder="endDate">
                             </div>
                             <div class="col-xs-6">
-                                <input id="recurrent-booking-end-time" type="text" class="time form-control timepicker"
+                                <input id="recurrent-booking-end-time" type="text" class="text-center time form-control timepicker"
                                        size="6"/>
                             </div>
                         </div>
@@ -147,26 +147,26 @@
                                             <tbody>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Monday-booking" value="Mon"
-                                                                  class="day">Monday</label><br>
+                                                                  class="day"> Monday</label><br>
                                                 </td>
                                                 <td><label><input type="checkbox" id="Tuesday-booking" value="Tue"
-                                                                  class="day">Tuesday</label><br>
+                                                                  class="day"> Tuesday</label><br>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Wednesday-booking" value="Wed"
-                                                                  class="day">Wednesday</label><br>
+                                                                  class="day"> Wednesday</label><br>
                                                 </td>
                                                 <td><label><input type="checkbox" id="Thursday-booking" value="Thu"
-                                                                  class="day">Thursday</label><br>
+                                                                  class="day"> Thursday</label><br>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Friday-booking" value="Fri"
-                                                                  class="day">Friday</label><br>
+                                                                  class="day"> Friday</label><br>
                                                 </td>
                                                 <td><label><input type="checkbox" id="Saturday-booking" value="Sat"
-                                                                  class="day">Saturday</label><br>
+                                                                  class="day"> Saturday</label><br>
                                                 </td>
                                             </tr>
                                             </tbody>
