@@ -181,21 +181,20 @@
                                         <c:forEach items="${kids}" var="kids" varStatus="loop">
 
                                             <c:set var="kidsArray" value="${kids}"/>
-                                            <tr>
-                                                <label><input type="checkbox" value=""
-                                                              id="checkboxKid${kids.id}">${kids.firstName}</label>
-                                                <br>
-                                            </tr>
 
+                                            <label><input type="checkbox" value=""
+                                                          id="checkboxKid${kids.id}">${kids.firstName}</label>
+                                            &nbsp;
                                         </c:forEach>
-
+                                        <br>
                                         <c:forEach items="${kids}" var="kids" varStatus="loop">
                                             <tr>
-                                                <label for="child-comment-${kids.id}" id="child-comment-${kids.id}-1"
-                                                       hidden>Comment
-                                                    for ${kids.firstName}:</label>
+                                                <span for="child-comment-${kids.id}" id="child-comment-${kids.id}-1"
+                                                      hidden>Comment
+                                                    for ${kids.firstName}:</span>
 
-                                                <textarea type="text" id="child-comment-${kids.id}" hidden></textarea>
+                                                <textarea type="text" class="col-xs-12" id="child-comment-${kids.id}"
+                                                          hidden></textarea>
 
                                                 <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
                                                 <br>
@@ -213,9 +212,6 @@
 
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-booking">Click here to delete this
-                                    booking
-                                </div>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking"
                                             hidden="true">Update
