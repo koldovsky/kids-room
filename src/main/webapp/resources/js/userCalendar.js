@@ -75,7 +75,6 @@ $(function () {
     // });
 
 
-
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
@@ -130,7 +129,7 @@ $(function () {
             effect: 'clip',
             duration: 500
         },
-        beforeClose: function () {
+        beforeClose: function (){
             $('#child-selector').show();
 
             $('#deleting-recurrent-booking').hide();
@@ -200,8 +199,6 @@ $(function () {
         confirmation('Delete booking','are you sure?',cancelBooking, info.id, "","")
         // $('#confirmation-dialog').dialog("open")
     });
-
-
 
 
     $('#deletingBooking').click(function () {
@@ -806,7 +803,7 @@ function getDisabledTime(dateLo, dateHi, roomId) {
         contentType: 'application/json',
         dataType: 'text',
         success: function (result) {
-            alert(result.val());
+            alert(result);
         }
     });
 }
