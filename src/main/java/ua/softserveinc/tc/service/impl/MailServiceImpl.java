@@ -16,6 +16,7 @@ import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletRequest;
 import java.util.HashMap;
@@ -37,7 +38,6 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ApplicationConfigurator configurator;
 
-
     @Async
     @Override
     public void sendMessage(String email, String subject, String text) throws MessagingException {
@@ -47,6 +47,7 @@ public class MailServiceImpl implements MailService {
         helper.setTo(email);
         helper.setSubject(subject);
         helper.setText(text, true);
+        helper.setFrom(new InternetAddress(MailConstants.EMAIL_BOT_ADDRESS));
 
         synchronized (message) {
             mailSender.send(message);

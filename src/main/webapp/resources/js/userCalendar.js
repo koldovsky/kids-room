@@ -56,43 +56,43 @@ $(function () {
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
     $('#bookingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
     $('#bookingUpdatingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
     $('#bookingUpdatingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
     $('#recurrent-booking-start-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
     $('#make-recurrent-booking').dialog({

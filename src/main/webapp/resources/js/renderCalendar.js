@@ -37,8 +37,8 @@ $(function () {
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 
 
