@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
@@ -16,12 +14,9 @@ import java.util.Date;
 import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
 
 
-/**
- * Created by TARAS on 30.04.2016.
- */
+
 @Entity
 @Table(name = BookingConstants.DB.TABLE_NAME_BOOKING)
-@Indexed
 public class Booking {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -32,7 +27,6 @@ public class Booking {
     @ManyToOne(optional = false)//(cascade = CascadeType.ALL)
     @JoinColumn(name = ChildConstants.ID_CHILD )
     @Embedded
-    @IndexedEmbedded
     private Child child;
 
     @ManyToOne(optional = false)//(fetch = FetchType.LAZY)
