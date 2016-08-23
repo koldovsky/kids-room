@@ -1,7 +1,3 @@
-/**
- * Created by dima- on 12.05.2016.
- */
-
 var info;
 var bookingsArray;
 var bookingDate;
@@ -9,9 +5,9 @@ var roomIdForHandler;
 var usersID;
 var clickedEvent;
 var clickedEventRecurrentId;
-var EVENT = '#ffff00';
-var BORDER = '#000000';
-var BOOKING = '#99ff33';
+var EVENT = '#f9e559';
+var BORDER = '#4caf50';
+var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
 var allBookings;
 
@@ -506,6 +502,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
     $('#user-calendar').fullCalendar({
         minTime: workingHoursStart,
         maxTime: workingHoursEnd,
+        timeFormat : 'HH:mm',
         eventBackgroundColor: NOT_SYNCHRONIZED,
         eventColor: 'transparent',
         eventBorderColor: 'transparent',

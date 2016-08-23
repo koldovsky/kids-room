@@ -1,3 +1,4 @@
+localStorage["userId"] = $("#selectRoomForParent li a").first().attr("id").split(",")[1];
 $(function () {
     if (localStorage["roomId"] == null) {
         renderRoom();
@@ -23,7 +24,6 @@ function renderRoom() {
             var room = $(this).first().attr("id").split(",");
 
             localStorage["roomId"] = room[0];
-            localStorage["userId"] = room[1];
             localStorage["phoneNumber"] = room[2];
             localStorage["managers"] = getManagersNames(managersString);
             localStorage["address"] = $(this).text();

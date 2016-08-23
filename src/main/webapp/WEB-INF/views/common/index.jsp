@@ -133,11 +133,11 @@
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio-bookingform"
                                                           id="no-recurrent-booking"
-                                                          class="booking-radio" checked>Single event</label>
+                                                          class="booking-radio" checked> Single event</label>
                                         </div>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio-bookingform" id="weekly-booking"
-                                                          class="booking-radio">Weekly</label>
+                                                          class="booking-radio"> Weekly</label>
                                         </div>
                                     </div>
                                     <div class="col-xs-8 pull-right" id="days-for-recurrent-booking-form" hidden>
@@ -212,13 +212,13 @@
 
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3 row ">
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking"
                                             hidden="true">Update
                                     </button>
                                     <button type="button" class="btn btn-success live" id="book">Book</button>
                                 </div>
-                                <div class="col-xs-9 ">
+                                <div class="col-xs-3 row pull-right ">
                                     <button type="button" class="btn btn-danger pull-right" id="cancel-changes">Cancel
                                     </button>
                                 </div>
@@ -259,14 +259,14 @@
     <div class="error" id="error-dialog"></div>
     <div class="container">
 
-
-        <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
-
-
         <button type="button" class="btn btn-success pull-right" data-toggle="modal"
                 data-target=".bs-modal-lg-colourInfo">
             &nbsp; <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
         </button>
+
+        <button type="button" class="btn btn-success" id="create-new-booking">Make booking</button>
+
+
 
         <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
@@ -421,7 +421,7 @@
                 <div id="dialog" class="dialog" hidden>
                     <form id="form">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <div class="form-group">
+                        <div class="col-xs-12 form-group">
                             <label for="startDate">Event title</label>
                             <input type="text" class="form-control" id="startDate" placeholder="title">
                         </div>
@@ -445,10 +445,10 @@
                             <label for="title">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="title" placeholder="startDate">
+                                <input type="date" class="text-center form-control" id="title" placeholder="startDate">
                             </div>
                             <div class="col-xs-6">
-                                <input id="basicExample" type="text" class="time form-control timepicker" size="6"/>
+                                <input id="basicExample" type="text" class=" text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -457,10 +457,10 @@
                             <label for="endDate">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="endDate" placeholder="endDate">
+                                <input type="date" class="text-center form-control" id="endDate" placeholder="endDate">
                             </div>
                             <div class="col-xs-6">
-                                <input id="ender" type="text" class="time form-control timepicker" size="6"/>
+                                <input id="ender" type="text" class="text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
 
@@ -472,37 +472,37 @@
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="no-recurrent"
-                                                          class="my-radio" checked>Single event</label>
+                                                          class="my-radio" checked> Single event</label>
                                         </div>
                                         <div class="radio-button">
-                                            <label><input type="radio" name="optradio" id="weekly" class="my-radio">Weekly</label>
+                                            <label><input type="radio" name="optradio" id="weekly" class="my-radio"> Weekly</label>
                                         </div>
                                         <div class="radio-button" hidden>
-                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio">Monthly</label>
+                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio"> Monthly</label>
                                         </div>
                                     </div>
                                     <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                         <table class="table" id="days-for-recurrent">
                                             <br>
-                                            <thead>Check required days</thead>
+                                            <thead >Check required days</thead>
                                             <tbody>
                                             <tr>
-                                                <td><label><input type="checkbox" id="Monday" value="Mon" class="day">Monday</label><br>
+                                                <td><label><input type="checkbox" id="Monday" value="Mon" class="day"> Monday</label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day">Tuesday</label><br>
+                                                <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day"> Tuesday</label><br>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Wednesday" value="Wed"
-                                                                  class="day">Wednesday</label><br>
+                                                                  class="day"> Wednesday</label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Thursday" value="Thu" class="day">Thursday</label><br>
+                                                <td><label><input type="checkbox" id="Thursday" value="Thu" class="day"> Thursday</label><br>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label><input type="checkbox" id="Friday" value="Fri" class="day">Friday</label><br>
+                                                <td><label><input type="checkbox" id="Friday" value="Fri" class="day"> Friday</label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Saturday" value="Sat" class="day">Saturday</label><br>
+                                                <td><label><input type="checkbox" id="Saturday" value="Sat" class="day"> Saturday</label><br>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -511,7 +511,7 @@
                                 </form>
                                 <br><br><br><br><br><br><br><br><br><br>
                                 <div class="clearfix"></div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-12">
                                     <label for="description">Description</label>
                                     <input type="text" size="15" class="form-control" id="description"
                                            placeholder="description">
@@ -557,8 +557,8 @@
                                 <input type="text" class="form-control" id="startDayUpdate" placeholder="startDate"
                                        readonly>
                             </div>
-                            <div class="col-xs-5">
-                                <input id="startTimeUpdate" type="text" class="time form-control timepicker" size="6"/>
+                            <div class="col-xs-6">
+                                <input id="startTimeUpdate" type="text" class="text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -570,19 +570,22 @@
                                 <input type="text" class="form-control" id="endDateUpdate" placeholder="endDate"
                                        readonly>
                             </div>
-                            <div class="col-xs-5">
-                                <input id="endTimeUpdate" type="text" class="time form-control timepicker" size="6"/>
+                            <div class="col-xs-6">
+                                <input id="endTimeUpdate" type="text" class="text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
-
+                        <br>
                         <div class="form-group">
                             <label for="descriptionUpdate">Description</label>
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-                        <div class="deleting-event" id="deleting-single-event">Click here to delete this event</div>
-                        <button type="button" class="btn btn-success" id="updatingButton">Update</button>
-                        <button type="button" class="btn btn-danger" id="cancel-update">Cancel</button>
+
+                        <button type="button" class="col-xs-6 btn btn-success" id="updatingButton">Update</button>
+                        <button type="button" class="pull-right btn btn-danger" id="cancel-update">Cancel</button>
+                        <button type="button" class="col-xs-12 deleting-event btn btn-warning btn-xs" id="deleting-single-event">Delete this event</button>
+
+
 
                     </form>
                 </div>

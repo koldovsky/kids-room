@@ -240,6 +240,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
 
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
+        timeFormat : 'HH:mm',
         minTime: workingHoursStart,
         maxTime: workingHoursEnd,
 
