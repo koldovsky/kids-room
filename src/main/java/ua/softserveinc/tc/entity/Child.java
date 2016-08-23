@@ -3,23 +3,16 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import ua.softserveinc.tc.constants.ChildConstants;
 
 import javax.persistence.*;
-
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Demian on 29.04.2016.
- */
+
 @Entity
 @Table(name = ChildConstants.TABLE_NAME)
-@Indexed
 @Embeddable
 public class Child implements Comparable<Child> {
     @Id
@@ -42,7 +35,6 @@ public class Child implements Comparable<Child> {
     @JoinColumn(name = ChildConstants.ID_PARENT,
             nullable = false)
     @Embedded
-    @IndexedEmbedded
     private User parentId;
 
     @Temporal(value = TemporalType.DATE)

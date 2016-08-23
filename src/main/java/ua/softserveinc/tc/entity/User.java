@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 })
 @Entity
 @Table(name = UserConstants.Entity.TABLE_NAME_USER)
-@Indexed
 @AnalyzerDef(name = "ngram",
         tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
         filters = {
