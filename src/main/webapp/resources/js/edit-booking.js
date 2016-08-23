@@ -11,8 +11,8 @@ $(function() {
     }
     });
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
-$('#bookingStartTimepicker').val("15:00");
-$('#bookingEndTimepicker').val("22:00");
+$('#bookingStartTimepicker').val("07:00");
+$('#bookingEndTimepicker').val("20:00");
 function validateData(startTime, endTime) {
     var isValid = startTime !== "" && endTime !== "";
     return isValid;
@@ -90,8 +90,8 @@ $(function() {
     $('.picker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '15:00',
-        maxTime: '22:00'
+        minTime: '07:00',
+        maxTime: '20:00'
     });
 });
 
