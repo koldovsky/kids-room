@@ -19,7 +19,7 @@
 
 <script src='resources/js/renderCalendar.js'></script>
 
-<%--<script src='resources/js/confirmation.js'></script>--%>
+<script src='resources/js/confirmation.js'></script>
 
 
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
@@ -276,7 +276,7 @@
                             <p><span style="color:red; text-align:center;" >Are you sure?</span> </p>
                         </div>
                         <button type="button" class="btn btn-success" id="confirmCancelBooking">delete</button>
-                        <button type="button" class="btn btn-danger pull-right" id="cconfirmCancel">cancel</button>
+                        <button type="button" class="btn btn-danger pull-right" id="confirmCancel">cancel</button>
                     </form>
                 </div>
             </div>

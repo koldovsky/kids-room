@@ -65,13 +65,14 @@ $(function () {
             duration: 500
         }
     });
-    $('#confirmCancelBooking').click(function () {
-        cancelBooking(info.id);
-        $('#confirmation-dialog').dialog('close');
-    });
-    $('#cconfirmCancel').click(function () {
-        $('#confirmation-dialog').dialog('close');
-    });
+    // });
+    // $('#confirmCancelBooking').click(function () {
+    //     cancelBooking(info.id);
+    //     $('#confirmation-dialog').dialog('close');
+    // });
+    // $('#cconfirmCancel').click(function () {
+    //     $('#confirmation-dialog').dialog('close');
+    // });
 
 
 
@@ -196,7 +197,8 @@ $(function () {
 
     $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
-        $('#confirmation-dialog').dialog("open")
+        confirmation('Delete booking','are you sure?',cancelBooking, info.id, "","")
+        // $('#confirmation-dialog').dialog("open")
     });
 
 
@@ -865,3 +867,21 @@ function cancelRecurrentBookings(recurrentId) {
     })
 }
 
+function confirmation (title, text, func1, param1, func2,param2){
+    var myDialog = $('#confirmation-dialog');
+    // $('#confirmation-dialog').title(title);
+    // myDialog.title(title);
+    $('#confirmation-dialog').dialog('open');
+    // myDialog.open()
+    $('#confirmCancelBooking').off('click').on('click', function func1a(){
+        func1(param1);
+        $('#confirmation-dialog').dialog('close');
+    });
+    $('#confirmCancel').off('click').on('click', function func2a(){
+        if (func2 !== undefined && func2 !== null && func2 !== "") {
+            func2(param2);
+        }
+
+        $('#confirmation-dialog').dialog('close');
+    });
+}
