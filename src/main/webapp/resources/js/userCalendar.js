@@ -53,6 +53,28 @@ $(function () {
         }
     });
 
+    $('#confirmation-dialog').dialog({
+        title: 'Deletiting booking',
+        autoOpen: false,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+    $('#confirmCancelBooking').click(function () {
+        cancelBooking(info.id);
+        $('#confirmation-dialog').dialog('close');
+    });
+    $('#cconfirmCancel').click(function () {
+        $('#confirmation-dialog').dialog('close');
+    });
+
+
+
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
@@ -174,8 +196,10 @@ $(function () {
 
     $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
-        cancelBooking(info.id);
+        $('#confirmation-dialog').dialog("open")
     });
+
+
 
 
     $('#deletingBooking').click(function () {
@@ -840,3 +864,4 @@ function cancelRecurrentBookings(recurrentId) {
         cancelBooking(item.id);
     })
 }
+

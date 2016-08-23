@@ -19,6 +19,8 @@
 
 <script src='resources/js/renderCalendar.js'></script>
 
+<%--<script src='resources/js/confirmation.js'></script>--%>
+
 
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 
@@ -34,7 +36,7 @@
 
 <sec:authorize access="hasRole('USER')">
 
-
+    <%--bookingUpdatingDialog--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -88,7 +90,7 @@
         </div>
     </div>
 
-
+    <%--make-recurrent-booking--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -231,7 +233,7 @@
         </div>
     </div>
 
-
+    <%--recurrent-change--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -257,6 +259,34 @@
     </div>
 
     <div class="error" id="error-dialog"></div>
+
+    <%--<div id="confirmation-dialog" title="Delete booking" hidden>--%>
+        <%--<p><span id="confirmation-dialog-message" class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Booking will be permanently deleted and cannot be recovered. Are you sure?</p>--%>
+    <%--</div>--%>
+
+
+    <%--confirmation-dialog--%>
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="confirmation-dialog" class="ui-dialog" hidden>
+                    <form id="confirm-your-choice">
+                        <div style = "align:center; color:red; text-align:center;">
+                            <p><span style="color:red; text-align:center;" >You are about to delete booking </span> </p>
+                            <p><span style="color:red; text-align:center;" >Are you sure?</span> </p>
+                        </div>
+                        <button type="button" class="btn btn-success" id="confirmCancelBooking">delete</button>
+                        <button type="button" class="btn btn-danger pull-right" id="cconfirmCancel">cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <%--create-new-booking--%>
     <div class="container">
 
 
@@ -295,6 +325,7 @@
     <div class="container">
         <div id='user-calendar'></div>
     </div>
+
 
 </sec:authorize>
 
