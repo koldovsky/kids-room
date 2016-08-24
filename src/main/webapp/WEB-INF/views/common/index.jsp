@@ -19,6 +19,8 @@
 
 <script src='resources/js/renderCalendar.js'></script>
 
+<script src='resources/js/confirmation.js'></script>
+
 
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 
@@ -34,7 +36,7 @@
 
 <sec:authorize access="hasRole('USER')">
 
-
+    <%--bookingUpdatingDialog--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -78,9 +80,9 @@
                         <button type="button" class="btn btn-danger pull-right" id="deletingBooking">Cancel</button>
 
                         <button type="button" class="btn btn-xs btn-warning col-xs-12" id="deleting-single-booking">
-                            Delete this
-                            booking
+                            <spring:message code= "booking.deleteBooking"/>
                         </button>
+                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
 
                     </form>
                 </div>
@@ -88,7 +90,7 @@
         </div>
     </div>
 
-
+    <%--make-recurrent-booking--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -231,7 +233,7 @@
         </div>
     </div>
 
-
+    <%--recurrent-change--%>
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -257,6 +259,18 @@
     </div>
 
     <div class="error" id="error-dialog"></div>
+
+    <%--<div id="confirmation-dialog" title="Delete booking" hidden>--%>
+        <%--<p><span id="confirmation-dialog-message" class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Booking will be permanently deleted and cannot be recovered. Are you sure?</p>--%>
+    <%--</div>--%>
+
+
+
+
+
+
+
+    <%--create-new-booking--%>
     <div class="container">
 
 
@@ -325,6 +339,7 @@
     <div class="container">
         <div id='user-calendar'></div>
     </div>
+
 
 </sec:authorize>
 
@@ -623,5 +638,29 @@
 <sec:authorize access="hasRole('ADMINISTRATOR')">
 
 </sec:authorize>
+
+<%--confirmation-dialog--%>
+<div class="container">">
+    <div class="vertical-center-row">
+        <div align="center">
+            <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
+                <form id="confirm-your-choice">
+                    <div style = "align:center; color:red; text-align:center;">
+                        <p><span style="color:red; text-align:center;" >
+                                <spring:message code= "booking.confirmCancelQuestion1"/> </span> </p>
+                        <p><span style="color:red; text-align:center;" >
+                                <spring:message code= "booking.confirmCancelQuestion2"/></span> </p>
+                    </div>
+                    <button type="button" class="btn btn-success" id="confirmYes">
+                        <spring:message code= "booking.confirmYes"/>
+                    </button>
+                    <button type="button" class="btn btn-danger pull-right" id="confirmNo">
+                        <spring:message code= "booking.confirmNo"/>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
