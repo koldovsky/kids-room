@@ -59,7 +59,7 @@ input{
 
 #foot{text-align: center;
 				font-style:italic;}
-	}
+
 
 .col-sm-4{
 margin: 0 auto;
@@ -92,4 +92,38 @@ table, tr{
 td{
     padding-left: 25px;
     padding-right: 25px;
+}
+
+textarea {
+    color: #444;
+    padding: 5px;
+    margin-top: 10px;
+    display: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.txtstuff {
+    resize: none;
+    overflow: hidden;
+}
+
+.hiddendiv {
+    display: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.common {
+    height: auto;
+    text-align: left;
+    width: 500px;
+    max-width: 300px;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+.lbr {
+    line-height: 3px;
 }
