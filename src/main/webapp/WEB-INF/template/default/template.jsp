@@ -36,6 +36,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css
 src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/bootstrap-material-design.iife.js"></script>
 
 
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
 <!-- Angular Material requires Angular.js Libraries -->
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
@@ -47,6 +51,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 
 
 <!-- /Material design -->
+
+  <script src='resources/js/confirmation.js'></script>
 
 </head>
 

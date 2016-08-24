@@ -49,6 +49,18 @@ $(function () {
         }
     });
 
+    $('#confirmation-dialog-div').dialog({
+        autoOpen: false,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
@@ -103,7 +115,7 @@ $(function () {
             effect: 'clip',
             duration: 500
         },
-        beforeClose: function () {
+        beforeClose: function (){
             $('#child-selector').show();
 
             $('#deleting-recurrent-booking').hide();
@@ -170,7 +182,8 @@ $(function () {
 
     $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
-        cancelBooking(info.id);
+        confirmation(cancelBooking, info.id, "","")
+        // $('#confirmation-dialog').dialog("open")
     });
 
 
@@ -777,7 +790,7 @@ function getDisabledTime(dateLo, dateHi, roomId) {
         contentType: 'application/json',
         dataType: 'text',
         success: function (result) {
-            alert(result.val());
+            // alert(result);
         }
     });
 }
@@ -837,3 +850,20 @@ function cancelRecurrentBookings(recurrentId) {
         cancelBooking(item.id);
     })
 }
+
+// function confirmation (func1, param1, func2,param2){
+//     var myDialog = $('#confirmation-dialog-div');
+//     myDialog.dialog('open');
+//     $('#confirmYes').off('click').on('click', function func1a(){
+//         if (func1 !== undefined && func1 !== null && func1 !== "") {
+//             func1(param1);
+//         }
+//         myDialog.dialog('close');
+//     });
+//     $('#confirmNo').off('click').on('click', function func2a(){
+//         if (func2 !== undefined && func2 !== null && func2 !== "") {
+//             func2(param2);
+//         }
+//         myDialog.dialog('close');
+//     });
+// }

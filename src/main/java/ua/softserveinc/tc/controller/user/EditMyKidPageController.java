@@ -146,6 +146,7 @@ public class EditMyKidPageController {
         kidToRemove.setEnabled(false);
         childService.update(kidToRemove);
         return "redirect:/" + ChildConstants.View.MY_KIDS;
+//        return new ModelAndView("redirect:/" + ChildConstants.View.MY_KIDS).;
     }
 
     @InitBinder
