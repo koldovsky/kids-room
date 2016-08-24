@@ -53,8 +53,7 @@ $(function () {
         }
     });
 
-    $('#confirmation-dialog').dialog({
-        title: 'Deletiting booking',
+    $('#confirmation-dialog-div').dialog({
         autoOpen: false,
         show: {
             effect: 'drop',
@@ -65,15 +64,6 @@ $(function () {
             duration: 500
         }
     });
-    // });
-    // $('#confirmCancelBooking').click(function () {
-    //     cancelBooking(info.id);
-    //     $('#confirmation-dialog').dialog('close');
-    // });
-    // $('#cconfirmCancel').click(function () {
-    //     $('#confirmation-dialog').dialog('close');
-    // });
-
 
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
@@ -196,7 +186,7 @@ $(function () {
 
     $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
-        confirmation('Delete booking','are you sure?',cancelBooking, info.id, "","")
+        confirmation(cancelBooking, info.id, "","")
         // $('#confirmation-dialog').dialog("open")
     });
 
@@ -803,7 +793,7 @@ function getDisabledTime(dateLo, dateHi, roomId) {
         contentType: 'application/json',
         dataType: 'text',
         success: function (result) {
-            alert(result);
+            // alert(result);
         }
     });
 }
@@ -864,21 +854,19 @@ function cancelRecurrentBookings(recurrentId) {
     })
 }
 
-function confirmation (title, text, func1, param1, func2,param2){
-    var myDialog = $('#confirmation-dialog');
-    // $('#confirmation-dialog').title(title);
-    // myDialog.title(title);
-    $('#confirmation-dialog').dialog('open');
-    // myDialog.open()
-    $('#confirmCancelBooking').off('click').on('click', function func1a(){
-        func1(param1);
-        $('#confirmation-dialog').dialog('close');
-    });
-    $('#confirmCancel').off('click').on('click', function func2a(){
-        if (func2 !== undefined && func2 !== null && func2 !== "") {
-            func2(param2);
-        }
-
-        $('#confirmation-dialog').dialog('close');
-    });
-}
+// function confirmation (func1, param1, func2,param2){
+//     var myDialog = $('#confirmation-dialog-div');
+//     myDialog.dialog('open');
+//     $('#confirmYes').off('click').on('click', function func1a(){
+//         if (func1 !== undefined && func1 !== null && func1 !== "") {
+//             func1(param1);
+//         }
+//         myDialog.dialog('close');
+//     });
+//     $('#confirmNo').off('click').on('click', function func2a(){
+//         if (func2 !== undefined && func2 !== null && func2 !== "") {
+//             func2(param2);
+//         }
+//         myDialog.dialog('close');
+//     });
+// }

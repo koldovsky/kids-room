@@ -69,24 +69,38 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       <footer class="removekidmsg">
       <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
 
-      <spring:message code="editkid.footmsg1" />
+      <spring:message code="editkid.deactivatekid1" />
       <%--<a href="removemykid?id=${kid.getId()}" id="removeKids">--%>
       <%--<p id="removeKids">'taking your kid\'s page off the list'</p>--%>
        <div id="removeKids" style="text-decoration: underline">
-            <spring:message code="editkid.footmsg2"/>
+            <spring:message code="editkid.deactivatekid2"/>
        </div>
       </a>
       </footer>
-                <div id="confirmation-dialog" class="ui-dialog" hidden>
+    <%--confirmation-dialog--%>
+    <div class="container">">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "editkid.confirmationtitle" /> hidden>
                     <form id="confirm-your-choice">
                         <div style = "align:center; color:red; text-align:center;">
-                            <p><span style="color:red; text-align:center;" >You are about to delete booking </span> </p>
-                            <p><span style="color:red; text-align:center;" >Are you sure?</span> </p>
+                            <p><span style="color:red; text-align:center;" >
+                                <spring:message code="editkid.confirmdeactivatekid1"/> </span> </p>
+                            <p><span style="color:red; text-align:center;" >
+                                <spring:message code="editkid.confirmdeactivatekid2"/> </span> </p>
                         </div>
-                        <button type="button" class="btn btn-success" id="confirmCancelBooking">delete</button>
-                        <button type="button" class="btn btn-danger pull-right" id="confirmCancel">cancel</button>
+                        <button type="button" class="btn btn-success" id="confirmYes">
+                            <spring:message code= "editkid.deactivateYes"/>
+                        </button>
+                        <button type="button" class="btn btn-danger pull-right" id="confirmNo">
+                            <spring:message code= "editkid.deactivateNo"/>
+                        </button>
                     </form>
                 </div>
- </form:form>
+            </div>
+        </div>
+    </div>
+
+</form:form>
 
 <script src='resources/js/editmykids.js'></script>

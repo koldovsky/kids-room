@@ -1,6 +1,6 @@
 $(function () {
-    $('#confirmation-dialog').dialog({
-        title: 'taking your kid\'s page off the list',
+    $('#confirmation-dialog-div').dialog({
+        // title: 'Confirmation',
         autoOpen: false,
         show: {
             effect: 'drop',
@@ -12,7 +12,7 @@ $(function () {
         }
     });
     $('#removeKids').click(function () {
-        confirmation('aking your kid\'s page off the list','are you sure?',takingKidOff,"","","")
+        confirmation(takingKidOff,"","","")
         // $('#confirmation-dialog').dialog("open")
     });
     $('#removeKids').hover(function(){
@@ -41,21 +41,19 @@ function takingKidOff() {
 $(location).attr('href',kidredirect);
 }
 
-function confirmation (title, text, func1, param1, func2,param2){
-    var myDialog = $('#confirmation-dialog');
-    // $('#confirmation-dialog').title(title);
-    // myDialog.title(title);
-    $('#confirmation-dialog').dialog('open');
-    // myDialog.open()
-    $('#confirmCancelBooking').off('click').on('click', function func1a(){
-        func1(param1);
-        $('#confirmation-dialog').dialog('close');
-    });
-    $('#confirmCancel').off('click').on('click', function func2a(){
-        if (func2 !== undefined && func2 !== null && func2 !== "") {
-            func2(param2);
-        }
-
-        $('#confirmation-dialog').dialog('close');
-    });
-}
+// function confirmation (func1, param1, func2,param2){
+//     var myDialog = $('#confirmation-dialog-div');
+//     myDialog.dialog('open');
+//     $('#confirmYes').off('click').on('click', function func1a(){
+//         if (func1 !== undefined && func1 !== null && func1 !== "") {
+//             func1(param1);
+//         }
+//         myDialog.dialog('close');
+//     });
+//     $('#confirmNo').off('click').on('click', function func2a(){
+//         if (func2 !== undefined && func2 !== null && func2 !== "") {
+//             func2(param2);
+//         }
+//         myDialog.dialog('close');
+//     });
+// }

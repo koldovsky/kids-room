@@ -52,12 +52,13 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 
 <!-- /Material design -->
 
+  <script src='resources/js/confirmation.js'></script>
+
 </head>
 
 
 <body>
 <script type="text/javascript" src='resources/js/error.js'></script>
-<script src='resources/js/confirmation.js'></script>
 <script type="text/javascript" src="resources/js/langswitcher.js"></script>
 <div class="wrapper">
   <div class="header"><tiles:insertAttribute name="header" /></div>

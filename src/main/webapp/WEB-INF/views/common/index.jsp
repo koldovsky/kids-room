@@ -80,9 +80,9 @@
                         <button type="button" class="btn btn-danger pull-right" id="deletingBooking">Cancel</button>
 
                         <button type="button" class="btn btn-xs btn-warning col-xs-12" id="deleting-single-booking">
-                            Delete this
-                            booking
+                            <spring:message code= "booking.deleteBooking"/>
                         </button>
+                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
 
                     </form>
                 </div>
@@ -265,23 +265,7 @@
     <%--</div>--%>
 
 
-    <%--confirmation-dialog--%>
-    <div class="container">
-        <div class="vertical-center-row">
-            <div align="center">
-                <div id="confirmation-dialog" class="ui-dialog" hidden>
-                    <form id="confirm-your-choice">
-                        <div style = "align:center; color:red; text-align:center;">
-                            <p><span style="color:red; text-align:center;" >You are about to delete booking </span> </p>
-                            <p><span style="color:red; text-align:center;" >Are you sure?</span> </p>
-                        </div>
-                        <button type="button" class="btn btn-success" id="confirmCancelBooking">delete</button>
-                        <button type="button" class="btn btn-danger pull-right" id="confirmCancel">cancel</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 
 
@@ -624,5 +608,29 @@
 <sec:authorize access="hasRole('ADMINISTRATOR')">
 
 </sec:authorize>
+
+<%--confirmation-dialog--%>
+<div class="container">">
+    <div class="vertical-center-row">
+        <div align="center">
+            <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
+                <form id="confirm-your-choice">
+                    <div style = "align:center; color:red; text-align:center;">
+                        <p><span style="color:red; text-align:center;" >
+                                <spring:message code= "booking.confirmCancelQuestion1"/> </span> </p>
+                        <p><span style="color:red; text-align:center;" >
+                                <spring:message code= "booking.confirmCancelQuestion2"/></span> </p>
+                    </div>
+                    <button type="button" class="btn btn-success" id="confirmYes">
+                        <spring:message code= "booking.confirmYes"/>
+                    </button>
+                    <button type="button" class="btn btn-danger pull-right" id="confirmNo">
+                        <spring:message code= "booking.confirmNo"/>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
