@@ -643,7 +643,7 @@
 </sec:authorize>
 
 <%--confirmation-dialog--%>
-<div class="container">">
+<div class="container">
     <div class="vertical-center-row">
         <div align="center">
             <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
