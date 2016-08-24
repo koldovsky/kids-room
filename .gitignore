@@ -18,7 +18,4 @@ SpringMVC.iml
 main.iml
 src/main/resources/properties/hibernate.properties
 src/main/resources/properties/import.sql
-ua.softserveinc.tc.entity.Booking
-ua.softserveinc.tc.entity.Child
-ua.softserveinc.tc.entity.User
 .gitignore
