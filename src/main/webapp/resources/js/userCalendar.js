@@ -490,16 +490,18 @@ function validateSingleBookingData(){
     var currentDate = new Date();
     var startTime = $("#recurrent-booking-start-time").timepicker('getTime');
     var endTime = $("#recurrent-booking-end-time").timepicker('getTime');
-    var dayLengthInMiliseconds = 24*60*60*1000;
-    var dataValidationString = "";
-    if( (startDate.getTime() - currentDate.getTime()) > dayLengthInMiliseconds){
-        dataValidationString += "\nCan't create bookings in the past!";
+    var dayLengthInMiliseconds = startTime.getHours()*60*60*1000;
+    var dataValidationStrings = new Array();
+    if( (startDate.getTime() - currentDate.getTime()) < 0){
+        if(startDate.getDate()<currentDate.getDate()){
+                dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
+        }
     }
     if(startTime.getTime() < currentDate.getTime()){
-        dataValidationString += "\nTime is too early!@";
+        dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
     }
     if(startTime.getTime() > endTime.getTime()){
-        dataValidationString += "\nEnd time is smaller then the start time";
+        dataValidationStrings.push("End time can't be earlier than the start time");
     }
     var numberOfSelectedKids = 0;
     for (var i = 0; i < ($('#number-of-kids').val()); i++) {
@@ -509,10 +511,14 @@ function validateSingleBookingData(){
             }
     }
     if(numberOfSelectedKids<1){
-        dataValidationString += "\nAt least one kid must be selected!";
+        dataValidationStrings.push("At least one kid must be selected");
     }
-    if(dataValidationString!=""){
-        alert("Incorrect input data: "+dataValidationString);
+    if(dataValidationStrings.length>0){
+        var text = "Incorrect input data:";
+        for(var i=0; i<dataValidationStrings.length; i++){
+            text+="<br/>- "+dataValidationStrings[i]+".";
+        }
+        $("#data-validation-information-string").html(text);
         return false;
     }else
         return true;
@@ -761,7 +767,7 @@ function makeRecurrentBookings() {
     var kidsCommentId;
 
     //TODO: REFACTOR THIS!!!
-    for (var i = 0; i < numberOfSelectedKids; i++) {
+    for (var i = 0; i < $('#number-of-kids').val(); i++) {
         kidsCommentId = $('#comment-' + i).val();
         if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
             bookingsRecurrentArray.push(
