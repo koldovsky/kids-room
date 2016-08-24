@@ -52,8 +52,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 
 <!-- /Material design -->
 
-  <script src='resources/js/confirmation.js'></script>
-
 </head>
 
 
