@@ -529,5 +529,9 @@ function deleteRecurrentEvents(recurrentId) {
             $('#calendar').fullCalendar('removeEvents', item.id);
             sendToServerForDelete(item);
         }
-    });
+    })
 }
+
+
+
+
