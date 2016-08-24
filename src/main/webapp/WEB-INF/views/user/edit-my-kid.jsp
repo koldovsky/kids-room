@@ -6,6 +6,7 @@
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
+<script src="resources/js/edit-my-kid.js"></script>
 
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
@@ -59,7 +60,7 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       <div class="form-group">
                     <label for="comment"><spring:message code="kid.comment" /></label>
                     <form:textarea path="comment" id="comment"
-                    value="${kid.getComment()}" rows="7" cols="50" class="form-control"/>
+                    value="${kid.getComment()}" class="form-control common"/>
       </div>
 
       <button class="btn btn-raised btn-success" type="submit" name="action">
