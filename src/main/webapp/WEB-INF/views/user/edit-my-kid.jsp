@@ -79,7 +79,7 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       </a>
       </footer>
     <%--confirmation-dialog--%>
-    <div class="container">">
+    <div class="container">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "editkid.confirmationtitle" /> hidden>
