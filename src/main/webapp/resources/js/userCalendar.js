@@ -9,7 +9,9 @@ var EVENT = '#f9e559';
 var BORDER = '#4caf50';
 var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
+var BLOCKED = '#ff0000'
 var allBookings;
+var blockedTimeSpans;
 
 $(function () {
 
@@ -233,10 +235,10 @@ $(function () {
 
 });
 
-function selectRoomForUser(roomParam, userId,  phoneNumber, managers) {
+function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
 
 
-        var id = roomParam;
+    var id = roomParam;
 
 
     showRoomPhone(phoneNumber);
@@ -332,8 +334,8 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
 
     $.ajax({
         url: pathForUploadingAllBookingsForUsers, success: function (result) {
-            result = JSON.parse(result);
 
+            result = JSON.parse(result);
             allBookings = result;
             var objectsLen = objects.length;
 
@@ -352,10 +354,38 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
                     recurrentId: item.recurrentId
                 };
             });
+            renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursEnd);
+        }
+    });
+}
+
+function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursEnd) {
+
+    var path = 'disabled?roomID=' + id;
+
+    $.ajax({
+        url: path, success: function (result) {
+
+            result = JSON.parse(result);
+            var objectsLen = objects.length;
+            var keyArr = Object.keys(result);
+            keyArr.sort();
+
+            keyArr.forEach(function (item, i) {
+                objects[objectsLen + i] = {
+                    title: 'Room is full',
+                    start: item,
+                    end: result[item],
+                    color: BLOCKED,
+                    borderColor: BORDER,
+                    editable: false,
+                };
+            });
             renderCalendar(objects, id, workingHoursStart, workingHoursEnd);
         }
     });
 }
+
 
 //tested
 function makeISOTime(clickDate, idOfTimePicker) {
@@ -421,39 +451,61 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
 }
 
 function sendBookingToServerForCreate(bookingsArray) {
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'makenewbooking',
-        dataType: 'json',
-        data: JSON.stringify(bookingsArray),
-        success: function (result) {
 
-            var refresh = result;
+    var currentTime = new Date().toISOString();
 
-            $('#user-calendar').fullCalendar('removeEvents', -1);
-
-            refresh.forEach(function (item) {
-
-                $('#user-calendar').fullCalendar('renderEvent', {
-                    id: item.id,
-                    title: item.kidName,
-                    start: item.startTime,
-                    end: item.endTime,
-                    color: BOOKING,
-                    borderColor: BORDER,
-                    kidId: item.idChild,
-                    editable: false,
-                    type: 'booking',
-                    comment: item.comment
-                });
-            });
-        },
-        error: function () {
-            $('#user-calendar').fullCalendar('removeEvents', -1);
-            callErrorDialog('Duplicate booking. please contact the manager if you have any problems with booking ');
+    bookingsArray.forEach(function (item, i) {
+        if (item.startTime < currentTime) {
+            delete bookingsArray[i];
         }
+
     });
+    var empty = true;
+    for (var i = 0; i < bookingsArray.length; i++) {
+
+        if (bookingsArray[i] != null) {
+            empty = false;
+        }
+    }
+
+    if (!empty) {
+        $.ajax({
+            type: 'post',
+            contentType: 'application/json',
+            url: 'makenewbooking',
+            dataType: 'json',
+            data: JSON.stringify(bookingsArray),
+            success: function (result) {
+
+                var refresh = result;
+
+                $('#user-calendar').fullCalendar('removeEvents', -1);
+
+                refresh.forEach(function (item) {
+
+                    $('#user-calendar').fullCalendar('renderEvent', {
+                        id: item.id,
+                        title: item.kidName,
+                        start: item.startTime,
+                        end: item.endTime,
+                        color: BOOKING,
+                        borderColor: BORDER,
+                        kidId: item.idChild,
+                        editable: false,
+                        type: 'booking',
+                        comment: item.comment
+                    });
+                });
+            },
+            error: function () {
+                $('#user-calendar').fullCalendar('removeEvents', -1);
+                callErrorDialog('Room is full or duplicate booking. Please contact the manager if you have any problems with booking ');
+            }
+        });
+    } else {
+        $('#user-calendar').fullCalendar('removeEvents', -1);
+        callErrorDialog('You cannot make booking in past time. Please contact the room manager if you have problems with booking');
+    }
 }
 
 function cancelBooking(bookingId) {
@@ -606,6 +658,11 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             if (calEvent.color === EVENT || calEvent.color === NOT_SYNCHRONIZED) {
                 return;
             }
+
+            if (calEvent.color === BLOCKED) {
+                return;
+            }
+
 
             if (calEvent.type === 'booking') {
                 $('#child-comment-update').val(calEvent.comment);

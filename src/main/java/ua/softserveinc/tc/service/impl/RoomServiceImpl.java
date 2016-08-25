@@ -35,7 +35,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Autowired
     private BookingService bookingService;
 
-    private static @Log Logger log;
+    private static
+    @Log
+    Logger log;
 
     @Override
     public List<Room> findAll() {
@@ -56,10 +58,32 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      */
     @Override
     public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
-        Map<String, String> result = new HashMap<>();
+        Map<String, String> result = new TreeMap<>();
         while (start.compareTo(end) < 0) {
             result.putAll(getBlockedPeriodsForDay(room, start));
             start.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+
+        Set keys = result.keySet();
+        Iterator i = keys.iterator();
+        String baseKey = (String) i.next();
+        while (i.hasNext()) {
+            try {
+                String nextKey = (String) i.next();
+                String value = result.get(baseKey);
+                if (value.compareTo(nextKey) == 0) {
+
+                    result.put(baseKey, result.get(nextKey));
+                    i.remove();
+                } else {
+                    i.remove();
+
+                    baseKey = (String) i.next();
+                }
+            } catch (Exception e) {
+                log.info(e.getMessage());
+            }
         }
 
         return result;
@@ -71,7 +95,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(calendarStart.getTime());
 
-        Map<String, String> result = new HashMap<>();
+        Map<String, String> result = new TreeMap<>();
 
         try {
             Calendar temp = Calendar.getInstance();
@@ -115,6 +139,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             }
             calendarStart.setTime(temp.getTime());
         }
+
 
         return result;
     }
