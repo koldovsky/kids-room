@@ -217,6 +217,7 @@ $(function () {
         $('#recurrent-booking-end-date').val(newBookingDate.substring(0, 10));
         $('#recurrent-booking-start-time').timepicker('setTime', newBookingDate.substring(11, 19));
         $('#recurrent-booking-end-time').timepicker('setTime', newBookingDate.substring(11, 19));
+        $("#data-validation-information-string").html("");
         $('#make-recurrent-booking').dialog('open');
     });
 
@@ -595,6 +596,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#recurrent-booking-end-date').val(clickDate.substring(0, 10));
             $('#recurrent-booking-start-time').timepicker('setTime', clickDate.substring(11, 19));
             $('#recurrent-booking-end-time').timepicker('setTime', clickDate.substring(11, 19));
+            $("#data-validation-information-string").html("");
 
             bookingDate.clickDate = clickDate;
 
