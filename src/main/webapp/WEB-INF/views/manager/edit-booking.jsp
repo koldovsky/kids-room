@@ -62,7 +62,7 @@
                 </div>
                 <div class="modal-body">
                     <p class="cancelName">
-                        <spring:message code= "booking.confirmCencelQuestion"/>
+                        <spring:message code= "booking.confirmCancelQuestion1"/>
                     </p>
                     <div>
                         <button id="closeCencel" class="btn btn-raised" data-dismiss="modal">
@@ -228,7 +228,7 @@
         				</div>
         				<div class="modal-body">
         					<p class="cancelName">
-        						<spring:message code= "booking.confirmCencelQuestion"/>
+        						<spring:message code="booking.confirmCancelQuestion1"/>
         					</p>
         					<div>
         						<button id="cancelButton" class="btn btn-raised btn-info">
