@@ -51,14 +51,8 @@ $(function () {
 
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
-        show: {
-            effect: 'drop',
-            duration: 500
-        },
-        hide: {
-            effect: 'clip',
-            duration: 500
-        }
+        width: 350,
+        modal: true
     });
 
     $('#bookingStartTimepicker').timepicker({
@@ -182,8 +176,16 @@ $(function () {
 
     $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
-        confirmation(cancelBooking, info.id, "","")
-        // $('#confirmation-dialog').dialog("open")
+        var myDialog = $('#confirmation-dialog-div');
+        myDialog.dialog('open');
+        $('#confirmYes').click(function () {
+            cancelBooking(info.id)
+            myDialog.dialog('close');
+        });
+        $('#confirmNo').click(function () {
+            debugger
+            myDialog.dialog('close');
+        });
     });
 
 
@@ -850,20 +852,3 @@ function cancelRecurrentBookings(recurrentId) {
         cancelBooking(item.id);
     })
 }
-
-// function confirmation (func1, param1, func2,param2){
-//     var myDialog = $('#confirmation-dialog-div');
-//     myDialog.dialog('open');
-//     $('#confirmYes').off('click').on('click', function func1a(){
-//         if (func1 !== undefined && func1 !== null && func1 !== "") {
-//             func1(param1);
-//         }
-//         myDialog.dialog('close');
-//     });
-//     $('#confirmNo').off('click').on('click', function func2a(){
-//         if (func2 !== undefined && func2 !== null && func2 !== "") {
-//             func2(param2);
-//         }
-//         myDialog.dialog('close');
-//     });
-// }

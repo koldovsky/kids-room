@@ -19,9 +19,6 @@
 
 <script src='resources/js/renderCalendar.js'></script>
 
-<script src='resources/js/confirmation.js'></script>
-
-
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 
 
@@ -654,11 +651,11 @@
                         <p><span style="color:red; text-align:center;" >
                                 <spring:message code= "booking.confirmCancelQuestion2"/></span> </p>
                     </div>
-                    <button type="button" class="btn btn-success" id="confirmYes">
-                        <spring:message code= "booking.confirmYes"/>
+                    <button type="button" class="btn btn-success pull-left" id="confirmYes">
+                        <spring:message code= "editkid.deactivateYes"/>
                     </button>
                     <button type="button" class="btn btn-danger pull-right" id="confirmNo">
-                        <spring:message code= "booking.confirmNo"/>
+                        <spring:message code= "editkid.deactivateNo"/>
                     </button>
                 </form>
             </div>

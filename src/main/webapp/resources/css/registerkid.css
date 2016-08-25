@@ -13,7 +13,7 @@ form h2{
 			margin-bottom: 45px;
 			text-align: center;
 		}
-form label:content {
+form label::content {
   			display: block;
  			margin-bottom: 8px;
  			color: black;
@@ -128,4 +128,7 @@ textarea {
 
 .lbr {
     line-height: 3px;
+}
+.confirm-form {
+    width: auto;
 }
