@@ -210,10 +210,6 @@
 
 
                                 <br>
-                                <div id="data-validation-information-string-container" class="clearfix">
-                                    <p class="col-xs-12" style="color:red" id="data-validation-information-string"></p>
-                                </div>
-
                                 <div class="clearfix"></div>
                                 <div class="col-xs-3 row ">
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking"
