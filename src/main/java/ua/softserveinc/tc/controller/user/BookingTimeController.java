@@ -96,8 +96,8 @@ public class BookingTimeController {
         end.set(Calendar.MINUTE, 0);
         end.set(Calendar.SECOND, 0);
         end.add(Calendar.MONTH, 1);
-
-        return JsonUtil.toJson(roomService.getBlockedPeriods(room, start, end));
+        Map<String, String> mp = roomService.getBlockedPeriods(room, start, end);
+        return JsonUtil.toJson(mp);
     }
 
     @RequestMapping(value = "getrecurrentbookings", method = RequestMethod.POST)

@@ -64,25 +64,26 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
 
+        if ( !result.isEmpty()) {
+            Set keys = result.keySet();
+            Iterator i = keys.iterator();
+            String baseKey = (String) i.next();
+            while (i.hasNext()) {
+                try {
+                    String nextKey = (String) i.next();
+                    String value = result.get(baseKey);
+                    if (value.compareTo(nextKey) == 0) {
 
-        Set keys = result.keySet();
-        Iterator i = keys.iterator();
-        String baseKey = (String) i.next();
-        while (i.hasNext()) {
-            try {
-                String nextKey = (String) i.next();
-                String value = result.get(baseKey);
-                if (value.compareTo(nextKey) == 0) {
+                        result.put(baseKey, result.get(nextKey));
+                        i.remove();
+                    } else {
+                        i.remove();
 
-                    result.put(baseKey, result.get(nextKey));
-                    i.remove();
-                } else {
-                    i.remove();
-
-                    baseKey = (String) i.next();
+                        baseKey = (String) i.next();
+                    }
+                } catch (Exception e) {
+                    log.info(e.getMessage());
                 }
-            } catch (Exception e) {
-                log.info(e.getMessage());
             }
         }
 

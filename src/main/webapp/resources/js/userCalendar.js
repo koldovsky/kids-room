@@ -246,7 +246,7 @@ function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
     showRoomManagers(managers);
 
 
-    getDisabledTime("2016-07-06", "2016-08-06", id);
+ //   getDisabledTime("2016-07-06", "2016-08-06", id);
 
 
     roomIdForHandler = id;
@@ -382,7 +382,11 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
                 };
             });
             renderCalendar(objects, id, workingHoursStart, workingHoursEnd);
+        },
+        error : function() {
+            renderCalendar(objects, id, workingHoursStart, workingHoursEnd);
         }
+
     });
 }
 
@@ -901,7 +905,7 @@ function makeUTCTime(time, date) {
     time.setSeconds(date.getUTCSeconds());
     return time;
 }
-
+/*
 function getDisabledTime(dateLo, dateHi, roomId) {
     var urls = 'disabled?roomID=' + roomId + '&dateLo=' + dateLo + '&dateHi=' + dateHi;
     $.ajax({
@@ -913,7 +917,7 @@ function getDisabledTime(dateLo, dateHi, roomId) {
         }
     });
 }
-
+*/
 //tested
 
 function showRoomPhone(phoneNumber) {
