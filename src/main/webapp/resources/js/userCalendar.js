@@ -492,13 +492,14 @@ function validateSingleBookingData(){
     var endTime = $("#recurrent-booking-end-time").timepicker('getTime');
     var dayLengthInMiliseconds = startTime.getHours()*60*60*1000;
     var dataValidationStrings = new Array();
-    if( (startDate.getTime() - currentDate.getTime()) < 0){
-        if(startDate.getDate()<currentDate.getDate()){
-                dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
-        }
+    if( (startDate.getTime() < currentDate.getTime())){
+                if(startDate.getDate()!=currentDate.getDate()){
+                    dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
+                }
     }
+    if(startDate.getDate()==currentDate.getDate())
     if(startTime.getTime() < currentDate.getTime()){
-        dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
+            dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
     }
     if(startTime.getTime() > endTime.getTime()){
         dataValidationStrings.push("End time can't be earlier than the start time");
