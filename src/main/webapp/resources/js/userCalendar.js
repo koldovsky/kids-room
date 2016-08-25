@@ -212,6 +212,11 @@ $(function () {
 
     //open booking creating dialog
     $('#create-new-booking').click(function () {
+        var newBookingDate = $('#user-calendar').fullCalendar('getDate').format();
+        $('#recurrent-booking-start-date').val(newBookingDate.substring(0, 10));
+        $('#recurrent-booking-end-date').val(newBookingDate.substring(0, 10));
+        $('#recurrent-booking-start-time').timepicker('setTime', newBookingDate.substring(11, 19));
+        $('#recurrent-booking-end-time').timepicker('setTime', newBookingDate.substring(11, 19));
         $('#make-recurrent-booking').dialog('open');
     });
 
@@ -588,6 +593,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
             $('#recurrent-booking-start-date').val(clickDate.substring(0, 10));
             $('#recurrent-booking-end-date').val(clickDate.substring(0, 10));
+            $('#recurrent-booking-start-time').timepicker('setTime', clickDate.substring(11, 19));
+            $('#recurrent-booking-end-time').timepicker('setTime', clickDate.substring(11, 19));
 
             bookingDate.clickDate = clickDate;
 

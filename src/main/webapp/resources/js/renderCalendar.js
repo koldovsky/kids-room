@@ -119,6 +119,9 @@ $(function () {
     });
 
     $('#create-new-event').click(function () {
+        var newEventDate = $('#calendar').fullCalendar('getDate').format();
+        $('#title').val(newEventDate.substring(0, 10));
+        $('#endDate').val(newEventDate.substring(0, 10));
         $('#dialog').dialog('open');
     });
 
@@ -529,7 +532,7 @@ function deleteRecurrentEvents(recurrentId) {
             $('#calendar').fullCalendar('removeEvents', item.id);
             sendToServerForDelete(item);
         }
-    })
+    });
 }
 
 
