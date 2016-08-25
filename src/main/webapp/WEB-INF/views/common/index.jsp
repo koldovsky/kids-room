@@ -314,13 +314,35 @@
                         <div align="center">
 
                             <br>
-                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means that</h2>
-                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
-                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
-                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
-                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
-                            <h2  ><span class="glyphicon glyphicon-stop"></span> - means this  </h2>
-                            <br>
+
+                               <div class="col-xs-4">
+                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1>your booking
+                               </div> <div class="col-xs-4">
+                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1>room
+                               </div> <div class="col-xs-4">
+                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1>fully booked room
+                               </div>
+                            <div class="col-xs-12">
+                                <h3  >
+                                    <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
+                                    </h3>
+                                <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
+                                events
+
+                                <br>
+
+
+
+                                <br>
+                            </div>
                             <span>SoftServe Inc</span>
 
 
