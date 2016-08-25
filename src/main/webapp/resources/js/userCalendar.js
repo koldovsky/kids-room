@@ -213,10 +213,11 @@ $(function () {
     //open booking creating dialog
     $('#create-new-booking').click(function () {
         var newBookingDate = $('#user-calendar').fullCalendar('getDate').format();
+        var currentDate = new Date();
         $('#recurrent-booking-start-date').val(newBookingDate.substring(0, 10));
         $('#recurrent-booking-end-date').val(newBookingDate.substring(0, 10));
-        $('#recurrent-booking-start-time').timepicker('setTime', newBookingDate.substring(11, 19));
-        $('#recurrent-booking-end-time').timepicker('setTime', newBookingDate.substring(11, 19));
+        $('#recurrent-booking-start-time').timepicker('setTime', currentDate.toLocaleTimeString());
+        $('#recurrent-booking-end-time').timepicker('setTime', currentDate.toLocaleTimeString());
         $("#data-validation-information-string").html("");
         $('#make-recurrent-booking').dialog('open');
     });
@@ -591,11 +592,16 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
+            var currentDate = new Date();
+
 
             $('#recurrent-booking-start-date').val(clickDate.substring(0, 10));
             $('#recurrent-booking-end-date').val(clickDate.substring(0, 10));
-            $('#recurrent-booking-start-time').timepicker('setTime', clickDate.substring(11, 19));
-            $('#recurrent-booking-end-time').timepicker('setTime', clickDate.substring(11, 19));
+            if (clickDate.substring(11, 19) == "00:00:00"){
+            $('#recurrent-booking-start-time').timepicker('setTime', currentDate.toLocaleTimeString());
+            $('#recurrent-booking-end-time').timepicker('setTime', currentDate.toLocaleTimeString());}
+            else {$('#recurrent-booking-start-time').timepicker('setTime', clickDate.substring(11, 19));
+                $('#recurrent-booking-end-time').timepicker('setTime', clickDate.substring(11, 19));}
             $("#data-validation-information-string").html("");
 
             bookingDate.clickDate = clickDate;
