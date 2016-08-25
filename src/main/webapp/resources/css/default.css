@@ -205,6 +205,15 @@ div .error {
     color: white;
 
 }
+#glyph {
+    position: relative;
+    -webkit-animation: arrow 0.5s linear 0.5s infinite alternate; /* Chrome, Safari, Opera */
+    animation: arrow 0.5s linear 0.5s infinite alternate;
+}
+@-webkit-keyframes arrow {
+    0%   {  left:0px; top:0px;}
+    100%  {  left:21px; top:0px;}
 
+}
 
 
