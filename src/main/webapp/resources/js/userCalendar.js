@@ -5,7 +5,6 @@ var roomIdForHandler;
 var usersID;
 var clickedEvent;
 var clickedEventRecurrentId;
-var EVENT = '#f9e559';
 var BORDER = '#4caf50';
 var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
@@ -299,7 +298,8 @@ function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
                                 start: result[i].startTime,
                                 end: result[i].endTime,
                                 editable: false,
-                                color: EVENT,
+                                color: result[i].color,
+                                description :result[i].description,
                                 type: 'event'
                             }
                         }
@@ -637,7 +637,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         eventBackgroundColor: NOT_SYNCHRONIZED,
         eventColor: 'transparent',
         eventBorderColor: 'transparent',
-        eventTextColor: '#000',
+        eventTextColor: '#fff',
         slotDuration: '00:15:00',
 
         dayClick: function (date) {
@@ -666,8 +666,25 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         },
 
         eventClick: function (calEvent) {
+            var eventDescription = "none";
+            if (calEvent.description != ""){
+                eventDescription = calEvent.description
+            }
 
-            if (calEvent.color === EVENT || calEvent.color === NOT_SYNCHRONIZED) {
+            if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
+                $("#eventInfo").dialog({
+                    width: 400
+                });
+                $( "#eventInfo" ).dialog( "option", "title", calEvent.title );
+                $('#startTime').html('<b>Start at : </b>' + calEvent.start.format('HH:mm'));
+                $('#endTime').html('<b>Ends at : </b>' + calEvent.end.format('HH:mm'));
+                $('#eventDescription').html('<b>Description : </b><br>' + eventDescription );
+                $("#eventInfo").dialog('open');
+
+                $('#confirmEventInfo').click(function () {
+                    $("#eventInfo").dialog('close');
+                });
+
                 return;
             }
 

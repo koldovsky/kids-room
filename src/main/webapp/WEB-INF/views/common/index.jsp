@@ -259,6 +259,28 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="eventInfo" class="dialog" hidden>
+                    <div class="col-xs-12 row">
+                        <br>
+                        <span id="startTime" class="pull-left"></span>
+                        <span id="endTime" class="pull-right"></span>
+                        <br><br>
+                        <span id="eventDescription">
+                    </span>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-success btn-lg " id="confirmEventInfo"><span
+                                    class="glyphicon glyphicon-ok"></span></button>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="error" id="error-dialog"></div>
 
     <%--<div id="confirmation-dialog" title="Delete booking" hidden>--%>
@@ -444,17 +466,17 @@
                         <div class="form-group">
                             <label for="title">Choose a color</label>
                             <select id="color-select">
-                                <option value="#ff0000" style="background:red">red</option>
-                                <option value="#ffff00" style="background:yellow">yellow</option>
-                                <option value="#800080" style="background:purple">purple</option>
-                                <option value="#0000ff" style="background:blue">blue</option>
-                                <option value="#6AA4C1" style="background:#6AA4C1" selected="selected">light blue
+                                <option value="#eb6f63" style="background:red">red</option>
+                                <option value="#ffcd5c" style="background:yellow">yellow</option>
+                                <option value="#9b3aa1" style="background:purple">purple</option>
+                                <option value="#044d92" style="background:blue">blue</option>
+                                <option value="#1ba1e2" style="background:#6AA4C1" selected="selected">light blue
                                 </option>
-                                <option value="#808080" style="background:grey">grey</option>
-                                <option value="#008000" style="background:green">green</option>
-                                <option value="#ffa500" style="background:orange">orange</option>
-                                <option value="#00ffff" style="background:aqua">aqua</option>
-                                <option value="#ffd700" style="background:gold">gold<br></option>
+                                <option value="#636363" style="background:grey">grey</option>
+                                <option value="#51d466" style="background:green">green</option>
+                                <option value="#f98e2e" style="background:orange">orange</option>
+                                <option value="#84fff7" style="background:aqua">aqua</option>
+                                <option value="#d3af37" style="background:gold">gold<br></option>
                             </select>
                         </div>
                         <div class="form-group">
