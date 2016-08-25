@@ -196,12 +196,9 @@ $(function () {
 
     //create booking and close the dialog window
     $('#book').click(function () {
-        //here the data validation
-
         if ($('#no-recurrent-booking').is(':checked')) {
-            var success = createBooking();
-            if(success)
-                closeBookingDialog();
+            closeBookingDialog();
+            createBooking();
         }
 
         if ($('#weekly-booking').is(':checked')) {
@@ -484,50 +481,7 @@ function updateBooking() {
 }
 
 //tested
-
-function validateSingleBookingData(){
-    var startDate = $.datepicker.parseDate("yy-mm-dd",$('#recurrent-booking-start-date').val());
-    var currentDate = new Date();
-    var startTime = $("#recurrent-booking-start-time").timepicker('getTime');
-    var endTime = $("#recurrent-booking-end-time").timepicker('getTime');
-    var dayLengthInMiliseconds = startTime.getHours()*60*60*1000;
-    var dataValidationStrings = new Array();
-    if( (startDate.getTime() - currentDate.getTime()) < 0){
-        if(startDate.getDate()<currentDate.getDate()){
-                dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
-        }
-    }
-    if(startTime.getTime() < currentDate.getTime()){
-        dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
-    }
-    if(startTime.getTime() > endTime.getTime()){
-        dataValidationStrings.push("End time can't be earlier than the start time");
-    }
-    var numberOfSelectedKids = 0;
-    for (var i = 0; i < ($('#number-of-kids').val()); i++) {
-            kidsCommentId = $('#comment-' + i).val();
-            if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
-                numberOfSelectedKids++;
-            }
-    }
-    if(numberOfSelectedKids<1){
-        dataValidationStrings.push("At least one kid must be selected");
-    }
-    if(dataValidationStrings.length>0){
-        var text = "Incorrect input data:";
-        for(var i=0; i<dataValidationStrings.length; i++){
-            text+="<br/>- "+dataValidationStrings[i]+".";
-        }
-        $("#data-validation-information-string").html(text);
-        return false;
-    }else
-        return true;
-}
 function createBooking() {
-
-    if(!validateSingleBookingData())
-        return false;
-
     bookingDate.clickDate = $('#recurrent-booking-start-date').val();
     bookingsArray = [];
     var kidsCommentId;
@@ -556,12 +510,6 @@ function createBooking() {
         }
     }
     sendBookingToServerForCreate(bookingsArray);
-    return true;
-
-
-
-
-
 }
 
 //tested
@@ -767,7 +715,7 @@ function makeRecurrentBookings() {
     var kidsCommentId;
 
     //TODO: REFACTOR THIS!!!
-    for (var i = 0; i < $('#number-of-kids').val(); i++) {
+    for (var i = 0; i < ($('#number-of-kids').val()); i++) {
         kidsCommentId = $('#comment-' + i).val();
         if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
             bookingsRecurrentArray.push(
