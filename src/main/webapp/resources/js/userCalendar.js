@@ -212,7 +212,7 @@ $(function () {
 
     //open booking creating dialog
     $('#create-new-booking').click(function () {
-        var newBookingDate = $('#user-calendar').fullCalendar('getDate').format();
+        var newBookingDate = $('#user-calendar').fullCalendar('getDate').format();123
         $('#recurrent-booking-start-date').val(newBookingDate.substring(0, 10));
         $('#recurrent-booking-end-date').val(newBookingDate.substring(0, 10));
         $('#recurrent-booking-start-time').timepicker('setTime', newBookingDate.substring(11, 19));
