@@ -28,14 +28,11 @@ public class MyKidsPageController {
     private UserService userService;
 
     /**
-     * @param principal
      * @return "My Kids" view
-     * @throws AccessDeniedException if requesting user has no permissions
-     *                               to access this page
+     * @throws AccessDeniedException if requesting user has no permission to access this page
      */
-    @RequestMapping(value = "/mykids", method = RequestMethod.GET)
-    public ModelAndView myKids(Principal principal)
-            throws AccessDeniedException {
+    @RequestMapping(value = ChildConstants.View.MY_KIDS, method = RequestMethod.GET)
+    public ModelAndView myKids(Principal principal) {
 
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.MY_KIDS);
@@ -44,7 +41,7 @@ public class MyKidsPageController {
             throw new AccessDeniedException("Only parents have access to this page");
         }
 
-        List<Child> myKids = current.getEnabledChildren();
+        List<Child> myKids = userService.getEnabledChildren(current);
         ModelMap modelMap = model.getModelMap();
 
         if (!modelMap.containsAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE)) {
