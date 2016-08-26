@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.validator;
 
 /**
- * a "Validator" class that helps checking requests from client ЙОБАНА ВРОТ
+ * a "Validator" class that helps checking requests from client
  */
 public class LogicalRequestsValidator {
     private LogicalRequestsValidator(){
