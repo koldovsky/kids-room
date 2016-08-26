@@ -452,6 +452,9 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
             }
+            else {
+                callErrorDialog('We regret to inform you that there are no available places left in the room on the time you\'ve chosen');
+            }
         }
     });
 }
