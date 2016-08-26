@@ -60,7 +60,8 @@ public class EditMyKidPageController {
     public ModelAndView selectKid(
             @RequestParam("kidId") String kidId,
             Principal principal,
-            HttpServletRequest request) throws ResourceNotFoundException, AccessDeniedException {
+            HttpServletRequest request) throws ResourceNotFoundException, AccessDeniedException
+    {
         if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
@@ -82,6 +83,7 @@ public class EditMyKidPageController {
         model.getModelMap()
                 .addAttribute(ChildConstants.View.KID_ATTRIBUTE, kidToEdit);
         request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
+        model.getModelMap().addAttribute("pageChecker","notHome");//value for checking the page in header.jsp
         return model;
     }
 

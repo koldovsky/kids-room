@@ -32,8 +32,8 @@ public class MyKidsPageController {
      * @throws AccessDeniedException if requesting user has no permission to access this page
      */
     @RequestMapping(value = ChildConstants.View.MY_KIDS, method = RequestMethod.GET)
-    public ModelAndView myKids(Principal principal) {
-
+    public ModelAndView myKids(Principal principal)
+    {
         ModelAndView model = new ModelAndView();
         model.setViewName(ChildConstants.View.MY_KIDS);
         User current = userService.getUserByEmail(principal.getName());
@@ -47,7 +47,7 @@ public class MyKidsPageController {
         if (!modelMap.containsAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE)) {
             modelMap.addAttribute(ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE, myKids);
         }
-
+        model.getModelMap().addAttribute("pageChecker","notHome");//value for checking the page in header.jsp
         return model;
     }
 }

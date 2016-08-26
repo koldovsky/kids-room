@@ -62,6 +62,7 @@ public class MyBookingsController {
 
         ModelAndView model = new ModelAndView();
         model.setViewName(UserConstants.Model.MY_BOOKINGS_VIEW);
+        model.getModelMap().addAttribute("pageChecker","notHome");//value for checking the page in header.jsp
         return model;
     }
 

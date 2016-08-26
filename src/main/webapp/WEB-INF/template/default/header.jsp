@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>--%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags"%>
@@ -42,20 +43,34 @@
                         <sec:authorize access="isAuthenticated()">
 
                             <sec:authorize access="hasRole('USER')">
-                                <li   class="dropdown menu-item" style="padding-right: 150px;">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
-                                <span id="usersRoom">
-                                    <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span><spring:message code="user.selectRoom"/>:</span>
-                                    </a>
-                                    <ul id="selectRoomForParent" class="dropdown-menu">
-                                        <c:forEach items="${rooms}" var="room">
-                                            <li>
-                                                <a style="cursor: pointer;" id="${room.id},${userId},${room.phoneNumber},${room.managers} ">${room.city}, ${room.address}</a>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </li>
+                                <%--<p>${pageContext.request.getHeader('referer')}</p>--%>
+                                <c:choose>
+                                    <c:when test="${pageChecker != 'notHome'}">
+                                        <li   class="dropdown menu-item" style="padding-right: 150px;">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <span id="usersRoom">
+                                                    <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
+                                                    <spring:message code="user.selectRoom"/>:
+                                                </span>
+                                            </a>
+
+                                            <ul id="selectRoomForParent" class="dropdown-menu">
+                                                <c:forEach items="${rooms}" var="room">
+                                                    <li>
+                                                        <a style="cursor: pointer;" id="${room.id},${userId},${room.phoneNumber},${room.managers} ">${room.city}, ${room.address}</a>
+                                                    </li>
+                                                </c:forEach>
+                                            </ul>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="${pageContext.request.getHeader('referer')}">
+                                            <span class="glyphicon glyphicon-arrow-left"></span>
+                                            Back
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
 
                                 <li><a href="/home">
                                     <span class="glyphicon glyphicon-calendar"></span>
