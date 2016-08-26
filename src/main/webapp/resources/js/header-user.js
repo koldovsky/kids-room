@@ -8,11 +8,11 @@ $(function () {
         var phoneNumber = roomInfo[2];
         var address = $("#selectRoomForParent li a").first().text();
         var managers = getManagersNames(managersArray);
-        selectRoomForUser(roomId,localStorage.userId,phoneNumber,managers);
+        selectRoomForUser(roomId,localStorage["userId"],phoneNumber,managers);
         $("#usersRoom").html(address+ ' ' + '<span id="glyph" class=" glyphicon glyphicon-arrow-left"></span>');
         renderRoom();
     } else {
-        selectRoomForUser(localStorage.userRoomId, localStorage.userId, localStorage.phoneNumber, localStorage.managers);
+        selectRoomForUser(localStorage["userRoomId"], localStorage["userId"], localStorage["phoneNumber"], localStorage["managers"]);
         $("#usersRoom").text(localStorage["address"]);
         renderRoom();
     }
@@ -37,7 +37,7 @@ function renderRoom() {
             localStorage["address"] = $(this).text();
 
 
-            selectRoomForUser(localStorage.userRoomId, localStorage.userId, localStorage.phoneNumber, localStorage.managers);
+            selectRoomForUser(localStorage["userRoomId"], localStorage["userId"], localStorage["phoneNumber"], localStorage["managers"]);
             $("#usersRoom").text(localStorage["address"]);
 
         });
