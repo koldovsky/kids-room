@@ -29,23 +29,20 @@ function takingKidOff() {
     var kidMap = parameters[0].split("=");
     var kidId = kidMap[1];
     var kidredirect="/home/mykids";
-    // jQuery.get( "removemykid?id="+kidId )
-    $.ajax({
-        url: 'removemykid?id=' + kidId,
-        success: function(responseText) {
-        },
-        error: function(xhr,status,error){
-            alert("Error!" + err+"  status = "+status);
-        }
-    })
-    $(location).attr('href',kidredirect).reload(true);
-
+    $.post('remove-kid/' + kidId)
+        .success(function (responseText) {
+            $(location).attr('href', kidredirect).reload(true);
+        })
+        .error(function (xhr, status, error) {
+            console.log("Error!" + error + "  status = " + status);
+        });
 }
 
 $(function() {
     var txt = $('#comment'),
         hiddenDiv = $(document.createElement('div')),
         content = null;
+
     txt.addClass('txtstuff');
     hiddenDiv.addClass('hiddendiv common');
     $('body').append(hiddenDiv);

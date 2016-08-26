@@ -49,21 +49,19 @@ public class EditMyKidPageController {
      * Method for responding with an editing form
      * to user's HTTP GET request
      *
-     * @param kidId ID of a kid to be edited (GET param)
+     * @param kidId     ID of a kid to be edited (GET param)
      * @param principal Spring-provided object containing requesting user info
      * @return ModelAndView of editing form
-     *
      * @throws ResourceNotFoundException if no such kid exists in the db
-     * @throws AccessDeniedException if requesting user has to permission for this action
+     * @throws AccessDeniedException     if requesting user has to permission for this action
      */
-    @RequestMapping(value="/editmykid",
+    @RequestMapping(value = "/editmykid",
             method = RequestMethod.GET)
     public ModelAndView selectKid(
             @RequestParam("kidId") String kidId,
             Principal principal,
-            HttpServletRequest request) throws ResourceNotFoundException, AccessDeniedException
-    {
-        if(!LogicalRequestsValidator.isRequestValid(kidId)) {
+            HttpServletRequest request) throws ResourceNotFoundException, AccessDeniedException {
+        if (!LogicalRequestsValidator.isRequestValid(kidId)) {
             throw new ResourceNotFoundException();
         }
 
@@ -71,11 +69,11 @@ public class EditMyKidPageController {
         User current = userService.getUserByEmail(principal.getName());
         Child kidToEdit = childService.findById(id);
 
-        if(!kidToEdit.getParentId().equals(current)) {
+        if (!kidToEdit.getParentId().equals(current)) {
             throw new AccessDeniedException("You do not have access to this page");
         }
 
-        if(!kidToEdit.isEnabled()){
+        if (!kidToEdit.isEnabled()) {
             throw new ResourceNotFoundException();
         }
 
@@ -89,26 +87,26 @@ public class EditMyKidPageController {
 
     /**
      * handles POST form submit
-     * @param kidToEdit a Child object to be validated and persisted to database
-     * @param principal Spring-provided object containing requesting user info
+     *
+     * @param kidToEdit     a Child object to be validated and persisted to database
+     * @param principal     Spring-provided object containing requesting user info
      * @param bindingResult object holding results of validating a ModelAttribute
      *                      submitted with POST method
      * @return "My kids" view if successful
-     *          Editing form if an object failed to pass validation
+     * Editing form if an object failed to pass validation
      */
-    @RequestMapping(value="/editmykid",
+    @RequestMapping(value = "/editmykid",
             method = RequestMethod.POST)
     public String submit(
             @ModelAttribute(value = ChildConstants.View.KID_ATTRIBUTE) Child kidToEdit,
             Principal principal,
-            BindingResult bindingResult)
-    {
+            BindingResult bindingResult) {
         kidToEdit.setParentId(
                 userService.getUserByEmail(principal.getName()));
         kidToEdit.setEnabled(true);
         validator.validate(kidToEdit, bindingResult);
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return ChildConstants.View.KID_EDITING;
         }
 
@@ -121,32 +119,25 @@ public class EditMyKidPageController {
 
     /**
      * Method handles disabling child's account
-     * @param id ID of a child (GET param)
+     *
+     * @param id        ID of a child (GET param)
      * @param principal Spring-provided object containing requesting user info
      * @return "My kids" view
      * @throws AccessDeniedException if requesting user has to permission for this action
      */
-    @RequestMapping(value = "/removemykid",
-    method = RequestMethod.GET)
-    public String removeKid(@RequestParam("id") String id, Principal principal)
-            throws AccessDeniedException, ResourceNotFoundException{
+    @ResponseBody
+    @RequestMapping(value = "/remove-kid/{id}", method = RequestMethod.POST)
+    public void removeKid(@PathVariable("id") long id, Principal principal) {
+        Child kidToRemove = childService.findById(id);
 
-        if(!LogicalRequestsValidator.isRequestValid(id)){
-            throw new ResourceNotFoundException();
-        }
-
-        Long idL = Long.parseLong(id);
-        Child kidToRemove = childService.findById(idL);
-        if(!userService
-                .getUserByEmail(principal.getName())
-                .equals(kidToRemove.getParentId())){
+        if (!userService.getUserByEmail(principal.getName()).equals(kidToRemove.getParentId())) { // TODO: PUT THIS TO ANOTHER METHOD -- is...()
             throw new AccessDeniedException("You do not have access to this page");
         }
 
+        // TODO: HANDLE CASE WHEN CHILD IS NULL, RETURN OPTIONAL ON SERVICE LAYER INSTEAD
+
         kidToRemove.setEnabled(false);
         childService.update(kidToRemove);
-        return "redirect:/" + ChildConstants.View.MY_KIDS;
-//        return new ModelAndView("redirect:/" + ChildConstants.View.MY_KIDS).;
     }
 
     @InitBinder

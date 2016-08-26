@@ -187,13 +187,7 @@ public class User implements Serializable {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
-
-    public List<Child> getEnabledChildren() {
-        return children.stream()
-                .filter(Child::isEnabled)
-                .collect(Collectors.toList());
-    }
-
+    
     public String getFullName() {
         return firstName + " " + lastName;
     }
