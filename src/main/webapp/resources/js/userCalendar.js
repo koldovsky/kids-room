@@ -16,6 +16,7 @@ $(function () {
 
     $('#recurrent-change').dialog({
         autoOpen: false,
+        modal:true,
         show: {
             effect: 'drop',
             duration: 500
@@ -28,6 +29,7 @@ $(function () {
 
     $('#bookingForm').dialog({
         autoOpen: false,
+        modal:true,
         show: {
             effect: 'drop',
             duration: 500
@@ -40,6 +42,7 @@ $(function () {
 
     $('#bookingUpdatingDialog').dialog({
         autoOpen: false,
+        modal: true,
         show: {
             effect: 'drop',
             duration: 500
@@ -52,6 +55,7 @@ $(function () {
 
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
+        modal:true,
         width: 350,
         modal: true
     });
@@ -100,6 +104,7 @@ $(function () {
 
     $('#make-recurrent-booking').dialog({
         autoOpen: false,
+        modal:true,
         title: 'New booking',
         width: 550,
         show: {
@@ -627,7 +632,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
             if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
                 $("#eventInfo").dialog({
-                    width: 400
+                    width: 400,
+                    modal:true                    ,
                 });
                 $( "#eventInfo" ).dialog( "option", "title", calEvent.title );
                 $('#startTime').html('<b>Start at : </b>' + calEvent.start.format('HH:mm'));
