@@ -12,7 +12,7 @@ public final class MailConstants {
     public static final String EMAIL_BOT_ADDRESS = "kidsroom.softserve@gmail.com";
 
     public static final String MY_BOOKINGS_LINK = "/mybookings";
-    public static final String CONFIRM_USER_LINK = ":8080/home/confirm?token=";
+    public static final String CONFIRM_USER_LINK = "/confirm?token=";
     public static final String CHANGE_PASS_LINK = "/changePassword?token=";
     public static final String CONFIRM_MANAGER_LINK = "/confirm-manager?token=";
 
