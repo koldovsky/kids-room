@@ -117,4 +117,15 @@ public class BookingTimeController {
         return new Gson().toJson(bookings);
     }
 
+
+    @RequestMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
+            method = RequestMethod.GET,
+            produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String getRecurrentBookingForEditing(@PathVariable  Long recurrentId) {
+        return bookingService.getRecurrentBookingForEditingById(recurrentId);
+    }
+
+
+
 }

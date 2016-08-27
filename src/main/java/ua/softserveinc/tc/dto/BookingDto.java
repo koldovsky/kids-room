@@ -264,5 +264,4 @@ public class BookingDto implements Serializable{
         this.daysOfWeek = daysOfWeek;
     }
 
-
 }

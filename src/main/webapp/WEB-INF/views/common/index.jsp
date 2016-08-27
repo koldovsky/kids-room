@@ -74,7 +74,7 @@
                         <br>
                         <textarea class="col-xs-12" type="text" id="child-comment-update"></textarea>
                         <button type="button" class="btn btn-success" id="updatingBooking">Save</button>
-                        <button type="button" class="btn btn-danger pull-right" id="deletingBooking">Cancel</button>
+                        <button type="button" class="btn btn-danger pull-right" id="deletingBookingCancel">Cancel</button>
 
                         <button type="button" class="btn btn-xs btn-warning col-xs-12" id="deleting-single-booking">
                             <spring:message code= "booking.deleteBooking"/>
@@ -528,7 +528,7 @@
                         <div class="col-xs-12">
                             <div class="row">
                                 <form role="form">
-                                    <div class="row col-xs-4">
+                                    <div class="row col-xs-4">   <%--radio id="no-recurrent"  id="weekly"--%>
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="no-recurrent"
