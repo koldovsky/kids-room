@@ -678,22 +678,42 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     $(this).css('z-index', 10000);
                     $('#eventTitle').html(calEvent.title);
                     $('#startTime').html('Start at :' + '<b>'+ calEvent.start.format('HH:mm'));
-                    $('#endTime').html('Ends at :' + calEvent.end.format('HH:mm'));
+                    $('#endTime').html('Ends at :' + '<b>'+calEvent.end.format('HH:mm'));
                     if (calEvent.description != "") {
                         $('#eventDescription').html('<b>Description : </b><br>' + eventDescription);
                     }
-                    $('.tooltipevent').delay(500).fadeTo(200, 1);
+                    $('.eventInfo').delay(500).fadeTo(200, 1);
                 }).mousemove(function (e) {
-                    $('.tooltipevent').css('top', e.pageY + 10);
-                    $('.tooltipevent').css('left', e.pageX + 20);
+
+                    var eventInfoHeight = parseInt($('.eventInfo').css('height'));
+                    var eventInfoWidth = parseInt($('.eventInfo').css('width'));
+                    var windowWidth = $( document ).width();
+                    var windowHeight = $( document ).height();
+
+
+                    if (e.pageX + eventInfoWidth > windowWidth){
+                        if(e.pageY + eventInfoHeight > windowHeight) {
+                            $('.eventInfo').css('top', e.pageY - eventInfoHeight);
+                            $('.eventInfo').css('left', e.pageX - eventInfoWidth);
+                        }
+                        else {
+                            $('.eventInfo').css('top', e.pageY);
+                            $('.eventInfo').css('left', e.pageX - eventInfoWidth);
+                        }
+                    }
+                    else {
+                        $('.eventInfo').css('top', e.pageY + 10);
+                        $('.eventInfo').css('left', e.pageX + 20);
+                    }
                 });
             }
         },
 
         eventMouseout: function() {
             $(this).css('z-index', 8);
-            $('.tooltipevent').hide();
+            $('.eventInfo').hide();
         },
+
         eventClick: function (calEvent, data, view) {
 
             var eventDescription = "none";

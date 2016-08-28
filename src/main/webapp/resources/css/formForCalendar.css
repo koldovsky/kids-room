@@ -10,7 +10,7 @@ html, body, .container {
     vertical-align: middle;
 }
 
-.tooltipevent {
+.eventInfo {
     height: 200px;
     background: #ccc;
     position: absolute;
@@ -25,7 +25,7 @@ html, body, .container {
     box-shadow: 0px 0px 25px #979797;
 
 }
-.container .tooltipevent #eventTitle {
+.container .eventInfo #eventTitle {
     margin-top: 10px;
     padding-top: 8px;
     border-width: 2px 2px 1px;
@@ -34,11 +34,11 @@ html, body, .container {
     border-bottom-style: solid;
     padding-left: 14px;
 }
-.container .tooltipevent .time {
+.container .eventInfo .time {
     padding-left: 14px;
     padding-right: 10px;
 }
-.container .tooltipevent .eventDescription {
+.container .eventInfo .eventDescription {
     border-top: 1px solid #E9E9E9;
 
     padding-left: 14px;

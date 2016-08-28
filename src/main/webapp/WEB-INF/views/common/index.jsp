@@ -261,7 +261,7 @@
     </div>
 
     <div class="container">
-        <div class="tooltipevent" >
+        <div class="eventInfo" >
 
             <h3 id="eventTitle">Title</h3>
 
