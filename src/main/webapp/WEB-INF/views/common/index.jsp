@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 
+
 <body>
 
 <sec:authorize access="hasRole('USER')">
@@ -79,7 +80,7 @@
                         <button type="button" class="btn btn-xs btn-warning col-xs-12" id="deleting-single-booking">
                             <spring:message code= "booking.deleteBooking"/>
                         </button>
-                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
+                            <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
 
                     </form>
                 </div>
@@ -260,40 +261,19 @@
     </div>
 
     <div class="container">
-        <div class="vertical-center-row">
-            <div align="center">
-                <div id="eventInfo" class="dialog" hidden>
-                    <div class="col-xs-12 row">
-                        <br>
-                        <span id="startTime" class="pull-left"></span>
-                        <span id="endTime" class="pull-right"></span>
-                        <br><br>
-                        <span id="eventDescription">
-                    </span>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn btn-success btn-lg " id="confirmEventInfo"><span
-                                    class="glyphicon glyphicon-ok"></span></button>
-                        </div>
-                    </div>
-                    <br>
-                </div>
+        <div class="tooltipevent" >
+
+            <h3 id="eventTitle">Title</h3>
+
+            <span class="time" id="startTime"></span>
+            <span class="time" id="endTime"></span><br/>
+            <div class="eventDescription">
+                <span id="eventDescription"></span>
             </div>
         </div>
+
     </div>
-    <div class="error" id="error-dialog"></div>
 
-    <%--<div id="confirmation-dialog" title="Delete booking" hidden>--%>
-        <%--<p><span id="confirmation-dialog-message" class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Booking will be permanently deleted and cannot be recovered. Are you sure?</p>--%>
-    <%--</div>--%>
-
-
-
-
-
-
-
-    <%--create-new-booking--%>
     <div class="container">
 
         <button type="button" class="btn btn-success pull-right" data-toggle="modal"
@@ -315,13 +295,13 @@
 
                             <br>
 
-                               <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1>your booking
-                               </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1>room
-                               </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1>fully booked room
-                               </div>
+                            <div class="col-xs-4">
+                                <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1>your booking
+                            </div> <div class="col-xs-4">
+                            <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1>room
+                        </div> <div class="col-xs-4">
+                            <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1>fully booked room
+                        </div>
                             <div class="col-xs-12">
                                 <h3  >
                                     <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
@@ -329,7 +309,7 @@
                                     <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
                                     <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
                                     <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
-                                    </h3>
+                                </h3>
                                 <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
                                     <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
                                     <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
@@ -337,11 +317,6 @@
                                     <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
                                 events
 
-                                <br>
-
-
-
-                                <br>
                             </div>
                             <span>SoftServe Inc</span>
 
@@ -436,29 +411,6 @@
                         </div>
 
                         <br><br>
-                            <%--fefe
-
-
-
-                            <table class="table">
-                                <thead>Check required days</thead>
-                                <tbody>
-                                <tr>
-                                    <td><label><input type="checkbox" id="Monday" value="Mon" class="day">Monday </label><br></td>
-                                    <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day">Tuesday</label><br></td>
-                                </tr>
-                                <tr>
-                                    <td><label><input type="checkbox" id="Wednesday" value="Wed" class="day">Wednesday </label><br>
-                                    </td>
-                                    <td><label><input type="checkbox" id="Thursday" value="Thu" class="day">Thursday</label><br></td>
-                                </tr>
-                                <tr>
-                                    <td><label><input type="checkbox" id="Friday" value="Fri" class="day">Friday </label><br></td>
-                                    <td><label><input type="checkbox" id="Saturday" value="Sat" class="day">Saturday</label><br></td>
-                                </tr>
-                                </tbody>
-                            </table>
-    --%>
 
                         <label for="recurrent-event-description">Description</label>
                         <textarea class="form-control" id="recurrent-event-description"

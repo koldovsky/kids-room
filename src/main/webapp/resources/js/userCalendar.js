@@ -247,7 +247,7 @@ function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
     showRoomManagers(managers);
 
 
- //   getDisabledTime("2016-07-06", "2016-08-06", id);
+    //   getDisabledTime("2016-07-06", "2016-08-06", id);
 
 
     roomIdForHandler = id;
@@ -559,23 +559,23 @@ function validateSingleBookingData(){
     var dayLengthInMiliseconds = startTime.getHours()*60*60*1000;
     var dataValidationStrings = new Array();
     if( (startDate.getTime() < currentDate.getTime())){
-                if(startDate.getDate()!=currentDate.getDate()){
-                    dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
-                }
+        if(startDate.getDate()!=currentDate.getDate()){
+            dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
+        }
     }
     if(startDate.getDate()==currentDate.getDate())
-    if(startTime.getTime() < currentDate.getTime()){
+        if(startTime.getTime() < currentDate.getTime()){
             dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
-    }
+        }
     if(startTime.getTime() > endTime.getTime()){
         dataValidationStrings.push("End time can't be earlier than the start time");
     }
     var numberOfSelectedKids = 0;
     for (var i = 0; i < ($('#number-of-kids').val()); i++) {
-            kidsCommentId = $('#comment-' + i).val();
-            if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
-                numberOfSelectedKids++;
-            }
+        kidsCommentId = $('#comment-' + i).val();
+        if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
+            numberOfSelectedKids++;
+        }
     }
     if(numberOfSelectedKids<1){
         dataValidationStrings.push("At least one kid must be selected");
@@ -657,8 +657,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#recurrent-booking-start-date').val(clickDate.substring(0, 10));
             $('#recurrent-booking-end-date').val(clickDate.substring(0, 10));
             if (clickDate.substring(11, 19) == "00:00:00"){
-            $('#recurrent-booking-start-time').timepicker('setTime', currentDate.toLocaleTimeString());
-            $('#recurrent-booking-end-time').timepicker('setTime', currentDate.toLocaleTimeString());}
+                $('#recurrent-booking-start-time').timepicker('setTime', currentDate.toLocaleTimeString());
+                $('#recurrent-booking-end-time').timepicker('setTime', currentDate.toLocaleTimeString());}
             else {$('#recurrent-booking-start-time').timepicker('setTime', clickDate.substring(11, 19));
                 $('#recurrent-booking-end-time').timepicker('setTime', clickDate.substring(11, 19));}
             $("#data-validation-information-string").html("");
@@ -668,26 +668,40 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#make-recurrent-booking').dialog('open');
         },
 
-        eventClick: function (calEvent) {
+        eventMouseover: function(calEvent) {
+            if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
+                if (calEvent.description != "") {
+                    eventDescription = calEvent.description
+                }
+
+                $(this).mouseover(function (e) {
+                    $(this).css('z-index', 10000);
+                    $('#eventTitle').html(calEvent.title);
+                    $('#startTime').html('Start at :' + '<b>'+ calEvent.start.format('HH:mm'));
+                    $('#endTime').html('Ends at :' + calEvent.end.format('HH:mm'));
+                    if (calEvent.description != "") {
+                        $('#eventDescription').html('<b>Description : </b><br>' + eventDescription);
+                    }
+                    $('.tooltipevent').delay(500).fadeTo(200, 1);
+                }).mousemove(function (e) {
+                    $('.tooltipevent').css('top', e.pageY + 10);
+                    $('.tooltipevent').css('left', e.pageX + 20);
+                });
+            }
+        },
+
+        eventMouseout: function() {
+            $(this).css('z-index', 8);
+            $('.tooltipevent').hide();
+        },
+        eventClick: function (calEvent, data, view) {
+
             var eventDescription = "none";
             if (calEvent.description != ""){
                 eventDescription = calEvent.description
             }
 
             if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
-                $("#eventInfo").dialog({
-                    width: 400
-                });
-                $( "#eventInfo" ).dialog( "option", "title", calEvent.title );
-                $('#startTime').html('<b>Start at : </b>' + calEvent.start.format('HH:mm'));
-                $('#endTime').html('<b>Ends at : </b>' + calEvent.end.format('HH:mm'));
-                $('#eventDescription').html('<b>Description : </b><br>' + eventDescription );
-                $("#eventInfo").dialog('open');
-
-                $('#confirmEventInfo').click(function () {
-                    $("#eventInfo").dialog('close');
-                });
-
                 return;
             }
 
@@ -764,11 +778,13 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         },
 
         eventRender: function (event, element) {
+
             if (event.rendering === 'background') {
                 element.append(event.title);
                 element.css('background-color', 'yellow');
                 element.css('color', 'black');
             }
+
         },
         editable: false,
         eventLimit: true,
@@ -934,18 +950,18 @@ function makeUTCTime(time, date) {
     return time;
 }
 /*
-function getDisabledTime(dateLo, dateHi, roomId) {
-    var urls = 'disabled?roomID=' + roomId + '&dateLo=' + dateLo + '&dateHi=' + dateHi;
-    $.ajax({
-        url: urls,
-        contentType: 'application/json',
-        dataType: 'text',
-        success: function (result) {
-            // alert(result);
-        }
-    });
-}
-*/
+ function getDisabledTime(dateLo, dateHi, roomId) {
+ var urls = 'disabled?roomID=' + roomId + '&dateLo=' + dateLo + '&dateHi=' + dateHi;
+ $.ajax({
+ url: urls,
+ contentType: 'application/json',
+ dataType: 'text',
+ success: function (result) {
+ // alert(result);
+ }
+ });
+ }
+ */
 //tested
 
 function showRoomPhone(phoneNumber) {

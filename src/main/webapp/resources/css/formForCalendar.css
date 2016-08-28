@@ -9,3 +9,37 @@ html, body, .container {
     display: table-cell;
     vertical-align: middle;
 }
+
+.tooltipevent {
+    height: 200px;
+    background: #ccc;
+    position: absolute;
+    z-index: 10001;
+    display: none;
+    background: #fefefe;
+    border: 1px solid gray;
+    border-radius: 19px;
+    font-family: Verdana,Arial,sans-serif;
+    width: 360px;
+    -webkit-box-shadow: 0px 0px 25px #979797;
+    box-shadow: 0px 0px 25px #979797;
+
+}
+.container .tooltipevent #eventTitle {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-width: 2px 2px 1px;
+    border-color: #E9E9E9;
+    margin-bottom: 7px;
+    border-bottom-style: solid;
+    padding-left: 14px;
+}
+.container .tooltipevent .time {
+    padding-left: 14px;
+    padding-right: 10px;
+}
+.container .tooltipevent .eventDescription {
+    border-top: 1px solid #E9E9E9;
+
+    padding-left: 14px;
+}

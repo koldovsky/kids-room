@@ -17,5 +17,5 @@ KidsRoom.iml
 SpringMVC.iml
 main.iml
 src/main/resources/properties/hibernate.properties
-src/main/resources/properties/import.sql
+src/main/resources/import.sql
 .gitignore
