@@ -197,7 +197,13 @@ select {
 }
 
 div .error {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     color : #ff1200;
+}
+
+div .successconfirmation {
+    color: green;
+    font-size: 1.3em;
 }
 .error .ui-dialog-title{
     color: #ff1200;
