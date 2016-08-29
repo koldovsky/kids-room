@@ -123,7 +123,7 @@ public class BookingTimeController {
             produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRecurrentBookingForEditing(@PathVariable  Long recurrentId) {
-        return bookingService.getRecurrentBookingForEditingById(recurrentId);
+        return new Gson().toJson(bookingService.getRecurrentBookingForEditingById(recurrentId));
     }
 
 

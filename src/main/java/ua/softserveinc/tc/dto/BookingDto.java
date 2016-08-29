@@ -17,6 +17,7 @@ public class BookingDto implements Serializable{
 
     private Long id;
     private String date;
+    private String endDate;
     private String startTime;
     private String endTime;
     private String kidName;
@@ -35,6 +36,8 @@ public class BookingDto implements Serializable{
 
     private String daysOfWeek;
 
+    private boolean[] daysOfWeekBool;
+
     private transient Child child;
     private transient User user;
     private transient Room room;
@@ -43,12 +46,13 @@ public class BookingDto implements Serializable{
     private transient Date dateEndTime;
 
     public BookingDto() {
-        //empty constructor for instantiating in controller
+        daysOfWeekBool = new boolean[]{false,false,false,false,false,false,false};
     }
 
     public BookingDto(Booking booking) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         this.date = df.format(booking.getBookingStartTime());
+        this.endDate = df.format(booking.getBookingEndTime());
         df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
         this.startTime = df.format(booking.getBookingStartTime());
         this.endTime = df.format(booking.getBookingEndTime());
@@ -62,6 +66,7 @@ public class BookingDto implements Serializable{
         this.idChild = booking.getChild().getId();
         this.comment = booking.getComment();
         this.recurrentId = booking.getRecurrentId();
+        daysOfWeekBool = new boolean[]{false,false,false,false,false,false,false};
     }
 
     public Booking getBookingObject() {
@@ -264,4 +269,35 @@ public class BookingDto implements Serializable{
         this.daysOfWeek = daysOfWeek;
     }
 
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public  boolean [] getDaysOfWeekBool() {
+        boolean [] daysOfWeekToReurn = new boolean[7];
+        System.arraycopy(this.daysOfWeekBool,0,daysOfWeekToReurn,0,this.daysOfWeekBool.length);
+        return daysOfWeekToReurn;
+    }
+
+    public void setDaysOfWeekBool(int index, boolean bool) {
+        daysOfWeekBool [index] = bool;
+    }
+    public void setDaysOfWeekBool(boolean day1,boolean day2,boolean day3, boolean day4, boolean day5,boolean day6,boolean day7) {
+        daysOfWeekBool [1] = day1;
+        daysOfWeekBool [2] = day2;
+        daysOfWeekBool [3] = day3;
+        daysOfWeekBool [4] = day4;
+        daysOfWeekBool [5] = day5;
+        daysOfWeekBool [6] = day6;
+        daysOfWeekBool [7] = day7;
+    }
+    public void setDaysOfWeekBool(boolean [] days) {
+        for (int i = 0; i < days.length; i++) {
+            daysOfWeekBool[i] = days[i];
+        }
+    }
 }

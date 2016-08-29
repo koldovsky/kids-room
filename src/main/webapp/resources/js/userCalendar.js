@@ -1047,15 +1047,15 @@ function editRecurrentBookingsReuest (recurrentId) {
                 result = JSON.parse(result);
                 recurrentBookingForEditing = {
                     recurentId: result.recurentId,
-                    startDate: result.startDate,
+                    startDate: result.date,
                     endDate: result.endDate,
                     startTime: result.startTime,
                     endTime: result.endTime,
-                    comment: result.comment,
-                       days: [],
+                    days: [],
+                    daysOfweek:result.daysOfWeek.trim(),
                 }
                 for (var i = 0; i < 6; i++) {
-                    recurrentBookingForEditing.days[i] = result.bookedDaysOfWeek[i];
+                    recurrentBookingForEditing.days[i] = result.daysOfWeekBool[i];
                 }
             }
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
@@ -1076,9 +1076,35 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
     $('#recurrent-booking-end-time').timepicker('setTime', recurrentBookingForEditing.endTime);
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var i = 0;
+    var DoW = recurrentBookingForEditing.daysOfweek.split(" ");
+    DoW.forEach(function (item,i) {
+        switch(item) {
+            case 'Mon':
+                day = 'Monday';
+                break;
+            case 'Tue':
+                day = 'Tuesday';
+                break;
+            case 'Wed':
+                day = 'Wednesday';
+                break;
+            case 'Thu':
+                day = 'Thursday';
+                break;
+            case 'Fri':
+                day = 'Friday';
+                break;
+            case 'Sat':
+                day = 'Saturday';
+                break;
+        }
+        $('#' + day + '-booking').prop('checked', recurrentBookingForEditing.days[i++]);
+    })
+/*
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').prop('checked', recurrentBookingForEditing.days[i++]);
     });
+*/
     $('#make-recurrent-booking').dialog('open');
     $('#book').hide();
     $('#update-recurrent-booking').show();
