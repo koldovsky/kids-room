@@ -669,6 +669,9 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         },
 
         eventMouseover: function(calEvent) {
+
+            cursorIsOverEvent = false;
+
             if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
                 if (calEvent.description != "") {
                     eventDescription = calEvent.description
@@ -684,13 +687,15 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     }
                     $('.eventInfo').delay(600).fadeTo(200, 1);
 
-                    cursorIsOverEvent = false;
-
-                    if(!cursorIsOverEvent) {
+                    if(cursorIsOverEvent == false) {
                         cursorOverEventX = e.pageX;
                         cursorOverEventY = e.pageY;
                         cursorIsOverEvent = true;
                     }
+                    else if (cursorIsOverEvent == true) {
+                        return
+                    }
+
                 }).mousemove(function (e) {
 
                     var eventInfoHeight = parseInt($('.eventInfo').css('height'));
@@ -698,7 +703,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     var windowWidth = $( document ).width();
                     var windowHeight = $( document ).height();
 
-                    if (cursorOverEventX > windowWidth - eventInfoWidth) {
+                    if (cursorOverEventX > windowWidth - eventInfoWidth * 1.5) {
                         if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
                             $('.eventInfo').css('top', e.pageY - eventInfoHeight);
                             $('.eventInfo').css('left', e.pageX - eventInfoWidth);
