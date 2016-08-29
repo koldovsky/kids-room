@@ -1051,11 +1051,7 @@ function editRecurrentBookingsReuest (recurrentId) {
                     endDate: result.endDate,
                     startTime: result.startTime,
                     endTime: result.endTime,
-                    days: [],
                     daysOfweek:result.daysOfWeek.trim(),
-                }
-                for (var i = 0; i < 6; i++) {
-                    recurrentBookingForEditing.days[i] = result.daysOfWeekBool[i];
                 }
             }
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
@@ -1067,6 +1063,7 @@ function editRecurrentBookingsReuest (recurrentId) {
 }
 
 function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
+    clearBookingDialogSingleMulti();
     $('#days-for-recurrent-booking-form').prop('hidden', false);
     $('#no-recurrent-booking').prop('checked',false);
     $('#weekly-booking').prop('checked',true);
@@ -1077,7 +1074,7 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var i = 0;
     var DoW = recurrentBookingForEditing.daysOfweek.split(" ");
-    DoW.forEach(function (item,i) {
+    DoW.forEach(function (item) {
         switch(item) {
             case 'Mon':
                 day = 'Monday';
@@ -1098,13 +1095,8 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
                 day = 'Saturday';
                 break;
         }
-        $('#' + day + '-booking').prop('checked', recurrentBookingForEditing.days[i++]);
+        $('#' + day + '-booking').prop('checked', true);
     })
-/*
-    checkBoxesDays.forEach(function (item) {
-        $('#' + item + '-booking').prop('checked', recurrentBookingForEditing.days[i++]);
-    });
-*/
     $('#make-recurrent-booking').dialog('open');
     $('#book').hide();
     $('#update-recurrent-booking').show();

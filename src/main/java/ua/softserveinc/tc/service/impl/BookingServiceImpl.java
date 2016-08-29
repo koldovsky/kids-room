@@ -325,7 +325,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             for (Booking booking : listOfRecurrentBooking) {
                 calendar.setTime(booking.getBookingStartTime());
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
-                recurentBookToReturn.setDaysOfWeekBool(day-2,true);
                 bookedDaysOfWeek[day-2]=true;
             }
             String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
