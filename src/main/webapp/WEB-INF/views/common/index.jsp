@@ -81,12 +81,18 @@
                             <spring:message code= "booking.update"/>
                         </button>
                         <button type="button" class="btn btn-danger pull-right" id="deletingBookingCancel">
-                            <spring:message code= "booking.cancel"/>
+                            <spring:message code= "cancel"/>
                         </button>
 
-                        <button type="button" class="btn btn-xs btn-warning col-xs-12" id="deleting-single-booking">
-                            <spring:message code= "booking.deleteBooking"/>
-                        </button>
+                        <div class = "col-xs-12">
+
+                            <footer class="delete-recurrent-booking">
+                                <div id="deleting-single-booking" style="text-decoration: underline; text-align: center;">
+                                    <spring:message code="booking.deleteBooking"/>
+                                </div>
+                            </footer>
+                        </div>
+
                         <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
 
                     </form>
@@ -228,8 +234,8 @@
 
                                 <div class="clearfix"></div>
                                 <div class="col-xs-3 row ">
-                                    <button type="button" class="btn btn-success" id="update-recurrent-booking"
-                                            hidden="true">Update
+                                    <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">
+                                        <spring:message code= "booking.update"/>
                                     </button>
                                     <button type="button" class="btn btn-success live" id="book">
                                         <spring:message code= "booking.book"/>
@@ -237,8 +243,17 @@
                                 </div>
                                 <div class="col-xs-3 row pull-right ">
                                     <button type="button" class="btn btn-danger pull-right" id="cancel-changes">
-                                        <spring:message code= "booking.cancel"/>
+                                        <spring:message code= "cancel"/>
                                     </button>
+                                </div>
+                                <br>
+                                <div class = "col-xs-12">
+
+                                    <footer class="delete-recurrent-booking">
+                                        <div id="delete-recurrent-booking" style="text-decoration: underline; text-align: center;">
+                                            <spring:message code="booking.deleteBooking"/>
+                                        </div>
+                                    </footer>
                                 </div>
 
                             </div>

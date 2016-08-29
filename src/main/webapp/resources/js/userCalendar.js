@@ -43,6 +43,7 @@ $(function () {
     $('#bookingUpdatingDialog').dialog({
         autoOpen: false,
         modal: true,
+        width:400,
         show: {
             effect: 'drop',
             duration: 500
@@ -166,12 +167,45 @@ $(function () {
         }
     });
 
+    $('#delete-recurrent-booking').click(function () {
+        $('#make-recurrent-booking').dialog('close');
+        var myDialog = $('#confirmation-dialog-div');
+        myDialog.dialog('open');
+        $('#confirmYes').click(function () {
+            cancelRecurrentBookings(info.calEvent.recurrentId);
+            myDialog.dialog('close');
+        });
+        $('#confirmNo').click(function () {
+            myDialog.dialog('close');
+        });
+    })
+    $('#delete-recurrent-booking').hover(function(){
+        $(this).css('color','red');
+        $(this).css('cursor','pointer ');
+    }, function(){
+        $(this).css("color", "black");
+    });
+
+/*
+    $('#deleting-recurrent-booking').click(function () {
+        $('#make-recurrent-booking').dialog('close');
+        cancelRecurrentBookings(info.calEvent.recurrentId);
+    });
+
+   */
+
 
     $('#updatingBooking').click(function () {
         updateBooking();
         $('#bookingUpdatingDialog').dialog('close');
     });
 
+    $('#deleting-single-booking').hover(function(){
+        $(this).css('color','red');
+        $(this).css('cursor','pointer ');
+    }, function(){
+        $(this).css("color", "black");
+    });
 
     $('#deleting-single-booking').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
@@ -229,10 +263,7 @@ $(function () {
         closeBookingDialog();
     });
 
-    $('#deleting-recurrent-booking').click(function () {
-        $('#make-recurrent-booking').dialog('close');
-        cancelRecurrentBookings(info.calEvent.recurrentId);
-    });
+
 
 
 });
@@ -964,6 +995,7 @@ function editRecurrentBookingsReuest (recurrentId) {
                     endDate: result.endDate,
                     startTime: result.startTime,
                     endTime: result.endTime,
+                    comment: result.comment,
                        days: [],
                 }
                 for (var i = 0; i < 6; i++) {

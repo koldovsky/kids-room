@@ -320,7 +320,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             recurentBookToReturn.endDate  = listOfRecurrentBookingDto.get(listOfRecurrentBookingDto.size()-1).getDate();
             recurentBookToReturn.startTime = listOfRecurrentBookingDto.get(0).getStartTime();
             recurentBookToReturn.endTime = listOfRecurrentBookingDto.get(0).getEndTime();
-            String comment = listOfRecurrentBookingDto.get(0).getComment();
+            recurentBookToReturn.comment = listOfRecurrentBookingDto.get(0).getComment();
             Calendar calendar = Calendar.getInstance();
             for (Booking booking : listOfRecurrentBooking) {
                 calendar.setTime(booking.getBookingStartTime());
@@ -341,6 +341,16 @@ class RecurentBookToReturn implements Serializable {
     String endDate;
     String startTime;
     String endTime;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    String comment;
     boolean [] bookedDaysOfWeek = {false,false,false,false,false,false};
 
     public Long getRecurentId() {
