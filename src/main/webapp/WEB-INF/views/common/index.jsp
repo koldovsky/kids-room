@@ -273,9 +273,8 @@
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="recurrent-change" class="dialog" hidden>
+                <div id="recurrent-change" title = "<spring:message code= "booking.edit"/>" class="dialog" hidden>
                     <form id="choose-updating-booking-form">
-
                         <div class="radio-button">
                             <label><input type="radio" id="single-update-booking" name="radio-check" checked>
                                 <spring:message code= "recurrent.justThisOne"/>

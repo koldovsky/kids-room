@@ -1043,7 +1043,6 @@ function editRecurrentBookingsReuest (recurrentId) {
     $.ajax({
         url: path,
         success: function (result) {
-            console.log("result = "+result);
             if (result.length) {
                 result = JSON.parse(result);
                 recurrentBookingForEditing = {
@@ -1059,7 +1058,6 @@ function editRecurrentBookingsReuest (recurrentId) {
                     recurrentBookingForEditing.days[i] = result.bookedDaysOfWeek[i];
                 }
             }
-            console.log("recurrentBookingForEditing = "+recurrentBookingForEditing);
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
         },
         error: function () {
@@ -1069,7 +1067,6 @@ function editRecurrentBookingsReuest (recurrentId) {
 }
 
 function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
-    console.log("kidName = "+recurrentBookingForEditing.kidName);
     $('#days-for-recurrent-booking-form').prop('hidden', false);
     $('#no-recurrent-booking').prop('checked',false);
     $('#weekly-booking').prop('checked',true);
@@ -1082,7 +1079,6 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').prop('checked', recurrentBookingForEditing.days[i++]);
     });
-    // $("#data-validation-information-string").html("");
     $('#make-recurrent-booking').dialog('open');
     $('#book').hide();
     $('#update-recurrent-booking').show();
