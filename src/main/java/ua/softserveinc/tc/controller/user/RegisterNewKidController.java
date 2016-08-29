@@ -51,6 +51,7 @@ public class RegisterNewKidController {
     public String registerKid(Model model, HttpServletRequest request){
         if(!model.containsAttribute(ChildConstants.View.KID_ATTRIBUTE)) {
             model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, new Child());
+            model.addAttribute("pageChecker","needBack");//value for checking the page in header.jsp
         }
 
         request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
