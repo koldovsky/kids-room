@@ -26,10 +26,6 @@ import ua.softserveinc.tc.validator.UserValidator;
 import javax.mail.MessagingException;
 import java.util.UUID;
 
-/**
- * Created by Chak on 27.05.2016.
- */
-
 @Controller
 public class UserRegistrationController {
 
