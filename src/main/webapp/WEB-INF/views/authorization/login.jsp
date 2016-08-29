@@ -10,7 +10,11 @@
     <form:form method="post" id="loginForm" >
 
 
-        <div class="form-group">
+        <div class ="successconfirmation">
+            ${param.confirm}
+
+        </div>
+            <div class="form-group">
             <span class="glyphicon glyphicon-envelope"></span>
             <label for="email" ><spring:message code="user.email" /></label>
             <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com"  />
