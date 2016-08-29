@@ -298,7 +298,7 @@
                             <div class="col-xs-4">
                                 <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1>your booking
                             </div> <div class="col-xs-4">
-                            <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1>room
+                            <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1>available room
                         </div> <div class="col-xs-4">
                             <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1>fully booked room
                         </div>
@@ -316,7 +316,7 @@
                                     <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
                                     <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
                                 events
-
+                                <br><br>
                             </div>
                             <span>SoftServe Inc</span>
 
@@ -341,9 +341,14 @@
                         <div align="center">
 
                             <br>
-                            <H3 id="roomPhone"></H3>
                             <h4 id="showRoomManagers"></h4>
+
+                            <H4 id="roomPhone"></H4>
+
+                            <br>
+
                             <span>SoftServe Inc</span>
+
 
 
                         </div>

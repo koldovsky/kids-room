@@ -1007,7 +1007,7 @@ function showRoomPhone(phoneNumber) {
 
 
 function showRoomManagers(managers) {
-    $('#showRoomManagers').empty().append('<span class="glyphicon glyphicon-user"></span>' + ' ' + managers);
+    $('#showRoomManagers').empty().append('Manager : ' + managers);
 }
 
 
