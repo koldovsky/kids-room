@@ -21,10 +21,10 @@
           <span class="label label-primary" id="radius">
           <spring:message code="kids.welcome" /></span>
         </h1>
-        <h3><spring:message code="kids.emptyList" /></h3>
+        <h3 class="add-kid-button"><spring:message code="kids.emptyList" /></h3>
         <form action="registerkid">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button class="btn btn-raised btn-success waves-effect waves-light" type="submit">
+            <button class="btn btn-raised btn-success waves-effect waves-light" type="submit" class="add-kid-button">
                 <spring:message code="button.add" />
             </button>
         </form>
