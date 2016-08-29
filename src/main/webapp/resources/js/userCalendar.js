@@ -682,7 +682,15 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     if (calEvent.description != "") {
                         $('#eventDescription').html('<b>Description : </b><br>' + eventDescription);
                     }
-                    $('.eventInfo').delay(500).fadeTo(200, 1);
+                    $('.eventInfo').delay(600).fadeTo(200, 1);
+
+                    cursorIsOverEvent = false;
+
+                    if(!cursorIsOverEvent) {
+                        cursorOverEventX = e.pageX;
+                        cursorOverEventY = e.pageY;
+                        cursorIsOverEvent = true;
+                    }
                 }).mousemove(function (e) {
 
                     var eventInfoHeight = parseInt($('.eventInfo').css('height'));
@@ -690,20 +698,22 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     var windowWidth = $( document ).width();
                     var windowHeight = $( document ).height();
 
-
-                    if (e.pageX + eventInfoWidth > windowWidth){
-                        if(e.pageY + eventInfoHeight > windowHeight) {
+                    if (cursorOverEventX > windowWidth - eventInfoWidth) {
+                        if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
                             $('.eventInfo').css('top', e.pageY - eventInfoHeight);
                             $('.eventInfo').css('left', e.pageX - eventInfoWidth);
-                        }
-                        else {
-                            $('.eventInfo').css('top', e.pageY);
+                        } else {
+                            $('.eventInfo').css('top', e.pageY + 20);
                             $('.eventInfo').css('left', e.pageX - eventInfoWidth);
                         }
-                    }
-                    else {
-                        $('.eventInfo').css('top', e.pageY + 10);
-                        $('.eventInfo').css('left', e.pageX + 20);
+                    } else {
+                        if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
+                            $('.eventInfo').css('top', e.pageY - eventInfoHeight);
+                            $('.eventInfo').css('left', e.pageX + 10);
+                        } else {
+                            $('.eventInfo').css('top', e.pageY + 20);
+                            $('.eventInfo').css('left', e.pageX + 10);
+                        }
                     }
                 });
             }
@@ -712,6 +722,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         eventMouseout: function() {
             $(this).css('z-index', 8);
             $('.eventInfo').hide();
+            cursorIsOverEvent = false;
+
         },
 
         eventClick: function (calEvent, data, view) {
