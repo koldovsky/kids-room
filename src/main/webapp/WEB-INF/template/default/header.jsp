@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%--<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>--%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags"%>
@@ -44,9 +43,21 @@
 
                             <sec:authorize access="hasRole('USER')">
 
-                                <%--<p>${pageContext.request.getHeader('referer')}</p>--%>
                                 <c:choose>
-                                    <c:when test="${pageChecker != 'notHome'}">
+                                    <c:when test="${pageChecker == 'notHome'}">
+                                        <li style="padding-right: 300px;">
+                                            <a> </a>
+                                        </li>
+                                    </c:when>
+                                    <c:when test="${pageChecker == 'needBack'}">
+                                        <li style="padding-right: 250px;">
+                                            <a style="cursor: pointer;" onclick="history.back()">
+                                                <span class="glyphicon glyphicon-arrow-left"></span>
+                                                Back
+                                            </a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
                                         <li   class="dropdown menu-item" style="padding-right: 150px;">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                                 <span id="usersRoom">
@@ -63,12 +74,6 @@
                                                 </c:forEach>
                                             </ul>
                                         </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="${pageContext.request.getHeader('referer')}">
-                                            <span class="glyphicon glyphicon-arrow-left"></span>
-                                            Back
-                                        </a>
                                     </c:otherwise>
                                 </c:choose>
 

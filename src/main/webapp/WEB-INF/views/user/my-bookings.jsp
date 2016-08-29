@@ -17,18 +17,18 @@
         </div>
         <div id="from-div">
           <label for="from"><spring:message code="report.from" /></label>
-          <input name="from" id="from" type="date" class="form-control"></input>
+          <input name="from" id="from" type="date" class="form-control"> </input>
 
         </div>
         <div id="to-div">
             <label for="from"><spring:message code="report.to" /></label>
-            <input id="to" type="date" class="form-control"></input>
+            <input id="to" type="date" class="form-control"> </input>
         </div>
     </div>
 
     <div class="tableDiv">
         <h2>
-           <spring:message code="report.myBookings" /></br>
+           <spring:message code="report.myBookings" /> </br>
         </h2>
         <table id="myBookings">
          <thead>
@@ -52,7 +52,7 @@
             </caption>
 
         </table>
-        <input id="itemsPerPage" type="hidden" value="10"></input>
+        <input id="itemsPerPage" type="hidden" value="10"> </input>
                 <a id="dlink"  style="display:none;"></a>
                 <button id="export" onclick= "tableToExcel('myBookings', 'name')" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
