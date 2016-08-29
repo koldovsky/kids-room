@@ -6,8 +6,8 @@
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
+<script src="resources/js/comment-box.js"></script>
 <script src="resources/js/kid-registration.js"></script>
-<script src="resources/js/edit-my-kid.js"></script>
 
 <form:form enctype="application/x-www-form-urlencoded" action="registerkid"
 method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
@@ -70,7 +70,7 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
                     <label for="comment">
                     	<spring:message code="kid.comment" />
                     </label>
-                    <form:textarea path="comment" id="comment" class="form-control common"/>
+                    <form:textarea path="comment" rows="1" class="form-control common comment"/>
       </div>
 
 
