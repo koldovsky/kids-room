@@ -49,6 +49,8 @@ public final class BookingConstants {
 
         public static final String START_TIME = "bookingStartTime";
 
+        public static final String RECURRENTID = "recurrentId";
+
         private Entity(){}
     }
 

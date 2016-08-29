@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.dao.impl;
 
+import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
@@ -12,10 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
@@ -76,4 +74,20 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         }
         return result;
     }
+
+    public List<Booking> getRecurrentBookingsByRecurrentId(Long recurrentId){
+
+        CriteriaQuery<Booking> query = null;
+        try {
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            query = builder.createQuery(Booking.class);
+            Root<Booking> root = query.from(Booking.class);
+            query.select(root).where(builder.equal(root.get(BookingConstants.Entity.RECURRENTID), recurrentId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
+        return entityManager.createQuery(query).getResultList();
+    };
+
 }
