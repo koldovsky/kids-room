@@ -122,7 +122,9 @@ $(function () {
             $('#deleting-recurrent-booking').hide();
 
             $('#update-recurrent-booking').hide();
+            $('#delete-recurrent-booking').hide();
             $('#book').show();
+
             $("#make-recurrent-booking").dialog("option", "title", "New booking");
         }
     });
@@ -1008,6 +1010,7 @@ function closeUpdatingDialog() {
     $('#make-recurrent-booking').dialog('close');
     $('#book').show();
     $('#update-recurrent-booking').hide();
+    $('#delete-recurrent-booking').hide();
 
     $('#child-selector').show();
     $('#comment-for-one-child-updating').hide();
@@ -1083,6 +1086,7 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
     $('#make-recurrent-booking').dialog('open');
     $('#book').hide();
     $('#update-recurrent-booking').show();
+    $('#delete-recurrent-booking').show();
     $('#child-selector').hide();
     $('#comment-for-one-child-updating').show();
     $('#deleting-recurrent-booking').show();

@@ -151,11 +151,15 @@
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio-bookingform"
                                                           id="no-recurrent-booking"
-                                                          class="booking-radio" checked> Single event</label>
+                                                          class="booking-radio" checked>
+                                                <spring:message code= "booking.singleBooking"/>
+                                            </label>
                                         </div>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio-bookingform" id="weekly-booking"
-                                                          class="booking-radio"> Weekly</label>
+                                                          class="booking-radio">
+                                                <spring:message code= "booking.weeklyBooking"/>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="col-xs-8 pull-right" id="days-for-recurrent-booking-form" hidden>
@@ -251,7 +255,7 @@
                                 <div class = "col-xs-12">
 
                                     <footer class="delete-recurrent-booking">
-                                        <div id="delete-recurrent-booking" style="text-decoration: underline; text-align: center;">
+                                        <div id="delete-recurrent-booking" style="text-decoration: underline; text-align: center;" hidden="true">
                                             <spring:message code="booking.deleteBooking"/>
                                         </div>
                                     </footer>
