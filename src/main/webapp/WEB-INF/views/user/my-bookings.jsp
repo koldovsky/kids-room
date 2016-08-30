@@ -46,7 +46,9 @@
 
             <caption class="captionBottom">
                 <h3>
-                    <spring:message code="report.sumTotal" /><p id="sum"></p>
+                    <spring:message code="report.sumTotal"/>
+                    <p id="sum"></p>
+                    <spring:message code="report.currencySymbol" />
                 </h3>
 
             </caption>
