@@ -86,10 +86,11 @@
                         </button>
 
                         <div class = "col-xs-12">
+
                             <footer class="deleteBookingButtonLink">
-                                <button id="deleting-single-booking" class="btn-link">
+                                <div id="deleting-single-booking" style="text-decoration: underline; text-align: center;">
                                     <spring:message code="booking.deleteBooking"/>
-                                </button>
+                                </div>
                             </footer>
                         </div>
 
