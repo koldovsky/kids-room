@@ -43,3 +43,28 @@ html, body, .container {
 
     padding-left: 14px;
 }
+
+.confirmDelete {
+    align:center;
+    color:red;
+    text-align:center;
+    padding-left: 14px;
+}
+
+.deleteBookingButtonLink{
+    font-size: 14px;
+    text-decoration: underline;
+    text-align: center;
+    align-items: center;
+    color:black;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+    padding: 3px;
+
+}
+.deleteBookingButtonLink:hover {
+    color:red;
+    cursor: pointer;
+}

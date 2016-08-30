@@ -88,12 +88,18 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
                             <p><span style="color:red; text-align:center;" >
                                 <spring:message code="editkid.confirmdeactivatekid2"/> </span> </p>
                         </div>
-                        <button type="button" class="btn btn-success pull-left" id="confirmYes">
-                            <spring:message code= "editkid.deactivateYes"/>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-right" id="confirmNo">
-                            <spring:message code= "editkid.deactivateNo"/>
-                        </button>
+                        <div class="col-xs-12" style = "display: flex; align-items: center;justify-content: center;" >
+                            <div class="col-xs-6">
+                                <button type="button"  class="btn btn-success" id="confirmYes">
+                                    <spring:message code= "editkid.deactivateYes"/>
+                                </button>
+                            </div>
+                            <div class = col-xs-6>
+                                <button type="button" class="btn btn-danger" id="confirmNo">
+                                    <spring:message code= "editkid.deactivateNo"/>
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
