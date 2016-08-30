@@ -50,7 +50,6 @@
                 <td>${booking.getSum()}</td>
             </tr>
             </c:forEach>
-
             <caption class="captionBottom">
                 <h3>
                     <spring:message code="report.sumTotal" /> ${sumTotal}

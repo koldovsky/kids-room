@@ -1,6 +1,9 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.dao.RateDao;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.service.RateService;
 
@@ -8,6 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static ua.softserveinc.tc.util.DateUtil.getRoundedHours;
 
@@ -30,5 +34,14 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
         } else {
             return Collections.max(rates, Comparator.comparing(Rate::getHourRate));
         }
+    }
+
+    public Long calculateBookingCost(Booking booking){
+        List<Rate> rates = booking.getRoom().getRates();
+        Rate closestRate = this.calculateAppropriateRate(booking.getDuration(), rates);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(booking.getDuration());
+        double minuteCostInCoins = (double)(closestRate.getPriceRate()*100/(closestRate.getHourRate()*60));
+        Long sum = (long)(minutes * minuteCostInCoins);
+        return sum;
     }
 }
