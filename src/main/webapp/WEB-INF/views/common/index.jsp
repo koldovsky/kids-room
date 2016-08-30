@@ -86,11 +86,10 @@
                         </button>
 
                         <div class = "col-xs-12">
-
-                            <footer class="delete-recurrent-booking">
-                                <div id="deleting-single-booking" style="text-decoration: underline; text-align: center;">
+                            <footer class="deleteBookingButtonLink">
+                                <button id="deleting-single-booking" class="btn-link">
                                     <spring:message code="booking.deleteBooking"/>
-                                </div>
+                                </button>
                             </footer>
                         </div>
 
@@ -711,14 +710,14 @@
 
 <%--confirmation-dialog--%>
 <div class="container">
-    <div class="vertical-center-row">
+    <div class="modal-dialog modal-lg vertical-center-row ">
         <div align="center">
             <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
                 <form id="confirm-your-choice">
-                    <div style = "align:center; color:red; text-align:center;">
-                        <p><span style="color:red; text-align:center;" >
+                    <div class= confirmDelete">
+                        <p><span style="text-align:center;" >
                                 <spring:message code= "booking.confirmCancelQuestion1"/> </span> </p>
-                        <p><span style="color:red; text-align:center;" >
+                        <p><span style="text-align:center;" >
                                 <spring:message code= "booking.confirmCancelQuestion2"/></span> </p>
                     </div>
                     <button type="button" class="btn btn-success pull-left" id="confirmYes">
