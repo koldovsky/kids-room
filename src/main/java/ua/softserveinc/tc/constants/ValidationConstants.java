@@ -51,7 +51,6 @@ public final class ValidationConstants {
     public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
-
     private ValidationConstants() {
     }
 
@@ -82,6 +81,7 @@ public final class ValidationConstants {
         public static final String VALUES_INAPPROPRIATE = "values.inappropriate";
 
         public static final String MAX_UPLOAD_IMG_SIZE = "maxUploadImgSizeMb";
+        public static final String SUCCESSFUL_CONFIRMATION_MESSAGE = "Registration confirmed!";
 
         private ConfigFields() {
         }
