@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
@@ -25,10 +27,6 @@ import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.mail.MessagingException;
 import java.util.UUID;
-
-/**
- * Created by Chak on 27.05.2016.
- */
 
 @Controller
 public class UserRegistrationController {
@@ -77,13 +75,17 @@ public class UserRegistrationController {
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
-    public String confirmRegistration(@RequestParam(TokenConstants.TOKEN) String sToken) {
+    public ModelAndView confirmRegistration(@RequestParam(TokenConstants.TOKEN) String sToken) {
         Token token = tokenService.findByToken(sToken);
         User user = token.getUser();
         user.setConfirmed(true);
         userService.update(user);
         tokenService.delete(token);
-        return "redirect:/login";
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("redirect:/login");
+        model.getModelMap().addAttribute("confirm", ValidationConstants.ConfigFields.SUCCESSFUL_CONFIRMATION_MESSAGE);
+        return model;
     }
 }
 

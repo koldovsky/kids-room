@@ -6,6 +6,7 @@
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
+<script src="resources/js/comment-box.js"></script>
 <script src="resources/js/edit-my-kid.js"></script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
@@ -58,8 +59,8 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
 
       <div class="form-group">
                     <label for="comment"><spring:message code="kid.comment" /></label>
-                    <form:textarea path="comment" id="comment"
-                    value="${kid.getComment()}" class="form-control common"/>
+                    <form:textarea path="comment"
+                    value="${kid.getComment()}" rows="1" class="form-control common comment"/>
       </div>
 
       <button class="btn btn-raised btn-success" type="submit" name="action">
@@ -87,12 +88,18 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
                             <p><span style="color:red; text-align:center;" >
                                 <spring:message code="editkid.confirmdeactivatekid2"/> </span> </p>
                         </div>
-                        <button type="button" class="btn btn-success pull-left" id="confirmYes">
-                            <spring:message code= "editkid.deactivateYes"/>
-                        </button>
-                        <button type="button" class="btn btn-danger pull-right" id="confirmNo">
-                            <spring:message code= "editkid.deactivateNo"/>
-                        </button>
+                        <div class="col-xs-12" style = "display: flex; align-items: center;justify-content: center;" >
+                            <div class="col-xs-6">
+                                <button type="button"  class="btn btn-success" id="confirmYes">
+                                    <spring:message code= "editkid.deactivateYes"/>
+                                </button>
+                            </div>
+                            <div class = col-xs-6>
+                                <button type="button" class="btn btn-danger" id="confirmNo">
+                                    <spring:message code= "editkid.deactivateNo"/>
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

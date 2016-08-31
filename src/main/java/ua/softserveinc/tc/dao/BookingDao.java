@@ -14,4 +14,7 @@ public interface BookingDao extends BaseDao<Booking> {
     List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates);
 
     Long getMaxRecurrentId();
+
+    List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
+
 }

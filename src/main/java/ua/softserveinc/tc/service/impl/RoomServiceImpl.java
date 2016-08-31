@@ -175,4 +175,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
         return room.getCapacity() - bookings.size();
     }
+
+    @Override
+    public List<Room> getActiveRooms() {
+        return roomDao.findAll().stream()
+                .filter(Room::isActive)
+                .collect(Collectors.toList());
+    }
+
+
 }

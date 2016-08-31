@@ -36,4 +36,5 @@ public interface BookingService extends BaseService<Booking> {
 
     Long getMaxRecurrentId();
     List<BookingDto> makeRecurrentBookings(List<BookingDto> bookingDtos);
+    BookingDto getRecurrentBookingForEditingById(long bookingId);
 }

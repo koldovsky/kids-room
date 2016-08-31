@@ -47,7 +47,7 @@ public class ViewEventController {
 
         switch (user.getRole()) {
             case USER:
-                model.addAttribute(UserConstants.Entity.ROOMS, roomService.findAll());
+                model.addAttribute(UserConstants.Entity.ROOMS, roomService.getActiveRooms());
                 model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
                 if(user.getChildren().isEmpty() | userService.getEnabledChildren(user).isEmpty()) {

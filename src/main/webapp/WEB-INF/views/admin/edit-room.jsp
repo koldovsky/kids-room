@@ -73,7 +73,7 @@
                         <input id="room" name="manager" type="hidden" value="${room.id}" />
                         <button type="submit" value="lock"
                                 onClick="return confirm('Are you sure you want to make the room active?')"
-                                class="button button-size-default save"></button>
+                                class="button button-size-default delete"></button>
                     </form:form>
                 </c:if>
                 <c:if test="${room.active eq true}">
@@ -82,7 +82,7 @@
                        <input id="room" name="room" type="hidden" value="${room.id}" />
                        <button type="submit" value="lock"
                                onClick="return confirm('Are you sure you want to make the room inactive?')"
-                               class="button button-size-default delete"></button>
+                               class="button button-size-default save"></button>
                     </form:form>
                 </c:if>
             </td>

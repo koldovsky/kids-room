@@ -17,6 +17,7 @@ public class BookingDto implements Serializable{
 
     private Long id;
     private String date;
+    private String endDate;
     private String startTime;
     private String endTime;
     private String kidName;
@@ -43,12 +44,12 @@ public class BookingDto implements Serializable{
     private transient Date dateEndTime;
 
     public BookingDto() {
-        //empty constructor for instantiating in controller
     }
 
     public BookingDto(Booking booking) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         this.date = df.format(booking.getBookingStartTime());
+        this.endDate = df.format(booking.getBookingEndTime());
         df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
         this.startTime = df.format(booking.getBookingStartTime());
         this.endTime = df.format(booking.getBookingEndTime());
@@ -263,6 +264,12 @@ public class BookingDto implements Serializable{
     public void setDaysOfWeek(String daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
+    public String getEndDate() {
+        return endDate;
+    }
 
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
 }

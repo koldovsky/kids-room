@@ -69,7 +69,7 @@ public class KidsProfileController {
         model.setViewName(ChildConstants.View.KID_PROFILE);
         model.getModelMap().addAttribute(ChildConstants.View.KID_ATTRIBUTE, kid);
         model.getModelMap().addAttribute("fileForm", new FileUploadFormObject());
-        model.getModelMap().addAttribute("pageChecker","notHome");//value for checking the page in header.jsp
+        model.getModelMap().addAttribute("pageChecker","needBack");//value for checking the page in header.jsp
         return model;
     }
 }

@@ -11,8 +11,7 @@ html, body, .container {
 }
 
 .eventInfo {
-    height: 200px;
-    background: #ccc;
+    height: 150px;
     position: absolute;
     z-index: 10001;
     display: none;
@@ -20,17 +19,18 @@ html, body, .container {
     border: 1px solid gray;
     border-radius: 19px;
     font-family: Verdana,Arial,sans-serif;
-    width: 360px;
+    width: 300px;
     -webkit-box-shadow: 0px 0px 25px #979797;
     box-shadow: 0px 0px 25px #979797;
+
 
 }
 .container .eventInfo #eventTitle {
     margin-top: 10px;
-    padding-top: 8px;
+    padding-top: 5px;
     border-width: 2px 2px 1px;
     border-color: #E9E9E9;
-    margin-bottom: 7px;
+    margin-bottom: 2px;
     border-bottom-style: solid;
     padding-left: 14px;
 }
@@ -40,6 +40,30 @@ html, body, .container {
 }
 .container .eventInfo .eventDescription {
     border-top: 1px solid #E9E9E9;
-
     padding-left: 14px;
+}
+
+.confirmDelete {
+    align:center;
+    color:red;
+    text-align:center;
+    padding-left: 14px;
+}
+
+.deleteBookingButtonLink{
+    font-size: 14px;
+    text-decoration: underline;
+    text-align: center;
+    align-items: center;
+    color:black;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px;
+    padding: 3px;
+
+}
+.deleteBookingButtonLink:hover {
+    color:red;
+    cursor: pointer;
 }
