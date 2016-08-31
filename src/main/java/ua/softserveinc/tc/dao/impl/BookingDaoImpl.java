@@ -45,7 +45,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
             c.setTime(endDate);
             c.add(Calendar.DATE, 1);
             endDate = c.getTime();
-            //end adding
+
             restrictions.add(builder.between(root.get(
                     BookingConstants.Entity.START_TIME), startDate, endDate));
         }
