@@ -78,6 +78,11 @@
                         </div>
                         <br>
                         <textarea class="col-xs-12" type="text" id="child-comment-update"></textarea>
+                        <br>
+                        <div id="data-validation-information-string-container" class="clearfix">
+                            <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                        </div>
+                        <br>
                         <button type="button" class="btn btn-success" id="updatingBooking">
                             <spring:message code= "booking.update"/>
                         </button>
@@ -234,7 +239,7 @@
 
                                 <br>
                                 <div id="data-validation-information-string-container" class="clearfix">
-                                    <p class="col-xs-12" style="color:red" id="data-validation-information-string"></p>
+                                    <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
                                 </div>
 
                                 <div class="clearfix"></div>
