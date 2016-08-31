@@ -6,29 +6,9 @@
 
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
-
-
-<script src='resources/js/moment.min.js'></script>
-
-<script src='resources/js/jquery.min.js'></script>
-<script src='resources/js/fullcalendar.js'></script>
-<script src='resources/js/header-manager.js'></script>
-<script src='resources/js/header-user.js'></script>
-
-<script src='resources/js/userCalendar.js'></script>
-
-<script src='resources/js/renderCalendar.js'></script>
-
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
-
-
-<script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
-
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
-
 
 <body>
 
@@ -121,7 +101,7 @@
                                 <spring:message code= "booking.startDate"/>
                             </label>
                             <br>
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 choose-booking">
                                 <input type="date" class="text-center form-control" id="recurrent-booking-start-date"
                                        placeholder="startDate">
                             </div>
@@ -137,9 +117,9 @@
                                 <spring:message code= "booking.endDate"/>
                             </label>
                             <br>
-                            <div class="col-xs-6">
-                                <input type="date" class="text-center form-control" id="recurrent-booking-end-date"
-                                       placeholder="endDate">
+                            <div class="col-xs-6 choose-booking">
+                                <input type="date" class="text-center form-control " id="recurrent-booking-end-date"
+                                       placeholder="endDate" disabled="true">
                             </div>
                             <div class="col-xs-6">
                                 <input id="recurrent-booking-end-time" type="text" class="text-center time form-control timepicker"
@@ -151,7 +131,7 @@
                         <div class="col-xs-12">
                             <div class="row">
                                 <form role="form">
-                                    <div class="row col-xs-5">
+                                    <div class="row col-xs-5 choose-booking">
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio-bookingform"
@@ -743,5 +723,17 @@
         </div>
     </div>
 </div>
+
+<script src='resources/js/moment.min.js'></script>
+<script src='resources/js/jquery.min.js'></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='resources/js/fullcalendar.js'></script>
+<script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
+
+<script src='resources/js/header-manager.js'></script>
+<script src='resources/js/header-user.js'></script>
+<script src='resources/js/userCalendar.js'></script>
+<script src='resources/js/renderCalendar.js'></script>
+<script src='resources/js/single-booking.js'></script>
 
 </body>
