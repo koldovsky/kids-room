@@ -418,12 +418,12 @@
                     <form id="form-dialog-recurrently">
 
                         <div class="form-group">
-                            <label for="recurrent-event-title">Event title</label>
+                            <label for="recurrent-event-title"><spring:message code="eventTitle"/></label>
                             <input type="text" class="form-control" id="recurrent-event-title" placeholder="title">
                         </div>
 
                         <div class="form-group">
-                            <label for="recurrent-event-start-date">Start date</label>
+                            <label for="recurrent-event-start-date"><spring:message code="booking.startDate"/></label>
                             <br>
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="recurrent-event-start-date"
@@ -436,7 +436,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="recurrent-event-end-date">End date</label>
+                            <label for="recurrent-event-end-date"><spring:message code="booking.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="recurrent-event-end-date"
