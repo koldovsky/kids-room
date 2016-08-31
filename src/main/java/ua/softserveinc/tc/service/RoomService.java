@@ -5,6 +5,7 @@ import ua.softserveinc.tc.entity.Room;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public interface RoomService extends BaseService<Room> {
@@ -16,4 +17,6 @@ public interface RoomService extends BaseService<Room> {
     Boolean isPossibleUpdate(BookingDto bookingDto);
 
     Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room);
+
+    List<Room> getActiveRooms();
 }
