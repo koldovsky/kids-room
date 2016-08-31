@@ -4,11 +4,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href='resources/css/flow-form.css' rel='stylesheet'/>
 
 <body>
 
