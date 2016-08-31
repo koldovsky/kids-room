@@ -120,8 +120,11 @@ $(function () {
 
     $('#create-new-event').click(function () {
         var newEventDate = $('#calendar').fullCalendar('getDate').format();
+        var currentDate = new Date();
         $('#title').val(newEventDate.substring(0, 10));
         $('#endDate').val(newEventDate.substring(0, 10));
+        $('#basicExample').timepicker('setTime', currentDate.toLocaleTimeString());
+        $('#ender').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
         $('#dialog').dialog('open');
     });
 
@@ -250,16 +253,23 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         dayClick: function (date) {
             var clickDate = date.format();
 
-            $('#startDate').val('');
-            $('#title').val(clickDate.substring(0, 10));
-            $('#endDate').val(clickDate.substring(0, 10));
 
-            $('#dialog').dialog('open');
 
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
-
+            var currentDate = new Date();
+            var neededTime = Number(clickDate.substring(11, 13))+1;
+            var endClickDate = String(neededTime).concat(clickDate.substring(13, 19));
+            $('#startDate').val('');
+            $('#title').val(clickDate.substring(0, 10));
+            $('#endDate').val(clickDate.substring(0, 10));
+            if (clickDate.substring(11, 19) == "00:00:00"){
+                $('#basicExample').timepicker('setTime', currentDate.toLocaleTimeString());
+                $('#ender').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()))}
+            else {$('#basicExample').timepicker('setTime', clickDate.substring(11, 19));
+                $('#ender').timepicker('setTime', endClickDate)}
+            $('#dialog').dialog('open');
             creatingEvent.clickDate = clickDate;
             creatingEvent.roomID = roomID;
         },
@@ -307,7 +317,6 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             }
         },
 
-        selectable: true,
         selectHelper: true,
         select: function (start, end) {
 
@@ -534,7 +543,11 @@ function deleteRecurrentEvents(recurrentId) {
         }
     });
 }
-
+function increaseTimeByHour(date){
+    var currentDate = new Date();
+    var endTimeHours = String(currentDate.getHours()+1);
+    return endTimeHours.concat(date.substring(2, 8));
+}
 
 
 

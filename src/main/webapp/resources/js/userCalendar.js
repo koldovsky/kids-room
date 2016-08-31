@@ -218,7 +218,7 @@ $(function () {
         $('#recurrent-booking-start-date').val(newBookingDate.substring(0, 10));
         $('#recurrent-booking-end-date').val(newBookingDate.substring(0, 10));
         $('#recurrent-booking-start-time').timepicker('setTime', currentDate.toLocaleTimeString());
-        $('#recurrent-booking-end-time').timepicker('setTime', currentDate.toLocaleTimeString());
+        $('#recurrent-booking-end-time').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
         $("#data-validation-information-string").html("");
         $('#make-recurrent-booking').dialog('open');
     });
@@ -652,15 +652,16 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                 clickDate = clickDate + 'T00:00:00';
             }
             var currentDate = new Date();
-
+            var neededTime = Number(clickDate.substring(11, 13))+1;
+            var endClickDate = String(neededTime).concat(clickDate.substring(13, 19));
 
             $('#recurrent-booking-start-date').val(clickDate.substring(0, 10));
             $('#recurrent-booking-end-date').val(clickDate.substring(0, 10));
             if (clickDate.substring(11, 19) == "00:00:00"){
                 $('#recurrent-booking-start-time').timepicker('setTime', currentDate.toLocaleTimeString());
-                $('#recurrent-booking-end-time').timepicker('setTime', currentDate.toLocaleTimeString());}
+                $('#recurrent-booking-end-time').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));}
             else {$('#recurrent-booking-start-time').timepicker('setTime', clickDate.substring(11, 19));
-                $('#recurrent-booking-end-time').timepicker('setTime', clickDate.substring(11, 19));}
+                $('#recurrent-booking-end-time').timepicker('setTime', endClickDate);}
             $("#data-validation-information-string").html("");
 
             bookingDate.clickDate = clickDate;
@@ -1053,4 +1054,9 @@ function cancelRecurrentBookings(recurrentId) {
         $('#user-calendar').fullCalendar('removeEvents', item.id);
         cancelBooking(item.id);
     })
+}
+function increaseTimeByHour(date){
+    var currentDate = new Date();
+    var endTimeHours = String(currentDate.getHours()+1);
+    return endTimeHours.concat(date.substring(2, 8));
 }
