@@ -99,4 +99,13 @@ public class ViewEventController {
         return calendarService.getRoomWorkingHours(id);
     }
 
+
+    @RequestMapping(value = "getRecurrentEventForEditing/{recurrentEventId}",
+            method = RequestMethod.GET,
+            produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String getRecurrentBookingForEditing(@PathVariable  Long recurrentEventId) {
+        return new Gson().toJson(calendarService.getRecurrentEventForEditingById(recurrentEventId));
+    }
+
 }

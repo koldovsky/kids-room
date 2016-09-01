@@ -1,5 +1,11 @@
 package ua.softserveinc.tc.dto;
 
+import ua.softserveinc.tc.constants.DateConstants;
+import ua.softserveinc.tc.entity.Event;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * Created by dima- on 07.05.2016.
  */
@@ -24,6 +30,24 @@ public class EventDto {
     private Long recurrentId;
 
     private String color;
+
+    public EventDto() {
+    }
+
+    public EventDto(Event event) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        this.name = event.getName();
+        this.startTime = df.format(event.getStartTime());
+        this.endTime = df.format(event.getEndTime());
+        this.ageLow = event.getAgeLow();
+        this.ageHigh = event.getAgeHigh();
+        this.id = event.getId();
+        this.description = event.getDescription();
+        this.recurrentId = event.getRecurrentId();
+        this.color = event.getColor();
+        this.roomId = event.getRoom().getId();
+    }
+
 
     public Long getRecurrentId() {
         return recurrentId;

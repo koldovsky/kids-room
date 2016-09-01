@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.GenericMapper;
 
@@ -14,6 +15,12 @@ public class RecurrentEventDto extends EventDto{
 
     private String daysOfWeek;
 
+    public RecurrentEventDto() {
+    }
+
+    public RecurrentEventDto(Event event) {
+        super(event);
+    }
     public Event toEvent() {
         EventDto eventDto = new EventDto();
         eventDto.setName(this.getName());
@@ -35,4 +42,5 @@ public class RecurrentEventDto extends EventDto{
     public void setDaysOfWeek(String daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
+
 }

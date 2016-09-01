@@ -682,7 +682,7 @@
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="choose-updating-type" class="dialog" hidden>
+                <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
                     <form id="choose-updating-form">
 
                         <div class="radio-button">
