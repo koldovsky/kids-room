@@ -10,7 +10,9 @@ var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
 var BLOCKED = '#ff0000'
 var allBookings;
-var blockedTimeSpans;
+var temporaryBookingId = -1;
+var blockedTimeSpanId = -2;
+
 
 $(function () {
 
@@ -67,43 +69,31 @@ $(function () {
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingUpdatingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingUpdatingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#recurrent-booking-start-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#make-recurrent-booking').dialog({
@@ -399,6 +389,7 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
             keyArr.sort();
             keyArr.forEach(function (item, i) {
                 objects[objectsLen + i] = {
+                    id: blockedTimeSpanId,
                     title: 'Room is full',
                     start: item,
                     end: result[item],
@@ -468,6 +459,8 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
                 bookingForUpdate.borderColor = BORDER;
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate);
+                redrawBlockedTimeSpans(roomIdForHandler);
+                redrawBlockedTimeSpans(roomIdForHandler);
             }
             else {
                 callErrorDialog('We regret to inform you that there are no available places left in the room on the time you\'ve chosen');
@@ -478,6 +471,7 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
 
 function sendBookingToServerForCreate(bookingsArray) {
     var currentTime = new Date().toISOString();
+    var roomId = bookingsArray[0].roomId;
     bookingsArray.forEach(function (item, i) {
         if (item.startTime < currentTime) {
             delete bookingsArray[i];
@@ -500,7 +494,7 @@ function sendBookingToServerForCreate(bookingsArray) {
 
                 var refresh = result;
 
-                $('#user-calendar').fullCalendar('removeEvents', -1);
+                $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
 
                 refresh.forEach(function (item) {
 
@@ -517,14 +511,16 @@ function sendBookingToServerForCreate(bookingsArray) {
                         comment: item.comment
                     });
                 });
+
+                redrawBlockedTimeSpans(roomIdForHandler);
             },
             error: function () {
-                $('#user-calendar').fullCalendar('removeEvents', -1);
+                $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
                 callErrorDialog('Room is full or duplicate booking. Please contact the manager if you have any problems with booking ');
             }
         });
     } else {
-        $('#user-calendar').fullCalendar('removeEvents', -1);
+        $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
         callErrorDialog('You cannot make booking in past time. Please contact the room manager if you have problems with booking');
     }
 }
@@ -538,6 +534,7 @@ function cancelBooking(bookingId) {
         dataType: 'json',
         data: JSON.stringify({})
     });
+    redrawBlockedTimeSpans(roomIdForHandler);
 }
 
 //tested
@@ -580,7 +577,7 @@ function createBooking() {
                     roomIdForHandler,
                     usersID));
             $('#user-calendar').fullCalendar('renderEvent', {
-                id: -1,
+                id: temporaryBookingId,
                 title: '',
                 start: makeISOTime(bookingDate.clickDate, 'recurrent-booking-start-time'),
                 end: makeISOTime(bookingDate.clickDate, 'recurrent-booking-end-time'),
@@ -596,6 +593,25 @@ function createBooking() {
 
 //tested
 function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
+    $('#bookingStartTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingStartTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingEndTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingEndTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingUpdatingStartTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingUpdatingStartTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingUpdatingEndTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingUpdatingEndTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#recurrent-booking-start-time').timepicker('option', 'minTime', workingHoursStart);
+    $('#recurrent-booking-start-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#recurrent-booking-end-time').timepicker('option', 'minTime', workingHoursStart);
+    $('#recurrent-booking-end-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+
     $('#user-calendar').fullCalendar({
         minTime: workingHoursStart,
         maxTime: workingHoursEnd,
@@ -1095,4 +1111,35 @@ function clearBookingDialogSingleMulti() {
         $('#' + item + '-booking').attr('checked', false);
     });
 
+}
+
+function redrawBlockedTimeSpans(roomId) {
+
+    $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);
+
+    var path = 'disabled?roomID=' + roomId;
+    $.ajax({
+        url: path, success: function (result) {
+            result = JSON.parse(result);
+
+            $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);
+            var keyArr = Object.keys(result);
+            keyArr.forEach(function (item) {
+                $('#user-calendar').fullCalendar('renderEvent', {
+                    id: blockedTimeSpanId,
+                    title: 'Room is full',
+                    start: item,
+                    end: result[item],
+                    color: BLOCKED,
+                    borderColor: BORDER,
+                    editable: false,
+
+                });
+            });
+
+        },
+        error : function() {
+
+        }
+    });
 }

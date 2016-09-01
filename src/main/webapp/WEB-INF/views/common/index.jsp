@@ -741,6 +741,8 @@
         </div>
     </div>
 </div>
+<%--error-dialog--%>
+<div id="error-dialog" type="hidden"></div>
 
 <script src='resources/js/moment.min.js'></script>
 <script src='resources/js/jquery.min.js'></script>
