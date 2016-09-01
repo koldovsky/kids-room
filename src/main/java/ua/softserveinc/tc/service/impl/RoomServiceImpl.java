@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.apache.lucene.facet.TopOrdAndIntQueue;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,7 +65,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             start.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        if ( !result.isEmpty()) {
+        if (!result.isEmpty()) {
             Set keys = result.keySet();
             Iterator i = keys.iterator();
             String baseKey = (String) i.next();
@@ -104,11 +105,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             calendarStart.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
             calendarStart.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
             calendarStart.set(Calendar.SECOND, 0);
+            calendarStart.set(Calendar.MILLISECOND, 0);
 
             temp.setTime(timeFormat.parse(room.getWorkingHoursEnd()));
             calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
             calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
             calendarEnd.set(Calendar.SECOND, 0);
+            calendarStart.set(Calendar.MILLISECOND, 0);
         } catch (ParseException pe) {
             log.error("Could not parse date", pe);
             return result;
@@ -116,31 +119,30 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
         List<Booking> bookings = reservedBookings(calendarStart.getTime(),
                 calendarEnd.getTime(), room);
+        if (bookings.size() >= room.getCapacity()) {
+            Calendar temp = Calendar.getInstance();
+            temp.setTime(calendarStart.getTime());
 
-        Calendar temp = Calendar.getInstance();
-        temp.setTime(calendarStart.getTime());
+            int minPeriod = appConfigurator.getMinPeriodSize();
+            while (calendarStart.compareTo(calendarEnd) < 0) {
 
-        int minPeriod = appConfigurator.getMinPeriodSize();
-        while (calendarStart.compareTo(calendarEnd) < 0) {
+                temp.add(Calendar.MINUTE, minPeriod);
 
-            temp.add(Calendar.MINUTE, minPeriod);
+                Date lo = calendarStart.getTime();
+                Date hi = temp.getTime();
 
-            Date lo = calendarStart.getTime();
-            Date hi = temp.getTime();
-
-            List<Booking> tempList = bookings.stream()
-                    .filter(booking ->
-                            booking.getBookingStartTime().compareTo(hi) < 0
-                                    && booking.getBookingEndTime().compareTo(lo) > 0)
-                    .collect(Collectors.toList());
-
-            if (room.getCapacity() <= tempList.size()) {
-                result.put(DateUtil.convertDateToString(lo),
-                        DateUtil.convertDateToString(hi));
+                List<Booking> tempList = bookings.stream()
+                        .filter(booking ->
+                                booking.getBookingStartTime().before(hi)
+                                        && booking.getBookingEndTime().after(lo))
+                        .collect(Collectors.toList());
+                if (room.getCapacity() <= tempList.size()) {
+                    result.put(DateUtil.convertDateToString(lo),
+                            DateUtil.convertDateToString(hi));
+                }
+                calendarStart.setTime(temp.getTime());
             }
-            calendarStart.setTime(temp.getTime());
         }
-
 
         return result;
     }

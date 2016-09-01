@@ -1,6 +1,6 @@
 function callErrorDialog(errorText) {
 
-    $('#error-dialog').attr('title', 'Error').text(errorText).dialog({
+    $('#error-dialog').attr('title', 'We\'re sorry').text(errorText).dialog({
         buttons: {
             'Ok': function () {
                 $(this).dialog('close');

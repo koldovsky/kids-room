@@ -744,4 +744,6 @@
     </div>
 </div>
 
+<%--error-dialog--%>
+<div id="error-dialog" type="hidden"></div>
 </body>
