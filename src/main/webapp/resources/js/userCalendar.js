@@ -67,43 +67,31 @@ $(function () {
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingUpdatingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingUpdatingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#recurrent-booking-start-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#make-recurrent-booking').dialog({
@@ -693,6 +681,25 @@ function createBooking() {
 
 //tested
 function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
+    $('#bookingStartTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingStartTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingEndTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingEndTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingUpdatingStartTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingUpdatingStartTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingUpdatingEndTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingUpdatingEndTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#recurrent-booking-start-time').timepicker('option', 'minTime', workingHoursStart);
+    $('#recurrent-booking-start-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#recurrent-booking-end-time').timepicker('option', 'minTime', workingHoursStart);
+    $('#recurrent-booking-end-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+
     $('#user-calendar').fullCalendar({
         minTime: workingHoursStart,
         maxTime: workingHoursEnd,

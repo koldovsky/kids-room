@@ -37,8 +37,6 @@ $(function () {
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
 
@@ -243,7 +241,14 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
     info_event = {};
     creatingEvent = {};
     allEvents = objects;
-
+    $('.timepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('.timepicker').timepicker('option', 'maxTime', workingHoursEnd);
+    $('.timepicker').timepicker({
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: workingHoursStart,
+        maxTime: workingHoursEnd
+    });
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
         timeFormat : 'HH:mm',
