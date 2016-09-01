@@ -14,8 +14,10 @@
 <script src='resources/js/fullcalendar.js'></script>
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
-
+<script src='resources/js/manager-create-events-validator.js'></script>
+<script src='resources/js/user-create-booking-validator.js'></script>
 <script src='resources/js/userCalendar.js'></script>
+
 
 <script src='resources/js/renderCalendar.js'></script>
 
@@ -491,8 +493,8 @@
                     <form id="form">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="col-xs-12 form-group">
-                            <label for="startDate">Event title</label>
-                            <input type="text" class="form-control" id="startDate" placeholder="title">
+                            <label for="event-title">Event title</label>
+                            <input type="text" class="form-control" id="event-title" placeholder="Event title">
                         </div>
                         <div class="form-group">
                             <label for="title">Choose a color</label>
@@ -604,6 +606,10 @@
                                            placeholder="description">
                                 </div>
                                 <br>
+                                    <div id="data-validation-information-string-container" class="clearfix">
+                                        <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                                    </div>
+                                <br>
                                 <div class="clearfix"></div>
                                 <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete
                                     this event
@@ -667,7 +673,11 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-
+                        <br>
+                            <div id="data-validation-information-string-container" class="clearfix">
+                                <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                            </div>
+                        <br>
                         <button type="button" class="col-xs-6 btn btn-success" id="updatingButton">Update</button>
                         <button type="button" class="pull-right btn btn-danger" id="cancel-update">Cancel</button>
                         <button type="button" class="col-xs-12 deleting-event btn btn-warning btn-xs" id="deleting-single-event">Delete this event</button>
