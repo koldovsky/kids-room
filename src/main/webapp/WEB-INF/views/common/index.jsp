@@ -11,6 +11,7 @@
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
+<link href='resources/css/manager-no-rooms.css' rel='stylesheet'/>
 
 <body>
 
@@ -300,10 +301,6 @@
 
     </div>
 
-    <%--<div id="confirmation-dialog" title="Delete booking" hidden>--%>
-        <%--<p><span id="confirmation-dialog-message" class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Booking will be permanently deleted and cannot be recovered. Are you sure?</p>--%>
-    <%--</div>--%>
-
     <%--create-new-booking--%>
     <div class="container">
 
@@ -406,12 +403,23 @@
 
 
     <c:forEach items="${managersRoom}" var="r">
-
         ${r.id}
-
     </c:forEach>
 
+    <c:if test="${rooms.isEmpty()}">
+        <div id="manager-no-rooms">
+            <h1>
+          <span class="label label-warning" id="radius">
+          <spring:message code="manager.oops"/></span>
+            </h1>
+            <h3 class="center"><spring:message code="manager.noRooms" /></h3>
+        </div>
+        <div class="desert">
+            <div class="tumbleweed"></div>
+        </div>
+    </c:if>
 
+    <c:if test="${!rooms.isEmpty()}">
     <div class="container">
         <div class="vertical-center-row">
             <div align="center">
@@ -698,7 +706,7 @@
         <button type="button" class="btn btn-success" id="create-new-event">New event</button>
         <div id='calendar'></div>
     </div>
-
+    </c:if>
 </sec:authorize>
 <sec:authorize access="hasRole('ADMINISTRATOR')">
 
