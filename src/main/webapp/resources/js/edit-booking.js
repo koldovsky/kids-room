@@ -84,6 +84,8 @@ $().ready(function() {
 });
 
 $(function() {
+
+
     $('#date-booking').change(function() {
         refreshTable(localStorage["bookingsState"]);
     });
@@ -93,10 +95,28 @@ $(function() {
         minTime: '07:00',
         maxTime: '20:00'
     });
+
 });
 
 function selectRoomForManager(roomId) {
     refreshTable(localStorage["bookingsState"]);
+    $.ajax({
+        url: 'getroomproperty/' + roomId,
+        success: function(result){
+            result = result.split(' ');
+            $('#bookingStartTimepicker').val(result[0]);
+            $('#bookingEndTimepicker').val(result[1]);
+            result[0] += ":00";
+            result[1] += ":00";
+
+            var startTime = result[0];
+            var endTime = result[1];
+            $('.picker').timepicker('option', 'minTime', startTime);
+            $('.picker').timepicker('option', 'maxTime', endTime);
+
+        }
+
+    });
 }
 
 function bookedBooking() {
