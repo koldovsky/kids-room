@@ -10,6 +10,7 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
+<link href='resources/css/flow-form.css' rel='stylesheet'/>
 
 <div class="container">
 <div class="table-edit">

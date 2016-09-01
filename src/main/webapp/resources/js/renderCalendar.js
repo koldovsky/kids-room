@@ -1,7 +1,6 @@
 /**
  * Created by dima- on 12.05.2016.
  */
-
 var info_event;
 var creatingEvent;
 var allEvents;
@@ -29,6 +28,9 @@ $(function () {
         autoOpen: false,
         beforeClose: function () {
             $('#deleting-recurrent-event').hide();
+        },
+        open: function(event, ui) {
+            cleanValidationInfo();
         }
 
     });
@@ -37,8 +39,6 @@ $(function () {
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
 
@@ -67,9 +67,13 @@ $(function () {
 
 
     $('#updatingButton').click(function () {
+        if(validateUpdateSingleDialog()){
+            updateSingleEvent();
+        }
+    });
 
+    function updateSingleEvent(){
         $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
-
         var eventForUpdate = {
             id: info_event.calEvent.id,
             title: $('#titleUpdate').val(),
@@ -84,7 +88,7 @@ $(function () {
         sendToServerForUpdate(eventForUpdate, info_event.roomID);
 
         $('#updating').dialog('close');
-    });
+    }
 
     $('#deleting-recurrent-event').click(function () {
         deleteRecurrentEvents(info_event.calEvent.recurrentId);
@@ -102,7 +106,15 @@ $(function () {
     });
 
     $('#creating').click(function () {
+        if(isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)){
+            if(!validateEventDialogData(CREATE_SINGLE_EVENT))
+                return;
+        }else{
+            if(!validateEventDialogData(CREATE_RECURRENT_EVENT))
+                return;
+        }
         createRecurrentEvents();
+
     });
 
     $('#recurrent').click(function () {
@@ -120,8 +132,11 @@ $(function () {
 
     $('#create-new-event').click(function () {
         var newEventDate = $('#calendar').fullCalendar('getDate').format();
+        var currentDate = new Date();
         $('#title').val(newEventDate.substring(0, 10));
         $('#endDate').val(newEventDate.substring(0, 10));
+        $('#basicExample').timepicker('setTime', currentDate.toLocaleTimeString());
+        $('#ender').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
         $('#dialog').dialog('open');
     });
 
@@ -154,18 +169,16 @@ $(function () {
 
     $('#cancel-choose').click(function () {
         $('#choose-updating-type').dialog('close');
-
         $('#single-update').prop('checked', true);
-
         $('#recurrent-update').prop('checked', false);
 
     });
 
     $('#update-recurrent').click(function () {
-
-        deleteRecurrentEvents(info_event.calEvent.recurrentId);
-        
-        createRecurrentEvents();
+        if(validateEventDialogData(UPDATE_RECURRENT_EVENT)){
+            deleteRecurrentEvents(info_event.calEvent.recurrentId);
+            createRecurrentEvents();
+        }
     });
 });
 
@@ -240,7 +253,14 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
     info_event = {};
     creatingEvent = {};
     allEvents = objects;
-
+    $('.timepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('.timepicker').timepicker('option', 'maxTime', workingHoursEnd);
+    $('.timepicker').timepicker({
+        timeFormat: 'H:i',
+        step: 15,
+        minTime: workingHoursStart,
+        maxTime: workingHoursEnd
+    });
     $('#calendar').fullCalendar({
         slotDuration: '00:15:00',
         timeFormat : 'HH:mm',
@@ -250,16 +270,23 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         dayClick: function (date) {
             var clickDate = date.format();
 
-            $('#startDate').val('');
-            $('#title').val(clickDate.substring(0, 10));
-            $('#endDate').val(clickDate.substring(0, 10));
 
-            $('#dialog').dialog('open');
 
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
-
+            var currentDate = new Date();
+            var neededTime = Number(clickDate.substring(11, 13))+1;
+            var endClickDate = String(neededTime).concat(clickDate.substring(13, 19));
+            $('#event-title').val('');
+            $('#title').val(clickDate.substring(0, 10));
+            $('#endDate').val(clickDate.substring(0, 10));
+            if (clickDate.substring(11, 19) == "00:00:00"){
+                $('#basicExample').timepicker('setTime', currentDate.toLocaleTimeString());
+                $('#ender').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()))}
+            else {$('#basicExample').timepicker('setTime', clickDate.substring(11, 19));
+                $('#ender').timepicker('setTime', endClickDate)}
+            $('#dialog').dialog('open');
             creatingEvent.clickDate = clickDate;
             creatingEvent.roomID = roomID;
         },
@@ -276,7 +303,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             $('#descriptionUpdate').val(calEvent.description);
 
 
-            $('#startDate').val(calEvent.title);
+            $('#event-title').val(calEvent.title);
             $('#title').val(calEvent.start.format().substring(0, 10));
             $('#endDate').val(calEvent.end.format().substring(0, 10));
             $('#description').val(calEvent.description);
@@ -307,7 +334,6 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             }
         },
 
-        selectable: true,
         selectHelper: true,
         select: function (start, end) {
 
@@ -439,6 +465,7 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
     });
 }
 
+
 function createRecurrentEvents() {
 
     var startDateForCreatingRecurrentEvents = $('#title').val() + 'T00:00:00';
@@ -448,7 +475,7 @@ function createRecurrentEvents() {
 
     var ev = {
         id: -1,
-        title: $('#startDate').val(),
+        title: $('#event-title').val(),
         start: makeISOTime(startDateForCreatingRecurrentEvents, 'basicExample'),
         end: makeISOTime(endDate, 'ender'),
         backgroundColor: NOT_ACTIVE_EVENT,
@@ -456,7 +483,7 @@ function createRecurrentEvents() {
         editable: false,
         description: $('#description').val()
     };
-
+    // ====================== In this part recurrent events are create======
     if ($('#weekly').is(':checked')) {
         var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var dayWhenEventIsRecurrent = [];
@@ -478,7 +505,7 @@ function createRecurrentEvents() {
         closeDialog('dialog');
         return;
     }
-
+    //======================================================================
     $('#calendar').fullCalendar('renderEvent', ev, true);
     $('#calendar').fullCalendar('unselect');
 
@@ -534,7 +561,11 @@ function deleteRecurrentEvents(recurrentId) {
         }
     });
 }
-
+function increaseTimeByHour(date){
+    var currentDate = new Date();
+    var endTimeHours = String(currentDate.getHours()+1);
+    return endTimeHours.concat(date.substring(2, 8));
+}
 
 
 

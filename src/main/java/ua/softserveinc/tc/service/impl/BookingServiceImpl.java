@@ -15,7 +15,9 @@ import ua.softserveinc.tc.util.DateUtil;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -72,11 +74,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public void calculateAndSetSum(Booking booking) {
         calculateAndSetDuration(booking);
-
-        List<Rate> rates = booking.getRoom().getRates();
-        Rate closestRate = rateService.calculateAppropriateRate(booking.getDuration(), rates);
-
-        booking.setSum(closestRate.getPriceRate());
+        Long sum = rateService.calculateBookingCost(booking);
+        booking.setSum(sum);
         booking.setBookingState(BookingState.COMPLETED);
         bookingDao.update(booking);
     }
@@ -116,9 +115,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findById(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
-        resetSumAndDuration(booking);
+        calculateAndSetSum(booking);
         return booking;
     }
+
+
+
 
     private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);

@@ -40,6 +40,12 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         List<Predicate> restrictions = new ArrayList<>();
         if (startDate != null && endDate != null) {
+            //add one day for including last day in parent report
+            Calendar c = Calendar.getInstance();
+            c.setTime(endDate);
+            c.add(Calendar.DATE, 1);
+            endDate = c.getTime();
+
             restrictions.add(builder.between(root.get(
                     BookingConstants.Entity.START_TIME), startDate, endDate));
         }

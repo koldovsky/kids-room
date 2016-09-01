@@ -50,7 +50,7 @@
                         <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                         <button type="submit" value="lock"
                                 onClick="return confirm('Are you sure you want to make the manager active?')"
-                                class="button-size-default button save"></button>
+                                class="button-size-default button delete"></button>
                     </form:form>
                 </c:if>
                 <c:if test="${manager.active eq true}">
@@ -59,7 +59,7 @@
                         <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                         <button type="submit" value="lock"
                                 onClick="return confirm('Are you sure you want to make the manager inactive?')"
-                                class="button-size-default button delete"></button>
+                                class="button-size-default button save"></button>
                     </form:form>
                 </c:if>
             </td>
