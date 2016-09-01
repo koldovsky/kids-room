@@ -4,31 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
 
-
-<script src='resources/js/moment.min.js'></script>
-
-<script src='resources/js/jquery.min.js'></script>
-<script src='resources/js/fullcalendar.js'></script>
-<script src='resources/js/header-manager.js'></script>
-<script src='resources/js/header-user.js'></script>
-
-<script src='resources/js/userCalendar.js'></script>
-
-<script src='resources/js/renderCalendar.js'></script>
-
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
-
-
-<script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
-
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
-
+<link href='resources/css/flow-form.css' rel='stylesheet'/>
 
 <body>
 
@@ -121,7 +103,7 @@
                                 <spring:message code= "booking.startDate"/>
                             </label>
                             <br>
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 choose-booking">
                                 <input type="date" class="text-center form-control" id="recurrent-booking-start-date"
                                        placeholder="startDate">
                             </div>
@@ -137,9 +119,9 @@
                                 <spring:message code= "booking.endDate"/>
                             </label>
                             <br>
-                            <div class="col-xs-6">
-                                <input type="date" class="text-center form-control" id="recurrent-booking-end-date"
-                                       placeholder="endDate">
+                            <div class="col-xs-6 choose-booking">
+                                <input type="date" class="text-center form-control " id="recurrent-booking-end-date"
+                                       placeholder="endDate" disabled="true">
                             </div>
                             <div class="col-xs-6">
                                 <input id="recurrent-booking-end-time" type="text" class="text-center time form-control timepicker"
@@ -151,7 +133,7 @@
                         <div class="col-xs-12">
                             <div class="row">
                                 <form role="form">
-                                    <div class="row col-xs-5">
+                                    <div class="row col-xs-5 choose-booking">
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio-bookingform"
@@ -343,25 +325,25 @@
                         <div align="center">
                             <br>
                                <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "yourBooking"/>
+                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-heart" ></span></h1> <spring:message code= "yourBooking"/>
                                </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "room"/>
+                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-record" ></span></h1> <spring:message code= "room"/>
                                </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "bookedRoom"/>
+                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-tree-conifer" ></span></h1> <spring:message code= "bookedRoom"/>
                                </div>
                             <div class="col-xs-12">
                                 <h3  >
-                                    <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-certificate" ></span>
+                                    <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-wrench" ></span>
+                                    <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-knight" ></span>
+                                    <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-apple" ></span>
+                                    <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-sunglasses" ></span>
                                 </h3>
-                                <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
+                                <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-scale" ></span>
+                                    <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-scissors" ></span>
+                                    <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-erase" ></span>
+                                    <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-piggy-bank" ></span>
+                                    <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-tree-deciduous" ></span>  </h3>
                                 <spring:message code= "events"/>
 
                                 <br>
@@ -437,12 +419,12 @@
                     <form id="form-dialog-recurrently">
 
                         <div class="form-group">
-                            <label for="recurrent-event-title">Event title</label>
+                            <label for="recurrent-event-title"><spring:message code="eventTitle"/></label>
                             <input type="text" class="form-control" id="recurrent-event-title" placeholder="title">
                         </div>
 
                         <div class="form-group">
-                            <label for="recurrent-event-start-date">Start date</label>
+                            <label for="recurrent-event-start-date"><spring:message code="booking.startDate"/></label>
                             <br>
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="recurrent-event-start-date"
@@ -455,7 +437,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="recurrent-event-end-date">End date</label>
+                            <label for="recurrent-event-end-date"><spring:message code="booking.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
                                 <input type="date" class="form-control" id="recurrent-event-end-date"
@@ -491,8 +473,8 @@
                     <form id="form">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="col-xs-12 form-group">
-                            <label for="startDate">Event title</label>
-                            <input type="text" class="form-control" id="startDate" placeholder="title">
+                            <label for="event-title">Event title</label>
+                            <input type="text" class="form-control" id="event-title" placeholder="Event title">
                         </div>
                         <div class="form-group">
                             <label for="title">Choose a color</label>
@@ -604,6 +586,10 @@
                                            placeholder="description">
                                 </div>
                                 <br>
+                                    <div id="data-validation-information-string-container" class="clearfix">
+                                        <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                                    </div>
+                                <br>
                                 <div class="clearfix"></div>
                                 <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete
                                     this event
@@ -667,7 +653,11 @@
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
-
+                        <br>
+                            <div id="data-validation-information-string-container" class="clearfix">
+                                <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                            </div>
+                        <br>
                         <button type="button" class="col-xs-6 btn btn-success" id="updatingButton">Update</button>
                         <button type="button" class="pull-right btn btn-danger" id="cancel-update">Cancel</button>
                         <button type="button" class="col-xs-12 deleting-event btn btn-warning btn-xs" id="deleting-single-event">Delete this event</button>
@@ -743,7 +733,21 @@
         </div>
     </div>
 </div>
-
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
+
+<script src='resources/js/moment.min.js'></script>
+<script src='resources/js/jquery.min.js'></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='resources/js/fullcalendar.js'></script>
+<script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
+
+<script src='resources/js/header-manager.js'></script>
+<script src='resources/js/header-user.js'></script>
+<script src='resources/js/manager-create-events-validator.js'></script>
+<script src='resources/js/user-create-booking-validator.js'></script>
+<script src='resources/js/userCalendar.js'></script>
+<script src='resources/js/renderCalendar.js'></script>
+<script src='resources/js/single-booking.js'></script>
+
 </body>

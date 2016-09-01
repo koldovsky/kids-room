@@ -69,43 +69,31 @@ $(function () {
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingUpdatingStartTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#bookingUpdatingEndTimepicker').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#recurrent-booking-start-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
         step: 15,
-        minTime: '07:00',
-        maxTime: '20:00'
     });
 
     $('#make-recurrent-booking').dialog({
@@ -138,6 +126,8 @@ $(function () {
     });
 
     $('#update-recurrent-booking').click(function () {
+        if(!validateCreateBookingDialogData(UPDATE_RECURRENT_BOOKING))
+            return;
         updateRecurrentBooking();
     });
     $('#close-choose').click(function () {
@@ -206,9 +196,10 @@ $(function () {
 
 
     $('#updatingBooking').click(function () {
-        var success = updateBooking();
-        if (success)
-            $('#bookingUpdatingDialog').dialog('close');
+        if(!validateSingleBookingUpdateDialogData())
+            return;
+        updateBooking();
+        $('#bookingUpdatingDialog').dialog('close');
 
     });
 
@@ -243,15 +234,17 @@ $(function () {
     $('#book').click(function () {
         //here the data validation
         if ($('#no-recurrent-booking').is(':checked')) {
-            var success= createBooking();
-            if(success)
-                closeBookingDialog();
+            if(!validateCreateBookingDialogData(CREATE_SINGLE_BOOKING))
+                    return;
+            createBooking();
+            closeBookingDialog();
         }
 
         if ($('#weekly-booking').is(':checked')) {
-            var success = makeRecurrentBookings();
-            if(success)
-                closeBookingDialog();
+            if(!validateCreateBookingDialogData(CREATE_RECURRENT_BOOKING))
+                return;
+            makeRecurrentBookings();
+            closeBookingDialog();
 
         }
     });
@@ -550,8 +543,6 @@ function getComment(commentInputId) {
 }
 
 function updateBooking() {
-    if(!validateSingleBookingUpdateDialogData())
-        return false;
     var newStartDate = makeISOTime(info.calEvent.start.format(), 'bookingUpdatingStartTimepicker');
     var newEndDate = makeISOTime(info.calEvent.end.format(), 'bookingUpdatingEndTimepicker');
 
@@ -569,108 +560,9 @@ function updateBooking() {
 
 //tested
 
-function validateSingleBookingUpdateDialogData(){
-    var startDate = $.datepicker.parseDate("yy-mm-dd",$('#recurrent-booking-start-date').val());
-    var startTime = $("#bookingUpdatingStartTimepicker").timepicker('getTime');
-    var endTime = $("#bookingUpdatingEndTimepicker").timepicker('getTime');
-    var currentDate = new Date();
-    var dataValidationStrings = new Array();
-    var minuteLengthInMilliseconds = 60000;
-    if(startDate.getDate()==currentDate.getDate())
-        if(startTime.getTime() < currentDate.getTime()){
-            dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
-        }
-    if(endTime.getTime()-startTime.getTime()<minuteLengthInMilliseconds){
-        dataValidationStrings.push("End time must be at least one minute later than the start time");
-    }
-     if(dataValidationStrings.length>0){
-            var text = "Incorrect data:";
-            for(var i=0; i<dataValidationStrings.length; i++){
-                text+="<br/>- "+dataValidationStrings[i]+".";
-            }
-            //$("#data-validation-information-string").html(text);
-            $(".data-validation-information-string").html(text);
-            return false;
-        }else{
-            return true;
-        }
 
-
-}
-
-
-function validateCreateBookingDialogData(bookingType){
-    var startDate = $.datepicker.parseDate("yy-mm-dd",$('#recurrent-booking-start-date').val());
-    var endDate = $.datepicker.parseDate("yy-mm-dd",$('#recurrent-booking-end-date').val());
-    var currentDate = new Date();
-    var startTime = $("#recurrent-booking-start-time").timepicker('getTime');
-    var endTime = $("#recurrent-booking-end-time").timepicker('getTime');
-    var dayLengthInMilliseconds = startTime.getHours()*60*60*1000;
-    var minuteLengthInMilliseconds = 60000;
-    var dataValidationStrings = new Array();
-    if( (startDate.getTime() < currentDate.getTime())){
-        if(startDate.getDate()!=currentDate.getDate()){
-            dataValidationStrings.push("Date can't be in the past, current date is: "+currentDate.toLocaleDateString());
-        }
-    }
-    if(startDate.getDate()==currentDate.getDate())
-        if(startTime.getTime() < currentDate.getTime()){
-            dataValidationStrings.push("Start can't be in the past, current time is: "+currentDate.toLocaleTimeString());
-        }
-    if(endTime.getTime()-startTime.getTime()<minuteLengthInMilliseconds){
-        dataValidationStrings.push("End time must be at least one minute later than the start time");
-    }
-
-
-    if(bookingType=="weekly-booking" || bookingType=="update-weekly-booking"){
-        if(endDate.getTime()-startDate.getTime()<dayLengthInMilliseconds){
-            dataValidationStrings.push("Weekly Booking: End date must be at least one day later than the start date");
-        }
-        var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var numberOfSelectedDays = 0;
-        checkBoxesDays.forEach(function (item) {
-            if ($('#' + item + '-booking').is(':checked')) {
-                numberOfSelectedDays++;
-            }
-        });
-        if(numberOfSelectedDays<1){
-            dataValidationStrings.push("Weekly Booking: At least one day must be selected");
-        }
-
-    }
-    if(bookingType!="update-weekly-booking" && bookingType!="update-single-booking"){
-        var numberOfSelectedKids = 0;
-        for (var i = 0; i < ($('#number-of-kids').val()); i++) {
-            kidsCommentId = $('#comment-' + i).val();
-            if ($('#checkboxKid' + kidsCommentId).is(':checked')) {
-                numberOfSelectedKids++;
-            }
-        }
-        if(numberOfSelectedKids<1){
-                dataValidationStrings.push("At least one kid must be selected");
-        }
-    }
-    if(bookingType=="update-weekly-booking"){
-        if ($("#no-recurrent-booking").is(":checked")){
-            dataValidationStrings.push("Can't convert weekly booking to single!");
-        }
-    }
-
-    if(dataValidationStrings.length>0){
-        var text = "Incorrect data:";
-        for(var i=0; i<dataValidationStrings.length; i++){
-            text+="<br/>- "+dataValidationStrings[i]+".";
-        }
-        //$("#data-validation-information-string").html(text);
-        $(".data-validation-information-string").html(text);
-        return false;
-    }else
-        return true;
-}
 
 function createBooking() {
-    if(!validateCreateBookingDialogData("single-booking"))
-        return false;
     bookingDate.clickDate = $('#recurrent-booking-start-date').val();
     bookingsArray = [];
     var kidsCommentId;
@@ -697,11 +589,29 @@ function createBooking() {
         }
     }
     sendBookingToServerForCreate(bookingsArray);
-    return true;
 }
 
 //tested
 function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
+    $('#bookingStartTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingStartTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingEndTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingEndTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingUpdatingStartTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingUpdatingStartTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#bookingUpdatingEndTimepicker').timepicker('option', 'minTime', workingHoursStart);
+    $('#bookingUpdatingEndTimepicker').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#recurrent-booking-start-time').timepicker('option', 'minTime', workingHoursStart);
+    $('#recurrent-booking-start-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+    $('#recurrent-booking-end-time').timepicker('option', 'minTime', workingHoursStart);
+    $('#recurrent-booking-end-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+
     $('#user-calendar').fullCalendar({
         minTime: workingHoursStart,
         maxTime: workingHoursEnd,
@@ -901,8 +811,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 }
 
 function updateRecurrentBooking() {
-    if(!validateCreateBookingDialogData("update-weekly-booking"))
-        return false;
+
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     var checkedDays = '';
@@ -964,12 +873,9 @@ function updateRecurrentBooking() {
         }
     )
     closeUpdatingDialog();
-    return true;
 }
 
 function makeRecurrentBookings() {
-    if(!validateCreateBookingDialogData("weekly-booking"))
-        return false;
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var checkedDays = '';
     checkBoxesDays.forEach(function (item) {
