@@ -325,25 +325,25 @@
                         <div align="center">
                             <br>
                                <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "yourBooking"/>
+                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-heart" ></span></h1> <spring:message code= "yourBooking"/>
                                </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "room"/>
+                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-record" ></span></h1> <spring:message code= "room"/>
                                </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "bookedRoom"/>
+                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-tree-conifer" ></span></h1> <spring:message code= "bookedRoom"/>
                                </div>
                             <div class="col-xs-12">
                                 <h3  >
-                                    <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
+                                    <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-certificate" ></span>
+                                    <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-wrench" ></span>
+                                    <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-knight" ></span>
+                                    <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-apple" ></span>
+                                    <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-sunglasses" ></span>
                                 </h3>
-                                <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
+                                <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-scale" ></span>
+                                    <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-scissors" ></span>
+                                    <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-erase" ></span>
+                                    <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-piggy-bank" ></span>
+                                    <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-tree-deciduous" ></span>  </h3>
                                 <spring:message code= "events"/>
 
                                 <br>
