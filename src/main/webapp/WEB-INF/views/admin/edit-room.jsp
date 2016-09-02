@@ -20,7 +20,7 @@
         <tr>
             <th class="th-size"><strong><spring:message code="administrator.room.name"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.address"/></strong></th>
-            <th class="th-size"><input type="text" id="search" placeholder="<spring:message code="administrator.room.city"/>"></th>
+            <th class="th-size"><input type="text" id="search" style="color:#827878;" placeholder="<spring:message code="administrator.room.city"/> "></th>
             <th class="th-size"><strong><spring:message code="administrator.phoneNumber"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.capacity"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
