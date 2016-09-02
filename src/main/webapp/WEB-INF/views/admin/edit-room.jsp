@@ -20,7 +20,7 @@
         <tr>
             <th class="th-size"><strong><spring:message code="administrator.room.name"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.address"/></strong></th>
-            <th class="th-size"><strong><spring:message code="administrator.room.city"/></strong></th>
+            <th class="th-size"><input type="text" id="search" style="color:#827878;" placeholder="<spring:message code="administrator.room.city"/> "></th>
             <th class="th-size"><strong><spring:message code="administrator.phoneNumber"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.capacity"/></strong></th>
             <th class="th-size"><strong><spring:message code="administrator.room.roomWorkTime"/></strong></th>
@@ -31,11 +31,11 @@
         </tr>
 
         <c:forEach var="room" items="${roomList}">
-        <c:if test="${room.active eq true}"><tr></c:if>
+        <c:if test="${room.active eq true}"><tr class="room"></c:if>
         <c:if test="${room.active ne true}"><tr class="tr-not-active"></c:if>
             <td>${room.name}</td>
             <td>${room.address}</td>
-            <td>${room.city}</td>
+            <td class="city">${room.city}</td>
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
             <td>
@@ -97,4 +97,6 @@
         </tr>
     </table>
 </div>
+
+<script src='resources/js/adminRoomSearch.js'></script>
 </body>

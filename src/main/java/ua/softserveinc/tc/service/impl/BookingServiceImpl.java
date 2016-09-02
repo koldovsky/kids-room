@@ -311,12 +311,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         for(Booking booking: listOfRecurrentBooking){
             listOfRecurrentBookingDto.add(new BookingDto(booking));
         }
-        listOfRecurrentBookingDto.sort(new Comparator<BookingDto>() {
-            @Override
-            public int compare(BookingDto o1, BookingDto o2) {
-                return o1.getStartTime().compareTo(o2.getStartTime());
-            }
-        });
         try {
             recurentBookToReturn.setDate(listOfRecurrentBookingDto.get(0).getDate());
             recurentBookToReturn.setEndDate(listOfRecurrentBookingDto.get(listOfRecurrentBookingDto.size()-1).getDate());;
@@ -330,11 +324,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 bookedDaysOfWeek[day-2]=true;
             }
             String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
-            String days="";
+            StringBuilder days=new StringBuilder();
             for (int i=0; i < nameOfDays.length; i++){
-                if (bookedDaysOfWeek[i]) days+=" "+nameOfDays[i];
+                if (bookedDaysOfWeek[i]) days.append(" "+nameOfDays[i]);
             }
-            recurentBookToReturn.setDaysOfWeek(days);
+            recurentBookToReturn.setDaysOfWeek(days.toString());
             recurentBookToReturn.setRecurrentId(bookingId);
         } catch (Exception e) {
             e.printStackTrace();

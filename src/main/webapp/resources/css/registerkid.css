@@ -132,3 +132,10 @@ textarea {
 .confirm-form {
     width: auto;
 }
+
+.confirmDelete {
+    align:center;
+    color:red;
+    text-align:center;
+    padding-left: 5px;
+}
