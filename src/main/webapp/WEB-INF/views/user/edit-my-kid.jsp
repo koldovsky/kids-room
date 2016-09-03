@@ -82,19 +82,19 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
             <div align="center">
                 <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "editkid.confirmationtitle" /> hidden>
                     <form id="confirm-your-choice" class="confirm-form">
-                        <div style = "align:center; color:red; text-align:center;">
-                            <p><span style="color:red; text-align:center;" >
+                        <div class= "confirmDelete">
+                            <p><span style="text-align:center;" >
                                 <spring:message code="editkid.confirmdeactivatekid1"/> </span> </p>
-                            <p><span style="color:red; text-align:center;" >
+                            <p><span style="text-align:center;" >
                                 <spring:message code="editkid.confirmdeactivatekid2"/> </span> </p>
                         </div>
-                        <div class="col-xs-12" style = "display: flex; align-items: center;justify-content: center;" >
-                            <div class="col-xs-6">
+                        <div class="col-xs-12">
+                            <div class="col-xs-6" style = "text-align: center">
                                 <button type="button"  class="btn btn-success" id="confirmYes">
                                     <spring:message code= "editkid.deactivateYes"/>
                                 </button>
                             </div>
-                            <div class = col-xs-6>
+                            <div class = col-xs-6" style = "text-align: center">
                                 <button type="button" class="btn btn-danger" id="confirmNo">
                                     <spring:message code= "editkid.deactivateNo"/>
                                 </button>

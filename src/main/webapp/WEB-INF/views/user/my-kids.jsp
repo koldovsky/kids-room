@@ -9,8 +9,7 @@
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
 
-<script src="resources/js/mykidslist.js">
-</script>
+<script src="resources/js/mykidslist.js"></script>
 
 
 <div class="list" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
@@ -29,8 +28,8 @@
             </button>
         </form>
     </div>
-
 </c:if>
+
 <c:if test="${!kids.isEmpty()}">
     <img id="icon-png" src="resources/img/kids_icon.png" />
     <h2>
