@@ -107,6 +107,11 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/adm-config.jsp"/>
     </definition>
 
+    <definition name="adm-days-off" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/days-off.jsp"/>
+    </definition>
+
+
     <!-- Manager -->
     <definition name="allkidslist" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager/allkidslist.jsp"/>

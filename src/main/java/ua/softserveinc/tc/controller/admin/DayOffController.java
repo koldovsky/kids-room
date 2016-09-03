@@ -13,16 +13,17 @@ import java.util.List;
 
 
 @RestController
+
 public class DayOffController {
 
     @Autowired
     private DayOffService dayOffService;
 
-    @RequestMapping(value = "/admin/days-off", method = RequestMethod.GET)
+    @RequestMapping(value = "/adm-days-off", method = RequestMethod.GET)
     public ResponseEntity<List<DayOff>> listAllUsers() {
         List<DayOff> daysOff = dayOffService.findAll();
         if(daysOff.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(daysOff, HttpStatus.OK);
     }

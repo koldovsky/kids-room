@@ -34,7 +34,7 @@ public class DayOff {
     @Column(name = DayOffConstants.Entity.END_DATE)
     private LocalDate endDate;
 
-    @ManyToMany(mappedBy = "daysOff")
+    @ManyToMany(mappedBy = "daysOff", fetch=FetchType.LAZY)
     List<Room> rooms;
 
 }

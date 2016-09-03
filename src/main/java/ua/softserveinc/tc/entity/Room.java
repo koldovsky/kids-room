@@ -54,7 +54,7 @@ public class Room {
     private List<User> managers;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = RoomConstants.ROOMS_OFF,
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.DAY_OFF))
