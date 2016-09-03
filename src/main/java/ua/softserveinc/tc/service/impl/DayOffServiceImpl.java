@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.service.DayOffService;
@@ -8,6 +9,7 @@ import ua.softserveinc.tc.service.DayOffService;
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class DayOffServiceImpl implements DayOffService {
 
     @Autowired

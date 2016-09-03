@@ -421,6 +421,13 @@ insert into managers (room, manager) values (13, 89)
 insert into managers (room, manager) values (14, 90)
 insert into managers (room, manager) values (15, 95)
 
+insert into days_off (id_days_off, name, start_date, end_date) values (1, 'Holiday', '2016-09-10', '2016-09-10');
+insert into days_off (id_days_off, name, start_date, end_date) values (2, 'SoftServe birthday', '2016-09-17', '2016-09-18');
+insert into days_off (id_days_off, name, start_date, end_date) values (2, 'The day of Knowledge', '2016-09-01', '2016-09-01');
+
+insert into managers (room, day_off) values (1, 1)
+insert into managers (room, day_off) values (1, 2)
+insert into managers (room, day_off) values (1, 3)
 
 INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (1, 2, 300, 1);
 INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (2, 4, 500, 1);
