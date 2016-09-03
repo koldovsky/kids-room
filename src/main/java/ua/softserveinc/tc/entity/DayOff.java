@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,7 @@ public class DayOff {
     private LocalDate endDate;
 
     @ManyToMany(mappedBy = "daysOff", fetch=FetchType.LAZY)
+    @JsonBackReference
     List<Room> rooms;
 
 }

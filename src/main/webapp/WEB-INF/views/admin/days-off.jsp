@@ -1,4 +1,4 @@
-<body>
+
 <%
     int x = 10;
     if(x>10) {
@@ -7,10 +7,3 @@
 <%
     }
 %>
-<c:forEach var="dayOff" items="${daysOff}">
-<td>${dayOff.name}</td>
-<td>${dayOff.startDate}</td>
-<td class="city">${dayOff.endDate}</td>
-
-
-</body>

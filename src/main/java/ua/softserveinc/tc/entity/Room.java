@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 
@@ -59,6 +60,7 @@ public class Room {
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.DAY_OFF))
     @OrderBy("startDate ASC")
+    @JsonManagedReference
     private List<DayOff> daysOff;
 
     public Room() {
