@@ -1,14 +1,23 @@
-package ua.softserveinc.tc.repo;
+package ua.softserveinc.tc.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import ua.softserveinc.tc.entity.DayOff;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface DayOffRepository extends JpaRepository<DayOff, Long> {
+public interface DayOffService {
+
+    DayOff upsert(DayOff dayOff);
+
+    DayOff findById(long id);
+
+    void delete(long id);
+
+    List<DayOff> findAll();
 
     List<DayOff> findByName(String name);
 
     List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
+
+
 }
