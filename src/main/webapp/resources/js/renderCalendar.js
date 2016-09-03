@@ -575,17 +575,14 @@ function editRecurrentEventRequest(eventRecurrentId) {
                 recurrentEventForEditing = {
                     recurentId: result.recurrentId,
                     startDate: result.startTime.substr(0, 10),
+                    startTime: result.startTime.substr(11, 5),
                     endDate: result.endTime.substr(0, 10),
-                    startTime: result.startTime.substr(10, 5),
-                    endTime: result.endTime.substr(10, 5),
+                    endTime: result.endTime.substr(11, 5),
                     daysOfweek: result.daysOfWeek.trim(),
                 }
             }
             editRecurrentEvent(recurrentEventForEditing);
         },
-        error: function () {
-            alert('Error');
-        }
     })
 }
 function editRecurrentEvent(recurrentEventForEditing){
@@ -616,19 +613,22 @@ function editRecurrentEvent(recurrentEventForEditing){
         }
         $('#' + day).prop('checked', true);
     })
-
+    $('#days-for-recurrent-form').attr('hidden', false);
+    $('#weekly').prop( "checked", true )
+    $('#no-recurrent').prop( "checked", false )
     $('#update-recurrent').show();
+    $('#title').val(recurrentEventForEditing.startDate);
+    $('#date').val(recurrentEventForEditing.endDate);
+    $('#basicExample').timepicker('setTime', recurrentEventForEditing.startTime);
+    $('#ender').timepicker('setTime', recurrentEventForEditing.endTime);
     $('#dialog').dialog('open');
 }
-
 
 function clearEventDialogSingleMulti(){
     $('#choose-updating-type').dialog('close');
     $('#creating').hide();
     $('#deleting-recurrent-event').show();
     $('#dialog').dialog('open');
-
-
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $('#days-for-recurrent-form').attr('hidden', true);
     $('#weekly').prop( "checked", false )

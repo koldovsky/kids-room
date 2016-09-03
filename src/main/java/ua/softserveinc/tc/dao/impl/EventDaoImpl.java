@@ -39,20 +39,15 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
         return result;
     }
 
-    public List <Event> getRecurrentEventByRecurrentId(Long recurrentId){
+    public List<Event> getRecurrentEventByRecurrentId(Long recurrentId) {
         CriteriaQuery<Event> query = null;
-        try {
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            query = builder.createQuery(Event.class);
-            Root<Event> root = query.from(Event.class);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        query = builder.createQuery(Event.class);
+        Root<Event> root = query.from(Event.class);
 
-            query.select(root).where(builder.equal(root.get(EventConstants.Entity.ID_RECURRENT), recurrentId)).
-                    orderBy(builder.asc(root.get(EventConstants.Entity.START_TIME)));
+        query.select(root).where(builder.equal(root.get(EventConstants.EntityClass.ID_RECURRENT), recurrentId)).
+                orderBy(builder.asc(root.get(EventConstants.EntityClass.START_TIME)));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e);
-        }
         return entityManager.createQuery(query).getResultList();
-    };
+    }
 }
