@@ -7,13 +7,10 @@ import ua.softserveinc.tc.util.DateUtil;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by Nestor on 30.04.2016.
- */
-
 @Entity
 @Table(name = EventConstants.Entity.TABLENAME)
 public class Event {
+
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")

@@ -3,15 +3,16 @@ package ua.softserveinc.tc.service;
 import java.util.List;
 
 public interface BaseService<T> {
-    List<T> findAll();
 
     void create(T entity);
+
+    T update(T entity);
 
     T findById(Object id);
 
     void delete(T entity);
 
-    void deleteAll();
+    List<T> findAll();
 
-    T update(T entity);
+    void deleteAll();
 }

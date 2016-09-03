@@ -44,25 +44,33 @@ public class Room {
     @Column(name = RoomConstants.WORKING_END_HOUR)
     private String workingHoursEnd;
 
+    @Column(name = RoomConstants.ACTIVE)
+    private boolean isActive;
+
     @ManyToMany
     @JoinTable(name = RoomConstants.MANAGERS,
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
     private List<User> managers;
 
-    @Column(name = RoomConstants.ACTIVE)
-    private boolean active;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = RoomConstants.ROOMS_OFF,
+            joinColumns = @JoinColumn(name = RoomConstants.ROOM),
+            inverseJoinColumns = @JoinColumn(name = RoomConstants.DAY_OFF))
+    @OrderBy("startDate ASC")
+    private List<DayOff> daysOff;
 
     public Room() {
         //empty constructor for instantiating in controller
     }
 
     public boolean isActive() {
-        return active;
+        return isActive;
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.isActive = active;
     }
 
     public List<User> getManagers() {

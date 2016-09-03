@@ -1,8 +1,5 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by Chak on 05.05.2016.
- */
 public final class RoomConstants {
 
     public static final String TABLE_NAME_ROOMS = "rooms";
@@ -30,6 +27,10 @@ public final class RoomConstants {
     public static final String MANAGERS = "managers";
 
     public static final String ROOM = "room";
+
+    public static final String ROOMS_OFF = "rooms_off";
+
+    public static final String DAY_OFF = "day_off";
 
     private RoomConstants() {
     }
