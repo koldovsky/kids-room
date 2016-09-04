@@ -186,8 +186,16 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <h3><span class="glyphicon glyphicon-ok-circle"></span></h3>
-                    <h4>New Booking Created</h4>
+                    <div class="checkmark">
+                        <svg version="1.1" id="Layer_1" x="0px" y="0px"
+                             viewBox="0 0 161.2 161.2" enable-background="new 0 0 161.2 161.2" xml:space="preserve">
+<circle class="path" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="80.6" cy="80.6" r="62.1"/>
+                            <polyline class="path" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"
+                                      stroke-miterlimit="10" points="113,52.8
+	74.1,108.4 48.2,86.4 "/>
+</svg>
+                    </div>
+                    <h2>New Booking Created</h2>
                 </div>
             </div>
         </div>

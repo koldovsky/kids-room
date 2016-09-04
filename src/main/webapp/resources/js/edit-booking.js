@@ -373,7 +373,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                 $('#bookingDialog').dialog();
             } else {
                 $('#createSuccess').modal('show');
-                setTimeout(function() {$('#createSuccess').modal('hide');}, 1100);
+                setTimeout(function() {$('#createSuccess').modal('hide');}, 1300);
                 refreshTable(localStorage["bookingsState"]);
             }
         },
