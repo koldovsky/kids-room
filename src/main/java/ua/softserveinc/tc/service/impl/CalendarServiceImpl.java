@@ -138,6 +138,7 @@ public class CalendarServiceImpl implements CalendarService {
             int day = calendar.get(Calendar.DAY_OF_WEEK);
             DaysOfWeek[day-2]=true;
         }
+        recurentEventToReturn.setDescription(listOfRecurrentEvent.get(0).getDescription());
         String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
         StringBuilder days=new StringBuilder();
         for (int i=0; i < nameOfDays.length; i++){

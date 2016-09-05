@@ -594,6 +594,8 @@ function editRecurrentEventRequest(eventRecurrentId) {
                 }
                 console.log("startTime = "+recurrentEventForEditing.startTime);
                 console.log("endTime = "+recurrentEventForEditing.endTime);
+                console.log("color = "+recurrentEventForEditing.color);
+                console.log("description = "+recurrentEventForEditing.description);
             }
             editRecurrentEvent(recurrentEventForEditing);
         },
@@ -604,9 +606,10 @@ function editRecurrentEvent(recurrentEventForEditing){
     $('#update-recurrent-button').show();
     $('#create-button').hide();
     $('#deleting-recurrent-event').show();
-    $('#weekly-radio-button').attr( "checked", true );
-    $('#single-event-radio-button').attr( "checked", false );
-    $('#days-for-recurrent-form').show();
+    $('#weekly-radio-button').prop( "checked", true );
+    $('#single-event-radio-button').prop( "checked", false );
+    $("#single-event-radio-button").prop("disabled", true);
+    $('#days-for-recurrent-form').attr("hidden", false);
 
     $('#start-date-picker').val(recurrentEventForEditing.startDate);
     $('#end-date-picker').val(recurrentEventForEditing.endDate);
@@ -638,7 +641,7 @@ function editRecurrentEvent(recurrentEventForEditing){
                 day = 'Saturday';
                 break;
         }
-        $('#' + day).attr('checked', true);
+        $('#' + day).prop('checked', true);
     });
 
 
@@ -646,15 +649,19 @@ function editRecurrentEvent(recurrentEventForEditing){
 
 function clearEventDialogSingleMulti(){
     $('#create-button').show();
+    $('#update-recurrent-button').hide();
     $('#deleting-recurrent-event').hide();
+    $("#single-event-radio-button").prop("disabled", false);
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $('#days-for-recurrent-form').attr('hidden', true);
-    $('#weekly-radio-button').attr( "checked", false )
-    $('#single-event-radio-button').attr( "checked", true )
+    $('#weekly-radio-button').prop( "checked", false )
+    $('#single-event-radio-button').prop( "checked", true )
     checkBoxesDays.forEach(function (item) {
         $('#' + item).attr('checked', false);
     });
-    $('#color-select').val("#6AA4C1");
+    $('#color-select').val("#1ba1e2");
+    $('#event-title').val("");
     $('#description').val("");
+
 }
 

@@ -485,7 +485,7 @@
                             <input type="text" class="form-control" id="event-title" placeholder="Event title">
                         </div>
                         <div class="form-group">
-                            <label for="title">Choose a color</label>
+                            <label for="color-select">Choose a color</label>
                             <select id="color-select">
                                 <option value="#eb6f63" style="background:red">
                                     <spring:message code= "color.red"/>
@@ -599,9 +599,6 @@
                                     </div>
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="deleting-event" id="deleting-recurrent-event" hidden>Click here to delete
-                                    this event
-                                </div>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent-button" hidden="true">
                                         Update
@@ -610,6 +607,13 @@
                                 </div>
                                 <div align="right" class="col-xs-9">
                                     <button type="button" class="btn btn-danger pull-right" id="cancel">Cancel</button>
+                                </div>
+                                <div class = "col-xs-12">
+                                    <footer class="deleteBookingButtonLink">
+                                        <div id="deleting-recurrent-event" style="text-decoration: underline; text-align: center;">
+                                            <spring:message code="event.deleteRecurrentEvent"/>
+                                        </div>
+                                    </footer>
                                 </div>
 
                             </div>
