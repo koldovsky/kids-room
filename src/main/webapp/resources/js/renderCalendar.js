@@ -12,6 +12,13 @@ $(function () {
     $('#update-recurrent-button').hide();
     $('#update-recurrent-booking').hide();
 
+    $('#confirmation-dialog-event-div').dialog({
+        autoOpen: false,
+        modal:true,
+        width: 350,
+        modal: true
+    });
+
     $('.modal-dialog-recurrently').dialog({
         modal: true,
         autoOpen: false
@@ -73,11 +80,32 @@ $(function () {
             updateSingleEvent();
         }
     });
+    //
+    // $('#deleting-recurrent-event').click(function () {
+    //     deleteRecurrentEvents(info_event.calEvent.recurrentId);
+    //     clearEventDialogSingleMulti();
+    //     $('#dialog').dialog('close');
+    // });
 
     $('#deleting-recurrent-event').click(function () {
-        deleteRecurrentEvents(info_event.calEvent.recurrentId);
-        clearEventDialogSingleMulti();
         $('#dialog').dialog('close');
+        var myDialog = $('#confirmation-dialog-event-div');
+        myDialog.dialog('open');
+        $('#confirmYesEvent').click(function () {
+            deleteRecurrentEvents(info_event.calEvent.recurrentId);
+            clearEventDialogSingleMulti();
+            myDialog.dialog('close');
+        });
+        $('#confirmNoEvent').click(function () {
+            clearEventDialogSingleMulti();
+            myDialog.dialog('close');
+        });
+    })
+    $('#deleting-recurrent-event').hover(function(){
+        $(this).css('color','red');
+        $(this).css('cursor','pointer ');
+    }, function(){
+        $(this).css("color", "black");
     });
 
     $('#deleting-single-event').click(function () {
@@ -163,6 +191,7 @@ $(function () {
             createRecurrentEvents();
         }
     });
+
 });
 
 /**
@@ -589,13 +618,12 @@ function editRecurrentEventRequest(eventRecurrentId) {
                     endDate: result.endTime.substr(0, 10),
                     endTime: result.endTime.substr(11, 5),
                     daysOfweek: result.daysOfWeek.trim(),
-
-
+                    title:result.name,
                 }
-                console.log("startTime = "+recurrentEventForEditing.startTime);
-                console.log("endTime = "+recurrentEventForEditing.endTime);
-                console.log("color = "+recurrentEventForEditing.color);
-                console.log("description = "+recurrentEventForEditing.description);
+                console.log("title="+recurrentEventForEditing.title);
+                console.log("name="+result.name);
+                console.log("description="+recurrentEventForEditing.description);
+                console.log("color="+recurrentEventForEditing.color);
             }
             editRecurrentEvent(recurrentEventForEditing);
         },
@@ -617,6 +645,7 @@ function editRecurrentEvent(recurrentEventForEditing){
     $('#end-time-picker').timepicker('setTime', recurrentEventForEditing.endTime);
     $('#color-select').val(recurrentEventForEditing.color);
     $('#description').val(recurrentEventForEditing.description);
+    $('#event-title').val(recurrentEventForEditing.title);
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var i = 0;
     var DoW = recurrentEventForEditing.daysOfweek.split(" ");

@@ -131,6 +131,8 @@ public class CalendarServiceImpl implements CalendarService {
         recurentEventToReturn.setEndTime(df.format(listOfRecurrentEvent.get(listOfRecurrentEvent.size()-1).getEndTime()));;
         recurentEventToReturn.setRecurrentId(recurrentEventId);
         recurentEventToReturn.setColor(listOfRecurrentEvent.get(0).getColor());
+        recurentEventToReturn.setName(listOfRecurrentEvent.get(0).getName());
+        recurentEventToReturn.setDescription(listOfRecurrentEvent.get(0).getDescription());
         boolean DaysOfWeek[] = {false,false,false,false,false,false};
         Calendar calendar = Calendar.getInstance();
         for (Event event : listOfRecurrentEvent) {
@@ -138,7 +140,6 @@ public class CalendarServiceImpl implements CalendarService {
             int day = calendar.get(Calendar.DAY_OF_WEEK);
             DaysOfWeek[day-2]=true;
         }
-        recurentEventToReturn.setDescription(listOfRecurrentEvent.get(0).getDescription());
         String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
         StringBuilder days=new StringBuilder();
         for (int i=0; i < nameOfDays.length; i++){
