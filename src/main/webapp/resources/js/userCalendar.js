@@ -560,8 +560,6 @@ function updateBooking() {
 
 //tested
 
-
-
 function createBooking() {
     bookingDate.clickDate = $('#recurrent-booking-start-date').val();
     bookingsArray = [];

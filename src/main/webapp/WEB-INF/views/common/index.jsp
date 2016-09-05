@@ -519,25 +519,25 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="title">Start date</label>
+                            <label for="start-date-picker">Start date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="text-center form-control" id="title" placeholder="startDate">
+                                <input id="start-date-picker" type="date" class="text-center form-control"  placeholder="startDate">
                             </div>
                             <div class="col-xs-6">
-                                <input id="basicExample" type="text" class=" text-center time form-control timepicker" size="6"/>
+                                <input id="start-time-picker" type="text" class=" text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
                         <br>
 
                         <div class="form-group">
-                            <label for="endDate">End date</label>
+                            <label for="end-date-picker">End date</label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="text-center form-control" id="endDate" placeholder="endDate">
+                                <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate">
                             </div>
                             <div class="col-xs-6">
-                                <input id="ender" type="text" class="text-center time form-control timepicker" size="6"/>
+                                <input id="end-time-picker" type="text" class="text-center time form-control timepicker" size="6"/>
                             </div>
                         </div>
 
@@ -548,11 +548,11 @@
                                     <div class="row col-xs-4">
                                         <br>
                                         <div class="radio-button">
-                                            <label><input type="radio" name="optradio" id="no-recurrent"
+                                            <label><input type="radio" name="optradio" id="single-event-radio-button"
                                                           class="my-radio" checked> Single event</label>
                                         </div>
                                         <div class="radio-button">
-                                            <label><input type="radio" name="optradio" id="weekly" class="my-radio"> Weekly</label>
+                                            <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio"> Weekly</label>
                                         </div>
                                         <div class="radio-button" hidden>
                                             <label><input type="radio" name="optradio" id="monthly" class="my-radio"> Monthly</label>
@@ -603,10 +603,10 @@
                                     this event
                                 </div>
                                 <div class="col-xs-3">
-                                    <button type="button" class="btn btn-success" id="update-recurrent" hidden="true">
+                                    <button type="button" class="btn btn-success" id="update-recurrent-button" hidden="true">
                                         Update
                                     </button>
-                                    <button type="button" class="btn btn-success live" id="creating">Create</button>
+                                    <button type="button" class="btn btn-success live" id="create-button">Create</button>
                                 </div>
                                 <div align="right" class="col-xs-9">
                                     <button type="button" class="btn btn-danger pull-right" id="cancel">Cancel</button>

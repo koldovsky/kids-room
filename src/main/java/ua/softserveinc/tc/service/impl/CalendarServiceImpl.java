@@ -130,6 +130,7 @@ public class CalendarServiceImpl implements CalendarService {
         recurentEventToReturn.setStartTime(df.format(listOfRecurrentEvent.get(0).getStartTime()));
         recurentEventToReturn.setEndTime(df.format(listOfRecurrentEvent.get(listOfRecurrentEvent.size()-1).getEndTime()));;
         recurentEventToReturn.setRecurrentId(recurrentEventId);
+        recurentEventToReturn.setColor(listOfRecurrentEvent.get(0).getColor());
         boolean DaysOfWeek[] = {false,false,false,false,false,false};
         Calendar calendar = Calendar.getInstance();
         for (Event event : listOfRecurrentEvent) {
