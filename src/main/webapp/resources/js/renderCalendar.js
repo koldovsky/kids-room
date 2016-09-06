@@ -41,19 +41,7 @@ $(function () {
         open: function(event, ui) {
             cleanValidationInfo();
             clearEventDialogSingleMulti();
-        }
-
-    });
-
-
-    $('.timepicker').timepicker({
-        timeFormat: 'H:i',
-        step: 15,
-    });
-
-
-    $('.dialog').dialog({
-        autoOpen: false,
+        },
         show: {
             effect: 'drop',
             duration: 500
@@ -64,9 +52,17 @@ $(function () {
         }
     });
 
+
+    $('.timepicker').timepicker({
+        timeFormat: 'H:i',
+        step: 15,
+    });
+
     $('#updating').dialog({
         autoOpen: false,
-        title: 'Change event'
+        title: 'Change event',
+        modal:true,
+        width:400
     });
 
     $('#choose-updating-type').dialog({
@@ -321,13 +317,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
             $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
             $('#descriptionUpdate').val(calEvent.description);
-
-
-            $('#event-title').val(calEvent.title);
-            $('#start-date-picker').val(calEvent.start.format().substring(0, 10));
-            $('#end-date-picker').val(calEvent.end.format().substring(0, 10));
-            $('#description').val(calEvent.description);
-
+            $('#color-select-single-event').val(calEvent.color)
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
@@ -403,7 +393,7 @@ function updateSingleEvent(){
         end: makeISOTime(info_event.calEvent.end.format(), 'endTimeUpdate'),
         editable: false,
         description: $('#descriptionUpdate').val(),
-        // color: $('#color-select').val(),
+        color: $('#color-select-single-event').val(),
     };
 
     $('#calendar').fullCalendar('renderEvent', eventForUpdate);
@@ -426,7 +416,7 @@ function sendToServerForUpdate(event, roomID) {
             endTime: event.end,
             roomId: roomID,
             description: event.description,
-            // color: event.color
+            color: event.color
         })
     });
 }
@@ -510,7 +500,6 @@ function createRecurrentEvents() {
 
     var startDateForCreatingRecurrentEvents = $('#start-date-picker').val() + 'T00:00:00';
     var endDate = $('#end-date-picker').val() + 'T00:00:00';
-
     var eventColor = $('#color-select').val();
 
     var ev = {
@@ -521,7 +510,8 @@ function createRecurrentEvents() {
         backgroundColor: NOT_ACTIVE_EVENT,
         borderColor: NOT_ACTIVE_EVENT,
         editable: false,
-        description: $('#description').val()
+        description: $('#description').val(),
+        color:eventColor
     };
     // ====================== In this part recurrent events are create======
     if ($('#weekly-radio-button').is(':checked')) {

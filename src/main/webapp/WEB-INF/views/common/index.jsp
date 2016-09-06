@@ -619,7 +619,7 @@
                                 <br><br><br><br><br><br><br><br><br><br>
                                 <div class="clearfix"></div>
                                 <div class="col-sm-12">
-                                    <label for="description">Description</label>
+                                    <label for="description"> <spring:message code="event.labelForDescription"></spring:message> </label>
                                     <input type="text" size="15" class="form-control" id="description"
                                            placeholder="description">
                                 </div>
@@ -661,12 +661,12 @@
                     <form id="updatingForm">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
-                            <label for="titleUpdate"> <spring:message code="event.titleHint"></spring:message> </label>
+                            <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
                             <input type="text" class="form-control" id="titleUpdate" placeholder="title">
                         </div>
 
                         <div class="form-group">
-                            <label for="color-select">Choose a color</label>
+                            <label for="color-select"> <spring:message code="event.chooseColor"></spring:message> </label>
                             <select id="color-select-single-event">
                                 <option value="#eb6f63" style="background:red">
                                     <spring:message code= "color.red"/>
