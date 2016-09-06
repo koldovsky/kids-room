@@ -80,12 +80,6 @@ $(function () {
             updateSingleEvent();
         }
     });
-    //
-    // $('#deleting-recurrent-event').click(function () {
-    //     deleteRecurrentEvents(info_event.calEvent.recurrentId);
-    //     clearEventDialogSingleMulti();
-    //     $('#dialog').dialog('close');
-    // });
 
     $('#deleting-recurrent-event').click(function () {
         $('#dialog').dialog('close');
@@ -109,9 +103,23 @@ $(function () {
     });
 
     $('#deleting-single-event').click(function () {
-        sendToServerForDelete(info_event.calEvent);
-        $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
         $('#updating').dialog('close');
+        var myDialog = $('#confirmation-dialog-event-div');
+        myDialog.dialog('open');
+        $('#confirmYesEvent').click(function () {
+            sendToServerForDelete(info_event.calEvent);
+            $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
+            myDialog.dialog('close');
+        });
+        $('#confirmNoEvent').click(function () {
+            myDialog.dialog('close');
+        })
+    });
+    $('#deleting-single-event').hover(function(){
+        $(this).css('color','red');
+        $(this).css('cursor','pointer ');
+    }, function(){
+        $(this).css("color", "black");
     });
 
     $('#cancel-update').click(function () {

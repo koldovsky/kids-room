@@ -661,12 +661,47 @@
                     <form id="updatingForm">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
-                            <label for="titleUpdate">Event title</label>
+                            <label for="titleUpdate"> <spring:message code="event.titleHint"></spring:message> </label>
                             <input type="text" class="form-control" id="titleUpdate" placeholder="title">
                         </div>
 
                         <div class="form-group">
-                            <label for="startDayUpdate">Start date</label>
+                            <label for="color-select">Choose a color</label>
+                            <select id="color-select-single-event">
+                                <option value="#eb6f63" style="background:red">
+                                    <spring:message code= "color.red"/>
+                                </option>
+                                <option value="#ffcd5c" style="background:yellow">
+                                    <spring:message code= "color.yellow"/>
+                                </option>
+                                <option value="#9b3aa1" style="background:purple">
+                                    <spring:message code= "color.purple"/>
+                                </option>
+                                <option value="#044d92" style="background:blue">
+                                    <spring:message code= "color.blue"/>
+                                </option>
+                                <option value="#1ba1e2" style="background:#6AA4C1" selected="selected">
+                                    <spring:message code= "color.lightBlue"/>
+                                </option>
+                                <option value="#636363" style="background:grey">
+                                    <spring:message code= "color.grey"/>
+                                </option>
+                                <option value="#51d466" style="background:green">
+                                    <spring:message code= "color.green"/>
+                                </option>
+                                <option value="#f98e2e" style="background:orange">
+                                    <spring:message code= "color.orange"/>
+                                </option>
+                                <option value="#84fff7" style="background:aqua">
+                                    <spring:message code= "color.aqua"/>
+                                </option>
+                                <option value="#d3af37" style="background:gold">
+                                    <spring:message code= "color.gold"/><br></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="startDayUpdate"> <spring:message code="event.startDate"></spring:message> </label>
                             <br>
                             <div class="col-xs-6">
                                 <input type="text" class="form-control" id="startDayUpdate" placeholder="startDate"
@@ -679,7 +714,7 @@
                         <br>
 
                         <div class="form-group">
-                            <label for="endDateUpdate">End date</label>
+                            <label for="endDateUpdate"> <spring:message code="event.endDate"></spring:message> </label>
                             <br>
                             <div class="col-xs-6">
                                 <input type="text" class="form-control" id="endDateUpdate" placeholder="endDate"
@@ -691,7 +726,9 @@
                         </div>
                         <br>
                         <div class="form-group">
-                            <label for="descriptionUpdate">Description</label>
+                            <label for="descriptionUpdate">
+                                <spring:message code="event.description"></spring:message>
+                            </label>
                             <textarea type="text" class="form-control" id="descriptionUpdate"
                                       placeholder="description"></textarea>
                         </div>
@@ -700,10 +737,20 @@
                                 <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
                             </div>
                         <br>
-                        <button type="button" class="col-xs-6 btn btn-success" id="updatingButton">Update</button>
-                        <button type="button" class="pull-right btn btn-danger" id="cancel-update">Cancel</button>
-                        <button type="button" class="col-xs-12 deleting-event btn btn-warning btn-xs" id="deleting-single-event">Delete this event</button>
+                        <button type="button" class="col-xs-6 btn btn-success" id="updatingButton">
+                            <spring:message code="event.update"></spring:message>
+                        </button>
+                        <button type="button" class="pull-right btn btn-danger" id="cancel-update">
+                            <spring:message code="cancel"></spring:message>
+                        </button>
 
+                        <div class = "col-xs-12">
+                            <footer class="deleteEventButtonLink">
+                                <div id="deleting-single-event" style="text-decoration: underline; text-align: center;">
+                                    <spring:message code="event.deleteEvent"/>
+                                </div>
+                            </footer>
+                        </div>
 
 
                     </form>
