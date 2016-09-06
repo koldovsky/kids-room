@@ -83,16 +83,11 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
     public List<Booking> getRecurrentBookingsByRecurrentId(Long recurrentId){
         CriteriaQuery<Booking> query = null;
-        try {
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            query = builder.createQuery(Booking.class);
-            Root<Booking> root = query.from(Booking.class);
-            query.select(root).where(builder.equal(root.get(BookingConstants.Entity.RECURRENTID), recurrentId)).
-                    orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e);
-        }
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+        query.select(root).where(builder.equal(root.get(BookingConstants.Entity.RECURRENTID), recurrentId)).
+                orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
         return entityManager.createQuery(query).getResultList();
     };
 }

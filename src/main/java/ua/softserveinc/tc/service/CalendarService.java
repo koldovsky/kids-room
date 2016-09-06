@@ -21,4 +21,6 @@ public interface CalendarService {
     List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto);
 
     String getRoomWorkingHours(final long id);
+
+    RecurrentEventDto getRecurrentEventForEditingById(long recurrentEventId);
 }
