@@ -318,40 +318,42 @@
         <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <div align="center">
-                            <br>
-                               <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "yourBooking"/>
-                               </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "room"/>
-                               </div> <div class="col-xs-4">
-                                   <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "bookedRoom"/>
-                               </div>
-                            <div class="col-xs-12">
-                                <h3  >
-                                    <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
-                                </h3>
-                                <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
-                                    <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
-                                <spring:message code= "events"/>
-
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div align="center">
                                 <br>
-
-
-
-                                <br>
+                                <div class="col-xs-4">
+                                    <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "yourBooking"/>
+                                </div> <div class="col-xs-4">
+                                <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "room"/>
+                            </div> <div class="col-xs-4">
+                                <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "bookedRoom"/>
                             </div>
-                            <span>SoftServe Inc</span>
+                                <div class="col-xs-12">
+                                    <h3  >
+                                        <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
+                                    </h3>
+                                    <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
+                                        <span id="loadEaster" style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
+                                        <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
+                                    <spring:message code= "events"/>
+                                    <br>
+                                    <body class="kidsInfo" onload="init();" >
+                                    <canvas id="blob" width="600" height="400" hidden> </canvas>
+                                    <br>
+                                    </body>
+                                    <br>
+                                </div>
+                                <span id="softServeInc">SoftServe Inc</span>
 
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -833,7 +835,7 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='resources/js/fullcalendar.js'></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
-
+<script src="resources/js/seriousColorLegendUpdate.js"/>
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
 <script src='resources/js/manager-create-events-validator.js'></script>
