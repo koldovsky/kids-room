@@ -64,7 +64,7 @@ public class BookingTimeController {
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
 
         if (dto.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Gson().toJson(dto));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new Gson().toJson(dto));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dto));

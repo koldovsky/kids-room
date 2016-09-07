@@ -227,6 +227,13 @@ div .successconfirmation {
     color: white;
 
 }
+.modal-body-err {
+    border: 3px solid red;
+    margin-top:11%;
+    background-color: white;
+    color: #f3212d;
+
+}
 #glyph {
     position: relative;
     -webkit-animation: arrow 0.5s linear 0.5s infinite alternate; /* Chrome, Safari, Opera */
