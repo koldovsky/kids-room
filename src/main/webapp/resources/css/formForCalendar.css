@@ -67,3 +67,7 @@ html, body, .container {
     color:red;
     cursor: pointer;
 }
+
+.bookingbutton {
+    width: 125px;
+}

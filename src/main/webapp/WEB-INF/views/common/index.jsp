@@ -230,12 +230,12 @@
                                     <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">
                                         <spring:message code= "booking.update"/>
                                     </button>
-                                    <button type="button" class="btn btn-success live" id="book">
+                                    <button type="button" class="btn btn-success live bookingbutton" id="book">
                                         <spring:message code= "booking.book"/>
                                     </button>
                                 </div>
                                 <div class="col-xs-3 row pull-right ">
-                                    <button type="button" class="btn btn-danger pull-right" id="cancel-changes">
+                                    <button type="button" class="btn btn-danger pull-right bookingbutton" id="cancel-changes">
                                         <spring:message code= "cancel"/>
                                     </button>
                                 </div>
@@ -659,6 +659,7 @@
             <div align="center">
                 <div id="updating" class="dialog" hidden>
                     <form id="updatingForm">
+
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
