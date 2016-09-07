@@ -14,11 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import ua.softserveinc.tc.constants.UserConstants;
-
-import javax.sql.DataSource;
 
 
 @ComponentScan(basePackages = "ua.softserveinc.tc.service")
@@ -30,9 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private DataSource dataSource;
 
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -66,7 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/accessDenied")
                 .and()
 
-
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
@@ -91,13 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        tokenRepositoryImpl.setDataSource(dataSource);
-        return tokenRepositoryImpl;
     }
 
 }
