@@ -10,7 +10,7 @@
 
 
 <div class="for-table">
-    <table class="col-sm-offset-4 col-sm-3 reg-form"">
+    <table class="col-sm-offset-4 col-sm-3 reg-form">
     <form:form modelAttribute="<%=AdminConstants.ATR_MANAGER%>" action="confirm-manager" method="post">
 
         <tr><th>
