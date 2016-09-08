@@ -835,7 +835,7 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='resources/js/fullcalendar.js'></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
-<script src="resources/js/seriousColorLegendUpdate.js"/>
+
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
 <script src='resources/js/manager-create-events-validator.js'></script>
