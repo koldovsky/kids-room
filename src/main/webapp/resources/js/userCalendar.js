@@ -514,9 +514,9 @@ function sendBookingToServerForCreate(bookingsArray) {
 
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
-            error: function () {
+            error: function (xhr) {
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
-                callErrorDialog('Room is full or duplicate booking. Please contact the manager if you have any problems with booking ');
+                callErrorDialog(xhr['responseText']);
             }
         });
     } else {

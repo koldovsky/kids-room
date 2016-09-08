@@ -21,6 +21,8 @@ public final class ValidationConstants {
     public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
     public static final String NOT_EMPTY_MESSAGE = "May not be empty.";
     public static final String NOT_VALID_MESSAGE = "Value is invalid.";
+    public static final String DUPLICATE_BOOKING_MESSAGE = "Room is already booked for your kid at this time";
+    public static final String ROOM_IS_FULL_MESSAGE = "This room is full at this time";
 
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
