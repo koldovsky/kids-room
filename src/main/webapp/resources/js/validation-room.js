@@ -30,7 +30,7 @@ $(document).ready(function() {
                 },
                 phoneNumber:{
                     required: true,
-                    regexPhone: /^0[1-9]{9}$/,
+                    regexPhone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
                 },
                 capacity: {
                     min: 1,
