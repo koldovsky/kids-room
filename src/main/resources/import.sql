@@ -381,21 +381,21 @@ insert into users (id_user, active, confirmed, email, first_name, last_name, pas
 -- 50 MANAGER END
 
 
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (1, 'Pasternaka 8', 40, 'Kvitkova', '+380947715038', 'Lviv', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (2, 'Antonycha 22', 15, 'Soniachna', '+380938587190', 'Lviv', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (3, 'Sadova 2a', 30, 'Nebesna', '+380951789603', 'Lviv', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (4, 'Shevchenka 32', 35, 'Velyka', '+380936458634', 'Kyiv', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (5, 'Franka 124', 30, 'Kvitkova', '+380938710134', 'Rivne', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (6, 'Tarasivka 27', 40, 'Zelena', '+380949441026', 'Lutsk', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (7, 'Pasichna 101', 20, 'Pyrohova', '+380952802396', 'Kryvyi Rih', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (8, 'Chervonoii Kalyny 3', 25, 'Na Kalyny', '+380958750736', 'Ternopil', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (9, 'Vernadskoho 12', 35, 'Akademika', '+380961934921', 'Vinnytsia', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (10, 'Rustaveli 26', 15, 'Shota', '+380960751648', 'Kharkiv', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (11, 'Naberezhna 34', 20, 'Naberezhna', '+380942132627', 'Odesa', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (12, 'Lastivkova 15', 30, 'Lastivka', '+380944711658', 'Dnipro', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (13, 'Soniachna 93', 45, 'Hard', '+380964372962', 'Alushta', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (14, 'Demianska 57', 50, 'Roomy', '+380957792337', 'Kamianets', true, '07:00', '20:00');
-insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (15, 'Ulianivska 15', 30, 'Oselia', '+380965168944', 'Zhytomyr', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (1, 'Pasternaka 8', 40, 'Kvitkova', '0947715038', 'Lviv', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (2, 'Antonycha 22', 15, 'Soniachna', '0938587190', 'Lviv', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (3, 'Sadova 2a', 30, 'Nebesna', '0951789603', 'Lviv', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (4, 'Shevchenka 32', 35, 'Velyka', '0936458634', 'Kyiv', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (5, 'Franka 124', 30, 'Kvitkova', '0938710134', 'Rivne', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (6, 'Tarasivka 27', 40, 'Zelena', '0949441026', 'Lutsk', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (7, 'Pasichna 101', 20, 'Pyrohova', '0952802396', 'Kryvyi Rih', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (8, 'Chervonoii Kalyny 3', 25, 'Na Kalyny', '0958750736', 'Ternopil', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (9, 'Vernadskoho 12', 35, 'Akademika', '0961934921', 'Vinnytsia', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (10, 'Rustaveli 26', 15, 'Shota', '0960751648', 'Kharkiv', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (11, 'Naberezhna 34', 20, 'Naberezhna', '0942132627', 'Odesa', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (12, 'Lastivkova 15', 30, 'Lastivka', '0944711658', 'Dnipro', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (13, 'Soniachna 93', 45, 'Hard', '0964372962', 'Alushta', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (14, 'Demianska 57', 50, 'Roomy', '0957792337', 'Kamianets', true, '07:00', '20:00');
+insert into rooms (id_room, address_room, capacity_room, name_room, phone_room, city_room, active, working_start_hour, working_end_hour) values (15, 'Ulianivska 15', 30, 'Oselia', '0965168944', 'Zhytomyr', true, '07:00', '20:00');
 
 
 insert into managers (room, manager) values (1, 2)

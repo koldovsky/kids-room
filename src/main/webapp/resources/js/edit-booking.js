@@ -373,12 +373,18 @@ function sendBookingToServerForCreate(bookingsArray) {
                 $('#bookingDialog').dialog();
             } else {
                 $('#createSuccess').modal('show');
-                setTimeout(function() {$('#createSuccess').modal('hide');}, 1300);
+                setTimeout(function () {
+                    $('#createSuccess').modal('hide');
+                }, 1300);
                 refreshTable(localStorage["bookingsState"]);
             }
         },
-        error: function() {
-            alert("Unfortunately could not create new booking, please contact admin");
+        error: function (xhr, ajaxOptions, thrownError) {
+            if (thrownError === "Not Acceptable") $('#creatingfailue1').modal('show');
+            else if (thrownError === "Bad Request") $('#creatingfailue2').modal('show');
+            else {
+                alert("Unfortunately could not create new booking, please contact admin");
+            }
         }
     });
 }
