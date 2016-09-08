@@ -50,7 +50,7 @@ public class ViewEventController {
                 model.addAttribute(UserConstants.Entity.ROOMS, roomService.getActiveRooms());
                 model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
-                if(user.getChildren().isEmpty() | userService.getEnabledChildren(user).isEmpty()) {
+                if(user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
                     return ChildConstants.View.MY_KIDS;
                 }
                 return EventConstants.View.MAIN_PAGE;
@@ -97,6 +97,15 @@ public class ViewEventController {
     @ResponseBody
     public String getRoomProperty(@PathVariable long id) {
         return calendarService.getRoomWorkingHours(id);
+    }
+
+
+    @RequestMapping(value = "getRecurrentEventForEditing/{recurrentEventId}",
+            method = RequestMethod.GET,
+            produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String getRecurrentBookingForEditing(@PathVariable  Long recurrentEventId) {
+        return new Gson().toJson(calendarService.getRecurrentEventForEditingById(recurrentEventId));
     }
 
 }

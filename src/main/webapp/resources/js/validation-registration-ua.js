@@ -5,7 +5,7 @@ $(document).ready(function() {
        }, "Please enter email with softserveinc.com domain.");
        $.validator.addMethod("regexPhone", function(value, element, regexpr) {
           return regexpr.test(value);
-       }, "Please enter valid phone number. Example 0981234567");
+       }, "Please enter valid phone number. Example +380991234567");
        $.validator.addMethod("regexFirstName", function(value, element, regexpr) {
           return regexpr.test(value);
        }, "Ви ввели ім'я невірно");
@@ -37,7 +37,7 @@ $(document).ready(function() {
                 },
                 phoneNumber:{
                    required: true,
-                   regexPhone: /[0-9]{10,14}/
+                   regexPhone: /^\+(?:[0-9] ?){6,14}[0-9]$/
                 }
             }, messages: {
                 firstName: {

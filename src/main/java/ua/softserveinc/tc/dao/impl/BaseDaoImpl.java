@@ -26,7 +26,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     }
     @Transactional
     public void create(T entity) {
-        entityManager.persist(entity);
+        try {
+            entityManager.persist(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
     }
 
     public T findById(Object id) {
