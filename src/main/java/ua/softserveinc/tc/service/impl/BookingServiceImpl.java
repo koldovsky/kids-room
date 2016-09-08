@@ -311,28 +311,24 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         for(Booking booking: listOfRecurrentBooking){
             listOfRecurrentBookingDto.add(new BookingDto(booking));
         }
-        try {
-            recurentBookToReturn.setDate(listOfRecurrentBookingDto.get(0).getDate());
-            recurentBookToReturn.setEndDate(listOfRecurrentBookingDto.get(listOfRecurrentBookingDto.size()-1).getDate());;
-            recurentBookToReturn.setStartTime(listOfRecurrentBookingDto.get(0).getStartTime());
-            recurentBookToReturn.setEndTime(listOfRecurrentBookingDto.get(0).getEndTime());
-            boolean bookedDaysOfWeek[] = {false,false,false,false,false,false};
-            Calendar calendar = Calendar.getInstance();
-            for (Booking booking : listOfRecurrentBooking) {
-                calendar.setTime(booking.getBookingStartTime());
-                int day = calendar.get(Calendar.DAY_OF_WEEK);
-                bookedDaysOfWeek[day-2]=true;
-            }
-            String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
-            StringBuilder days=new StringBuilder();
-            for (int i=0; i < nameOfDays.length; i++){
-                if (bookedDaysOfWeek[i]) days.append(" "+nameOfDays[i]);
-            }
-            recurentBookToReturn.setDaysOfWeek(days.toString());
-            recurentBookToReturn.setRecurrentId(bookingId);
-        } catch (Exception e) {
-            e.printStackTrace();
+        recurentBookToReturn.setDate(listOfRecurrentBookingDto.get(0).getDate());
+        recurentBookToReturn.setEndDate(listOfRecurrentBookingDto.get(listOfRecurrentBookingDto.size()-1).getDate());;
+        recurentBookToReturn.setStartTime(listOfRecurrentBookingDto.get(0).getStartTime());
+        recurentBookToReturn.setEndTime(listOfRecurrentBookingDto.get(0).getEndTime());
+        boolean bookedDaysOfWeek[] = {false,false,false,false,false,false};
+        Calendar calendar = Calendar.getInstance();
+        for (Booking booking : listOfRecurrentBooking) {
+            calendar.setTime(booking.getBookingStartTime());
+            int day = calendar.get(Calendar.DAY_OF_WEEK);
+            bookedDaysOfWeek[day-2]=true;
         }
+        String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
+        StringBuilder days=new StringBuilder();
+        for (int i=0; i < nameOfDays.length; i++){
+            if (bookedDaysOfWeek[i]) days.append(" "+nameOfDays[i]);
+        }
+        recurentBookToReturn.setDaysOfWeek(days.toString());
+        recurentBookToReturn.setRecurrentId(bookingId);
         return recurentBookToReturn;
     };
 }

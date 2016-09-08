@@ -28,8 +28,7 @@ $(document).ready(function() {
                 },
                 phoneNumber:{
                    required: true,
-                   phoneUK: true,
-                   regexPhone: /[0-9]{10,14}/
+                   regexPhone: /^\+(?:[0-9] ?){6,14}[0-9]$/
                 },
             },
         });

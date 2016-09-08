@@ -8,13 +8,13 @@ var CREATE_EVENT = "create-event"
 
 // ID of elements of the CreateEventDialog
 var CREATE_EVENT_DIALOG_NAME = "dialog";
-var CREATE_EVENT_DIALOG_START_DATE_ID = "title";
-var CREATE_EVENT_DIALOG_END_DATE_ID = "endDate";
-var CREATE_EVENT_DIALOG_START_TIME_ID = "basicExample";
-var CREATE_EVENT_DIALOG_END_TIME_ID = "ender";
+var CREATE_EVENT_DIALOG_START_DATE_ID = "start-date-picker";
+var CREATE_EVENT_DIALOG_END_DATE_ID = "end-date-picker";
+var CREATE_EVENT_DIALOG_START_TIME_ID = "start-time-picker";
+var CREATE_EVENT_DIALOG_END_TIME_ID = "end-time-picker";
 var MINUTE_LENGTH_IN_MILLISECONDS = 60000;
-var CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON = "no-recurrent";
-var CREATE_EVENT_DIALOG_RECURRENT_EVENT_RADIOBUTTON = "weekly";
+var CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON = "single-event-radio-button";
+var CREATE_EVENT_DIALOG_RECURRENT_EVENT_RADIOBUTTON = "weekly-radio-button";
 var CREATE_EVENT_DIALOG_DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 var CREATE_EVENT_DIALOG_INPUT_TITLE_ID = "event-title";
 

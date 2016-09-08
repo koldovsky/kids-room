@@ -514,9 +514,9 @@ function sendBookingToServerForCreate(bookingsArray) {
 
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
-            error: function () {
+            error: function (xhr) {
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
-                callErrorDialog('Room is full or duplicate booking. Please contact the manager if you have any problems with booking ');
+                callErrorDialog(xhr['responseText']);
             }
         });
     } else {
@@ -559,8 +559,6 @@ function updateBooking() {
 }
 
 //tested
-
-
 
 function createBooking() {
     bookingDate.clickDate = $('#recurrent-booking-start-date').val();
@@ -1060,9 +1058,6 @@ function editRecurrentBookingsReuest (recurrentId) {
 
 function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
     clearBookingDialogSingleMulti();
-    $('#days-for-recurrent-booking-form').prop('hidden', false);
-    $('#no-recurrent-booking').prop('checked',false);
-    $('#weekly-booking').prop('checked',true);
     $('#recurrent-booking-start-date').val(recurrentBookingForEditing.startDate.substring(0, 10));
     $('#recurrent-booking-end-date').val(recurrentBookingForEditing.endDate.substring(0, 10));
     $('#recurrent-booking-start-time').timepicker('setTime', recurrentBookingForEditing.startTime);
@@ -1092,25 +1087,24 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
                 break;
         }
         $('#' + day + '-booking').prop('checked', true);
-    })
-    $('#make-recurrent-booking').dialog('open');
+    });
     $('#book').hide();
-    $('#update-recurrent-booking').show();
-    $('#delete-recurrent-booking').show();
     $('#child-selector').hide();
     $('#comment-for-one-child-updating').show();
-    $('#deleting-recurrent-booking').show();
+    $('#update-recurrent-booking').show();
+    $('#delete-recurrent-booking').show();
+    $('#make-recurrent-booking').dialog('open');
+
 };
 
 function clearBookingDialogSingleMulti() {
-    var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $('#days-for-recurrent-booking-form').attr('hidden', true);
     $('#weekly-booking').prop( "checked", false )
     $('#no-recurrent-booking').prop( "checked", true )
+    var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').attr('checked', false);
     });
-
 }
 
 function redrawBlockedTimeSpans(roomId) {

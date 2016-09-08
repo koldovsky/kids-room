@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.BookingState;
@@ -48,7 +49,7 @@ public class BookingTimeController {
     @ResponseBody
     public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos) {
         if (bookingService.checkForDuplicateBooking(dtos)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
         }
 
         dtos.forEach(dto -> {
@@ -64,7 +65,7 @@ public class BookingTimeController {
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
 
         if (dto.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Gson().toJson(dto));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ValidationConstants.ROOM_IS_FULL_MESSAGE);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dto));

@@ -21,7 +21,7 @@ import ua.softserveinc.tc.constants.UserConstants;
 import javax.sql.DataSource;
 
 
-@ComponentScan(basePackages = "ua.softserveinc.tc.service")
+@ComponentScan(basePackages = {"ua.softserveinc.tc.service", "ua.softserveinc.tc.config"})
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)

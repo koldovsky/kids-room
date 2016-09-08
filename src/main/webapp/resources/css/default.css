@@ -227,6 +227,13 @@ div .successconfirmation {
     color: white;
 
 }
+.modal-body-err {
+    border: 3px solid red;
+    margin-top:11%;
+    background-color: white;
+    color: #f3212d;
+
+}
 #glyph {
     position: relative;
     -webkit-animation: arrow 0.5s linear 0.5s infinite alternate; /* Chrome, Safari, Opera */
@@ -240,6 +247,31 @@ div .successconfirmation {
 
 #error-dialog{
     color: #ff1200;
+}
+.checkmark {
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+.path {
+    background-color: white;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+    animation: dash 2.5s ease-in-out;
+    -webkit-animation: dash 2.4s ease-in-out;
+}
+
+
+
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
 }
 
 
