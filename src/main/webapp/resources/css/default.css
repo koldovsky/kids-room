@@ -266,6 +266,28 @@ div .successconfirmation {
         stroke-dashoffset: 0;
     }
 }
+@media (max-width: 768px) {
+    .btn-responsive {
+        padding:2px 4px;
+        font-size:65%;
+        line-height: 1;
+        border-radius:3px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .btn-responsive {
+        padding:4px 9px;
+        font-size:65%;
+        line-height: 1.2;
+    }
+}
+@media (min-width: 770px) {
+    .btn-responsive {
+        height: 34px;
+    }
+}
+
 
 
 
