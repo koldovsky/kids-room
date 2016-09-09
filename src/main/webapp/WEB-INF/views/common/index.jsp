@@ -444,7 +444,7 @@
     </c:if>
 
     <c:if test="${!rooms.isEmpty()}">
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="dialog-recurrently" class="modal-dialog-recurrently dialog" hidden>
@@ -497,8 +497,7 @@
         </div>
     </div>
 
-
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="dialog" class="dialog" hidden>
@@ -648,7 +647,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="updating" class="dialog" hidden>
@@ -754,8 +753,7 @@
         </div>
     </div>
 
-
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
@@ -777,7 +775,6 @@
         </div>
     </div>
 
-
     <div class="container">
         <button type="button" class="btn btn-success" id="create-new-event">New event</button>
         <div id='calendar'></div>
@@ -785,7 +782,7 @@
     </c:if>
 
     <%--confirmation-dialog--%>
-    <div class="container">
+    <div class="row">
         <div class="modal-dialog modal-lg vertical-center-row ">
             <div align="center">
                 <div id="confirmation-dialog-event-div" class="ui-dialog"  title=<spring:message code= "event.confirmTitle" /> hidden>
