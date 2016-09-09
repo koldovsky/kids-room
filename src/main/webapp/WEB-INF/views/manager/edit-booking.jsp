@@ -180,6 +180,36 @@
         </div>
     </div>
 </div>
+<div id="creatingfailue1" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body-err">
+                <div align="center">
+                    <br>
+                    <h4>Please try to select another time, because currently this room is full!</h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="creatingfailue2" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body-err">
+                <div align="center">
+                    <br>
+                    <h4>Error, duplicate booking!</h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 <div id="createSuccess" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">

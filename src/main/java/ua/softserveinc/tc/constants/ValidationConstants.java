@@ -9,7 +9,7 @@ public final class ValidationConstants {
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
     // public static final String EMAIL_REGEX = "^(\\w){1,60}[@][s]oft[s]erveinc[.]com$";
-    public static final String SIMPLY_PHONE_REGEX = "^([0-9]{5,14})*$";
+    public static final String SIMPLY_PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
     public static final String LETTERS_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦц" +
             "ЧчШшЩщЬьЮюЯя]*$";
     public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОо" +
@@ -53,6 +53,9 @@ public final class ValidationConstants {
     public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
+    //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
+    public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
+
     private ValidationConstants() {
     }
 

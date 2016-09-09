@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.validator.annotation;
 
 import org.springframework.stereotype.Component;
+import org.springframework.validation.ValidationUtils;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.util.JsonUtil;
 
@@ -46,7 +47,6 @@ public class RateValidationImpl implements ConstraintValidator<RateValidation, S
         if (rates.stream().filter(rate -> (rate.getPriceRate() < 0)).findFirst().isPresent()){
             return false;
         }
-
         Map<Integer, Long> map = rates.stream().collect(Collectors.groupingBy(Rate::getHourRate, Collectors.counting()));
         return !map.values().stream().filter(en -> en > 1).findFirst().isPresent();
     }
