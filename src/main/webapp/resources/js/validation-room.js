@@ -10,7 +10,7 @@ $(document).ready(function() {
        }, "Invalid address.");
        $.validator.addMethod("regexCity", function(value, element, regexpr) {
           return regexpr.test(value);
-       }, "Invalid city.");
+       }, "Incorrect data, enter the correct data.");
        $.validator.addMethod("regexPhone", function(value, element, regexpr) {
           return regexpr.test(value);
        }, "Invalid phone number.");

@@ -15,7 +15,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = RateValidationImpl.class)
 public @interface RateValidation {
 
-    String message() default "Invalid value entered.";
+    String message() default "{RateValidation}";
 
     Class<?>[] groups() default {};
 
