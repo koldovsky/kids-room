@@ -11,7 +11,7 @@ $(document).ready(function() {
        }, "Last Name is invalid.");
        $.validator.addMethod("regexPhone", function(value, element, regexpr) {
           return regexpr.test(value);
-       }, "Phone number is invalid. Example 0123456789");
+       }, "Phone number is invalid. Example +380991234567");
     $('#managerForm').validate({
             rules:{
                 email: {

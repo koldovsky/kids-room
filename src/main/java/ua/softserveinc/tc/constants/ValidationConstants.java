@@ -53,6 +53,9 @@ public final class ValidationConstants {
     public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
+    //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
+    public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
+
     private ValidationConstants() {
     }
 

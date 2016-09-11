@@ -68,8 +68,9 @@ public class AddRoomController {
                                     BindingResult bindingResult) {
         this.timeValidator.validate(roomDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ModelAndView(AdminConstants.ADD_ROOM).addObject(AdminConstants.MANAGER_LIST,
+            ModelAndView model = new ModelAndView(AdminConstants.ADD_ROOM).addObject(AdminConstants.MANAGER_LIST,
                     this.userService.findAllUsersByRole(Role.MANAGER));
+            return model;
         }
 
         List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
