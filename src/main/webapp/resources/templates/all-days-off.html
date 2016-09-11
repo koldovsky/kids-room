@@ -11,20 +11,23 @@
             </th>
         </tr>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Start day</th>
             <th>End day</th>
             <th>Rooms</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="day in ctrl.daysOff">
-            <td>{{day.id}}</td>
-            <td>{{day.name}}</td>
+            <td><span editable-text="day.name" e-name="name" e-form="rowform" onaftersave="checkName($data, day.id)">
+                {{day.name}}
+                </span>
+            </td>
             <td>{{day.startDate}}</td>
             <td>{{day.endDate}}</span></td>
             <td>{{day.rooms}}></td>
+            <td>--</td>
         </tr>
         </tbody>
     </table>
@@ -32,6 +35,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script type="text/javascript" src='resources/js/xeditable.js'></script>
 <script type="text/javascript" src='resources/js/day_off_app.js'></script>
 <script type="text/javascript" src='resources/js/day_off_service.js'></script>
 <script type="text/javascript" src='resources/js/day_off_controller.js'></script>
