@@ -17,8 +17,9 @@
 
 <sec:authorize access="hasRole('USER')">
 
-    <%--bookingUpdatingDialog--%>
-    <div class="container">
+<div class="container">
+        <%--bookingUpdatingDialog--%>
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="bookingUpdatingDialog" class="dialog" hidden>
@@ -26,7 +27,7 @@
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="bookingUpdatingStartDate">
-                                    <spring:message code= "booking.startDate"/>
+                                <spring:message code= "booking.startDate"/>
                             </label>
                             <br>
                             <div class="col-xs-6  ">
@@ -82,7 +83,7 @@
                             </footer>
                         </div>
 
-                        <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
+                            <%--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#cancelModal">Delete this booking</button>--%>
 
                     </form>
                 </div>
@@ -90,8 +91,8 @@
         </div>
     </div>
 
-    <%--make-recurrent-booking--%>
-    <div class="container">
+        <%--make-recurrent-booking--%>
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="make-recurrent-booking" class="dialog" hidden>
@@ -257,8 +258,8 @@
         </div>
     </div>
 
-    <%--recurrent-change--%>
-    <div class="container">
+        <%--recurrent-change--%>
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="recurrent-change" title = "<spring:message code= "booking.edit"/>" class="dialog" hidden>
@@ -287,7 +288,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="row">
         <div class="eventInfo" >
 
             <h3 id="eventTitle">Title</h3>
@@ -301,19 +302,19 @@
 
     </div>
 
-    <%--create-new-booking--%>
-    <div class="container">
-
-        <button type="button" class="btn btn-success pull-right" data-toggle="modal"
-                data-target=".bs-modal-lg-colourInfo">
-            &nbsp; <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+        <%--create-new-booking--%>
+    <div class="container col-xs-12">
+        <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
+                data-target=".bs-modal-lg-colourInfo" >
+            <span class="glyphicon glyphicon-info-sign"> </span>
         </button>
-
-        <button type="button" class="btn btn-success" id="create-new-booking">
+        <button type="button" class="btn btn-success btn-responsive" id="create-new-booking">
             <spring:message code= "booking.makeBooking"/>
         </button>
-
-
+        <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
+                data-target=".bs-modal-lg-contact">
+            Contact
+        </button>
 
         <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
@@ -360,11 +361,6 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-success pull-right" data-toggle="modal"
-                data-target=".bs-modal-lg-contact">
-            Contact
-        </button>
-
         <div class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -390,16 +386,11 @@
             </div>
         </div>
 
-
-    </div>
-
-
-    <div class="container">
         <div id='user-calendar'></div>
     </div>
 
-    <%--confirmation-dialog--%>
-    <div class="container">
+        <%--confirmation-dialog--%>
+    <div class="row">
         <div class="modal-dialog modal-lg vertical-center-row ">
             <div align="center">
                 <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
@@ -427,7 +418,8 @@
             </div>
         </div>
     </div>
-
+            <div class="loading" hidden>Loading&#8230;</div>
+</div>
 
 </sec:authorize>
 
@@ -452,7 +444,7 @@
     </c:if>
 
     <c:if test="${!rooms.isEmpty()}">
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="dialog-recurrently" class="modal-dialog-recurrently dialog" hidden>
@@ -505,8 +497,7 @@
         </div>
     </div>
 
-
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="dialog" class="dialog" hidden>
@@ -656,7 +647,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="updating" class="dialog" hidden>
@@ -762,8 +753,7 @@
         </div>
     </div>
 
-
-    <div class="container">
+    <div class="row">
         <div class="vertical-center-row">
             <div align="center">
                 <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
@@ -785,7 +775,6 @@
         </div>
     </div>
 
-
     <div class="container">
         <button type="button" class="btn btn-success" id="create-new-event">New event</button>
         <div id='calendar'></div>
@@ -793,7 +782,7 @@
     </c:if>
 
     <%--confirmation-dialog--%>
-    <div class="container">
+    <div class="row">
         <div class="modal-dialog modal-lg vertical-center-row ">
             <div align="center">
                 <div id="confirmation-dialog-event-div" class="ui-dialog"  title=<spring:message code= "event.confirmTitle" /> hidden>

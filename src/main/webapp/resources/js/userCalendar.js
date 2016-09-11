@@ -243,8 +243,11 @@ $(function () {
         if ($('#weekly-booking').is(':checked')) {
             if(!validateCreateBookingDialogData(CREATE_RECURRENT_BOOKING))
                 return;
-            makeRecurrentBookings();
             closeBookingDialog();
+            $('.loading').show();
+            makeRecurrentBookings();
+
+
 
         }
     });
@@ -947,9 +950,11 @@ function makeRecurrentBookings() {
                     $('#user-calendar').fullCalendar('renderEvent', newBooking);
 
                 });
+                $('.loading').hide();
             }
         }
     )
+
     return true;
 }
 //tested
