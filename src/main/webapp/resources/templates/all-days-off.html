@@ -1,0 +1,40 @@
+<body ng-app="myApp">
+
+<div ng-controller="DayOffController as ctrl">
+    <table class="table table-striped days-off" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
+        <thead>
+        <tr class="hide-border">
+            <th colspan="7" class="set-standard-color">
+                <legend class="for-table"><strong class="title-font">
+                    <spring:message code="administrator.daysOff"/>
+                </strong></legend>
+            </th>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Start day</th>
+            <th>End day</th>
+            <th>Rooms</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="day in ctrl.daysOff">
+            <td>span</td>
+            <td>{{day.name}}</td>
+            <td>{{day.startDate}}</td>
+            <td>{{day.endDate}}</span></td>
+            <td>{{day.rooms}}></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script type="text/javascript" src='resources/js/day_off_app.js'></script>
+<script type="text/javascript" src='resources/js/day_off_service.js'></script>
+<script type="text/javascript" src='resources/js/day_off_controller.js'></script>
+
+</body>
+

@@ -5,7 +5,7 @@
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 
-<body>
-<%@include  file="all-days-off.html" %>
-</body>
+<%@include  file="../../../resources/templates/all-days-off.html" %>
+
+
 
