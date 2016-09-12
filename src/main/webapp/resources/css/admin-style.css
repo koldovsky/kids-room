@@ -118,3 +118,13 @@ th.th-size{
     width: 70%;
     margin: auto;
 }
+
+.btn-cancel {
+    padding-left: 6%;
+    width: 31%;
+}
+
+.editable-wrap .editable-controls > input {
+    max-width: 120px;
+
+}

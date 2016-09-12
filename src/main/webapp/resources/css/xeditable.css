@@ -189,3 +189,7 @@ a.editable-empty:focus {
     }
 }
 
+.editable-wrap .editable-controls > input {
+    text-align: center;
+}
+

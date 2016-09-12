@@ -20,18 +20,33 @@
         </thead>
         <tbody>
         <tr ng-repeat="day in ctrl.daysOff">
-            <td><span editable-text="day.name" e-name="name" e-form="rowform" onaftersave="checkName($data, day.id)">
+            <td><span editable-text="day.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"
+                      e-required e-placeholder="Enter day off name">
                 {{day.name}}
                 </span>
             </td>
             <td>{{day.startDate}}</td>
             <td>{{day.endDate}}</span></td>
             <td>{{day.rooms}}></td>
-            <td>--</td>
+            <td style="white-space: nowrap">
+                <form ng-submit="ctrl.submit()" shown="false" editable-form name="rowform" onbeforesave="updateDayOff(day.id)" ng-show="rowform.$visible"
+                       class="form-buttons form-inline ng-hide" shown="inserted == day">
+                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                        save
+                    </button>
+                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-cancel">
+                        cancel
+                    </button>
+                </form>
+                <div class="buttons" ng-show="!rowform.$visible">
+                    <button class="btn btn-primary" ng-click="rowform.$show(); ctrl.edit(day.id)">edit</button>
+                    <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
-
+    <button class="btn btn-default" ng-click="addDayOff()">Add</button>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
