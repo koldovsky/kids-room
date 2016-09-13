@@ -29,7 +29,7 @@
             <td>{{day.endDate}}</span></td>
             <td>{{day.rooms}}></td>
             <td style="white-space: nowrap">
-                <form ng-submit="ctrl.submit()" shown="false" editable-form name="rowform" onbeforesave="updateDayOff(day.id)" ng-show="rowform.$visible"
+                <form shown="false" editable-form name="rowform" onbeforesave="ctrl.updateName($data)" ng-show="rowform.$visible"
                        class="form-buttons form-inline ng-hide" shown="inserted == day">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                         save

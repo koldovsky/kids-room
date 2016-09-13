@@ -32,7 +32,12 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function($scope, 
             );
     }
 
+    function updateName(name) {
+        self.dayOff.name = name;
+    }
+
     function updateDayOff(id) {
+        updateName();
 
         DayOffService.updateDayOff(self.dayOff, id)
             .then(
@@ -63,7 +68,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function($scope, 
     }
 
     $scope.checkName = function(data) {
-        if (!data.empty()) {
+        if (!data) {
             return "Enter a name";
         }
     };
