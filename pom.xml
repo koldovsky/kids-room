@@ -35,7 +35,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/home</path>
-					<server>credserver</server>
+					<server>Tomcat8</server>
                 </configuration>
             </plugin>
         </plugins>
