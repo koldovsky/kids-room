@@ -62,7 +62,7 @@
         </table>
     </div>
 
-    <input id="itemsPerPage" type="hidden" value="10"></input>
+    <input id="itemsPerPage" type="hidden" value="10" />
     <a id="dlink"  style="display:none;"></a>
     <button id="export" onclick= "tableToExcel('bookings', 'name')" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
         &nbsp; <spring:message code="report.download" /> Excel
