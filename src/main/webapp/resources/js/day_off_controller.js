@@ -36,10 +36,12 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function($scope, 
         self.dayOff.name = name;
     }
 
-    function updateDayOff(id) {
+    function updateDay(data) {
         updateName();
 
-        DayOffService.updateDayOff(self.dayOff, id)
+        angular.extend(data, {id: self.dayOff.id});
+        self.dayOff = data;
+        DayOffService.updateDayOff(self.dayOff, self.dayOff.id)
             .then(
                 getAllDaysOff,
                 function (errResponse) {
@@ -64,7 +66,6 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function($scope, 
     function edit(id) {
         console.log('id to be edited', id);
         self.dayOff.id = id;
-        self.dayOff = getDayOff(id);
     }
 
     $scope.checkName = function(data) {

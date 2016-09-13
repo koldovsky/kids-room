@@ -25,12 +25,12 @@
                 {{day.name}}
                 </span>
             </td>
-            <td>{{day.startDate}}</td>
-            <td>{{day.endDate}}</span></td>
-            <td>{{day.rooms}}></td>
+            <td><span e-form="rowform">{{day.startDate}}</span></td>
+            <td><span e-form="rowform">{{day.endDate}}</span></span></td>
+            <td><span e-form="rowform">{{day.rooms}}></span></td>
             <td style="white-space: nowrap">
-                <form shown="false" editable-form name="rowform" onbeforesave="ctrl.updateName($data)" ng-show="rowform.$visible"
-                       class="form-buttons form-inline ng-hide" shown="inserted == day">
+                <form shown="false" editable-form name="rowform" onbeforesave="updateDay($data, day.id)" ng-show="rowform.$visible"
+                       class="form-buttons form-inline ng-hide">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
                         save
                     </button>
