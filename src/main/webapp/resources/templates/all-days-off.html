@@ -31,7 +31,7 @@
             <td style="white-space: nowrap">
                 <form shown="false" editable-form name="rowform" onbeforesave="updateDay($data, day.id)" ng-show="rowform.$visible"
                        class="form-buttons form-inline ng-hide">
-                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
                         save
                     </button>
                     <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-cancel">
@@ -39,7 +39,7 @@
                     </button>
                 </form>
                 <div class="buttons" ng-show="!rowform.$visible">
-                    <button class="btn btn-primary" ng-click="rowform.$show(); ctrl.edit(day.id)">edit</button>
+                    <button class="btn btn-success" ng-click="rowform.$show(); ctrl.edit(day.id)">edit</button>
                     <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
                 </div>
             </td>
