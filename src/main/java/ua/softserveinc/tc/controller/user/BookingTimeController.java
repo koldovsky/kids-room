@@ -101,7 +101,7 @@ public class BookingTimeController {
         return JsonUtil.toJson(mp);
     }
 
-    @RequestMapping(value = "getrecurrentbookings", method = RequestMethod.POST)
+    @RequestMapping(value = "makerecurrentbookings", method = RequestMethod.POST)
     @ResponseBody
     public String makeRecurrentBookings(@RequestBody List<BookingDto> bookingDtos) {
         for (BookingDto bookingDto : bookingDtos) {

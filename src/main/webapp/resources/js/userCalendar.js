@@ -847,7 +847,7 @@ function updateRecurrentBooking() {
     cancelRecurrentBookings(clickedEventRecurrentId);
 
     $.ajax({
-            url: 'getrecurrentbookings',
+            url: 'makerecurrentbookings',
             type: 'post',
             contentType: 'application/json',
             dataType: 'json',
@@ -926,7 +926,7 @@ function makeRecurrentBookings() {
     }
 
     $.ajax({
-            url: 'getrecurrentbookings',
+            url: 'makerecurrentbookings',
             type: 'post',
             contentType: 'application/json',
             dataType: 'json',
@@ -1065,7 +1065,14 @@ function editRecurrentBookingsReuest (recurrentId) {
 }
 
 function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
-    clearBookingDialogSingleMulti();
+    $('#book').hide();
+    $('#child-selector').hide();
+    $('#comment-for-one-child-updating').show();
+
+    $('#make-recurrent-booking').dialog('open');
+    $('#days-for-recurrent-booking-form').prop('hidden', false);
+    $('#no-recurrent-booking').prop('checked',false);
+    $('#weekly-booking').prop('checked',true);
     $('#recurrent-booking-start-date').val(recurrentBookingForEditing.startDate.substring(0, 10));
     $('#recurrent-booking-end-date').val(recurrentBookingForEditing.endDate.substring(0, 10));
     $('#recurrent-booking-start-time').timepicker('setTime', recurrentBookingForEditing.startTime);
@@ -1096,19 +1103,16 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
         }
         $('#' + day + '-booking').prop('checked', true);
     });
-    $('#book').hide();
-    $('#child-selector').hide();
-    $('#comment-for-one-child-updating').show();
     $('#update-recurrent-booking').show();
     $('#delete-recurrent-booking').show();
-    $('#make-recurrent-booking').dialog('open');
 
 };
 
 function clearBookingDialogSingleMulti() {
+    $('#weekly-booking').prop( "checked", false );
+    $('#no-recurrent-booking').prop( "checked", true );
     $('#days-for-recurrent-booking-form').attr('hidden', true);
-    $('#weekly-booking').prop( "checked", false )
-    $('#no-recurrent-booking').prop( "checked", true )
+
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').attr('checked', false);
