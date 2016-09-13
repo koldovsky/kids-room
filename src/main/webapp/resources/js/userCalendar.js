@@ -12,8 +12,11 @@ var BLOCKED = '#ff0000'
 var allBookings;
 var temporaryBookingId = -1;
 var blockedTimeSpanId = -2;
-
-
+$(document).ready(function () {
+    if($(window).width() < 1000){
+        $('#mobile').attr('class','');
+    }
+});
 $(function () {
 
     $('#recurrent-change').dialog({

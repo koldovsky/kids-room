@@ -51,7 +51,7 @@ public class UserServiceTest {
         u.setFirstName("Adam");
         u.setLastName("Tester");
         u.setRole(Role.USER);
-        u.setPhoneNumber("380679122354");
+        u.setPhoneNumber("+380679122354");
 
         userService.create(u);
 
@@ -75,19 +75,20 @@ public class UserServiceTest {
         u.setFirstName("Adam");
         u.setLastName("Tester");
         u.setRole(Role.USER);
-        u.setPhoneNumber("380679122354");
+        u.setPhoneNumber("+380679122354");
 
         userService.createWithEncoder(u);
 
         User after = userService.getUserByEmail(email);
-        assertEquals(passwordEncoder.encode(password), u.getPassword());
+
+        assertEquals(true, passwordEncoder.matches(password, after.getPassword()));
     }
 
     @Test
     @Transactional
     @Rollback
     public void testDeleteAndFindAll(){
-        User toBeDeleted = userService.findById(1L);
+        User toBeDeleted = userService.findById(91L);
         userService.delete(toBeDeleted);
         List<User> all = userService.findAll();
 
@@ -98,9 +99,9 @@ public class UserServiceTest {
     @Transactional
     @Rollback
     public void testDeleteById(){
-        userService.deleteUserById(1L);
+        userService.deleteUserById(91L);
         try{
-            userService.findById(1L);   //should throw an exception
+            userService.findById(91L);   //should throw an exception
             fail();
         }
         catch (ResourceNotFoundException rfe){

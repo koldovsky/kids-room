@@ -67,6 +67,7 @@ public class ReportParentController {
         modelMap.addAttribute(ReportConstants.BOOKINGS, bookings);
         modelMap.addAttribute(ReportConstants.SUM_TOTAL, sumTotal);
         modelMap.addAttribute(ReportConstants.START_DATE, startDate);
+        modelMap.addAttribute("pageChecker","reportParent"); //value for checking the page in header.jsp
 
         return modelAndView;
     }

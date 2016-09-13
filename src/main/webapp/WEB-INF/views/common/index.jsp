@@ -17,7 +17,7 @@
 
 <sec:authorize access="hasRole('USER')">
 
-<div class="container">
+<div id="mobile" class="container">
         <%--bookingUpdatingDialog--%>
     <div class="row">
         <div class="vertical-center-row">
