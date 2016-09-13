@@ -36,7 +36,7 @@ public class DayOffController {
 
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {
-            System.out.println("User with id " + id + " not found");
+            System.out.println("While getting user with id " + id + " not found");
             return new ResponseEntity<DayOff>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<DayOff>(currentDay, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class DayOffController {
         DayOff currentDay = dayOffService.findById(id);
 
         if (currentDay == null) {
-            log.error("User with id " + id + " not found");
+            log.error("While updating user with id " + id + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         currentDay.setName(dayOff.getName());
@@ -56,6 +56,19 @@ public class DayOffController {
 
         dayOffService.upsert(currentDay);
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/day/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<DayOff> deleteUser(@PathVariable("id") long id) {
+
+        DayOff currentDay = dayOffService.findById(id);
+        if (currentDay == null) {
+            log.error("While deleting user with id " + id + " not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        dayOffService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
