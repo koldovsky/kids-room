@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "name")
 public class Room {
 
     @Id
@@ -37,6 +42,7 @@ public class Room {
     private List<Event> events;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "room")
+    @JsonIgnore
     private List<Rate> rates;
 
     @Column(name = RoomConstants.WORKING_START_HOUR)
@@ -60,7 +66,6 @@ public class Room {
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.DAY_OFF))
     @OrderBy("startDate ASC")
-    @JsonManagedReference
     private List<DayOff> daysOff;
 
     public Room() {
@@ -161,6 +166,14 @@ public class Room {
 
     public void setRates(List<Rate> rates) {
         this.rates = rates;
+    }
+
+    public List<DayOff> getDaysOff() {
+        return daysOff;
+    }
+
+    public void setDaysOff(List<DayOff> daysOff) {
+        this.daysOff = daysOff;
     }
 
     @Override

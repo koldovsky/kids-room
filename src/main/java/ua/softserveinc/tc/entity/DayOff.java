@@ -1,16 +1,19 @@
 package ua.softserveinc.tc.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.DayOffConstants;
+import ua.softserveinc.tc.util.SimpleRoomSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = DayOffConstants.Entity.TABLENAME)
@@ -18,6 +21,9 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(of = "id")
 @ToString
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "name")
 public class DayOff {
 
     @Id
@@ -36,7 +42,7 @@ public class DayOff {
     private LocalDate endDate;
 
     @ManyToMany(mappedBy = "daysOff", fetch=FetchType.LAZY)
-    @JsonBackReference
-    List<Room> rooms;
+    @JsonSerialize(using = SimpleRoomSerializer.class)
+    Set<Room> rooms;
 
 }
