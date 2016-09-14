@@ -37,12 +37,14 @@ public class DayOffController {
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {
             System.out.println("While getting user with id " + id + " not found");
-            return new ResponseEntity<DayOff>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<DayOff>(currentDay, HttpStatus.OK);
+        return new ResponseEntity<>(currentDay, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT,
+            consumes = "application/json",
+            produces = "application/json")
     public ResponseEntity<DayOff> updateDayOff(@PathVariable("id") long id, @RequestBody DayOff dayOff) {
         DayOff currentDay = dayOffService.findById(id);
 

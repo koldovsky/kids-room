@@ -8,7 +8,8 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
     var factory = {
         getAllDaysOff: getAllDaysOff,
         getDayOff: getDayOff,
-        updateDayOff: updateDayOff
+        updateDayOff: updateDayOff,
+        deleteDayOff: deleteDayOff
     };
 
     return factory;
@@ -43,7 +44,7 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
         return deferred.promise;
     }
 
-    function updateDayOff(dayOff, id) {
+    function updateDayOff(id, dayOff) {
         var deferred = $q.defer();
         $http.put(REST_URI_DAY + id, dayOff)
             .then(
@@ -52,6 +53,21 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
                 },
                 function (errResponse) {
                     console.error('Error while updating Day Off');
+                    deferred.reject(errResponse);
+                }
+            );
+        return deferred.promise;
+    }
+
+    function deleteDayOff(id) {
+        var deferred = $q.defer();
+        $http.delete(REST_URI_DAY + id)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                },
+                function (errResponse) {
+                    console.error('Error while deleting Day Off');
                     deferred.reject(errResponse);
                 }
             );

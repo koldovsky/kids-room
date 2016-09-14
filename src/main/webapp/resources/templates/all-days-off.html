@@ -29,7 +29,7 @@
             <td><span e-form="rowform">{{day.endDate}}</span></span></td>
             <td><span e-form="rowform">{{day.rooms}}></span></td>
             <td style="white-space: nowrap">
-                <form shown="false" editable-form name="rowform" onbeforesave="updateDay($data, day.id)" ng-show="rowform.$visible"
+                <form shown="false" editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
                        class="form-buttons form-inline ng-hide">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
                         save
@@ -39,8 +39,8 @@
                     </button>
                 </form>
                 <div class="buttons" ng-show="!rowform.$visible">
-                    <button class="btn btn-success" ng-click="rowform.$show(); ctrl.edit(day.id)">edit</button>
-                    <button class="btn btn-danger" ng-click="removeUser($index)">del</button>
+                    <button class="btn btn-success" ng-click="rowform.$show(); edit(day.id)">edit</button>
+                    <button class="btn btn-danger" ng-click="deleteDay(day.id, $index)">del</button>
                 </div>
             </td>
         </tr>
