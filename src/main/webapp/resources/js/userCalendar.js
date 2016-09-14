@@ -853,7 +853,6 @@ function updateRecurrentBooking() {
             dataType: 'json',
             data: JSON.stringify(newEventAfterUpdate),
             success: function (result) {
-
                 result.forEach(function (item, i) {
                     var newBooking = {
                         id: item.id,
@@ -873,7 +872,11 @@ function updateRecurrentBooking() {
                     $('#user-calendar').fullCalendar('renderEvent', newBooking);
 
                 });
-            }
+            },
+            error: function (xhr) {
+                $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
+                callErrorDialog(xhr['responseText']);
+        }
         }
     )
     closeUpdatingDialog();
@@ -954,7 +957,11 @@ function makeRecurrentBookings() {
 
                 });
                 $('.loading').hide();
-            }
+            },
+            error: function (xhr) {
+                $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
+                callErrorDialog(xhr['responseText']);
+        }
         }
     )
 
