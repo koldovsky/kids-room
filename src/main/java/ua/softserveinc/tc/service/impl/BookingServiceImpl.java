@@ -1,23 +1,25 @@
 package ua.softserveinc.tc.service.impl;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.DateConstants;
-import ua.softserveinc.tc.dao.*;
+import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dao.ChildDao;
+import ua.softserveinc.tc.dao.RoomDao;
+import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -218,20 +220,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         daysOFWeek.put("Fri", Calendar.FRIDAY);
         daysOFWeek.put("Sat", Calendar.SATURDAY);
 
-
-     /*   try{
-            dateForRecurrentStart = sdf.parse(dateStart);
-            dateForRecurrentEnd = sdf.parse(dateEnd);
-        } catch (Exception e) {
-            dateForRecurrentStart = null;
-            dateForRecurrentEnd = null;
-        }*/
         Calendar calendar1 = Calendar.getInstance();
+
         Calendar calendarEndTime = Calendar.getInstance();
         calendarEndTime.setTime(dateForRecurrentEnd);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(dateForRecurrentStart);
+        Calendar calendarStartTime = Calendar.getInstance();
+        calendarStartTime.setTime(dateForRecurrentStart);
 
         String[] days = bookingDtos.get(0).getDaysOfWeek().split(" ");
         Long newRecID = bookingDao.getMaxRecurrentId() + 1;
@@ -250,25 +245,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         List<BookingDto> newRecurrentBooking = new LinkedList<>();
 
-        while (dateForRecurrentEnd.getTime() > calendar.getTimeInMillis()) {
+        while (dateForRecurrentEnd.getTime() > calendarStartTime.getTimeInMillis()) {
             for (int i = 0; i < days.length; i++) {
 
                 List<BookingDto> dailyBookings = new LinkedList<>();
 
-                calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get(days[i]));
+                calendarStartTime.set(Calendar.DAY_OF_WEEK, daysOFWeek.get(days[i]));
 
-                if (dateForRecurrentEnd.getTime() < calendar.getTimeInMillis()) break;
-                if (dateForRecurrentStart.getTime() > calendar.getTimeInMillis()) continue;
+                if (dateForRecurrentEnd.getTime() < calendarStartTime.getTimeInMillis()) break;
+                if (dateForRecurrentStart.getTime() > calendarStartTime.getTimeInMillis()) continue;
 
 
                 for (int j = 0; j < bookingDtos.size(); j++) {
                     Booking booking = new Booking();
 
-                    booking.setBookingStartTime(calendar.getTime());
+                    booking.setBookingStartTime(calendarStartTime.getTime());
 
 
-                    calendar1.setTime(calendar.getTime());
-                    calendar1.set(Calendar.HOUR, calendarEndTime.get(Calendar.HOUR));
+                    calendar1.setTime(calendarStartTime.getTime());
+                    calendar1.set(Calendar.HOUR, calendarEndTime.get(Calendar.HOUR_OF_DAY));
                     calendar1.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
 
                     booking.setBookingEndTime(calendar1.getTime());
@@ -286,7 +281,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                     buf.setRoom(room);
                     buf.setRoomId(room.getId());
 
-                    buf.setDateStartTime(DateUtil.toDateISOFormat(DateUtil.toIsoString(calendar.getTime())));
+                    buf.setDateStartTime(DateUtil.toDateISOFormat(DateUtil.toIsoString(calendarStartTime.getTime())));
                     buf.setDateEndTime(DateUtil.toDateISOFormat(DateUtil.toIsoString(calendar1.getTime())));
 
                     buf.setUser(userDao.findById(bookingDtos.get(j).getUserId()));
@@ -296,8 +291,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 }
                 newRecurrentBooking.addAll(dailyBookings);
             }
-            calendar.add(Calendar.WEEK_OF_YEAR, 1);
-            calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));
+            calendarStartTime.add(Calendar.WEEK_OF_YEAR, 1);
+            calendarStartTime.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));
         }
         return persistBookingsFromDtoAndSetId(newRecurrentBooking);
     }

@@ -935,7 +935,6 @@ function makeRecurrentBookings() {
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
-
                 result.forEach(function (item, i) {
                     var newBooking = {
                         id: item.id,
@@ -960,7 +959,9 @@ function makeRecurrentBookings() {
             },
             error: function (xhr) {
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
+                $('.loading').hide();
                 callErrorDialog(xhr['responseText']);
+
         }
         }
     )
