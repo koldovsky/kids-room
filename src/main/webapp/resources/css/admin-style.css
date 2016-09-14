@@ -41,16 +41,15 @@ th.for-button{
 }
 
 .reg-form {
-    min-width: 400px;
+    min-width: 300px;
     padding: 30px;
     background-color: white;
     box-shadow: 3px 3px 10px grey;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    float: none;
+    margin: 0 auto;
 }
 
 .for-table {
-    block:fixed;
     margin: auto;
 	width: auto;
 	padding-top: 10px;
@@ -69,21 +68,30 @@ th.for-button{
 
 .for-field {
     height: 30px;
-    width: 350px;
+    width: 300px;
     margin: auto;
-    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .for-field1 {
     height: 30px;
-    width: 150px;
+    width: 140px;
     margin: auto;
     margin-bottom: 15px;
+    float: left;
 }
 
 .for-field2 {
     height: 30px;
-    width: 150px;
+    width: 140px;
+    margin: auto;
+    margin-bottom: 15px;
+    float: right;
+}
+
+.for-field3 {
+    height: 30px;
+    width: 140px;
     margin: auto;
     margin-bottom: 15px;
 }
@@ -110,6 +118,6 @@ th.th-size{
 }
 
 .sizing-between {
-    margin: 0px;
+    margin: 0;
     margin-bottom: 35px;
 }
