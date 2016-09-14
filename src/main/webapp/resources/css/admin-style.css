@@ -45,12 +45,11 @@ th.for-button{
     padding: 30px;
     background-color: white;
     box-shadow: 3px 3px 10px grey;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    float: none;
+    margin: 0 auto;
 }
 
 .for-table {
-    block:fixed;
     margin: auto;
 	width: auto;
 	padding-top: 10px;
@@ -119,6 +118,6 @@ th.th-size{
 }
 
 .sizing-between {
-    margin: 0px;
+    margin: 0;
     margin-bottom: 35px;
 }

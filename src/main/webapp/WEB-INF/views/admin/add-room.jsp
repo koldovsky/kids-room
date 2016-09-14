@@ -12,7 +12,7 @@
 <body>
 
 <div class=" for-table">
-    <table class="col-sm-offset-4 col-sm-3 reg-form">
+    <table class="col-sm-offset-3 col-sm-3 reg-form">
 
         <tr><th>
             <strong class="title-font"><spring:message code="administrator.addRoom"/></strong>
