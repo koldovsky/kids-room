@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,9 +19,6 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(of = "id")
 @ToString
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "name")
 public class DayOff {
 
     @Id

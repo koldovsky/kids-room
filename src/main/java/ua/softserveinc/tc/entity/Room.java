@@ -1,8 +1,5 @@
 package ua.softserveinc.tc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 
@@ -12,9 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "name")
 public class Room {
 
     @Id
@@ -42,7 +36,6 @@ public class Room {
     private List<Event> events;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "room")
-    @JsonIgnore
     private List<Rate> rates;
 
     @Column(name = RoomConstants.WORKING_START_HOUR)

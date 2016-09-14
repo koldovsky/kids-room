@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class that handles JSON Serialization for DaysOff Entity's ManyToMany mapping.
+ * Class that handles JSON Serialization for DayOff Entity's ManyToMany mapping.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SimpleRoomSerializer  extends JsonSerializer<Set<Room>> {
