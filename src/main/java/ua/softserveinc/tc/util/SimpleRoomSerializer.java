@@ -4,25 +4,27 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ua.softserveinc.tc.entity.Room;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SimpleRoomSerializer  extends JsonSerializer<Set<Room>> {
+/**
+ * Class that handles JSON Serialization for DaysOff Entity's ManyToMany mapping.
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class SimpleRoomSerializer  extends JsonSerializer<Set<Room>> {
 
     @Override
     public void serialize(final Set<Room> rooms, final JsonGenerator generator,
                           final SerializerProvider provider) throws IOException, JsonProcessingException {
-        final Set<SimpleRoom> simpleCollaborations = new HashSet<>();
+        final Set<SimpleRoom> simpleRooms = new HashSet<>();
         for (final Room room : rooms) {
-            simpleCollaborations.add(new SimpleRoom(room.getId(), room.getName()));
+            simpleRooms.add(new SimpleRoom(room.getId(), room.getName()));
         }
-        generator.writeObject(simpleCollaborations);
+        generator.writeObject(simpleRooms);
     }
 
     @Getter
