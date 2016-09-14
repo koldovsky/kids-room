@@ -40,4 +40,14 @@ public class DayOff {
     @JsonSerialize(using = SimpleRoomSerializer.class)
     Set<Room> rooms;
 
+    /**
+     * Method for deleting Day Off object and
+     * avoid throwing DataIntegrityViolationException.
+     */
+    @PreRemove
+    private void removeGroupsFromUsers() {
+        for (Room room : rooms) {
+            room.getDaysOff().remove(this);
+        }
+    }
 }

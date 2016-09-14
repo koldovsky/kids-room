@@ -27,7 +27,7 @@
             </td>
             <td><span e-form="rowform">{{day.startDate}}</span></td>
             <td><span e-form="rowform">{{day.endDate}}</span></span></td>
-            <td><span e-form="rowform">--</span></td>
+            <td><span e-form="rowform">{{day.rooms}}</span></td>
             <td style="white-space: nowrap">
                 <form shown="false" editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
                        class="form-buttons form-inline ng-hide">
