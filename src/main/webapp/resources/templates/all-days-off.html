@@ -30,11 +30,12 @@
             <td><span e-form="rowform">{{day.rooms}}</span></td>
             <td style="white-space: nowrap">
                 <form shown="false" editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
-                       class="form-buttons form-inline ng-hide">
+                      class="form-buttons form-inline ng-hide">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
                         save
                     </button>
-                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default btn-cancel">
+                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
+                            class="btn btn-default btn-cancel">
                         cancel
                     </button>
                 </form>

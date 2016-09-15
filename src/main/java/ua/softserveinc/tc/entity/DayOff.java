@@ -36,13 +36,13 @@ public class DayOff {
     @Column(name = DayOffConstants.Entity.END_DATE)
     private LocalDate endDate;
 
-    @ManyToMany(mappedBy = "daysOff", fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "daysOff", fetch = FetchType.LAZY)
     @JsonSerialize(using = SimpleRoomSerializer.class)
     Set<Room> rooms;
 
     /**
-     * Method for deleting Day Off object and
-     * avoid throwing DataIntegrityViolationException.
+     * Deletes {@link DayOff} instance and avoids
+     * throwing DataIntegrityViolationException.
      */
     @PreRemove
     private void removeGroupsFromUsers() {

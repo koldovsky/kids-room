@@ -43,7 +43,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
             );
     };
 
-    $scope.deleteDay = function(id, index) {
+    $scope.deleteDay = function (id, index) {
         console.log("id:" + id + " | index:" + index);
 
         self.daysOff.splice(index, 1);
