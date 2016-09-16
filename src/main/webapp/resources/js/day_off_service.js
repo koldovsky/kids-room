@@ -8,6 +8,7 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
     var factory = {
         getAllDaysOff: getAllDaysOff,
         getDayOff: getDayOff,
+        createDayOff: createDayOff,
         updateDayOff: updateDayOff,
         deleteDayOff: deleteDayOff
     };
@@ -38,6 +39,21 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
                 },
                 function (errResponse) {
                     console.error('Error while fetching Day Off');
+                    deferred.reject(errResponse);
+                }
+            );
+        return deferred.promise;
+    }
+
+    function createDayOff(dayOff) {
+        var deferred = $q.defer();
+        $http.post(REST_SERVICE_URI, dayOff)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                },
+                function(errResponse){
+                    console.error('Error while creating UDay Off');
                     deferred.reject(errResponse);
                 }
             );

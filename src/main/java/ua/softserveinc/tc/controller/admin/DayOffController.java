@@ -56,7 +56,6 @@ public class DayOffController {
         if (dayOffService.dayOffExist(dayOff.getName(), dayOff.getStartDate())) {
             log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
                     "with the same start date: " + dayOff.getStartDate());
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         dayOffService.upsert(dayOff);
 

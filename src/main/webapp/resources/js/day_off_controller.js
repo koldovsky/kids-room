@@ -33,6 +33,16 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
             );
     }
 
+    $scope.createDay = function(day){
+        DayOffService.createDayOff(day)
+            .then(
+                getAllDaysOff(),
+                function(errResponse){
+                    console.error('Error while creating Day Off');
+                }
+            );
+    };
+
     $scope.updateDay = function (day) {
         DayOffService.updateDayOff(day.id, day)
             .then(
