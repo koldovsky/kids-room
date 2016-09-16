@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.DayOffConstants;
+import ua.softserveinc.tc.constants.RoomConstants;
 import ua.softserveinc.tc.util.SimpleRoomSerializer;
 
 import javax.persistence.*;
@@ -41,7 +42,10 @@ public class DayOff {
     @Column(name = DayOffConstants.Entity.END_DATE)
     private LocalDate endDate;
 
-    @ManyToMany(mappedBy = "daysOff")
+    @ManyToMany
+    @JoinTable(name = RoomConstants.ROOMS_OFF,
+            joinColumns = @JoinColumn(name = RoomConstants.DAY_OFF),
+            inverseJoinColumns = @JoinColumn(name = RoomConstants.ROOM))
     @JsonSerialize(using = SimpleRoomSerializer.class)
     Set<Room> rooms;
 

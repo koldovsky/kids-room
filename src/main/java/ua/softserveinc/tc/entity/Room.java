@@ -59,10 +59,7 @@ public class Room {
     private List<User> managers;
 
 
-    @ManyToMany
-    @JoinTable(name = RoomConstants.ROOMS_OFF,
-            joinColumns = @JoinColumn(name = RoomConstants.ROOM),
-            inverseJoinColumns = @JoinColumn(name = RoomConstants.DAY_OFF))
+    @ManyToMany(mappedBy = RoomConstants.TABLE_NAME_ROOMS)
     @OrderBy("startDate ASC")
     private List<DayOff> daysOff;
 

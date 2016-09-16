@@ -3,7 +3,7 @@
 App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope, DayOffService) {
     var self = this;
 
-    self.dayOff = {id: null, name: '', startDate: '', endDate: ''};
+    self.dayOff = {id: null, name: '', startDate: '', endDate: '', rooms: ''};
     self.daysOff = [];
     $scope.daysOff = getAllDaysOff();
 
