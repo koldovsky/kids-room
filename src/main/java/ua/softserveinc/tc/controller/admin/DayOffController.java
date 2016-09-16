@@ -2,10 +2,12 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.DayOffService;
@@ -47,6 +49,20 @@ public class DayOffController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/day/", method = RequestMethod.POST)
+    public ResponseEntity<Void> createDayOff(@RequestBody DayOff dayOff, UriComponentsBuilder ucBuilder) {
+        if (dayOffService.dayOffExist(dayOff.getName(), dayOff.getStartDate())) {
+            log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
+                    "with the same start date: " + dayOff.getStartDate());
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        dayOffService.upsert(dayOff);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/day/{id}").buildAndExpand(dayOff.getId()).toUri());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT)

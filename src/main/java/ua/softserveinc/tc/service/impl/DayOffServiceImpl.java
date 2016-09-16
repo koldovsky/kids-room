@@ -26,6 +26,19 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
+    public List<DayOff> findByNameOrStartDate(String name, LocalDate startDate) {
+        return dayOffRepository.findByNameOrStartDate(name, startDate);
+    }
+
+    @Override
+    public boolean dayOffExist(String name, LocalDate startDate) {
+        if(findByNameOrStartDate(name, startDate).isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void delete(long id) {
         dayOffRepository.delete(id);
     }
@@ -33,11 +46,6 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public List<DayOff> findAll() {
         return dayOffRepository.findAll();
-    }
-
-    @Override
-    public List<DayOff> findByName(String name) {
-        return dayOffRepository.findByName(name);
     }
 
     @Override

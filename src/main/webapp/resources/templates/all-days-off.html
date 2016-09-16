@@ -1,6 +1,6 @@
 <body ng-app="myApp">
 
-<div ng-controller="DayOffController as ctrl">
+<div ng-controller="DayOffController as dayCtrl">
     <table class="table table-striped days-off" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
         <thead>
         <tr class="hide-border">
@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="day in ctrl.daysOff">
+        <tr ng-repeat="day in dayCtrl.daysOff">
             <td><span editable-text="day.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"
                       e-required e-placeholder="Enter day off name">
                 {{day.name}}
@@ -58,7 +58,9 @@
 <script type="text/javascript" src='resources/js/xeditable.js'></script>
 <script type="text/javascript" src='resources/js/day_off_app.js'></script>
 <script type="text/javascript" src='resources/js/day_off_service.js'></script>
+<script type="text/javascript" src='resources/js/room_service.js'></script>
 <script type="text/javascript" src='resources/js/day_off_controller.js'></script>
+<script type="text/javascript" src='resources/js/room_controller.js'></script>
 
 </body>
 

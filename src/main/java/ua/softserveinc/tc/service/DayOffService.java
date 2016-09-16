@@ -11,11 +11,13 @@ public interface DayOffService {
 
     DayOff findById(long id);
 
+    boolean dayOffExist(String name, LocalDate startDate);
+
     void delete(long id);
 
     List<DayOff> findAll();
 
-    List<DayOff> findByName(String name);
+    List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
 
     List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
