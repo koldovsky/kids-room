@@ -7,10 +7,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.entity.DayOff;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.DayOffService;
+import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.Log;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/adm-days-off")
@@ -21,6 +26,9 @@ public class DayOffController {
 
     @Autowired
     private DayOffService dayOffService;
+
+    @Autowired
+    private RoomService roomService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DayOff>> allDaysOff() {
@@ -42,9 +50,7 @@ public class DayOffController {
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT,
-            consumes = "application/json",
-            produces = "application/json")
+    @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT)
     public ResponseEntity<DayOff> updateDayOff(@PathVariable("id") long id, @RequestBody DayOff dayOff) {
         DayOff currentDay = dayOffService.findById(id);
 
@@ -55,6 +61,13 @@ public class DayOffController {
         currentDay.setName(dayOff.getName());
         currentDay.setStartDate(dayOff.getStartDate());
         currentDay.setEndDate(dayOff.getEndDate());
+        currentDay.setRooms(Collections.emptySet());
+
+        Set<Room> currentRooms = new HashSet<>();
+        for(Room room : dayOff.getRooms()) {
+            currentRooms.add(roomService.findById(room.getId()));
+        }
+        currentDay.setRooms(currentRooms);
 
         dayOffService.upsert(currentDay);
         return new ResponseEntity<>(currentDay, HttpStatus.OK);

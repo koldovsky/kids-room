@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 
@@ -9,6 +11,9 @@ import java.util.List;
 
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "name")
 public class Room {
 
     @Id
