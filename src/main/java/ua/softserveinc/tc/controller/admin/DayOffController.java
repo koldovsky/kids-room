@@ -12,7 +12,6 @@ import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.Log;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,7 +60,6 @@ public class DayOffController {
         currentDay.setName(dayOff.getName());
         currentDay.setStartDate(dayOff.getStartDate());
         currentDay.setEndDate(dayOff.getEndDate());
-        currentDay.setRooms(Collections.emptySet());
 
         Set<Room> currentRooms = new HashSet<>();
         for(Room room : dayOff.getRooms()) {
