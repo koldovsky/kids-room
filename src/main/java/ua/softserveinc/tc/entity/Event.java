@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.util.DateUtil;
@@ -101,6 +102,7 @@ public class Event {
         this.ageHigh = ageHigh;
     }
 
+    @JsonBackReference
     public Room getRoom() {
         return room;
     }

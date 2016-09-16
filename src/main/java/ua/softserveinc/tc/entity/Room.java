@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
@@ -147,6 +148,7 @@ public class Room {
         this.city = city;
     }
 
+    @JsonManagedReference
     public List<Event> getEvents() {
         return events;
     }
