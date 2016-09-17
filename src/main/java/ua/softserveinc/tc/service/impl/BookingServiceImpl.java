@@ -263,7 +263,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
 
                     calendar1.setTime(calendarStartTime.getTime());
-                    calendar1.set(Calendar.HOUR, calendarEndTime.get(Calendar.HOUR_OF_DAY));
+                    calendar1.set(Calendar.HOUR_OF_DAY, calendarEndTime.get(Calendar.HOUR_OF_DAY));
                     calendar1.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
 
                     booking.setBookingEndTime(calendar1.getTime());
