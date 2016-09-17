@@ -1,14 +1,13 @@
 package ua.softserveinc.tc.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 
 import javax.persistence.*;
 import java.util.List;
-
 
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
@@ -76,6 +75,7 @@ public class Room {
         this.isActive = active;
     }
 
+    @JsonIgnore
     public List<User> getManagers() {
         return managers;
     }
@@ -148,7 +148,7 @@ public class Room {
         this.city = city;
     }
 
-    @JsonManagedReference
+    @JsonIgnore
     public List<Event> getEvents() {
         return events;
     }
@@ -157,6 +157,7 @@ public class Room {
         this.events = events;
     }
 
+    @JsonIgnore
     public List<Rate> getRates() {
         return rates;
     }
@@ -165,6 +166,7 @@ public class Room {
         this.rates = rates;
     }
 
+    @JsonIgnore
     public List<DayOff> getDaysOff() {
         return daysOff;
     }
