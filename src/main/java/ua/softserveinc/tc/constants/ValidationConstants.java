@@ -23,7 +23,7 @@ public final class ValidationConstants {
     public static final String NOT_VALID_MESSAGE = "Value is invalid.";
     public static final String DUPLICATE_BOOKING_MESSAGE = "Room is already booked for your kid at this time";
     public static final String ROOM_IS_FULL_MESSAGE = "This room is full at this time";
-    public static final String ENDTIME_BEFORE_STARTTIME = "Endtime is before starttime";
+    public static final String ENDTIME_BEFORE_STARTTIME = "End time can't be before start time";
 
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
@@ -56,6 +56,7 @@ public final class ValidationConstants {
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
     //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
+    public static final String NO_DAYS_FOR_BOOKING = "There are no days for booking";
 
     private ValidationConstants() {
     }

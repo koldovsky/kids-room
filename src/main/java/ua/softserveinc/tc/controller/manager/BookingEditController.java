@@ -15,6 +15,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.TimeValidator;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -41,6 +42,9 @@ public class BookingEditController {
 
     @Autowired
     private BookingDao bookingDao;
+
+    @Autowired
+    private TimeValidator timeValidator;
 
     @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
     public ModelAndView editBookingModel(Model model, Principal principal) {
@@ -109,6 +113,7 @@ public class BookingEditController {
         Booking booking = bookingService.findById(bookingDto.getId());
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
+        if (!this.timeValidator.validateBooking(bookingDto)) return false;
         if (roomService.isPossibleUpdate(bookingDto)) {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);

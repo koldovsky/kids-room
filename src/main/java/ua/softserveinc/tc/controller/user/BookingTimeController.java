@@ -58,9 +58,9 @@ public class BookingTimeController {
         }
 
         for (BookingDto dto : dtos) {
-            this.timeValidator.validateBooking(dto, bindingResult);
-            if (bindingResult.hasErrors()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            if (!this.timeValidator.validateBooking(dto)) {
+                ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+                return resp;
             }
         }
         dtos.forEach(dto -> {
@@ -119,11 +119,11 @@ public class BookingTimeController {
         if (bookingService.checkForDuplicateBooking(bookingDtos)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
         }
+        if (!this.timeValidator.validateBooking(bookingDtos.get(0))) {
+            ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            return resp;
+        }
         for (BookingDto bookingDto : bookingDtos) {
-            this.timeValidator.validateBooking(bookingDto, bindingResult);
-            if (bindingResult.hasErrors()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
-            }
             if (bookingDto.getIdChild() == null) {
                 bookingDto.setIdChild(bookingDto.getKidId());
             }
@@ -133,6 +133,7 @@ public class BookingTimeController {
             }
         }
         List<BookingDto> bookings = bookingService.makeRecurrentBookings(bookingDtos);
+        if (bookings.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
 
         return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(bookings));
     }

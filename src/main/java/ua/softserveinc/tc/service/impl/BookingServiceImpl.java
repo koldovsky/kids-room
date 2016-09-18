@@ -294,6 +294,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             calendarStartTime.add(Calendar.WEEK_OF_YEAR, 1);
             calendarStartTime.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));
         }
+        if (newRecurrentBooking.isEmpty()) return newRecurrentBooking;
         return persistBookingsFromDtoAndSetId(newRecurrentBooking);
     }
 
