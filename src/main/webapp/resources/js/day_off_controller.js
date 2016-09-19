@@ -33,29 +33,37 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
             );
     }
 
-    $scope.createDay = function(day){
-        DayOffService.createDayOff(day)
-            .then(
-                getAllDaysOff(),
-                function(errResponse){
-                    console.error('Error while creating Day Off');
-                }
-            );
+    $scope.createDay = function (day) {
+        $scope.inserted = {
+            name: 'Enter the name',
+            startDate: new Date().toISOString(),
+            endDate: new Date().toISOString(),
+            rooms: null
+        };
+        self.daysOff.unshift($scope.inserted);
     };
 
     $scope.updateDay = function (day) {
-        DayOffService.updateDayOff(day.id, day)
-            .then(
-                getAllDaysOff,
-                function (errResponse) {
-                    console.error('Error while updating Day Off');
-                }
-            );
+        if (typeof day.id == 'undefined') {
+            DayOffService.createDayOff(day)
+                .then(
+                    getAllDaysOff(),
+                    function (errResponse) {
+                        console.error('Error while creating Day Off');
+                    }
+                );
+        } else {
+            DayOffService.updateDayOff(day.id, day)
+                .then(
+                    getAllDaysOff,
+                    function (errResponse) {
+                        console.error('Error while updating Day Off');
+                    }
+                );
+        }
     };
 
     $scope.deleteDay = function (id, index) {
-        console.log("id:" + id + " | index:" + index);
-
         self.daysOff.splice(index, 1);
 
         DayOffService.deleteDayOff(id)
@@ -70,6 +78,12 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.edit = function (id) {
         console.log('id to be edited', id);
         self.dayOff.id = id;
+    };
+
+    $scope.checkForData = function (day) {
+        if (day.name == 'Enter the name') {
+            self.daysOff.splice(0, 1);
+        }
     };
 
     $scope.checkName = function (data) {

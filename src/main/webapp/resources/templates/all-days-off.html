@@ -1,15 +1,16 @@
-<body ng-app="myApp">
+<body ng-app="myApp" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
 
 <div ng-controller="DayOffController as dayCtrl">
+    <div class="hide-border set-standard-color day-off-label">
+            <legend class="for-table"><strong class="title-font">
+                <spring:message code="administrator.daysOff"/>
+            </strong></legend>
+    </div>
+    <div class="days-off">
+        <button class="btn btn-default" id="add-button" ng-click="createDay()">Add</button>
+    </div>
     <table class="table table-striped days-off" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
         <thead>
-        <tr class="hide-border">
-            <th colspan="7" class="set-standard-color">
-                <legend class="for-table"><strong class="title-font">
-                    <spring:message code="administrator.daysOff"/>
-                </strong></legend>
-            </th>
-        </tr>
         <tr>
             <th>Name</th>
             <th>Start day</th>
@@ -21,26 +22,26 @@
         <tbody>
         <tr ng-repeat="day in dayCtrl.daysOff">
             <td><span editable-text="day.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"
-                      e-required e-placeholder="Enter day off name">
+                      e-required e-placeholder="Enter day's off name">
                 {{day.name}}
                 </span>
             </td>
-            <td><span e-form="rowform">{{day.startDate}}</span></td>
-            <td><span e-form="rowform">{{day.endDate}}</span></span></td>
-            <td><span editable-select="room.name" e-name="status" e-form="rowform">
+            <td><span e-form="rowform">{{day.startDate | date:'yyyy-MM-dd'}}</span></td>
+            <td><span e-form="rowform">{{day.endDate | date:'yyyy-MM-dd'}}</span></span></td>
+            <td><span editable-select="room.name" e-name="room.name" e-form="rowform">
                 <ul ng-repeat="room in day.rooms" style="color: black">
                     <li>{{room.name}}</li>
                 </ul>
             </span></td>
             <td style="white-space: nowrap">
-                <form shown="false" editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
-                      class="form-buttons form-inline ng-hide">
+                <form editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
+                      class="form-buttons form-inline ng-hide" shown="inserted == day">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
                         save
                     </button>
-                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"
+                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel(); checkForData(day)"
                             class="btn btn-default btn-cancel">
-                        cancel
+                        canc
                     </button>
                 </form>
                 <div class="buttons" ng-show="!rowform.$visible">
@@ -51,16 +52,15 @@
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-default" ng-click="addDayOff()">Add</button>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
 <script type="text/javascript" src='resources/js/xeditable.js'></script>
 <script type="text/javascript" src='resources/js/day_off_app.js'></script>
 <script type="text/javascript" src='resources/js/day_off_service.js'></script>
-<script type="text/javascript" src='resources/js/room_service.js'></script>
 <script type="text/javascript" src='resources/js/day_off_controller.js'></script>
-<script type="text/javascript" src='resources/js/room_controller.js'></script>
+<!--<script type="text/javascript" src='resources/js/room_service.js'></script>-->
+<!--<script type="text/javascript" src='resources/js/room_controller.js'></script>-->
 
 </body>
 

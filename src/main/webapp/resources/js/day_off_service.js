@@ -47,13 +47,13 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
 
     function createDayOff(dayOff) {
         var deferred = $q.defer();
-        $http.post(REST_SERVICE_URI, dayOff)
+        $http.post(REST_URI_DAY, dayOff)
             .then(
                 function (response) {
                     deferred.resolve(response.data);
                 },
                 function(errResponse){
-                    console.error('Error while creating UDay Off');
+                    console.error('Error while creating Day Off');
                     deferred.reject(errResponse);
                 }
             );
