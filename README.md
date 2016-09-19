@@ -8,6 +8,8 @@ CONTRIBUTORS
 * **[Eduard Litvinchuck](https://github.com/litvinchuck)**
 * **[Taras Zyhmunt](https://github.com/EditedBoy)**
 * **[Bogdan Levkovych](https://github.com/levkovych67)**
+
+
 PROJECT MANAGERS
 ------------
 * **[Vyacheslav Koldovskyy](https://github.com/koldovsky)**
