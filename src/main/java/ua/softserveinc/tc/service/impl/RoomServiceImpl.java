@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-import org.apache.lucene.facet.TopOrdAndIntQueue;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,7 @@ import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
@@ -19,6 +19,7 @@ import ua.softserveinc.tc.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -185,5 +186,28 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Room> getFreeDayOffRooms() {
+        return roomDao.findAll().stream()
+                .filter(room -> room.getDaysOff().isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Room> getTodayActiveRooms() {
+        LocalDate today = LocalDate.now();
+        List<Room> freeRooms = new ArrayList<>();
+
+        freeRooms.addAll(getFreeDayOffRooms());
+        for (Room room : getActiveRooms()) {
+            for (DayOff dayOff : room.getDaysOff()) {
+                if (today.isEqual(dayOff.getStartDate()) || today.isEqual(dayOff.getEndDate()) ||
+                        (today.isAfter(dayOff.getStartDate()) && today.isBefore(dayOff.getEndDate()))) {
+                    freeRooms.add(room);
+                }
+            }
+        }
+        return freeRooms;
+    }
 
 }

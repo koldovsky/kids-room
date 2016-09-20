@@ -19,4 +19,8 @@ public interface RoomService extends BaseService<Room> {
     Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room);
 
     List<Room> getActiveRooms();
+
+    List<Room> getFreeDayOffRooms();
+
+    List<Room> getTodayActiveRooms();
 }
