@@ -7,16 +7,16 @@
             </strong></legend>
     </div>
     <div class="days-off">
-        <button class="btn btn-success" ng-click="createDay()">Add</button>
+        <button class="btn btn-success" ng-click="createDay()"><spring:message code="administrator.add"/></button>
     </div>
     <table class="table table-striped days-off" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Start day</th>
-            <th>End day</th>
-            <th>Rooms</th>
-            <th>Actions</th>
+            <th><spring:message code="administrator.day.name"/></th>
+            <th><spring:message code="administrator.day.start"/></th>
+            <th><spring:message code="administrator.day.end"/></th>
+            <th><spring:message code="administrator.listRooms"/></th>
+            <th><spring:message code="administrator.day.actions"/></th>
         </tr>
         </thead>
         <tbody>
@@ -35,16 +35,16 @@
                 <form editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
                       class="form-buttons form-inline ng-hide" shown="inserted == day">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
-                        save
+                        <spring:message code="administrator.save"/>
                     </button>
                     <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel(); checkForData(day)"
                             class="btn btn-default btn-cancel">
-                        canc
+                        <spring:message code="administrator.canc"/>
                     </button>
                 </form>
                 <div class="buttons" ng-show="!rowform.$visible">
-                    <button class="btn btn-success" ng-click="rowform.$show(); edit(day.id)">edit</button>
-                    <button class="btn btn-danger" ng-click="deleteDay(day.id, $index)">del</button>
+                    <button class="btn btn-success" ng-click="rowform.$show(); edit(day.id)"><spring:message code="administrator.edit"/></button>
+                    <button class="btn btn-danger" ng-click="deleteDay(day.id, $index)"><spring:message code="administrator.del"/></button>
                 </div>
             </td>
         </tr>
