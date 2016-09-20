@@ -369,5 +369,12 @@
             <version>${org.mockito.mockito-all-version}</version>
         </dependency>
 
+        <!-- SAML extension for SSO -->
+        <dependency>
+            <groupId>org.springframework.security.extensions</groupId>
+            <artifactId>spring-security-saml2-core</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+
     </dependencies>
 </project>

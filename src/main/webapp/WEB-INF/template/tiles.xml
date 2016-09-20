@@ -21,6 +21,10 @@
     </definition>
 
     <!-- Authorization -->
+    <definition name="entrypoint" extends="default" >
+        <put-attribute name="body" value="/WEB-INF/views/authorization/entrypoint.jsp"/>
+    </definition>
+
     <definition name="login" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/authorization/login.jsp"/>
     </definition>
