@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -55,6 +56,7 @@ public class Child implements Comparable<Child> {
     private Gender gender;
 
     @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(name = ChildConstants.PROFILE_IMG)
     private byte[] image;
 
