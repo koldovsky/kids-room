@@ -170,6 +170,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="adm-days-off">
+                                <span class="glyphicon glyphicon-flag"></span>
+                                <spring:message code="administrator.daysOff"/>
+                            </a>
+                        </li>
+                        <li>
                             <a href="adm-config">
                                 <span class="glyphicon glyphicon-cog"></span>
                                 <spring:message code="administrator.configuration" />
