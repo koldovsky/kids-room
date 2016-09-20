@@ -40,7 +40,8 @@ public class ViewEventController {
     public final String viewHome(Model model, Principal principal) {
 
         if (principal == null) {
-            return UserConstants.Model.LOGIN_VIEW;
+        //    return UserConstants.Model.LOGIN_VIEW;
+            return "entrypoint";
         }
         String email = principal.getName();
         User user = userService.getUserByEmail(email);
@@ -62,6 +63,7 @@ public class ViewEventController {
                 return AdminConstants.EDIT_ROOM;
         }
     }
+
 
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody

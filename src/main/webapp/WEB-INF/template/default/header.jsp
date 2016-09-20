@@ -27,7 +27,7 @@
                 <%--<li>--%>
                 <sec:authorize access="!isAuthenticated()">
                     <li>
-                        <a href="<c:url value="/login" />">
+                        <a href="<c:url value="/saml/login" />">
                             <span class="glyphicon glyphicon-log-in" ></span>
                             <spring:message code="user.login" />
                         </a>
@@ -194,11 +194,13 @@
 
                 <li>
                     <sec:authorize access="isAuthenticated()">
-                    <a>
-                       <form:form  action="logout" method="post">
-                           <button id="logout" action="submit" type="submit"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></button>
-                       </form:form>
-                    </a>
+                        <a href="saml/logout?local=true"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></a>
+                    </sec:authorize>
+                </li>
+
+                <li>
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="saml/logout"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.globalLogout"/></a>
                     </sec:authorize>
                 </li>
             </ul>
