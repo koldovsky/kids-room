@@ -85,11 +85,6 @@
 
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-        </dependency>
 
         <!-- SPRING CORE -->
         <dependency>
@@ -394,5 +389,13 @@
             <version>1.16.10</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- SAML extension for SSO -->
+        <dependency>
+            <groupId>org.springframework.security.extensions</groupId>
+            <artifactId>spring-security-saml2-core</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+
     </dependencies>
 </project>
