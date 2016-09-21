@@ -48,4 +48,5 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
     }
+
 }

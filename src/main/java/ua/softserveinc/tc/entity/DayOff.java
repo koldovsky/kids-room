@@ -58,5 +58,5 @@ public class DayOff {
         for (Room room : rooms) {
             room.getDaysOff().remove(this);
         }
-    }
+}
 }
