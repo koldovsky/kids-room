@@ -3,7 +3,10 @@ package ua.softserveinc.tc.config;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.LocaleResolver;
@@ -47,6 +50,9 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
         builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+        converters.add(new StringHttpMessageConverter());
+        converters.add(new ByteArrayHttpMessageConverter());
+        converters.add(new GsonHttpMessageConverter());
     }
 
 }
