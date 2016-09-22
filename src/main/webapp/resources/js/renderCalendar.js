@@ -130,7 +130,7 @@ $(function () {
             if(!validateEventDialogData(CREATE_RECURRENT_EVENT))
                 return;
         }
-        createRecurrentEvents();
+        createSingleOrRecurrentEvents();
 
     });
 
@@ -192,7 +192,7 @@ $(function () {
     $('#update-recurrent-button').click(function () {
         if(validateEventDialogData(UPDATE_RECURRENT_EVENT)){
             deleteRecurrentEvents(info_event.calEvent.recurrentId);
-            createRecurrentEvents();
+            createSingleOrRecurrentEvents();
         }
     });
 
@@ -384,59 +384,6 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
     });
 }
 
-function updateSingleEvent(){
-    $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
-    var eventForUpdate = {
-        id: info_event.calEvent.id,
-        title: $('#titleUpdate').val(),
-        start: makeISOTime(info_event.calEvent.start.format(), 'startTimeUpdate'),
-        end: makeISOTime(info_event.calEvent.end.format(), 'endTimeUpdate'),
-        editable: false,
-        description: $('#descriptionUpdate').val(),
-        color: $('#color-select-single-event').val(),
-    };
-
-    $('#calendar').fullCalendar('renderEvent', eventForUpdate);
-
-    sendToServerForUpdate(eventForUpdate, info_event.roomID);
-
-    $('#updating').dialog('close');
-}
-
-function sendToServerForUpdate(event, roomID) {
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'geteventforupdate',
-        dataType: 'json',
-        data: JSON.stringify({
-            id: event.id,
-            name: event.title,
-            startTime: event.start,
-            endTime: event.end,
-            roomId: roomID,
-            description: event.description,
-            color: event.color
-        })
-    });
-}
-
-function sendToServerForDelete(event) {
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'geteventfordelete',
-        dataType: 'json',
-        data: JSON.stringify({
-            id: event.id,
-            name: event.title,
-            startTime: event.start,
-            roomId: localStorage['roomId'],
-            endTime: event.end
-        })
-    });
-}
-
 function makeUTCTime(time, date) {
     time.setHours(date.getUTCHours());
     time.setMinutes(date.getUTCMinutes());
@@ -444,59 +391,18 @@ function makeUTCTime(time, date) {
     return time;
 }
 
-function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
-    var stringWithDaysForRecurrent = '';
+/**
+ * This function using for unchecking all checkboxes
+ * and setting all fields in original state
+ */
 
-    dayWhenEventIsRecurrent.forEach(function (item) {
-        stringWithDaysForRecurrent += item + ' ';
-    });
-
-    stringWithDaysForRecurrent.substring(0, stringWithDaysForRecurrent.length - 1);
-
-    $.ajax({
-        type: 'post',
-        contentType: 'application/json',
-        url: 'getrecurrentevents',
-        dataType: 'json',
-        data: JSON.stringify({
-            name: recurrentEvents.title,
-            startTime: recurrentEvents.start,
-            endTime: recurrentEvents.end,
-            daysOfWeek: stringWithDaysForRecurrent,
-            roomId: localStorage['roomId'],
-            description: recurrentEvents.description,
-            color: eventColor,
-            borderColor: BORDER_COLOR
-        }),
-        success: function (result) {
-            var recurrentEventsForRender = [];
-
-            result.forEach(function (item, i) {
-                var newRecurrentEvent = {
-                    id: item.id,
-                    title: item.name,
-                    start: item.startTime,
-                    end: item.endTime,
-                    editable: false,
-                    type: 'event',
-                    description: item.description,
-                    color: item.color,
-                    borderColor: BORDER_COLOR,
-                    recurrentId: item.recurrentId
-                };
-
-                allEvents.push(newRecurrentEvent);
-
-                recurrentEventsForRender.push(newRecurrentEvent);
-
-                $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
-            });
-        }
-    });
+function increaseTimeByHour(date){
+    var currentDate = new Date();
+    var endTimeHours = String(currentDate.getHours()+1);
+    return endTimeHours.concat(date.substring(2, 8));
 }
 
-
-function createRecurrentEvents() {
+function createSingleOrRecurrentEvents() {
 
     var startDateForCreatingRecurrentEvents = $('#start-date-picker').val() + 'T00:00:00';
     var endDate = $('#end-date-picker').val() + 'T00:00:00';
@@ -572,17 +478,174 @@ function createRecurrentEvents() {
     closeDialog('dialog');
 }
 
-/**
- * This function using for unchecking all checkboxes
- * and setting all fields in original state
- */
-function closeDialog(divid) {
-    $('#' + divid + ' :checkbox:enabled').attr('checked', false);
-    $('#single-event-radio-button').attr('checked', true);
-    $('#days-for-recurrent-form').attr('hidden', true);
-    $('#update-recurrent-button').hide();
-    $('#create-button').show();
+function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
+    var stringWithDaysForRecurrent = '';
 
+    dayWhenEventIsRecurrent.forEach(function (item) {
+        stringWithDaysForRecurrent += item + ' ';
+    });
+
+    stringWithDaysForRecurrent.substring(0, stringWithDaysForRecurrent.length - 1);
+
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'getrecurrentevents',
+        dataType: 'json',
+        data: JSON.stringify({
+            name: recurrentEvents.title,
+            startTime: recurrentEvents.start,
+            endTime: recurrentEvents.end,
+            daysOfWeek: stringWithDaysForRecurrent,
+            roomId: localStorage['roomId'],
+            description: recurrentEvents.description,
+            color: eventColor,
+            borderColor: BORDER_COLOR
+        }),
+        success: function (result) {
+            var recurrentEventsForRender = [];
+
+            result.forEach(function (item, i) {
+                var newRecurrentEvent = {
+                    id: item.id,
+                    title: item.name,
+                    start: item.startTime,
+                    end: item.endTime,
+                    editable: false,
+                    type: 'event',
+                    description: item.description,
+                    color: item.color,
+                    borderColor: BORDER_COLOR,
+                    recurrentId: item.recurrentId
+                };
+
+                allEvents.push(newRecurrentEvent);
+
+                recurrentEventsForRender.push(newRecurrentEvent);
+
+                $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
+            });
+        }
+    });
+}
+
+function updateSingleEvent(){
+    $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
+    var eventForUpdate = {
+        id: info_event.calEvent.id,
+        title: $('#titleUpdate').val(),
+        start: makeISOTime(info_event.calEvent.start.format(), 'startTimeUpdate'),
+        end: makeISOTime(info_event.calEvent.end.format(), 'endTimeUpdate'),
+        editable: false,
+        description: $('#descriptionUpdate').val(),
+        color: $('#color-select-single-event').val(),
+    };
+
+    $('#calendar').fullCalendar('renderEvent', eventForUpdate);
+
+    sendToServerForUpdate(eventForUpdate, info_event.roomID);
+
+    $('#updating').dialog('close');
+}
+function sendToServerForUpdate(event, roomID) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'geteventforupdate',
+        dataType: 'json',
+        data: JSON.stringify({
+            id: event.id,
+            name: event.title,
+            startTime: event.start,
+            endTime: event.end,
+            roomId: roomID,
+            description: event.description,
+            color: event.color
+        })
+    });
+}
+
+function sendToServerForDelete(event) {
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'geteventfordelete',
+        dataType: 'json',
+        data: JSON.stringify({
+            id: event.id,
+            name: event.title,
+            startTime: event.start,
+            roomId: localStorage['roomId'],
+            endTime: event.end
+        })
+    });
+}
+
+function editRecurrentEvent(recurrentEventForEditing){
+    $('#dialog').dialog('open');
+    $('#update-recurrent-button').show();
+    $('#create-button').hide();
+    $('#deleting-recurrent-event').show();
+    $('#weekly-radio-button').prop("checked", true);
+    $('#single-event-radio-button').prop("checked", false);
+    $('#days-for-recurrent-form').attr("hidden", false);
+    if (recurrentEventForEditing) {
+        $('#start-date-picker').val(recurrentEventForEditing.startDate);
+        $('#end-date-picker').val(recurrentEventForEditing.endDate);
+        $('#start-time-picker').timepicker('setTime', recurrentEventForEditing.startTime);
+        $('#end-time-picker').timepicker('setTime', recurrentEventForEditing.endTime);
+        $('#color-select').val(recurrentEventForEditing.color);
+        $('#description').val(recurrentEventForEditing.description);
+        $('#event-title').val(recurrentEventForEditing.title);
+        var DoW = recurrentEventForEditing.daysOfweek.split(" ");
+        DoW.forEach(function (item) {
+            switch (item) {
+                case 'Mon':
+                    day = 'Monday';
+                    break;
+                case 'Tue':
+                    day = 'Tuesday';
+                    break;
+                case 'Wed':
+                    day = 'Wednesday';
+                    break;
+                case 'Thu':
+                    day = 'Thursday';
+                    break;
+                case 'Fri':
+                    day = 'Friday';
+                    break;
+                case 'Sat':
+                    day = 'Saturday';
+                    break;
+            }
+            $('#' + day).prop('checked', true);
+        });
+    }
+}
+
+function editRecurrentEventRequest(eventRecurrentId) {
+    var recurrentEventForEditing = {};
+    var path = 'getRecurrentEventForEditing/' + eventRecurrentId;
+    $.ajax({
+        type : 'GET',
+        dataType : 'json',
+        url: path,
+        success: function (result) {
+            recurrentEventForEditing = {
+                recurentId: result.recurrentId,
+                color: result.color,
+                description: result.description,
+                startDate: result.startTime.substr(0, 10),
+                startTime: result.startTime.substr(11, 5),
+                endDate: result.endTime.substr(0, 10),
+                endTime: result.endTime.substr(11, 5),
+                daysOfweek: result.daysOfWeek.trim(),
+                title:result.name
+            };
+            editRecurrentEvent(recurrentEventForEditing);
+        }
+    })
 }
 
 function deleteRecurrentEvents(recurrentId) {
@@ -592,86 +655,6 @@ function deleteRecurrentEvents(recurrentId) {
             sendToServerForDelete(item);
         }
     });
-}
-function increaseTimeByHour(date){
-    var currentDate = new Date();
-    var endTimeHours = String(currentDate.getHours()+1);
-    return endTimeHours.concat(date.substring(2, 8));
-}
-
-function editRecurrentEventRequest(eventRecurrentId) {
-    var recurrentEventForEditing = {};
-    var path = 'getRecurrentEventForEditing/' + eventRecurrentId;
-    $.ajax({
-        url: path,
-        success: function (result) {
-            if (result.length) {
-                result = JSON.parse(result);
-                recurrentEventForEditing = {
-                    recurentId: result.recurrentId,
-                    color: result.color,
-                    description: result.description,
-                    startDate: result.startTime.substr(0, 10),
-                    startTime: result.startTime.substr(11, 5),
-                    endDate: result.endTime.substr(0, 10),
-                    endTime: result.endTime.substr(11, 5),
-                    daysOfweek: result.daysOfWeek.trim(),
-                    title:result.name,
-                }
-                console.log("title="+recurrentEventForEditing.title);
-                console.log("name="+result.name);
-                console.log("description="+recurrentEventForEditing.description);
-                console.log("color="+recurrentEventForEditing.color);
-            }
-            editRecurrentEvent(recurrentEventForEditing);
-        },
-    })
-}
-function editRecurrentEvent(recurrentEventForEditing){
-    $('#dialog').dialog('open');
-    $('#update-recurrent-button').show();
-    $('#create-button').hide();
-    $('#deleting-recurrent-event').show();
-    $('#weekly-radio-button').prop( "checked", true );
-    $('#single-event-radio-button').prop( "checked", false );
-    $("#single-event-radio-button").prop("disabled", true);
-    $('#days-for-recurrent-form').attr("hidden", false);
-
-    $('#start-date-picker').val(recurrentEventForEditing.startDate);
-    $('#end-date-picker').val(recurrentEventForEditing.endDate);
-    $('#start-time-picker').timepicker('setTime', recurrentEventForEditing.startTime);
-    $('#end-time-picker').timepicker('setTime', recurrentEventForEditing.endTime);
-    $('#color-select').val(recurrentEventForEditing.color);
-    $('#description').val(recurrentEventForEditing.description);
-    $('#event-title').val(recurrentEventForEditing.title);
-    var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var i = 0;
-    var DoW = recurrentEventForEditing.daysOfweek.split(" ");
-    DoW.forEach(function (item) {
-        switch(item) {
-            case 'Mon':
-                day = 'Monday';
-                break;
-            case 'Tue':
-                day = 'Tuesday';
-                break;
-            case 'Wed':
-                day = 'Wednesday';
-                break;
-            case 'Thu':
-                day = 'Thursday';
-                break;
-            case 'Fri':
-                day = 'Friday';
-                break;
-            case 'Sat':
-                day = 'Saturday';
-                break;
-        }
-        $('#' + day).prop('checked', true);
-    });
-
-
 }
 
 function clearEventDialogSingleMulti(){
@@ -691,4 +674,14 @@ function clearEventDialogSingleMulti(){
     $('#description').val("");
 
 }
+
+function closeDialog(divid) {
+    $('#' + divid + ' :checkbox:enabled').attr('checked', false);
+    $('#single-event-radio-button').attr('checked', true);
+    $('#days-for-recurrent-form').attr('hidden', true);
+    $('#update-recurrent-button').hide();
+    $('#create-button').show();
+
+}
+
 

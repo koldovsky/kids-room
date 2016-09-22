@@ -44,12 +44,9 @@ public class CalendarServiceImpl implements CalendarService {
         return eventMapper.toDto(roomService.findById(roomId).getEvents());
     }
 
-    public final void updateEvent(final Event event) {
-        eventDao.update(event);
-    }
-
-    public final void deleteEvent(final Event event) {
-        eventDao.delete(event);
+    public String getRoomWorkingHours(final long id) {
+        return roomService.findById(id).getWorkingHoursStart() +
+                " " + roomService.findById(id).getWorkingHoursEnd();
     }
 
     public final List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto) {
@@ -116,36 +113,42 @@ public class CalendarServiceImpl implements CalendarService {
         return res;
     }
 
-    public String getRoomWorkingHours(final long id) {
-        return roomService.findById(id).getWorkingHoursStart() +
-                " " + roomService.findById(id).getWorkingHoursEnd();
-    }
-
     public RecurrentEventDto getRecurrentEventForEditingById(long recurrentEventId){
 
-        RecurrentEventDto recurentEventToReturn = new RecurrentEventDto();
-        List<Event> listOfRecurrentEvent = new LinkedList<Event>();
+        List<Event> listOfRecurrentEvent;
         listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
+        RecurrentEventDto recurentEventToReturn = new RecurrentEventDto();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         recurentEventToReturn.setStartTime(df.format(listOfRecurrentEvent.get(0).getStartTime()));
-        recurentEventToReturn.setEndTime(df.format(listOfRecurrentEvent.get(listOfRecurrentEvent.size()-1).getEndTime()));;
+        recurentEventToReturn.setEndTime(df.format(listOfRecurrentEvent.get(listOfRecurrentEvent.size()-1).getEndTime()));
         recurentEventToReturn.setRecurrentId(recurrentEventId);
         recurentEventToReturn.setColor(listOfRecurrentEvent.get(0).getColor());
         recurentEventToReturn.setName(listOfRecurrentEvent.get(0).getName());
         recurentEventToReturn.setDescription(listOfRecurrentEvent.get(0).getDescription());
-        boolean DaysOfWeek[] = {false,false,false,false,false,false};
+        boolean[] daysOfWeek = {false, false, false, false, false, false};
         Calendar calendar = Calendar.getInstance();
         for (Event event : listOfRecurrentEvent) {
             calendar.setTime(event.getStartTime());
             int day = calendar.get(Calendar.DAY_OF_WEEK);
-            DaysOfWeek[day-2]=true;
+            daysOfWeek[day-2]=true;
         }
-        String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
+        String[] nameOfDays = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         StringBuilder days=new StringBuilder();
         for (int i=0; i < nameOfDays.length; i++){
-            if (DaysOfWeek[i]) days.append(" "+nameOfDays[i]);
+            if (daysOfWeek[i]) {
+                days.append(" ").append(nameOfDays[i]);
+            }
         }
         recurentEventToReturn.setDaysOfWeek(days.toString());
         return recurentEventToReturn;
-    };
+    }
+
+    public final void updateEvent(final Event event) {
+        eventDao.update(event);
+    }
+
+    public final void deleteEvent(final Event event) {
+        eventDao.delete(event);
+    }
+
 }
