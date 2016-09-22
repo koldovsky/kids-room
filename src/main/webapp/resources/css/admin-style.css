@@ -4,7 +4,7 @@ strong.title-font {
     color: black;
 }
 
-table{
+table {
     width: 90%;
 }
 
@@ -36,7 +36,7 @@ th {
     color: white;
 }
 
-th.for-button{
+th.for-button {
     width: 10%;
 }
 
@@ -51,15 +51,15 @@ th.for-button{
 
 .for-table {
     margin: auto;
-	width: auto;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    width: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .for-table-fields {
     margin: auto;
-	padding-top: 10px;
-	padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 .hide-border {
@@ -96,7 +96,7 @@ th.for-button{
     margin-bottom: 15px;
 }
 
-.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover {
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover {
     background-color: rgb(190, 190, 255);
 }
 
@@ -108,7 +108,7 @@ th.for-button{
     background-color: rgb(238, 238, 238);
 }
 
-th.th-size{
+th.th-size {
     width: 10%;
 }
 
@@ -127,10 +127,10 @@ th.th-size{
     margin: auto;
 }
 
-/*.btn-cancel {*/
-    /*padding-left: 6%;*/
-    /*width: 31%;*/
-/*}*/
+.btn-cancel {
+    padding-left: 6%;
+    width: 31%;
+}
 
 .editable-wrap .editable-controls > input {
     max-width: 120px;
@@ -148,6 +148,25 @@ th.th-size{
     border-radius: 5%;
 }
 
-.editable-checklist label {
-    display: block;
+.dropdown-div {
+    width: 100%;
 }
+
+#btn-append-to-single-button {
+    width: 100%;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.dropdown-custom li {
+    margin-left: 10px;
+}
+
+.dropdown-custom li span{
+    margin-left: 10px;
+    font-family: Helvetica, Arial, Verdana;
+    font-size: 1.10em;
+}
+

@@ -2,6 +2,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.dayOff = {id: null, name: '', startDate: '', endDate: '', rooms: ''};
     $scope.daysOff = [];
     $scope.rooms = [];
+    $scope.check = true;
 
     $scope.getAllDaysOff = function () {
         DayOffService.getAllDaysOff()
@@ -35,7 +36,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
 
     $scope.createDay = function (day) {
         $scope.inserted = {
-            name: 'Enter the name',
+            name: '',
             startDate: new Date().yyyymmdd(),
             endDate: new Date().yyyymmdd(),
             rooms: null
@@ -46,7 +47,9 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.saveDay = function (day) {
         if (day.id === undefined) {
             DayOffService.createDayOff(day)
-                .success($scope.getAllDaysOff)
+                .success(function (result){
+
+                })
                 .error(function (err) {
                     console.error('Error while creating Day Off' + err);
                 });
@@ -57,6 +60,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
                     console.error('Error while updating Day Off' + err);
                 });
         }
+        $scope.dayOff.id = undefined;
     };
 
     $scope.deleteDay = function (id, index) {
@@ -72,7 +76,6 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     };
 
     $scope.edit = function (id) {
-        console.log('id to be edited', id);
         $scope.dayOff.id = id;
     };
 
@@ -87,8 +90,8 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     };
 
     $scope.checkForData = function (day) {
-        if (day.name == 'Enter the name') {
-            self.daysOff.splice(0, 1);
+        if (day.name == '') {
+            $scope.daysOff.splice(0, 1);
         }
     };
 
@@ -97,6 +100,31 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
             return "Enter a name";
         }
     };
+
+    $scope.isRoomChecked = function (dayOffRooms, room) {
+        if (dayOffRooms != null){
+            return dayOffRooms
+                .map(function (room) {
+                    return room.id
+                })
+                .includes(room.id);
+        }
+
+    };
+
+    $scope.assignRoom = function ($event, day, room) {
+        $event.target.checked ?
+            day.rooms.unshift(room) :
+            day.rooms.splice(day.rooms.indexOf(room));
+
+    };
+
+    $scope.checkRooms = function(id) {
+        if (id == $scope.dayOff.id) {
+            return false;
+        }
+        return true;
+    }
 
     Date.prototype.yyyymmdd = function () {
         var mm = this.getMonth() + 1;
@@ -112,19 +140,4 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
         return [this.getFullYear(), mm, dd].join('-');
     };
 
-    $scope.isRoomChecked = function (dayOffRooms, room) {
-        return dayOffRooms
-            .map(function (room) {
-                return room.id
-            })
-            .includes(room.id);
-    };
-
-    $scope.assignRoom = function ($event, day, room) {
-        $event.target.checked ?
-            day.rooms.push(room) :
-            day.rooms.splice(day.rooms.indexOf(room));
-
-            $scope.saveDay(day);
-    };
 }]);
