@@ -23,7 +23,7 @@ import java.util.Set;
 public class DayOffController {
 
     @Log
-    private static Logger log;
+    private Logger log;
 
     @Autowired
     private DayOffService dayOffService;
@@ -77,7 +77,7 @@ public class DayOffController {
         currentDay.setEndDate(dayOff.getEndDate());
 
         Set<Room> currentRooms = new HashSet<>();
-        for(Room room : dayOff.getRooms()) {
+        for (Room room : dayOff.getRooms()) {
             currentRooms.add(roomService.findById(room.getId()));
         }
         currentDay.setRooms(currentRooms);

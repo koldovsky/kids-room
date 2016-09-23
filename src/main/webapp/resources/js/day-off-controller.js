@@ -47,9 +47,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.saveDay = function (day) {
         if (day.id === undefined) {
             DayOffService.createDayOff(day)
-                .success(function (result){
-
-                })
+                .success($scope.getAllDaysOff)
                 .error(function (err) {
                     console.error('Error while creating Day Off' + err);
                 });
@@ -114,7 +112,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
 
     $scope.assignRoom = function ($event, day, room) {
         $event.target.checked ?
-            day.rooms.unshift(room) :
+            day.rooms.push(room) :
             day.rooms.splice(day.rooms.indexOf(room));
 
     };

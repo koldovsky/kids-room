@@ -71,20 +71,17 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             Iterator i = keys.iterator();
             String baseKey = (String) i.next();
             while (i.hasNext()) {
-                try {
-                    String nextKey = (String) i.next();
-                    String value = result.get(baseKey);
-                    if (value.compareTo(nextKey) == 0) {
 
-                        result.put(baseKey, result.get(nextKey));
-                        i.remove();
-                    } else {
-                        i.remove();
+                String nextKey = (String) i.next();
+                String value = result.get(baseKey);
+                if (value.compareTo(nextKey) == 0) {
 
-                        baseKey = (String) i.next();
-                    }
-                } catch (Exception e) {
-                    log.info(e.getMessage());
+                    result.put(baseKey, result.get(nextKey));
+                    i.remove();
+                } else {
+                    i.remove();
+
+                    baseKey = (String) i.next();
                 }
             }
         }
@@ -187,7 +184,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public List<Room> getFreeDayOffRooms() {
+    public List<Room> getDayOffFreeRooms() {
         return roomDao.findAll().stream()
                 .filter(room -> room.getDaysOff().isEmpty())
                 .collect(Collectors.toList());
@@ -198,11 +195,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         LocalDate today = LocalDate.now();
         List<Room> freeRooms = new ArrayList<>();
 
-        freeRooms.addAll(getFreeDayOffRooms());
+        freeRooms.addAll(getDayOffFreeRooms());
         for (Room room : getActiveRooms()) {
             for (DayOff dayOff : room.getDaysOff()) {
-                if (today.isEqual(dayOff.getStartDate()) || today.isEqual(dayOff.getEndDate()) ||
-                        (today.isAfter(dayOff.getStartDate()) && today.isBefore(dayOff.getEndDate()))) {
+                if (!(today.isEqual(dayOff.getStartDate()) || today.isEqual(dayOff.getEndDate()) ||
+                        (today.isAfter(dayOff.getStartDate()) && today.isBefore(dayOff.getEndDate())))) {
                     freeRooms.add(room);
                 }
             }

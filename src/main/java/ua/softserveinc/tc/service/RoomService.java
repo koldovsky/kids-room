@@ -20,7 +20,7 @@ public interface RoomService extends BaseService<Room> {
 
     List<Room> getActiveRooms();
 
-    List<Room> getFreeDayOffRooms();
+    List<Room> getDayOffFreeRooms();
 
     List<Room> getTodayActiveRooms();
 }

@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.util;
+package ua.softserveinc.tc.util.Serializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

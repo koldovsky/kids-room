@@ -1,14 +1,7 @@
 package ua.softserveinc.tc.config;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import java.util.List;
 import java.util.Locale;
 
 @Configuration
@@ -43,16 +35,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
         localeResolver.setDefaultLocale(new Locale("en"));
 
         return localeResolver;
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
-        converters.add(new StringHttpMessageConverter());
-        converters.add(new ByteArrayHttpMessageConverter());
-        converters.add(new GsonHttpMessageConverter());
     }
 
 }

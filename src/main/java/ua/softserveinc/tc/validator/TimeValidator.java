@@ -33,20 +33,13 @@ public class TimeValidator implements Validator {
             errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.TIME_IS_NOT_VALID);
         }
     }
+
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String startTime=booking.getStartTime().substring(11);
         String endTime=booking.getEndTime().substring(11);
-//        Date startTime = null;
-//        Date endTime = null;
-//        try {
-//            startTime = df.parse(booking.getStartTime());
-//            endTime = df.parse(booking.getStartTime().substring(0,10)+booking.getEndTime().substring(11));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
         if (startTime.compareTo(endTime)>0) {
            return false;
