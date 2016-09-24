@@ -8,7 +8,6 @@ import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
@@ -177,34 +176,18 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public List<Room> getActiveRooms() {
-        return roomDao.findAll().stream()
-                .filter(Room::isActive)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Room> getDayOffFreeRooms() {
-        return roomDao.findAll().stream()
-                .filter(room -> room.getDaysOff().isEmpty())
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Room> getTodayActiveRooms() {
         LocalDate today = LocalDate.now();
-        List<Room> freeRooms = new ArrayList<>();
 
-        freeRooms.addAll(getDayOffFreeRooms());
-        for (Room room : getActiveRooms()) {
-            for (DayOff dayOff : room.getDaysOff()) {
-                if (!(today.isEqual(dayOff.getStartDate()) || today.isEqual(dayOff.getEndDate()) ||
-                        (today.isAfter(dayOff.getStartDate()) && today.isBefore(dayOff.getEndDate())))) {
-                    freeRooms.add(room);
-                }
-            }
-        }
-        return freeRooms;
+        return roomDao.findAll().stream()
+                .filter(Room::isActive)
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> day.getStartDate().isEqual(today)))
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> day.getEndDate().isEqual(today)))
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate())))
+                .collect(Collectors.toList());
     }
 
 }

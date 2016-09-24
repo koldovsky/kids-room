@@ -11,9 +11,9 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.DayOffConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
-import ua.softserveinc.tc.util.Serializers.LocalDateDeserializer;
-import ua.softserveinc.tc.util.Serializers.LocalDateSerializer;
-import ua.softserveinc.tc.util.Serializers.SimpleRoomSerializer;
+import ua.softserveinc.tc.util.serializers.LocalDateDeserializer;
+import ua.softserveinc.tc.util.serializers.LocalDateSerializer;
+import ua.softserveinc.tc.util.serializers.SimpleRoomSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDate;

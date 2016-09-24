@@ -32,7 +32,7 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public boolean dayOffExist(String name, LocalDate startDate) {
-        if(findByNameOrStartDate(name, startDate).isEmpty()){
+        if (findByNameOrStartDate(name, startDate).isEmpty()) {
             return false;
         }
         return true;
