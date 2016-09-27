@@ -90,7 +90,7 @@ public class CalendarServiceImpl implements CalendarService {
 
 
                 calendarWithEndDate.setTime(calendar.getTime());
-                calendarWithEndDate.set(Calendar.HOUR, calendarEndTime.get(Calendar.HOUR));
+                calendarWithEndDate.set(Calendar.HOUR_OF_DAY, calendarEndTime.get(Calendar.HOUR_OF_DAY));
                 calendarWithEndDate.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
 
                 newRecurrentEvent.setEndTime(calendarWithEndDate.getTime());
