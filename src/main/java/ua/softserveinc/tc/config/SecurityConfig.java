@@ -38,7 +38,6 @@ import org.springframework.security.saml.parser.ParserPoolHolder;
 import org.springframework.security.saml.processor.*;
 import org.springframework.security.saml.trust.httpclient.TLSProtocolConfigurer;
 import org.springframework.security.saml.trust.httpclient.TLSProtocolSocketFactory;
-import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.security.saml.util.VelocityFactory;
 import org.springframework.security.saml.websso.*;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -66,6 +65,12 @@ import java.util.*;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private SAMLUserDetailsServiceImpl samlUserDetailsServiceImpl;
@@ -225,7 +230,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public ExtendedMetadata extendedMetadata() {
         ExtendedMetadata extendedMetadata = new ExtendedMetadata();
         extendedMetadata.setIdpDiscoveryEnabled(false);
-    //    extendedMetadata.setSignMetadata(false);
+        //    extendedMetadata.setSignMetadata(false);
         return extendedMetadata;
     }
 
@@ -475,6 +480,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers("/registration").permitAll()
                 .antMatchers(HttpMethod.GET, "/mykids").hasRole(UserConstants.Role.ROLE_USER)
                 .antMatchers(HttpMethod.GET, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
                 .antMatchers(HttpMethod.POST, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
@@ -491,73 +497,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/accessDenied");
-        http
-                .logout()
-                .logoutSuccessUrl("/");
-    }
-
-    /**
-     * Sets a custom authentication provider.
-     *
-     * @param   auth SecurityBuilder used to create an AuthenticationManager.
-     * @throws  Exception
-     */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .authenticationProvider(samlAuthenticationProvider());
-    }
-
-    //Solve
-    @Bean
-    public PasswordEncoder getBCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
-
-
-    /*
-    @Autowired
-    @Qualifier(UserConstants.Model.USER_DETAILS_SERVICE)
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(getBCryptPasswordEncoder());
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("resources/css/**").permitAll()
-                .antMatchers("resources/js/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/registration").anonymous()
-                .antMatchers(HttpMethod.GET, "/profile").authenticated()
-                .antMatchers(HttpMethod.GET, "/mykids").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.POST, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/editmykid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.POST, "/editmykid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/mybookings").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/manager-**").hasRole(UserConstants.Role.ROLE_MANAGER)
-                .antMatchers(HttpMethod.POST, "/manager-**").hasRole(UserConstants.Role.ROLE_MANAGER)
-                .antMatchers(HttpMethod.GET, "/adm-**").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.POST, "/adm-**").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.GET, "/api/**").hasRole(UserConstants.Role.ROLE_MANAGER)
-                .and()
-                .exceptionHandling()
                 .accessDeniedPage("/accessDenied")
                 .and()
-
 
                 .formLogin()
                 .loginPage("/login")
@@ -569,9 +510,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .logout()
-                .permitAll()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/");
 
         http.rememberMe().
                 key("rem-me-key").
@@ -580,10 +519,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 tokenValiditySeconds(286400);
     }
 
+    /**
+     * Sets a custom authentication provider.
+     *
+     * @param   auth SecurityBuilder used to create an AuthenticationManager.
+     * @throws  Exception
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .authenticationProvider(samlAuthenticationProvider())
+                .userDetailsService(userDetailsService).passwordEncoder(getBCryptPasswordEncoder());
+    }
+
+    //Solve
     @Bean
     public PasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -591,5 +546,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         tokenRepositoryImpl.setDataSource(dataSource);
         return tokenRepositoryImpl;
     }
-*/
+
 }
