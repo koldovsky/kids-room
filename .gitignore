@@ -13,8 +13,5 @@ WebContent/
 .project
 .cfs
 .settings/
-KidsRoom.iml
-SpringMVC.iml
-main.iml
+*.iml
 src/main/resources/properties/hibernate.properties
-src/main/resources/import.sql

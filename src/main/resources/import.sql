@@ -696,3 +696,16 @@ INSERT into bookings (id_book, booking_start_time, booking_end_time, id_user, id
  INSERT into bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (119, '2016-05-09 15:00:00', '2016-05-09 17:15:00', 36, 99, 4, 0, 0, 0,'Do not talk to the kid about his favourite cat. The cat has run away and the kid is unhappy abou it'); 
  INSERT into bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (120, '2016-05-11 16:00:00', '2016-05-11 17:15:00', 44, 117, 1, 2, 0, 0,''); 
  INSERT into bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (121, '2016-05-17 15:00:00', '2016-05-17 17:45:00', 41, 110, 2, 0, 0, 0,''); 
+
+INSERT into days_off (id_days_off, name, start_date, end_date) VALUES (1, 'Teachers day','2016-10-02', '2016-10-02');
+INSERT into days_off (id_days_off, name, start_date, end_date) VALUES (2, 'Day Off','2016-10-03', '2016-10-06');
+INSERT into days_off (id_days_off, name, start_date, end_date) VALUES (3, 'Repair works','2016-10-10', '2016-10-12');
+
+INSERT into rooms_off (day_off, room) VALUES (1, 1);
+INSERT into rooms_off (day_off, room) VALUES (1, 2);
+INSERT into rooms_off (day_off, room) VALUES (1, 3);
+INSERT into rooms_off (day_off, room) VALUES (1, 4);
+INSERT into rooms_off (day_off, room) VALUES (2, 5);
+INSERT into rooms_off (day_off, room) VALUES (2, 4);
+INSERT into rooms_off (day_off, room) VALUES (2, 3);
+INSERT into rooms_off (day_off, room) VALUES (3, 11);
