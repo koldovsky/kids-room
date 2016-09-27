@@ -61,6 +61,11 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
                     <label for="comment"><spring:message code="kid.comment" /></label>
                     <form:textarea path="comment"
                     value="${kid.getComment()}" rows="1" class="form-control common comment"/>
+          <div class="err-msg">
+              <form:errors path="comment" cssClass="error">
+                  <spring:message code="registration.kid.comment" />
+              </form:errors>
+          </div>
       </div>
 
       <button class="btn btn-raised btn-success" type="submit" name="action">

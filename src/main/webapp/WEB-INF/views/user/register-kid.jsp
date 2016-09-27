@@ -9,7 +9,7 @@
 <script src="resources/js/comment-box.js"></script>
 <script src="resources/js/kid-registration.js"></script>
 
-<form:form enctype="application/x-www-form-urlencoded" action="registerkid"
+<form:form id="kidregistrform" enctype="application/x-www-form-urlencoded" action="registerkid"
 method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
 
 <img class="icon-png" src="resources/img/edit.png" />
@@ -71,6 +71,11 @@ method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
                     	<spring:message code="kid.comment" />
                     </label>
                     <form:textarea path="comment" rows="1" class="form-control common comment"/>
+          <div class="err-msg">
+              <form:errors path="comment" cssClass="error">
+                  <spring:message code="registration.kid.comment" />
+              </form:errors>
+          </div>
       </div>
 
 
