@@ -27,9 +27,16 @@
                 <%--<li>--%>
                 <sec:authorize access="!isAuthenticated()">
                     <li>
-                        <a href="<c:url value="/saml/login" />">
+                        <a href="<c:url value="/login" />">
                             <span class="glyphicon glyphicon-log-in" ></span>
                             <spring:message code="user.login" />
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<c:url value="/saml/login" />">
+                            <span class="glyphicon glyphicon-log-in" ></span>
+                            <spring:message code="user.SSOLogin" />
                         </a>
                     </li>
                                 
