@@ -10,6 +10,7 @@ import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.DateUtil;
@@ -18,7 +19,6 @@ import ua.softserveinc.tc.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +35,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private DayOffService dayOffService;
 
     private static
     @Log
@@ -177,16 +180,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public List<Room> getTodayActiveRooms() {
-        LocalDate today = LocalDate.now();
 
         return roomDao.findAll().stream()
                 .filter(Room::isActive)
-                .filter(room -> room.getDaysOff().stream()
-                        .noneMatch(day -> day.getStartDate().isEqual(today)))
-                .filter(room -> room.getDaysOff().stream()
-                        .noneMatch(day -> day.getEndDate().isEqual(today)))
-                .filter(room -> room.getDaysOff().stream()
-                        .noneMatch(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate())))
+                .filter(room -> dayOffService.checkIfDayMatchToday(room).isEmpty())
                 .collect(Collectors.toList());
     }
 

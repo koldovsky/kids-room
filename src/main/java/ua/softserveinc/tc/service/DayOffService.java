@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.entity.DayOff;
+import ua.softserveinc.tc.entity.Room;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +17,8 @@ public interface DayOffService {
     void delete(long id);
 
     List<DayOff> findAll();
+
+    List<DayOff> checkIfDayMatchToday(Room room);
 
     List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
 
