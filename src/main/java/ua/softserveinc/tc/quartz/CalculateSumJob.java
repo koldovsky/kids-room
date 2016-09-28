@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Service(QuartzConstants.CALCULATE_SUM)
 public class CalculateSumJob {
+
     @Autowired
     private BookingService bookingService;
 

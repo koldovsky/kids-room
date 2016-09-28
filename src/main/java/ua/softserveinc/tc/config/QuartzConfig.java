@@ -13,6 +13,7 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 @Configuration
 @ComponentScan(QuartzConstants.QUARTZ_PACKAGE)
 public class QuartzConfig {
+
     @Autowired
     ApplicationConfigurator configurator;
 
@@ -102,6 +103,24 @@ public class QuartzConfig {
         return stFactory;
     }
 
+
+    @Bean
+    public MethodInvokingJobDetailFactoryBean invokeSendDayOffReminder() {
+        MethodInvokingJobDetailFactoryBean obj = new MethodInvokingJobDetailFactoryBean();
+        obj.setTargetBeanName(QuartzConstants.SEND_DAY_OFF_REMINDER);
+        obj.setTargetMethod(QuartzConstants.TASK);
+        return obj;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean sendDayOffReminderTrigger() {
+        CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
+        stFactory.setJobDetail(invokeSendReminder().getObject());
+        stFactory.setName(QuartzConstants.SEND_REMINDER_TRIGGER);
+        stFactory.setCronExpression("0 0 6 ? * *");
+        return stFactory;
+    }
+
     @Bean
     public SchedulerFactoryBean scheduler() {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
@@ -109,7 +128,8 @@ public class QuartzConfig {
                 calculateSumTrigger().getObject(),
                 calculateSumTriggerTemp().getObject(),
                 cleanUpBookingsTrigger().getObject(),
-                sendReminderTrigger().getObject());
+                sendReminderTrigger().getObject(),
+                sendDayOffReminderTrigger().getObject());
         return scheduler;
     }
 }

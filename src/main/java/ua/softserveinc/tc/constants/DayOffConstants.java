@@ -1,9 +1,10 @@
 package ua.softserveinc.tc.constants;
 
-public final class DayOffConstants {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-    private DayOffConstants() {
-    }
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class DayOffConstants {
 
     public static final class Entity {
 
@@ -17,4 +18,13 @@ public final class DayOffConstants {
 
         public static final String END_DATE = "end_date";
     }
+
+    public static final class Mail {
+
+        public static final String DAY_OFF = "day";
+
+        public static final String ROOMS = "rooms";
+
+    }
+
 }

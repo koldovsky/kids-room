@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 /**
  * Created by Nestor on 29.06.2016.
  */
-
 @Service(QuartzConstants.SEND_REMINDER)
 public class SendReminderJob {
     @Log

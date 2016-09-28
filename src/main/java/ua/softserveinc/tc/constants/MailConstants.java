@@ -21,6 +21,7 @@ public final class MailConstants {
     public static final String CHANGE_PASS_VM = "changePassword.vm";
     public static final String CONFIRM_MANAGER_VM = "confirmManager.vm";
     public static final String REMINDER_VM = "reminder.vm";
+    public static final String DAY_OFF_REMINDER_VM = "dayOffReminder.vm";
 
     public static final String PAYMENT_INFO_SUBJECT = "Payment info";
     public static final String REMINDER_SUBJECT = "You have a reservation for today!";

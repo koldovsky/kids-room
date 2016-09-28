@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.DayOffConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
@@ -37,16 +34,19 @@ public class DayOff {
     private Long id;
 
     @Column(name = DayOffConstants.Entity.NAME)
+    @NonNull
     private String name;
 
     @Column(name = DayOffConstants.Entity.START_DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @NonNull
     private LocalDate startDate;
 
     @Column(name = DayOffConstants.Entity.END_DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @NonNull
     private LocalDate endDate;
 
     @ManyToMany
@@ -62,8 +62,8 @@ public class DayOff {
      */
     @PreRemove
     private void removeDaysOffFromRoom() {
-    for (Room room : rooms) {
-        room.getDaysOff().remove(this);
+        for (Room room : rooms) {
+            room.getDaysOff().remove(this);
+        }
     }
-}
 }

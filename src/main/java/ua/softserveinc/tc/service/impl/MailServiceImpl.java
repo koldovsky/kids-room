@@ -7,10 +7,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import ua.softserveinc.tc.constants.DayOffConstants;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.DayOff;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -38,6 +41,23 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ApplicationConfigurator configurator;
 
+
+    private String getTextMessage(String template, Map<String, Object> model) {
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                MailConstants.EMAIL_TEMPLATE + template, MailConstants.UTF_8, model);
+    }
+
+    private Map<String, Object> getModel(User user, String partOfLink, String token) {
+        Map<String, Object> model = new HashMap<>();
+        model.put(UserConstants.Entity.USER, user);
+        model.put(MailConstants.LINK, getLink(partOfLink, token));
+        return model;
+    }
+
+    private StringBuilder getLink(String partOfLink, String token) {
+        return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink).append(token);
+    }
+
     @Async
     @Override
     public void sendMessage(String email, String subject, String text) throws MessagingException {
@@ -57,7 +77,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendReminder(User recipient, String subject, List<BookingDto> bookings)
-            throws MessagingException{
+            throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, recipient);
         model.put(ReportConstants.BOOKINGS, bookings);
@@ -95,19 +115,17 @@ public class MailServiceImpl implements MailService {
         sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.PAYMENT_VM, model));
     }
 
-    private String getTextMessage(String template, Map<String, Object> model) {
-        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                MailConstants.EMAIL_TEMPLATE + template, MailConstants.UTF_8, model);
-    }
 
-    private Map<String, Object> getModel(User user, String partOfLink, String token) {
+    @Override
+    public void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> unactiveRooms)
+            throws MessagingException {
         Map<String, Object> model = new HashMap<>();
-        model.put(UserConstants.Entity.USER, user);
-        model.put(MailConstants.LINK, getLink(partOfLink, token));
-        return model;
+        model.put(UserConstants.Entity.USER, recipient);
+        model.put(DayOffConstants.Mail.DAY_OFF, dayOff);
+        model.put(DayOffConstants.Mail.ROOMS, unactiveRooms);
+
+        sendMessage(recipient.getEmail(), subject,
+                getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
     }
 
-    private StringBuilder getLink(String partOfLink, String token) {
-        return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink).append(token);
-    }
 }

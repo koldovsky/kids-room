@@ -1,8 +1,5 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by Demian on 07.06.2016.
- */
 public final class QuartzConstants {
 
     public static final String TASK = "task";
@@ -19,6 +16,8 @@ public final class QuartzConstants {
     public static final String SEND_REMINDER = "sendReminder";
     public static final String SEND_REMINDER_TRIGGER = "sendReminderTrigger";
 
+    public static final String SEND_DAY_OFF_REMINDER = "sendDayOffReminder";
+    public static final String SEND_DAY_OFF_REMINDER_TRIGGER = "sendDayOffReminderTrigger";
 
     public static final String QUARTZ_PACKAGE = "ua.softserveinc.tc/quartz";
 

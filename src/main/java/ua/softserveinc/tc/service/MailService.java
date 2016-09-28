@@ -1,14 +1,13 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.DayOff;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;
 import java.util.List;
 
-/**
- * Created by Chak on 10.05.2016.
- */
 public interface MailService {
 
     void sendMessage(String email, String subject, String text) throws MessagingException;
@@ -22,4 +21,6 @@ public interface MailService {
     void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException;
 
     void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException;
+
+    void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> unactiveRooms) throws MessagingException;
 }

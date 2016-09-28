@@ -24,6 +24,7 @@ import static ua.softserveinc.tc.util.DateUtil.*;
  */
 @Service(QuartzConstants.SEND_PAYMENT_INFO)
 public class SendPaymentInfoJob {
+
     @Log
     private static Logger log;
 
