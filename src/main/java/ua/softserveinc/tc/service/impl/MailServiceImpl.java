@@ -117,12 +117,12 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> unactiveRooms)
+    public void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> inactiveRooms)
             throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, recipient);
         model.put(DayOffConstants.Mail.DAY_OFF, dayOff);
-        model.put(DayOffConstants.Mail.ROOMS, unactiveRooms);
+        model.put(DayOffConstants.Mail.ROOMS, inactiveRooms);
 
         sendMessage(recipient.getEmail(), subject,
                 getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));

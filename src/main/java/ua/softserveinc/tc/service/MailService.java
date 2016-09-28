@@ -22,5 +22,5 @@ public interface MailService {
 
     void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException;
 
-    void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> unactiveRooms) throws MessagingException;
+    void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> inactiveRooms) throws MessagingException;
 }
