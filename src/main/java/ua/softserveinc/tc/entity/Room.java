@@ -1,11 +1,11 @@
 package ua.softserveinc.tc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RoomConstants;
 
 import javax.persistence.*;
 import java.util.List;
-
 
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
@@ -44,27 +44,33 @@ public class Room {
     @Column(name = RoomConstants.WORKING_END_HOUR)
     private String workingHoursEnd;
 
+    @Column(name = RoomConstants.ACTIVE)
+    private boolean isActive;
+
     @ManyToMany
     @JoinTable(name = RoomConstants.MANAGERS,
             joinColumns = @JoinColumn(name = RoomConstants.ROOM),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.MANAGER))
     private List<User> managers;
 
-    @Column(name = RoomConstants.ACTIVE)
-    private boolean active;
+
+    @ManyToMany(mappedBy = RoomConstants.TABLE_NAME_ROOMS)
+    @OrderBy("startDate ASC")
+    private List<DayOff> daysOff;
 
     public Room() {
         //empty constructor for instantiating in controller
     }
 
     public boolean isActive() {
-        return active;
+        return isActive;
     }
 
     public void setActive(boolean active) {
-        this.active = active;
+        this.isActive = active;
     }
 
+    @JsonIgnore
     public List<User> getManagers() {
         return managers;
     }
@@ -137,6 +143,7 @@ public class Room {
         this.city = city;
     }
 
+    @JsonIgnore
     public List<Event> getEvents() {
         return events;
     }
@@ -145,12 +152,22 @@ public class Room {
         this.events = events;
     }
 
+    @JsonIgnore
     public List<Rate> getRates() {
         return rates;
     }
 
     public void setRates(List<Rate> rates) {
         this.rates = rates;
+    }
+
+    @JsonIgnore
+    public List<DayOff> getDaysOff() {
+        return daysOff;
+    }
+
+    public void setDaysOff(List<DayOff> daysOff) {
+        this.daysOff = daysOff;
     }
 
     @Override

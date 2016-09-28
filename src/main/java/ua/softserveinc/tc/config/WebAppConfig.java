@@ -36,4 +36,5 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 
         return localeResolver;
     }
+
 }

@@ -7,13 +7,10 @@ import ua.softserveinc.tc.util.DateUtil;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by Nestor on 30.04.2016.
- */
-
 @Entity
 @Table(name = EventConstants.Entity.TABLENAME)
 public class Event {
+
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
@@ -42,7 +39,7 @@ public class Event {
     @Column(name = EventConstants.Entity.DESCRIPTION)
     private String description;
 
-    @Column(name = EventConstants.Entity.ID_RECURRENT, columnDefinition = "bigint(20) default NULL")
+    @Column(name = EventConstants.Entity.ID_RECURRENT, columnDefinition = "bigint default NULL")
     private Long recurrentId;
 
     @Column(name = EventConstants.Entity.COLOR, columnDefinition = "char(7) default '#6AA4C1'")

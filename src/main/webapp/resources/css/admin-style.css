@@ -4,7 +4,7 @@ strong.title-font {
     color: black;
 }
 
-table{
+table {
     width: 90%;
 }
 
@@ -36,31 +36,30 @@ th {
     color: white;
 }
 
-th.for-button{
+th.for-button {
     width: 10%;
 }
 
 .reg-form {
-    min-width: 400px;
+    min-width: 300px;
     padding: 30px;
     background-color: white;
     box-shadow: 3px 3px 10px grey;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    float: none;
+    margin: 0 auto;
 }
 
 .for-table {
-    block:fixed;
     margin: auto;
-	width: auto;
-	padding-top: 10px;
-	padding-bottom: 10px;
+    width: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .for-table-fields {
     margin: auto;
-	padding-top: 10px;
-	padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 .hide-border {
@@ -69,26 +68,35 @@ th.for-button{
 
 .for-field {
     height: 30px;
-    width: 350px;
+    width: 300px;
     margin: auto;
-    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .for-field1 {
     height: 30px;
-    width: 150px;
+    width: 140px;
     margin: auto;
     margin-bottom: 15px;
+    float: left;
 }
 
 .for-field2 {
     height: 30px;
-    width: 150px;
+    width: 140px;
+    margin: auto;
+    margin-bottom: 15px;
+    float: right;
+}
+
+.for-field3 {
+    height: 30px;
+    width: 140px;
     margin: auto;
     margin-bottom: 15px;
 }
 
-.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover {
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover {
     background-color: rgb(190, 190, 255);
 }
 
@@ -100,7 +108,7 @@ th.for-button{
     background-color: rgb(238, 238, 238);
 }
 
-th.th-size{
+th.th-size {
     width: 10%;
 }
 
@@ -110,6 +118,55 @@ th.th-size{
 }
 
 .sizing-between {
-    margin: 0px;
+    margin: 0;
     margin-bottom: 35px;
 }
+
+.days-off {
+    width: 70%;
+    margin: auto;
+}
+
+.btn-cancel {
+    padding-left: 6%;
+    width: 31%;
+}
+
+.editable-wrap .editable-controls > input {
+    max-width: 120px;
+
+}
+
+.day-off-label {
+    margin-top: 20px;
+}
+
+#add-button {
+    border: 2px solid #4d94ff;
+    background-color: #eee;
+    color: #4d94ff;
+    border-radius: 5%;
+}
+
+.dropdown-div {
+    width: 100%;
+}
+
+#btn-append-to-single-button {
+    width: 100%;
+}
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.dropdown-custom li {
+    margin-left: 10px;
+}
+
+.dropdown-custom li span{
+    margin-left: 10px;
+    font-family: Helvetica, Arial, Verdana;
+    font-size: 1.10em;
+}
+

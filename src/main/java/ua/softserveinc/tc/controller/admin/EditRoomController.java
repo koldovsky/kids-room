@@ -33,7 +33,7 @@ public class EditRoomController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showAllRoomsForm() {
-        List<Room> rooms = this.roomService.findAll();
+        List<Room> rooms = roomService.findAll();
 
         ModelAndView model = new ModelAndView(AdminConstants.EDIT_ROOM);
         model.addObject(AdminConstants.ROOM_LIST, rooms);

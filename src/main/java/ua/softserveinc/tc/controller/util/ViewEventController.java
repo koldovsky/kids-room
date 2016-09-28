@@ -40,17 +40,18 @@ public class ViewEventController {
     public final String viewHome(Model model, Principal principal) {
 
         if (principal == null) {
-            return UserConstants.Model.LOGIN_VIEW;
+        //    return UserConstants.Model.LOGIN_VIEW;
+            return "entrypoint";
         }
         String email = principal.getName();
         User user = userService.getUserByEmail(email);
 
         switch (user.getRole()) {
             case USER:
-                model.addAttribute(UserConstants.Entity.ROOMS, roomService.getActiveRooms());
+                model.addAttribute(UserConstants.Entity.ROOMS, roomService.getTodayActiveRooms());
                 model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
-                if(user.getChildren().isEmpty() | userService.getEnabledChildren(user).isEmpty()) {
+                if(user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
                     return ChildConstants.View.MY_KIDS;
                 }
                 return EventConstants.View.MAIN_PAGE;
@@ -62,6 +63,7 @@ public class ViewEventController {
                 return AdminConstants.EDIT_ROOM;
         }
     }
+
 
     @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody

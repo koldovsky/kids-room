@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-import org.apache.lucene.facet.TopOrdAndIntQueue;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import ua.softserveinc.tc.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,20 +70,17 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
             Iterator i = keys.iterator();
             String baseKey = (String) i.next();
             while (i.hasNext()) {
-                try {
-                    String nextKey = (String) i.next();
-                    String value = result.get(baseKey);
-                    if (value.compareTo(nextKey) == 0) {
 
-                        result.put(baseKey, result.get(nextKey));
-                        i.remove();
-                    } else {
-                        i.remove();
+                String nextKey = (String) i.next();
+                String value = result.get(baseKey);
+                if (value.compareTo(nextKey) == 0) {
 
-                        baseKey = (String) i.next();
-                    }
-                } catch (Exception e) {
-                    log.info(e.getMessage());
+                    result.put(baseKey, result.get(nextKey));
+                    i.remove();
+                } else {
+                    i.remove();
+
+                    baseKey = (String) i.next();
                 }
             }
         }
@@ -179,11 +176,18 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
-    public List<Room> getActiveRooms() {
+    public List<Room> getTodayActiveRooms() {
+        LocalDate today = LocalDate.now();
+
         return roomDao.findAll().stream()
                 .filter(Room::isActive)
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> day.getStartDate().isEqual(today)))
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> day.getEndDate().isEqual(today)))
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
-
 
 }

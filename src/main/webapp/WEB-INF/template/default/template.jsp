@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
-
+  <meta name="viewport" content="width=device-width"/>
 <!--Bootstrap and jQuery -->
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -49,8 +49,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 
-
-<!-- /Material design -->
+<script src="resources/js/lib/ui-bootstrap-tpls-2.1.3.min.js"></script>
 
 </head>
 

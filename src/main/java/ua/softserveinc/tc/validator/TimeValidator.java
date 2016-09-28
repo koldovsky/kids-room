@@ -4,8 +4,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ua.softserveinc.tc.constants.ValidationConstants;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 
 /**
@@ -29,5 +32,18 @@ public class TimeValidator implements Validator {
         if (startTime.isAfter(endTime)) {
             errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.TIME_IS_NOT_VALID);
         }
+    }
+
+    public boolean validateBooking(Object target) {
+        BookingDto booking = (BookingDto) target;
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String startTime=booking.getStartTime().substring(11);
+        String endTime=booking.getEndTime().substring(11);
+
+        if (startTime.compareTo(endTime)>0) {
+           return false;
+        }
+        return true;
     }
 }

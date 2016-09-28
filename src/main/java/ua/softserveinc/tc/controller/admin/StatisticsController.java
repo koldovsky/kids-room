@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.*;
 
-/**
- * Created by Demian on 28.05.2016.
- */
 @Controller
 public class StatisticsController {
 

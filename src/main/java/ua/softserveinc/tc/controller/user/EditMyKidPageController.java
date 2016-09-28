@@ -136,8 +136,6 @@ public class EditMyKidPageController {
             throw new AccessDeniedException("You do not have access to this page");
         }
 
-        // TODO: HANDLE CASE WHEN CHILD IS NULL, RETURN OPTIONAL ON SERVICE LAYER INSTEAD
-
         kidToRemove.setEnabled(false);
         childService.update(kidToRemove);
     }

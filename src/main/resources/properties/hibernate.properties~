@@ -1,11 +1,11 @@
-jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/kidsroom
-jdbc.username = root
-jdbc.password = jobanujbabaj
-hibernate.dialect = org.hibernate.dialect.MySQLDialect
+jdbc.driverClassName = org.postgresql.Driver
+jdbc.url = jdbc:postgresql://ec2-54-75-232-66.eu-west-1.compute.amazonaws.com:5432/d50eh2vqnmplkt?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+jdbc.username = bxqwcunzzsxboc
+jdbc.password = 33fZ-UiJOFNDZwAbKgBQ0pVCMV
+hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
 hibernate.show_sql = true
 hibernate.format_sql = true
-hibernate.hbm2ddl.auto = create
+hibernate.hbm2ddl.auto = update
 hibernate.enable_lazy_load_no_trans = true
 hibernate.search.default.directory_provider = ram
 hibernate.search.default.indexBase = com.acme.hibernate.CustomDirectoryProvider

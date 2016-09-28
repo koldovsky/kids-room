@@ -21,6 +21,10 @@
     </definition>
 
     <!-- Authorization -->
+    <definition name="entrypoint" extends="default" >
+        <put-attribute name="body" value="/WEB-INF/views/authorization/entrypoint.jsp"/>
+    </definition>
+
     <definition name="login" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/authorization/login.jsp"/>
     </definition>
@@ -106,6 +110,11 @@
     <definition name="adm-config" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/adm-config.jsp"/>
     </definition>
+
+    <definition name="adm-days-off" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/days-off.jsp"/>
+    </definition>
+
 
     <!-- Manager -->
     <definition name="allkidslist" extends="default">

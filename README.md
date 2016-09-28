@@ -9,6 +9,13 @@ CONTRIBUTORS
 * **[Taras Zyhmunt](https://github.com/EditedBoy)**
 * **[Demian Bekesh](https://github.com/bahrianyi)**
 
+LV-193.Java:
+
+* **[Bogdan Levkovych](https://github.com/levkovych67)**
+* **[Bohdan Kononchuk](https://github.com/Kononchuk-B)**
+* **[Sviatoslav Dubyniak](https://github.com/Sviatko)**
+
+
 PROJECT MANAGERS
 ------------
 * **[Vyacheslav Koldovskyy](https://github.com/koldovsky)**

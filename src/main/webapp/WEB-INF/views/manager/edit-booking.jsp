@@ -187,7 +187,7 @@
             <div class="modal-body-err">
                 <div align="center">
                     <br>
-                    <h4>Please try to select another time, because currently this room is full!</h4>
+                    <h4>We regret to inform you that there are no available places left in the room.</h4>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
 
