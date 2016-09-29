@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.QuartzConstants;
+import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
@@ -27,12 +28,14 @@ public class SendDayOffReminderInfo {
     private DayOffService dayOffService;
 
     private void task() {
-        userService.findAll().forEach(recipient -> dayOffService.getClosestDays().forEach(day -> {
-            try {
-                mailService.sendDayOffReminder(recipient, MailConstants.DAY_OFF_REMINDER, day);
-            } catch (MessagingException me) {
-                logger.error("Error sending e-mail", me);
-            }
-        }));
+        userService.findAll().stream()
+                .filter(user -> !(user.getRole().equals(Role.ADMINISTRATOR)))
+                .forEach(recipient -> dayOffService.getClosestDays().forEach(day -> {
+                    try {
+                        mailService.sendDayOffReminder(recipient, MailConstants.DAY_OFF_REMINDER, day);
+                    } catch (MessagingException me) {
+                        logger.error("Error sending e-mail", me);
+                    }
+                }));
     }
 }
