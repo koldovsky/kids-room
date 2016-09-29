@@ -247,7 +247,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    private ClasspathResource classpathResource() throws ResourceException {
+    public ClasspathResource classpathResource() throws ResourceException {
         return new ClasspathResource("/metadata/federationmetadata.xml");
     }
 
