@@ -26,11 +26,11 @@
 
         </div>
         <div class="clearfix">
-            <label class="pull-left">
-                <fieldset class="form-group">
-                <input type="checkbox" name="remember-me">  <spring:message code="user.remember" />
-                </fieldset>
-            </label>
+            <%--<label class="pull-left">--%>
+                <%--<fieldset class="form-group">--%>
+                <%--<input type="checkbox" name="remember-me">  <spring:message code="user.remember" />--%>
+                <%--</fieldset>--%>
+            <%--</label>--%>
 
 
             <a href="<c:url value="/resetPassword"/>" class="pull-right"> <spring:message code="password.reset" /></a>

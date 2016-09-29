@@ -43,5 +43,8 @@ public class ChildValidator implements Validator{
         if(age < configurator.getKidsMinAge() || age> configurator.getKidsMaxAge()){
             errors.rejectValue(ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.DATE_ERROR_MSG);
         }
+
+        String comment = kidToValidate.getComment();
+        if (comment.length() > 250){errors.rejectValue("comment", "registration.kid.comment");}
     }
 }
