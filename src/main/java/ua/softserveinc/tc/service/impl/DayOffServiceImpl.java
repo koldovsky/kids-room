@@ -7,6 +7,7 @@ import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.service.DayOffService;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,8 @@ public class DayOffServiceImpl implements DayOffService {
 
         return dayOffRepository.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
-                .filter(day -> day.getStartDate().until(today).getDays() <= WEEK_LENGTH)
+                .filter(day -> today.until(day.getStartDate()).getDays() <= WEEK_LENGTH)
+                .sorted(Comparator.comparing(DayOff::getStartDate))
                 .collect(Collectors.toList());
     }
 

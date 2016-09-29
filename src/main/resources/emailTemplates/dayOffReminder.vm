@@ -182,8 +182,12 @@
                                                             <td valign="top" class="textContent">
                                                                 <h3 mc:edit="header" style="color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;">Hello, ${user.firstName}!</h3>
                                                                 <div mc:edit="body" style="text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
-                                                                    There is ${day.name} day off in a week for $rooms.size() rooms(s).
-                                                                    Pay attention while making bookings for next rooms:
+                                                                    <p>There is <b>${day.name}</b> on <b>${day.startDate}</b> for $rooms.size() room(s).</p>
+                                                                    <p>Pay attention while making bookings for the next rooms:</p>
+
+                                                                    #foreach( $room in $rooms )
+                                                                    <p style="font-size:13px">$room.name<span>($room.address, $room.city)</span></p>
+                                                                    #end
                                                                 </div>
 
                                                             </td>
@@ -193,82 +197,12 @@
                                                 </td>
                                             </tr>
                                         </table>
+
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-
-                    <tr mc:hideable>
-                        <td align="center" valign="top">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td align="center" valign="top">
-                                        <table border="0" cellpadding="30" cellspacing="0" width="500" class="flexibleContainer">
-                                            <tr>
-                                                <td valign="top" width="500" class="flexibleContainerCell">
-
-                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                                        <tr>
-                                                            <td valign="top" class="textContent">
-                                                        <tr>
-                                                            <table>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>Name</td>
-                                                                    <td>Address</td>
-                                                                    <td>City</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </tr>
-                                                        </td>
-                                                        </tr>
-                                                    </table>
-
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <tr mc:hideable>
-                        <td align="center" valign="top">
-                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                <tr>
-                                    <td align="center" valign="top">
-                                        <table border="0" cellpadding="30" cellspacing="0" width="500" class="flexibleContainer">
-                                            <tr>
-                                                <td valign="top" width="500" class="flexibleContainerCell">
-
-                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                                        <tr>
-                                                            <table>
-                                                                <tbody>
-                                                                    #foreach( $room in $rooms )
-                                                                    <tr>
-                                                                        <td>$room.name</td>
-                                                                        <td>$room.address</td>
-                                                                        <td>$room.city</td>
-                                                                    </tr>
-                                                                    #end
-                                                                </tbody>
-                                                            </table>
-                                                        </tr>
-                                                    </table>
-
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
 
                     <tr>
                         <td align="center" valign="top">

@@ -27,7 +27,6 @@ public class SendDayOffReminderInfo {
     private DayOffService dayOffService;
 
     private void task() {
-
         userService.findAll().forEach(recipient -> dayOffService.getClosestDays().forEach(day -> {
             try {
                 mailService.sendDayOffReminder(recipient, MailConstants.DAY_OFF_REMINDER, day);
