@@ -296,7 +296,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         metadataGenerator.setEntityId("kidsroom:test:sasha:guydye");
         metadataGenerator.setExtendedMetadata(extendedMetadata());
         metadataGenerator.setIncludeDiscoveryExtension(false);
-        metadataGenerator.setEntityBaseURL("https://kidsroomstage.softserveinc.com/home/");
         metadataGenerator.setKeyManager(keyManager());
         return metadataGenerator;
     }
