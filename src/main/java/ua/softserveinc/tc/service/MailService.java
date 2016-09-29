@@ -2,7 +2,6 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.DayOff;
-import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;
@@ -22,5 +21,5 @@ public interface MailService {
 
     void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException;
 
-    void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> inactiveRooms) throws MessagingException;
+    void sendDayOffReminder(User recipient, String subject, DayOff dayOff) throws MessagingException;
 }

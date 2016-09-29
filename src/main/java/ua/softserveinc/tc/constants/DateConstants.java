@@ -4,6 +4,7 @@ package ua.softserveinc.tc.constants;
  * Created by dima- on 12.05.2016.
  */
 public final class DateConstants {
+
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
     public static final String SHORT_DATE_FORMAT = "yyyy-MM-dd";

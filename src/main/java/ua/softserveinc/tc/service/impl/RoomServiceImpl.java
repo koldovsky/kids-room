@@ -19,6 +19,7 @@ import ua.softserveinc.tc.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -180,10 +181,16 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public List<Room> getTodayActiveRooms() {
+        LocalDate today = LocalDate.now();
 
-        return roomDao.findAll().stream()
+        return findAll().stream()
                 .filter(Room::isActive)
-                .filter(room -> dayOffService.checkIfDayMatchToday(room).isEmpty())
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> day.getStartDate().isEqual(today)))
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> day.getEndDate().isEqual(today)))
+                .filter(room -> room.getDaysOff().stream()
+                        .noneMatch(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
 

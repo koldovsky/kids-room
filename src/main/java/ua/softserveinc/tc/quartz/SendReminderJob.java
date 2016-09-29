@@ -9,7 +9,6 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
-
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
@@ -26,6 +25,7 @@ import java.util.stream.Collectors;
  */
 @Service(QuartzConstants.SEND_REMINDER)
 public class SendReminderJob {
+
     @Log
     private static org.slf4j.Logger logger;
 

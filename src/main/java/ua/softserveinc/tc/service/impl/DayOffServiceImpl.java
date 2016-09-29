@@ -3,10 +3,10 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.entity.DayOff;
-import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.service.DayOffService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,13 +51,12 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
-    public List<DayOff> checkIfDayMatchToday(Room room) {
+    public List<DayOff> getClosestDays() {
         LocalDate today = LocalDate.now();
 
-        return room.getDaysOff().stream()
-                .filter(day -> day.getStartDate().isEqual(today))
-                .filter(day -> day.getEndDate().isEqual(today))
-                .filter(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate()))
+        return dayOffRepository.findAll().stream()
+                .filter(day -> day.getStartDate().isAfter(today))
+                .filter(day -> day.getStartDate().until(today).getDays() <= DayOfWeek.values().length)
                 .collect(Collectors.toList());
     }
 

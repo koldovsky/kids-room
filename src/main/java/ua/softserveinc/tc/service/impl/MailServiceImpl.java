@@ -13,7 +13,6 @@ import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.DayOff;
-import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -117,12 +116,12 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendDayOffReminder(User recipient, String subject, DayOff dayOff, List<Room> inactiveRooms)
+    public void sendDayOffReminder(User recipient, String subject, DayOff dayOff)
             throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, recipient);
         model.put(DayOffConstants.Mail.DAY_OFF, dayOff);
-        model.put(DayOffConstants.Mail.ROOMS, inactiveRooms);
+        model.put(DayOffConstants.Mail.ROOMS, dayOff.getRooms());
 
         sendMessage(recipient.getEmail(), subject,
                 getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));

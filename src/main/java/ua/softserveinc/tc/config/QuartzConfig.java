@@ -115,9 +115,9 @@ public class QuartzConfig {
     @Bean
     public CronTriggerFactoryBean sendDayOffReminderTrigger() {
         CronTriggerFactoryBean stFactory = new CronTriggerFactoryBean();
-        stFactory.setJobDetail(invokeSendReminder().getObject());
-        stFactory.setName(QuartzConstants.SEND_REMINDER_TRIGGER);
-        stFactory.setCronExpression("0 0 6 ? * *");
+        stFactory.setJobDetail(invokeSendDayOffReminder().getObject());
+        stFactory.setName(QuartzConstants.SEND_DAY_OFF_REMINDER_TRIGGER);
+        stFactory.setCronExpression("0 0 6 1/1 * ? *");
         return stFactory;
     }
 
