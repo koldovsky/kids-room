@@ -5,6 +5,8 @@ package ua.softserveinc.tc.constants;
  */
 public final class DateConstants {
 
+    public static final int WEEK_LENGTH = 7;
+
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
     public static final String SHORT_DATE_FORMAT = "yyyy-MM-dd";

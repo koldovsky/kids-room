@@ -6,10 +6,11 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.service.DayOffService;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ua.softserveinc.tc.constants.DateConstants.WEEK_LENGTH;
 
 @Service
 public class DayOffServiceImpl implements DayOffService {
@@ -56,7 +57,7 @@ public class DayOffServiceImpl implements DayOffService {
 
         return dayOffRepository.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
-                .filter(day -> day.getStartDate().until(today).getDays() <= DayOfWeek.values().length)
+                .filter(day -> day.getStartDate().until(today).getDays() <= WEEK_LENGTH)
                 .collect(Collectors.toList());
     }
 
