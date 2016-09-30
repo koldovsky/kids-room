@@ -296,7 +296,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         metadataGenerator.setEntityId("kidsroom:test:sasha:guydye");
         metadataGenerator.setExtendedMetadata(extendedMetadata());
         metadataGenerator.setIncludeDiscoveryExtension(false);
-        metadataGenerator.setKeyManager(keyManager());
+    //    metadataGenerator.setKeyManager(keyManager());
         return metadataGenerator;
     }
 
