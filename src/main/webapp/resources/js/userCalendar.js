@@ -754,22 +754,22 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
         var DoW = recurrentBookingForEditing.daysOfweek.split(" ");
         DoW.forEach(function (item) {
             switch (item) {
-                case 'Mon':
+                case '2':
                     day = 'Monday';
                     break;
-                case 'Tue':
+                case '3':
                     day = 'Tuesday';
                     break;
-                case 'Wed':
+                case '4':
                     day = 'Wednesday';
                     break;
-                case 'Thu':
+                case '5':
                     day = 'Thursday';
                     break;
-                case 'Fri':
+                case '6':
                     day = 'Friday';
                     break;
-                case 'Sat':
+                case '7':
                     day = 'Saturday';
                     break;
             }

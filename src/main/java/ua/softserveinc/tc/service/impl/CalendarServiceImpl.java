@@ -13,9 +13,9 @@ import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static ua.softserveinc.tc.dto.RecurrentEventDto.getRecurrentEventDto;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
@@ -114,33 +114,14 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     public RecurrentEventDto getRecurrentEventForEditingById(long recurrentEventId){
-
-        List<Event> listOfRecurrentEvent;
-        listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
-        RecurrentEventDto recurentEventToReturn = new RecurrentEventDto();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        recurentEventToReturn.setStartTime(df.format(listOfRecurrentEvent.get(0).getStartTime()));
-        recurentEventToReturn.setEndTime(df.format(listOfRecurrentEvent.get(listOfRecurrentEvent.size()-1).getEndTime()));
-        recurentEventToReturn.setRecurrentId(recurrentEventId);
-        recurentEventToReturn.setColor(listOfRecurrentEvent.get(0).getColor());
-        recurentEventToReturn.setName(listOfRecurrentEvent.get(0).getName());
-        recurentEventToReturn.setDescription(listOfRecurrentEvent.get(0).getDescription());
-        boolean[] daysOfWeek = {false, false, false, false, false, false};
+        List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
+        Set <Integer> weekDays = new HashSet<>();
         Calendar calendar = Calendar.getInstance();
         for (Event event : listOfRecurrentEvent) {
             calendar.setTime(event.getStartTime());
-            int day = calendar.get(Calendar.DAY_OF_WEEK);
-            daysOfWeek[day-2]=true;
+            weekDays.add(calendar.get(Calendar.DAY_OF_WEEK));
         }
-        String[] nameOfDays = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-        StringBuilder days=new StringBuilder();
-        for (int i=0; i < nameOfDays.length; i++){
-            if (daysOfWeek[i]) {
-                days.append(" ").append(nameOfDays[i]);
-            }
-        }
-        recurentEventToReturn.setDaysOfWeek(days.toString());
-        return recurentEventToReturn;
+        return getRecurrentEventDto(listOfRecurrentEvent, weekDays);
     }
 
     public final void updateEvent(final Event event) {
