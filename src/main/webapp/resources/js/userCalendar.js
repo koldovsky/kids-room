@@ -724,7 +724,7 @@ function editRecurrentBookingsReuest (recurrentId) {
                 endDate: result.endDate,
                 startTime: result.startTime,
                 endTime: result.endTime,
-                daysOfweek:result.daysOfWeek.trim()
+                weekDays:result.weekDays
             };
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
         },
@@ -751,25 +751,24 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
         $('#recurrent-booking-end-date').val(endBookingTime);
         $('#recurrent-booking-start-time').timepicker('setTime', recurrentBookingForEditing.startTime);
         $('#recurrent-booking-end-time').timepicker('setTime', recurrentBookingForEditing.endTime);
-        var DoW = recurrentBookingForEditing.daysOfweek.split(" ");
-        DoW.forEach(function (item) {
+            recurrentBookingForEditing.weekDays.forEach(function (item) {
             switch (item) {
-                case '2':
+                case 2:
                     day = 'Monday';
                     break;
-                case '3':
+                case 3:
                     day = 'Tuesday';
                     break;
-                case '4':
+                case 4:
                     day = 'Wednesday';
                     break;
-                case '5':
+                case 5:
                     day = 'Thursday';
                     break;
-                case '6':
+                case 6:
                     day = 'Friday';
                     break;
-                case '7':
+                case 7:
                     day = 'Saturday';
                     break;
             }

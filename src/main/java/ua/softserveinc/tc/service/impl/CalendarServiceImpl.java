@@ -113,8 +113,8 @@ public class CalendarServiceImpl implements CalendarService {
         return res;
     }
 
-    public RecurrentEventDto getRecurrentEventForEditingById(long recurrentEventId){
-        List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
+    public RecurrentEventDto getRecurrentEventForEditingById(final long recurrentEventId){
+        final List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
         Set <Integer> weekDays = new HashSet<>();
         Calendar calendar = Calendar.getInstance();
         for (Event event : listOfRecurrentEvent) {

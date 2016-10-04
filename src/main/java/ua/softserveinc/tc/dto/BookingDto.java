@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -35,6 +37,7 @@ public class BookingDto implements Serializable{
     private Long roomId;
 
     private String daysOfWeek;
+    private Set<Integer> weekDays;
 
     private transient Child child;
     private transient User user;
@@ -63,6 +66,23 @@ public class BookingDto implements Serializable{
         this.idChild = booking.getChild().getId();
         this.comment = booking.getComment();
         this.recurrentId = booking.getRecurrentId();
+    }
+
+
+    public static BookingDto getBookingDto(final List<Booking> listOfRecurrentBooking, final Set<Integer> weekDays) {
+        Booking startDay = listOfRecurrentBooking.get(0);
+        Booking endDay = listOfRecurrentBooking.get(listOfRecurrentBooking.size() - 1);
+        Booking recurrentDay = startDay;
+        recurrentDay.setBookingEndTime(endDay.getBookingEndTime());
+        BookingDto recurrentBookingDto = new BookingDto(recurrentDay);
+        recurrentBookingDto.setWeekDays(weekDays);
+        return recurrentBookingDto;
+    }
+
+    public void setWeekDays(Set<Integer> weekDays)
+    {
+        this.weekDays=weekDays;
+
     }
 
     public Booking getBookingObject() {
