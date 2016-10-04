@@ -178,7 +178,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public JKSKeyManager keyManager() {
         DefaultResourceLoader loader = new DefaultResourceLoader();
         Resource storeFile = loader
-                .getResource("classpath:/saml/samlkeystore.jks");
+                .getResource("classpath:/saml/samlKeystore.jks");
         String storePass = "nalle123";
         Map<String, String> passwords = new HashMap<String, String>();
         passwords.put("kidsroom", "softserve");
