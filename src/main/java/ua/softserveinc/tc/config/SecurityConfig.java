@@ -33,6 +33,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
+import org.springframework.security.saml.key.EmptyKeyManager;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
@@ -174,14 +175,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Central storage of cryptographic keys
     @Bean
-    public KeyManager keyManager() {
+    public JKSKeyManager keyManager() {
         DefaultResourceLoader loader = new DefaultResourceLoader();
         Resource storeFile = loader
-                .getResource("classpath:/saml/samlKeystore.jks");
+                .getResource("classpath:/saml/samlkeystore.jks");
         String storePass = "nalle123";
         Map<String, String> passwords = new HashMap<String, String>();
-        passwords.put("apollo", "nalle123");
-        String defaultKey = "apollo";
+        passwords.put("kidsroom", "softserve");
+        String defaultKey = "kidsroom";
         return new JKSKeyManager(storeFile, storePass, passwords, defaultKey);
     }
 
@@ -233,7 +234,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public ExtendedMetadata extendedMetadata() {
         ExtendedMetadata extendedMetadata = new ExtendedMetadata();
         extendedMetadata.setIdpDiscoveryEnabled(false);
-        //    extendedMetadata.setSignMetadata(false);
+        extendedMetadata.setSignMetadata(false);
         return extendedMetadata;
     }
 
@@ -296,7 +297,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         metadataGenerator.setEntityId("kidsroom:test:sasha:guydye");
         metadataGenerator.setExtendedMetadata(extendedMetadata());
         metadataGenerator.setIncludeDiscoveryExtension(false);
-    //    metadataGenerator.setKeyManager(keyManager());
+        metadataGenerator.setKeyManager(keyManager());
         return metadataGenerator;
     }
 
