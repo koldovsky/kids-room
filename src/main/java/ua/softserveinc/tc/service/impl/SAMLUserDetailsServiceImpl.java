@@ -15,12 +15,10 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ADFSParser;
 import ua.softserveinc.tc.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -35,39 +33,18 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
 
-        LOG.debug("NameID " + credential.getNameID().getValue());
-        LOG.debug("LocalEntityID " + credential.getLocalEntityID());
-        LOG.debug("Credential " + credential.toString());
-        LOG.debug("Display-Name: " + credential.getAttributeAsString("DisplayName"));
-        LOG.debug("User-Principal-Name: " + credential.getAttributeAsString("UserPrincipalName"));
-        LOG.debug("E-Mail-Address:  " + credential.getAttributeAsString("EmailAddress"));
-        LOG.debug("UPN:  " + credential.getAttributeAsString("UPN"));
-        LOG.debug("E-Mail Address :  " + credential.getAttributeAsString("E-Mail Address"));
-        LOG.debug("Name:  " + credential.getAttributeAsString("Name"));
-      //  LOG.debug("Additional Data: " + credential.getAdditionalData().toString());
-        credential.getAttributes().forEach(a -> {
-            LOG.debug("Name: " + a.getName());
-            LOG.debug("Values: " + a.getAttributeValues().get(0).getClass());
-            a.getAttributeValues().forEach(value -> {
-                if ( value instanceof XSAnyImpl ) {
-                    XSAnyImpl temp = (XSAnyImpl) value;
-                    LOG.debug("Text content: " + temp.getTextContent());
-                }
-            }
-            );
-        });
-
-        String userEmail = credential.getNameID().getValue();
-
+        Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
+        String userEmail = credentials.get("emailaddress");
         User user = userService.getUserByEmail(userEmail);
-        if(user == null) {
+
+        if (user == null) {
             user = new User();
             user.setEmail(userEmail);
             user.setActive(true);
             user.setRole(Role.USER);
             user.setConfirmed(true);
-            user.setFirstName("Default");
-            user.setLastName("Default");
+            user.setFirstName(credentials.get("firstName"));
+            user.setLastName(credentials.get("lastName"));
             user.setPassword("123");
             user.setPhoneNumber("+380000000000");
             userService.create(user);
@@ -81,7 +58,6 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
-
 
     }
 
