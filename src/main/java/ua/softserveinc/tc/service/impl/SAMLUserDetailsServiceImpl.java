@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service.impl;
 
 
 import org.opensaml.samlext.saml2mdui.DisplayName;
+import org.opensaml.xml.schema.impl.XSAnyImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,13 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
         credential.getAttributes().forEach(a -> {
             LOG.debug("Name: " + a.getName());
             LOG.debug("Values: " + a.getAttributeValues().get(0).getClass());
+            a.getAttributeValues().forEach(value -> {
+                if ( value instanceof XSAnyImpl ) {
+                    XSAnyImpl temp = (XSAnyImpl) value;
+                    LOG.debug("Text content: " + temp.getTextContent());
+                }
+            }
+            );
         });
 
         String userEmail = credential.getNameID().getValue();
