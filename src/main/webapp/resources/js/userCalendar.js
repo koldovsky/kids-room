@@ -102,7 +102,7 @@ $(function () {
     $('#make-recurrent-booking').dialog({
         autoOpen: false,
         modal:true,
-        title: 'New booking',
+        // title: 'New booking',
         width: 550,
         show: {
             effect: 'drop',
@@ -121,7 +121,7 @@ $(function () {
             $('#delete-recurrent-booking').hide();
             $('#book').show();
 
-            $("#make-recurrent-booking").dialog("option", "title", "New booking");
+            // $("#make-recurrent-booking").dialog("option", "title", "New booking");
         },
         open: function(event, ui) {
             $('.data-validation-information-string').html("");
@@ -1000,7 +1000,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);
 
 
-            $("#make-recurrent-booking").dialog("option", "title", beforeUpdate);
+            // $("#make-recurrent-booking").dialog("option", "title", beforeUpdate);
 
             $('#recurrent-booking-start-date').val(calEvent.start.format().substring(0, 10));
             $('#recurrent-booking-end-date').val(calEvent.end.format().substring(0, 10));

@@ -31,7 +31,7 @@ $(function () {
     });
 
     $('#dialog').dialog({
-        title: 'New event',
+        // title: 'New event',
         modal: true,
         width: 550,
         autoOpen: false,
@@ -60,7 +60,7 @@ $(function () {
 
     $('#updating').dialog({
         autoOpen: false,
-        title: 'Change event',
+        // title: 'Change event',
         modal:true,
         width:400
     });

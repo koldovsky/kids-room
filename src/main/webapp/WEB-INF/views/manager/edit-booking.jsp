@@ -234,7 +234,6 @@
 <div id="cancelModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-body text-center">
                 <br>
                 <h2><spring:message code="booking.cancel"/></h2>
@@ -249,9 +248,6 @@
                 <button id="closeCencel" class="btn btn-danger  " data-dismiss="modal">
                     <spring:message code="booking.closeCencel"/>
                 </button>
-
-
-
             </div>
         </div>
     </div>
