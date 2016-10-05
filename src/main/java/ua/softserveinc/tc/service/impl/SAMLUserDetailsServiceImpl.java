@@ -34,7 +34,7 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
 
-        LOG.debug("GetNameID " + credential.getNameID().getValue());
+        LOG.debug("NameID " + credential.getNameID().getValue());
         LOG.debug("LocalEntityID " + credential.getLocalEntityID());
         LOG.debug("Credential " + credential.toString());
         LOG.debug("Display-Name: " + credential.getAttributeAsString("DisplayName"));
@@ -43,7 +43,7 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
         LOG.debug("UPN:  " + credential.getAttributeAsString("UPN"));
         LOG.debug("E-Mail Address :  " + credential.getAttributeAsString("E-Mail Address"));
         LOG.debug("Name:  " + credential.getAttributeAsString("Name"));
-
+        LOG.debug("Additional Data: " + credential.getAdditionalData().toString());
 
 
         String userEmail = credential.getNameID().getValue();
