@@ -44,7 +44,11 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
         LOG.debug("E-Mail Address :  " + credential.getAttributeAsString("E-Mail Address"));
         LOG.debug("Name:  " + credential.getAttributeAsString("Name"));
       //  LOG.debug("Additional Data: " + credential.getAdditionalData().toString());
-        credential.getAttributes().forEach(a -> LOG.debug(a.toString()));
+        credential.getAttributes().forEach(a -> {
+            LOG.debug("Friendly Name: " + a.getFriendlyName());
+            LOG.debug("Name: " + a.getName());
+
+        });
 
         String userEmail = credential.getNameID().getValue();
 
