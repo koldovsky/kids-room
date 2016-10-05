@@ -49,7 +49,9 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
             user.setPhoneNumber("+380000000000");
             userService.create(user);
             user = userService.getUserByEmail(userEmail);
+            LOG.debug("New user: " + userEmail + "is created");
         }
+        LOG.debug("User: " + userEmail + "is logged in");
 
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
