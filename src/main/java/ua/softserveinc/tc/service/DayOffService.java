@@ -15,6 +15,8 @@ public interface DayOffService {
 
     void delete(long id);
 
+    void sendSingleMail(DayOff dayOff);
+
     List<DayOff> findAll();
 
     List<DayOff> getClosestDays();
