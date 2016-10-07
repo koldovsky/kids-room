@@ -10,8 +10,8 @@ import javax.persistence.PostPersist;
 import java.time.LocalDate;
 
 import static ua.softserveinc.tc.constants.DateConstants.WEEK_LENGTH;
-import static ua.softserveinc.tc.constants.DayOffConstants.Event.COLOR;
-import static ua.softserveinc.tc.constants.DayOffConstants.Event.DESCRIPTION;
+import static ua.softserveinc.tc.constants.DayOffConstants.Event.DAY_OFF_DESCRIPTION;
+import static ua.softserveinc.tc.constants.DayOffConstants.Event.EVENT_COLOR;
 import static ua.softserveinc.tc.util.LocalDateUtil.asDate;
 
 public class DayAddedListener {
@@ -26,6 +26,9 @@ public class DayAddedListener {
     public void postPersist(DayOff day) {
         LocalDate today = LocalDate.now();
 
+        AutowireHelper.autowire(this, this.calendarService);
+        AutowireHelper.autowire(this, this.dayOffService);
+
         if (today.until(day.getStartDate()).getDays() < WEEK_LENGTH) {
             dayOffService.sendSingleMail(day);
             day.getRooms().forEach(room -> calendarService.add(Event.builder()
@@ -33,16 +36,13 @@ public class DayAddedListener {
                     .startTime(asDate(day.getStartDate()))
                     .endTime(asDate(day.getEndDate()))
                     .room(room)
-                    .color(COLOR)
-                    .description(DESCRIPTION)
+                    .color(EVENT_COLOR)
+                    .description(DAY_OFF_DESCRIPTION)
                     .build()));
         }
 
     }
 
     public DayAddedListener() {
-        AutowireHelper.autowire(this, this.calendarService);
-        AutowireHelper.autowire(this, this.dayOffService);
     }
-
 }

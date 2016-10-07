@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,9 @@ import java.util.concurrent.Executors;
 public class MailServiceImpl implements MailService {
 
     private ExecutorService executor = Executors.newFixedThreadPool(20, factory -> {
-            Thread t = Executors.defaultThreadFactory().newThread(factory);
-            t.setDaemon(true);
-            return t;
+            Thread thread = Executors.defaultThreadFactory().newThread(factory);
+            thread.setDaemon(true);
+            return thread;
     });
 
     @Autowired
@@ -139,7 +138,6 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    @SneakyThrows(MessagingException.class)
     public void sendDayOffReminderAsync(User recipient, String subject, DayOff dayOff)
             throws MessagingException {
 
@@ -149,8 +147,12 @@ public class MailServiceImpl implements MailService {
         model.put(DayOffConstants.Mail.ROOMS, dayOff.getRooms());
 
         executor.execute(() -> {
-            sendMessage(recipient.getEmail(), subject,
-                    getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
+            try {
+                sendMessage(recipient.getEmail(), subject,
+                        getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         });
 
     }
