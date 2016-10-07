@@ -78,15 +78,15 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public void sendSingleMail(DayOff day) {
-        new Thread(() -> userService.findAll().stream()
+        userService.findAll().stream()
                 .filter(user -> !(user.getRole().equals(Role.ADMINISTRATOR)))
                 .forEach(recipient -> {
                     try {
-                        mailService.sendDayOffReminder(recipient, MailConstants.DAY_OFF_REMINDER, day);
+                        mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
                     } catch (MessagingException me) {
                         log.error("Error sending e-mail", me);
                     }
-                })).start();
+                });
     }
 
 

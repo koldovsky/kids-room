@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.config;
+package ua.softserveinc.tc.util;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * .springframework.context.ApplicationContext}.
  */
 @Component
-public final class AutowireHelper implements ApplicationContextAware {
+public final class  AutowireHelper implements ApplicationContextAware {
 
     private static final AutowireHelper INSTANCE = new AutowireHelper();
     private static ApplicationContext applicationContext;
