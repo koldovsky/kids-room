@@ -37,10 +37,12 @@
                       e-required e-placeholder="Enter day's name" ng-bind="day.name">
                 </span>
             </td>
-            <td><span class="datepick" e-form="rowform" editable-bsdate="day.startDate"
-                      e-is-open="opened.$data" e-ng-click="open($event,'$data')"
+            <td><span e-form="rowform" editable-bsdate="day.startDate"
+                      e-is-open="startDateOpened.$data" e-ng-click="openStartDate($event,'$data')"
                       e-datepicker-popup="yyyy-MM-dd" ng-bind="day.startDate | date:'yyyy-MM-dd'"></span></td>
-            <td><span e-form="rowform" ng-bind="day.endDate | date:'yyyy-MM-dd'"></span></span></td>
+            <td><span e-form="rowform" editable-bsdate="day.endDate"
+                      e-is-open="endDateOpened.$data" e-ng-click="openEndDate($event,'$data')"
+                      e-datepicker-popup="yyyy-MM-dd" ng-bind="day.endDate | date:'yyyy-MM-dd'"></span></span></td>
             <td>
                 <div class="btn-group dropdown-div" uib-dropdown>
                     <button id="btn-append-to-single-button" type="button" class="btn btn-primary" uib-dropdown-toggle
@@ -49,10 +51,11 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-custom" uib-dropdown-menu role="menu"
-                        aria-labelledby="btn-append-to-single-button" ng-click="$event.stopPropagation()">
-                        <li role="menuitem" ng-repeat="room in rooms" ng-click="assignRoom($event, day, room)">
-                            <input type="checkbox"
-                                   ng-checked="isRoomChecked(day.rooms, room)"><span>{{room.name}}</span></input>
+                        aria-labelledby="btn-append-to-single-button">
+                        <li role="menuitem" ng-repeat="room in rooms"
+                            ng-click="assignRoom($event, day, room); $event.stopPropagation(); ">
+                            <input type="checkbox" ng-checked="isRoomChecked(day.rooms, room)">
+                            <span>{{room.name}}</span></input>
                         </li>
                     </ul>
                 </div>

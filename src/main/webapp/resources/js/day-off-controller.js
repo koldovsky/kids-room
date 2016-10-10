@@ -1,5 +1,5 @@
-App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope, DayOffService) {
-    $scope.dayOff = {id: null, name: '', startDate: '', endDate: '', rooms: ''};
+App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', function ($scope, DayOffService, $filter) {
+    $scope.dayOff = {id: null, name: '', startDate: ''.to, endDate: '', rooms: ''};
     $scope.daysOff = [];
     $scope.rooms = [];
 
@@ -36,24 +36,25 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.createDay = function (day) {
         $scope.inserted = {
             name: '',
-            startDate: new Date().yyyymmdd(),
-            endDate: new Date().yyyymmdd(),
+            startDate: new Date(),
+            endDate: new Date(),
             rooms: []
         };
         $scope.daysOff.unshift($scope.inserted);
     };
 
     $scope.saveDay = function (day) {
+
+        day.startDate = $filter('date')(day.startDate, "yyyy-MM-dd");
+        day.endDate = $filter('date')(day.endDate, "yyyy-MM-dd");
+
         if (day.id === undefined) {
             DayOffService.createDayOff(day)
-                .success(res => {
-                    console.log(res);
-                    $scope.getAllDaysOff();
-                })
+                .success(res => $scope.getAllDaysOff())
                 .error(err => console.error('Error while creating Day Off' + err));
         } else {
             DayOffService.updateDayOff(day)
-                .success(res => console.log(res))
+                .success(res => $scope.getAllDaysOff())
                 .error(err =>console.error('Error while updating Day Off' + err));
         }
     };
@@ -72,6 +73,13 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
 
     $scope.edit = function (id) {
         $scope.dayOff.id = id;
+
+        $scope.dayOff.startDate = $filter('date')($scope.dayOff.startDate, "yyyy-MM-dd");
+        $scope.dayOff.endDate = $filter('date')($scope.dayOff.endDate, "yyyy-MM-dd");
+    };
+
+    $scope.dateParser = function (date) {
+        date = $filter('date')(date, "yyyy-MM-dd");
     };
 
     $scope.showAllRooms = function () {
@@ -104,7 +112,6 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
                 })
                 .includes(room.id);
         }
-
     };
 
     $scope.assignRoom = function ($event, day, selectedRoom) {
@@ -118,28 +125,27 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
         }
     };
 
-    $scope.opened = {};
+    $scope.dateParser = function (day) {
+        day.startDate = $filter('date')(day.startDate, "yyyy-MM-dd");
+        day.endDate = $filter('date')(day.endDate, "yyyy-MM-dd");
+    };
 
-    $scope.open = function($event, elementOpened) {
+    $scope.startDateOpened = {};
+
+    $scope.openStartDate = function($event, elementOpened) {
         $event.preventDefault();
         $event.stopPropagation();
 
-        $scope.opened[elementOpened] = !$scope.opened[elementOpened];
+        $scope.startDateOpened[elementOpened] = !$scope.startDateOpened[elementOpened];
     };
 
+    $scope.endDateOpened = {};
 
-    Date.prototype.yyyymmdd = function () {
-        var mm = this.getMonth() + 1;
-        if (mm.toString().charAt(0) != '1') {
-            mm = '0' + mm.toString();
-        }
-        else {
-            mm = mm.toString();
-        }
-        var dd = this.getDate().toString    ();
-        var yyyy = this.getFullYear().toString();
+    $scope.openEndDate = function($event, elementOpened) {
+        $event.preventDefault();
+        $event.stopPropagation();
 
-        return [this.getFullYear(), mm, dd].join('-');
+        $scope.endDateOpened[elementOpened] = !$scope.endDateOpened[elementOpened];
     };
 
 }]);
