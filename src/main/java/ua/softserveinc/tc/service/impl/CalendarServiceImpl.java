@@ -49,6 +49,11 @@ public class CalendarServiceImpl implements CalendarService {
                 " " + roomService.findById(id).getWorkingHoursEnd();
     }
 
+    @Override
+    public void add(Event event) {
+        eventDao.create(event);
+    }
+
     public final List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto) {
         Date dateForRecurrentStart = DateUtil.toDateISOFormat(recurrentEventDto.getStartTime());
         Date dateForRecurrentEnd = DateUtil.toDateISOFormat(recurrentEventDto.getEndTime());

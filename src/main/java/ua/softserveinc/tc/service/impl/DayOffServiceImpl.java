@@ -78,7 +78,7 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public void sendSingleMail(DayOff day) {
-        new Thread(() -> userService.findAll().stream().peek(recipient -> System.out.println(recipient))
+        new Thread(() -> userService.findAll().stream()
                 .filter(user -> !(user.getRole().equals(Role.ADMINISTRATOR)))
                 .forEach(recipient -> {
                     try {
