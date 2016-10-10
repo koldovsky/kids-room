@@ -46,7 +46,10 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.saveDay = function (day) {
         if (day.id === undefined) {
             DayOffService.createDayOff(day)
-                .success(res => console.log(res))
+                .success(res => {
+                    console.log(res);
+                    $scope.getAllDaysOff();
+                })
                 .error(err => console.error('Error while creating Day Off' + err));
         } else {
             DayOffService.updateDayOff(day)
