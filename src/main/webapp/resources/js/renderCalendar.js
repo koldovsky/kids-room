@@ -31,7 +31,7 @@ $(function () {
     });
 
     $('#dialog').dialog({
-        title: 'New event',
+        // title: 'New event',
         modal: true,
         width: 550,
         autoOpen: false,
@@ -60,7 +60,7 @@ $(function () {
 
     $('#updating').dialog({
         autoOpen: false,
-        title: 'Change event',
+        // title: 'Change event',
         modal:true,
         width:400
     });
@@ -597,25 +597,24 @@ function editRecurrentEvent(recurrentEventForEditing){
         $('#color-select').val(recurrentEventForEditing.color);
         $('#description').val(recurrentEventForEditing.description);
         $('#event-title').val(recurrentEventForEditing.title);
-        var DoW = recurrentEventForEditing.daysOfweek.split(" ");
-        DoW.forEach(function (item) {
+        recurrentEventForEditing.weekDays.forEach(function (item) {
             switch (item) {
-                case 'Mon':
+                case 2:
                     day = 'Monday';
                     break;
-                case 'Tue':
+                case 3:
                     day = 'Tuesday';
                     break;
-                case 'Wed':
+                case 4:
                     day = 'Wednesday';
                     break;
-                case 'Thu':
+                case 5:
                     day = 'Thursday';
                     break;
-                case 'Fri':
+                case 6:
                     day = 'Friday';
                     break;
-                case 'Sat':
+                case 7:
                     day = 'Saturday';
                     break;
             }
@@ -640,7 +639,7 @@ function editRecurrentEventRequest(eventRecurrentId) {
                 startTime: result.startTime.substr(11, 5),
                 endDate: result.endTime.substr(0, 10),
                 endTime: result.endTime.substr(11, 5),
-                daysOfweek: result.daysOfWeek.trim(),
+                weekDays: result.weekDays,
                 title:result.name
             };
             editRecurrentEvent(recurrentEventForEditing);

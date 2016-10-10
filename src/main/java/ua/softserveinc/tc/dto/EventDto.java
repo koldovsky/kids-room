@@ -1,14 +1,10 @@
 package ua.softserveinc.tc.dto;
 
-import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.entity.Event;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-/**
- * Created by dima- on 07.05.2016.
- */
 public class EventDto {
 
     private long id;

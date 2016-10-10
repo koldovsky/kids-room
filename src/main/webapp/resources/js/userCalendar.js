@@ -102,7 +102,7 @@ $(function () {
     $('#make-recurrent-booking').dialog({
         autoOpen: false,
         modal:true,
-        title: 'New booking',
+        // title: 'New booking',
         width: 550,
         show: {
             effect: 'drop',
@@ -121,7 +121,7 @@ $(function () {
             $('#delete-recurrent-booking').hide();
             $('#book').show();
 
-            $("#make-recurrent-booking").dialog("option", "title", "New booking");
+            // $("#make-recurrent-booking").dialog("option", "title", "New booking");
         },
         open: function(event, ui) {
             $('.data-validation-information-string').html("");
@@ -724,7 +724,7 @@ function editRecurrentBookingsReuest (recurrentId) {
                 endDate: result.endDate,
                 startTime: result.startTime,
                 endTime: result.endTime,
-                daysOfweek:result.daysOfWeek.trim()
+                weekDays:result.weekDays
             };
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
         },
@@ -751,25 +751,24 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
         $('#recurrent-booking-end-date').val(endBookingTime);
         $('#recurrent-booking-start-time').timepicker('setTime', recurrentBookingForEditing.startTime);
         $('#recurrent-booking-end-time').timepicker('setTime', recurrentBookingForEditing.endTime);
-        var DoW = recurrentBookingForEditing.daysOfweek.split(" ");
-        DoW.forEach(function (item) {
+            recurrentBookingForEditing.weekDays.forEach(function (item) {
             switch (item) {
-                case 'Mon':
+                case 2:
                     day = 'Monday';
                     break;
-                case 'Tue':
+                case 3:
                     day = 'Tuesday';
                     break;
-                case 'Wed':
+                case 4:
                     day = 'Wednesday';
                     break;
-                case 'Thu':
+                case 5:
                     day = 'Thursday';
                     break;
-                case 'Fri':
+                case 6:
                     day = 'Friday';
                     break;
-                case 'Sat':
+                case 7:
                     day = 'Saturday';
                     break;
             }
@@ -1001,7 +1000,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);
 
 
-            $("#make-recurrent-booking").dialog("option", "title", beforeUpdate);
+            // $("#make-recurrent-booking").dialog("option", "title", beforeUpdate);
 
             $('#recurrent-booking-start-date').val(calEvent.start.format().substring(0, 10));
             $('#recurrent-booking-end-date').val(calEvent.end.format().substring(0, 10));

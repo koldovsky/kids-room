@@ -95,7 +95,7 @@
     <div class="row">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="make-recurrent-booking" class="dialog" hidden>
+                <div id="make-recurrent-booking" class="dialog" hidden title=<spring:message code= "booking.newBooking"/>>
                     <form id="recurrent-booking-form">
                         <!--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
 
@@ -154,7 +154,7 @@
                                     <div class="col-xs-7 pull-right" id="days-for-recurrent-booking-form" hidden>
                                         <table class="table" id="days-for-recurrent-booking">
                                             <br>
-                                            <thead>Check required days</thead>
+                                            <thead><spring:message code="event.checkRequiredDays"/></thead>
                                             <tbody>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Monday-booking" value="Mon"
@@ -226,19 +226,20 @@
                                     <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
                                 </div>
 
-                                <div class="clearfix"></div>
-                                <div class="col-xs-3 row ">
-                                    <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">
-                                        <spring:message code= "booking.update"/>
-                                    </button>
-                                    <button type="button" class="btn btn-success live bookingbutton" id="book">
-                                        <spring:message code= "booking.book"/>
-                                    </button>
-                                </div>
-                                <div class="col-xs-3 row pull-right ">
-                                    <button type="button" class="btn btn-danger pull-right bookingbutton" id="cancel-changes">
-                                        <spring:message code= "cancel"/>
-                                    </button>
+                                <div class="clearfix">
+                                    <%--<div class="col-xs-4 row">--%>
+                                        <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">
+                                            <spring:message code= "booking.update"/>
+                                        </button>
+                                        <button type="button" class="btn btn-success" id="book">
+                                            <spring:message code= "booking.book"/>
+                                        </button>
+<%--                                    </div>
+                                    <div class="col-xs-4 row ">--%>
+                                        <button type="button" class="btn btn-danger pull-right" id="cancel-changes">
+                                            <spring:message code= "cancel"/>
+                                        </button>
+                                    <%--</div>--%>
                                 </div>
                                 <br>
                                 <div class = "col-xs-12">
@@ -266,7 +267,7 @@
                     <form id="choose-updating-booking-form">
                         <div class="radio-button">
                             <label><input type="radio" id="single-update-booking" name="radio-check" checked>
-                                <spring:message code= "recurrent.justThisOne"/>
+                                <spring:message code= "recurrent.justThisOneBooking"/>
                             </label>
                         </div>
                         <div class="radio-button">
@@ -390,9 +391,9 @@
     </div>
 
         <%--confirmation-dialog--%>
-    <div class="row">
-        <div class="modal-dialog modal-lg vertical-center-row ">
-            <div align="center">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div aclass="modal-body text-center">
                 <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
                     <form id="confirm-your-choice">
                         <div class= "confirmDelete">
@@ -418,6 +419,8 @@
             </div>
         </div>
     </div>
+
+
             <div class="loading" hidden>Loading&#8230;</div>
 </div>
 
@@ -483,12 +486,12 @@
 
                         <br><br>
 
-                        <label for="recurrent-event-description">Description</label>
+                        <label for="recurrent-event-description"><spring:message code="recurrent.description" /></label>
                         <textarea class="form-control" id="recurrent-event-description"
                                   placeholder="description" cols="30"></textarea>
 
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-success" id="recurrent-event-create">Create</button>
+                            <button type="button" class="btn btn-success" id="recurrent-event-create"><spring:message code="booking.create"/></button>
                         </div>
 
                     </form>
@@ -500,15 +503,15 @@
     <div class="row">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="dialog" class="dialog" hidden>
+                <div id="dialog" class="dialog" hidden title="<spring:message code= "event.new"/>">
                     <form id="form">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="col-xs-12 form-group">
-                            <label for="event-title">Event title</label>
+                            <label for="event-title"><spring:message code= "event.title"/></label>
                             <input type="text" class="form-control" id="event-title" placeholder="Event title">
                         </div>
                         <div class="form-group">
-                            <label for="color-select">Choose a color</label>
+                            <label for="color-select"><spring:message code="event.chooseColor" /></label>
                             <select id="color-select">
                                 <option value="#eb6f63" style="background:red">
                                     <spring:message code= "color.red"/>
@@ -542,7 +545,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="start-date-picker">Start date</label>
+                            <label for="start-date-picker"><spring:message code= "event.startDate"/></label>
                             <br>
                             <div class="col-xs-6">
                                 <input id="start-date-picker" type="date" class="text-center form-control"  placeholder="startDate">
@@ -554,7 +557,7 @@
                         <br>
 
                         <div class="form-group">
-                            <label for="end-date-picker">End date</label>
+                            <label for="end-date-picker"><spring:message code= "event.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
                                 <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate">
@@ -572,37 +575,44 @@
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="single-event-radio-button"
-                                                          class="my-radio" checked> Single event</label>
+                                                          class="my-radio" checked><spring:message code="event.singleEvent"/></label>
                                         </div>
                                         <div class="radio-button">
-                                            <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio"> Weekly</label>
+                                            <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio">
+                                                <spring:message code="event.weeklyEvent"/></label>
                                         </div>
                                         <div class="radio-button" hidden>
-                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio"> Monthly</label>
+                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio">
+                                                <spring:message code="event.monthlyEvent"/></label>
                                         </div>
                                     </div>
                                     <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                         <table class="table" id="days-for-recurrent">
                                             <br>
-                                            <thead >Check required days</thead>
+                                            <thead > <spring:message code="event.checkRequiredDays"/></thead>
                                             <tbody>
                                             <tr>
-                                                <td><label><input type="checkbox" id="Monday" value="Mon" class="day"> Monday</label><br>
+                                                <td><label><input type="checkbox" id="Monday" value="Mon" class="day">
+                                                    <spring:message code="monday"/></label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day"> Tuesday</label><br>
+                                                <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day">
+                                                    <spring:message code="tuestay"/></label><br>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td><label><input type="checkbox" id="Wednesday" value="Wed"
-                                                                  class="day"> Wednesday</label><br>
+                                                                  class="day"> <spring:message code="wednesday"/></label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Thursday" value="Thu" class="day"> Thursday</label><br>
+                                                <td><label><input type="checkbox" id="Thursday" value="Thu" class="day">
+                                                    <spring:message code="thursday"/></label><br>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label><input type="checkbox" id="Friday" value="Fri" class="day"> Friday</label><br>
+                                                <td><label><input type="checkbox" id="Friday" value="Fri" class="day">
+                                                    <spring:message code="friday"/></label><br>
                                                 </td>
-                                                <td><label><input type="checkbox" id="Saturday" value="Sat" class="day"> Saturday</label><br>
+                                                <td><label><input type="checkbox" id="Saturday" value="Sat" class="day">
+                                                    <spring:message code="saturday"/></label><br>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -624,12 +634,12 @@
                                 <div class="clearfix"></div>
                                 <div class="col-xs-3">
                                     <button type="button" class="btn btn-success" id="update-recurrent-button" hidden="true">
-                                        Update
+                                        <spring:message code="booking.update"/>
                                     </button>
-                                    <button type="button" class="btn btn-success live" id="create-button">Create</button>
+                                    <button type="button" class="btn btn-success live" id="create-button"><spring:message code="booking.create"/></button>
                                 </div>
                                 <div align="right" class="col-xs-9">
-                                    <button type="button" class="btn btn-danger pull-right" id="cancel">Cancel</button>
+                                    <button type="button" class="btn btn-danger pull-right" id="cancel"><spring:message code="cancel"/></button>
                                 </div>
                                 <div class = "col-xs-12">
                                     <footer class="deleteBookingButtonLink">
@@ -650,7 +660,7 @@
     <div class="row">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="updating" class="dialog" hidden>
+                <div id="updating" class="dialog" hidden title = "<spring:message code="event.changeEvent"></spring:message>">
                     <form id="updatingForm">
 
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -760,14 +770,14 @@
                     <form id="choose-updating-form">
 
                         <div class="radio-button">
-                            <label><input type="radio" id="single-update" name="radio" checked>Just this one</label>
+                            <label><input type="radio" id="single-update" name="radio" checked><spring:message code="recurrent.justThisOneEvent"/></label>
                         </div>
                         <div class="radio-button">
-                            <label><input type="radio" id="recurrent-update" name="radio">The entire series</label>
+                            <label><input type="radio" id="recurrent-update" name="radio"><spring:message code="recurrent.allSeries"/></label>
                         </div>
 
-                        <button type="button" class="btn btn-success" id="confirm-choose">Ok</button>
-                        <button type="button" class="btn btn-danger" id="cancel-choose">Cancel</button>
+                        <button type="button" class="btn btn-success" id="confirm-choose"><spring:message code="ok"/></button>
+                        <button type="button" class="btn btn-danger" id="cancel-choose"><spring:message code="cancel"/></button>
 
                     </form>
                 </div>
@@ -776,7 +786,7 @@
     </div>
 
     <div class="container">
-        <button type="button" class="btn btn-success" id="create-new-event">New event</button>
+        <button type="button" class="btn btn-success" id="create-new-event"><spring:message code="event.new"/></button>
         <div id='calendar'></div>
     </div>
     </c:if>
