@@ -34,7 +34,6 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public DayOff upsert(DayOff dayOff) {
-        sendSingleMail(dayOff);
         return dayOffRepository.saveAndFlush(dayOff);
     }
 
@@ -79,7 +78,7 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public void sendSingleMail(DayOff day) {
-        new Thread(() -> userService.findAll().stream()
+        new Thread(() -> userService.findAll().stream().peek(recipient -> System.out.println(recipient))
                 .filter(user -> !(user.getRole().equals(Role.ADMINISTRATOR)))
                 .forEach(recipient -> {
                     try {
