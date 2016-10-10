@@ -2,7 +2,6 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.dayOff = {id: null, name: '', startDate: '', endDate: '', rooms: ''};
     $scope.daysOff = [];
     $scope.rooms = [];
-    $scope.check = true;
 
     $scope.getAllDaysOff = function () {
         DayOffService.getAllDaysOff()
@@ -39,7 +38,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
             name: '',
             startDate: new Date().yyyymmdd(),
             endDate: new Date().yyyymmdd(),
-            rooms: null
+            rooms: []
         };
         $scope.daysOff.unshift($scope.inserted);
     };
@@ -47,18 +46,13 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.saveDay = function (day) {
         if (day.id === undefined) {
             DayOffService.createDayOff(day)
-                .success($scope.getAllDaysOff)
-                .error(function (err) {
-                    console.error('Error while creating Day Off' + err);
-                });
+                .success(res => console.log(res))
+                .error(err => console.error('Error while creating Day Off' + err));
         } else {
-            DayOffService.updateDayOff(day.id, day)
-                .success($scope.getAllDaysOff)
-                .error(function (err) {
-                    console.error('Error while updating Day Off' + err);
-                });
+            DayOffService.updateDayOff(day)
+                .success(res => console.log(res))
+                .error(err =>console.error('Error while updating Day Off' + err));
         }
-        $scope.dayOff.id = undefined;
     };
 
     $scope.deleteDay = function (id, index) {
@@ -100,7 +94,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     };
 
     $scope.isRoomChecked = function (dayOffRooms, room) {
-        if (dayOffRooms != null){
+        if (dayOffRooms != null) {
             return dayOffRooms
                 .map(function (room) {
                     return room.id
@@ -110,19 +104,26 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
 
     };
 
-    $scope.assignRoom = function ($event, day, room) {
-        $event.target.checked ?
-            day.rooms.push(room) :
-            day.rooms.splice(day.rooms.indexOf(room));
-
+    $scope.assignRoom = function ($event, day, selectedRoom) {
+        if ($event.target.checked) {
+            day.rooms.push(selectedRoom);
+        } else {
+            day.rooms = day.rooms.filter(room => room.id !== selectedRoom.id);
+        }
+        if (day.id !== undefined) {
+            $scope.saveDay(day);
+        }
     };
 
-    $scope.checkRooms = function(id) {
-        if (id == $scope.dayOff.id) {
-            return false;
-        }
-        return true;
-    }
+    $scope.opened = {};
+
+    $scope.open = function($event, elementOpened) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened[elementOpened] = !$scope.opened[elementOpened];
+    };
+
 
     Date.prototype.yyyymmdd = function () {
         var mm = this.getMonth() + 1;
@@ -132,7 +133,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
         else {
             mm = mm.toString();
         }
-        var dd = this.getDate().toString();
+        var dd = this.getDate().toString    ();
         var yyyy = this.getFullYear().toString();
 
         return [this.getFullYear(), mm, dd].join('-');

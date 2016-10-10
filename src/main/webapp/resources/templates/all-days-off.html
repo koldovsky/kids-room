@@ -34,35 +34,37 @@
         <tbody>
         <tr ng-repeat="day in daysOff">
             <td><span editable-text="day.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"
-                      e-required e-placeholder="Enter day's name">
-                {{day.name}}
+                      e-required e-placeholder="Enter day's name" ng-bind="day.name">
                 </span>
             </td>
-            <td><span e-form="rowform">{{day.startDate | date:'yyyy-MM-dd'}}</span></td>
-            <td><span e-form="rowform">{{day.endDate | date:'yyyy-MM-dd'}}</span></span></td>
+            <td><span class="datepick" e-form="rowform" editable-bsdate="day.startDate"
+                      e-is-open="opened.$data" e-ng-click="open($event,'$data')"
+                      e-datepicker-popup="yyyy-MM-dd" ng-bind="day.startDate | date:'yyyy-MM-dd'"></span></td>
+            <td><span e-form="rowform" ng-bind="day.endDate | date:'yyyy-MM-dd'"></span></span></td>
             <td>
-                <div class="btn-group dropdown-div"  uib-dropdown>
+                <div class="btn-group dropdown-div" uib-dropdown>
                     <button id="btn-append-to-single-button" type="button" class="btn btn-primary" uib-dropdown-toggle
-                            ng-disabled="checkRooms(day.id)">
-                        {{day.rooms.length}} <spring:message code="administrator.listRooms"/>
+                            ng-bind="day.rooms.length">
+                        <spring:message code="administrator.listRooms"/>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-custom" uib-dropdown-menu role="menu"
                         aria-labelledby="btn-append-to-single-button" ng-click="$event.stopPropagation()">
                         <li role="menuitem" ng-repeat="room in rooms" ng-click="assignRoom($event, day, room)">
-                            <input type="checkbox" ng-checked="isRoomChecked(day.rooms, room)"><span>{{room.name}}</span></input>
+                            <input type="checkbox"
+                                   ng-checked="isRoomChecked(day.rooms, room)"><span>{{room.name}}</span></input>
                         </li>
                     </ul>
                 </div>
             </td>
             <td style="white-space: nowrap">
                 <form editable-form name="rowform" onaftersave="saveDay(day)" ng-show="rowform.$visible"
-                      class="form-buttons form-inline ng-hide" shown="inserted == day" >
+                      class="form-buttons form-inline ng-hide" shown="inserted == day">
                     <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
                         <spring:message code="administrator.save"/>
                     </button>
                     <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel(); checkForData(day)"
-                            class="btn btn-default btn-cancel">
+                            class="btn btn-default btn-warning">
                         <spring:message code="administrator.canc"/>
                     </button>
                 </form>

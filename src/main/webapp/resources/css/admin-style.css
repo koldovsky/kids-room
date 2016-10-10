@@ -170,3 +170,6 @@ th.th-size {
     font-size: 1.10em;
 }
 
+.datepick {
+    white-space: nowrap;
+}
