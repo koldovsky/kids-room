@@ -24,4 +24,5 @@ public interface MailService {
     void sendDayOffReminder(User recipient, String subject, DayOff dayOff) throws MessagingException;
 
     void sendDayOffReminderAsync(User recipient, String subject, DayOff dayOff) throws MessagingException;
+
 }

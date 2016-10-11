@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.entity.DayOff;
-import ua.softserveinc.tc.entity.Role;
+import ua.softserveinc.tc.entity.Event;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
+import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
@@ -18,6 +20,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.constants.DateConstants.WEEK_LENGTH;
+import static ua.softserveinc.tc.constants.DayOffConstants.Event.DAY_OFF_DESCRIPTION;
+import static ua.softserveinc.tc.constants.DayOffConstants.Event.EVENT_COLOR;
+import static ua.softserveinc.tc.entity.Role.ADMINISTRATOR;
+import static ua.softserveinc.tc.util.LocalDateUtil.asDate;
 
 @Service
 @Slf4j
@@ -27,6 +33,9 @@ public class DayOffServiceImpl implements DayOffService {
     private MailService mailService;
 
     @Autowired
+    private CalendarService calendarService;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -34,7 +43,10 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public DayOff upsert(DayOff dayOff) {
-        return dayOffRepository.saveAndFlush(dayOff);
+        dayOffRepository.saveAndFlush(dayOff);
+        createDayOffEvent(dayOff);
+        sendSingleMail(dayOff);
+        return dayOff;
     }
 
     @Override
@@ -77,16 +89,33 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
+    public void createDayOffEvent(DayOff day) {
+        day.getRooms().forEach(room -> calendarService.add(Event.builder()
+                .name(day.getName())
+                .startTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
+                .endTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
+                .room(room)
+                .color(EVENT_COLOR)
+                .description(DAY_OFF_DESCRIPTION)
+                .build()));
+    }
+
+    @Override
     public void sendSingleMail(DayOff day) {
-        userService.findAll().stream()
-                .filter(user -> !(user.getRole().equals(Role.ADMINISTRATOR)))
-                .forEach(recipient -> {
-                    try {
-                        mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
-                    } catch (MessagingException me) {
-                        log.error("Error sending e-mail", me);
-                    }
-                });
+        LocalDate today = LocalDate.now();
+
+        if (today.until(day.getStartDate()).getDays() < WEEK_LENGTH) {
+            userService.findAll().stream()
+                    .filter(user -> user.getRole() != ADMINISTRATOR)
+                    .filter(User::isActive)
+                    .forEach(recipient -> {
+                        try {
+                            mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
+                        } catch (MessagingException me) {
+                            log.error("Error sending e-mail", me);
+                        }
+                    });
+        }
     }
 
 

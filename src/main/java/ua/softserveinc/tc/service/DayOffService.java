@@ -21,6 +21,8 @@ public interface DayOffService {
 
     List<DayOff> getClosestDays();
 
+    void createDayOffEvent(DayOff dayOff);
+
     List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
 
     List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);

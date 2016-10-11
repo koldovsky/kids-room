@@ -8,7 +8,6 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.DayOffConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
-import ua.softserveinc.tc.service.impl.DayAddedListener;
 import ua.softserveinc.tc.util.serializers.LocalDateDeserializer;
 import ua.softserveinc.tc.util.serializers.LocalDateSerializer;
 import ua.softserveinc.tc.util.serializers.SimpleRoomSerializer;
@@ -18,7 +17,6 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@EntityListeners(DayAddedListener.class)
 @Table(name = DayOffConstants.Entity.TABLENAME)
 @Getter
 @Setter

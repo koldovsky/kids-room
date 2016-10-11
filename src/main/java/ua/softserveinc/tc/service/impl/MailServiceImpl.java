@@ -33,9 +33,9 @@ import java.util.concurrent.Executors;
 public class MailServiceImpl implements MailService {
 
     private ExecutorService executor = Executors.newFixedThreadPool(20, factory -> {
-            Thread thread = Executors.defaultThreadFactory().newThread(factory);
-            thread.setDaemon(true);
-            return thread;
+        Thread thread = Executors.defaultThreadFactory().newThread(factory);
+        thread.setDaemon(true);
+        return thread;
     });
 
     @Autowired
@@ -148,10 +148,10 @@ public class MailServiceImpl implements MailService {
 
         executor.execute(() -> {
             try {
-                sendMessage(recipient.getEmail(), subject,
-                        getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
-            } catch (MessagingException e) {
-                e.printStackTrace();
+                sendMessage(recipient.getEmail(),
+                        subject, getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
+            } catch (MessagingException me) {
+                log.error("Error sending e-mail", me);
             }
         });
 
