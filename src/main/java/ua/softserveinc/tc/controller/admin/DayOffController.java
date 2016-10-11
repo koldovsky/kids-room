@@ -14,9 +14,11 @@ import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.Log;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/adm-days-off")
@@ -33,7 +35,9 @@ public class DayOffController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DayOff>> allDaysOff() {
-        List<DayOff> daysOff = dayOffService.findAll();
+        List<DayOff> daysOff = dayOffService.findAll().stream()
+                .sorted(Comparator.comparing(DayOff::getId).reversed())
+                .collect(Collectors.toList());
         if (daysOff.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

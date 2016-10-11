@@ -1,13 +1,12 @@
 package ua.softserveinc.tc.dto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.GenericMapper;
 
-/**
- * Created by dima- on 28.06.2016.
- */
+import java.util.List;
+import java.util.Set;
+
 public class RecurrentEventDto extends EventDto{
 
     @Autowired
@@ -15,11 +14,26 @@ public class RecurrentEventDto extends EventDto{
 
     private String daysOfWeek;
 
+    private Set <Integer> weekDays;
+
     public RecurrentEventDto() {
+    }
+    public static RecurrentEventDto getRecurrentEventDto(List<Event> listOfRecurrentEvent, Set<Integer> weekDays) {
+        Event startDay = listOfRecurrentEvent.get(0);
+        Event endDay = listOfRecurrentEvent.get(listOfRecurrentEvent.size() - 1);
+        startDay.setEndTime(endDay.getEndTime());
+        RecurrentEventDto recurrentEventDto = new RecurrentEventDto(startDay);
+        recurrentEventDto.setWeekDays(weekDays);
+        return recurrentEventDto;
     }
 
     public RecurrentEventDto(Event event) {
         super(event);
+    }
+    public void setWeekDays(Set<Integer> weekDays)
+    {
+        this.weekDays=weekDays;
+
     }
     public Event toEvent() {
         EventDto eventDto = new EventDto();

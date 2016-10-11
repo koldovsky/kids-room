@@ -156,10 +156,6 @@ th.th-size {
     width: 100%;
 }
 
-.dropdown-menu {
-    width: 100%;
-}
-
 .dropdown-custom li {
     margin-left: 10px;
 }
@@ -169,4 +165,9 @@ th.th-size {
     font-family: Helvetica, Arial, Verdana;
     font-size: 1.10em;
 }
+
+.e-datepicker-popup {
+
+}
+
 

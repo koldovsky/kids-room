@@ -27,8 +27,8 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
         return $http.post(REST_URI_DAY, dayOff);
     }
 
-    function updateDayOff(id, dayOff) {
-        return $http.put(REST_URI_DAY + id, dayOff);
+    function updateDayOff(dayOff) {
+        return $http.put(REST_URI_DAY + dayOff.id, dayOff);
     }
 
     function deleteDayOff(id) {

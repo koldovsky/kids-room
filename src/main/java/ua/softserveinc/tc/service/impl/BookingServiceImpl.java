@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static ua.softserveinc.tc.dto.BookingDto.getBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 @Service
@@ -298,33 +299,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return persistBookingsFromDtoAndSetId(newRecurrentBooking);
     }
 
-    public BookingDto getRecurrentBookingForEditingById(long bookingId){
-
-        BookingDto recurentBookToReturn = new BookingDto();
-        List<Booking> listOfRecurrentBooking = new LinkedList<Booking>();
-        listOfRecurrentBooking = bookingDao.getRecurrentBookingsByRecurrentId(bookingId);
-        List<BookingDto> listOfRecurrentBookingDto = new LinkedList<BookingDto>();
-        for(Booking booking: listOfRecurrentBooking){
-            listOfRecurrentBookingDto.add(new BookingDto(booking));
-        }
-        recurentBookToReturn.setDate(listOfRecurrentBookingDto.get(0).getDate());
-        recurentBookToReturn.setEndDate(listOfRecurrentBookingDto.get(listOfRecurrentBookingDto.size()-1).getDate());;
-        recurentBookToReturn.setStartTime(listOfRecurrentBookingDto.get(0).getStartTime());
-        recurentBookToReturn.setEndTime(listOfRecurrentBookingDto.get(0).getEndTime());
-        boolean bookedDaysOfWeek[] = {false,false,false,false,false,false};
+    public BookingDto getRecurrentBookingForEditingById(final long bookingId){
+        final List<Booking> listOfRecurrentBooking = bookingDao.getRecurrentBookingsByRecurrentId(bookingId);
+        Set <Integer> weekDays = new HashSet<>();
         Calendar calendar = Calendar.getInstance();
         for (Booking booking : listOfRecurrentBooking) {
             calendar.setTime(booking.getBookingStartTime());
-            int day = calendar.get(Calendar.DAY_OF_WEEK);
-            bookedDaysOfWeek[day-2]=true;
+            weekDays.add(calendar.get(Calendar.DAY_OF_WEEK));
         }
-        String nameOfDays[]=new String[] {"Mon","Tue","Wed","Thu","Fri","Sat"};
-        StringBuilder days=new StringBuilder();
-        for (int i=0; i < nameOfDays.length; i++){
-            if (bookedDaysOfWeek[i]) days.append(" "+nameOfDays[i]);
-        }
-        recurentBookToReturn.setDaysOfWeek(days.toString());
-        recurentBookToReturn.setRecurrentId(bookingId);
-        return recurentBookToReturn;
+        return getBookingDto(listOfRecurrentBooking, weekDays);
+
     };
 }
