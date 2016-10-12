@@ -34,10 +34,13 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
     };
 
     $scope.createDay = function (day) {
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
         $scope.inserted = {
             name: '',
-            startDate: new Date(),
-            endDate: new Date(),
+            startDate: tomorrow,
+            endDate: tomorrow,
             rooms: []
         };
         $scope.daysOff.unshift($scope.inserted);
@@ -98,12 +101,6 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         }
     };
 
-    $scope.checkName = function (data) {
-        if (!data) {
-            return "Enter a name";
-        }
-    };
-
     $scope.isRoomChecked = function (dayOffRooms, room) {
         if (dayOffRooms != null) {
             return dayOffRooms
@@ -125,6 +122,31 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         }
     };
 
+
+    $scope.checkName = function (data) {
+        if (!data) {
+            return "Enter a name";
+        }
+    };
+
+    $scope.startDate = new Date();
+
+    $scope.checkStartDate = function (data) {
+        $scope.startDate = data;
+        var now = new Date();
+        if (data < now) {
+            return "Choose date in future";
+        }
+    };
+
+    $scope.checkEndDate = function (data) {
+        var now = new Date();
+        if (data < $scope.startDate) {
+            return "Choose date in future";
+        }
+    };
+
+
     $scope.dateParser = function (day) {
         day.startDate = $filter('date')(day.startDate, "yyyy-MM-dd");
         day.endDate = $filter('date')(day.endDate, "yyyy-MM-dd");
@@ -132,7 +154,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
 
     $scope.startDateOpened = {};
 
-    $scope.openStartDate = function($event, elementOpened) {
+    $scope.openStartDate = function ($event, elementOpened) {
         $event.preventDefault();
         $event.stopPropagation();
 
@@ -141,7 +163,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
 
     $scope.endDateOpened = {};
 
-    $scope.openEndDate = function($event, elementOpened) {
+    $scope.openEndDate = function ($event, elementOpened) {
         $event.preventDefault();
         $event.stopPropagation();
 

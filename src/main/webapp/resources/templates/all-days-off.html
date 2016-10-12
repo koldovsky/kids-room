@@ -37,14 +37,14 @@
                       e-required e-placeholder="Enter day's name" ng-bind="day.name">
                 </span>
             </td>
-            <td><span e-form="rowform" editable-bsdate="day.startDate"
+            <td><span e-form="rowform" editable-bsdate="day.startDate" onbeforesave="checkStartDate($data)"
                       e-is-open="startDateOpened.$data" e-ng-click="openStartDate($event,'$data')"
                       e-datepicker-popup="yyyy-MM-dd" ng-bind="day.startDate | date:'yyyy-MM-dd'"></span></td>
-            <td><span e-form="rowform" editable-bsdate="day.endDate"
+            <td><span e-form="rowform" editable-bsdate="day.endDate" onbeforesave="checkEndDate($data)"
                       e-is-open="endDateOpened.$data" e-ng-click="openEndDate($event,'$data')"
                       e-datepicker-popup="yyyy-MM-dd" ng-bind="day.endDate | date:'yyyy-MM-dd'"></span></span></td>
             <td>
-                <div class="btn-group dropdown-div" uib-dropdown>
+                <div class="btn-group dropdown-div" uib-dropdown onbeforesave="checkSelectedRooms($data)">
                     <button id="btn-append-to-single-button" type="button" class="btn btn-primary" uib-dropdown-toggle
                             ng-bind="day.rooms.length">
                         <span class="caret"></span>
