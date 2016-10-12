@@ -45,7 +45,7 @@ public class DayOffController {
     }
 
     @RequestMapping(value = "/day/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DayOff> getUser(@PathVariable("id") long id) {
+    public ResponseEntity<DayOff> getDayOff(@PathVariable("id") long id) {
 
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {
@@ -61,7 +61,7 @@ public class DayOffController {
             log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
                     "with the same start date: " + dayOff.getStartDate());
         }
-        dayOffService.upsert(dayOff);
+        dayOffService.create(dayOff);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/day/{id}").buildAndExpand(dayOff.getId()).toUri());
@@ -86,7 +86,7 @@ public class DayOffController {
         }
         currentDay.setRooms(currentRooms);
 
-        dayOffService.upsert(currentDay);
+        dayOffService.update(currentDay);
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
     }
 

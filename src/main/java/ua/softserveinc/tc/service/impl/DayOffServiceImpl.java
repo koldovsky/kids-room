@@ -43,22 +43,35 @@ public class DayOffServiceImpl implements DayOffService {
     private DayOffRepository dayOffRepository;
 
     /**
-     * Saves/updates {@link DayOff} in database, creates it in calendar
-     * for appropriate rooms and sends information email to users, if
+     * Creates {@link DayOff} in database
+     * and sends information email to users, if
      * there is less than three days till day off
      *
      * @param dayOff a requested day off
      * @return current day
      */
     @Override
-    public DayOff upsert(DayOff dayOff) {
+    public DayOff create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
-
         dayOffRepository.saveAndFlush(dayOff);
-        createDayOffEvent(dayOff);
+
         if (today.until(dayOff.getStartDate()).getDays() < WEEK_LENGTH) {
             sendDayOffInfo(dayOff);
         }
+        return dayOff;
+    }
+
+    /**
+     * Updates {@link DayOff} in database, creates it in
+     * calendar for appropriate rooms
+     *
+     * @param dayOff a requested day off
+     * @return current day
+     */
+    @Override
+    public DayOff update(DayOff dayOff) {
+        dayOffRepository.saveAndFlush(dayOff);
+        createDayOffEvent(dayOff);
         return dayOff;
     }
 

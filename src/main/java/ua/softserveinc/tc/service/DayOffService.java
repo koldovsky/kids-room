@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface DayOffService {
 
-    DayOff upsert(DayOff dayOff);
+    DayOff create(DayOff dayOff);
+
+    DayOff update(DayOff dayOff);
 
     DayOff findById(long id);
 
