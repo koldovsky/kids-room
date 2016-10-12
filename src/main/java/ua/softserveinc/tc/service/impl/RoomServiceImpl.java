@@ -8,6 +8,7 @@ import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.DayOffService;
@@ -179,6 +180,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return room.getCapacity() - bookings.size();
     }
 
+    /**
+     * @return today's active rooms for parent, based on {@link DayOff}
+     */
     @Override
     public List<Room> getTodayActiveRooms() {
         LocalDate today = LocalDate.now();

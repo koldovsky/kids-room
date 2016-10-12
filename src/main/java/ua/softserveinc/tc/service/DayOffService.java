@@ -15,16 +15,17 @@ public interface DayOffService {
 
     void delete(long id);
 
-    void sendSingleMail(DayOff dayOff);
-
     List<DayOff> findAll();
+
+    List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
+
+    List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
     List<DayOff> getClosestDays();
 
     void createDayOffEvent(DayOff dayOff);
 
-    List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
+    void sendDayOffInfo(DayOff dayOff);
 
-    List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 
 }

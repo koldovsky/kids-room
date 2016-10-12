@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Event;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.service.CalendarService;
@@ -41,11 +42,23 @@ public class DayOffServiceImpl implements DayOffService {
     @Autowired
     private DayOffRepository dayOffRepository;
 
+    /**
+     * Saves/updates {@link DayOff} in database, creates it in calendar
+     * for appropriate rooms and sends information email to users, if
+     * there is less than three days till day off
+     *
+     * @param dayOff a requested day off
+     * @return current day
+     */
     @Override
     public DayOff upsert(DayOff dayOff) {
+        LocalDate today = LocalDate.now();
+
         dayOffRepository.saveAndFlush(dayOff);
         createDayOffEvent(dayOff);
-        sendSingleMail(dayOff);
+        if (today.until(dayOff.getStartDate()).getDays() < WEEK_LENGTH) {
+            sendDayOffInfo(dayOff);
+        }
         return dayOff;
     }
 
@@ -78,49 +91,67 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
+    public List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate) {
+        return dayOffRepository.findByStartDateBetween(startDate, endDate);
+    }
+
+    /**
+     * Gets all upcoming days {@link DayOff} within
+     * seven days from today
+     *
+     * @return list of days
+     */
+    @Override
     public List<DayOff> getClosestDays() {
         LocalDate today = LocalDate.now();
 
         return dayOffRepository.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
-                .filter(day -> today.until(day.getStartDate()).getDays() <= WEEK_LENGTH)
+                .filter(day -> today.until(day.getStartDate()).getDays() == WEEK_LENGTH)
                 .sorted(Comparator.comparing(DayOff::getStartDate))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Creates event on calendar based on day's off information
+     * for appropriate rooms
+     *
+     * @param day requested day
+     */
     @Override
     public void createDayOffEvent(DayOff day) {
-        day.getRooms().forEach(room -> calendarService.add(Event.builder()
-                .name(day.getName())
-                .startTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
-                .endTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
-                .room(room)
-                .color(EVENT_COLOR)
-                .description(DAY_OFF_DESCRIPTION)
-                .build()));
-    }
-
-    @Override
-    public void sendSingleMail(DayOff day) {
-        LocalDate today = LocalDate.now();
-
-        if (today.until(day.getStartDate()).getDays() < WEEK_LENGTH) {
-            userService.findAll().stream()
-                    .filter(user -> user.getRole() != ADMINISTRATOR)
-                    .filter(User::isActive)
-                    .forEach(recipient -> {
-                        try {
-                            mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
-                        } catch (MessagingException me) {
-                            log.error("Error sending e-mail", me);
-                        }
-                    });
+        for (Room room : day.getRooms()) {
+            calendarService.add(Event.builder()
+                    .name(day.getName())
+                    .startTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
+                    .endTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
+                    .room(room)
+                    .color(EVENT_COLOR)
+                    .description(DAY_OFF_DESCRIPTION)
+                    .build());
         }
     }
 
-
+    /**
+     * Sends information email for parents and managers
+     * about upcoming day off
+     *
+     * @param day requested day
+     * @throws MessagingException if any problems with
+     *                            sending email occurs
+     */
     @Override
-    public List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate) {
-        return dayOffRepository.findByStartDateBetween(startDate, endDate);
+    public void sendDayOffInfo(DayOff day) {
+        userService.findAll().stream()
+                .filter(user -> user.getRole() != ADMINISTRATOR)
+                .filter(User::isActive)
+                .forEach(recipient -> {
+                    try {
+                        mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
+                    } catch (MessagingException me) {
+                        log.error("Error sending e-mail", me);
+                    }
+                });
     }
+
 }
