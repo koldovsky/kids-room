@@ -54,6 +54,7 @@ public class DayOffServiceImpl implements DayOffService {
     public DayOff create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
         dayOffRepository.saveAndFlush(dayOff);
+        upsertDayOffEvent(dayOff);
 
         if (today.until(dayOff.getStartDate()).getDays() < WEEK_LENGTH) {
             sendDayOffInfo(dayOff);
@@ -71,7 +72,7 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public DayOff update(DayOff dayOff) {
         dayOffRepository.saveAndFlush(dayOff);
-        createDayOffEvent(dayOff);
+        upsertDayOffEvent(dayOff);
         return dayOff;
     }
 
@@ -87,10 +88,7 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public boolean dayOffExist(String name, LocalDate startDate) {
-        if (findByNameOrStartDate(name, startDate).isEmpty()) {
-            return false;
-        }
-        return true;
+        return findByNameOrStartDate(name, startDate).isEmpty();
     }
 
     @Override
@@ -132,7 +130,7 @@ public class DayOffServiceImpl implements DayOffService {
      * @param day requested day
      */
     @Override
-    public void createDayOffEvent(DayOff day) {
+    public void upsertDayOffEvent(DayOff day) {
         for (Room room : day.getRooms()) {
             calendarService.add(Event.builder()
                     .name(day.getName())

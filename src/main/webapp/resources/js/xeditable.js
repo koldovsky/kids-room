@@ -99,7 +99,7 @@ angular.module('xeditable').directive('editableBsdate', ['editableDirectiveFacto
 
                 var inputDatePicker = angular.element('<input type="text" class="form-control" data-ng-model="$parent.$data"/>');
 
-                inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy/MM/dd' );
+                inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopupXEditable || 'yyyy-MM-dd' );
                 inputDatePicker.attr('is-open', this.attrs.eIsOpen);
                 inputDatePicker.attr('date-disabled', this.attrs.eDateDisabled);
                 inputDatePicker.attr('uib-datepicker-popup', this.attrs.eDatepickerPopup);

@@ -9,6 +9,7 @@ import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.mapper.GenericMapper;
+import ua.softserveinc.tc.repo.EventRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
@@ -22,6 +23,9 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Autowired
     private EventDao eventDao;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private RoomService roomService;
@@ -51,7 +55,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public void add(Event event) {
-        eventDao.create(event);
+        eventRepository.saveAndFlush(event);
     }
 
     public final List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto) {

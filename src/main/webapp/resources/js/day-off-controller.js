@@ -132,7 +132,11 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
     $scope.startDate = new Date();
 
     $scope.checkStartDate = function (data) {
-        $scope.startDate = data;
+        if (data instanceof Date) {
+            $scope.startDate = data;
+        } else {
+            return "Incorrect date"
+        }
         var now = new Date();
         if (data < now) {
             return "Choose date in future";
@@ -140,6 +144,9 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
     };
 
     $scope.checkEndDate = function (data) {
+        if (!(data instanceof Date)) {
+            return "Incorrect date"
+        }
         var now = new Date();
         if (data < $scope.startDate) {
             return "Choose date in future";
