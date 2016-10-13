@@ -19,6 +19,8 @@ public interface CalendarService {
 
     void updateEvent(final Event event);
 
+    List<Event> findByName(String name);
+
     void deleteEvent(final Event event);
 
     List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto);

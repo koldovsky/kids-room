@@ -93,7 +93,9 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public void delete(long id) {
+        String eventName = dayOffRepository.findOne(id).getName();
         dayOffRepository.delete(id);
+        deleteDayOffEvent(eventName);
     }
 
     @Override
@@ -104,6 +106,13 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate) {
         return dayOffRepository.findByStartDateBetween(startDate, endDate);
+    }
+
+    @Override
+    public void deleteDayOffEvent(String name) {
+        for (Event event : calendarService.findByName(name)) {
+            calendarService.deleteEvent(event);
+        }
     }
 
     /**

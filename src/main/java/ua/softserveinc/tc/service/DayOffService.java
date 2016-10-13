@@ -29,5 +29,6 @@ public interface DayOffService {
 
     void sendDayOffInfo(DayOff dayOff);
 
+    void deleteDayOffEvent(String name);
 
 }

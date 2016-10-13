@@ -137,6 +137,11 @@ public class CalendarServiceImpl implements CalendarService {
         eventDao.update(event);
     }
 
+    @Override
+    public List<Event> findByName(String name) {
+        return eventRepository.findByName(name);
+    }
+
     public final void deleteEvent(final Event event) {
         eventDao.delete(event);
     }
