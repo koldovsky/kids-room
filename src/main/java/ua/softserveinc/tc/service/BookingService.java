@@ -30,11 +30,14 @@ public interface BookingService extends BaseService<Booking> {
     Date replaceBookingTime(Booking booking, String time);
 
     Boolean checkForDuplicateBooking(List<BookingDto> listDto);
+    Boolean checkForDuplicateBookingSingle (BookingDto bookingDto);
 
     List<BookingDto> persistBookingsFromDtoAndSetId (List<BookingDto> listDTO);
+    List<Booking> updateRecurrentBookingsDeleteCreate(List<Booking> oldBookings, List<Booking> newBookings);
     List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom);
 
     Long getMaxRecurrentId();
     List<BookingDto> makeRecurrentBookings(List<BookingDto> bookingDtos);
     BookingDto getRecurrentBookingForEditingById(long bookingId);
+    List<BookingDto> updateRecurrentBookings(BookingDto recurrentBookingDtos);
 }
