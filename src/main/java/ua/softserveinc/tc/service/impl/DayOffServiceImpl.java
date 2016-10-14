@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,10 +10,10 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
+import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
-import ua.softserveinc.tc.service.UserService;
 
 import javax.mail.MessagingException;
 import java.time.LocalDate;
@@ -37,7 +38,7 @@ public class DayOffServiceImpl implements DayOffService {
     private CalendarService calendarService;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private DayOffRepository dayOffRepository;
@@ -161,17 +162,13 @@ public class DayOffServiceImpl implements DayOffService {
      *                            sending email occurs
      */
     @Override
+    @SneakyThrows
     public void sendDayOffInfo(DayOff day) {
-        userService.findAll().stream()
-                .filter(user -> user.getRole() != ADMINISTRATOR)
-                .filter(User::isActive)
-                .forEach(recipient -> {
-                    try {
-                        mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
-                    } catch (MessagingException me) {
-                        log.error("Error sending e-mail", me);
-                    }
-                });
+        List<User> activeUsers = userRepository.findByActiveTrueAndRoleNot(ADMINISTRATOR);
+
+        for (User recipient : activeUsers) {
+            mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
+        }
     }
 
 }

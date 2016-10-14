@@ -1,9 +1,6 @@
 package ua.softserveinc.tc.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.util.DateUtil;
