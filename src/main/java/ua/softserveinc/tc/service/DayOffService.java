@@ -25,9 +25,9 @@ public interface DayOffService {
 
     List<DayOff> getClosestDays();
 
-    void upsertDayOffEvent(DayOff dayOff);
-
     void sendDayOffInfo(DayOff dayOff);
+
+    void createDayOffEvent(DayOff dayOff);
 
     void deleteDayOffEvent(String name);
 

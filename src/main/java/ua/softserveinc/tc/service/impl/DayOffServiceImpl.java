@@ -10,12 +10,12 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
+import ua.softserveinc.tc.repo.EventRepository;
 import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
 
-import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -41,12 +41,16 @@ public class DayOffServiceImpl implements DayOffService {
     private UserRepository userRepository;
 
     @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired
     private DayOffRepository dayOffRepository;
 
     /**
      * Creates {@link DayOff} in database
      * and sends information email to users, if
-     * there is less than three days till day off
+     * there is less than three days till day off,
+     * creates it in calendar for appropriate rooms
      *
      * @param dayOff a requested day off
      * @return current day
@@ -55,7 +59,7 @@ public class DayOffServiceImpl implements DayOffService {
     public DayOff create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
         dayOffRepository.saveAndFlush(dayOff);
-        upsertDayOffEvent(dayOff);
+        createDayOffEvent(dayOff);
 
         if (today.until(dayOff.getStartDate()).getDays() < WEEK_LENGTH) {
             sendDayOffInfo(dayOff);
@@ -64,17 +68,14 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     /**
-     * Updates {@link DayOff} in database, creates it in
-     * calendar for appropriate rooms
+     * Updates {@link DayOff} in database
      *
      * @param dayOff a requested day off
      * @return current day
      */
     @Override
     public DayOff update(DayOff dayOff) {
-        dayOffRepository.saveAndFlush(dayOff);
-        upsertDayOffEvent(dayOff);
-        return dayOff;
+        return dayOffRepository.saveAndFlush(dayOff);
     }
 
     @Override
@@ -134,15 +135,30 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     /**
+     * Sends information email for parents and managers
+     * about upcoming day off
+     *
+     * @param day requested day
+     */
+    @Override
+    @SneakyThrows
+    public void sendDayOffInfo(DayOff day) {
+        List<User> activeUsers = userRepository.findByActiveTrueAndRoleNot(ADMINISTRATOR);
+        for (User recipient : activeUsers) {
+            mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
+        }
+    }
+
+    /**
      * Creates event on calendar based on day's off information
      * for appropriate rooms
      *
      * @param day requested day
      */
     @Override
-    public void upsertDayOffEvent(DayOff day) {
+    public void createDayOffEvent(DayOff day) {
         for (Room room : day.getRooms()) {
-            calendarService.add(Event.builder()
+            eventRepository.saveAndFlush(Event.builder()
                     .name(day.getName())
                     .startTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
                     .endTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
@@ -150,24 +166,6 @@ public class DayOffServiceImpl implements DayOffService {
                     .color(EVENT_COLOR)
                     .description(DAY_OFF_DESCRIPTION)
                     .build());
-        }
-    }
-
-    /**
-     * Sends information email for parents and managers
-     * about upcoming day off
-     *
-     * @param day requested day
-     * @throws MessagingException if any problems with
-     *                            sending email occurs
-     */
-    @Override
-    @SneakyThrows
-    public void sendDayOffInfo(DayOff day) {
-        List<User> activeUsers = userRepository.findByActiveTrueAndRoleNot(ADMINISTRATOR);
-
-        for (User recipient : activeUsers) {
-            mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
         }
     }
 
