@@ -189,6 +189,10 @@ th.th-size {
     border: 0;
 }
 
+.uib-datepicker-popup.dropdown-menu table {
+    border: 0;
+}
+
 .help-block {
     font-size: 15px;
 }
