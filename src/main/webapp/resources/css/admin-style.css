@@ -127,11 +127,6 @@ th.th-size {
     margin: auto;
 }
 
-.btn-cancel {
-    padding-left: 6%;
-    width: 31%;
-}
-
 .editable-wrap .editable-controls > input {
     max-width: 120px;
 
@@ -196,6 +191,14 @@ th.th-size {
 
 .help-block {
     font-size: 15px;
+}
+
+.error-class {
+    background-color: #EE0000 !important;
+}
+
+.btn-cancel {
+    background-color: #00aa9a !important;
 }
 
 

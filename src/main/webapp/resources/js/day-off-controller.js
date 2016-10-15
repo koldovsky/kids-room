@@ -88,16 +88,6 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         date = $filter('date')(date, "yyyy-MM-dd");
     };
 
-    $scope.showAllRooms = function () {
-        var selected = [];
-        angular.forEach($scope.rooms, function (s) {
-            if ($scope.dayOff.rooms.indexOf(s.value) >= 0) {
-                selected.push(s.text);
-            }
-        });
-        return selected.length ? selected.join(', ') : 'Not set';
-    };
-
     $scope.checkForData = function (day) {
         if (day.name == '') {
             $scope.daysOff.splice(0, 1);
@@ -154,6 +144,10 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         if (data < $scope.startDate) {
             return "Choose date in future";
         }
+    };
+
+    $scope.checkSelectedRooms = function(day) {
+      return day.rooms.length < 1;
     };
 
 
