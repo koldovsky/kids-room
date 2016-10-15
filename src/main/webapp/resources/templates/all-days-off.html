@@ -14,17 +14,25 @@
     <table class="table table-striped days-off cusom" xmlns:spring="http://jboss.org/xml/ns/javax/validation/mapping">
         <thead>
         <tr>
-            <th>
+            <th ng-click="orderTable('day.name')">
                 <spring:message code="administrator.day.name"/>
+                <span class="fa fa-sort-alpha-asc" aria-hidden="true" ng-show="predicate == 'day.name' && !reverse"></span>
+                <span class="fa fa-sort-alpha-desc" aria-hidden="true" ng-show="predicate == 'day.name' && reverse"></span>
             </th>
-            <th>
+            <th ng-click="orderTable('day.start')">
                 <spring:message code="administrator.day.start"/>
+                <span class="fa fa-sort" aria-hidden="true" ng-show="predicate == 'day.start' && !reverse"></span>
+                <span class="fa fa-sort" aria-hidden="true" ng-show="predicate == 'day.start' && reverse"></span>
             </th>
-            <th>
+            <th ng-click="orderTable('day.end')">
                 <spring:message code="administrator.day.end"/>
+                <span class="fa fa-sort" aria-hidden="true" ng-show="predicate == 'day.end' && !reverse"></span>
+                <span class="fa fa-sort" aria-hidden="true" ng-show="predicate == 'day.end' && reverse"></span>
             </th>
-            <th>
+            <th ng-click="orderTable('listRooms')">
                 <spring:message code="administrator.listRooms"/>
+                <span class="fa fa-sort-amount-desc" aria-hidden="true" ng-show="predicate == 'listRooms' && !reverse"></span>
+                <span class="fa fa-sort-amount-asc" aria-hidden="true" ng-show="predicate == 'listRooms' && reverse"></span>
             </th>
             <th>
                 <spring:message code="administrator.day.actions"/>
@@ -32,7 +40,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="day in daysOff">
+        <tr ng-repeat="day in daysOff | orderBy:predicate:reverse">
             <td><span editable-text="day.name" e-name="name" e-form="rowform" onbeforesave="checkName($data)"
                       e-required e-placeholder="Enter day's name" ng-bind="day.name">
                 </span>
@@ -45,8 +53,8 @@
                       e-datepicker-popup="yyyy-MM-dd" ng-bind="day.endDate | date:'yyyy-MM-dd'"></span></span></td>
             <td>
                 <div class="btn-group dropdown-div" uib-dropdown onbeforesave="checkSelectedRooms($data)">
-                    <button id="btn-append-to-single-button" type="button" class="btn btn-primary" uib-dropdown-toggle
-                            ng-bind="day.rooms.length">
+                    <button id="btn-append-to-single-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
+                        {{day.rooms.length}}
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-custom" uib-dropdown-menu role="menu"

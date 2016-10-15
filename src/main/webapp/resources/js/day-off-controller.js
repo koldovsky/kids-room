@@ -3,6 +3,9 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
     $scope.daysOff = [];
     $scope.rooms = [];
 
+    $scope.predicate = 'id';
+    $scope.reverse = true;
+
     $scope.getAllDaysOff = function () {
         DayOffService.getAllDaysOff()
             .success(function (result) {
@@ -175,6 +178,12 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         $event.stopPropagation();
 
         $scope.endDateOpened[elementOpened] = !$scope.endDateOpened[elementOpened];
+    };
+
+
+    $scope.orderTable = function (predicate) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
     };
 
 }]);
