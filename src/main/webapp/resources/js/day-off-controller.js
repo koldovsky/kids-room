@@ -105,16 +105,16 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
     };
 
     $scope.assignRoom = function ($event, day, selectedRoom) {
-        if ($event.target.checked) {
-            day.rooms.push(selectedRoom);
-        } else {
-            day.rooms = day.rooms.filter(room => room.id !== selectedRoom.id);
-        }
-        if (day.id !== undefined) {
-            $scope.saveDay(day);
-        }
+        $event.target.checked ? day.rooms.push(selectedRoom)
+            : day.rooms = day.rooms.filter(room => room.id !== selectedRoom.id);
+
     };
 
+    $scope.toggled = function(open, day) {
+        if (!open && day.id !== undefined && day.rooms.length > 0) {
+            $scope.saveDay(day)
+        }
+    };
 
     $scope.checkName = function (data) {
         if (!data) {
@@ -146,8 +146,8 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         }
     };
 
-    $scope.checkSelectedRooms = function(day) {
-      return day.rooms.length < 1;
+    $scope.checkSelectedRooms = function (day) {
+        return day.rooms.length < 1;
     };
 
 
