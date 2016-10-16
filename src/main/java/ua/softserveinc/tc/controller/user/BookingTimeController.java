@@ -149,4 +149,24 @@ public class BookingTimeController {
 
 
 
+    @RequestMapping(value = "updaterecurrentbookings", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto RecurrentBookingDto,
+                                                         BindingResult bindingResult) {
+
+        if (bookingService.checkForDuplicateBookingSingle(RecurrentBookingDto)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+        }
+        if (!this.timeValidator.validateBooking(RecurrentBookingDto)) {
+            ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            return resp;
+        }
+
+        List<BookingDto> bookings = bookingService.updateRecurrentBookings(RecurrentBookingDto);
+        if (bookings.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(bookings));
+    }
+
+
 }

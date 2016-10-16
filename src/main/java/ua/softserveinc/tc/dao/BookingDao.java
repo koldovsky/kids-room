@@ -17,4 +17,6 @@ public interface BookingDao extends BaseDao<Booking> {
 
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 
+    List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings, List<Booking> newBookings);
+
 }

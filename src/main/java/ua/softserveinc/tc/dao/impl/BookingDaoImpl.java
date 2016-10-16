@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
-import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
@@ -90,4 +90,12 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
                 orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
         return entityManager.createQuery(query).getResultList();
     };
+
+    @Override
+    @Transactional(rollbackForClassName={"Exception"})
+    public List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings, List<Booking> newBookings) {
+        oldBookings.forEach(entityManager::merge);
+        newBookings.forEach(entityManager::persist);
+        return newBookings;
+    }
 }

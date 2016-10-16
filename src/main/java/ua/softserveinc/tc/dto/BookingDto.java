@@ -15,6 +15,7 @@ import java.util.Set;
  * Created by Петришак on 14.05.2016.
  */
 
+
 public class BookingDto implements Serializable{
 
     private Long id;
@@ -49,6 +50,29 @@ public class BookingDto implements Serializable{
     public BookingDto() {
     }
 
+    public BookingDto(BookingDto newBookingDto) {
+        this.date=newBookingDto.date;
+        this.endDate=newBookingDto.endDate;
+        this.startTime=newBookingDto.startTime;
+        this.endTime=newBookingDto.endTime;
+        this.kidName=newBookingDto.kidName;
+        this.roomName=newBookingDto.roomName;
+        this.duration=newBookingDto.duration;
+        this.idChild=newBookingDto.idChild;
+        this.durationLong=newBookingDto.durationLong;
+        this.bookingState=newBookingDto.bookingState;
+        this.comment=newBookingDto.comment;
+        this.recurrentId=newBookingDto.recurrentId;
+        this.userId=newBookingDto.userId;
+        this.kidId=newBookingDto.kidId;
+        this.roomId=newBookingDto.roomId;
+        this.daysOfWeek=newBookingDto.daysOfWeek;
+        this.weekDays=newBookingDto.weekDays;
+        this.child=newBookingDto.child;
+        this.user=newBookingDto.user;
+        this.room=newBookingDto.room;
+    }
+
     public BookingDto(Booking booking) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         this.date = df.format(booking.getBookingStartTime());
@@ -70,11 +94,10 @@ public class BookingDto implements Serializable{
 
 
     public static BookingDto getBookingDto(final List<Booking> listOfRecurrentBooking, final Set<Integer> weekDays) {
-        Booking startDay = listOfRecurrentBooking.get(0);
-        Booking endDay = listOfRecurrentBooking.get(listOfRecurrentBooking.size() - 1);
-        Booking recurrentDay = startDay;
-        recurrentDay.setBookingEndTime(endDay.getBookingEndTime());
-        BookingDto recurrentBookingDto = new BookingDto(recurrentDay);
+        Booking recurrentStartDay = listOfRecurrentBooking.get(0);
+        Booking recurrentEndDay = listOfRecurrentBooking.get(listOfRecurrentBooking.size() - 1);
+        recurrentStartDay.setBookingEndTime(recurrentEndDay.getBookingEndTime());
+        BookingDto recurrentBookingDto = new BookingDto(recurrentStartDay);
         recurrentBookingDto.setWeekDays(weekDays);
         return recurrentBookingDto;
     }
@@ -95,8 +118,9 @@ public class BookingDto implements Serializable{
         booking.setUser(user);
         booking.setBookingState(bookingState);
         booking.setRecurrentId(recurrentId);
-
-
+        long duraion = booking.getBookingEndTime().getTime() -
+                booking.getBookingStartTime().getTime();
+        booking.setDuration(duraion);
         return booking;
     }
 
@@ -129,6 +153,10 @@ public class BookingDto implements Serializable{
     }
 
     public void setDateStartTime(Date dateStartTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        this.date = df.format(dateStartTime);
+        df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
+        this.startTime = df.format(dateStartTime);
         this.dateStartTime = dateStartTime;
     }
 
@@ -137,6 +165,10 @@ public class BookingDto implements Serializable{
     }
 
     public void setDateEndTime(Date dateEndTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        this.endDate = df.format(dateEndTime);
+        df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
+        this.endTime = df.format(dateEndTime);
         this.dateEndTime = dateEndTime;
     }
 
@@ -290,6 +322,10 @@ public class BookingDto implements Serializable{
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public Set<Integer> getWeekDays(){
+        return weekDays;
     }
 
 }
