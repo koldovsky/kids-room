@@ -166,8 +166,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebSSOProfileECPImpl();
     }
 
-
-
     @Bean
     public SingleLogoutProfile logoutprofile() {
         return new SingleLogoutProfileImpl();
@@ -185,7 +183,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         String defaultKey = "kidsroom";
         return new JKSKeyManager(storeFile, storePass, passwords, defaultKey);
     }
-
 
     // Setup TLS Socket Factory
     @Bean
@@ -238,7 +235,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return extendedMetadata;
     }
 
-
     // IDP Discovery Service
     @Bean
     public SAMLDiscovery samlIDPDiscovery() {
@@ -252,7 +248,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new ClasspathResource("/metadata/federationmetadata.xml");
     }
 
-
     @Bean
     public ExtendedMetadataDelegate ADFSExtendedMetadataProvider() throws ResourceException, MetadataProviderException {
         Timer backgroundTaskTimer = new Timer(true);
@@ -263,6 +258,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         extendedMetadataDelegate.initialize();
         return extendedMetadataDelegate;
     }
+
     @Bean
     @Qualifier("idp-ssocircle")
     public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider()
@@ -327,7 +323,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return failureHandler;
     }
 
-
     @Bean
     public SAMLWebSSOHoKProcessingFilter samlWebSSOHoKProcessingFilter() throws Exception {
         SAMLWebSSOHoKProcessingFilter samlWebSSOHoKProcessingFilter = new SAMLWebSSOHoKProcessingFilter();
@@ -351,7 +346,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public MetadataGeneratorFilter metadataGeneratorFilter() {
         return new MetadataGeneratorFilter(metadataGenerator());
     }
-
 
     // Handler for successful logout
     @Bean
