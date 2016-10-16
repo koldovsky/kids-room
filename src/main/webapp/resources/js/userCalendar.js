@@ -824,7 +824,7 @@ function cancelRecurrentBookings(recurrentId) {
     });
     bookingsForDelete.forEach(function (item) {
         $('#user-calendar').fullCalendar('removeEvents', item.id);
-        // cancelBooking(item.id);
+        cancelBooking(item.id);
     })
 }
 
