@@ -96,6 +96,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         if (day.name == '') {
             $scope.daysOff.splice(0, 1);
         }
+        $scope.isAdded = false;
     };
 
     $scope.isRoomChecked = function (dayOffRooms, room) {

@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 import static ua.softserveinc.tc.constants.DateConstants.WEEK_LENGTH;
 import static ua.softserveinc.tc.constants.DayOffConstants.Event.DAY_OFF_DESCRIPTION;
 import static ua.softserveinc.tc.constants.DayOffConstants.Event.EVENT_COLOR;
@@ -49,7 +50,7 @@ public class DayOffServiceImpl implements DayOffService {
     /**
      * Creates {@link DayOff} in database
      * and sends information email to users, if
-     * there is less than three days till day off,
+     * there is less than seven days till day off,
      * creates it in calendar for appropriate rooms
      *
      * @param dayOff a requested day off
@@ -61,7 +62,7 @@ public class DayOffServiceImpl implements DayOffService {
         dayOffRepository.saveAndFlush(dayOff);
         createDayOffEvent(dayOff);
 
-        if (today.until(dayOff.getStartDate()).getDays() < WEEK_LENGTH) {
+        if (DAYS.between(today, dayOff.getStartDate()) < WEEK_LENGTH) {
             sendDayOffInfo(dayOff);
         }
         return dayOff;
@@ -129,7 +130,7 @@ public class DayOffServiceImpl implements DayOffService {
 
         return dayOffRepository.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
-                .filter(day -> today.until(day.getStartDate()).getDays() == WEEK_LENGTH)
+                .filter(day -> DAYS.between(today, day.getStartDate()) == WEEK_LENGTH)
                 .sorted(Comparator.comparing(DayOff::getStartDate))
                 .collect(Collectors.toList());
     }
