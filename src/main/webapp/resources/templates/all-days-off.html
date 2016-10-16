@@ -7,7 +7,7 @@
         </strong></legend>
     </div>
     <div class="days-off">
-        <button class="btn btn-success" ng-click="createDay()">
+        <button class="btn btn-success" ng-click="createDay()" ng-disabled="checkBeforeAdd()">
             <spring:message code="administrator.add"/>
         </button>
     </div>
@@ -31,8 +31,8 @@
             </th>
             <th ng-click="orderTable('listRooms')">
                 <spring:message code="administrator.listRooms"/>
-                <span class="fa fa-sort-amount-desc" aria-hidden="true" ng-show="predicate == 'listRooms' && !reverse"></span>
-                <span class="fa fa-sort-amount-asc" aria-hidden="true" ng-show="predicate == 'listRooms' && reverse"></span>
+                <span class="fa fa-sort-amount-asc" aria-hidden="true" ng-show="predicate == 'listRooms' && !reverse"></span>
+                <span class="fa fa-sort-amount-desc" aria-hidden="true" ng-show="predicate == 'listRooms' && reverse"></span>
             </th>
             <th>
                 <spring:message code="administrator.day.actions"/>

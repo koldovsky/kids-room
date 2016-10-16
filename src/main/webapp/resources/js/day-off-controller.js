@@ -6,6 +6,8 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
     $scope.predicate = 'id';
     $scope.reverse = true;
 
+    $scope.isAdded = false;
+
     $scope.getAllDaysOff = function () {
         DayOffService.getAllDaysOff()
             .success(function (result) {
@@ -40,6 +42,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
         var tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
 
+        $scope.isAdded = true;
         $scope.inserted = {
             name: '',
             startDate: tomorrow,
@@ -51,6 +54,7 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
 
     $scope.saveDay = function (day) {
 
+        $scope.isAdded = false;
         day.startDate = $filter('date')(day.startDate, "yyyy-MM-dd");
         day.endDate = $filter('date')(day.endDate, "yyyy-MM-dd");
 
@@ -148,6 +152,10 @@ App.controller('DayOffController', ['$scope', 'DayOffService', '$filter', functi
 
     $scope.checkSelectedRooms = function (day) {
         return day.rooms.length < 1;
+    };
+
+    $scope.checkBeforeAdd = function() {
+        return $scope.isAdded;
     };
 
 
