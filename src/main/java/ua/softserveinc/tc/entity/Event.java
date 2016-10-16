@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.entity;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.util.DateUtil;
@@ -9,6 +10,9 @@ import java.util.Date;
 
 @Entity
 @Table(name = EventConstants.Entity.TABLENAME)
+@Builder
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Event {
 
     @Id

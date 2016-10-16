@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,9 +25,18 @@ import javax.servlet.ServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
+@Slf4j
 public class MailServiceImpl implements MailService {
+
+    private ExecutorService executor = Executors.newFixedThreadPool(20, factory -> {
+        Thread thread = Executors.defaultThreadFactory().newThread(factory);
+        thread.setDaemon(true);
+        return thread;
+    });
 
     @Autowired
     private ServletRequest request;
@@ -125,6 +135,26 @@ public class MailServiceImpl implements MailService {
 
         sendMessage(recipient.getEmail(), subject,
                 getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
+    }
+
+    @Override
+    public void sendDayOffReminderAsync(User recipient, String subject, DayOff dayOff)
+            throws MessagingException {
+
+        Map<String, Object> model = new HashMap<>();
+        model.put(UserConstants.Entity.USER, recipient);
+        model.put(DayOffConstants.Mail.DAY_OFF, dayOff);
+        model.put(DayOffConstants.Mail.ROOMS, dayOff.getRooms());
+
+        executor.execute(() -> {
+            try {
+                sendMessage(recipient.getEmail(),
+                        subject, getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
+            } catch (MessagingException me) {
+                log.error("Error sending e-mail", me);
+            }
+        });
+
     }
 
 }

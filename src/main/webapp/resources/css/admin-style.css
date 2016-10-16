@@ -127,11 +127,6 @@ th.th-size {
     margin: auto;
 }
 
-.btn-cancel {
-    padding-left: 6%;
-    width: 31%;
-}
-
 .editable-wrap .editable-controls > input {
     max-width: 120px;
 
@@ -156,10 +151,6 @@ th.th-size {
     width: 100%;
 }
 
-.dropdown-menu {
-    width: 100%;
-}
-
 .dropdown-custom li {
     margin-left: 10px;
 }
@@ -169,4 +160,49 @@ th.th-size {
     font-family: Helvetica, Arial, Verdana;
     font-size: 1.10em;
 }
+
+.input-group .form-control {
+    text-align: center;
+    max-width: 100px;
+}
+
+.input-group .input-group-btn .btn {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.uib-datepicker-popup.dropdown-menu th {
+    background-color: white;
+    color: #4d94ff;
+    height: 25px;
+    padding: 0px;
+    border: 1px solid white;
+}
+
+.uib-datepicker-popup.dropdown-menu td {
+    padding: 0px;
+    border: 0;
+
+}
+
+.uib-datepicker-popup.dropdown-menu tr {
+    border: 0;
+}
+
+.uib-datepicker-popup.dropdown-menu table {
+    border: 0;
+}
+
+.help-block {
+    font-size: 15px;
+}
+
+.error-class {
+    background-color: #EE0000 !important;
+}
+
+.btn-cancel {
+    background-color: #00aa9a !important;
+}
+
 

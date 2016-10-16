@@ -22,4 +22,7 @@ public interface MailService {
     void sendReminder(User recipient, String subject, List<BookingDto> bookings) throws MessagingException;
 
     void sendDayOffReminder(User recipient, String subject, DayOff dayOff) throws MessagingException;
+
+    void sendDayOffReminderAsync(User recipient, String subject, DayOff dayOff) throws MessagingException;
+
 }

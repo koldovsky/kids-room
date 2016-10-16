@@ -9,6 +9,7 @@ import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.mapper.GenericMapper;
+import ua.softserveinc.tc.repo.EventRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
@@ -22,6 +23,9 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Autowired
     private EventDao eventDao;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private RoomService roomService;
@@ -47,6 +51,11 @@ public class CalendarServiceImpl implements CalendarService {
     public String getRoomWorkingHours(final long id) {
         return roomService.findById(id).getWorkingHoursStart() +
                 " " + roomService.findById(id).getWorkingHoursEnd();
+    }
+
+    @Override
+    public void add(Event event) {
+        eventRepository.saveAndFlush(event);
     }
 
     public final List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto) {
@@ -126,6 +135,11 @@ public class CalendarServiceImpl implements CalendarService {
 
     public final void updateEvent(final Event event) {
         eventDao.update(event);
+    }
+
+    @Override
+    public List<Event> findByName(String name) {
+        return eventRepository.findByName(name);
     }
 
     public final void deleteEvent(final Event event) {

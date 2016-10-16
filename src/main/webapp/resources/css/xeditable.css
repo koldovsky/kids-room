@@ -4,7 +4,7 @@
 /* class for single editable element */
 .editable-wrap {
   display: inline-block;
-  white-space: pre;
+  /*white-space: pre;*/
   margin: 0;
 }
 

@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.controller.admin;
 
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,18 +12,17 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.Log;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/adm-days-off")
+@Slf4j
 public class DayOffController {
-
-    @Log
-    private Logger log;
 
     @Autowired
     private DayOffService dayOffService;
@@ -33,7 +32,9 @@ public class DayOffController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<DayOff>> allDaysOff() {
-        List<DayOff> daysOff = dayOffService.findAll();
+        List<DayOff> daysOff = dayOffService.findAll().stream()
+                .sorted(Comparator.comparing(DayOff::getId).reversed())
+                .collect(Collectors.toList());
         if (daysOff.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -41,7 +42,7 @@ public class DayOffController {
     }
 
     @RequestMapping(value = "/day/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DayOff> getUser(@PathVariable("id") long id) {
+    public ResponseEntity<DayOff> getDayOff(@PathVariable("id") long id) {
 
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {
@@ -57,7 +58,7 @@ public class DayOffController {
             log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
                     "with the same start date: " + dayOff.getStartDate());
         }
-        dayOffService.upsert(dayOff);
+        dayOffService.create(dayOff);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/day/{id}").buildAndExpand(dayOff.getId()).toUri());
@@ -82,7 +83,7 @@ public class DayOffController {
         }
         currentDay.setRooms(currentRooms);
 
-        dayOffService.upsert(currentDay);
+        dayOffService.update(currentDay);
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
     }
 

@@ -1,40 +1,46 @@
 package ua.softserveinc.tc.quartz;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.QuartzConstants;
-import ua.softserveinc.tc.entity.Role;
+import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
-import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.util.Log;
 
 import javax.mail.MessagingException;
 
-@Service(QuartzConstants.SEND_DAY_OFF_REMINDER)
-public class SendDayOffReminderInfo {
+import static ua.softserveinc.tc.entity.Role.ADMINISTRATOR;
 
-    @Log
-    private static org.slf4j.Logger logger;
+/**
+ * Class that is related to Quartz Scheduling and
+ * runs its method every day at 5:30 AM
+ */
+@Service(QuartzConstants.SEND_DAY_OFF_REMINDER)
+@Slf4j
+public class SendDayOffReminderInfo {
 
     @Autowired
     private MailService mailService;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private DayOffService dayOffService;
 
+    /**
+     * Sends information email for parents and managers
+     * about closest days off
+     */
     private void task() {
-        userService.findAll().stream()
-                .filter(user -> !(user.getRole().equals(Role.ADMINISTRATOR)))
+        userRepository.findByActiveTrueAndRoleNot(ADMINISTRATOR).stream()
                 .forEach(recipient -> dayOffService.getClosestDays().forEach(day -> {
                     try {
                         mailService.sendDayOffReminder(recipient, MailConstants.DAY_OFF_REMINDER, day);
                     } catch (MessagingException me) {
-                        logger.error("Error sending e-mail", me);
+                        log.error("Error sending e-mail", me);
                     }
                 }));
     }

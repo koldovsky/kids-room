@@ -27,4 +27,12 @@ public final class DayOffConstants {
 
     }
 
+    public static final class Event {
+
+        public static final String EVENT_COLOR = "red";
+
+        public static final String DAY_OFF_DESCRIPTION = "This is Day Off. Room is unavailable.";
+
+    }
+
 }

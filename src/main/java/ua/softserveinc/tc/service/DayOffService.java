@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface DayOffService {
 
-    DayOff upsert(DayOff dayOff);
+    DayOff create(DayOff dayOff);
+
+    DayOff update(DayOff dayOff);
 
     DayOff findById(long id);
 
@@ -17,10 +19,16 @@ public interface DayOffService {
 
     List<DayOff> findAll();
 
-    List<DayOff> getClosestDays();
-
     List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
 
     List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
+
+    List<DayOff> getClosestDays();
+
+    void sendDayOffInfo(DayOff dayOff);
+
+    void createDayOffEvent(DayOff dayOff);
+
+    void deleteDayOffEvent(String name);
 
 }

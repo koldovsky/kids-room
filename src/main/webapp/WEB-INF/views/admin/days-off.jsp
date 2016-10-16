@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="resources/css/xeditable.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 <%@include  file="../../../resources/templates/all-days-off.html" %>
 

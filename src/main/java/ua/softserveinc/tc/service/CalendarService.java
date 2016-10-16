@@ -10,11 +10,16 @@ import java.util.List;
  * Created by dima- on 11.05.2016.
  */
 public interface CalendarService {
+
     Long create(final Event event);
+
+    void add(Event event);
 
     List<EventDto> findEventByRoomId(final long roomId);
 
     void updateEvent(final Event event);
+
+    List<Event> findByName(String name);
 
     void deleteEvent(final Event event);
 
