@@ -108,8 +108,8 @@ public class BookingTimeController {
         end.set(Calendar.MINUTE, 0);
         end.set(Calendar.SECOND, 0);
         end.add(Calendar.MONTH, 1);
-        Map<String, String> mp = roomService.getBlockedPeriods(room, start, end);
-        return JsonUtil.toJson(mp);
+        Map<String, String> blockedPeriods = roomService.getBlockedPeriods(room, start, end);
+        return JsonUtil.toJson(blockedPeriods);
     }
 
     @RequestMapping(value = "makerecurrentbookings", method = RequestMethod.POST)
