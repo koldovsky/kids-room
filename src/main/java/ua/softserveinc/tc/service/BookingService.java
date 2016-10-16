@@ -33,7 +33,6 @@ public interface BookingService extends BaseService<Booking> {
     Boolean checkForDuplicateBookingSingle (BookingDto bookingDto);
 
     List<BookingDto> persistBookingsFromDtoAndSetId (List<BookingDto> listDTO);
-    List<Booking> updateRecurrentBookingsDeleteCreate(List<Booking> oldBookings, List<Booking> newBookings);
     List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom);
 
     Long getMaxRecurrentId();

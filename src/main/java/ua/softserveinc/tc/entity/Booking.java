@@ -54,11 +54,11 @@ public class Booking {
 
     @NotNull
     @Column(name = BookingConstants.DB.DURATION, columnDefinition = "bigint default 0")
-    private Long duration;
+    private Long duration = 0L;
 
     @NotNull
     @Column(name = BookingConstants.DB.SUM, columnDefinition = "bigint default 0")
-    private Long sum;
+    private Long sum = 0L;
 
     @Column(name = BookingConstants.DB.ID_RECURRENT, columnDefinition = "bigint default NULL")
     private Long recurrentId;

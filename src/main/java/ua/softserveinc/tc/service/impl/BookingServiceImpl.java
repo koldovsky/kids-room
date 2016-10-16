@@ -2,7 +2,6 @@ package ua.softserveinc.tc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.ChildDao;
@@ -311,14 +310,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Date dateForRecurrentStart = DateUtil.toDateISOFormat(dateStart);
         Date dateForRecurrentEnd = DateUtil.toDateISOFormat(dateEnd);
 
-
         Calendar calendarEndTime = Calendar.getInstance();
         calendarEndTime.setTime(dateForRecurrentEnd);
 
         Calendar calendarStartTime = Calendar.getInstance();
         calendarStartTime.setTime(dateForRecurrentStart);
 
-        ArrayList<Integer> weekDays = DaysStringToArray(recurrentBookingDto.getDaysOfWeek());
         Long newRecID = bookingDao.getMaxRecurrentId() + 1;
         Room room = roomDao.findById(recurrentBookingDto.getRoomId());
         recurrentBookingDto.setRecurrentId(newRecID);
@@ -350,37 +347,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return newRecurrentBookingDto;
     }
 
-    public ArrayList<Integer> DaysStringToArray(String days){
-        ArrayList<Integer> weekDays = new ArrayList<>();
-        String[] daysArray = days.split(" ");
-        for(String day: daysArray){
-            switch (day) {
-                case "Sun":
-                    weekDays.add(Calendar.SUNDAY);
-                    break;
-                case "Mon":
-                    weekDays.add(Calendar.MONDAY);
-                    break;
-                case "Tue":
-                    weekDays.add(Calendar.TUESDAY);
-                    break;
-                case "Wed":
-                    weekDays.add(Calendar.WEDNESDAY);
-                    break;
-                case "Thu":
-                    weekDays.add(Calendar.THURSDAY);
-                    break;
-                case "Fri":
-                    weekDays.add(Calendar.FRIDAY);
-                    break;
-                case "Sat":
-                    weekDays.add(Calendar.SATURDAY);
-                    break;
-            }
-        }
-        return weekDays;
-    }
-
     public BookingDto getRecurrentBookingForEditingById(final long bookingId){
         final List<Booking> listOfRecurrentBooking = bookingDao.getRecurrentBookingsByRecurrentId(bookingId);
         Set <Integer> weekDays = new HashSet<>();
@@ -399,33 +365,20 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         for(Booking bdto:recurrentBookingForDelete) {
             bdto.setBookingState(BookingState.CANCELLED);
         }
-        List<Booking> recurrentBookingForCreate = new ArrayList<>();
-        List<BookingDto> listOfRecurrentBooking = recurrentDtoToList(recurrentBookingDto);
 
+        List<BookingDto> listOfRecurrentBooking = recurrentDtoToList(recurrentBookingDto);
         if (listOfRecurrentBooking.isEmpty()) {
             return listOfRecurrentBooking;
         }
+
+        List<Booking> recurrentBookingForCreate = new ArrayList<>();
         for(BookingDto bdto:listOfRecurrentBooking){
-//        listOfRecurrentBooking.forEach(bdto -> {
-            Booking booking = bdto.getBookingObject();
-            booking.setSum(0L);
-            booking.setDuration(0L);
-            bdto.setId(booking.getIdBook());
-            recurrentBookingForCreate.add(booking);
-        };
-        updateRecurrentBookingsDeleteCreate (recurrentBookingForDelete, recurrentBookingForCreate);
+            recurrentBookingForCreate.add(bdto.getBookingObject());
+        }
+
+        bookingDao.updateRecurrentBookingsDAO(recurrentBookingForDelete, recurrentBookingForCreate);
         final ArrayList <BookingDto> recurrentBookings = new ArrayList<>();
         recurrentBookingForCreate.forEach((b)-> recurrentBookings.add(new BookingDto(b)));
         return recurrentBookings;
     }
-
-    @Override
-    @Transactional
-    public List<Booking> updateRecurrentBookingsDeleteCreate(List<Booking> oldBookings, List<Booking> newBookings) {
-        oldBookings.forEach(this::update);
-        newBookings.forEach(this::create);
-        return newBookings;
-
-    }
-
 }

@@ -15,6 +15,7 @@ import java.util.Set;
  * Created by Петришак on 14.05.2016.
  */
 
+
 public class BookingDto implements Serializable{
 
     private Long id;
@@ -117,8 +118,9 @@ public class BookingDto implements Serializable{
         booking.setUser(user);
         booking.setBookingState(bookingState);
         booking.setRecurrentId(recurrentId);
-
-
+        long duraion = booking.getBookingEndTime().getTime() -
+                booking.getBookingStartTime().getTime();
+        booking.setDuration(duraion);
         return booking;
     }
 
