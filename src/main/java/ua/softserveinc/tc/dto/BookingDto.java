@@ -153,10 +153,6 @@ public class BookingDto implements Serializable{
     }
 
     public void setDateStartTime(Date dateStartTime) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        this.date = df.format(dateStartTime);
-        df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
-        this.startTime = df.format(dateStartTime);
         this.dateStartTime = dateStartTime;
     }
 
@@ -165,10 +161,6 @@ public class BookingDto implements Serializable{
     }
 
     public void setDateEndTime(Date dateEndTime) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        this.endDate = df.format(dateEndTime);
-        df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
-        this.endTime = df.format(dateEndTime);
         this.dateEndTime = dateEndTime;
     }
 
