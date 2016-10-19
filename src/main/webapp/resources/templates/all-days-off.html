@@ -28,10 +28,8 @@
             </td>
             <td><span e-form="rowform">{{day.startDate | date:'yyyy-MM-dd'}}</span></td>
             <td><span e-form="rowform">{{day.endDate | date:'yyyy-MM-dd'}}</span></span></td>
-            <td><span editable-select="room.name" e-name="room.name" e-form="rowform">
-                <ul ng-repeat="room in day.rooms" style="color: black">
-                    <li>{{room.name}}</li>
-                </ul>
+            <td><span editable-checklist="room.name" e-name="room.name" e-form="rowform" e-ng-options="s as s.text for s in rooms">
+                {{showAllRooms()}}
             </span></td>
             <td style="white-space: nowrap">
                 <form editable-form name="rowform" onaftersave="updateDay(day)" ng-show="rowform.$visible"
@@ -54,13 +52,12 @@
     </table>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+<script type="text/javascript" src='resources/js/checklist-model.js'></script>
 <script type="text/javascript" src='resources/js/xeditable.js'></script>
 <script type="text/javascript" src='resources/js/day_off_app.js'></script>
 <script type="text/javascript" src='resources/js/day_off_service.js'></script>
 <script type="text/javascript" src='resources/js/day_off_controller.js'></script>
-<!--<script type="text/javascript" src='resources/js/room_service.js'></script>-->
-<!--<script type="text/javascript" src='resources/js/room_controller.js'></script>-->
+
 
 </body>
 

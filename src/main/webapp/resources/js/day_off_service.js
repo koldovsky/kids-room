@@ -2,15 +2,17 @@
 
 App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
 
-    var REST_URI_ALL = 'http://localhost:8080/home/adm-days-off/all';
-    var REST_URI_DAY = 'http://localhost:8080/home/adm-days-off/day/';
+    var REST_URI_ALL = '/home/adm-days-off/all';
+    var REST_URI_ROOMS = '/home/adm-edit-room/all';
+    var REST_URI_DAY = '/home/adm-days-off/day/';
 
     var factory = {
         getAllDaysOff: getAllDaysOff,
         getDayOff: getDayOff,
         createDayOff: createDayOff,
         updateDayOff: updateDayOff,
-        deleteDayOff: deleteDayOff
+        deleteDayOff: deleteDayOff,
+        getAllRooms: getAllRooms
     };
 
     return factory;
@@ -88,5 +90,19 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
                 }
             );
         return deferred.promise;
+    }
+
+    function getAllRooms() {
+        var deferred = $q.defer();
+        return $http.get(REST_URI_ROOMS)
+            .then(
+                function (response) {
+                    return response.data;
+                },
+                function (errResponse) {
+                    console.error('Error while fetching rooms');
+                    return $q.reject(errResponse);
+                }
+            );
     }
 }]);

@@ -80,6 +80,18 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
         self.dayOff.id = id;
     };
 
+    $scope.rooms = [];
+
+    $scope.showAllRooms = function () {
+        var selected = [];
+        angular.forEach($scope.rooms, function (s) {
+            if ($scope.dayOff.rooms.indexOf(s.value) >= 0) {
+                selected.push(s.text);
+            }
+        });
+        return selected.length ? selected.join(', ') : 'Not set';
+    };
+
     $scope.checkForData = function (day) {
         if (day.name == 'Enter the name') {
             self.daysOff.splice(0, 1);
@@ -105,5 +117,17 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
 
         return [this.getFullYear(), mm, dd].join('-');
     };
+
+    $scope.getAllRooms = function () {
+        DayOffService.getAllRooms()
+            .then(
+                function (d) {
+                    self.rooms = d;
+                },
+                function (errResponse) {
+                    console.error('Error while fetching all rooms');
+                }
+            );
+    }
 }]);
 
