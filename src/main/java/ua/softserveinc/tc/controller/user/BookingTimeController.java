@@ -143,7 +143,7 @@ public class BookingTimeController {
             produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRecurrentBookingForEditing(@PathVariable  Long recurrentId) {
-        return new Gson().toJson(bookingService.getRecurrentBookingForEditingById(recurrentId));
+        return JsonUtil.toJson(bookingService.getRecurrentBookingForEditingById(recurrentId));
     }
 
 
@@ -164,7 +164,7 @@ public class BookingTimeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(bookings));
+        return ResponseEntity.status(HttpStatus.OK).body(JsonUtil.toJson(bookings));
     }
 
 
