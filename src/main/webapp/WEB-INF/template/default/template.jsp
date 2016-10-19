@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
-
+  <meta name="viewport" content="width=device-width"/>
 <!--Bootstrap and jQuery -->
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"

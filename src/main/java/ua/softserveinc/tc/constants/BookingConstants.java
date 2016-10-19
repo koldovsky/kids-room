@@ -96,4 +96,11 @@ public final class BookingConstants {
         public static final String ID_RECURRENT = "id_recurrent";
         private DB(){}
     }
+
+    public static final class View {
+
+        public static final String MAIN_PAGE = "index";
+
+        private View(){}
+    }
 }
