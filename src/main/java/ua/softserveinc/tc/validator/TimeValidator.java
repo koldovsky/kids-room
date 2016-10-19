@@ -7,8 +7,6 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 
 /**
@@ -36,14 +34,9 @@ public class TimeValidator implements Validator {
 
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
-
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String startTime=booking.getStartTime().substring(11);
         String endTime=booking.getEndTime().substring(11);
 
-        if (startTime.compareTo(endTime)>0) {
-           return false;
-        }
-        return true;
+        return startTime.compareTo(endTime) <= 0;
     }
 }

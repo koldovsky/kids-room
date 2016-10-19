@@ -59,8 +59,7 @@ public class BookingTimeController {
 
         for (BookingDto dto : dtos) {
             if (!this.timeValidator.validateBooking(dto)) {
-                ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
-                return resp;
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
             }
         }
         dtos.forEach(dto -> {
@@ -151,19 +150,19 @@ public class BookingTimeController {
 
     @RequestMapping(value = "updaterecurrentbookings", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto RecurrentBookingDto,
-                                                         BindingResult bindingResult) {
+    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto) {
 
-        if (bookingService.checkForDuplicateBookingSingle(RecurrentBookingDto)) {
+        if (bookingService.checkForDuplicateBookingSingle(recurrentBookingDto)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
         }
-        if (!this.timeValidator.validateBooking(RecurrentBookingDto)) {
-            ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
-            return resp;
+        if (!this.timeValidator.validateBooking(recurrentBookingDto)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
         }
 
-        List<BookingDto> bookings = bookingService.updateRecurrentBookings(RecurrentBookingDto);
-        if (bookings.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
+        List<BookingDto> bookings = bookingService.updateRecurrentBookings(recurrentBookingDto);
+        if (bookings.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(bookings));
     }

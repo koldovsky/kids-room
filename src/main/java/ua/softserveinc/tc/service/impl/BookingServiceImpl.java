@@ -304,7 +304,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return persistBookingsFromDtoAndSetId(newRecurrentBooking);
     }
 
-    public List<BookingDto> recurrentDtoToList (BookingDto recurrentBookingDto){
+    private List<BookingDto> recurrentDtoToList (BookingDto recurrentBookingDto){
         String dateStart = recurrentBookingDto.getStartTime();
         String dateEnd = recurrentBookingDto.getEndTime();
         Date dateForRecurrentStart = DateUtil.toDateISOFormat(dateStart);
@@ -347,6 +347,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return newRecurrentBookingDto;
     }
 
+    @Override
     public BookingDto getRecurrentBookingForEditingById(final long bookingId){
         final List<Booking> listOfRecurrentBooking = bookingDao.getRecurrentBookingsByRecurrentId(bookingId);
         Set <Integer> weekDays = new HashSet<>();
@@ -359,6 +360,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     }
 
+    @Override
     public List<BookingDto> updateRecurrentBookings(BookingDto recurrentBookingDto) {
         Long recurrentId = recurrentBookingDto.getRecurrentId();
         List<Booking> recurrentBookingForDelete = bookingDao.getRecurrentBookingsByRecurrentId(recurrentId);
