@@ -15,6 +15,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.BookingUtil;
 import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.DateFormat;
@@ -141,6 +142,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     public Boolean checkForDuplicateBooking(List<BookingDto> listDto) {
+
         for (BookingDto x : listDto) {
             if (checkForDuplicateBookingSingle(x)) return true;
         }
@@ -150,19 +152,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         User user = userDao.findById(bookingDto.getUserId());
         Room room = roomDao.findById(bookingDto.getRoomId());
 
-            for (Booking y : bookingDao.getBookingsByUserAndRoom(user, room)) {
+        Boolean isDuplicate = bookingDao.getBookingsByUserAndRoom(user, room).stream()
+                .filter(booking ->
+                        booking.getBookingEndTime().after(new Date()) &&
+                                booking.getBookingState() != BookingState.CANCELLED)
+                .map(booking -> BookingUtil.checkBookingTimeOverlap(bookingDto,booking))
+                .filter(overlap -> overlap.equals(Boolean.TRUE))
+                .findAny().orElse(false);
 
-                if (y.getBookingEndTime().after(new Date()) && (y.getBookingState() != BookingState.CANCELLED)) {
+        return isDuplicate;
 
-                    if ((y.getRecurrentId()!=bookingDto.getRecurrentId())&&(!(!(DateUtil.toDateISOFormat(bookingDto.getEndTime()).after(y.getBookingStartTime()))
-                            || !(DateUtil.toDateISOFormat(bookingDto.getStartTime()).before(y.getBookingEndTime())))
-                            && bookingDto.getKidId().equals(y.getChild().getId()))) {
-                        return true;
-                    }
-                }
-
-            }
-        return false;
     }
 
 
