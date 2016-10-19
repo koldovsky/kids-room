@@ -7,7 +7,8 @@ CONTRIBUTORS
 * **[Dmytro Krupa](https://github.com/KrupaDmytro)**
 * **[Eduard Litvinchuck](https://github.com/litvinchuck)**
 * **[Taras Zyhmunt](https://github.com/EditedBoy)**
-* **[Demian Bekesh](https://github.com/bahrianyi)**
+* **[Bogdan Levkovych](https://github.com/levkovych67)**
+
 
 PROJECT MANAGERS
 ------------

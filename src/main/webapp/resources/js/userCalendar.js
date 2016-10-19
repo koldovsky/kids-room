@@ -12,8 +12,11 @@ var BLOCKED = '#ff0000'
 var allBookings;
 var temporaryBookingId = -1;
 var blockedTimeSpanId = -2;
-
-
+$(document).ready(function () {
+    if($(window).width() < 1000){
+        $('#mobile').attr('class','');
+    }
+});
 $(function () {
 
     $('#recurrent-change').dialog({
@@ -844,13 +847,12 @@ function updateRecurrentBooking() {
     cancelRecurrentBookings(clickedEventRecurrentId);
 
     $.ajax({
-            url: 'getrecurrentbookings',
+            url: 'makerecurrentbookings',
             type: 'post',
             contentType: 'application/json',
             dataType: 'json',
             data: JSON.stringify(newEventAfterUpdate),
             success: function (result) {
-
                 result.forEach(function (item, i) {
                     var newBooking = {
                         id: item.id,
@@ -870,7 +872,11 @@ function updateRecurrentBooking() {
                     $('#user-calendar').fullCalendar('renderEvent', newBooking);
 
                 });
-            }
+            },
+            error: function (xhr) {
+                $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
+                callErrorDialog(xhr['responseText']);
+        }
         }
     )
     closeUpdatingDialog();
@@ -923,13 +929,12 @@ function makeRecurrentBookings() {
     }
 
     $.ajax({
-            url: 'getrecurrentbookings',
+            url: 'makerecurrentbookings',
             type: 'post',
             contentType: 'application/json',
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
-
                 result.forEach(function (item, i) {
                     var newBooking = {
                         id: item.id,
@@ -951,7 +956,13 @@ function makeRecurrentBookings() {
 
                 });
                 $('.loading').hide();
-            }
+            },
+            error: function (xhr) {
+                $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
+                $('.loading').hide();
+                callErrorDialog(xhr['responseText']);
+
+        }
         }
     )
 
@@ -1062,7 +1073,14 @@ function editRecurrentBookingsReuest (recurrentId) {
 }
 
 function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
-    clearBookingDialogSingleMulti();
+    $('#book').hide();
+    $('#child-selector').hide();
+    $('#comment-for-one-child-updating').show();
+
+    $('#make-recurrent-booking').dialog('open');
+    $('#days-for-recurrent-booking-form').prop('hidden', false);
+    $('#no-recurrent-booking').prop('checked',false);
+    $('#weekly-booking').prop('checked',true);
     $('#recurrent-booking-start-date').val(recurrentBookingForEditing.startDate.substring(0, 10));
     $('#recurrent-booking-end-date').val(recurrentBookingForEditing.endDate.substring(0, 10));
     $('#recurrent-booking-start-time').timepicker('setTime', recurrentBookingForEditing.startTime);
@@ -1093,19 +1111,16 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing){
         }
         $('#' + day + '-booking').prop('checked', true);
     });
-    $('#book').hide();
-    $('#child-selector').hide();
-    $('#comment-for-one-child-updating').show();
     $('#update-recurrent-booking').show();
     $('#delete-recurrent-booking').show();
-    $('#make-recurrent-booking').dialog('open');
 
 };
 
 function clearBookingDialogSingleMulti() {
+    $('#weekly-booking').prop( "checked", false );
+    $('#no-recurrent-booking').prop( "checked", true );
     $('#days-for-recurrent-booking-form').attr('hidden', true);
-    $('#weekly-booking').prop( "checked", false )
-    $('#no-recurrent-booking').prop( "checked", true )
+
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').attr('checked', false);

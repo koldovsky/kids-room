@@ -53,7 +53,7 @@
                             </c:when>
                             <c:when test="${pageChecker == 'needBack'}">
                                 <li style="padding-right: 250px;">
-                                    <a style="cursor: pointer;" onclick="history.back()">
+                                    <a style="cursor: pointer" onclick="history.back()" >
                                         <span class="glyphicon glyphicon-arrow-left"></span>
                                             Back
                                     </a>
@@ -62,8 +62,8 @@
                             <c:otherwise>
                                 <li   class="dropdown menu-item" style="padding-right: 150px;">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
                                         <span id="usersRoom">
-                                            <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
                                             <spring:message code="user.selectRoom"/>:
                                         </span>
                                     </a>
@@ -86,6 +86,12 @@
                     </sec:authorize>
 
                     <sec:authorize access="hasRole('MANAGER')">
+
+                        <c:if test="${pageChecker == 'reportParent'}">
+                            <li style="padding-right: 330px;">
+                                <a></a>
+                            </li>
+                        </c:if>
 
                         <li id="roompicker" class="dropdown menu-item" style="padding-right: 150px;">
 
