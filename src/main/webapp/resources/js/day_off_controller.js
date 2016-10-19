@@ -36,8 +36,8 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
     $scope.createDay = function (day) {
         $scope.inserted = {
             name: 'Enter the name',
-            startDate: new Date().toISOString(),
-            endDate: new Date().toISOString(),
+            startDate: new Date().yyyymmdd(),
+            endDate: new Date().yyyymmdd(),
             rooms: null
         };
         self.daysOff.unshift($scope.inserted);
@@ -90,6 +90,20 @@ App.controller('DayOffController', ['$scope', 'DayOffService', function ($scope,
         if (!data) {
             return "Enter a name";
         }
+    };
+
+    Date.prototype.yyyymmdd = function () {
+        var mm = this.getMonth() + 1;
+        if (mm.toString().charAt(0) != '1') {
+            mm = '0' + mm.toString();
+        }
+        else {
+            mm = mm.toString();
+        }
+        var dd = this.getDate().toString();
+        var yyyy = this.getFullYear().toString();
+
+        return [this.getFullYear(), mm, dd].join('-');
     };
 }]);
 
