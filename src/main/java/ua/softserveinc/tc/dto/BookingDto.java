@@ -154,6 +154,9 @@ public class BookingDto implements Serializable{
 
     public void setDateStartTime(Date dateStartTime) {
         this.dateStartTime = dateStartTime;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"); // Quoted "Z" to indicate UTC, no timezone offset
+        this.startTime = df.format(dateStartTime);
+
     }
 
     public Date getDateEndTime() {
@@ -162,6 +165,8 @@ public class BookingDto implements Serializable{
 
     public void setDateEndTime(Date dateEndTime) {
         this.dateEndTime = dateEndTime;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"); // Quoted "Z" to indicate UTC, no timezone offset
+        this.endTime = df.format(dateEndTime);
     }
 
 
@@ -228,9 +233,18 @@ public class BookingDto implements Serializable{
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
+    public void setStartTime(Date startTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        this.startTime = df.format(startTime);
+    }
 
     public String getEndTime() {
         return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        this.endTime = df.format(endTime);
     }
 
     public void setEndTime(String endTime) {

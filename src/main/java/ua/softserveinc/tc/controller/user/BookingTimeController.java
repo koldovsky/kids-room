@@ -138,6 +138,7 @@ public class BookingTimeController {
     }
 
 
+
     @RequestMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
             method = RequestMethod.GET,
             produces = "text/plain;charset=UTF-8")
@@ -151,10 +152,6 @@ public class BookingTimeController {
     @RequestMapping(value = "updaterecurrentbookings", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto) {
-
-        if (bookingService.checkForDuplicateBookingSingle(recurrentBookingDto)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
-        }
         if (!this.timeValidator.validateBooking(recurrentBookingDto)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
         }

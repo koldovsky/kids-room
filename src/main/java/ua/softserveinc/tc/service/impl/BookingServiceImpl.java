@@ -12,6 +12,7 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.server.exception.DuplicateBookingException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
@@ -153,15 +154,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Room room = roomDao.findById(bookingDto.getRoomId());
 
         Boolean isDuplicate = bookingDao.getBookingsByUserAndRoom(user, room).stream()
+                .filter(booking -> !booking.getRecurrentId().equals(bookingDto.getRecurrentId()))
                 .filter(booking ->
                         booking.getBookingEndTime().after(new Date()) &&
                                 booking.getBookingState() != BookingState.CANCELLED)
                 .map(booking -> BookingUtil.checkBookingTimeOverlap(bookingDto,booking))
                 .filter(overlap -> overlap.equals(Boolean.TRUE))
                 .findAny().orElse(false);
-
         return isDuplicate;
-
     }
 
 
@@ -317,7 +317,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         Long newRecID = bookingDao.getMaxRecurrentId() + 1;
         Room room = roomDao.findById(recurrentBookingDto.getRoomId());
-        recurrentBookingDto.setRecurrentId(newRecID);
         recurrentBookingDto.setRoom(room);
         recurrentBookingDto.setChild(childDao.findById(recurrentBookingDto.getKidId()));
         recurrentBookingDto.setUser(userDao.findById(recurrentBookingDto.getUserId()));
@@ -339,10 +338,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 newBbooking.setRoomName( newBbooking.getRoom().getAddress() );
                 newBbooking.setIdChild(newBbooking.getChild().getId());
                 newRecurrentBookingDto.add(newBbooking);
+                if (checkForDuplicateBookingSingle(newBbooking)) {
+                    throw new DuplicateBookingException();
+                }
+                newBbooking.setRecurrentId(newRecID);
             }
             iterationDayStartTime.add(Calendar.DAY_OF_MONTH, 1);
             iterationDayEndTime.add(Calendar.DAY_OF_MONTH, 1);
         }
+
         return newRecurrentBookingDto;
     }
 
@@ -379,7 +383,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         bookingDao.updateRecurrentBookingsDAO(recurrentBookingForDelete, recurrentBookingForCreate);
         final ArrayList <BookingDto> recurrentBookings = new ArrayList<>();
-        recurrentBookingForCreate.forEach((b)-> recurrentBookings.add(new BookingDto(b)));
+        recurrentBookingForCreate.forEach(b-> recurrentBookings.add(new BookingDto(b)));
         return recurrentBookings;
     }
 }

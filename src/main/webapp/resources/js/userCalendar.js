@@ -621,8 +621,8 @@ function makeRecurrentBookings() {
                     var newBooking = {
                         id: item.id,
                         title: item.kidName,
-                        start: item.date + 'T' + item.startTime + ':00',
-                        end: item.date + 'T' + item.endTime + ':00',
+                        start: item.startTime,
+                        end: item.endTime,
                         color: BOOKING,
                         borderColor: BORDER,
                         editable: false,

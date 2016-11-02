@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.server.exception.BadUploadException;
+import ua.softserveinc.tc.server.exception.DuplicateBookingException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.server.exception.TokenInvalidException;
 
@@ -65,5 +66,12 @@ public class ExceptionHandlingController {
     public String badUpload() {
         return "error-bad-upload";
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DuplicateBookingException.class)
+    public String duplicateBooking() {
+        return "error-duplicate-booking";
+    }
+
 
 }
