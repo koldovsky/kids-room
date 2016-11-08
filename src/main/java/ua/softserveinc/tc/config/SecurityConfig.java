@@ -8,6 +8,9 @@ import org.apache.velocity.app.VelocityEngine;
 import org.opensaml.saml2.metadata.provider.HTTPMetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
+import org.opensaml.saml2.metadata.provider.ResourceBackedMetadataProvider;
+import org.opensaml.util.resource.ClasspathResource;
+import org.opensaml.util.resource.ResourceException;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
+import org.springframework.security.saml.key.EmptyKeyManager;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
@@ -162,8 +166,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new WebSSOProfileECPImpl();
     }
 
-
-
     @Bean
     public SingleLogoutProfile logoutprofile() {
         return new SingleLogoutProfileImpl();
@@ -171,17 +173,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Central storage of cryptographic keys
     @Bean
-    public KeyManager keyManager() {
+    public JKSKeyManager keyManager() {
         DefaultResourceLoader loader = new DefaultResourceLoader();
         Resource storeFile = loader
                 .getResource("classpath:/saml/samlKeystore.jks");
         String storePass = "nalle123";
         Map<String, String> passwords = new HashMap<String, String>();
-        passwords.put("apollo", "nalle123");
-        String defaultKey = "apollo";
+        passwords.put("kidsroom", "softserve");
+        String defaultKey = "kidsroom";
         return new JKSKeyManager(storeFile, storePass, passwords, defaultKey);
     }
-
 
     // Setup TLS Socket Factory
     @Bean
@@ -230,10 +231,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public ExtendedMetadata extendedMetadata() {
         ExtendedMetadata extendedMetadata = new ExtendedMetadata();
         extendedMetadata.setIdpDiscoveryEnabled(false);
-        //    extendedMetadata.setSignMetadata(false);
+        extendedMetadata.setSignMetadata(true);
         return extendedMetadata;
     }
-
 
     // IDP Discovery Service
     @Bean
@@ -241,6 +241,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         SAMLDiscovery idpDiscovery = new SAMLDiscovery();
         idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
         return idpDiscovery;
+    }
+
+    @Bean
+    public ClasspathResource classpathResource() throws ResourceException {
+        return new ClasspathResource("/metadata/federationmetadata.xml");
+    }
+
+    @Bean
+    public ExtendedMetadataDelegate ADFSExtendedMetadataProvider() throws ResourceException, MetadataProviderException {
+        Timer backgroundTaskTimer = new Timer(true);
+        ResourceBackedMetadataProvider resourceBackedMetadataProvider = new ResourceBackedMetadataProvider(backgroundTaskTimer, classpathResource());
+        resourceBackedMetadataProvider.setParserPool(parserPool());
+        ExtendedMetadataDelegate extendedMetadataDelegate = new ExtendedMetadataDelegate(resourceBackedMetadataProvider, extendedMetadata());
+        extendedMetadataDelegate.setMetadataTrustCheck(false);
+        extendedMetadataDelegate.initialize();
+        return extendedMetadataDelegate;
     }
 
     @Bean
@@ -264,9 +280,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Do no forget to call iniitalize method on providers
     @Bean
     @Qualifier("metadata")
-    public CachingMetadataManager metadata() throws MetadataProviderException {
+    public CachingMetadataManager metadata() throws MetadataProviderException, ResourceException {
         List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
-        providers.add(ssoCircleExtendedMetadataProvider());
+        providers.add(ADFSExtendedMetadataProvider());
         return new CachingMetadataManager(providers);
     }
 
@@ -307,7 +323,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return failureHandler;
     }
 
-
     @Bean
     public SAMLWebSSOHoKProcessingFilter samlWebSSOHoKProcessingFilter() throws Exception {
         SAMLWebSSOHoKProcessingFilter samlWebSSOHoKProcessingFilter = new SAMLWebSSOHoKProcessingFilter();
@@ -331,7 +346,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public MetadataGeneratorFilter metadataGeneratorFilter() {
         return new MetadataGeneratorFilter(metadataGenerator());
     }
-
 
     // Handler for successful logout
     @Bean

@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.service.impl;
 
 
+import org.opensaml.samlext.saml2mdui.DisplayName;
+import org.opensaml.xml.schema.impl.XSAnyImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,17 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ADFSParser;
+import ua.softserveinc.tc.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
 public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SAMLUserDetailsServiceImpl.class);
+
 
     @Autowired
     private UserService userService;
@@ -29,21 +33,25 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
 
-        String userEmail = credential.getNameID().getValue();
+        Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
+        String userEmail = credentials.get("emailaddress");
         User user = userService.getUserByEmail(userEmail);
-        if(user == null) {
+
+        if (user == null) {
             user = new User();
             user.setEmail(userEmail);
             user.setActive(true);
             user.setRole(Role.USER);
             user.setConfirmed(true);
-            user.setFirstName("Default");
-            user.setLastName("Default");
+            user.setFirstName(credentials.get("firstName"));
+            user.setLastName(credentials.get("lastName"));
             user.setPassword("123");
             user.setPhoneNumber("+380000000000");
             userService.create(user);
             user = userService.getUserByEmail(userEmail);
+            LOG.debug("New user: " + userEmail + "is created");
         }
+        LOG.debug("User: " + userEmail + "is logged in");
 
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
@@ -52,7 +60,6 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
-
 
     }
 
