@@ -12,13 +12,16 @@ import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.server.exception.DuplicateBookingException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.JsonUtil;
+import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.TimeValidator;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +44,9 @@ public class BookingTimeController {
 
     @Autowired
     private TimeValidator timeValidator;
+
+    @Autowired
+    private BookingValidator bookingValidator;
 
 
     @RequestMapping(value = "getroomproperty", method = RequestMethod.POST)
@@ -151,12 +157,17 @@ public class BookingTimeController {
 
     @RequestMapping(value = "updaterecurrentbookings", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto) {
-        if (!this.timeValidator.validateBooking(recurrentBookingDto)) {
+    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto, BindingResult bindingResult) {
+        bookingValidator.validate(recurrentBookingDto, bindingResult);
+        if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
         }
-
-        List<BookingDto> bookings = bookingService.updateRecurrentBookings(recurrentBookingDto);
+        List<BookingDto> bookings = new ArrayList<>();
+        try {
+            bookings = bookingService.updateRecurrentBookings(recurrentBookingDto);
+        }catch (DuplicateBookingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+        }
         if (bookings.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
         }

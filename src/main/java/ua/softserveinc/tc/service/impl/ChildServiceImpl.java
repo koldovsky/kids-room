@@ -19,4 +19,6 @@ public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildSer
     public List<Child> getActiveChildrenInRoom(Room room) {
         return childDao.getActiveChildrenInRoom(room);
     }
+
+
 }

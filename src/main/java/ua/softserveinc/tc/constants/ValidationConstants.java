@@ -29,6 +29,14 @@ public final class ValidationConstants {
     public static final String LAST_NAME = "lastName";
     public static final String CHILD_DATE_OF_BIRTH = "dateOfBirth";
 
+
+    public static final String START_TIME = "startTime";
+    public static final String END_TIME = "endTime";
+    public static final String USER_ID = "userId";
+    public static final String KID_ID = "kidId";
+    public static final String ROOM_ID = "roomId";
+
+
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String PHONE_NUMBER = "phoneNumber";
@@ -50,6 +58,8 @@ public final class ValidationConstants {
     public static final String EMAIL_ERROR_MSG = "registration.email";
     public static final String EMAIL_ALREADY_IN_USE_MSG = "registration.emailExist";
     public static final String USER_NOT_EXIST = "user.notExist";
+    public static final String ROOM_NOT_EXIST = "room.notExist";
+    public static final String CHILD_NOT_EXIST = "child.notExist";
     public static final String PROPERTIES_WRITE_FAILED = "properties.update.failed";
     public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
@@ -57,6 +67,8 @@ public final class ValidationConstants {
     //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
     public static final String NO_DAYS_FOR_BOOKING = "There are no days for booking";
+
+
 
     private ValidationConstants() {
     }

@@ -154,7 +154,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Room room = roomDao.findById(bookingDto.getRoomId());
 
         Boolean isDuplicate = bookingDao.getBookingsByUserAndRoom(user, room).stream()
-                .filter(booking -> !booking.getRecurrentId().equals(bookingDto.getRecurrentId()))
+                .filter(booking -> (booking.getRecurrentId()==null)||(!booking.getRecurrentId().equals(bookingDto.getRecurrentId())))
                 .filter(booking ->
                         booking.getBookingEndTime().after(new Date()) &&
                                 booking.getBookingState() != BookingState.CANCELLED)
