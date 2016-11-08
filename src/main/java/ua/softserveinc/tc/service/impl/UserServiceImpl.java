@@ -53,6 +53,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    public User getUserByName(String firstName, String lastName) {
+        return userDao.getUserByName(firstName, lastName);
+    }
+
+    @Override
     public void create(User user) {
         userDao.create(user);
     }

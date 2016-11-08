@@ -16,6 +16,8 @@ public interface UserService extends BaseService<User> {
 
     User getUserByEmail(String email);
 
+    User getUserByName(String firstName, String lastName);
+
     void createWithEncoder(User user);
 
     List<User> findAllUsersByRole(Role role);

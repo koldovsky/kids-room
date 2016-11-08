@@ -51,6 +51,28 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public User getUserByName(String firstName, String lastName) throws NonUniqueResultException {
+
+        try {
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> query = builder.createQuery(User.class);
+
+            Root<User> root = query.from(User.class);
+            query.select(root).where(
+                    builder.equal(root.get("firstName"), firstName),
+                    builder.equal(root.get("lastName"), lastName));
+
+            return entityManager.createQuery(query).getSingleResult();
+        } catch (NoResultException e) {
+            log.error("user" + firstName + " " + lastName + " doesnt exist");
+            return null;
+        } catch (NonUniqueResultException e) {
+            log.error("multiple users with " + firstName + " and " + lastName + "  exist");
+            throw e;
+        }
+    }
+
+    @Override
     public List<User> findAll(List<Long> ids) {
         List<User> result = new ArrayList<>();
 

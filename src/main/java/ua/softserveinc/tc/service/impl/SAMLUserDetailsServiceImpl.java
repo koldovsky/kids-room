@@ -18,6 +18,7 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.ADFSParser;
 import ua.softserveinc.tc.util.Log;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.*;
 
 
@@ -32,34 +33,42 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
-
         Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
-        String userEmail = credentials.get("emailaddress");
-        User user = userService.getUserByEmail(userEmail);
+        String fName = credentials.get("firstName");
+        String lName = credentials.get("lastName");
+       // String userEmail = credentials.get("emailaddress");
+       // User user = userService.getUserByEmail(userEmail);
+        User user = null;
+        try {
+            user = userService.getUserByName(fName, lName);
 
         if (user == null) {
             user = new User();
-            user.setEmail(userEmail);
+            user.setEmail("testemail@softserveinc.com");
             user.setActive(true);
             user.setRole(Role.USER);
             user.setConfirmed(true);
-            user.setFirstName(credentials.get("firstName"));
-            user.setLastName(credentials.get("lastName"));
+            user.setFirstName(fName);
+            user.setLastName(lName);
             user.setPassword("123");
             user.setPhoneNumber("+380000000000");
             userService.create(user);
-            user = userService.getUserByEmail(userEmail);
-            LOG.debug("New user: " + userEmail + "is created");
+            user = userService.getUserByName(fName, lName);
+            LOG.debug("New user: " + fName + " " + lName + " is created");
         }
-        LOG.debug("User: " + userEmail + "is logged in");
+        LOG.debug("User: " + fName + " " + lName + " is logged in");
 
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
-        Set<GrantedAuthority> roles = new HashSet();
+        Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(user.getRole().getAuthority()));
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
+
 
     }
 

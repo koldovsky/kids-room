@@ -71,11 +71,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         }
 
         if (!result.isEmpty()) {
-            Set keys = result.keySet();
-            Iterator i = keys.iterator();
-            String baseKey = (String) i.next();
+            Set<String> keys = result.keySet();
+            Iterator<String> i = keys.iterator();
+            String baseKey = i.next();
             while (i.hasNext()) {
-
                 String nextKey = (String) i.next();
                 String value = result.get(baseKey);
                 if (value.compareTo(nextKey) == 0) {
