@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.service.impl;
 
 
+import org.opensaml.samlext.saml2mdui.DisplayName;
+import org.opensaml.xml.schema.impl.XSAnyImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,45 +15,59 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.ADFSParser;
+import ua.softserveinc.tc.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.NonUniqueResultException;
+import java.util.*;
 
 
 @Service
 public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SAMLUserDetailsServiceImpl.class);
+
 
     @Autowired
     private UserService userService;
 
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
+        Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
+        String fName = credentials.get("firstName");
+        String lName = credentials.get("lastName");
+       // String userEmail = credentials.get("emailaddress");
+       // User user = userService.getUserByEmail(userEmail);
+        User user = null;
+        try {
+            user = userService.getUserByName(fName, lName);
 
-        String userEmail = credential.getNameID().getValue();
-        User user = userService.getUserByEmail(userEmail);
-        if(user == null) {
+        if (user == null) {
             user = new User();
-            user.setEmail(userEmail);
+            user.setEmail("testemail@softserveinc.com");
             user.setActive(true);
             user.setRole(Role.USER);
             user.setConfirmed(true);
-            user.setFirstName("Default");
-            user.setLastName("Default");
+            user.setFirstName(fName);
+            user.setLastName(lName);
             user.setPassword("123");
             user.setPhoneNumber("+380000000000");
             userService.create(user);
-            user = userService.getUserByEmail(userEmail);
+            user = userService.getUserByName(fName, lName);
+            LOG.debug("New user: " + fName + " " + lName + " is created");
         }
+        LOG.debug("User: " + fName + " " + lName + " is logged in");
 
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
-        Set<GrantedAuthority> roles = new HashSet();
+        Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(user.getRole().getAuthority()));
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
+        } catch (NonUniqueResultException e) {
+            return null;
+        }
 
 
     }
