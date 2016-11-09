@@ -34,6 +34,9 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
         Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
+        credentials.forEach((k, v) -> {
+            LOG.debug("Key: " + k + " Value: " + v);
+        });
         String fName = credentials.get("firstName");
         String lName = credentials.get("lastName");
        // String userEmail = credentials.get("emailaddress");
