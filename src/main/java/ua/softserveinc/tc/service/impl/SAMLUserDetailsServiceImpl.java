@@ -34,32 +34,24 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
         Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
-        credentials.forEach((k, v) -> {
-            LOG.debug("Key: " + k + " Value: " + v);
-        });
-        String fName = credentials.get("firstName");
-        String lName = credentials.get("lastName");
-       // String userEmail = credentials.get("emailaddress");
-       // User user = userService.getUserByEmail(userEmail);
-        User user = null;
-        try {
-            user = userService.getUserByName(fName, lName);
+        String userEmail = credentials.get("emailaddress");
+        User user = userService.getUserByEmail(userEmail);
 
         if (user == null) {
             user = new User();
-            user.setEmail("testemail@softserveinc.com");
+            user.setEmail(userEmail);
             user.setActive(true);
             user.setRole(Role.USER);
             user.setConfirmed(true);
-            user.setFirstName(fName);
-            user.setLastName(lName);
+            user.setFirstName(credentials.getOrDefault("firstName", credentials.getOrDefault("name", "default")));
+            user.setLastName(credentials.getOrDefault("lastName", "default"));
             user.setPassword("123");
             user.setPhoneNumber("+380000000000");
             userService.create(user);
-            user = userService.getUserByName(fName, lName);
-            LOG.debug("New user: " + fName + " " + lName + " is created");
+            user = userService.getUserByEmail(userEmail);
+            LOG.debug("New user: " + userEmail +  " is created");
         }
-        LOG.debug("User: " + fName + " " + lName + " is logged in");
+        LOG.debug("User: " + userEmail + " is logged in");
 
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
@@ -68,10 +60,6 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
-        } catch (NonUniqueResultException e) {
-            return null;
-        }
-
 
     }
 
