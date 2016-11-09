@@ -160,7 +160,7 @@ public class BookingTimeController {
     public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto, BindingResult bindingResult) {
         bookingValidator.validate(recurrentBookingDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
         }
         List<BookingDto> bookings = new ArrayList<>();
         try {
