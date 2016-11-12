@@ -12,16 +12,16 @@
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
 <link href='resources/css/manager-no-rooms.css' rel='stylesheet'/>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='resources/js/moment.min.js'></script>
 <script src="resources/js/jquery.timepicker.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 
 
 <body>
@@ -864,12 +864,13 @@
 
 <script src='resources/js/fullcalendar.js'></script>
 <script src="resources/js/seriousColorLegendUpdate.js"></script>
-<script src='resources/js/header-manager.js'></script>
-<script src='resources/js/header-user.js'></script>
 <script src='resources/js/manager-create-events-validator.js'></script>
 <script src='resources/js/user-create-booking-validator.js'></script>
 <script src='resources/js/single-booking.js'></script>
 <script src='resources/js/renderCalendar.js'></script>
 <script src='resources/js/userCalendar.js'></script>
+
+<script src='resources/js/header-manager.js'></script>
+<script src='resources/js/header-user.js'></script>
 
 </body>
