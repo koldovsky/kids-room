@@ -12,11 +12,13 @@ var BLOCKED = '#ff0000'
 var allBookings;
 var temporaryBookingId = -1;
 var blockedTimeSpanId = -2;
+
 $(document).ready(function () {
     if($(window).width() < 1000){
         $('#mobile').attr('class','');
     }
 });
+
 $(function () {
 
     $('#recurrent-change').dialog({
@@ -246,13 +248,11 @@ $(function () {
         if ($('#weekly-booking').is(':checked')) {
             if(!validateCreateBookingDialogData(CREATE_RECURRENT_BOOKING))
                 return;
-            closeBookingDialog();
             $('.loading').show();
             makeRecurrentBookings();
-
-
-
+            closeBookingDialog();
         }
+
     });
 
     //open booking creating dialog
@@ -521,6 +521,12 @@ function sendBookingToServerForCreate(bookingsArray) {
                     },true);
                 });
 
+
+                $('#createSuccess1').modal('show');
+                setTimeout(function () {
+                    $('#createSuccess1').modal('hide');
+                }, 1300);
+
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
             error: function (xhr) {
@@ -638,6 +644,11 @@ function makeRecurrentBookings() {
 
                 });
                 $('.loading').hide();
+
+                $('#createSuccess1').modal('show');
+                setTimeout(function () {
+                    $('#createSuccess1').modal('hide');
+                }, 1300);
             },
             error: function (xhr) {
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
@@ -1146,7 +1157,6 @@ function redrawBlockedTimeSpans(roomId) {
 
                 }, true);
             });
-
         },
         error : function() {
 
