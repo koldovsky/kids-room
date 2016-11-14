@@ -9,6 +9,7 @@
 <link rel='stylesheet' href='resources/css/user-my-report.css'>
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
+<script src="resources/js/validateDate.js"></script>
 
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
@@ -17,12 +18,12 @@
         </div>
         <div id="from-div">
           <label for="from"><spring:message code="report.from" /></label>
-          <input name="from" id="from" type="date" class="form-control"> </input>
+          <input name="from" id="from" type="date" min="1990-01-01" max="2100-01-01" onkeydown="return false" class="form-control" > </input>
 
         </div>
         <div id="to-div">
             <label for="from"><spring:message code="report.to" /></label>
-            <input id="to" type="date" class="form-control"> </input>
+            <input id="to" type="date"  min="1990-01-01" max="2100-01-01" onkeydown="return false" class="form-control"> </input>
         </div>
     </div>
 
