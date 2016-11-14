@@ -240,6 +240,10 @@ $(function () {
         });
     });
 
+    $('.ui-dialog-titlebar-close').click(function ()  {
+        $('#comment-for-update-recurrency').val("");
+        $('#comment-for-one-child-updating').hide();
+    });
 
     $('#deletingBookingCancel').click(function () {
         $('#bookingUpdatingDialog').dialog('close');
@@ -692,7 +696,7 @@ function updateRecurrentBooking() {
     var newEventAfterUpdate = {
         startTime: makeISOTime(recurrentStartDay, 'recurrent-booking-start-time'),
         endTime: makeISOTime(recurrentEndDay, 'recurrent-booking-end-time'),
-        // comment: $('#comment-for-update-recurrency').val(),
+        comment: $('#comment-for-update-recurrency').val(), //booo
         kidId: clickedEvent,
         roomId: roomIdForHandler,
         userId: usersID,
@@ -703,12 +707,13 @@ function updateRecurrentBooking() {
         endDate:,
         bookingsState,
  */
-        comment:info.calEvent.comment,
+        //comment:info.calEvent.comment,
         /*        kidId: info.calEvent.kidId,
         roomId: info.calEvent.roomId,*/
         weekDays:weekDaysArr
     };
 
+    $('#comment-for-update-recurrency').val("");
     $.ajax({
             // url: 'makerecurrentbookings',
             url: 'updaterecurrentbookings',
@@ -765,7 +770,8 @@ function editRecurrentBookingsReuest (recurrentId) {
                 endDate: result.endDate,
                 startTime: result.startTime,
                 endTime: result.endTime,
-                weekDays:result.weekDays
+                weekDays:result.weekDays,
+                comment:result.comment,                         // edit
             };
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
         },
@@ -851,6 +857,7 @@ function cancelRecurrentBookings(recurrentId) {
 
 function closeBookingDialog() {
     $('#make-recurrent-booking').dialog('close');
+    $('#comment-for-update-recurrency').hide();
 }
 
 function closeUpdatingDialog() {
@@ -1056,6 +1063,10 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#recurrent-booking-end-date').val(calEvent.end.format().substring(0, 10));
             $('#recurrent-booking-start-time').timepicker('setTime', newDate);
             $('#recurrent-booking-end-time').timepicker('setTime', newDateForEnd);
+
+            if (calEvent.type === 'booking') {
+                $('#comment-for-update-recurrency').val(calEvent.comment);
+            }
 
             info.id = calEvent.id;
             info.beforeUpdate = beforeUpdate;
