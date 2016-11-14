@@ -13,7 +13,6 @@
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
 <link href='resources/css/manager-no-rooms.css' rel='stylesheet'/>
 
-
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
@@ -21,8 +20,6 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='resources/js/moment.min.js'></script>
 <script src="resources/js/jquery.timepicker.js"></script>
-
-
 
 <body>
 
@@ -270,7 +267,7 @@
         </div>
     </div>
 
-            <div id="createSuccess1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div id="duplicateBookingDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -279,13 +276,20 @@
                                 <div class="checkmark">
                                     <svg version="1.1" id="Layer_1" x="0px" y="0px"
                                          viewBox="0 0 161.2 161.2" enable-background="new 0 0 161.2 161.2" xml:space="preserve">
-<circle class="path" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="80.6" cy="80.6" r="62.1"/>
+                                            <circle class="path" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="80.6" cy="80.6" r="62.1"/>
                                         <polyline class="path" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"
-                                                  stroke-miterlimit="10" points="113,52.8
-	74.1,108.4 48.2,86.4 "/>
-</svg>
+                                                  stroke-miterlimit="10" points="113,52.8 74.1,108.4 48.2,86.4 "/>
+                                    </svg>
                                 </div>
-                                <h2>New Booking Created</h2>
+                                <h2>New Booking Created</h2><br>
+                                    Do you want to duplicate the booking in your corporate calendar?<br>
+                                    <button type="button" class="btn btn-danger pull-right" id="omitCreateDuplicateBooking">
+                                        <spring:message code= "no"/>
+                                    </button>
+                                    <button type="button" class="btn btn-danger pull-right" id="createDuplicateBooking">
+                                        <spring:message code= "yes"/>
+                                    </button>
+                                <br>
                             </div>
                         </div>
                     </div>
@@ -868,9 +872,11 @@
 <script src='resources/js/user-create-booking-validator.js'></script>
 <script src='resources/js/single-booking.js'></script>
 <script src='resources/js/renderCalendar.js'></script>
-<script src='resources/js/userCalendar.js'></script>
 
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
+
+
+<script src='resources/js/userCalendar.js'></script>
 
 </body>

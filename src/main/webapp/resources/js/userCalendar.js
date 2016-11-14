@@ -21,6 +21,17 @@ $(document).ready(function () {
 
 $(function () {
 
+    $('#createDuplicateBooking').click(function() { //code to duplicate the booking in corporate calendar
+        $('#duplicateBookingDialog').modal('hide');
+        alert("trying to add booking to corporate calendar (will be deleted)");
+        //getSuccess();
+    });
+
+    $('#omitCreateDuplicateBooking').click(function() {
+        $('#duplicateBookingDialog').modal('hide');
+       // getSuccess();
+    });
+
     $('#recurrent-change').dialog({
         autoOpen: false,
         modal:true,
@@ -252,7 +263,6 @@ $(function () {
             makeRecurrentBookings();
             closeBookingDialog();
         }
-
     });
 
     //open booking creating dialog
@@ -412,6 +422,12 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
     });
 }
 
+function getSuccess() {
+    $('#createSuccess1').modal('show');
+    setTimeout(function () {
+        $('#createSuccess1').modal('hide');
+    }, 2500);
+}
 //tested
 function makeISOTime(clickDate, idOfTimePicker) {
     if (clickDate.length < 12) {
@@ -522,10 +538,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                 });
 
 
-                $('#createSuccess1').modal('show');
-                setTimeout(function () {
-                    $('#createSuccess1').modal('hide');
-                }, 1300);
+                $('#duplicateBookingDialog').modal('show');
 
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
@@ -645,10 +658,7 @@ function makeRecurrentBookings() {
                 });
                 $('.loading').hide();
 
-                $('#createSuccess1').modal('show');
-                setTimeout(function () {
-                    $('#createSuccess1').modal('hide');
-                }, 1300);
+                $('#duplicateBookingDialog').modal('show');
             },
             error: function (xhr) {
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
@@ -892,6 +902,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
     $('#recurrent-booking-start-time').timepicker('option', 'minTime', workingHoursStart);
     $('#recurrent-booking-start-time').timepicker('option', 'maxTime', workingHoursEnd);
+
+    //$('#recurrent-booking-start-time').timepicker('option', 'step', 10); //hgjgkl;kjhgfdsfghjkgfdfcgfgfgb
 
     $('#recurrent-booking-end-time').timepicker('option', 'minTime', workingHoursStart);
     $('#recurrent-booking-end-time').timepicker('option', 'maxTime', workingHoursEnd);
