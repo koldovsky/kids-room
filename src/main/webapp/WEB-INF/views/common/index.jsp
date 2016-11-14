@@ -24,7 +24,7 @@
             <div align="center">
                 <div id="bookingUpdatingDialog" class="dialog" hidden>
                     <form id="bookingUpdatingForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        //<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
                             <label for="bookingUpdatingStartDate">
                                 <spring:message code= "booking.startDate"/>
@@ -214,11 +214,11 @@
                                         <input id="number-of-kids" hidden value="${fn:length(kids)}">
                                     </table>
 
+                                </div>
 
                                     <div id="comment-for-one-child-updating" hidden>
                                         <textarea class="form-control" id="comment-for-update-recurrency"></textarea>
                                     </div>
-                                </div>
 
 
                                 <br>
