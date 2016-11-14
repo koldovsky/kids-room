@@ -857,7 +857,7 @@ function cancelRecurrentBookings(recurrentId) {
 
 function closeBookingDialog() {
     $('#make-recurrent-booking').dialog('close');
-    $('#comment-for-update-recurrency').hide();
+    $('#comment-for-one-child-updating').hide();
 }
 
 function closeUpdatingDialog() {
