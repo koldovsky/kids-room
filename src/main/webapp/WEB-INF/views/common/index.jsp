@@ -223,9 +223,9 @@
                                     </table>
 
 
-                                    <div id="comment-for-one-child-updating" hidden>
-                                        <textarea class="form-control" id="comment-for-update-recurrency"></textarea>
-                                    </div>
+                                </div>
+                                <div id="comment-for-one-child-updating" hidden>
+                                    <textarea class="form-control" id="comment-for-update-recurrency"></textarea>
                                 </div>
 
 
