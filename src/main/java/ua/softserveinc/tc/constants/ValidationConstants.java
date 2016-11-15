@@ -51,6 +51,7 @@ public final class ValidationConstants {
 
     public static final String EMAIL_NOT_VALID = "registration.manager.emailNotValid";
     public static final String NAME_ERROR_MSG = "registration.kid.name";
+    public static final String NAME_NOT_EDITTED = "registration.kid.nameNotEdited";
     public static final String DATE_ERROR_MSG = "registration.kid.date";
     public static final String PASSWORD_ERROR_MSG = "registration.password";
     public static final String PHONE_NUMBER_ERROR_MSG = "registration.phone";
