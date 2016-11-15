@@ -38,6 +38,23 @@ public class ChildValidator implements Validator{
         ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors, ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.EMPTY_FIELD_MSG);
 
+
+/**
+ * check if the first and last names are corrent(if there is only 1 letter)
+ * Error messages appear. "First Name" and "Last Name" fields are not edited.
+ */
+        String fName = kidToValidate.getFirstName();
+        String lName = kidToValidate.getLastName();
+
+        if ((fName.length() < 2) || (lName.length() < 2)) {
+
+            if(fName.length() < 2) {
+                errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.NAME_NOT_EDITTED);
+            } else if(lName.length() < 2) {
+                errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.NAME_NOT_EDITTED);
+            }
+        }   // end of the if statement
+
         int age = kidToValidate.getAge();
 
         if(age < configurator.getKidsMinAge() || age > configurator.getKidsMaxAge()){
