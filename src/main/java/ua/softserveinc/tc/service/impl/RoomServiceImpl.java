@@ -169,6 +169,35 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     /**
+     *
+     * @param dateLo start of period
+     * @param dateHi end of period
+     * @param bookings all reserved bookings in the time range
+     * @return The maximum number of people that are simultaneously in the room
+     */
+
+    private int maxRangeReservedBookings (Date dateLo, Date dateHi, List<Booking> bookings) {
+        if(dateLo == null)
+            throw new NullPointerException("dateLo is null");
+        else if(dateHi == null)
+            throw new NullPointerException("dateHi is null");
+        else if(bookings == null)
+            throw new NullPointerException("bookings is null");
+
+        long oneMinute = 60 * 1000;
+        int maxReservedBookings = 0;
+        for(long ti = dateLo.getTime(); ti < dateHi.getTime(); ti += oneMinute) {
+            int temporaryMax = 0;
+            for(Booking tab : bookings)
+                if(tab.getBookingStartTime().getTime() <= ti && tab.getBookingEndTime().getTime() >= ti)
+                    temporaryMax++;
+            if(temporaryMax > maxReservedBookings)
+                maxReservedBookings = temporaryMax;
+        }
+        return maxReservedBookings;
+    }
+
+    /**
      * @param dateLo start of period
      * @param dateHi end of period
      * @param room   a requested room
@@ -176,7 +205,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      */
     public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
         List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
-        return room.getCapacity() - bookings.size();
+        int maxReservedBookings = maxRangeReservedBookings(dateLo, dateHi, bookings);
+        return room.getCapacity() - maxReservedBookings;
     }
 
     /**
