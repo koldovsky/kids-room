@@ -16,6 +16,9 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 @Component
 public class ChildValidator implements Validator{
+
+    public static final int MIN_NAME_CHARACTER = 2;
+
     @Autowired
     private ApplicationConfigurator configurator;
 
@@ -46,14 +49,12 @@ public class ChildValidator implements Validator{
         String fName = kidToValidate.getFirstName();
         String lName = kidToValidate.getLastName();
 
-        if ((fName.length() < 2) || (lName.length() < 2)) {
+        if(fName.length() < MIN_NAME_CHARACTER) {
+            errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.NAME_NOT_EDITTED);
+        } else if(lName.length() < MIN_NAME_CHARACTER) {
+            errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.NAME_NOT_EDITTED);
+        }
 
-            if(fName.length() < 2) {
-                errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.NAME_NOT_EDITTED);
-            } else if(lName.length() < 2) {
-                errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.NAME_NOT_EDITTED);
-            }
-        }   // end of the if statement
 
         int age = kidToValidate.getAge();
 

@@ -5,10 +5,10 @@ $(document).ready(function() {
     $(function() {
         $.validator.addMethod("regexFirstName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Все плохо");
+        }, "Ви повинні ввести як мінімум два символи");
         $.validator.addMethod("regexLastName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Все плохо");
+        }, "Ви повинні ввести як мінімум два символи");
         $('#editkidform').validate({
             rules:{
 
