@@ -45,6 +45,18 @@ public class ChildValidator implements Validator{
         }
 
         String comment = kidToValidate.getComment();
-        if (comment.length() > 250){errors.rejectValue("comment", "registration.kid.comment");}
+
+        if (comment.length() > 250) {
+            errors.rejectValue(ValidationConstants.COMMENT, ValidationConstants.COMMENT_ERROR_MSG);
+        }
+        String firstName = kidToValidate.getFirstName();
+        if (firstName.length() > 35) {
+            errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.FIRSTNAME_ERROR_MSG);
+        }
+        String lastName = kidToValidate.getLastName();
+        if (lastName.length() > 35) {
+            errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.LASTNAME_ERROR_MSG);
+        }
+
     }
 }
