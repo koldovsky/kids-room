@@ -17,14 +17,15 @@
         </div>
         <div id="from-div">
           <label for="from"><spring:message code="report.from" /></label>
-          <input name="from" id="from" type="date" class="form-control"> </input>
+          <input name="from" id="from" type="date" class="form-control" onchange="validateDate()"> </input>
 
         </div>
         <div id="to-div">
             <label for="from"><spring:message code="report.to" /></label>
-            <input id="to" type="date" class="form-control"> </input>
+            <input id="to" type="date" class="form-control" onchange="validateDate()"> </input>
         </div>
     </div>
+    <div id="errorDate"></div>
 
     <div class="tableDiv">
         <h2>
@@ -65,3 +66,11 @@
 
     </div>
 </div>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="resources/js/validation-my-booking-ua.js"></script>
+</c:if>
+<c:if test="${pageContext.response.locale != 'ua'}">
+    <script src="resources/js/validation-my-booking.js"></script>
+</c:if>
+
+
