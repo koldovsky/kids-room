@@ -77,6 +77,7 @@
                                 <input id="bookingUpdatingEndTimepicker" type="text" name="end"
                                        class="time form-control picker"/>
                             </div>
+
                             <div>
 
                                 <textarea type="text" class="form-control" id="kid-comment"
