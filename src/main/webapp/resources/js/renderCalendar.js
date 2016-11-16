@@ -273,7 +273,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
     $('.timepicker').timepicker('option', 'maxTime', workingHoursEnd);
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
         minTime: workingHoursStart,
         maxTime: workingHoursEnd
     });

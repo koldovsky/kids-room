@@ -13,10 +13,17 @@
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
 <link href='resources/css/manager-no-rooms.css' rel='stylesheet'/>
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='resources/js/moment.min.js'></script>
+<script src="resources/js/jquery.timepicker.js"></script>
+
 <body>
 
 <sec:authorize access="hasRole('USER')">
-
 <div id="mobile" class="container">
         <%--bookingUpdatingDialog--%>
     <div class="row">
@@ -214,10 +221,10 @@
                                         <input id="number-of-kids" hidden value="${fn:length(kids)}">
                                     </table>
 
+                                </div>
 
-                                    <div id="comment-for-one-child-updating" hidden>
-                                        <textarea class="form-control" id="comment-for-update-recurrency"></textarea>
-                                    </div>
+                                <div id="comment-for-one-child-updating" hidden>
+                                    <textarea class="col-xs-12" id="comment-for-update-recurrency"></textarea>
                                 </div>
 
 
@@ -258,6 +265,36 @@
             </div>
         </div>
     </div>
+
+            <div id="duplicateBookingDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div align="center">
+                                <br>
+                                <div class="checkmark">
+                                    <svg version="1.1" id="Layer_1" x="0px" y="0px"
+                                         viewBox="0 0 161.2 161.2" enable-background="new 0 0 161.2 161.2" xml:space="preserve">
+                                            <circle class="path" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-miterlimit="10" cx="80.6" cy="80.6" r="62.1"/>
+                                        <polyline class="path" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"
+                                                  stroke-miterlimit="10" points="113,52.8 74.1,108.4 48.2,86.4 "/>
+                                    </svg>
+                                </div>
+                                <h2><spring:message code= "booking.created"/></h2><br>
+                                <spring:message code= "booking.duplicate"/>
+                                <br>
+                                    <button type="button" class="btn btn-danger pull-right" id="omitCreateDuplicateBooking">
+                                        <spring:message code= "no"/>
+                                    </button>
+                                    <button type="button" class="btn btn-danger pull-right" id="createDuplicateBooking">
+                                        <spring:message code= "yes"/>
+                                    </button>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <%--recurrent-change--%>
     <div class="row">
@@ -829,18 +866,17 @@
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
 
-<script src='resources/js/moment.min.js'></script>
-<script src='resources/js/jquery.min.js'></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='resources/js/fullcalendar.js'></script>
-<script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
 <script src="resources/js/seriousColorLegendUpdate.js"></script>
-<script src='resources/js/header-manager.js'></script>
-<script src='resources/js/header-user.js'></script>
 <script src='resources/js/manager-create-events-validator.js'></script>
 <script src='resources/js/user-create-booking-validator.js'></script>
-<script src='resources/js/userCalendar.js'></script>
-<script src='resources/js/renderCalendar.js'></script>
 <script src='resources/js/single-booking.js'></script>
+<script src='resources/js/renderCalendar.js'></script>
+
+<script src='resources/js/header-manager.js'></script>
+<script src='resources/js/header-user.js'></script>
+
+
+<script src='resources/js/userCalendar.js'></script>
 
 </body>
