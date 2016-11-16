@@ -24,7 +24,6 @@
 <body>
 
 <sec:authorize access="hasRole('USER')">
-
 <div id="mobile" class="container">
         <%--bookingUpdatingDialog--%>
     <div class="row">
@@ -281,8 +280,9 @@
                                                   stroke-miterlimit="10" points="113,52.8 74.1,108.4 48.2,86.4 "/>
                                     </svg>
                                 </div>
-                                <h2>New Booking Created</h2><br>
-                                    Do you want to duplicate the booking in your corporate calendar?<br>
+                                <h2><spring:message code= "booking.created"/></h2><br>
+                                <spring:message code= "booking.duplicate"/>
+                                <br>
                                     <button type="button" class="btn btn-danger pull-right" id="omitCreateDuplicateBooking">
                                         <spring:message code= "no"/>
                                     </button>

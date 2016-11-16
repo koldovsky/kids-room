@@ -23,7 +23,7 @@ $(function () {
 
     $('#createDuplicateBooking').click(function() { //code to duplicate the booking in corporate calendar
         $('#duplicateBookingDialog').modal('hide');
-        alert("trying to add booking to corporate calendar (will be deleted)");
+        // some code for duplicating booking into corporate calendar
         //getSuccess();
     });
 
