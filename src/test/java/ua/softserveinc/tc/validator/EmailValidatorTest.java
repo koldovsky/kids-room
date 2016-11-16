@@ -3,6 +3,7 @@ package ua.softserveinc.tc.validator;
 /**
  * Created by Valery on 16.11.2016.
  */
+
 import org.junit.Assert;
 import org.junit.Test;
 import ua.softserveinc.tc.constants.ValidationConstants;
