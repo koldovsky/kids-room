@@ -169,10 +169,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     /**
-     *
+     * The method finds the maximum people in the room for period of time
+     * from dateLo to dateHi.
      * @param dateLo start of period
      * @param dateHi end of period
-     * @param bookings all reserved bookings in the time range
+     * @param bookings all reserved bookings in the time period
      * @return The maximum number of people that are simultaneously in the room
      */
 
@@ -198,6 +199,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     /**
+     * The method finds the available space in the room (number of people)
+     * for the given period of time from dateLo to dateHi.
      * @param dateLo start of period
      * @param dateHi end of period
      * @param room   a requested room
