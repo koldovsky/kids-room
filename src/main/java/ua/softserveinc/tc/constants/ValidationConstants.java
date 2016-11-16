@@ -14,9 +14,13 @@ public final class ValidationConstants {
             "ЧчШшЩщЬьЮюЯя]*$";
     public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОо" +
             "ПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\\s]*$";
-    public static final String SIMPLE_EMAIL_REGEX = "^[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@(([0-9]{1,3})|([a-zA-Z]{2,11})" +
-            "|(aero|coop|info|museum|name))+(\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name)))*" +
-            "\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))*$";
+//    public static final String SIMPLE_EMAIL_REGEX = "^[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@(([0-9]{1,3})|([a-zA-Z]{2,11})" +
+//            "|(aero|coop|info|museum|name))+(\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name)))*" +
+//            "\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))*$";
+
+    public static final String SIMPLE_EMAIL_REGEX =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
     public static final String NOT_EMPTY_MESSAGE = "May not be empty.";
