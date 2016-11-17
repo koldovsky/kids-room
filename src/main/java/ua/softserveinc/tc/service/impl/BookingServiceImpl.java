@@ -164,18 +164,40 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return isDuplicate;
     }
 
+    /**
+     * The method finds out is there available space in
+     * the rooms for given listDTO.
+     * @param listDTO list of BookingDto
+     * @return true if there is available places in the room
+     */
+    private boolean isAvailabilePlacesInTheRoom(List<BookingDto> listDTO) {
+        int availablePlaces = 0;
+        int needPlaces = 1;
+        Date theSameDay = null;
+        for(BookingDto bdto : listDTO) {
+            if(bdto.getDateStartTime().equals(theSameDay)) {
+                needPlaces++;
+                continue;
+            } else if (theSameDay != null && availablePlaces < needPlaces)
+                return false;
+            needPlaces = 1;
 
+            theSameDay = bdto.getDateStartTime();
+            availablePlaces = roomService.getAvailableSpaceForPeriod(
+                    bdto.getDateStartTime(),
+                    bdto.getDateEndTime(),
+                    bdto.getRoom());
+        }
+        return availablePlaces >= needPlaces;
+    }
 
     @Override
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
-        BookingDto bdto = listDTO.get(0);
+        if(listDTO == null)
+            throw new RuntimeException("listDTO is null");
 
-        int available = roomService.getAvailableSpaceForPeriod(
-                bdto.getDateStartTime(),
-                bdto.getDateEndTime(),
-                bdto.getRoom());
-
-        if (available >= listDTO.size()) {
+        boolean isAvailablePlaces = isAvailabilePlacesInTheRoom(listDTO);
+        if (isAvailablePlaces) {
             listDTO.forEach(bookingDTO -> {
                 Booking booking = bookingDTO.getBookingObject();
                 booking.setSum(0L);
