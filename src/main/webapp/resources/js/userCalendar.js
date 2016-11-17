@@ -23,13 +23,10 @@ $(function () {
 
     $('#createDuplicateBooking').click(function() { //code to duplicate the booking in corporate calendar
         $('#duplicateBookingDialog').modal('hide');
-        // some code for duplicating booking into corporate calendar
-        //getSuccess();
     });
 
     $('#omitCreateDuplicateBooking').click(function() {
         $('#duplicateBookingDialog').modal('hide');
-       // getSuccess();
     });
 
     $('#recurrent-change').dialog({
@@ -426,6 +423,9 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
     });
 }
 
+/*
+* method to show dialog that action (ex: booking) has been done successfully
+ */
 function getSuccess() {
     $('#createSuccess1').modal('show');
     setTimeout(function () {
@@ -696,20 +696,13 @@ function updateRecurrentBooking() {
     var newEventAfterUpdate = {
         startTime: makeISOTime(recurrentStartDay, 'recurrent-booking-start-time'),
         endTime: makeISOTime(recurrentEndDay, 'recurrent-booking-end-time'),
-        comment: $('#comment-for-update-recurrency').val(), //booo
+        comment: $('#comment-for-update-recurrency').val(),
         kidId: clickedEvent,
         roomId: roomIdForHandler,
         userId: usersID,
         daysOfWeek: checkedDays,
         id:info.id,
         recurrentId:info.recurrentId,
-/*        date : ,
-        endDate:,
-        bookingsState,
- */
-        //comment:info.calEvent.comment,
-        /*        kidId: info.calEvent.kidId,
-        roomId: info.calEvent.roomId,*/
         weekDays:weekDaysArr
     };
 
@@ -771,7 +764,7 @@ function editRecurrentBookingsReuest (recurrentId) {
                 startTime: result.startTime,
                 endTime: result.endTime,
                 weekDays:result.weekDays,
-                comment:result.comment,                         // edit
+                comment:result.comment,
             };
             editRecurrentBookingsOpenDialog(recurrentBookingForEditing);
         },
@@ -909,8 +902,6 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
     $('#recurrent-booking-start-time').timepicker('option', 'minTime', workingHoursStart);
     $('#recurrent-booking-start-time').timepicker('option', 'maxTime', workingHoursEnd);
-
-    //$('#recurrent-booking-start-time').timepicker('option', 'step', 10); //hgjgkl;kjhgfdsfghjkgfdfcgfgfgb
 
     $('#recurrent-booking-end-time').timepicker('option', 'minTime', workingHoursStart);
     $('#recurrent-booking-end-time').timepicker('option', 'maxTime', workingHoursEnd);
