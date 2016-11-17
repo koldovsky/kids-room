@@ -27,7 +27,7 @@
 
             <caption>
                 <h2>
-                    <spring:message code="report.activeParents" /></br>
+                    <spring:message code="report.activeParents" />
                 </h2>
             </caption>
 

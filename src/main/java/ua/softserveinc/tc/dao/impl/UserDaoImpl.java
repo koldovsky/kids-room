@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.dao.impl;
 
+import org.hibernate.Criteria;
 import org.slf4j.Logger;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Repository;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.UserConstants;
@@ -89,11 +91,14 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<Booking> root = query.from(Booking.class);
+        Root<User> userRoot = query.from(User.class);
 
+        query.select(userRoot);
+        query.where(builder.equal(userRoot.get(UserConstants.Entity.ACTIVE),
+                UserConstants.Entity.ACTIVE));
         query.select(root.get(BookingConstants.Entity.USER)).distinct(true).where(
                 builder.between(root.get(
                         BookingConstants.Entity.START_TIME), startDate, endDate),
-                builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.COMPLETED),
                 builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         return entityManager.createQuery(query).getResultList();
