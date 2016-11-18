@@ -23,11 +23,11 @@ $(function () {
 
     $('#createDuplicateBooking').click(function() {
         //TODO: code to duplicate the booking in corporate calendar
-        $('#duplicateBookingDialog').modal('hide');
+        $('#duplicate-booking-dialog').modal('hide');
     });
 
     $('#omitCreateDuplicateBooking').click(function() {
-        $('#duplicateBookingDialog').modal('hide');
+        $('#duplicate-booking-dialog').modal('hide');
     });
 
     $('#recurrent-change').dialog({
@@ -535,7 +535,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                 });
 
 
-                $('#duplicateBookingDialog').modal('show');
+                $('#duplicate-booking-dialog').modal('show');
 
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
@@ -655,7 +655,7 @@ function makeRecurrentBookings() {
                 });
                 $('.loading').hide();
 
-                $('#duplicateBookingDialog').modal('show');
+                $('#duplicate-booking-dialog').modal('show');
             },
             error: function (xhr) {
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);

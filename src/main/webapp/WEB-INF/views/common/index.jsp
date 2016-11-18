@@ -260,7 +260,7 @@
         </div>
     </div>
 
-            <div id="duplicateBookingDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div id="duplicate-booking-dialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
