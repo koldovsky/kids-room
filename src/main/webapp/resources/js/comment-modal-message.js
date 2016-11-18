@@ -6,6 +6,5 @@ function callCommentDialog()  {
         var comment = $(this).attr('title');
             $('#kidCommentMessage').find('h4').html(comment);
             $('#kidCommentMessage').modal('show');
-
     });
 }

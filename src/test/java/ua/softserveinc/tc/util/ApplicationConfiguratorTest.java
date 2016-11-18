@@ -25,7 +25,26 @@ public class ApplicationConfiguratorTest {
     private ApplicationConfigurator appConfigurator;
 
     @Test
-    public void testProperties(){
+    public void testProperties() {
         assertEquals(3, (Object) appConfigurator.getKidsMinAge());
+    }
+
+    @Test
+    public void testPropertiesMaxAge() {
+        assertEquals(8,(Object) appConfigurator.getKidsMaxAge());
+    }
+    @Test
+    public void testPropertiesMinPeriodSize(){
+     assertEquals(15, (Object) appConfigurator.getMinPeriodSize());
+    }
+    @Test
+    public void testPropertiesServerName()
+    {
+        assertEquals("kidroom.herokuapp.com", appConfigurator.getServerName());
+    }
+    @Test
+    public void testPropertiesMaxUploadImgSizeMb()
+    {
+        assertEquals(10, (Object)appConfigurator.getMaxUploadImgSizeMb());
     }
 }

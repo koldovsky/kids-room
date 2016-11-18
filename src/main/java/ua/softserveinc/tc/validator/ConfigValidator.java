@@ -44,6 +44,10 @@ public class ConfigValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.MIN_AGE, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.MAX_NAME_LENGTH,ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
+                ValidationConstants.ConfigFields.MAX_COMMENT_LENGTH,ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.MIN_PERIOD, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors,
                 ValidationConstants.ConfigFields.SERVER_NAME, ValidationConstants.EMPTY_FIELD_MSG);

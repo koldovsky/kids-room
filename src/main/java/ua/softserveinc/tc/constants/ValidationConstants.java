@@ -81,6 +81,9 @@ public final class ValidationConstants {
     public static final class ConfigFields {
         public static final String MIN_AGE = "kidsMinAge";
         public static final String MAX_AGE = "kidsMaxAge";
+        public static final String MAX_NAME_LENGTH = "kidsMaxNameLength";
+        public static final String MAX_COMMENT_LENGTH = "kidsMaxCommentLength";
+
 
         public static final String CALCULATION_HOUR = "hourToCalculateBookingsEveryDay";
         public static final String CALCULATION_MINUTE = "minutesToCalculateBookingsEveryDay";
