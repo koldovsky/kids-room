@@ -40,11 +40,23 @@ public class ChildValidator implements Validator{
 
         int age = kidToValidate.getAge();
 
-        if(age < configurator.getKidsMinAge() || age> configurator.getKidsMaxAge()){
+        if(age < configurator.getKidsMinAge() || age > configurator.getKidsMaxAge()){
             errors.rejectValue(ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.DATE_ERROR_MSG);
         }
 
         String comment = kidToValidate.getComment();
-        if (comment.length() > 250){errors.rejectValue("comment", "registration.kid.comment");}
+
+        if (comment.length() > configurator.getKidsMaxCommentLength()) {
+            errors.rejectValue(ValidationConstants.COMMENT, ValidationConstants.COMMENT_ERROR_MSG);
+        }
+        String firstName = kidToValidate.getFirstName();
+        if (firstName.length() > configurator.getKidsMaxNameLength()) {
+            errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.FIRSTNAME_ERROR_MSG);
+        }
+        String lastName = kidToValidate.getLastName();
+        if (lastName.length() > configurator.getKidsMaxNameLength()) {
+            errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.LASTNAME_ERROR_MSG);
+        }
+
     }
 }

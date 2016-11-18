@@ -198,7 +198,7 @@ function refreshTable(bookingsState) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
                         + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id
                         + '" class="glyphicon glyphicon-info-sign"' + 'title="'
-                        + oData.comment + '"></span>');
+                        + oData.comment +  '"' + ' onclick="callCommentDialog()"></span>');
                     } else {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>');
                     }

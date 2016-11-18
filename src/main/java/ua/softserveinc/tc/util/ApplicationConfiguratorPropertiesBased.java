@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DefaultPropertiesPersister;
 import ua.softserveinc.tc.dto.ConfigurationDto;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,6 +32,12 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
     @Value("${kids.maxAge}")
     private Integer kidsMaxAge;
+
+    @Value("${kids.maxNameLength}")
+    private Integer kidsMaxNameLength;
+
+    @Value("${kids.maxCommentLength}")
+    private Integer kidsMaxCommentLength;
 
     @Value("${calculation.time.minutes}")
     private Integer minutesToCalculateBookingsEveryDay;
@@ -96,6 +103,12 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
         this.kidsMaxAge = cDto.getKidsMaxAge();
         properties.setProperty("kids.maxAge", kidsMaxAge.toString());
 
+        this.kidsMaxNameLength = cDto.getKidsMaxNameLength();
+        properties.setProperty("kids.maxNameLength",kidsMaxNameLength.toString());
+
+        this.kidsMaxCommentLength = cDto.getKidsMaxCommentLength();
+        properties.setProperty("kids.maxCommentLength", kidsMaxCommentLength.toString());
+
         this.minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();
         properties.setProperty("calculation.time.minutes", minutesToCalculateBookingsEveryDay.toString());
 
@@ -153,6 +166,16 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     }
 
     @Override
+    public Integer getKidsMaxNameLength() {
+        return kidsMaxNameLength;
+    }
+
+    @Override
+    public Integer getKidsMaxCommentLength() {
+        return kidsMaxCommentLength;
+    }
+
+    @Override
     public Integer getMinPeriodSize() {
         return minPeriodSize;
     }
@@ -171,6 +194,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     public Integer getHourToCalculateBookingsEveryDay() {
         return hourToCalculateBookingsEveryDay;
     }
+
 
     @Override
     public Integer getMinutesToSendEmailReport() {
