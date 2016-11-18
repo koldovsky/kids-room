@@ -21,7 +21,8 @@ $(document).ready(function () {
 
 $(function () {
 
-    $('#createDuplicateBooking').click(function() { //code to duplicate the booking in corporate calendar
+    $('#createDuplicateBooking').click(function() {
+        //TODO: code to duplicate the booking in corporate calendar
         $('#duplicateBookingDialog').modal('hide');
     });
 
@@ -184,6 +185,7 @@ $(function () {
         $('#make-recurrent-booking').dialog('close');
         var myDialog = $('#confirmation-dialog-div');
         myDialog.dialog('open');
+        $('#comment-for-one-child-updating').hide();
         $('#confirmYes').click(function () {
             cancelRecurrentBookings(info.calEvent.recurrentId);
             myDialog.dialog('close');
@@ -232,7 +234,7 @@ $(function () {
             myDialog.dialog('close');
         });
         $('#confirmNo').click(function () {
-            debugger
+
             myDialog.dialog('close');
         });
     });
@@ -423,15 +425,6 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
     });
 }
 
-/*
-* method to show dialog that action (ex: booking) has been done successfully
- */
-function getSuccess() {
-    $('#createSuccess1').modal('show');
-    setTimeout(function () {
-        $('#createSuccess1').modal('hide');
-    }, 2500);
-}
 //tested
 function makeISOTime(clickDate, idOfTimePicker) {
     if (clickDate.length < 12) {
