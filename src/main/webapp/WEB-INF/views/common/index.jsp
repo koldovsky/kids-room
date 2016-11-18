@@ -278,15 +278,14 @@
                                     </svg>
                                 </div>
                                 <h2><spring:message code= "booking.created"/></h2><br>
-                                <spring:message code= "booking.duplicate"/>
-                                <br>
-                                    <button type="button" class="btn btn-danger pull-right" id="omitCreateDuplicateBooking">
-                                        <spring:message code= "no"/>
-                                    </button>
-                                    <button type="button" class="btn btn-danger pull-right" id="createDuplicateBooking">
-                                        <spring:message code= "yes"/>
-                                    </button>
-                                <br>
+                                <h4><spring:message code= "booking.duplicate"/></h4>
+                                <button type="button" class="btn btn-success pull-right" id="createDuplicateBooking">
+                                    <spring:message code= "yes"/>
+                                </button>
+                                <button type="button" class="btn btn-danger pull-right" id="omitCreateDuplicateBooking">
+                                    <spring:message code= "no"/>
+                                </button>
+                                <br><br>
                             </div>
                         </div>
                     </div>
