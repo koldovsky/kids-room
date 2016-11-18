@@ -5,10 +5,10 @@ $(document).ready(function() {
     $(function() {
         $.validator.addMethod("regexFirstName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Ви повинні ввести як мінімум два символи");
+        }, "registration.kid.comment");
         $.validator.addMethod("regexLastName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Ви повинні ввести як мінімум два символи");
+        }, "registration.kid.comment");
         $('#editkidform').validate({
             rules:{
 
@@ -25,11 +25,11 @@ $(document).ready(function() {
 
             }, messages: {
                 firstName: {
-                    required: "Будь ласка введіть щонайменше 2 символи"
+                    required: "registration.kid.comment"
 
                 },
                 lastName: {
-                    required: "Будь ласка введіть щонайменше 2 символи"
+                    required: "registration.kid.comment"
                 }
             }
         });

@@ -121,12 +121,12 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
 
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
-        <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages_uk.js"></script>
+        <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages_ua.js"></script>
         <script src="resources/js/validation-edit-kid-ua.js"></script>
     </c:when>
 
     <c:when test="${pageContext.response.locale=='en'}">
-        <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages_uk.js"></script>
+        <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages.js"></script>
         <script src="resources/js/validation-edit-kid.js"></script>
     </c:when>
 

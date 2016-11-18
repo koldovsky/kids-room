@@ -16,7 +16,6 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 @Component
 public class ChildValidator implements Validator{
-
     public static final int MIN_NAME_CHARACTER = 2;
 
     @Autowired
@@ -51,7 +50,8 @@ public class ChildValidator implements Validator{
 
         if(fName.length() < MIN_NAME_CHARACTER) {
             errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.NAME_NOT_EDITTED);
-        } else if(lName.length() < MIN_NAME_CHARACTER) {
+        }
+        if(lName.length() < MIN_NAME_CHARACTER) {
             errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.NAME_NOT_EDITTED);
         }
 

@@ -6,10 +6,10 @@ $(document).ready(function() {
     $(function() {
         $.validator.addMethod("regexKidFirstName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Invalid First Name");
+        }, "registration.kid.comment");
         $.validator.addMethod("regexKidLastName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Invalid Last Name");
+        }, "registration.kid.comment");
 
 
         $('#editkidform').validate({
@@ -29,10 +29,10 @@ $(document).ready(function() {
             },
             messages: {
                 firstName: {
-                    required: 'Please enter at least 2 characters'
+                    required: 'registration.kid.comment'
                 },
                 lastName: {
-                    required: 'Please enter at least 2 characters'
+                    required: 'registration.kid.comment'
 
                 }
 
