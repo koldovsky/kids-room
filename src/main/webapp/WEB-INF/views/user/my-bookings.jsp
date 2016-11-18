@@ -11,9 +11,6 @@
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
 
-
-
-
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
         <div id="msg">
