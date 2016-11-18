@@ -7,8 +7,12 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <link rel='stylesheet' href='resources/css/user-my-report.css'>
+
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
+
+
+
 
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
@@ -16,14 +20,16 @@
         <spring:message code="report.select.period"/>:
         </div>
         <div id="from-div">
-          <label for="from"><spring:message code="report.from" /></label>
-          <input name="from" id="from" type="date" class="form-control"> </input>
 
+          <label for="from"><spring:message code="report.from" /></label>
+          <input name="from" id="from" type="date" class="form-control" onchange="validateDate()" > </input>
         </div>
+
         <div id="to-div">
-            <label for="from"><spring:message code="report.to" /></label>
-            <input id="to" type="date" class="form-control"> </input>
+            <label for="from"><spring:message code="report.to"  /></label>
+            <input id="to" type="date" class="form-control" onchange="validateDate() "> </input>
         </div>
+        <span id="dateError" class="error" ></span>
     </div>
 
     <div class="tableDiv">
@@ -65,3 +71,4 @@
 
     </div>
 </div>
+<script src="resources/js/validation-date.js"></script>
