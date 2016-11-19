@@ -1,37 +1,36 @@
-/**
- * Created by Вова on 14.11.2016.
- */
 $(document).ready(function() {
     $(function() {
-        $.validator.addMethod("regexFirstName", function(value, element, regexpr) {
+        $.validator.addMethod("regexKidFirstName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "registration.kid.comment");
-        $.validator.addMethod("regexLastName", function(value, element, regexpr) {
+        }, "Ваше ім'я має складатись як мінімум із двох символів");
+        $.validator.addMethod("regexKidLastName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "registration.kid.comment");
+        }, "Ваше прізвище має складатись як мінімум із двох символів");
         $('#editkidform').validate({
-            rules:{
+            rules: {
 
                 firstName: {
                     required: true,
-                    minlength: 2,
-                    regexFirstName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя]+$/
+                    regexKidFirstName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя\s]+$/,
+                    minlength: 2
                 },
                 lastName: {
                     required: true,
-                    minlength: 2,
-                    regexLastName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя]+$/
+                    regexKidLastName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя\s]+$/,
+                    minlength: 2
                 }
-
-            }, messages: {
+            },
+            messages: {
                 firstName: {
-                    required: "registration.kid.comment"
-
+                    required: "Введіть, будь ласка, своє ім'я",
+                    regexFirstName: "Ви ввели ім'я невірно"
                 },
                 lastName: {
-                    required: "registration.kid.comment"
-                }
+                    required: "Введіть, будь ласка, своє прізвище",
+                    regexFirstName: "Ви ввели ім'я невірно"
+                },
             }
         });
     });
+
 });

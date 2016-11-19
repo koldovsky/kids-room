@@ -115,21 +115,15 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
 
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<c:if test="${pageContext.response.locale=='en' || pageContext.response.locale=='ua'}">
-
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages_ua.js"></script>
+    <script src="resources/js/validation-edit-kid-ua.js"></script>
 </c:if>
 
-<c:choose>
-    <c:when test="${pageContext.response.locale=='ua'}">
-        <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages_ua.js"></script>
-        <script src="resources/js/validation-edit-kid-ua.js"></script>
-    </c:when>
+<c:if test="${pageContext.response.locale=='en'}">
+    <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages.js"></script>
+    <script src="resources/js/validation-edit-kid.js"></script>
+</c:if>
 
-    <c:when test="${pageContext.response.locale=='en'}">
-        <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages.js"></script>
-        <script src="resources/js/validation-edit-kid.js"></script>
-    </c:when>
-
-</c:choose>
 
 
