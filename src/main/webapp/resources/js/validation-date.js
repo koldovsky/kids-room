@@ -24,3 +24,5 @@ function validateBookingsDate() {
 
     return isValidate;
 }
+
+

@@ -73,3 +73,5 @@
 <c:if test="${pageContext.response.locale != 'ua'}">
     <script src="resources/js/validation-my-booking.js"></script>
 </c:if>
+
+
