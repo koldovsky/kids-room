@@ -55,7 +55,6 @@ public class ChildValidator implements Validator{
             errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.NAME_NOT_EDITTED);
         }
 
-
         int age = kidToValidate.getAge();
 
         if(age < configurator.getKidsMinAge() || age > configurator.getKidsMaxAge()){
