@@ -31,6 +31,8 @@ function updateTable(){
 			url: request,
 			datatype: JSON,
 			success: function (response) {
+
+				document.getElementById("dateError").innerHTML = "";
 				var list = $.parseJSON(response);
 
 				var tableContent = '<tbody><tr>';
@@ -52,6 +54,9 @@ function updateTable(){
 				sumTotal = (sumTotal / 100).toFixed(2);
 				$('#sum').html(sumTotal);
 				paginate();
+			},
+			error: function (dateError, textStatus, xhr) {
+				document.getElementById("dateError").innerHTML = "<br>" + dateError.responseText;
 			}
 		});
 	}

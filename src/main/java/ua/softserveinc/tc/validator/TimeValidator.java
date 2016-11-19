@@ -32,6 +32,11 @@ public class TimeValidator implements Validator {
         }
     }
 
+    public boolean validateDate(String date)
+    {
+        return date.matches(ValidationConstants.DATE_REGEX);
+    }
+
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
         String startTime=booking.getStartTime().substring(11);
