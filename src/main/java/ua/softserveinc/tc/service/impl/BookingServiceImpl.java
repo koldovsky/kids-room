@@ -181,7 +181,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             } else if (theSameDay != null && availablePlaces < needPlaces)
                 return false;
             needPlaces = 1;
-
             theSameDay = bdto.getDateStartTime();
             availablePlaces = roomService.getAvailableSpaceForPeriod(
                     bdto.getDateStartTime(),
@@ -194,7 +193,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
         if(listDTO == null)
-            throw new RuntimeException("listDTO is null");
+            throw new NullPointerException("listDTO is null");
 
         boolean isAvailablePlaces = isAvailabilePlacesInTheRoom(listDTO);
         if (isAvailablePlaces) {

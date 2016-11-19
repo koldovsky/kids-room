@@ -5,7 +5,7 @@ var withoutFocusColor;
 
 $(function() {
 
-    $("button").focusin(function() {
+    $(".btn").focusin(function() {
         withoutFocusColor = window.getComputedStyle(this).getPropertyValue('color');
         this.style.color = '#CACFD2';
     }).focusout(function() {

@@ -91,7 +91,7 @@ $(function() {
     });
     $('.picker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
         minTime: '07:00',
         maxTime: '20:00'
     });
