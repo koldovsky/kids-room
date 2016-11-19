@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DefaultPropertiesPersister;
 import ua.softserveinc.tc.dto.ConfigurationDto;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
