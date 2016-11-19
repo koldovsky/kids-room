@@ -221,3 +221,5 @@
         </div>
     </div>
 </nav>
+
+<script src='resources/js/tab-highlighting.js'></script>
