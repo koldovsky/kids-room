@@ -22,10 +22,10 @@ $(document).ready(function() {
             },
             messages: {
                 firstName: {
-                    required: 'Incorrect first name'
+                    required: 'Please enter at least 2 characters'
                 },
                 lastName: {
-                    required: 'Incorrect last name`'
+                    required: 'Please enter at least 2 characters'
                 }
             }
         });
