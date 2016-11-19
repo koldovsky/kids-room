@@ -7,7 +7,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <link rel='stylesheet' href='resources/css/user-my-report.css'>
-
 <script src="resources/js/myBookings.js"></script>
 <script src="resources/js/printMyBookings.js"></script>
 
@@ -17,21 +16,20 @@
         <spring:message code="report.select.period"/>:
         </div>
         <div id="from-div">
-
           <label for="from"><spring:message code="report.from" /></label>
-          <input name="from" id="from" type="date" class="form-control"  >
-        </div>
+          <input name="from" id="from" type="date" class="form-control" onchange="validateDate()"> </input>
 
-        <div id="to-div">
-            <label for="from"><spring:message code="report.to"  /></label>
-            <input id="to" type="date" class="form-control" />
         </div>
-        <span id="dateError" class="error" ></span>
+        <div id="to-div">
+            <label for="from"><spring:message code="report.to" /></label>
+            <input id="to" type="date" class="form-control" onchange="validateDate()"> </input>
+        </div>
     </div>
+    <div id="errorDate"></div>
 
     <div class="tableDiv">
         <h2>
-           <spring:message code="report.myBookings" />
+           <spring:message code="report.myBookings" /> </br>
         </h2>
         <table id="myBookings">
          <thead>
@@ -57,7 +55,7 @@
             </caption>
 
         </table>
-        <input id="itemsPerPage" type="hidden" value="10">
+        <input id="itemsPerPage" type="hidden" value="10"> </input>
                 <a id="dlink"  style="display:none;"></a>
                 <button id="export" onclick= "tableToExcel('myBookings', 'name')" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
                     &nbsp; <spring:message code="report.download" /> Excel
@@ -68,4 +66,11 @@
 
     </div>
 </div>
-<script src="resources/js/validation-date.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="resources/js/validation-my-booking-ua.js"></script>
+</c:if>
+<c:if test="${pageContext.response.locale != 'ua'}">
+    <script src="resources/js/validation-my-booking.js"></script>
+</c:if>
+
+

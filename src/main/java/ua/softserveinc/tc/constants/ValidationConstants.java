@@ -31,6 +31,7 @@ public final class ValidationConstants {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String CHILD_DATE_OF_BIRTH = "dateOfBirth";
+    public static final String COMMENT = "comment";
 
 
     public static final String START_TIME = "startTime";
@@ -55,7 +56,12 @@ public final class ValidationConstants {
 
     public static final String EMAIL_NOT_VALID = "registration.manager.emailNotValid";
     public static final String NAME_ERROR_MSG = "registration.kid.name";
+    public static final String NAME_NOT_EDITTED = "registration.kid.nameNotEdited";
     public static final String DATE_ERROR_MSG = "registration.kid.date";
+    public static final String LASTNAME_ERROR_MSG = "registration.kid.lastName";
+    public static final String FIRSTNAME_ERROR_MSG = "registration.kid.firstName";
+    public static final String COMMENT_ERROR_MSG = "registration.kid.comment";
+
     public static final String PASSWORD_ERROR_MSG = "registration.password";
     public static final String PHONE_NUMBER_ERROR_MSG = "registration.phone";
     public static final String NOT_CONFIRMED_MSG = "registration.confirm";
@@ -80,6 +86,9 @@ public final class ValidationConstants {
     public static final class ConfigFields {
         public static final String MIN_AGE = "kidsMinAge";
         public static final String MAX_AGE = "kidsMaxAge";
+        public static final String MAX_NAME_LENGTH = "kidsMaxNameLength";
+        public static final String MAX_COMMENT_LENGTH = "kidsMaxCommentLength";
+
 
         public static final String CALCULATION_HOUR = "hourToCalculateBookingsEveryDay";
         public static final String CALCULATION_MINUTE = "minutesToCalculateBookingsEveryDay";

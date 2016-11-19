@@ -84,8 +84,6 @@ $().ready(function() {
 });
 
 $(function() {
-
-
     $('#date-booking').change(function() {
         refreshTable(localStorage["bookingsState"]);
     });
@@ -200,7 +198,7 @@ function refreshTable(bookingsState) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
                         + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id
                         + '" class="glyphicon glyphicon-info-sign"' + 'title="'
-                        + oData.comment + '"></span>');
+                        + oData.comment +  '"' + ' onclick="callCommentDialog()"></span>');
                     } else {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>');
                     }
@@ -239,7 +237,6 @@ function refreshTable(bookingsState) {
         });
     }).draw();
     addHilighted(data);
-
 }
 
 function setStartTime(id, startTime) {
@@ -397,7 +394,7 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
 });
 
 $('#booking-table tbody').on('focus', 'input', function() {
-    var time = dateNow.toString().match(/\d{2}:\d{2}/)[0];
+    var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
     $(this).val(time);
 });
 
@@ -405,8 +402,6 @@ $('#booking-table tbody').on('click', '#leave-btn', function() {
     var tr = $(this).closest('tr');
     var id = table.row(tr).data().id;
     var time = $(this).closest('td').find('input').val();
-
-
     setEndTime(id, time);
 });
 

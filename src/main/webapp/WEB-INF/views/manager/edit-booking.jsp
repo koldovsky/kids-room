@@ -76,6 +76,7 @@
                                 <input id="bookingUpdatingEndTimepicker" type="text" name="end"
                                        class="time form-control picker"/>
                             </div>
+
                             <div>
 
                                 <textarea type="text" class="form-control" id="kid-comment"
@@ -83,11 +84,9 @@
                             </div>
                         </div>
 
-                        <input type="button" class="btn btn-success pull-left" id="updatingBooking" value="Update"></input>
-
-
+                        <input type="button" class="btn btn-success pull-left" id="updatingBooking" value="Update">
                         <button type="button" class="btn btn-danger pull-right" id="deletingBooking">Delete</button>
-
+                    </div>
                 </form>
             </div>
         </div>
@@ -129,7 +128,7 @@
                         <div id="kids">
                         </div>
                         <br>
-                        <input type="button" class="btn btn-success" id="booking" value="Book"></input>
+                        <input type="button" class="btn btn-success" id="booking" value="Book">
                     </div>
                 </form>
             </div>
@@ -161,6 +160,20 @@
                     <br>
                     <h4>Booking updated</h4>
                     <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="kidCommentMessage" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body-inf">
+                <div align="center">
+                    <br>
+                    <h4></h4>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code ="modal.okay"/></button>
                 </div>
 
             </div>
@@ -255,5 +268,6 @@
 
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
+<script src="resources/js/comment-modal-message.js"></script>
 
 
