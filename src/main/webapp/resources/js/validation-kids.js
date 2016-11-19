@@ -7,10 +7,10 @@ $(document).ready(function() {
     $(function() {
         $.validator.addMethod("regexKidFirstName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Invalid First Name ");
+        }, messages.kid.invalidFirstName);
         $.validator.addMethod("regexKidLastName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Invalid Last Name");
+        }, messages.kid.invalidLastName);
 
         $('#kidregistrform').validate({
             rules: {
@@ -29,17 +29,14 @@ $(document).ready(function() {
             },
             messages: {
                 firstName: {
-                    required: 'The field first name can not be empty',
-                    regexKidFirstName: 'To enter a first name, use only letters',
-
-
+                    required: messages.kid.requiredFirstName,
+                    regexKidFirstName: messages.kid.regexKidFirstName
                 },
                 lastName: {
-                    required: 'The field last name can not be empty',
-                    regexKidLastName: 'To enter a last name use only letters'
+                    required: messages.kid.requiredLastName,
+                    regexKidLastName: messages.kid.regexKidLastName
 
                 }
-
             }
         });
     });

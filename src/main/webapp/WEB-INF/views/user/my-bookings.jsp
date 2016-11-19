@@ -66,11 +66,12 @@
 
     </div>
 </div>
-<c:if test="${pageContext.response.locale=='ua'}">
-    <script src="resources/js/validation-my-booking-ua.js"></script>
-</c:if>
-<c:if test="${pageContext.response.locale != 'ua'}">
-    <script src="resources/js/validation-my-booking.js"></script>
+ <script src="resources/js/validation-my-booking.js"></script>
+<c:if test="${pageContext.response.locale =='ua'}">
+    <script src="resources/js/lib/messages-ua.js"></script>
 </c:if>
 
+<c:if test="${pageContext.response.locale != 'ua'}">
+    <script src="resources/js/lib/messages.js"></script>
+</c:if>
 
