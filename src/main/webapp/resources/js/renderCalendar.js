@@ -55,7 +55,7 @@ $(function () {
 
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#updating').dialog({

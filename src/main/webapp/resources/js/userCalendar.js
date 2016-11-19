@@ -43,6 +43,12 @@ $(function () {
         }
     });
 
+    $("button").focusin(function() {
+        this.style.color = "#CACFD2";
+    }).focusout(function() {
+        this.style.color = "#FFFFFF";
+    });
+
     $('#bookingForm').dialog({
         autoOpen: false,
         modal:true,
@@ -82,32 +88,32 @@ $(function () {
 
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#bookingEndTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#bookingUpdatingStartTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#bookingUpdatingEndTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#recurrent-booking-start-time').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
-        step: 15,
+        step: 1,
     });
 
     $('#make-recurrent-booking').dialog({
