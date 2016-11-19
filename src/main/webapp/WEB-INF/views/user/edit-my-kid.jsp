@@ -8,11 +8,12 @@
 <link rel='stylesheet' href='resources/css/registerkid.css'>
 <script src="resources/js/comment-box.js"></script>
 <script src="resources/js/edit-my-kid.js"></script>
+<script scr="resources/js/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
 
-<form:form class = "registerkid"  enctype="application/x-www-form-urlencoded"
+<form:form class = "registerkid"  enctype="application/x-www-form-urlencoded" id = "editkidform"
 modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" method="post">
 
       <img class="icon-png" src="resources/img/edit.png" />
@@ -21,14 +22,14 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       <form:hidden path="id" />
 <div class="form-group-material-blue-400">
       <div class="form-group">
-             <label for="firstname" class="required"><spring:message code="kid.firstname" /></label>
-              <form:input path="firstName" id="firstname" value="${kid.getFirstName()}"
+             <label for="firstName" class="required"><spring:message code="kid.firstname" /></label>
+              <form:input path="firstName" id="firstName" value="${kid.getFirstName()}"
               class="form-control" required="required"/>
               <form:errors path="firstName" cssClass="error"  />
       </div>
       <div class="form-group">
-              <label for="lastname" class="required"><spring:message code="kid.lastname" /></label>
-              <form:input path="lastName" id="lastname" value="${kid.getLastName()}" class="form-control" required="required" />
+              <label for="lastName" class="required"><spring:message code="kid.lastname" /></label>
+              <form:input path="lastName" id="lastName" value="${kid.getLastName()}" class="form-control" required="required" />
               <form:errors path="lastName" cssClass="error" />
       </div>
 
@@ -81,6 +82,7 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       </footer>
     </div>
 </form:form>
+
     <%--confirmation-dialog--%>
     <div class="container">
         <div class="vertical-center-row">
@@ -110,6 +112,18 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
             </div>
         </div>
     </div>
+
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages_ua.js"></script>
+    <script src="resources/js/validation-edit-kid-ua.js"></script>
+</c:if>
+
+<c:if test="${pageContext.response.locale=='en'}">
+    <script src="ajax.aspnetcdn.com/ajax/jquery.validate/1.15.6/localization/messages.js"></script>
+    <script src="resources/js/validation-edit-kid.js"></script>
+</c:if>
 
 
 

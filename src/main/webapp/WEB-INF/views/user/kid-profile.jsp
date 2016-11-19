@@ -54,7 +54,7 @@
 </sec:authorize>
 <hr></hr>
 <div id="parent">
-    <h3> <spring:message code="kid.parent" /> </h4>
+    <h4> <spring:message code="kid.parent" /> </h4>
     <h4> ${kid.getParentId().getFullName()}<h4>
     <h4> ${kid.getParentId().getEmail()}<h4>
     <h4> ${kid.getParentId().getPhoneNumber()}<h4>
