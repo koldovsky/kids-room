@@ -32,7 +32,6 @@ function updateTable(){
 			datatype: JSON,
 			success: function (response) {
 
-				document.getElementById("dateError").innerHTML = "";
 				var list = $.parseJSON(response);
 
 				var tableContent = '<tbody><tr>';
