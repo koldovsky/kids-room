@@ -12,6 +12,5 @@ messages = {
     },
     date: {
     	fromBiggerThanTo:  " 'To' date should be bigger than 'From' date "
-    }
-    
-}
+    }   
+};

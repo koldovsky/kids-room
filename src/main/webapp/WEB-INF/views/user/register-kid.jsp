@@ -103,15 +103,15 @@
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script src="resources/js/validation-kids.js"></script>
-
-<c:if test="${pageContext.response.locale=='ua'}">
+<c:choose>
+<c:when test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
     <script src="resources/js/lib/messages-ua.js"></script>
-</c:if>
-
-<c:if test="${pageContext.response.locale!= 'ua'}">
+</c:when>
+<c:when test="${pageContext.response.locale!= 'ua'}">
     <script src="resources/js/lib/messages.js"></script>
-</c:if>
+</c:when>
+</c:choose>
 
 
 
