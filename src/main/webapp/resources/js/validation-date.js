@@ -1,4 +1,4 @@
-function validateDate() {
+function validateBookingsDate() {
 
     var fromDateValue = $('#from').val();
     var toDateValue = $('#to').val();
@@ -19,12 +19,7 @@ function validateDate() {
         isValidate = false;
     }
     if((new Date(fromDateValue)) > (new Date(toDateValue))) {
-        document.getElementById("dateError").
-            innerHTML = "<br>`from date` cannot be greater than `to date`";
         isValidate = false;
-    }else {
-        document.getElementById("dateError").
-            innerHTML = "";
     }
 
     return isValidate;

@@ -1,9 +1,11 @@
 function validateDate() {
-    var startDate = document.getElementById("from").value.toString().replace(/-/gi, "");
-    var endDate = document.getElementById("to").value.toString().replace(/-/gi, "");
-    if (endDate - startDate < 0) {
-        document.getElementById("errorDate").innerHTML = "Початкова дата не повинна перевищувати кінцеву";
-    } else {
-        document.getElementById("errorDate").innerHTML = "";
+    if(validateBookingsDate()) {
+        var startDate = document.getElementById("from").value.toString();
+        var endDate = document.getElementById("to").value.toString();
+        if (new Date(endDate) > new Date(startDate)) {
+            document.getElementById("errorDate").innerHTML = "Початкова дата не повинна перевищувати кінцеву";
+        } else {
+            document.getElementById("errorDate").innerHTML = "";
+        }
     }
 }

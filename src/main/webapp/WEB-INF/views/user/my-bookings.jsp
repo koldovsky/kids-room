@@ -66,11 +66,10 @@
 
     </div>
 </div>
+<script src="resources/js/validation-date.js"></script>
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="resources/js/validation-my-booking-ua.js"></script>
 </c:if>
 <c:if test="${pageContext.response.locale != 'ua'}">
     <script src="resources/js/validation-my-booking.js"></script>
 </c:if>
-
-
