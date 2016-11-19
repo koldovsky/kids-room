@@ -45,7 +45,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
             return
                     query.setParameter(UserConstants.Entity.EMAIL, email).getSingleResult();
         } catch (NoResultException e) {
-            log.error("no exist", e);
+            log.error("This email doesn't exists.", e);
             return null;
         }
     }
