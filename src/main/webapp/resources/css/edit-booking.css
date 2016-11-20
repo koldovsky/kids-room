@@ -58,23 +58,24 @@ html, body, .container {
 
 #create-booking-btn{
       width:150px;
-      margin-right: 50px;
-      float:right;
+      margin-bottom: 50px;
+      display: inline-block;
 
 }
 
 #choose-time-inp{
        width:150px;
-       margin-left: 50px;
+       margin-right: 30px;
        margin-top: 20px;
-       float:left;
+       display: inline-block;
 }
 
 #nav-group{
-     margin: auto;
+    margin-right: 20px;
      width: 50%;
      float:none;
      background-color: white;
+     display: inline-block;
 }
 .glyphicon-warning-sign{
     font-size: 1.3em;
@@ -96,7 +97,8 @@ html, body, .container {
 }
 
 #booking-table{
-    display: none;
+    margin-top: 100px;
+    display: inline-block;
 }
 
 .highlight-row{

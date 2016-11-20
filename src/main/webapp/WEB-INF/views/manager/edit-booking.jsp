@@ -20,11 +20,6 @@
                 <input id="date-booking" class="form-control" type="date"/>
             </form>
         </div>
-        <div id="create-booking-btn">
-            <button class="btn btn-primary" onclick="openCreateBookingDialog()">
-                Add a kid
-            </button>
-        </div>
         <div id="nav-group">
             <nav>
                 <ul class="nav nav-pills">
@@ -34,6 +29,11 @@
                     <button id="btn-leaved" class="btn btn-raised" onclick="leavedBooking()">Left</button>
                 </ul>
             </nav>
+        </div>
+        <div id="create-booking-btn">
+            <button class="btn btn-primary" onclick="openCreateBookingDialog()">
+                Add a kid
+            </button>
         </div>
         <br>
 

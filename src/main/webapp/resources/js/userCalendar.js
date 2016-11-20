@@ -43,12 +43,6 @@ $(function () {
         }
     });
 
-    $("button").focusin(function() {
-        this.style.color = "#CACFD2";
-    }).focusout(function() {
-        this.style.color = "#FFFFFF";
-    });
-
     $('#bookingForm').dialog({
         autoOpen: false,
         modal:true,

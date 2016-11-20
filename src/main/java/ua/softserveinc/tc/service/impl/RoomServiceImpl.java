@@ -185,7 +185,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         else if(bookings == null)
             throw new NullPointerException("bookings is null");
 
-        long oneMinute = 60 * 1000;
+        final long oneMinute = 60 * 1000;
         int maxReservedBookings = 0;
         for(long ti = dateLo.getTime(); ti < dateHi.getTime(); ti += oneMinute) {
             int temporaryMax = 0;
