@@ -2,6 +2,8 @@ package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
@@ -19,6 +22,7 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.TimeValidator;
 
 import java.security.Principal;
 import java.util.List;
@@ -42,6 +46,8 @@ public class MyBookingsController {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private TimeValidator timeValidator;
     /**
      * Renders a view
      * @param principal
@@ -83,12 +89,15 @@ public class MyBookingsController {
      */
     @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
     @ResponseBody
-    public String getBookings(
+    public ResponseEntity<String> getBookings(
                        @RequestParam(value = "dateLo") String dateLo,
                        @RequestParam(value = "dateHi") String dateHi,
                        Principal principal)
     throws ResourceNotFoundException{
 
+        if(!timeValidator.validateDate(dateLo) || !timeValidator.validateDate(dateHi)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DATE_IS_NOT_VALID);
+        }
         User currentUser = userService.getUserByEmail(principal.getName());
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
@@ -100,6 +109,6 @@ public class MyBookingsController {
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
 
-        return new Gson().toJson(dtos);
+        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dtos));
     }
 }

@@ -18,6 +18,10 @@ public final class ValidationConstants {
     public static final String SIMPLE_EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
             "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+    public static final String DATE_REGEX = "^(\\d{4})(\\/|-)(\\d{1,2})(\\/|-)(\\d{1,2})$";
+
+    public static final String DATE_IS_NOT_VALID = "Date is not valid";
+
     public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
     public static final String NOT_EMPTY_MESSAGE = "May not be empty.";
     public static final String NOT_VALID_MESSAGE = "Value is invalid.";
@@ -45,6 +49,7 @@ public final class ValidationConstants {
 
     public static final String TIME_IS_NOT_VALID = "administrator.timeStartEnd";
     public static final String TIME_FIELD = "timeStartEnd";
+    public static final String DATE_FIELD = "date";
 
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";

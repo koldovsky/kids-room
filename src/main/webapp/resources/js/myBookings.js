@@ -25,35 +25,40 @@ function updateTable(){
 	var from = $('#from').val();
 	var to = $('#to').val();
 	var request = "mybookings/getbookings?dateLo=" + from +"&dateHi=" + to;
+	if(validateBookingsDate()) {
+		$.ajax({
+			type: "GET",
+			url: request,
+			datatype: JSON,
+			success: function (response) {
 
-	$.ajax({
-		type: "GET",
-		url: request,
-		datatype: JSON,
-		success: function(response){
-			var list = $.parseJSON(response);
+				var list = $.parseJSON(response);
 
-			var tableContent = '<tbody><tr>';
-            var sumTotal = 0;
-			$.each(list, function(i, booking){
-			tableContent += '<td>' + booking.date + '</td>'
-            			+ '<td>' + booking.kidName + '</td>'
-			            + '<td>' + booking.roomName + '</td>'
-			            + '<td>' + booking.startTime + '</td>'
-			            + '<td>' + booking.endTime + '</td>'
-			            + '<td>' + booking.duration + '</td>'
-			            + '<td>' + (booking.sum/100).toFixed(2) + '</td> + </tr>';
-			sumTotal += booking.sum;
-			        });
+				var tableContent = '<tbody><tr>';
+				var sumTotal = 0;
+				$.each(list, function (i, booking) {
+					tableContent += '<td>' + booking.date + '</td>'
+						+ '<td>' + booking.kidName + '</td>'
+						+ '<td>' + booking.roomName + '</td>'
+						+ '<td>' + booking.startTime + '</td>'
+						+ '<td>' + booking.endTime + '</td>'
+						+ '<td>' + booking.duration + '</td>'
+						+ '<td>' + (booking.sum / 100).toFixed(2) + '</td> + </tr>';
+					sumTotal += booking.sum;
+				});
 
-            tableContent += '</tbody>';
-			$('tr:not(#header)').remove();
-			$('#myBookings').append( tableContent );
-            sumTotal = (sumTotal/100).toFixed(2);
-			$('#sum').html(sumTotal);
-			paginate();
-		}
-	});
+				tableContent += '</tbody>';
+				$('tr:not(#header)').remove();
+				$('#myBookings').append(tableContent);
+				sumTotal = (sumTotal / 100).toFixed(2);
+				$('#sum').html(sumTotal);
+				paginate();
+			},
+			error: function (dateError, textStatus, xhr) {
+				document.getElementById("dateError").innerHTML = "<br>" + dateError.responseText;
+			}
+		});
+	}
 }
 
 function paginate(){
@@ -100,4 +105,4 @@ var tableToExcel = ( function() {
                       $('#itemsPerPage').val(10);
                       paginate();
                       }
-          })()
+          })();
