@@ -166,11 +166,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     /**
      * The method finds out is there available space in
-     * the rooms for given listDTO.
+     * the rooms for given listDTO. The listDto must not
+     * be null.
+     *
      * @param listDTO list of BookingDto
      * @return true if there is available places in the room
      */
     private boolean isAvailabilePlacesInTheRoom(List<BookingDto> listDTO) {
+        Objects.requireNonNull(listDTO, "listDTO must not be null");
         int availablePlaces = 0;
         int needPlaces = 1;
         Date theSameDay = null;
@@ -192,11 +195,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
-        if(listDTO == null)
-            throw new NullPointerException("listDTO is null");
-
-        boolean isAvailablePlaces = isAvailabilePlacesInTheRoom(listDTO);
-        if (isAvailablePlaces) {
+        Objects.requireNonNull(listDTO, "listDTO must not be null");
+        if (isAvailabilePlacesInTheRoom(listDTO)) {
             listDTO.forEach(bookingDTO -> {
                 Booking booking = bookingDTO.getBookingObject();
                 booking.setSum(0L);
