@@ -1,0 +1,15 @@
+button:focus {
+    border: 1pt groove lightskyblue;
+}
+
+a:focus {
+    border: 1px groove steelblue;
+}
+
+th:focus {
+    border: 1px groove mediumblue;
+}
+
+select:focus {
+    border: 2pt groove lightskyblue;
+}

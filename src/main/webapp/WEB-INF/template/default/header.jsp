@@ -3,6 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<link href='resources/css/highlighting.css' rel='stylesheet'/>
+
 <div class="tophead">
     <div class="logo">
         <a href="/home">
@@ -222,4 +224,3 @@
     </div>
 </nav>
 
-<script src='resources/js/tab-highlighting.js'></script>
