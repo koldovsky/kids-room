@@ -65,7 +65,7 @@
                     </c:forEach>
                 </table>
             </td>
-            <td><a href="adm-update-room?id=${room.id}"><button class="button button-size-default edit"/></button></a></td>
+            <td><a href="adm-update-room?id=${room.id}" tabindex="-1"><button class="button button-size-default edit"></button></a></td>
             <td>
                 <c:if test="${room.active ne true}">
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
@@ -91,8 +91,11 @@
 
         <tr>
             <th colspan="10" class="hide-border set-standard-color">
-                <a href="adm-add-room"><input type="button" value=<spring:message code="administrator.add"/>
-                                        class="button-add button"/></a>
+                <a href="adm-add-room" tabindex="-1">
+                    <button type="button" class="button-add button">
+                        <spring:message code="administrator.add"/>
+                    </button>
+                </a>
             </th>
         </tr>
     </table>

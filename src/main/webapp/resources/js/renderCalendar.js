@@ -184,9 +184,7 @@ $(function () {
 
     $('#cancel-choose').click(function () {
         $('#choose-updating-type').dialog('close');
-        $('#single-update').attr('checked', true);
-        $('#recurrent-update').attr('checked', false);
-
+        $('#single-update').prop('checked', true);
     });
 
     $('#update-recurrent-button').click(function () {

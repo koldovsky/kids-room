@@ -145,9 +145,8 @@ $(function () {
         updateRecurrentBooking();
     });
     $('#close-choose').click(function () {
-        // $('#single-update-booking').prop('checked', true);
-        // $('#recurrent-update-booking').prop('checked', false);
         $('#recurrent-change').dialog('close');
+        $('#single-update-booking').prop('checked', true);
     });
 
     $('#confirm-choose-booking').click(function () {
