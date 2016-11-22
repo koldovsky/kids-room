@@ -6,8 +6,10 @@ function validateDate() {
             document.getElementById("errorDate").innerHTML = messages.date.fromBiggerThanTo;
         } else {
             document.getElementById("errorDate").innerHTML = "";
+            return true;
         }
     }
+    return false;
 }
 
 function validateBookingsDate() {

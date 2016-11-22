@@ -25,7 +25,7 @@ function updateTable(){
 	var from = $('#from').val();
 	var to = $('#to').val();
 	var request = "mybookings/getbookings?dateLo=" + from +"&dateHi=" + to;
-	if(validateBookingsDate()) {
+	if(validateDate()) {
 		$.ajax({
 			type: "GET",
 			url: request,
@@ -55,7 +55,7 @@ function updateTable(){
 				paginate();
 			},
 			error: function (dateError, textStatus, xhr) {
-				document.getElementById("dateError").innerHTML = "<br>" + dateError.responseText;
+				document.getElementById("errorDate").innerHTML = dateError.responseText;
 			}
 		});
 	}
