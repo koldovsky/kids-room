@@ -1,6 +1,6 @@
 button:focus {
     border: 1pt solid  #4d90fe !important;
-    outline: 1px solid white !important;
+    outline: 1px solid #EEEEEE !important;
 }
 
 .button-add:focus {
