@@ -1,6 +1,21 @@
 button:focus {
-    border: 1pt solid #0000CD !important;
+    border: 1pt solid  #4d90fe !important;
+    outline: 1px solid white !important;
+}
 
+.button-add:focus {
+    border: 1pt solid #0000CD !important;
+    outline: none !important;
+}
+
+.button.save:focus {
+      border: 1pt solid #0000CD !important;
+      outline: none !important;
+}
+
+.button.edit:focus {
+    border: 1pt solid #0000CD !important;
+    outline: none !important;
 }
 
 a:focus {
