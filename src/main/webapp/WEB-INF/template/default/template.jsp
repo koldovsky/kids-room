@@ -51,6 +51,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 
 <script src="resources/js/lib/ui-bootstrap-tpls-2.1.3.min.js"></script>
 
+<link href='resources/css/highlighting.css' rel='stylesheet'/>
+
 </head>
 
 

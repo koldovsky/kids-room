@@ -3,8 +3,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<link href='resources/css/highlighting.css' rel='stylesheet'/>
-
 <div class="tophead">
     <div class="logo">
         <a href="/home">
@@ -69,7 +67,7 @@
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li   class="dropdown menu-item" style="padding-right: 150px;">
+                                <li class="dropdown menu-item" style="padding-right: 150px;">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
                                         <span id="usersRoom">
@@ -80,7 +78,7 @@
                                     <ul id="selectRoomForParent" class="dropdown-menu">
                                         <c:forEach items="${rooms}" var="room">
                                             <li>
-                                                <a style="cursor: pointer;" id="${room.id},${userId},${room.phoneNumber},${room.managers} ">${room.city}, ${room.address}</a>
+                                                <a href="#" style="cursor: pointer;" id="${room.id},${userId},${room.phoneNumber},${room.managers} ">${room.city}, ${room.address}</a>
                                             </li>
                                         </c:forEach>
                                     </ul>
@@ -112,7 +110,7 @@
                             <ul id="selectRoom" class="dropdown-menu">
                                 <c:forEach items="${rooms}" var="room">
                                     <li>
-                                        <a style="cursor: pointer;" id="${room.id}">${room.address}</a>
+                                        <a href="#" style="cursor: pointer;" id="${room.id}">${room.address}</a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -202,8 +200,8 @@
                         <span style="font-size: 8px;" class="glyphicon glyphicon-triangle-bottom"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li> <a class="langitem" id="EN">EN</a></li>
-                        <li> <a class="langitem" id="UA">UA</a></li>
+                        <li> <a href="#" class="langitem" id="EN">EN</a></li>
+                        <li> <a href="#" class="langitem" id="UA">UA</a></li>
                    </ul>
                 </li>
 
