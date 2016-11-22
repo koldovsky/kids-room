@@ -940,6 +940,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         eventMouseover: function(calEvent) {
 
             cursorIsOverEvent = false;
+            var eventInfo = $('.eventInfo');
+            var textArea = $('#text-area');
 
             if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
                 if (calEvent.description != "") {
@@ -951,10 +953,23 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     $('#eventTitle').html(calEvent.title);
                     $('#startTime').html('Start at :' + '<b>'+ calEvent.start.format('HH:mm'));
                     $('#endTime').html('Ends at :' + '<b>'+calEvent.end.format('HH:mm'));
+
+                    textArea.css({"height": parseInt(eventInfo.css('height')) - 100,
+                        "width": parseInt(eventInfo.css('width')) - 30,
+                        "resize": "none"});
+
+                    $('#eventDescription').html('Description:');
                     if (calEvent.description != "") {
-                        $('#eventDescription').html('<b>Description : </b><br>' + eventDescription);
+                        textArea.val(eventDescription);
+                    } else {
+                        textArea.val("This event hasn't any description");
                     }
-                    $('.eventInfo').delay(600).fadeTo(200, 1);
+
+                    eventInfo.delay(200).fadeTo(200, 1);
+
+                    eventInfo.mouseover(function () {
+                        eventInfo.show();
+                    });
 
                     if(cursorIsOverEvent == false) {
                         cursorOverEventX = e.pageX;
@@ -967,26 +982,26 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
                 }).mousemove(function (e) {
 
-                    var eventInfoHeight = parseInt($('.eventInfo').css('height'));
-                    var eventInfoWidth = parseInt($('.eventInfo').css('width'));
+                    var eventInfoHeight = parseInt(eventInfo.css('height'));
+                    var eventInfoWidth = parseInt(eventInfo.css('width'));
                     var windowWidth = $( document ).width();
                     var windowHeight = $( document ).height();
 
                     if (cursorOverEventX > windowWidth - eventInfoWidth * 1.5) {
                         if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
-                            $('.eventInfo').css('top', e.pageY - eventInfoHeight);
-                            $('.eventInfo').css('left', e.pageX - eventInfoWidth);
+                            eventInfo.css('top', e.pageY - eventInfoHeight);
+                            eventInfo.css('left', e.pageX - eventInfoWidth);
                         } else {
-                            $('.eventInfo').css('top', e.pageY + 20);
-                            $('.eventInfo').css('left', e.pageX - eventInfoWidth);
+                            eventInfo.css('top', e.pageY + 20);
+                            eventInfo.css('left', e.pageX - eventInfoWidth);
                         }
                     } else {
                         if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
-                            $('.eventInfo').css('top', e.pageY - eventInfoHeight);
-                            $('.eventInfo').css('left', e.pageX + 10);
+                            eventInfo.css('top', e.pageY - eventInfoHeight);
+                            eventInfo.css('left', e.pageX + 10);
                         } else {
-                            $('.eventInfo').css('top', e.pageY + 20);
-                            $('.eventInfo').css('left', e.pageX + 10);
+                            eventInfo.css('top', e.pageY + 20);
+                            eventInfo.css('left', e.pageX + 10);
                         }
                     }
                 });
@@ -994,10 +1009,22 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         },
 
         eventMouseout: function() {
-            $(this).css('z-index', 8);
-            $('.eventInfo').hide();
-            cursorIsOverEvent = false;
+            $(document).ready(function() {
+                var countdown;
+                var eventInfo = $(".eventInfo");
 
+                eventInfo.show().hover(function() {
+                    clearTimeout(countdown);
+                });
+
+                countdown = setTimeout(function() {
+                    eventInfo.hide();
+                }, 2000);
+
+                eventInfo.mouseout(function () {
+                    eventInfo.hide();
+                });
+            });
         },
 
         eventClick: function (calEvent, data, view) {
