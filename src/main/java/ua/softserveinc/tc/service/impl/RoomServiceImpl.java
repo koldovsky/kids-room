@@ -187,7 +187,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         for(long ti = dateLo.getTime(); ti < dateHi.getTime(); ti += oneMinuteMillis) {
             int temporaryMax = 0;
             for(Booking tab : bookings)
-                if(tab.getBookingStartTime().getTime() <= ti && tab.getBookingEndTime().getTime() >= ti)
+                if(tab.getBookingStartTime().getTime() < ti && tab.getBookingEndTime().getTime() > ti)
                     temporaryMax++;
             if(temporaryMax > maxReservedBookings)
                 maxReservedBookings = temporaryMax;
