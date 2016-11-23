@@ -953,7 +953,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     $('#eventTitle').html(calEvent.title);
                     $('#startTime').html(messages.date.startEventDate + '<b>'+ calEvent.start.format('HH:mm'));
                     $('#endTime').html(messages.date.endEventDate + '<b>'+calEvent.end.format('HH:mm'));
-                    textArea.css({"height": parseInt(eventInfo.css('height')) - 80,
+                    $('#eventDescription').html(messages.date.description);
+                    textArea.css({"height": parseInt(eventInfo.css('height')) - 100,
                         "width": parseInt(eventInfo.css('width')) - 30,
                         "resize": "none"});
                     if (calEvent.description != "") {
