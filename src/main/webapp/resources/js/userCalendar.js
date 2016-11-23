@@ -937,7 +937,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#make-recurrent-booking').dialog('open');
         },
 
-        eventMouseover: function(calEvent) {
+        eventMouseover: function (calEvent) {
 
             cursorIsOverEvent = false;
             var eventInfo = $('.eventInfo');
@@ -951,25 +951,26 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                 $(this).mouseover(function (e) {
                     $(this).css('z-index', 10000);
                     $('#eventTitle').html(calEvent.title);
-                    $('#startTime').html(messages.date.startEventDate + '<b>'+ calEvent.start.format('HH:mm'));
-                    $('#endTime').html(messages.date.endEventDate + '<b>'+calEvent.end.format('HH:mm'));
+                    $('#startTime').html(messages.date.startEventDate + '<b>' + calEvent.start.format('HH:mm'));
+                    $('#endTime').html(messages.date.endEventDate + '<b>' + calEvent.end.format('HH:mm'));
                     $('#eventDescription').html(messages.date.description);
-                    textArea.css({"height": parseInt(eventInfo.css('height')) - 100,
+                    textArea.css({
+                        "height": parseInt(eventInfo.css('height')) - 100,
                         "width": parseInt(eventInfo.css('width')) - 30,
-                        "resize": "none"});
+                        "resize": "none"
+                    });
                     if (calEvent.description != "") {
                         textArea.val(eventDescription);
                     } else {
-                        textArea.val("This event hasn't any description");
+                        textArea.val(messages.info.noDescription);
                     }
-
                     eventInfo.delay(200).fadeTo(200, 1);
 
                     eventInfo.mouseover(function () {
                         eventInfo.show();
                     });
 
-                    if(cursorIsOverEvent == false) {
+                    if (cursorIsOverEvent == false) {
                         cursorOverEventX = e.pageX;
                         cursorOverEventY = e.pageY;
                         cursorIsOverEvent = true;
@@ -982,8 +983,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
                     var eventInfoHeight = parseInt(eventInfo.css('height'));
                     var eventInfoWidth = parseInt(eventInfo.css('width'));
-                    var windowWidth = $( document ).width();
-                    var windowHeight = $( document ).height();
+                    var windowWidth = $(document).width();
+                    var windowHeight = $(document).height();
 
                     if (cursorOverEventX > windowWidth - eventInfoWidth * 1.5) {
                         if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
@@ -1006,22 +1007,25 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             }
         },
 
-        eventMouseout: function() {
-            $(document).ready(function() {
-                var countdown;
-                var eventInfo = $(".eventInfo");
+        eventMouseout: function (calEvent) {
+            $(document).ready(function () {
+                if (calEvent.type === 'event') {
+                    cursorIsOverEvent = false;
+                    var countdown;
+                    var eventInfo = $(".eventInfo");
 
-                eventInfo.show().hover(function() {
-                    clearTimeout(countdown);
-                });
+                    eventInfo.show().hover(function () {
+                        clearTimeout(countdown);
+                    });
 
-                countdown = setTimeout(function() {
-                    eventInfo.hide();
-                }, 2000);
+                    countdown = setTimeout(function () {
+                        eventInfo.hide();
+                    }, 1000);
 
-                eventInfo.mouseout(function () {
-                    eventInfo.hide();
-                });
+                    eventInfo.mouseout(function () {
+                        eventInfo.hide();
+                    });
+                }
             });
         },
 

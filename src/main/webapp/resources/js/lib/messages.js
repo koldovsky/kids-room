@@ -18,5 +18,9 @@ messages = {
 		startEventDate: "Start at: ",
 		endEventDate: "End at: ",
 		description: "Description: "
-    }   
+    },
+    info: {
+		description: "Description: ",
+		noDescription: "This event hasn't any description"
+	}
 };
