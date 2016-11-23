@@ -11,8 +11,12 @@ messages = {
 		regexKidLastName: 'To enter a last name use only letters',
 		editFirstName : "Incorrect first name. Please enter at least 2 characters",
 		editLastName : "Incorrect last name. Please enter at least 2 characters"
+
     },
     date: {
-    	fromBiggerThanTo:  " 'To' date should be bigger than 'From' date "
+    	fromBiggerThanTo:  " 'To' date should be bigger than 'From' date ",
+		startEventDate: "Start at: ",
+		endEventDate: "End at: ",
+		description: "Description: "
     }   
 };

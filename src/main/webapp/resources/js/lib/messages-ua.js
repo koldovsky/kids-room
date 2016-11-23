@@ -14,6 +14,9 @@ messages = {
 	},
 
 	 date: {
-    	fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву"
+    	fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву",
+		 startEventDate: "Початок: ",
+		 endEventDate: "Кінець: ",
+		 description: "Опис: "
     }
 };
