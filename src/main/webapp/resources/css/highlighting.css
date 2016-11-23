@@ -18,6 +18,16 @@ button:focus {
     outline: none !important;
 }
 
+.button.button-confirm:focus {
+     border: 1pt solid #0000CD !important;
+     outline: none !important;
+ }
+
+.button.button-cancel:focus {
+    border: 1pt solid #0000CD !important;
+    outline: none !important;
+}
+
 a:focus {
     border: 1px groove #4682B4;
 }
