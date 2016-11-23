@@ -61,6 +61,10 @@ $().ready(function() {
         $('#cancelButton').on('click', function() {
             cancelBooking();
         });
+        $('#closeCencel').on('click', function() {
+            $('#cancelModal').modal('hide');
+            $('#bookingUpdatingDialog').dialog('close');
+        });
     });
     $('#updatingBooking').click(function() {
         var getData = $('#data-edit').val();
