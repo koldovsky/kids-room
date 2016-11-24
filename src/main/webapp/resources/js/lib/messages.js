@@ -35,6 +35,13 @@ messages = {
 			sortAscending:  ": activate to sort column ascending",
 			sortDescending: ": activate to sort column descending"
 		}
+	},
+	modal:
+	{
+		kid: {
+			comment: "Comment",
+			choose: "Please choose kid"
+		}
 	}
 };
 
