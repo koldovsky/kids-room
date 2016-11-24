@@ -86,7 +86,6 @@ html, body, .container {
 .leave-time{
      margin-left: 15px;
      margin-right: 15px;
-
 }
 
 .table-edit tr:hover {
@@ -100,6 +99,21 @@ html, body, .container {
 #booking-table{
     margin-top: 100px;
     display: inline-block;
+    padding-left: 30px;
+}
+
+#booking-table_filter {
+    padding-right: 45px;
+}
+#booking-table_wrapper{
+    padding-bottom: 10px;
+}
+#booking-table_info, #booking-table_length {
+    text-align: left;
+    margin-left:30px;
+}
+#booking-table_paginate{
+    padding-right: 45px;
 }
 
 .highlight-row{
