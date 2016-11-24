@@ -2,8 +2,9 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https:////cdn.datatables.net/plug-ins/1.10.12/i18n/Ukrainian.json"></script>
 
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -23,16 +24,16 @@
         <div id="nav-group">
             <nav>
                 <ul class="nav nav-pills">
-                    <button id="btn-all" class="btn btn-raised" onclick="allBooking()">All</button>
-                    <button id="btn-booked" class="btn btn-raised" onclick="bookedBooking()">Booked</button>
-                    <button id="btn-active" class="btn btn-raised" onclick="activeBooking()">Arrived</button>
-                    <button id="btn-leaved" class="btn btn-raised" onclick="leavedBooking()">Left</button>
+                    <button id="btn-all" class="btn btn-raised" onclick="allBooking()"><spring:message code="booking.allKids"/></button>
+                    <button id="btn-booked" class="btn btn-raised" onclick="bookedBooking()"><spring:message code="booking.bookedKids"/></button>
+                    <button id="btn-active" class="btn btn-raised" onclick="activeBooking()"><spring:message code="booking.arrivedKids"/></button>
+                    <button id="btn-leaved" class="btn btn-raised" onclick="leavedBooking()"><spring:message code="booking.leftKids"/></button>
                 </ul>
             </nav>
         </div>
         <div id="create-booking-btn">
             <button class="btn btn-primary" onclick="openCreateBookingDialog()">
-                Add a kid
+                <spring:message code="booking.addKid"/>
             </button>
         </div>
         <br>
@@ -99,15 +100,15 @@
                 <form id="bookings">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
-                        <label for="selectUser">Choose parent</label>
+                        <label for="selectUser"><spring:message code="booking.chooseParent"/></label>
                         <select id="selectUser" name="select" onchange="selectUser();" class="form-control">
-                            <lable> Please choose kid</lable>
+                            <label> Please choose kid</label>
                             <option value=" " disabled selected hidden></option>
                             <c:forEach items="${users}" var="user">
                                 <option value="${user.id}">${user.getFullName()}</option>
                             </c:forEach>
                         </select>
-                        <label for="bookingStartDate">Booking date</label>
+                        <label for="bookingStartDate"><spring:message code="booking.bookingDate"/></label>
                         <br>
                         <div>
                             <input type="text" class="form-control" id="bookingStartDate" placeholder="booking date"
@@ -127,7 +128,7 @@
                         <div id="kids">
                         </div>
                         <br>
-                        <input type="button" class="btn btn-success" id="booking" value="Book">
+                        <input type="button" class="btn btn-success" id="booking" value="<spring:message code="booking.book"/>">
                     </div>
                 </form>
             </div>
@@ -237,7 +238,7 @@
 	74.1,108.4 48.2,86.4 "/>
 </svg>
                     </div>
-                    <h2>New Booking Created</h2>
+                    <h2><spring:message code="booking.creatingNewBooking"/> </h2>
                 </div>
             </div>
         </div>
@@ -268,5 +269,13 @@
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
 <script src="resources/js/comment-modal-message.js"></script>
+<c:choose>
+    <c:when test="${pageContext.response.locale=='ua'}">
+        <script src="resources/js/lib/messages-ua.js"></script>
+    </c:when>
+    <c:when test="${pageContext.response.locale!= 'ua'}">
+        <script src="resources/js/lib/messages.js"></script>
+    </c:when>
+</c:choose>
 
 
