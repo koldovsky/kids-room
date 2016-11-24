@@ -40,7 +40,6 @@
         <table id="booking-table" class="col-md-12" >
             <thead >
             <tr>
-
                 <th class="col-xs-1">#</th>
                 <th class="col-xs-3"><spring:message code="booking.childrens"/></th>
                 <th><spring:message code="booking.time"/></th>
