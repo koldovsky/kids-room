@@ -19,6 +19,16 @@ $(document).ready(function() {
                     regexKidLastName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя\s]+$/,
                     minlength: 2
                 }
+            },
+            messages: {
+                firstName: {
+                    required: messages.kid.requiredFirstName,
+                    minlength: messages.kid.editFirstName
+                },
+                lastName: {
+                    required: messages.kid.requiredLastName,
+                    minlength: messages.kid.editLastName
+                }
             }
         });
     });

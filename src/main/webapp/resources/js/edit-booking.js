@@ -61,6 +61,10 @@ $().ready(function() {
         $('#cancelButton').on('click', function() {
             cancelBooking();
         });
+        $('#closeCencel').on('click', function() {
+            $('#cancelModal').modal('hide');
+            $('#bookingUpdatingDialog').dialog('close');
+        });
     });
     $('#updatingBooking').click(function() {
         var getData = $('#data-edit').val();
@@ -111,9 +115,7 @@ function selectRoomForManager(roomId) {
             var endTime = result[1];
             $('.picker').timepicker('option', 'minTime', startTime);
             $('.picker').timepicker('option', 'maxTime', endTime);
-
         }
-
     });
 }
 
@@ -176,6 +178,27 @@ function refreshTable(bookingsState) {
     }
 
     table = $('#booking-table').DataTable({
+        language: {
+            processing:     messages.dateTable.processing,
+            search:         messages.dateTable.search,
+            lengthMenu:     messages.dateTable.lengthMenu,
+            info:           messages.dateTable.info,
+            infoEmpty:      messages.dateTable.infoEmpty,
+            infoFiltered:   messages.dateTable.infoFiltered,
+            loadingRecords: messages.dateTable.loadingRecords,
+            zeroRecords:    messages.dateTable.zeroRecords,
+            emptyTable:     messages.dateTable.emptyTable,
+            paginate: {
+                first:      messages.dateTable.paginate.first,
+                previous:   messages.dateTable.paginate.previous,
+                next:       messages.dateTable.paginate.next,
+                last:       messages.dateTable.paginate.last
+            },
+            aria: {
+                sortAscending:  messages.dateTable.aria.sortAscending,
+                sortDescending: messages.dateTable.aria.sortDescending
+            }
+        },
         rowId: 'id',
         "columnDefs": [{
             "searchable": false,
@@ -183,7 +206,7 @@ function refreshTable(bookingsState) {
             "targets": 0
         }],
         "order": [
-            [0, 'asc']
+            [1, 'asc']
         ],
         'data': data,
         'columns': [{
@@ -225,7 +248,8 @@ function refreshTable(bookingsState) {
                 + '<button class="btn btn-sm btn-success glyphicon glyphicon-share-alt" id="leave-btn"></button>'
             },
 
-        ]
+        ],
+        "pagingType": "simple_numbers"
     });
 
     table.on('order.dt search.dt', function() {
@@ -237,8 +261,15 @@ function refreshTable(bookingsState) {
         });
     }).draw();
     addHilighted(data);
+    checkTablePage();
 }
-
+function checkTablePage() {
+    $('#booking-table_previous').hide();
+    $('#booking-table_paginate').click(function () {
+        if ($('#booking-table_paginate').find('.active a.page-link').html() == 1)
+            $('#booking-table_previous').hide();
+    });
+}
 function setStartTime(id, startTime) {
     var inputData = {
         startTime: startTime,

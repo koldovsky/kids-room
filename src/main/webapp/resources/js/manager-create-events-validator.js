@@ -104,7 +104,7 @@ function validateDaysOfWeekSelection(daysArray){
 }
 
 function isTextInputElementEmpty(inputElement){
-    if($("#"+inputElement).val() === ""){
+    if($("#"+inputElement).val().trim() === ""){
             dataValidationStrings.push(VALIDATION_ERRORS["emptyTitle"]);
     }
 }
