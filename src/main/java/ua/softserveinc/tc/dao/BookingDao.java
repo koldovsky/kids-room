@@ -11,9 +11,8 @@ import java.util.List;
 public interface BookingDao extends BaseDao<Booking> {
     List<Booking> getBookingsByUserAndRoom(User user, Room room);
 
-    List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates);
-
-    List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState[] bookingStates);
+    List<Booking> getBookings(Date startDate, Date endDate, User user, Room room,
+                              boolean includeLastDay, BookingState... bookingStates);
 
     Long getMaxRecurrentId();
 
