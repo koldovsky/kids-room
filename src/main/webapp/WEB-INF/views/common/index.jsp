@@ -15,6 +15,13 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 
+<style>
+    .lableBoard {
+        border: 4px double black; /* Параметры границы */
+        background: #beccff; /* Цвет фона */
+        padding: 10px; /* Поля вокруг текста */
+    }
+</style>
 <body>
 
 <sec:authorize access="hasRole('USER')">
@@ -802,6 +809,10 @@
             <div align="center">
                 <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
                     <form id="choose-updating-form">
+
+                        <div class="lableBoard">
+                            <label><small><i><ins><spring:message code="recurrent.editEventMessage"/></ins></i></small></label>
+                        </div>
                         <div class="radio-button">
                             <label><input type="radio" id="single-update" name="radio" checked> <spring:message code="recurrent.justThisOneEvent"/></label>
                         </div>
