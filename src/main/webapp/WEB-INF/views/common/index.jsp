@@ -801,23 +801,19 @@
             <div align="center">
                 <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
                     <form id="choose-updating-form">
-
                         <div class="radio-button">
-                            <label><input type="radio" id="single-update" name="radio" checked><spring:message code="recurrent.justThisOneEvent"/></label>
+                            <label><input type="radio" id="single-update" name="radio" checked> <spring:message code="recurrent.justThisOneEvent"/></label>
                         </div>
                         <div class="radio-button">
-                            <label><input type="radio" id="recurrent-update" name="radio"><spring:message code="recurrent.allSeries"/></label>
+                            <label><input type="radio" id="recurrent-update" name="radio"> <spring:message code="recurrent.allSeries"/></label>
                         </div>
-
-                        <button type="button" class="btn btn-success" id="confirm-choose"><spring:message code="ok"/></button>
-                        <button type="button" class="btn btn-danger" id="cancel-choose"><spring:message code="cancel"/></button>
-
+                        <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose"> <spring:message code="ok"/></button>
+                        <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose"> <spring:message code="cancel"/></button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container">
         <button type="button" class="btn btn-success" id="create-new-event"><spring:message code="event.new"/></button>
         <div id='calendar'></div>

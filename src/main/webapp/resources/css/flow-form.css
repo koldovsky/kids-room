@@ -4,3 +4,10 @@
     opacity: 0.93;
     color: white;
 }
+
+.btn-edit-event {
+    width: 45%;
+}
+#ui-id-5 {
+    text-align: center;
+}
