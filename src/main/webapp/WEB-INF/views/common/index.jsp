@@ -15,9 +15,6 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 
-
-
-
 <body>
 
 <sec:authorize access="hasRole('USER')">
