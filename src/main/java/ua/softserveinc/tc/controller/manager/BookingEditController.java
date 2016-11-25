@@ -106,6 +106,28 @@ public class BookingEditController {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * Receives the date and id of room from the client. Figures out list all of the bookings
+     * that have booking states BookingState.BOOKED and BookingState.Active for the given
+     * date.
+     * Sends to the client JSON with relevant information.
+     * @param date date for which makes figuring out bookings
+     * @param id id the room for which makes figuring out bookings
+     * @return JSON with relevant information
+     */
+    @RequestMapping(value = "dailyNotCompletedBookings/{date}/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public String dailyBookingsByState(@PathVariable String date, @PathVariable Long id) {
+        Room room = roomService.findById(id);
+        Date startDate = toDateAndTime(date + " " + room.getWorkingHoursStart());
+        Date endDate = toDateAndTime(date + " " + room.getWorkingHoursEnd());
+        List<Booking> bookings = bookingService.getNotCompletedAndCancelledBookings(startDate, endDate, room);
+        return new Gson().toJson(bookings.stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList()));
+    }
+
+
     @RequestMapping(value = "change-booking", method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseBody

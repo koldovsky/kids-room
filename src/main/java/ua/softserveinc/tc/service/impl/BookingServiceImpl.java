@@ -50,6 +50,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ChildDao childDao;
 
     @Override
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room) {
+        return getNotCompletedAndCancelledBookings(startDate, endDate, room);
+    }
+
+    @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
         return getBookings(startDate, endDate, null, null, bookingStates);
     }

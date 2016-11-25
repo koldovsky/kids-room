@@ -76,7 +76,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         List<Predicate> restrictions = new ArrayList<>();
         restrictions.add(root.get(BookingConstants.Entity.STATE).in(
-                new BookingState[]{BookingState.BOOKED, BookingState.ACTIVE}));
+                BookingConstants.States.getActiveAndBooked()));
         restrictions.add(builder.between(root.get(
                 BookingConstants.Entity.START_TIME), startDate, endDate));
         restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
