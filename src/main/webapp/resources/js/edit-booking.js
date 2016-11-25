@@ -269,6 +269,10 @@ function checkTablePage() {
         if ($('#booking-table_paginate').find('.active a.page-link').html() == 1)
             $('#booking-table_previous').hide();
     });
+    $('#booking-table').find('th').click(function () {
+        if ($('#booking-table_paginate').find('.active a.page-link').html() == 1)
+            $('#booking-table_previous').hide();
+    });
 }
 function setStartTime(id, startTime) {
     var inputData = {
