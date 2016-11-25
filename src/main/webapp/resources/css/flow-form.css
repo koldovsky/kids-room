@@ -5,6 +5,11 @@
     color: white;
 }
 
+.lableBoard {
+    border: 4px double black; /* Параметры границы */
+    background: #beccff; /* Цвет фона */
+    padding: 10px; /* Поля вокруг текста */
+}
 .btn-edit-event {
     width: 45%;
 }

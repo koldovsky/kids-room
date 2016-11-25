@@ -15,13 +15,9 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 
-<style>
-    .lableBoard {
-        border: 4px double black; /* Параметры границы */
-        background: #beccff; /* Цвет фона */
-        padding: 10px; /* Поля вокруг текста */
-    }
-</style>
+
+
+
 <body>
 
 <sec:authorize access="hasRole('USER')">
