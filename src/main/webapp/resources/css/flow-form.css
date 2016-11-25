@@ -4,10 +4,15 @@
     opacity: 0.93;
     color: white;
 }
-
+.lableBoard {
+    border: 4px double black; /* Параметры границы */
+    background: #beccff; /* Цвет фона */
+    padding: 10px; /* Поля вокруг текста */
+}
 .btn-edit-event {
     width: 45%;
 }
 #ui-id-5 {
     text-align: center;
 }
+
