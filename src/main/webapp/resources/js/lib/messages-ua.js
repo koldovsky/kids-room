@@ -12,11 +12,16 @@ messages = {
 		editFirstName : "Будь ласка, введіть не менше 2 символів.",
 		editLastName : "Будь ласка, введіть не менше 2 символів."
 	},
-
-	 date: {
-    	fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву"
+    date: {
+        fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву",
+        startEventDate: "Початок: ",
+        endEventDate: "Кінець: "
     },
-
+    info: {
+        description: "Опис: ",
+        noDescription: "Ця подія немає опису",
+        fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву"
+    },
 	dateTable: {
 		emptyTable: "Немає даних в таблиці",
 		processing: "Зачекайте...",
@@ -33,7 +38,7 @@ messages = {
 			next: "Наступна",
 			last: "Остання"
 		},
-		aria: {
+        aria: {
 			sortAscending:  ": активувати для сортування стовпців за зростанням",
 			sortDescending: ": активувати для сортування стовпців за спаданням"
 		}

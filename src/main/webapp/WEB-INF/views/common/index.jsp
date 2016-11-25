@@ -322,19 +322,20 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="eventInfo" >
+            <div class="row">
+                <div class="eventInfo">
+                    <h3 id="eventTitle">Title</h3>
+                    <span class="time" id="startTime"></span>
+                    <span class="time" id="endTime"></span><br/>
+                    <div class="eventDescription">
+                        <span id="eventDescription"></span>
+                    </div>
+                    <div class="text-area">
+                        <textarea id="text-area" readonly="readonly"> </textarea>
+                    </div>
+                </div>
 
-            <h3 id="eventTitle">Title</h3>
-
-            <span class="time" id="startTime"></span>
-            <span class="time" id="endTime"></span><br/>
-            <div class="eventDescription">
-                <span id="eventDescription"></span>
             </div>
-        </div>
-
-    </div>
 
         <%--create-new-booking--%>
     <div class="container col-xs-12">
@@ -876,5 +877,15 @@
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
 <script src='resources/js/userCalendar.js'></script>
+
+<c:choose>
+    <c:when test="${pageContext.response.locale =='ua'}">
+        <script src="resources/js/lib/messages-ua.js"></script>
+    </c:when>
+
+    <c:when test="${pageContext.response.locale != 'ua'}">
+        <script src="resources/js/lib/messages.js"></script>
+    </c:when>
+</c:choose>
 
 </body>
