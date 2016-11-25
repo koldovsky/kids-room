@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.Collections;
 import java.util.*;
 
 @Repository
@@ -56,6 +57,29 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
             restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
         if (room != null)
             restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
+
+        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
+
+        return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room){
+        if (startDate == null || endDate == null || room == null) {
+            return Collections.emptyList();
+        }
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
+        Root<Booking> root = criteria.from(Booking.class);
+
+        List<Predicate> restrictions = new ArrayList<>();
+        restrictions.add(root.get(BookingConstants.Entity.STATE).in(
+                new BookingState[]{BookingState.BOOKED, BookingState.ACTIVE}));
+        restrictions.add(builder.between(root.get(
+                BookingConstants.Entity.START_TIME), startDate, endDate));
+        restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
         criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));

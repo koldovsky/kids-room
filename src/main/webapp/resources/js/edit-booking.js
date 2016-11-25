@@ -171,6 +171,7 @@ function refreshTable(bookingsState) {
     var results = $.getValues();
     var data = JSON.parse(results);
 
+
     if (!(table === null)) {
         table.destroy();
     }
