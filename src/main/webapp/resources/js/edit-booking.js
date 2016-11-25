@@ -368,13 +368,20 @@ function addKids(getKidsUrl) {
             var kids = JSON.parse(result);
             var kidsCount = kids.length;
             var tr = "";
+            var label = '<div>' + '<label id="choose-kid"></label>' +'</div>';
             $.each(kids, function(i, kid) {
-                tr += '<br><div>' + '<label><input type="checkbox"' + 'id="checkboxKid' + kid.id + '">' + kid.firstName
-                + '<input type = "text"' + 'placeholder="Comment"' + 'class="form-control"' + 'id="child-comment-'
+                tr += '<br><div >' + '<label><input type="checkbox"' + 'id="checkboxKid' + kid.id + '">' + kid.firstName
+                + '<input type = "text"' + 'class="form-control"' + 'id="child-comment-'
                 + kid.id + '">' + '</div>';
             });
             $('#kids-count').val(kidsCount);
-            $('#kids').append(tr);
+            $('#kids').append(label).append(tr);
+            $('[id^=child-comment]').attr("placeholder",messages.modal.kid.comment);
+             if (kidsCount > 0)
+             {
+                $('#choose-kid').text(messages.modal.kid.choose);
+
+             }
         }
     });
 }

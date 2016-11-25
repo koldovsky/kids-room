@@ -2,14 +2,17 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src="https:////cdn.datatables.net/plug-ins/1.10.12/i18n/Ukrainian.json"></script>
+
 
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
+
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
 
@@ -142,9 +145,9 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <h3>Incorrect arrive or leave time</h3>
-                    <h4>Please enter correct time</h4>
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    <h3><spring:message code="booking.incorrectArrive"/></h3>
+                    <h4><spring:message code="booking.enterCorrectTime"/></h4>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="booking.close"/></button>
 
                 </div>
             </div>
@@ -158,8 +161,8 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <h4>Booking updated</h4>
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    <h4><spring:message code="booking.updated"/> </h4>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="booking.close"/> </button>
                 </div>
 
             </div>
@@ -185,10 +188,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <p>We regret to inform you that there are no available places left in the room.</p>
+                <p><spring:message code="booking.noAvailablePlaces"/></p>
             </div>
             <div class="modal-body">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="booking.close"/> </button>
             </div>
         </div>
     </div>
@@ -200,8 +203,8 @@
             <div class="modal-body-err">
                 <div align="center">
                     <br>
-                    <h4>We regret to inform you that there are no available places left in the room.</h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <h4><spring:message code="booking.noAvailablePlaces"/> </h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
                 </div>
 
             </div>
@@ -215,8 +218,8 @@
             <div class="modal-body-err">
                 <div align="center">
                     <br>
-                    <h4>Error, duplicate booking!</h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <h4><spring:message code="booking.duplicateError"/> </h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
                 </div>
 
             </div>
