@@ -18,9 +18,9 @@ messages = {
         endEventDate: "Кінець: "
     },
     info: {
-		description: "Опис: ",
-		noDescription: "Ця подія немає опису",
-    	fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву"
+        description: "Опис: ",
+        noDescription: "Ця подія немає опису",
+        fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву"
     },
 	dateTable: {
 		emptyTable: "Немає даних в таблиці",
