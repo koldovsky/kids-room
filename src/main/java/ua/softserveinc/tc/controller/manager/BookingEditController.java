@@ -117,7 +117,7 @@ public class BookingEditController {
      * @return JSON with relevant information
      */
     @RequestMapping(value = "dailyNotCompletedBookings/{date}/{id}", method = RequestMethod.GET)
-
+    @ResponseBody
     public String dailyNotCompletedBookings(@PathVariable String date, @PathVariable Long id) {
         Room room = roomService.findById(id);
         Date startDate = toDateAndTime(date + " " + room.getWorkingHoursStart());
