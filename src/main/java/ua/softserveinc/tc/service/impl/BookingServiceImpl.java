@@ -51,7 +51,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room) {
-        return getNotCompletedAndCancelledBookings(startDate, endDate, room);
+        return bookingDao.getNotCompletedAndCancelledBookings(startDate, endDate, room);
     }
 
     @Override

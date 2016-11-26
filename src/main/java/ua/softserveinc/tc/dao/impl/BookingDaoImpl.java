@@ -71,20 +71,17 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         }
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
-        Root<Booking> root = criteria.from(Booking.class);
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+        query.select(root).where(
+                builder.and(
+                        builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
+                        builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate)),
+                        builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        root.get(BookingConstants.Entity.STATE).in(
+                                BookingConstants.States.getActiveAndBooked()));
 
-        List<Predicate> restrictions = new ArrayList<>();
-        restrictions.add(root.get(BookingConstants.Entity.STATE).in(
-                BookingConstants.States.getActiveAndBooked()));
-        restrictions.add(builder.between(root.get(
-                BookingConstants.Entity.START_TIME), startDate, endDate));
-        restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
-
-        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
-
-        return entityManager.createQuery(criteria).getResultList();
+        return entityManager.createQuery(query).getResultList();
     }
 
     public Long getMaxRecurrentId() {
