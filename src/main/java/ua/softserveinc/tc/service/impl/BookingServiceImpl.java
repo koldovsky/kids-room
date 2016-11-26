@@ -213,7 +213,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
         User user = userDao.findById(idUser);
         Room room = roomDao.findById(idRoom);
-        return getBookings(null, null, user, room,false, BookingState.BOOKED)
+        return getBookings(null, null, user, room,true, BookingState.BOOKED)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
