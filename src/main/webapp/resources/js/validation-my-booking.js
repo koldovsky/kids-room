@@ -3,14 +3,13 @@ function validateDate() {
         var endDate = $("#to").val();
         if (new Date(startDate) > new Date(endDate)) {
             $("#errorDate").html(messages.date.fromBiggerThanTo);
-
         } else {
             $("#errorDate").html("");
             return true;
         }
 }
 
-$('input[type="date"]').on('change', function(event){
+$('input[type="date"]').on('change', function(){
 
     var date = $(this).val();
     var regex = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
