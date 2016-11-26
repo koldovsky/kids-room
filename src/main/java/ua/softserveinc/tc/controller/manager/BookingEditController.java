@@ -95,9 +95,11 @@ public class BookingEditController {
                                        @PathVariable Long id,
                                        @PathVariable BookingState[] state) {
         Room room = roomService.findById(id);
+        final boolean includeOneDay = false;
         Date dateLo = toDateAndTime(date + " " + room.getWorkingHoursStart());
         Date dateHi = toDateAndTime(date + " " + room.getWorkingHoursEnd());
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, state);
+        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, includeOneDay, state);
+
         if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
             Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
         }

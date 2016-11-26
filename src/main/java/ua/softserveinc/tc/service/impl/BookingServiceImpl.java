@@ -59,8 +59,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates) {
-        return bookingDao.getBookings(startDate, endDate, null, room, true, bookingStates);
+    public List<Booking> getBookings(Date startDate, Date endDate, Room room, boolean includeLastDay, BookingState... bookingStates) {
+        return getBookings(startDate, endDate, null, room, includeLastDay, bookingStates);
     }
 
     @Override
