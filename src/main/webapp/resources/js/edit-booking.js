@@ -3,7 +3,8 @@ var idBooking;
 var dateNow = new Date();
 var bookingsState = localStorage["bookingsState"];
 var table = null;
-
+var dailyNotCompletedBookings;  //array containing bookings DTO
+var roomCapacity; // The capacity (number of people) current room
 
 $(function() {
     if(localStorage["bookingsState"] == null) {
@@ -83,6 +84,28 @@ $().ready(function() {
     });
 });
 
+/**
+ * Receives JSON containing bookings DTO with status ACTIVE and BOOKED
+ * for one given day and given room. Information is evaluated to working
+ * hours of the room. Information is stores in the global variable
+ * dailyNotCompletedBookings
+ */
+
+function getNotCompletedBokings() {
+    var time = $('#date-booking').val();
+    var idRoom = localStorage["roomId"];
+    var results;
+    src = 'dailyNotCompletedBookings/' + time + "/" + idRoom;
+        $.ajax({
+            url: src,
+            async: false,
+            success: function (data) {
+                results = data;
+            }
+        });
+    dailyNotCompletedBookings = JSON.parse(results);
+}
+
 $(function() {
     $('#date-booking').change(function() {
         refreshTable(localStorage["bookingsState"]);
@@ -112,6 +135,7 @@ function selectRoomForManager(roomId) {
             $('.picker').timepicker('option', 'minTime', startTime);
             $('.picker').timepicker('option', 'maxTime', endTime);
 
+            roomCapacity = result[2];
         }
 
     });
@@ -294,11 +318,68 @@ function addHilighted(bookings) {
     });
 }
 
+/**
+ * The method finds the maximum people in the room for period of time
+ * from dateLo to dateHi. All of the parameters must not be a null.
+ *
+ * @param dateLo start of period
+ * @param dateHi end of period
+ * @param bookings all reserved bookings in the time period
+ * @return The maximum number of people that are simultaneously in the room
+ */
+function maxRangeReservedBookings(startTimeMillis, endTimeMillis, bookings) {
+    var oneMinuteMillis = 60 * 1000;
+    var maxReservedBookings = 0;
+    var temporaryMax;
+    var bok;
+    var ti;
+    var i;
+    for (ti = startTimeMillis + 1; ti < endTimeMillis; ti += oneMinuteMillis) {
+        temporaryMax = 0;
+        for (i = 0; i < bookings.length; i++) {
+            bok = bookings[i];
+            if (bok.startTimeMillis < ti && bok.endTimeMillis > ti)
+                temporaryMax++;
+            if (temporaryMax > maxReservedBookings)
+                maxReservedBookings = temporaryMax;
+        }
+    }
+    return maxReservedBookings;
+}
+
+/**
+ * The method finds the available space in the room (number of people)
+ * for the given period of time from dateLo to dateHi.
+ * All of the parameters must not be a null.
+ *
+ * @param dateLo start of period
+ * @param dateHi end of period
+ * @return number of places available in the room for the period
+ */
+function getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis) {
+    alert();
+    return roomCapacity - maxRangeReservedBookings(startTimeMillis, endTimeMillis, dailyNotCompletedBookings);
+}
+
 function openCreateBookingDialog() {
     var date = $('#date-booking').val();
     $('#bookingStartDate').val(date);
     $('#bookingDialog').dialog();
 }
+
+
+
+$("#btn-add-kid").click(function() {
+    getNotCompletedBokings();
+    var date = $('#date-booking').val();
+    var time = $('#bookingStartTimepicker').val();
+    var startTimeMillis = new Date(date +"T" + time + ":00").getTime();
+    time = $('#bookingEndTimepicker').val();
+    var endTimeMillis = new Date(date +"T" + time + ":00").getTime();
+    document.getElementById('free-spaces').innerHTML = getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
+    openCreateBookingDialog();
+});
+
 
 function cancelBooking() {
 

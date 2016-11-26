@@ -23,6 +23,8 @@ public class BookingDto implements Serializable{
     private String endDate;
     private String startTime;
     private String endTime;
+    private Long startTimeMillis;
+    private Long endTimeMillis;
     private String kidName;
     private String roomName;
     private String duration;
@@ -55,6 +57,8 @@ public class BookingDto implements Serializable{
         this.endDate=newBookingDto.endDate;
         this.startTime=newBookingDto.startTime;
         this.endTime=newBookingDto.endTime;
+        this.startTimeMillis=newBookingDto.startTimeMillis;
+        this.endTimeMillis=newBookingDto.endTimeMillis;
         this.kidName=newBookingDto.kidName;
         this.roomName=newBookingDto.roomName;
         this.duration=newBookingDto.duration;
@@ -80,6 +84,8 @@ public class BookingDto implements Serializable{
         df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
         this.startTime = df.format(booking.getBookingStartTime());
         this.endTime = df.format(booking.getBookingEndTime());
+        this.startTimeMillis=booking.getBookingStartTime().getTime();
+        this.endTimeMillis=booking.getBookingEndTime().getTime();
         this.kidName = booking.getChild().getFullName();
         this.roomName = booking.getRoom().getAddress();
         this.duration = booking.formatDuration();
@@ -230,9 +236,24 @@ public class BookingDto implements Serializable{
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStartTimeMillis(Long startTime) {
+        this.startTimeMillis = startTime;
     }
+
+    public Long getStartTimeMillis() {
+        return startTimeMillis;
+    }
+
+    public void setEndTimeMillis(Long endTime) {
+        this.endTimeMillis = endTime;
+    }
+
+    public Long getEndTimeMillis() {
+        return endTimeMillis;
+    }
+
+    public void setStartTime(String startTime) {this.startTime = startTime;}
+
     public void setStartTime(Date startTime) {
         DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
         this.startTime = df.format(startTime);
@@ -322,6 +343,7 @@ public class BookingDto implements Serializable{
     public void setDaysOfWeek(String daysOfWeek) {
         this.daysOfWeek = daysOfWeek;
     }
+
     public String getEndDate() {
         return endDate;
     }
