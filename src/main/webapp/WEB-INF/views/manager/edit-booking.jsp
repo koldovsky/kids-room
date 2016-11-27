@@ -272,5 +272,6 @@
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
 <script src="resources/js/comment-modal-message.js"></script>
+<script src="resources/js/available-places-manager.js"></script>
 
 
