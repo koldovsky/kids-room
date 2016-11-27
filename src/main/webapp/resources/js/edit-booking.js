@@ -3,7 +3,7 @@ var idBooking;
 var dateNow = new Date();
 var bookingsState = localStorage["bookingsState"];
 var table = null;
-
+var roomCapacity; // The capacity (number of people) current room
 
 $(function() {
     if(localStorage["bookingsState"] == null) {
@@ -112,6 +112,7 @@ function selectRoomForManager(roomId) {
             $('.picker').timepicker('option', 'minTime', startTime);
             $('.picker').timepicker('option', 'maxTime', endTime);
 
+            roomCapacity = result[2];
         }
 
     });
@@ -170,6 +171,7 @@ function refreshTable(bookingsState) {
     });
     var results = $.getValues();
     var data = JSON.parse(results);
+
 
     if (!(table === null)) {
         table.destroy();
@@ -291,12 +293,6 @@ function addHilighted(bookings) {
             $('#' + value.id).find('.inp-leaveTime').val(value.endTime);
         }
     });
-}
-
-function openCreateBookingDialog() {
-    var date = $('#date-booking').val();
-    $('#bookingStartDate').val(date);
-    $('#bookingDialog').dialog();
 }
 
 function cancelBooking() {

@@ -31,7 +31,7 @@
             </nav>
         </div>
         <div id="create-booking-btn">
-            <button class="btn btn-primary" onclick="openCreateBookingDialog()">
+            <button id="btn-add-kid" class="btn btn-primary">
                 Add a kid
             </button>
         </div>
@@ -100,6 +100,9 @@
                 <form id="bookings">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
+                        <div>
+                            <p><spring:message code="manager.available.rooms"/> <span id="free-spaces"></span></p>
+                        </div>
                         <label for="selectUser">Choose parent</label>
                         <select id="selectUser" name="select" onchange="selectUser();" class="form-control">
                             <lable> Please choose kid</lable>
@@ -108,7 +111,7 @@
                                 <option value="${user.id}">${user.getFullName()}</option>
                             </c:forEach>
                         </select>
-                        <label for="bookingStartDate">Booking date</label>
+                        <label for="bookingStartDate"><br>Booking date</label>
                         <br>
                         <div>
                             <input type="text" class="form-control" id="bookingStartDate" placeholder="booking date"
@@ -269,5 +272,15 @@
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
 <script src="resources/js/comment-modal-message.js"></script>
+<script src="resources/js/available-places-manager.js"></script>
+
+<c:choose>
+    <c:when test="${pageContext.response.locale=='ua'}">
+        <script src="resources/js/lib/messages-ua.js"></script>
+    </c:when>
+    <c:when test="${pageContext.response.locale!= 'ua'}">
+        <script src="resources/js/lib/messages.js"></script>
+    </c:when>
+</c:choose>
 
 
