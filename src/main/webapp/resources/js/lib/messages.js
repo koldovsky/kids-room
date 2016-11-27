@@ -14,5 +14,8 @@ messages = {
     },
     date: {
     	fromBiggerThanTo:  " 'To' date should be bigger than 'From' date "
-    }   
+    },
+	notCorrect: {
+		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>'
+	}
 };

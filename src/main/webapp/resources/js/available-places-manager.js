@@ -127,7 +127,7 @@ function getAndSetAvailablePlaces() {
         endTimeMillis = new Date(date + " " + timeEnd + ":00").getTime();
         availablePlaces = getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
     } else {
-        availablePlaces = '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>';
+        availablePlaces = messages.notCorrect.time;
     }
     document.getElementById('free-spaces').innerHTML = availablePlaces;
 }

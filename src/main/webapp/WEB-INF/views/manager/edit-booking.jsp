@@ -101,7 +101,7 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
                         <div>
-                            <p>The available places in the room is: <span id="free-spaces"></span></p>
+                            <p><spring:message code="manager.available.rooms"/> <span id="free-spaces"></span></p>
                         </div>
                         <label for="selectUser">Choose parent</label>
                         <select id="selectUser" name="select" onchange="selectUser();" class="form-control">
@@ -273,5 +273,14 @@
 <script src="resources/js/header-manager.js"></script>
 <script src="resources/js/comment-modal-message.js"></script>
 <script src="resources/js/available-places-manager.js"></script>
+
+<c:choose>
+    <c:when test="${pageContext.response.locale=='ua'}">
+        <script src="resources/js/lib/messages-ua.js"></script>
+    </c:when>
+    <c:when test="${pageContext.response.locale!= 'ua'}">
+        <script src="resources/js/lib/messages.js"></script>
+    </c:when>
+</c:choose>
 
 
