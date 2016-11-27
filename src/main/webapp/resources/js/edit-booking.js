@@ -357,8 +357,8 @@ function maxRangeReservedBookings(startTimeMillis, endTimeMillis, bookings) {
  * @return number of places available in the room for the period
  */
 function getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis) {
-    alert();
-    return roomCapacity - maxRangeReservedBookings(startTimeMillis, endTimeMillis, dailyNotCompletedBookings);
+    return roomCapacity - maxRangeReservedBookings(
+        startTimeMillis, endTimeMillis, dailyNotCompletedBookings);
 }
 
 function openCreateBookingDialog() {
@@ -367,16 +367,44 @@ function openCreateBookingDialog() {
     $('#bookingDialog').dialog();
 }
 
+/**
+ * Receives time for normalization to format HH:mm.
+ * If received time is not in format /^(([01]\d|2[0-3])|(\d)):(([0-5]\d)|(\d))$/
+ * the method throws alert with relative information and returns from method.
+ * If time is x:yz, the method returns 0x:yz. If time is xy:z, the method returns
+ * xy:0z. If time is x:y, the method returns 0x:0y.
+ *
+ * @param time for normaliation
+ * @returns normalizated time
+ */
 
+function timeNormalize(time) {
+    var regexpTime = /^(([01]\d|2[0-3])|(\d)):(([0-5]\d)|(\d))$/;
+    var timeAr;
+    if (!regexpTime.test(time)){
+        alert("You enter time in wrong format. Must be HH:mm");
+        return;
+    }
+    timeAr = time.split(":");
+    if(timeAr[0].length < 2){
+        timeAr[0] = 0 + timeAr[0];
+    }
+    if(timeAr[1].length < 2){
+        timeAr[1] = 0 + timeAr[1];
+    }
+    return timeAr[0] + ":" + timeAr[1];
+}
 
 $("#btn-add-kid").click(function() {
     getNotCompletedBokings();
     var date = $('#date-booking').val();
     var time = $('#bookingStartTimepicker').val();
-    var startTimeMillis = new Date(date +"T" + time + ":00").getTime();
+    timeNormalize(time);
+    var startTimeMillis = new Date(date + " " + time + ":00").getTime();
     time = $('#bookingEndTimepicker').val();
-    var endTimeMillis = new Date(date +"T" + time + ":00").getTime();
-    document.getElementById('free-spaces').innerHTML = getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
+    var endTimeMillis = new Date(date + " " + time + ":00").getTime();
+    document.getElementById('free-spaces').innerHTML =
+        getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
     openCreateBookingDialog();
 });
 
