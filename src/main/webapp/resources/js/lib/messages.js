@@ -44,11 +44,23 @@ messages = {
 			sortDescending: ": activate to sort column descending"
 		}
 	},
-	modal:
-	{
+	modal: {
 		kid: {
 			comment: "Comment",
 			choose: "Please choose kid"
+		}
+	},
+	event: {
+		errors: {
+			dateInThePast: "Date can't be in the past, current date is: ",
+			timeInThePast: "Start time can't be in the past, current time is: ",
+			endTimeGreaterThanStartTime: "End time must be at least one minute later than the start time",
+			minimalDatesDifference: "Recurrent: End date must be at least one day later than the start date",
+			emptyTitle: "Title can't be empty",
+			noDaysSelected: "Recurrent: At least one day must be selected",
+			noKidsSelected: "At least one kid must be selected",
+			bookingTypeMismatchWhenUpdating: "Can't convert weekly booking to single",
+			incorrectData: "Incorrect Data: "
 		}
 	}
 };
