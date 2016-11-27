@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -177,19 +178,18 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      * @param bookings all reserved bookings in the time period
      * @return The maximum number of people that are simultaneously in the room
      */
-
-    private int maxRangeReservedBookings (Date dateLo, Date dateHi, List<Booking> bookings) {
+    private int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings) {
         Objects.requireNonNull(dateLo, "dateLo must not be null");
         Objects.requireNonNull(dateHi, "dateHi must not be null");
         Objects.requireNonNull(bookings, "bookings must not be null");
         final long oneMinuteMillis = 60 * 1000;
         int maxReservedBookings = 0;
-        for(long ti = dateLo.getTime(); ti < dateHi.getTime(); ti += oneMinuteMillis) {
+        for (long ti = dateLo.getTime() + 1; ti < dateHi.getTime(); ti += oneMinuteMillis) {
             int temporaryMax = 0;
-            for(Booking tab : bookings)
-                if(tab.getBookingStartTime().getTime() <= ti && tab.getBookingEndTime().getTime() >= ti)
+            for (Booking tab : bookings)
+                if (tab.getBookingStartTime().getTime() < ti && tab.getBookingEndTime().getTime() > ti)
                     temporaryMax++;
-            if(temporaryMax > maxReservedBookings)
+            if (temporaryMax > maxReservedBookings)
                 maxReservedBookings = temporaryMax;
         }
         return maxReservedBookings;

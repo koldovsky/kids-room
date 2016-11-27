@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.Collections;
 import java.util.*;
 
 @Repository
@@ -84,6 +85,26 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room){
+        if (startDate == null || endDate == null || room == null) {
+            return Collections.emptyList();
+        }
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+        query.select(root).where(
+                builder.and(
+                        builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
+                        builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate)),
+                        builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        root.get(BookingConstants.Entity.STATE).in(
+                                BookingConstants.States.getActiveAndBooked()));
+
+        return entityManager.createQuery(query).getResultList();
     }
 
     public Long getMaxRecurrentId() {
