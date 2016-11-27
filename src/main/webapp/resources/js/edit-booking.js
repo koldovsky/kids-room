@@ -361,6 +361,10 @@ function getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis) {
         startTimeMillis, endTimeMillis, dailyNotCompletedBookings);
 }
 
+/**
+ * Opens Dialog on edit-booking.jsp for making a booking.
+ */
+
 function openCreateBookingDialog() {
     var date = $('#date-booking').val();
     $('#bookingStartDate').val(date);
@@ -381,9 +385,8 @@ function openCreateBookingDialog() {
 function timeNormalize(time) {
     var regexpTime = /^(([01]\d|2[0-3])|(\d)):(([0-5]\d)|(\d))$/;
     var timeAr;
-    if (!regexpTime.test(time)){
-        alert("You enter time in wrong format. Must be HH:mm");
-        return;
+    if (!regexpTime.test(time)) {
+        return null;
     }
     timeAr = time.split(":");
     if(timeAr[0].length < 2){
@@ -395,19 +398,47 @@ function timeNormalize(time) {
     return timeAr[0] + ":" + timeAr[1];
 }
 
+/**
+ * Figures out available places in the room for set period of time
+ * and show it in dialog window (id="bookingDialog") on edit-booking.jsp page.
+ * The period of time gets from elements (id=bookingStartTimepicker and id=bookingEndTimepicker)
+ * on aforementioned page.
+ * If the time is not in corrected form the message with appropriate information
+ * is shows in aforementioned dialog message.
+ */
+
+function getAndSetAvailablePlaces() {
+    var startTimeMillis;
+    var endTimeMillis;
+    var availablePlaces;
+    var date = $('#date-booking').val();
+    var timeStart = timeNormalize($('#bookingStartTimepicker').val());
+    var timeEnd = timeNormalize($('#bookingEndTimepicker').val());
+    if (timeStart != null && timeEnd != null) {
+        startTimeMillis = new Date(date + " " + timeStart + ":00").getTime();
+        endTimeMillis = new Date(date + " " + timeEnd + ":00").getTime();
+        availablePlaces = getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
+    } else {
+        availablePlaces = '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>';
+    }
+    document.getElementById('free-spaces').innerHTML = availablePlaces;
+}
+
 $("#btn-add-kid").click(function() {
     getNotCompletedBokings();
-    var date = $('#date-booking').val();
-    var time = $('#bookingStartTimepicker').val();
-    timeNormalize(time);
-    var startTimeMillis = new Date(date + " " + time + ":00").getTime();
-    time = $('#bookingEndTimepicker').val();
-    var endTimeMillis = new Date(date + " " + time + ":00").getTime();
-    document.getElementById('free-spaces').innerHTML =
-        getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
+    getAndSetAvailablePlaces();
     openCreateBookingDialog();
 });
 
+
+
+$("#bookingStartTimepicker").change(function () {
+    getAndSetAvailablePlaces();
+});
+
+$("#bookingEndTimepicker").change(function () {
+    getAndSetAvailablePlaces();
+});
 
 function cancelBooking() {
 
