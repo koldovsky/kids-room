@@ -21,6 +21,7 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Autowired
     private ChildDao childDao;
+
+    @Override
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room) {
+        return bookingDao.getNotCompletedAndCancelledBookings(startDate, endDate, room);
+    }
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
