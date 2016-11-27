@@ -55,7 +55,7 @@ function updateTable(){
 				paginate();
 			},
 			error: function (dateError, textStatus, xhr) {
-				document.getElementById("errorDate").innerHTML = dateError.responseText;
+                $('#errorDate').html(dateError.responseText);
 			}
 		});
 	}
