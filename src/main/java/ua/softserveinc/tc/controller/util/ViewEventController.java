@@ -114,7 +114,7 @@ public class ViewEventController {
     @RequestMapping(value = "getroomproperty/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRoomProperty(@PathVariable long id) {
-        return calendarService.getRoomWorkingHours(id);
+        return calendarService.getRoomWorkingHours(id) + " " + calendarService.getRoomCapacity(id);
     }
 
 

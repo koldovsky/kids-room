@@ -62,6 +62,9 @@ messages = {
 			bookingTypeMismatchWhenUpdating: "Can't convert weekly booking to single",
 			incorrectData: "Incorrect Data: "
 		}
+    },
+	notCorrect: {
+		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>'
 	}
 };
 

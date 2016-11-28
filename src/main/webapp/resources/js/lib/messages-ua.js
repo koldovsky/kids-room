@@ -62,5 +62,8 @@ messages = {
 			bookingTypeMismatchWhenUpdating: "Неможливо перетворити щотижневе бронювання в одноденне",
 			incorrectData: "Невірні дані: "
 		}
+    },
+	notCorrect: {
+		time: '<b>невідомо</b>. Введено неправильний час. Допустимий формат: <b>HH:mm</b>'
 	}
 };

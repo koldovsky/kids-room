@@ -21,6 +21,7 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,23 +50,29 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ChildDao childDao;
 
     @Override
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room) {
+        return bookingDao.getNotCompletedAndCancelledBookings(startDate, endDate, room);
+    }
+
+    @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
-        return getBookings(startDate, endDate, null, null, bookingStates);
+        return getBookings(startDate, endDate, null, null, true, bookingStates);
     }
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, User user, BookingState... bookingStates) {
-        return getBookings(startDate, endDate, user, null, bookingStates);
+        return getBookings(startDate, endDate, user, null, true, bookingStates);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates) {
-        return bookingDao.getBookings(startDate, endDate, room, bookingStates);
+    public List<Booking> getBookings(Date startDate, Date endDate, Room room, boolean includeLastDay, BookingState... bookingStates) {
+        return getBookings(startDate, endDate, null, room, includeLastDay, bookingStates);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates) {
-        return bookingDao.getBookings(startDate, endDate, user, room, bookingStates);
+    public List<Booking> getBookings(Date startDate, Date endDate, User user,
+                                     Room room, boolean includeDay, BookingState... bookingStates) {
+        return bookingDao.getBookings(startDate, endDate, user, room, includeDay, bookingStates);
     }
 
     @Override
@@ -212,7 +219,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
         User user = userDao.findById(idUser);
         Room room = roomDao.findById(idRoom);
-        return getBookings(null, null, user, room, BookingState.BOOKED)
+        return getBookings(null, null, user, room,true, BookingState.BOOKED)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());

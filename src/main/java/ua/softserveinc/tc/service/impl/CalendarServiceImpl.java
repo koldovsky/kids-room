@@ -39,18 +39,26 @@ public class CalendarServiceImpl implements CalendarService {
     @Autowired
     private GenericMapper<Event, EventDto> genericMapper;
 
+    @Override
     public Long create(final Event event) {
         eventDao.create(event);
         return event.getId();
     }
 
+    @Override
     public final List<EventDto> findEventByRoomId(final long roomId) {
         return eventMapper.toDto(roomService.findById(roomId).getEvents());
     }
 
+    @Override
     public String getRoomWorkingHours(final long id) {
         return roomService.findById(id).getWorkingHoursStart() +
                 " " + roomService.findById(id).getWorkingHoursEnd();
+    }
+
+    @Override
+    public String getRoomCapacity(long id){
+       return roomService.findById(id).getCapacity().toString();
     }
 
     @Override
@@ -58,6 +66,7 @@ public class CalendarServiceImpl implements CalendarService {
         eventRepository.saveAndFlush(event);
     }
 
+    @Override
     public final List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto) {
         Date dateForRecurrentStart = DateUtil.toDateISOFormat(recurrentEventDto.getStartTime());
         Date dateForRecurrentEnd = DateUtil.toDateISOFormat(recurrentEventDto.getEndTime());
@@ -122,6 +131,7 @@ public class CalendarServiceImpl implements CalendarService {
         return res;
     }
 
+    @Override
     public RecurrentEventDto getRecurrentEventForEditingById(final long recurrentEventId){
         final List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
         Set <Integer> weekDays = new HashSet<>();
@@ -133,6 +143,7 @@ public class CalendarServiceImpl implements CalendarService {
         return getRecurrentEventDto(listOfRecurrentEvent, weekDays);
     }
 
+    @Override
     public final void updateEvent(final Event event) {
         eventDao.update(event);
     }
@@ -142,6 +153,7 @@ public class CalendarServiceImpl implements CalendarService {
         return eventRepository.findByName(name);
     }
 
+    @Override
     public final void deleteEvent(final Event event) {
         eventDao.delete(event);
     }
