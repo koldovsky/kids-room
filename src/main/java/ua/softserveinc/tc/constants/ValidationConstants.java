@@ -63,6 +63,10 @@ public final class ValidationConstants {
     public static final String FIRSTNAME_ERROR_MSG = "registration.kid.firstName";
     public static final String COMMENT_ERROR_MSG = "registration.kid.comment";
 
+    public static final String EVENT_EMPTY_TITLE_MSG = "event.emptyTitle";
+    public static final String EVENT_START_NOT_EQUALS_END_MSG = "event.startDateNotEqualEnd";
+    public static final String EVENT_START_TIME_BIGGER_END_MSG = "event.startTimeBiggerEnd";
+
     public static final String PASSWORD_ERROR_MSG = "registration.password";
     public static final String PHONE_NUMBER_ERROR_MSG = "registration.phone";
     public static final String NOT_CONFIRMED_MSG = "registration.confirm";

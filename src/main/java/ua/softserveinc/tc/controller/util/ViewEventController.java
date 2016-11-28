@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
@@ -18,7 +19,11 @@ import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.EventValidator;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import java.security.Principal;
 
 @Controller
@@ -34,7 +39,11 @@ public class ViewEventController {
     private RoomService roomService;
 
     @Autowired
+    private EventValidator eventValidator;
+
+    @Autowired
     private UserService userService;
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public final String viewHome(Model model, Principal principal) {
@@ -71,16 +80,23 @@ public class ViewEventController {
         return new Gson().toJson(calendarService.findEventByRoomId(id));
     }
 
+
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public String getAjax(@RequestBody EventDto eventDto) {
-        return calendarService.create(genericMapper.toEntity(eventDto)).toString();
+        if(eventValidator.isSingleEventValid(eventDto)) {
+            return calendarService.create(genericMapper.toEntity(eventDto)).toString();
+        } else return eventValidator.errorSingleMessage(eventDto);
+
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
+    @ResponseBody
     public void getEventForUpdate(@RequestBody EventDto eventDto) {
-        calendarService.updateEvent(genericMapper.toEntity(eventDto));
+        if(eventValidator.isSingleEventValid(eventDto)) {
+            calendarService.updateEvent(genericMapper.toEntity(eventDto));
+        }
     }
 
     @RequestMapping(value = "geteventfordelete", method = RequestMethod.POST)

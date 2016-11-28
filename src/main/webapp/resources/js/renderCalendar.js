@@ -161,12 +161,13 @@ $(function () {
     $('.my-radio').click(function () {
         if ($('#weekly-radio-button').is(':checked')) {
             $('#days-for-recurrent-form').attr('hidden', false);
+            $('#end-date-picker').attr('disabled',false);
         } else {
             $('#days-for-recurrent-form').attr('hidden', true);
         }
 
         if ($('#single-event-radio-button').is(':checked')) {
-            $('#end-date-picker').val($('#start-date-picker').val());
+            $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled',true);
         }
     });
 
@@ -466,7 +467,14 @@ function createSingleOrRecurrentEvents() {
             ev.borderColor = BORDER_COLOR;
 
             $('#calendar').fullCalendar('renderEvent', ev);
+
+        },
+        error: function (xhr) {
+            $('#calendar').fullCalendar('removeEvents', ev.id);
+            callErrorDialog(xhr['responseText']);
         }
+
+
     });
 
     $('#start-date-picker').val('');
@@ -561,6 +569,7 @@ function sendToServerForUpdate(event, roomID) {
             color: event.color
         })
     });
+
 }
 
 function sendToServerForDelete(event) {
