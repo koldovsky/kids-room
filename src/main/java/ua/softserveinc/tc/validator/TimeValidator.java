@@ -32,9 +32,15 @@ public class TimeValidator implements Validator {
         }
     }
 
-    public boolean validateDate(String date)
-    {
+    public boolean validateDateFormat(String date) {
         return date.matches(ValidationConstants.DATE_REGEX);
+    }
+
+    public boolean validateDate(String startTime, String endTime) {
+        if(validateDateFormat(startTime) && validateDateFormat(endTime)) {
+            return startTime.compareTo(endTime) <= 0;
+        }
+        return false;
     }
 
     public boolean validateBooking(Object target) {

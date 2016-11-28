@@ -95,7 +95,7 @@ public class MyBookingsController {
                        Principal principal)
     throws ResourceNotFoundException{
 
-        if(!timeValidator.validateDate(dateLo) || !timeValidator.validateDate(dateHi)) {
+        if(!timeValidator.validateDate(dateLo, dateHi)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DATE_IS_NOT_VALID);
         }
         User currentUser = userService.getUserByEmail(principal.getName());
