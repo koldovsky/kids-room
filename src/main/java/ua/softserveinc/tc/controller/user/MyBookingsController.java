@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,9 +26,11 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.TimeValidator;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.text.DateFormat;
 import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 /**
@@ -76,8 +79,8 @@ public class MyBookingsController {
     /**
      * Handles HTTP GET request for bookings in custom range of time
      *
-     * @param dateLo time range lower limit
-     * @param dateHi time range upp er limit
+     * @param startDate time range lower limit
+     * @param endDate time range upp er limit
      * @param principal User principal
      *
      * @return A list of DTOs containing all valuable info in JSON
@@ -90,20 +93,21 @@ public class MyBookingsController {
     @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> getBookings(
-                       @RequestParam(value = "dateLo") String dateLo,
-                       @RequestParam(value = "dateHi") String dateHi,
+                       @RequestParam(value = "startDate") String startDate,
+                       @RequestParam(value = "endDate") String endDate,
                        Principal principal)
-    throws ResourceNotFoundException{
+            throws ResourceNotFoundException, ParseException {
 
-        if(!timeValidator.validateDate(dateLo) || !timeValidator.validateDate(dateHi)) {
+        if(!timeValidator.validateDate(startDate, endDate)) {
+
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DATE_IS_NOT_VALID);
         }
         User currentUser = userService.getUserByEmail(principal.getName());
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo),
-                toDate(dateHi), currentUser, BookingState.COMPLETED);
+        List<Booking> myBookings = bookingService.getBookings(toDate(startDate),
+                toDate(endDate), currentUser, BookingState.COMPLETED);
         List<BookingDto> dtos = myBookings
                 .stream()
                 .map(BookingDto::new)
