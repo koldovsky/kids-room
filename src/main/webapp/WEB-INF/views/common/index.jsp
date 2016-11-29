@@ -893,10 +893,10 @@
                                 <br>
                                 <div class="clearfix"></div>
                                 <div class="col-xs-3">
-                                    <button type="button" class="btn btn-success live" id="cancel-event-button"><spring:message code="yes"/></button>
+                                    <button type="button" class="btn btn-success live" id="yes-cancel-event-button"><spring:message code="yes"/></button>
                                 </div>
                                 <div align="right" class="col-xs-9">
-                                    <button type="button" class="btn btn-danger pull-right" id="no-button"><spring:message code="no"/></button>
+                                    <button type="button" class="btn btn-danger pull-right" id="no-cancel-event-button"><spring:message code="no"/></button>
                                 </div>
                             </div>
                         </div>

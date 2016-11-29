@@ -53,7 +53,13 @@ messages = {
     },
 	notCorrect: {
 		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>',
-		server: '<b>unknown</b>. Server error'
+		date: 'Entered not correct date. Acceptable format is <b>dd:MM:YYYY</b>',
+		server: '<b>unknown</b>. Server error',
+		emptyStartDate: "Not entered start date",
+		emptyEndDate: "Not entered end date",
+		startDay: "The start day can't be in the past",
+		endDay: "The end day can't be smaller than start Day",
+		wrongDatesRange: 'Chosen period must be in range '
 	}
 };
 

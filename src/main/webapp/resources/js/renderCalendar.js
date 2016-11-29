@@ -6,6 +6,8 @@ var creatingEvent;
 var allEvents;
 var NOT_ACTIVE_EVENT = '#33cc33';
 var BORDER_COLOR = '#000000';
+var MAX_POSSIBLE_DATE = new Date(884541340800000); //Sat, 01 Jan 30000 00:00:00 GMT
+var MIN_POSSIBLE_DATE = new Date(0); //Thu, 01 Jan 1970 00:00:00 GMT
 
 $(function () {
 
@@ -83,9 +85,55 @@ $(function () {
         }
     });
 
+
+    function deleteRecurrentEvents(recurrentId) {
+        allEvents.forEach(function (item) {
+            if (item.recurrentId === recurrentId) {
+                $('#calendar').fullCalendar('removeEvents', item.id);
+                sendToServerForDelete(item);
+            }
+        });
+    }
+
+    function deleteRecurrentEventsForTime(recurrentId, startDate, endDate) {
+
+    }
+
+    function validateRecurrentDatesPeriod(recurrentId, startDate, endDate){
+        var startMillis =  new Date(startDate).getTime();
+        var endMillis = new Date(endDate).getTime();
+        var oneDayMillis = 24 * 60 * 60 * 1000;
+        var i;
+        var firstReccurentDate = MAX_POSSIBLE_DATE; //01 Jan 30000 00:00:00 GMT
+        var lastReccurentDate = MIN_POSSIBLE_DATE; // 01 Jan 1970 00:00:00 GMT
+        for(i = startMillis; i <= endMillis; i += oneDayMillis) {
+
+            $.each(allEvents, function(index, value) {
+                var startTime = new Date(value.start);
+                if(startTime < firstReccurentDate)
+                    firstReccurentDate = startTime;
+                if (startTime > lastReccurentDate)
+                    lastReccurentDate = startTime;
+            });
+        }
+
+    }
+
     $('#deleting-recurrent-event').click(function () {
         $('#dialog').dialog('close');
         $('#cancel-event-dialog').dialog('open');
+        $('#yes-cancel-event-button').click(function() {
+            var startDate = $('#start-date-cancel-picker').val();
+            var endDate = $('#end-date-cancel-picker').val();
+            validateRecurrentDatesPeriod();
+            deleteRecurrentEventsForTime(info_event.calEvent.recurrentId,
+                startDate, endDate);
+            $('#cancel-event-dialog').dialog('close');
+        });
+        $('#no-cancel-event-button').click(function() {
+            $('#cancel-event-dialog').dialog('close');
+        });
+
     });
 
     /**
@@ -297,7 +345,6 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
 
         dayClick: function (date) {
             var clickDate = date.format();
-            alert("fdwsefwefsf");
 
 
             if (clickDate.length < 12) {
@@ -320,7 +367,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         },
 
         eventClick: function (calEvent) {
-
+            alert(allEvents[0].start + " " + allEvents[0].end);
             if (calEvent.color === NOT_ACTIVE_EVENT) {
                 return;
             }
