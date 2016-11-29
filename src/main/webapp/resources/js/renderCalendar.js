@@ -367,7 +367,11 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         },
 
         eventClick: function (calEvent) {
-            alert(allEvents[0].start + " " + allEvents[0].end);
+            //alert(allEvents[0].start + " " + allEvents[0].end);
+            var arStartEv = allEvents[0].end.split('T');
+           // alert(new Date().toString());
+           // alert(new Date(arStartEv[0] + " " + arStartEv[1]).toString());
+            alert(new Date(allEvents[0].start).toString());
             if (calEvent.color === NOT_ACTIVE_EVENT) {
                 return;
             }
