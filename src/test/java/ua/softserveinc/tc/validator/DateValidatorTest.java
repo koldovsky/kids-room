@@ -30,6 +30,14 @@ public class DateValidatorTest {
     }
 
     @Test
+    public void testEqualTimeExpectTrue() throws ParseException {
+        final String startDate = "2016-11-11";
+        final String endDate = "2016-11-11";
+        final String message = "end date should be greater than end date";
+        Assert.assertTrue(message, timeValidator.validateDate(startDate, endDate));
+    }
+
+    @Test
     public void testFromTimeGreaterThanToTimeExpectFalse() throws ParseException {
         final String startDate = "2016-11-11";
         final String endDate = "2016-10-31";

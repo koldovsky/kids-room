@@ -46,7 +46,7 @@ public class TimeValidator implements Validator {
             Date startDate = simpleDateFormat.parse(startTime);
             Date endDate = simpleDateFormat.parse(endTime);
 
-            return endDate.after(startDate);
+            return !endDate.before(startDate);
         }
 
         return false;
