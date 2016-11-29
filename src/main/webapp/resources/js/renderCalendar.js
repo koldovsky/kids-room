@@ -162,12 +162,20 @@ $(function () {
         if ($('#weekly-radio-button').is(':checked')) {
             $('#days-for-recurrent-form').attr('hidden', false);
             $('#end-date-picker').attr('disabled',false);
+            $("#dialog" ).off( "change", "#start-date-picker", function () {
+                $('#end-date-picker').val($('#start-date-picker').val());
+            });
         } else {
             $('#days-for-recurrent-form').attr('hidden', true);
         }
 
         if ($('#single-event-radio-button').is(':checked')) {
             $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled',true);
+            //TODO:HELLO WORLD
+            $("#dialog" ).on( "change", "#start-date-picker", function () {
+                $('#end-date-picker').val($('#start-date-picker').val());
+            });
+
         }
     });
 
@@ -536,7 +544,6 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
 }
 
 function updateSingleEvent(){
-    $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
     var eventForUpdate = {
         id: info_event.calEvent.id,
         title: $('#titleUpdate').val(),
@@ -546,8 +553,6 @@ function updateSingleEvent(){
         description: $('#descriptionUpdate').val(),
         color: $('#color-select-single-event').val(),
     };
-
-    $('#calendar').fullCalendar('renderEvent', eventForUpdate);
 
     sendToServerForUpdate(eventForUpdate, info_event.roomID);
 
@@ -567,7 +572,18 @@ function sendToServerForUpdate(event, roomID) {
             roomId: roomID,
             description: event.description,
             color: event.color
-        })
+        }),
+        success: function () {
+                $('#calendar').fullCalendar('removeEvents', event.id);
+                $('#calendar').fullCalendar('renderEvent', event,true);
+                redrawBlockedTimeSpans(roomIdForHandler);
+                redrawBlockedTimeSpans(roomIdForHandler);
+        },
+        error: function (xhr) {
+
+            callErrorDialog(xhr['responseText']);
+
+        }
     });
 
 }
@@ -585,6 +601,7 @@ function sendToServerForDelete(event) {
             roomId: localStorage['roomId'],
             endTime: event.end
         })
+
     });
 }
 

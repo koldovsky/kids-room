@@ -5,6 +5,11 @@ package ua.softserveinc.tc.constants;
  * Interface stores all validation-related constants
  */
 public final class ValidationConstants {
+    public static final int EVENT_DESCRIPTION_MAX_LENGHT = 250;
+    public static final int ONE_MINUTE = 1;
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
+    public static final String ONLY_DATE_FORMAT = "yyyy-MM-dd";
     public static final String PASSWORD_REGEX = "^(\\S){8,24}$";
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -40,6 +45,9 @@ public final class ValidationConstants {
     public static final String USER_ID = "userId";
     public static final String KID_ID = "kidId";
     public static final String ROOM_ID = "roomId";
+    public static final String EVENT_TITLE = "name";
+    public static final String EVENT_COLOR = "color";
+    public static final String EVENT_DESCRIPTION = "description";
 
 
     public static final String EMAIL = "email";
@@ -54,7 +62,11 @@ public final class ValidationConstants {
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
     public static final String EMPTY_FIELD_MSG = "registration.empty";
-
+    public static final String EVENT_DATE_FORMAT_INVALID_MSG = "Can't convert data type";
+    public static final String EVENT_PAST_TIME_CREATION_MSG = "Must create new event in Present time";
+    public static final String EVENT_DESCRIPTION_LENGTH_ERROR_MSG = "Description  should be less than 250 characters";
+    public static final String EVENT_INACTIVE_ROOM_ERROR_MSG = "You can't create event on inactive room. Please contact to admin";
+    public static final String EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG = "End time must be bigger than start at least one minute";
     public static final String EMAIL_NOT_VALID = "registration.manager.emailNotValid";
     public static final String NAME_ERROR_MSG = "registration.kid.name";
     public static final String NAME_NOT_EDITTED = "registration.kid.nameNotEdited";

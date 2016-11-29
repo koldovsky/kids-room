@@ -224,7 +224,7 @@ function refreshTable(bookingsState) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
                         + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id
                         + '" class="glyphicon glyphicon-info-sign"' + 'title="'
-                        + oData.comment +  '"' + ' onclick="callCommentDialog()"></span>');
+                        + oData.comment +  '"></span>');
                     } else {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>');
                     }
@@ -442,6 +442,11 @@ $('#booking-table tbody').on('click', '#leave-btn', function() {
     var id = table.row(tr).data().id;
     var time = $(this).closest('td').find('input').val();
     setEndTime(id, time);
+});
+$('#booking-table tbody').on('click', '[id^=comment]', function() {
+    var comment = $(this).attr('title');
+    $('#kidCommentMessage').find('h4').html(comment);
+    $('#kidCommentMessage').modal('show');
 });
 
 $('#booking-table tbody').on('click', '.edit-button-btn', function() {
