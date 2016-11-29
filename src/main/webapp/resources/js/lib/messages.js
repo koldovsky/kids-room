@@ -52,7 +52,8 @@ messages = {
 		}
     },
 	notCorrect: {
-		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>'
+		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>',
+		server: '<b>unknown</b>. Server error'
 	}
 };
 

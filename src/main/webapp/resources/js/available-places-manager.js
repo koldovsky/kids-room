@@ -15,7 +15,7 @@ function getNotCompletedBokings() {
     var time = $('#date-booking').val();
     var idRoom = localStorage["roomId"];
     var results;
-    src = 'dailyNotCompletedBookings/' + time + "/" + idRoom;
+    src = 'dailyNotCompletedBookings/' + time + '/' + idRoom;
     $.ajax({
         url: src,
         async: false,
@@ -23,7 +23,7 @@ function getNotCompletedBokings() {
             results = data;
         },
         error: function() {
-            document.getElementById('free-spaces').innerHTML = 'unknown. Problem with server';
+            $('#free-spaces').html(messages.notCorrect.server);
         }
     });
     dailyNotCompletedBookings = JSON.parse(results);
@@ -42,9 +42,7 @@ function maxRangeReservedBookings(startTimeMillis, endTimeMillis, bookings) {
     var oneMinuteMillis = 60 * 1000;
     var maxReservedBookings = 0;
     var temporaryMax;
-    var bok;
-    var ti;
-    var i;
+    var bok, ti, i;
     for (ti = startTimeMillis + 1; ti < endTimeMillis; ti += oneMinuteMillis) {
         temporaryMax = 0;
         for (i = 0; i < bookings.length; i++) {
@@ -129,7 +127,7 @@ function getAndSetAvailablePlaces() {
     } else {
         availablePlaces = messages.notCorrect.time;
     }
-    document.getElementById('free-spaces').innerHTML = availablePlaces;
+    $('#free-spaces').html(availablePlaces);
 }
 
 $().ready(function() {
