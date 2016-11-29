@@ -10,6 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.config.AppConfig;
 
+import java.text.ParseException;
+
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
@@ -20,8 +22,7 @@ public class DateValidatorTest {
     public TimeValidator timeValidator;
 
     @Test
-    public void testCorrectTimeExpectTrue()
-    {
+    public void testCorrectTimeExpectTrue() throws ParseException {
         final String startDate = "2016-11-11";
         final String endDate = "2016-12-31";
         final String message = "end date should be greater than end date";
@@ -29,8 +30,7 @@ public class DateValidatorTest {
     }
 
     @Test
-    public void testFromTimeGreaterThanToTimeExpectFalse()
-    {
+    public void testFromTimeGreaterThanToTimeExpectFalse() throws ParseException {
         final String startDate = "2016-11-11";
         final String endDate = "2016-10-31";
         final String message = "end date should be greater than end date";

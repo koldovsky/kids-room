@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,9 +26,11 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.TimeValidator;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.text.DateFormat;
 import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 /**
@@ -93,9 +96,10 @@ public class MyBookingsController {
                        @RequestParam(value = "startDate") String startDate,
                        @RequestParam(value = "endDate") String endDate,
                        Principal principal)
-    throws ResourceNotFoundException{
+            throws ResourceNotFoundException, ParseException {
 
         if(!timeValidator.validateDate(startDate, endDate)) {
+
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DATE_IS_NOT_VALID);
         }
         User currentUser = userService.getUserByEmail(principal.getName());
