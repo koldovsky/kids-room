@@ -76,8 +76,8 @@ public class MyBookingsController {
     /**
      * Handles HTTP GET request for bookings in custom range of time
      *
-     * @param dateLo time range lower limit
-     * @param dateHi time range upp er limit
+     * @param startDate time range lower limit
+     * @param endDate time range upp er limit
      * @param principal User principal
      *
      * @return A list of DTOs containing all valuable info in JSON
@@ -90,20 +90,20 @@ public class MyBookingsController {
     @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> getBookings(
-                       @RequestParam(value = "dateLo") String dateLo,
-                       @RequestParam(value = "dateHi") String dateHi,
+                       @RequestParam(value = "startDate") String startDate,
+                       @RequestParam(value = "endDate") String endDate,
                        Principal principal)
     throws ResourceNotFoundException{
 
-        if(!timeValidator.validateDate(dateLo, dateHi)) {
+        if(!timeValidator.validateDate(startDate, endDate)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DATE_IS_NOT_VALID);
         }
         User currentUser = userService.getUserByEmail(principal.getName());
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookings(toDate(dateLo),
-                toDate(dateHi), currentUser, BookingState.COMPLETED);
+        List<Booking> myBookings = bookingService.getBookings(toDate(startDate),
+                toDate(endDate), currentUser, BookingState.COMPLETED);
         List<BookingDto> dtos = myBookings
                 .stream()
                 .map(BookingDto::new)

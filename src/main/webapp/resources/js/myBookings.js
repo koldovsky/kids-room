@@ -24,7 +24,7 @@ $(document).ready(function(){
 function updateTable(){
 	var from = $('#from').val();
 	var to = $('#to').val();
-	var request = "mybookings/getbookings?dateLo=" + from +"&dateHi=" + to;
+	var request = "mybookings/getbookings?startDate=" + from +"&endDate=" + to;
 	if(validateDate()) {
 		$.ajax({
 			type: "GET",
