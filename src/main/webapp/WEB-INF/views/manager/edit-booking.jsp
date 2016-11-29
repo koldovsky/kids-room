@@ -181,7 +181,6 @@
                     <h4></h4>
                     <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code ="modal.okay"/></button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -267,6 +266,21 @@
                 <button id="closeCencel" class="btn btn-danger  " data-dismiss="modal">
                     <spring:message code="booking.closeCencel"/>
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="failureNoArriveTime" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body-err">
+                <div align="center">
+                    <br>
+                    <h4><spring:message code="booking.noArriveTime"/> </h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
+                </div>
+
             </div>
         </div>
     </div>
