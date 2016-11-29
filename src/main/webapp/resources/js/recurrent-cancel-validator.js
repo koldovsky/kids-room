@@ -123,7 +123,7 @@ function printErrorMessages(element) {
 
 function validateRecurrentDates(recurrentId, startDate, endDate) {
     var result = true;
-    element = '#validation-information';
+    var element = '#validation-information';
     if(!isNotEmptyDates(startDate, endDate)) {
         printErrorMessages(element);
         result = false;
