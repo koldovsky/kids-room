@@ -6,7 +6,9 @@ $(document).ready(function(){
         if(path.indexOf("language=") > -1){
         	newpath = updateQueryStringParameter(path, "language", locale);
         }
-        else{
+        else if(path.indexOf('#') > -1){
+            newpath = path.substring(0, path.indexOf('#')) + "?language=" + locale;
+        } else {
 	        if (path.indexOf('?') > -1){
 	            newpath = path + "&language=" + locale;
 	        }

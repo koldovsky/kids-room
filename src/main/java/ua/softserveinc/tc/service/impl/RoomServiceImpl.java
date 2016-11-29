@@ -21,6 +21,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -170,29 +171,25 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     /**
      * The method finds the maximum people in the room for period of time
-     * from dateLo to dateHi.
+     * from dateLo to dateHi. All of the parameters must not be a null.
+     *
      * @param dateLo start of period
      * @param dateHi end of period
      * @param bookings all reserved bookings in the time period
      * @return The maximum number of people that are simultaneously in the room
      */
-
-    private int maxRangeReservedBookings (Date dateLo, Date dateHi, List<Booking> bookings) {
-        if(dateLo == null)
-            throw new NullPointerException("dateLo is null");
-        else if(dateHi == null)
-            throw new NullPointerException("dateHi is null");
-        else if(bookings == null)
-            throw new NullPointerException("bookings is null");
-
-        long oneMinute = 60 * 1000;
+    private int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings) {
+        Objects.requireNonNull(dateLo, "dateLo must not be null");
+        Objects.requireNonNull(dateHi, "dateHi must not be null");
+        Objects.requireNonNull(bookings, "bookings must not be null");
+        final long oneMinuteMillis = 60 * 1000;
         int maxReservedBookings = 0;
-        for(long ti = dateLo.getTime(); ti < dateHi.getTime(); ti += oneMinute) {
+        for (long ti = dateLo.getTime() + 1; ti < dateHi.getTime(); ti += oneMinuteMillis) {
             int temporaryMax = 0;
-            for(Booking tab : bookings)
-                if(tab.getBookingStartTime().getTime() <= ti && tab.getBookingEndTime().getTime() >= ti)
+            for (Booking tab : bookings)
+                if (tab.getBookingStartTime().getTime() < ti && tab.getBookingEndTime().getTime() > ti)
                     temporaryMax++;
-            if(temporaryMax > maxReservedBookings)
+            if (temporaryMax > maxReservedBookings)
                 maxReservedBookings = temporaryMax;
         }
         return maxReservedBookings;
@@ -201,12 +198,17 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     /**
      * The method finds the available space in the room (number of people)
      * for the given period of time from dateLo to dateHi.
+     * All of the parameters must not be a null.
+     *
      * @param dateLo start of period
      * @param dateHi end of period
      * @param room   a requested room
      * @return number of places available in the room for the period
      */
     public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
+        Objects.requireNonNull(dateLo, "dateLo must not be null");
+        Objects.requireNonNull(dateHi, "dateHi must not be null");
+        Objects.requireNonNull(room, "room must not be null");
         List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
         int maxReservedBookings = maxRangeReservedBookings(dateLo, dateHi, bookings);
         return room.getCapacity() - maxReservedBookings;

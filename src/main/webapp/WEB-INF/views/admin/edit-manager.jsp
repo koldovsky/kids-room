@@ -40,7 +40,7 @@
                 <c:if test="${manager.confirmed eq true}"><img src="resources/img/ok.png" class="img-size"></c:if>
                 <c:if test="${manager.confirmed ne true}"><img src="resources/img/no.png" class="img-size"></c:if>
             </td>
-            <td><a href="adm-update-manager?id=${manager.id}"><button class="button-size-default button edit"></button>
+            <td><a href="adm-update-manager?id=${manager.id}" tabindex="-1"><button class="button-size-default button edit"></button>
                 </a></td>
 
             <td>
@@ -69,8 +69,11 @@
         <tr></tr>
         <tr>
             <th colspan="7" class="hide-border set-standard-color">
-                <a href="adm-add-manager"><input type="button" value=<spring:message code="administrator.add"/>
-                   class="button-add button"/></a>
+                <a href="adm-add-manager" tabindex="-1">
+                    <button type="button" class="button-add button">
+                            <spring:message code="administrator.add"/>
+                    </button>
+                </a>
             </th>
         </tr>
     </table>

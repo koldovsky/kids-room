@@ -2,10 +2,10 @@ $(document).ready(function() {
     $(function() {
         $.validator.addMethod("regexKidFirstName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Incorrect first name. Please enter at least 2 characters");
+        }, "messages.kid.editFirstName");
         $.validator.addMethod("regexKidLastName", function(value, element, regexpr) {
             return regexpr.test(value);
-        }, "Incorrect last name. Please enter at least 2 characters");
+        }, "messages.kid.editLastName");
         $('#editkidform').validate({
             rules: {
 
@@ -22,13 +22,14 @@ $(document).ready(function() {
             },
             messages: {
                 firstName: {
-                    required: 'Please enter at least 2 characters'
+                    required: messages.kid.requiredFirstName,
+                    minlength: messages.kid.editFirstName
                 },
                 lastName: {
-                    required: 'Please enter at least 2 characters'
+                    required: messages.kid.requiredLastName,
+                    minlength: messages.kid.editLastName
                 }
             }
         });
     });
-
 });

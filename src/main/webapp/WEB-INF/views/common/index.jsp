@@ -322,19 +322,20 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="eventInfo" >
+            <div class="row">
+                <div class="eventInfo">
+                    <h3 id="eventTitle">Title</h3>
+                    <span class="time" id="startTime"></span>
+                    <span class="time" id="endTime"></span><br/>
+                    <div class="eventDescription">
+                        <span id="eventDescription"></span>
+                    </div>
+                    <div class="text-area">
+                        <textarea id="text-area" readonly="readonly"> </textarea>
+                    </div>
+                </div>
 
-            <h3 id="eventTitle">Title</h3>
-
-            <span class="time" id="startTime"></span>
-            <span class="time" id="endTime"></span><br/>
-            <div class="eventDescription">
-                <span id="eventDescription"></span>
             </div>
-        </div>
-
-    </div>
 
         <%--create-new-booking--%>
     <div class="container col-xs-12">
@@ -347,7 +348,7 @@
         </button>
         <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
                 data-target=".bs-modal-lg-contact">
-            Contact
+            <spring:message code= "booking.makeBooking"/>
         </button>
 
         <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -802,22 +803,22 @@
                 <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
                     <form id="choose-updating-form">
 
-                        <div class="radio-button">
-                            <label><input type="radio" id="single-update" name="radio" checked><spring:message code="recurrent.justThisOneEvent"/></label>
+                        <div class="lableBoard">
+                            <label><small><i><ins><spring:message code="recurrent.editEventMessage"/></ins></i></small></label>
                         </div>
                         <div class="radio-button">
-                            <label><input type="radio" id="recurrent-update" name="radio"><spring:message code="recurrent.allSeries"/></label>
+                            <label><input type="radio" id="single-update" name="radio" checked> <spring:message code="recurrent.justThisOneEvent"/></label>
                         </div>
-
-                        <button type="button" class="btn btn-success" id="confirm-choose"><spring:message code="ok"/></button>
-                        <button type="button" class="btn btn-danger" id="cancel-choose"><spring:message code="cancel"/></button>
-
+                        <div class="radio-button">
+                            <label><input type="radio" id="recurrent-update" name="radio"> <spring:message code="recurrent.allSeries"/></label>
+                        </div>
+                        <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose"> <spring:message code="ok"/></button>
+                        <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose"> <spring:message code="cancel"/></button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container">
         <button type="button" class="btn btn-success" id="create-new-event"><spring:message code="event.new"/></button>
         <div id='calendar'></div>
@@ -876,5 +877,15 @@
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
 <script src='resources/js/userCalendar.js'></script>
+
+<c:choose>
+    <c:when test="${pageContext.response.locale =='ua'}">
+        <script src="resources/js/lib/messages-ua.js"></script>
+    </c:when>
+
+    <c:when test="${pageContext.response.locale != 'ua'}">
+        <script src="resources/js/lib/messages.js"></script>
+    </c:when>
+</c:choose>
 
 </body>

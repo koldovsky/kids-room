@@ -11,7 +11,7 @@ html, body, .container {
 }
 
 .eventInfo {
-    height: 150px;
+    height: 200px;
     position: absolute;
     z-index: 10001;
     display: none;
@@ -34,6 +34,11 @@ html, body, .container {
     border-bottom-style: solid;
     padding-left: 14px;
 }
+
+.container .eventInfo .text-area {
+    padding-left: 14px;
+}
+
 .container .eventInfo .time {
     padding-left: 14px;
     padding-right: 10px;
