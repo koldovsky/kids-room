@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
+import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.entity.Event;
 
 import java.util.List;
@@ -25,7 +26,9 @@ public interface CalendarService {
 
     List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto);
 
+    List<EventDto> createMonthlyEvents(final MonthlyEventDto monthlyEventDto);
+
     String getRoomWorkingHours(final long id);
 
-    RecurrentEventDto getRecurrentEventForEditingById(long recurrentEventId);
+    EventDto getRecurrentEventForEditingById(long recurrentEventId);
 }

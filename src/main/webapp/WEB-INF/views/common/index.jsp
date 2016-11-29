@@ -615,10 +615,15 @@
                                             <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio">
                                                 <spring:message code="event.weeklyEvent"/></label>
                                         </div>
-                                        <div class="radio-button" hidden>
-                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio">
+                                        <div class="radio-button">
+                                            <label><input type="radio" name="optradio" id="monthly-radio-button" class="my-radio">
                                                 <spring:message code="event.monthlyEvent"/></label>
                                         </div>
+                                    </div>
+                                    <div class="row col-xs-7" id="days-for-monthly-form" hidden>
+                                        <br><spring:message code="event.checkRequiredDays"/>
+                                        <table class = "table center" id="monthly-days">
+                                        </table>
                                     </div>
                                     <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                         <table class="table" id="days-for-recurrent">

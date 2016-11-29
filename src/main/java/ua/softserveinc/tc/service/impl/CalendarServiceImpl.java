@@ -6,6 +6,7 @@ import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
+import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.mapper.GenericMapper;
@@ -16,6 +17,7 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.*;
 
+import static ua.softserveinc.tc.dto.MonthlyEventDto.getMonthlyEventDto;
 import static ua.softserveinc.tc.dto.RecurrentEventDto.getRecurrentEventDto;
 
 @Service
@@ -82,8 +84,11 @@ public class CalendarServiceImpl implements CalendarService {
         calendar.setTime(dateForRecurrentStart);
 
         String[] days = recurrentEventDto.getDaysOfWeek().split(" ");
-        Long newRecID = eventDao.getMaxRecurrentId() + 1;
-
+        Long newRecID;
+        if((eventDao.getMaxRecurrentId() + 1)%10==0)
+            newRecID = eventDao.getMaxRecurrentId() + 2;
+        else
+            newRecID = eventDao.getMaxRecurrentId() + 1;
 
         while (dateForRecurrentEnd.getTime() > calendar.getTimeInMillis()) {
             for (int i = 0; i < days.length; i++) {
@@ -121,16 +126,84 @@ public class CalendarServiceImpl implements CalendarService {
         }
         return res;
     }
+    //========================== working here
+    public final List<EventDto> createMonthlyEvents(final MonthlyEventDto monthlyEventDto) {
+        Date dateForMonthlyStart = DateUtil.toDateISOFormat(monthlyEventDto.getStartTime());
+        Date dateForMonthlyEnd = DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
+        //// TODO: 29.11.2016 if that data doesnt exist then exception - prevent it 
 
-    public RecurrentEventDto getRecurrentEventForEditingById(final long recurrentEventId){
+        List<EventDto> res = new LinkedList<>();
+
+        Calendar calendarEndTime = Calendar.getInstance();
+        calendarEndTime.setTime(dateForMonthlyEnd);
+
+        Calendar calendarWithEndDate = Calendar.getInstance();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateForMonthlyStart);
+
+        int[] days = monthlyEventDto.getDaysOfMonth();
+        Long newRecID = eventDao.getMaxRecurrentId() + 10 - eventDao.getMaxRecurrentId()%10;
+
+        while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
+            for (int i = 0; i < days.length; i++) {
+
+                if(calendar.getActualMaximum(Calendar.DAY_OF_MONTH)>=days[i])
+                    calendar.set(Calendar.DAY_OF_MONTH, days[i]);
+                else continue;
+
+                if (dateForMonthlyEnd.getTime() < calendar.getTimeInMillis()) break;
+                if (dateForMonthlyStart.getTime() > calendar.getTimeInMillis()) continue;
+
+                Event newRecurrentEvent = new Event();
+                newRecurrentEvent.setName(monthlyEventDto.getName());
+                newRecurrentEvent.setDescription(monthlyEventDto.getDescription());
+                newRecurrentEvent.setStartTime(calendar.getTime());
+
+                calendarWithEndDate.setTime(calendar.getTime());
+                calendarWithEndDate.set(Calendar.HOUR_OF_DAY, calendarEndTime.get(Calendar.HOUR_OF_DAY));
+                calendarWithEndDate.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
+
+                newRecurrentEvent.setEndTime(calendarWithEndDate.getTime());
+                newRecurrentEvent.setRecurrentId(newRecID);
+                newRecurrentEvent.setRoom(roomDao.findById(monthlyEventDto.getRoomId()));
+                newRecurrentEvent.setColor(monthlyEventDto.getColor());
+
+                try {
+                    eventDao.create(newRecurrentEvent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println(e);
+                }
+
+                res.add(genericMapper.toDto(newRecurrentEvent));
+            }
+            calendar.add(Calendar.MONTH, 1);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+        }
+        return res;
+    }
+    //========================== working here
+    public EventDto getRecurrentEventForEditingById(final long recurrentEventId){
+
         final List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
         Set <Integer> weekDays = new HashSet<>();
+        Set <Integer> daysOfTheMonth = new HashSet<>();
         Calendar calendar = Calendar.getInstance();
         for (Event event : listOfRecurrentEvent) {
             calendar.setTime(event.getStartTime());
             weekDays.add(calendar.get(Calendar.DAY_OF_WEEK));
+            daysOfTheMonth.add(calendar.get(Calendar.DAY_OF_MONTH));
         }
-        return getRecurrentEventDto(listOfRecurrentEvent, weekDays);
+        if (recurrentEventId%10==0) {
+            int[] tempDays = new int[daysOfTheMonth.size()];
+            int index =0;
+            for (int day: daysOfTheMonth)
+                tempDays[index++] = day;
+            return getMonthlyEventDto(listOfRecurrentEvent, tempDays);
+        }
+        else
+            return getRecurrentEventDto(listOfRecurrentEvent, weekDays);
     }
 
     public final void updateEvent(final Event event) {

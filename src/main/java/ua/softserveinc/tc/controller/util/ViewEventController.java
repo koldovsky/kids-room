@@ -11,6 +11,7 @@ import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.User;
@@ -93,6 +94,12 @@ public class ViewEventController {
     @ResponseBody
     public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
         return new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto));
+    }
+
+    @RequestMapping(value = "getmonthlyevents", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public String getMonthly(@RequestBody MonthlyEventDto monthlyEventDto) {
+        return new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto));
     }
 
     @RequestMapping(value = "getroomproperty/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
