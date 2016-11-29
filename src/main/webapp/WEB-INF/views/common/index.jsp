@@ -322,19 +322,20 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="eventInfo" >
+            <div class="row">
+                <div class="eventInfo">
+                    <h3 id="eventTitle">Title</h3>
+                    <span class="time" id="startTime"></span>
+                    <span class="time" id="endTime"></span><br/>
+                    <div class="eventDescription">
+                        <span id="eventDescription"></span>
+                    </div>
+                    <div class="text-area">
+                        <textarea id="text-area" readonly="readonly"> </textarea>
+                    </div>
+                </div>
 
-            <h3 id="eventTitle">Title</h3>
-
-            <span class="time" id="startTime"></span>
-            <span class="time" id="endTime"></span><br/>
-            <div class="eventDescription">
-                <span id="eventDescription"></span>
             </div>
-        </div>
-
-    </div>
 
         <%--create-new-booking--%>
     <div class="container col-xs-12">
@@ -802,22 +803,22 @@
                 <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
                     <form id="choose-updating-form">
 
-                        <div class="radio-button">
-                            <label><input type="radio" id="single-update" name="radio" checked><spring:message code="recurrent.justThisOneEvent"/></label>
+                        <div class="lableBoard">
+                            <label><small><i><ins><spring:message code="recurrent.editEventMessage"/></ins></i></small></label>
                         </div>
                         <div class="radio-button">
-                            <label><input type="radio" id="recurrent-update" name="radio"><spring:message code="recurrent.allSeries"/></label>
+                            <label><input type="radio" id="single-update" name="radio" checked> <spring:message code="recurrent.justThisOneEvent"/></label>
                         </div>
-
-                        <button type="button" class="btn btn-success" id="confirm-choose"><spring:message code="ok"/></button>
-                        <button type="button" class="btn btn-danger" id="cancel-choose"><spring:message code="cancel"/></button>
-
+                        <div class="radio-button">
+                            <label><input type="radio" id="recurrent-update" name="radio"> <spring:message code="recurrent.allSeries"/></label>
+                        </div>
+                        <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose"> <spring:message code="ok"/></button>
+                        <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose"> <spring:message code="cancel"/></button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="container">
         <button type="button" class="btn btn-success" id="create-new-event"><spring:message code="event.new"/></button>
         <div id='calendar'></div>
@@ -853,6 +854,57 @@
             </div>
         </div>
     </div>
+
+    <%--cancel-event-dialog--%>
+    <div class="row">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="cancel-event-dialog" class="dialog" hidden title="<spring:message code= "event.cancel"/>">
+                    <form id="form-event-cancel">
+                        <div>
+                            <p style="color:red;"><spring:message code= "cancel.warning" arguments='<span id="event-cancel-title"></span>'/></p>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label align-items="center"  for="start-date-cancel-picker"><spring:message code= "event.startDate"/></label>
+
+                            <div class=>
+                                <input id="start-date-cancel-picker" type="date" class=" form-control"  placeholder="startDate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label align="center" for="end-date-cancel-picker"><spring:message code= "event.endDate"/></label>
+                            <br>
+                            <div class=>
+                                <input id="end-date-cancel-picker" type="date" class="form-control" placeholder="endDate">
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <br>
+                                <div class="clearfix"></div>
+                                <br>
+                                <div id="validation-information-container" class="clearfix">
+                                    <p class="col-xs-12 data-validation-information-string" style="color:red" id="validation-information"></p>
+                                </div>
+                                <br>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-3">
+                                    <button type="button" class="btn btn-success live" id="yes-cancel-event-button"><spring:message code="yes"/></button>
+                                </div>
+                                <div align="right" class="col-xs-9">
+                                    <button type="button" class="btn btn-danger pull-right" id="no-cancel-event-button"><spring:message code="no"/></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </sec:authorize>
 <sec:authorize access="hasRole('ADMINISTRATOR')">
 
@@ -876,5 +928,16 @@
 <script src='resources/js/header-manager.js'></script>
 <script src='resources/js/header-user.js'></script>
 <script src='resources/js/userCalendar.js'></script>
+<script src='resources/js/recurrent-cancel-validator.js'></script>
+
+<c:choose>
+    <c:when test="${pageContext.response.locale =='ua'}">
+        <script src="resources/js/lib/messages-ua.js"></script>
+    </c:when>
+
+    <c:when test="${pageContext.response.locale != 'ua'}">
+        <script src="resources/js/lib/messages.js"></script>
+    </c:when>
+</c:choose>
 
 </body>
