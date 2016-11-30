@@ -3,14 +3,16 @@ package ua.softserveinc.tc.controller.util;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.softserveinc.tc.constants.AdminConstants;
-import ua.softserveinc.tc.constants.ChildConstants;
-import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.EventConstants;
+import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
@@ -21,9 +23,6 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.EventValidator;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import java.security.Principal;
 
 @Controller
@@ -83,21 +82,41 @@ public class ViewEventController {
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public String getAjax(@RequestBody EventDto eventDto) {
-        if(eventValidator.isSingleEventValid(eventDto)) {
-            return calendarService.create(genericMapper.toEntity(eventDto)).toString();
-        } else return eventValidator.errorSingleMessage(eventDto);
-
+    public ResponseEntity<String>  getAjax(@RequestBody EventDto eventDto, BindingResult bindingResult) {
+        eventValidator.validate(eventDto,bindingResult);
+        if (eventValidator.isSingleValid(eventDto))
+        {
+            if (bindingResult.hasErrors()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
+            } else {
+                calendarService.create(genericMapper.toEntity(eventDto));
+                return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
+        }
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK)
+   // @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
-    public void getEventForUpdate(@RequestBody EventDto eventDto) {
-        if(eventValidator.isSingleEventValid(eventDto)) {
-            calendarService.updateEvent(genericMapper.toEntity(eventDto));
+    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto, BindingResult bindingResult) {
+        eventValidator.validate(eventDto,bindingResult);
+        if (eventValidator.isSingleValid(eventDto))
+        {
+            if (bindingResult.hasErrors()){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
+            } else {
+                calendarService.updateEvent(genericMapper.toEntity(eventDto));
+                return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
         }
     }
+
+
+
 
     @RequestMapping(value = "geteventfordelete", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
