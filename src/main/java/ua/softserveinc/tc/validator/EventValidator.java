@@ -22,10 +22,6 @@ import java.util.Date;
 public class EventValidator implements Validator {
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private EventService eventService;
-
     private DateFormat onlyDateSimpleDateFormat = new SimpleDateFormat(ValidationConstants.DATE_FORMAT);
     private Date startDate;
     private Date endDate;
@@ -33,11 +29,6 @@ public class EventValidator implements Validator {
     private Calendar startDateCalendar;
     private  Calendar endDateCalendar;
 
-
-
-    public static void main(String[] args) {
-     //  new EventValidator().dateSet();
-    }
 
     private void dateSet(EventDto eventDto) throws ParseException {
         DateFormat sdf = new SimpleDateFormat(ValidationConstants.DATE_FORMAT);
@@ -49,33 +40,7 @@ public class EventValidator implements Validator {
         endDateCalendar = Calendar.getInstance();
         startDateCalendar.setTime(startDate);
         endDateCalendar.setTime(endDate);
-        //String nowDate= new SimpleDateFormat(ValidationConstants.DATE_FORMAT).format(Calendar.getInstance().getTime());
-//        dateStart = Integer.parseInt(eventDto.getEndTime().substring(0,10).replace("-",""));
-//        dateEnd = Integer.parseInt(eventDto.getStartTime().substring(0,10).replace("-",""));
-//        timeStart = Integer.parseInt(eventDto.getStartTime().substring(11,16).replace(":",""));
-//        timeEnd = Integer.parseInt(eventDto.getEndTime().substring(11,16).replace(":",""));
-//        dateNow = Integer.parseInt(nowDate.substring(0,10).replace("-",""));
-//        timeNow = Integer.parseInt(nowDate.substring(11,16).replace(":",""));
     }
-
-//    public  String errorSingleMessage(EventDto eventDto) throws ParseException {
-//       dateSet(eventDto);
-//        StringBuilder stringBuilder= new StringBuilder();
-//        if (eventDto.getName().length() == 0) {
-//            stringBuilder.append(ValidationConstants.EVENT_EMPTY_TITLE_MSG);
-//        }
-//        if ((dateStart == null) || (dateEnd == null)) {
-//            stringBuilder.append("Empty data" + "\n");
-//        } else if( (dateStart < dateNow) && (timeStart < dateNow) ) {
-//            stringBuilder.append("Must create new event in Present time" + "\n");
-//        } else if (!Objects.equals(dateStart, dateEnd))
-//        {
-//            stringBuilder.append(ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
-//        } else if (timeStart >= timeEnd) {
-//            stringBuilder.append(ValidationConstants.EVENT_START_TIME_BIGGER_END_MSG+"\n");
-//        }
-//        return stringBuilder.toString();
-//    }
 
     @Override
     public boolean supports(Class<?> aClass) {
