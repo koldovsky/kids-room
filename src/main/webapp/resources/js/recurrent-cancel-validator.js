@@ -5,8 +5,15 @@
 
 var MAX_POSSIBLE_DATE = new Date(884541340800000); //Sat, 01 Jan 30000 00:00:00 GMT
 var MIN_POSSIBLE_DATE = new Date(0); //Thu, 01 Jan 1970 00:00:00 GMT
-var STANDART_DATE_REGEXP = '/^\d{4}\-((((0?[13578])|10|12)\-31)|(((0?[469])|11)\-30)|(0?2|\-28))$/';
-var LEAP_YEAR_REGEXP = '/^\d{4}\-((((0?[13578])|10|12)\-31)|(((0?[469])|11)\-30)|(0?2|\-29))$/';
+var START_UTC_TIME_UNIT = "T00:00:00";
+var END_UTC_TIME_UNIT = "T23:59:59";
+var DATE_REGEXP = new RegExp(['^((\\d{2}(([02468][048])|([13579][26]))',
+    '\\-((((0?[13578])|(1[02]))\\-((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))',
+    '\\-((0?[1-9])|([1-2][0-9])|(30)))|(0?2\\-((0?[1-9])|([1-2][0-9])))))',
+    '|(\\d{2}(([02468][1235679])|([13579][01345789]))\\-((((0?[13578])|(1[02]))',
+    '\\-((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))',
+    '\\-((0?[1-9])|([1-2][0-9])|(30)))|(0?2\\-((0?[1-9])|(1[0-9])|(2[0-8]))))))$'].join['']
+);
 var ERROR_MESSAGES_RECURRENT_CANCEL = [];
 
 /**
@@ -36,15 +43,11 @@ function isNotEmptyDates(startDate, endDate) {
  */
 function isRightFormatDates(startDate, endDate) {
     var result = true;
-    var isStartDateLeapYear = startDate / 4 == 0; //Ss this a leap year (February 28 days)
-    var isEndDateLeapYear = endDate / 4 == 0;
-    if(!isStartDateLeapYear && !STANDART_DATE_REGEXP.test(startDate)
-        || isStartDateLeapYear && !LEAP_YEAR_REGEXP.test(startDate)) {
+    if(!DATE_REGEXP.test(startDate)) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.startDate);
         result = false;
     }
-    if(!isStartDateLeapYear && !STANDART_DATE_REGEXP.test(endDate)
-        || isStartDateLeapYear && !LEAP_YEAR_REGEXP.test(endDate)) {
+    if(!DATE_REGEXP.test(endDate)) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.endDate);
         result = false;
     }
@@ -69,7 +72,7 @@ function isNotInThePast(startDate, endDate, recurrentId) {
         }
     arStartEv = event.start.split('T');
 
-    //We add arStartEv[1] (time of starting event), because startDate is only date
+    //We add arStartEv[1] (time of starting event), because startDate is only a date
     if(new Date(startDate + " " + arStartEv[1]) < new Date()) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.pastStartDay);
         result = false;
@@ -95,16 +98,16 @@ function validateRecurrentDatesPeriod(recurrentId, startDate, endDate){
     $.each(allEvents, function(index, value) {
         var startD = new Date(value.start);
         var endD = new Date(value.end);
-        if(value.recurrentId = recurrentId && startD < firstReccurentDate)
+        if(value.recurrentId == recurrentId && startD < firstReccurentDate)
             firstReccurentDate = startD;
-        if (value.recurrentId = recurrentId && endD > lastReccurentDate)
+        if (value.recurrentId == recurrentId && endD > lastReccurentDate)
             lastReccurentDate = endD;
     });
-    if(new Date(startDate + "T00:00:00" < firstReccurentDate)) {
+    if(new Date(startDate + END_UTC_TIME_UNIT) < firstReccurentDate) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.wrongDateStartRange);
         result = false;
     }
-    if(new Date(endDate + "T00:00:00" > lastReccurentDate)) {
+    if(new Date(endDate + START_UTC_TIME_UNIT) > lastReccurentDate) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.wrongDateEndRange);
         result = false;
     }
@@ -116,8 +119,9 @@ function validateRecurrentDatesPeriod(recurrentId, startDate, endDate){
  * @param element
  */
 function printErrorMessages(element) {
-    $(ERROR_MESSAGES_RECURRENT_CANCEL).each(function(message) {
-        $(element).html(message + '</br>');
+    $(element).html("");
+    $(ERROR_MESSAGES_RECURRENT_CANCEL).each(function(index, message) {
+        $(element).append("- " + message + '</br>');
     });
 }
 
@@ -137,5 +141,6 @@ function validateRecurrentDates(recurrentId, startDate, endDate) {
         printErrorMessages(element);
         result = false;
     }
+    ERROR_MESSAGES_RECURRENT_CANCEL = [];
     return result;
 }
