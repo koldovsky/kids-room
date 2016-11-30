@@ -438,7 +438,7 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
 });
 
 
-$('#booking-table tbody').on('mousedown','.inp-leaveTime', function() {
+$('#booking-table tbody').on('click','.inp-leaveTime', function() {
     var arrivalTime = $(this).parents('tr').find('.inp-ArrivalTime').val();
     if(arrivalTime == "") {
         $('#failureNoArriveTime').modal('show');
