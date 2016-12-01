@@ -166,18 +166,36 @@ $(function () {
 
     $('.my-radio').click(function () {
         if ($('#weekly-radio-button').is(':checked')) {
+<<<<<<< HEAD
             $('#days-for-recurrent-form').attr('hidden', false);//week form
             $('#days-for-monthly-form').attr('hidden', true);//monthly form
         }
         if($('#monthly-radio-button').is(':checked')) {
             buildTableMonthly();
             $('#days-for-monthly-form').attr('hidden', false);
+=======
+            $('#days-for-recurrent-form').attr('hidden', false);
+            $('#end-date-picker').attr('disabled',false);
+            $("#dialog" ).off( "change", "#start-date-picker", function () {
+                $('#end-date-picker').val($('#start-date-picker').val());
+            });
+        } else {
+>>>>>>> master
             $('#days-for-recurrent-form').attr('hidden', true);
         }
         if ($('#single-event-radio-button').is(':checked')) {
+<<<<<<< HEAD
             $('#days-for-monthly-form').attr('hidden', true);
             $('#days-for-recurrent-form').attr('hidden', true);
             $('#end-date-picker').val($('#start-date-picker').val());
+=======
+            $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled',true);
+            //TODO:HELLO WORLD
+            $("#dialog" ).on( "change", "#start-date-picker", function () {
+                $('#end-date-picker').val($('#start-date-picker').val());
+            });
+
+>>>>>>> master
         }
     });
 
@@ -488,7 +506,14 @@ function createSingleOrRecurrentEvents() {
             ev.borderColor = BORDER_COLOR;
 
             $('#calendar').fullCalendar('renderEvent', ev);
+
+        },
+        error: function (xhr) {
+            $('#calendar').fullCalendar('removeEvents', ev.id);
+            callErrorDialog(xhr['responseText']);
         }
+
+
     });
 
     $('#start-date-picker').val('');
@@ -574,7 +599,6 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
 }
 
 function updateSingleEvent(){
-    $('#calendar').fullCalendar('removeEvents', info_event.calEvent.id);
     var eventForUpdate = {
         id: info_event.calEvent.id,
         title: $('#titleUpdate').val(),
@@ -584,8 +608,6 @@ function updateSingleEvent(){
         description: $('#descriptionUpdate').val(),
         color: $('#color-select-single-event').val(),
     };
-
-    $('#calendar').fullCalendar('renderEvent', eventForUpdate);
 
     sendToServerForUpdate(eventForUpdate, info_event.roomID);
 
@@ -605,8 +627,20 @@ function sendToServerForUpdate(event, roomID) {
             roomId: roomID,
             description: event.description,
             color: event.color
-        })
+        }),
+        success: function () {
+                $('#calendar').fullCalendar('removeEvents', event.id);
+                $('#calendar').fullCalendar('renderEvent', event,true);
+                redrawBlockedTimeSpans(roomIdForHandler);
+                redrawBlockedTimeSpans(roomIdForHandler);
+        },
+        error: function (xhr) {
+
+            callErrorDialog(xhr['responseText']);
+
+        }
     });
+
 }
 
 function sendToServerForDelete(event) {
@@ -622,6 +656,7 @@ function sendToServerForDelete(event) {
             roomId: localStorage['roomId'],
             endTime: event.end
         })
+
     });
 }
 

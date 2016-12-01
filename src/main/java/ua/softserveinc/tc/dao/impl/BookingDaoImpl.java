@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.Collections;
 import java.util.*;
 
 @Repository
@@ -32,31 +33,10 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         return entityManager.createQuery(query).getResultList();
     }
 
-    @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, Room room, BookingState... bookingStates) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
-        Root<Booking> root = criteria.from(Booking.class);
-
-        List<Predicate> restrictions = new ArrayList<>();
-        if (startDate != null && endDate != null) {
-            restrictions.add(builder.between(root.get(
-                    BookingConstants.Entity.START_TIME), startDate, endDate));
-        }
-
-        if (bookingStates != null && bookingStates.length > 0)
-            restrictions.add(root.get(BookingConstants.Entity.STATE).in(Arrays.asList(bookingStates)));
-        if (room != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
-
-        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
-
-        return entityManager.createQuery(criteria).getResultList();
-    }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room, BookingState... bookingStates) {
+    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room,
+                                     boolean includeLastDay, BookingState... bookingStates) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
@@ -64,11 +44,12 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         List<Predicate> restrictions = new ArrayList<>();
         if (startDate != null && endDate != null) {
             //add one day for including last day in parent report
-            Calendar c = Calendar.getInstance();
-            c.setTime(endDate);
-            c.add(Calendar.DATE, 1);
-            endDate = c.getTime();
-
+            if(includeLastDay) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(endDate);
+                c.add(Calendar.DATE, 1);
+                endDate = c.getTime();
+            }
             restrictions.add(builder.between(root.get(
                     BookingConstants.Entity.START_TIME), startDate, endDate));
         }
@@ -84,6 +65,26 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room){
+        if (startDate == null || endDate == null || room == null) {
+            return Collections.emptyList();
+        }
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+        query.select(root).where(
+                builder.and(
+                        builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
+                        builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate)),
+                        builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        root.get(BookingConstants.Entity.STATE).in(
+                                BookingConstants.States.getActiveAndBooked()));
+
+        return entityManager.createQuery(query).getResultList();
     }
 
     public Long getMaxRecurrentId() {

@@ -31,4 +31,11 @@ public interface CalendarService {
     String getRoomWorkingHours(final long id);
 
     EventDto getRecurrentEventForEditingById(long recurrentEventId);
+    /**
+     * Return capacity (number of people) of the room
+     *
+     * @param id id the room
+     * @return capacity of the room
+     */
+    String getRoomCapacity(long id);
 }

@@ -5,9 +5,15 @@
     color: white;
 }
 .lableBoard {
+<<<<<<< HEAD
     border: 4px double black;
     background: #beccff;
     padding: 10px;
+=======
+    border: 4px double black; /* Параметри границі */
+    background: #beccff; /* Колір фону */
+    padding: 10px; /* Поле навколо тексту */
+>>>>>>> master
 }
 .btn-edit-event {
     width: 45%;

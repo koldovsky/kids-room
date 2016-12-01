@@ -54,7 +54,7 @@ public class ReportParentController {
 
         User parent = userService.getUserByEmail(email);
         List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate),
-                parent, room, BookingState.COMPLETED);
+                parent, room, true, BookingState.COMPLETED);
 
         Long sumTotal = bookingService.getSumTotal(bookings);
 

@@ -15,7 +15,8 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 
-<body>
+
+
 
 <sec:authorize access="hasRole('USER')">
 <div id="mobile" class="container">
@@ -594,7 +595,8 @@
                             <label for="end-date-picker"><spring:message code= "event.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
-                                <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate">
+                                <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate"
+                                disabled="true">
                             </div>
                             <div class="col-xs-6">
                                 <input id="end-time-picker" type="text" class="text-center time form-control timepicker" size="6"/>
@@ -888,10 +890,9 @@
     <c:when test="${pageContext.response.locale =='ua'}">
         <script src="resources/js/lib/messages-ua.js"></script>
     </c:when>
-
     <c:when test="${pageContext.response.locale != 'ua'}">
         <script src="resources/js/lib/messages.js"></script>
     </c:when>
 </c:choose>
 
-</body>
+

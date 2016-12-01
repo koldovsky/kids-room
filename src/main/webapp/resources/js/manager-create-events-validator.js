@@ -34,8 +34,14 @@ var VALIDATION_ERRORS = {
     "emptyTitle":"Title can't be empty",
     "noDaysSelected":"Recurrent: At least one day must be selected",
     "noKidsSelected":"At least one kid must be selected",
+<<<<<<< HEAD
     "bookingTypeMismatchWhenUpdating":"Can't convert weekly booking to single",
 };
+=======
+    "bookingTypeMismatchWhenUpdating":"Can't convert weekly booking to single"
+};
+
+>>>>>>> master
 
 var dataValidationStrings = new Array();
 
@@ -54,7 +60,7 @@ function validateEventDialogData(eventType){
     var endDate = $.datepicker.parseDate("yy-mm-dd",$('#'+CREATE_EVENT_DIALOG_END_DATE_ID).val()); // 535
     var startTime = $("#"+CREATE_EVENT_DIALOG_START_TIME_ID).timepicker('getTime'); //538
     var endTime = $("#"+CREATE_EVENT_DIALOG_END_TIME_ID).timepicker('getTime'); //550
-
+    //TODO:
     isTextInputElementEmpty(CREATE_EVENT_DIALOG_INPUT_TITLE_ID);
     if(eventType==CREATE_SINGLE_EVENT){
         validateTime(startDate,null,startTime,endTime);
@@ -71,7 +77,7 @@ function validateEventDialogData(eventType){
 
     if(eventType==UPDATE_RECURRENT_EVENT){
         if(isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)){
-            dataValidationStrings.push(VALIDATION_ERRORS["bookingTypeMismatchWhenUpdating"]);
+            dataValidationStrings.push(messages.event.errors.bookingTypeMismatchWhenUpdating);
         }
     }
     return isValidationSuccessful();
@@ -82,19 +88,19 @@ function validateTime(startDate,endDate,startTime,endTime){
     var dayLengthInMilliseconds = startTime.getHours()*60*60*1000;
     if( (startDate.getTime() < currentDate.getTime())){
         if(startDate.getDate()!=currentDate.getDate()){
-            dataValidationStrings.push(VALIDATION_ERRORS["dateInThePast"]+currentDate.toLocaleDateString());
+            dataValidationStrings.push(messages.event.errors.dateInThePast+currentDate.toLocaleDateString());
         }
     }
     if(startDate.getDate()==currentDate.getDate())
         if(startTime.getTime() < currentDate.getTime()){
-            dataValidationStrings.push(VALIDATION_ERRORS["timeInThePast"]+currentDate.toLocaleTimeString());
+            dataValidationStrings.push(messages.event.errors.timeInThePast+currentDate.toLocaleTimeString());
         }
     if(endTime.getTime()-startTime.getTime() < MINUTE_LENGTH_IN_MILLISECONDS){
-        dataValidationStrings.push(VALIDATION_ERRORS["endTimeGreaterThanStartTime"]);
+        dataValidationStrings.push(messages.event.errors.endTimeGreaterThanStartTime);
     }
     if(endDate!=null){
         if(endDate.getTime()-startDate.getTime()<dayLengthInMilliseconds){
-            dataValidationStrings.push(VALIDATION_ERRORS["minimalDatesDifference"]);
+            dataValidationStrings.push(messages.event.errors.minimalDatesDifference);
         }
     }
 }
@@ -107,7 +113,7 @@ function validateDaysOfWeekSelection(daysArray){
         }
     });
     if(numberOfSelectedDays<1){
-        dataValidationStrings.push(VALIDATION_ERRORS["noDaysSelected"]);
+        dataValidationStrings.push(messages.event.errors.noDaysSelected);
     }
 }
 
@@ -119,7 +125,7 @@ function validateDaysOfMonthSelection(){
 
 function isTextInputElementEmpty(inputElement){
     if($("#"+inputElement).val().trim() === ""){
-            dataValidationStrings.push(VALIDATION_ERRORS["emptyTitle"]);
+            dataValidationStrings.push(messages.event.errors.emptyTitle);
     }
 }
 
@@ -131,7 +137,7 @@ function isRadioButtonSelected(radioButton){
 }
 
 function printValidationInfo(){
-    var text = "Incorrect data:";
+    var text = messages.event.errors.incorrectData;
     for(var i=0; i<dataValidationStrings.length; i++){
         text+="<br/>- "+dataValidationStrings[i]+".";
     }

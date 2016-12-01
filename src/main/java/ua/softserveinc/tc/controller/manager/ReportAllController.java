@@ -47,12 +47,12 @@ public class ReportAllController {
 
         Room room = roomService.findById(roomId);
         User manager = userService.getUserByEmail(principal.getName());
-
+        final boolean includeOneDay = true;
         if (!room.getManagers().contains(manager)) {
             throw new AccessDeniedException("You don't have access to this page");
         }
 
-        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate), room, BookingState.COMPLETED);
+        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate), room, includeOneDay, BookingState.COMPLETED);
         Map<User, Long> report = bookingService.generateAReport(bookings);
 
         ModelAndView modelAndView = new ModelAndView(ReportConstants.ALL_VIEW);

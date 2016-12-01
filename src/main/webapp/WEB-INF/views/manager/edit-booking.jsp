@@ -35,7 +35,7 @@
             </nav>
         </div>
         <div id="create-booking-btn">
-            <button class="btn btn-primary" onclick="openCreateBookingDialog()">
+            <button id="btn-add-kid" class="btn btn-primary">
                 <spring:message code="booking.addKid"/>
             </button>
         </div>
@@ -103,6 +103,9 @@
                 <form id="bookings">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
+                        <div>
+                            <p><spring:message code="manager.available.rooms"/> <span id="free-spaces"></span></p>
+                        </div>
                         <label for="selectUser"><spring:message code="booking.chooseParent"/></label>
                         <select id="selectUser" name="select" onchange="selectUser();" class="form-control">
                             <label> Please choose kid</label>
@@ -178,7 +181,6 @@
                     <h4></h4>
                     <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code ="modal.okay"/></button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -268,10 +270,27 @@
         </div>
     </div>
 </div>
+<div id="failureNoArriveTime" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body-err">
+                <div align="center">
+                    <br>
+                    <h4><spring:message code="booking.noArriveTime"/> </h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript" src="resources/js/edit-booking.js"></script>
 <script src="resources/js/header-manager.js"></script>
 <script src="resources/js/comment-modal-message.js"></script>
+<script src="resources/js/available-places-manager.js"></script>
+
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
         <script src="resources/js/lib/messages-ua.js"></script>

@@ -1,39 +1,26 @@
 function validateDate() {
-    if(validateBookingsDate() == true) {
-        var startDate = document.getElementById("from").value.toString();
-        var endDate = document.getElementById("to").value.toString();
+        var startDate = $("#from").val();
+        var endDate = $("#to").val();
         if (new Date(startDate) > new Date(endDate)) {
-            document.getElementById("errorDate").innerHTML = messages.date.fromBiggerThanTo;
+            $("#errorDate").html(messages.date.fromBiggerThanTo);
         } else {
-            document.getElementById("errorDate").innerHTML = "";
+            $("#errorDate").html("");
             return true;
         }
-    }
-    return false;
 }
 
-function validateBookingsDate() {
+$('input[type="date"]').on('change', function(){
 
-    var fromDateValue = $('#from').val();
-    var toDateValue = $('#to').val();
+    var date = $(this).val();
     var regex = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
-    var isValidate = true;
 
-    if (fromDateValue.match(regex) == null) {
-        nowYear = new Date().getFullYear();
-        month = fromDateValue.split("-")[1];
-        day = fromDateValue.split("-")[2];
-        $('#from').val(nowYear + "-" + month + "-" + day);
-        isValidate = false;
-    } else if (toDateValue.match(regex) == null) {
-        nowYear = new Date().getFullYear();
-        month = toDateValue.split("-")[1];
-        day = toDateValue.split("-")[2];
-        $('#to').val(nowYear + "-" + month + "-" + day);
-        isValidate = false;
+    if(date.match(regex) == null){
+        var nowYear = new Date().getFullYear();
+        var month = date.split("-")[1];
+        var day = date.split("-")[2];
+        $(this).val(nowYear + "-" + month + "-" + day);
     }
-
-    return isValidate;
-}
-
-
+    else{
+        validateDate();
+    }
+});
