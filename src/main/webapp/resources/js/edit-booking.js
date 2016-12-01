@@ -438,12 +438,11 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
 });
 
 
-$('#booking-table tbody').on('click','.inp-leaveTime', function() {
+$('#booking-table tbody').on('click', '.inp-leaveTime', function() {
     var arrivalTime = $(this).parents('tr').find('.inp-ArrivalTime').val();
-    if(arrivalTime == "") {
+    if (arrivalTime === "") {
         $('#failureNoArriveTime').modal('show');
-    }
-    else {
+    } else {
         var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
         $(this).val(time);
 
@@ -455,6 +454,7 @@ $('#booking-table tbody').on('click','.inp-leaveTime', function() {
         });
     }
 });
+
 $('#booking-table tbody').on('click', '[id^=comment]', function() {
     var comment = $(this).attr('title');
     $('#kidCommentMessage').find('h4').html(comment);
