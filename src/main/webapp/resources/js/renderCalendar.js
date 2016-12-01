@@ -165,37 +165,26 @@ $(function () {
     });
 
     $('.my-radio').click(function () {
+        $('#end-date-picker').attr('disabled',false);
+        $("#dialog" ).off( "change", "#start-date-picker", function () {
+            $('#end-date-picker').val($('#start-date-picker').val());
+        });
         if ($('#weekly-radio-button').is(':checked')) {
-<<<<<<< HEAD
-            $('#days-for-recurrent-form').attr('hidden', false);//week form
-            $('#days-for-monthly-form').attr('hidden', true);//monthly form
+            $('#days-for-recurrent-form').attr('hidden', false);
+            $('#days-for-monthly-form').attr('hidden', true);
         }
         if($('#monthly-radio-button').is(':checked')) {
             buildTableMonthly();
             $('#days-for-monthly-form').attr('hidden', false);
-=======
-            $('#days-for-recurrent-form').attr('hidden', false);
-            $('#end-date-picker').attr('disabled',false);
-            $("#dialog" ).off( "change", "#start-date-picker", function () {
-                $('#end-date-picker').val($('#start-date-picker').val());
-            });
-        } else {
->>>>>>> master
             $('#days-for-recurrent-form').attr('hidden', true);
         }
         if ($('#single-event-radio-button').is(':checked')) {
-<<<<<<< HEAD
             $('#days-for-monthly-form').attr('hidden', true);
             $('#days-for-recurrent-form').attr('hidden', true);
-            $('#end-date-picker').val($('#start-date-picker').val());
-=======
             $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled',true);
-            //TODO:HELLO WORLD
             $("#dialog" ).on( "change", "#start-date-picker", function () {
                 $('#end-date-picker').val($('#start-date-picker').val());
             });
-
->>>>>>> master
         }
     });
 

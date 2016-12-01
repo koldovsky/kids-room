@@ -34,14 +34,8 @@ var VALIDATION_ERRORS = {
     "emptyTitle":"Title can't be empty",
     "noDaysSelected":"Recurrent: At least one day must be selected",
     "noKidsSelected":"At least one kid must be selected",
-<<<<<<< HEAD
-    "bookingTypeMismatchWhenUpdating":"Can't convert weekly booking to single",
-};
-=======
     "bookingTypeMismatchWhenUpdating":"Can't convert weekly booking to single"
 };
-
->>>>>>> master
 
 var dataValidationStrings = new Array();
 

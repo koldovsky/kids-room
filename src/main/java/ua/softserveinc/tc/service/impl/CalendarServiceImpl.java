@@ -132,7 +132,6 @@ public class CalendarServiceImpl implements CalendarService {
         return res;
     }
 
-<<<<<<< HEAD
     public final List<EventDto> createMonthlyEvents(final MonthlyEventDto monthlyEventDto) {
         Date dateForMonthlyStart = DateUtil.toDateISOFormat(monthlyEventDto.getStartTime());
         Date dateForMonthlyEnd = DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
@@ -184,13 +183,8 @@ public class CalendarServiceImpl implements CalendarService {
         }
         return res;
     }
-
-    public EventDto getRecurrentEventForEditingById(final long recurrentEventId){
-
-=======
     @Override
-    public RecurrentEventDto getRecurrentEventForEditingById(final long recurrentEventId){
->>>>>>> master
+    public EventDto getRecurrentEventForEditingById(final long recurrentEventId){
         final List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
         Set <Integer> weekDays = new HashSet<>();
         Set <Integer> daysOfTheMonth = new HashSet<>();
