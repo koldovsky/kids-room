@@ -349,7 +349,7 @@
         </button>
         <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
                 data-target=".bs-modal-lg-contact">
-            <spring:message code= "booking.makeBooking"/>
+            <spring:message code= "booking.contact"/>
         </button>
 
         <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
