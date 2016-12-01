@@ -1,11 +1,18 @@
-$(function() {
-    if(localStorage["roomId"] == null) {
+$(function () {
+    var listRoom = $("#selectRoom li a");
+    var inactiveRoom = true;
+    for (var i = 0; i < listRoom.length; i++) {
+        if ((localStorage["roomId"]) == listRoom[i].id) {
+            inactiveRoom = false;
+            break;
+        }
+    }
+    if (inactiveRoom) {
         localStorage["room"] = $("#selectRoom li a").first().text();
         localStorage["roomId"] = $("#selectRoom li a").first().attr("id");
     }
-
-    $("#selectRoom li a").each(function() {
-        $(this).click(function() {
+    $("#selectRoom li a").each(function () {
+        $(this).click(function () {
             var room = $(this).text();
             var roomId = $(this).attr("id");
 
@@ -26,7 +33,8 @@ $(function() {
 function getAmountOfChildren() {
     $.ajax({
         url: "getAmountOfChildren/" + localStorage["roomId"],
-        success: function(result) {
-        $("#amountOfChildren").text(result)
-    }});
+        success: function (result) {
+            $("#amountOfChildren").text(result)
+        }
+    });
 }

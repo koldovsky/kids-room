@@ -171,6 +171,9 @@ $(function () {
         });
         if ($('#weekly-radio-button').is(':checked')) {
             $('#days-for-recurrent-form').attr('hidden', false);
+            $('#end-date-picker').attr('disabled',false);
+        } else {
+
             $('#days-for-monthly-form').attr('hidden', true);
         }
         if($('#monthly-radio-button').is(':checked')) {
@@ -536,6 +539,31 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
+            var recurrentEventsForRender = [];
+
+            result.forEach(function (item, i) {
+                var newRecurrentEvent = {
+                    id: item.id,
+                    title: item.name,
+                    start: item.startTime,
+                    end: item.endTime,
+                    editable: false,
+                    type: 'event',
+                    description: item.description,
+                    color: item.color,
+                    borderColor: BORDER_COLOR,
+                    recurrentId: item.recurrentId
+                };
+
+                allEvents.push(newRecurrentEvent);
+
+                recurrentEventsForRender.push(newRecurrentEvent);
+
+                $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
+            });
+        },
+        errors:function (xhr) {
+            callErrorDialog(xhr['responseText']);
             popSetOfEvents(result);
         }
     });
@@ -624,9 +652,7 @@ function sendToServerForUpdate(event, roomID) {
                 redrawBlockedTimeSpans(roomIdForHandler);
         },
         error: function (xhr) {
-
             callErrorDialog(xhr['responseText']);
-
         }
     });
 
