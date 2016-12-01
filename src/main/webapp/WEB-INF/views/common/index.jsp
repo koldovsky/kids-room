@@ -609,7 +609,8 @@
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="single-event-radio-button"
-                                                          class="my-radio" checked><spring:message code="event.singleEvent"/></label>
+                                                          class="my-radio" checked>
+                                                <spring:message code="event.singleEvent"/></label>
                                         </div>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio">

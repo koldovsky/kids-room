@@ -84,11 +84,7 @@ public class CalendarServiceImpl implements CalendarService {
         calendar.setTime(dateForRecurrentStart);
 
         String[] days = recurrentEventDto.getDaysOfWeek().split(" ");
-        Long newRecID;
-        if((eventDao.getMaxRecurrentId() + 1)%10==0)
-            newRecID = eventDao.getMaxRecurrentId() + 2;
-        else
-            newRecID = eventDao.getMaxRecurrentId() + 1;
+        Long newRecID = eventDao.getMaxRecurrentId() + 1;
 
         while (dateForRecurrentEnd.getTime() > calendar.getTimeInMillis()) {
             for (int i = 0; i < days.length; i++) {
@@ -101,7 +97,7 @@ public class CalendarServiceImpl implements CalendarService {
                 newRecurrentEvent.setName(recurrentEventDto.getName());
                 newRecurrentEvent.setDescription(recurrentEventDto.getDescription());
                 newRecurrentEvent.setStartTime(calendar.getTime());
-
+                newRecurrentEvent.setRecurrentType("Weekly");
 
                 calendarWithEndDate.setTime(calendar.getTime());
                 calendarWithEndDate.set(Calendar.HOUR_OF_DAY, calendarEndTime.get(Calendar.HOUR_OF_DAY));
@@ -143,7 +139,9 @@ public class CalendarServiceImpl implements CalendarService {
         calendar.setTime(dateForMonthlyStart);
 
         int[] days = monthlyEventDto.getDaysOfMonth();
-        Long newRecID = eventDao.getMaxRecurrentId() + 10 - eventDao.getMaxRecurrentId()%10;
+        //Long newRecID = eventDao.getMaxRecurrentId() + 10 - eventDao.getMaxRecurrentId()%10;
+        Long newRecID = eventDao.getMaxRecurrentId() +1 ;
+
 
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
             for (int i = 0; i < days.length; i++) {
@@ -168,14 +166,9 @@ public class CalendarServiceImpl implements CalendarService {
                 newRecurrentEvent.setRecurrentId(newRecID);
                 newRecurrentEvent.setRoom(roomDao.findById(monthlyEventDto.getRoomId()));
                 newRecurrentEvent.setColor(monthlyEventDto.getColor());
+                newRecurrentEvent.setRecurrentType("Monthly");
 
-                try {
-                    eventDao.create(newRecurrentEvent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println(e);
-                }
-
+                eventDao.create(newRecurrentEvent);
                 res.add(genericMapper.toDto(newRecurrentEvent));
             }
             calendar.add(Calendar.MONTH, 1);
@@ -195,7 +188,7 @@ public class CalendarServiceImpl implements CalendarService {
             weekDays.add(calendar.get(Calendar.DAY_OF_WEEK));
             daysOfTheMonth.add(calendar.get(Calendar.DAY_OF_MONTH));
         }
-        if (recurrentEventId%10==0) {
+        if (listOfRecurrentEvent.get(0).getRecurrentType().equals("Monthly")) {
             int[] tempDays = new int[daysOfTheMonth.size()];
             int index =0;
             for (int day: daysOfTheMonth)
