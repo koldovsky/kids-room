@@ -122,7 +122,7 @@ public class CalendarServiceImpl implements CalendarService {
         }
         return res;
     }
-    //========================== working here
+
     public final List<EventDto> createMonthlyEvents(final MonthlyEventDto monthlyEventDto) {
         Date dateForMonthlyStart = DateUtil.toDateISOFormat(monthlyEventDto.getStartTime());
         Date dateForMonthlyEnd = DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
@@ -139,9 +139,7 @@ public class CalendarServiceImpl implements CalendarService {
         calendar.setTime(dateForMonthlyStart);
 
         int[] days = monthlyEventDto.getDaysOfMonth();
-        //Long newRecID = eventDao.getMaxRecurrentId() + 10 - eventDao.getMaxRecurrentId()%10;
         Long newRecID = eventDao.getMaxRecurrentId() +1 ;
-
 
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
             for (int i = 0; i < days.length; i++) {
@@ -176,7 +174,7 @@ public class CalendarServiceImpl implements CalendarService {
         }
         return res;
     }
-    //========================== working here
+
     public EventDto getRecurrentEventForEditingById(final long recurrentEventId){
 
         final List<Event> listOfRecurrentEvent = eventDao.getRecurrentEventByRecurrentId(recurrentEventId);

@@ -441,7 +441,6 @@ function createSingleOrRecurrentEvents() {
                 indexForRecurrentDay++;
             }
         });
-        alert('tryingtocreateWeekly');
         sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor);
         $('#start-date-picker').val('');
         clearEventDialogSingleMulti();
@@ -456,7 +455,6 @@ function createSingleOrRecurrentEvents() {
             daysWhenEventIsRecurrent.push(this.innerHTML);
         });
 
-        alert('tryingtocreateMonthly');
         sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent, eventColor);
         $('#start-date-picker').val('');
         clearEventDialogSingleMulti();
@@ -643,8 +641,6 @@ function editRecurrentEvent(recurrentEventForEditing){
         $('#description').val(recurrentEventForEditing.description);
         $('#event-title').val(recurrentEventForEditing.title);
 
-        alert('id = ' + recurrentEventForEditing.monthDays);
-        alert('id = ' + recurrentEventForEditing.weekDays);
         if (recurrentEventForEditing.monthDays) {
             $('#monthly-radio-button').prop("checked", true);
             $('#days-for-monthly-form').attr('hidden', false);

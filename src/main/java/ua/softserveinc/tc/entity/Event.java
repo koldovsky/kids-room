@@ -49,10 +49,8 @@ public class Event {
     @Column(name = EventConstants.Entity.COLOR, columnDefinition = "char(7) default '#6AA4C1'")
     private String color;
 
-    //==========type of recurrent event
     @Column(name = EventConstants.Entity.TYPE)
     private String recurrentType;
-    //==========================
 
     public Long getRecurrentId() {
         return recurrentId;
