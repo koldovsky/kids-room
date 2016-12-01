@@ -64,7 +64,16 @@ messages = {
 		}
     },
 	notCorrect: {
-		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>'
+		time: '<b>unknown</b>. Entered not correct time. Acceptable format is <b>HH:mm</b>',
+		startDate: 'Entered not correct start date. Acceptable format is <b>dd:MM:YYYY</b>',
+		endDate: 'Entered not correct end date. Acceptable format is <b>dd:MM:YYYY</b>',
+		server: '<b>unknown</b>. Server error',
+		emptyStartDate: "Not entered start date",
+		emptyEndDate: "Not entered end date",
+		pastStartDay: "The start day can't be in the past",
+		pastEndDay: "The end day can't be smaller than start Day",
+		wrongDateStartRange: 'The start day is out of range of chosen events',
+		wrongDateEndRange: 'The end day is out of range of chosen events'
 	}
 };
 
