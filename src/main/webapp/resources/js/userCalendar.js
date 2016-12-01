@@ -20,7 +20,6 @@ $(document).ready(function () {
 });
 
 $(function () {
-
     $('#createDuplicateBooking').click(function() {
         //TODO: code to duplicate the booking in corporate calendar
         $('#duplicate-booking-dialog').modal('hide');
@@ -533,9 +532,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                     },true);
                 });
 
-
                 $('#duplicate-booking-dialog').modal('show');
-
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
             error: function (xhr) {

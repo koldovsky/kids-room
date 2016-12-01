@@ -5,14 +5,18 @@
     color: white;
 }
 .lableBoard {
-    border: 4px double black; /* Параметри границі */
-    background: #beccff; /* Колір фону */
-    padding: 10px; /* Поле навколо тексту */
+    border: 4px double black;
+    background: #beccff;
+    padding: 10px;
 }
 .btn-edit-event {
     width: 45%;
 }
 #ui-id-5 {
     text-align: center;
+}
+
+#monthly-days td {
+    cursor: hand;
 }
 

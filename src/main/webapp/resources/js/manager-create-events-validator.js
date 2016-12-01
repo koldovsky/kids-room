@@ -1,7 +1,9 @@
 //================================= Validation Part =============================
 // EVENT type constants
 var CREATE_RECURRENT_EVENT = "create-recurrent-event";
+var CREATE_MONTHLY_EVENT = "create-monthly-event";
 var UPDATE_RECURRENT_EVENT = "update-recurrent-event";
+var UPDATE_MONTHLY_EVENT = "update-monthly-event";
 var CREATE_SINGLE_EVENT = "create-single-event";
 var UPDATE_SINGLE_EVENT = "update-single-event";
 var CREATE_EVENT = "create-event"
@@ -14,7 +16,8 @@ var CREATE_EVENT_DIALOG_START_TIME_ID = "start-time-picker";
 var CREATE_EVENT_DIALOG_END_TIME_ID = "end-time-picker";
 var MINUTE_LENGTH_IN_MILLISECONDS = 60000;
 var CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON = "single-event-radio-button";
-var CREATE_EVENT_DIALOG_RECURRENT_EVENT_RADIOBUTTON = "weekly-radio-button";
+var CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON = "weekly-radio-button";
+var CREATE_EVENT_DIALOG_MONTHLY_EVENT_RADIOBUTTON = "monthly-radio-button";
 var CREATE_EVENT_DIALOG_DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 var CREATE_EVENT_DIALOG_INPUT_TITLE_ID = "event-title";
 
@@ -33,7 +36,6 @@ var VALIDATION_ERRORS = {
     "noKidsSelected":"At least one kid must be selected",
     "bookingTypeMismatchWhenUpdating":"Can't convert weekly booking to single"
 };
-
 
 var dataValidationStrings = new Array();
 
@@ -62,6 +64,11 @@ function validateEventDialogData(eventType){
         validateDaysOfWeekSelection(CREATE_EVENT_DIALOG_DAYS_OF_WEEK);
     }
 
+    if(eventType==CREATE_MONTHLY_EVENT || eventType==UPDATE_MONTHLY_EVENT){
+        validateTime(startDate,endDate,startTime,endTime);
+        validateDaysOfMonthSelection();
+    }
+
     if(eventType==UPDATE_RECURRENT_EVENT){
         if(isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)){
             dataValidationStrings.push(messages.event.errors.bookingTypeMismatchWhenUpdating);
@@ -71,7 +78,6 @@ function validateEventDialogData(eventType){
 }
 
 function validateTime(startDate,endDate,startTime,endTime){
-    //if endDate==null then it is a single type event
     var currentDate = new Date();
     var dayLengthInMilliseconds = startTime.getHours()*60*60*1000;
     if( (startDate.getTime() < currentDate.getTime())){
@@ -102,6 +108,12 @@ function validateDaysOfWeekSelection(daysArray){
     });
     if(numberOfSelectedDays<1){
         dataValidationStrings.push(messages.event.errors.noDaysSelected);
+    }
+}
+
+function validateDaysOfMonthSelection(){
+    if($('#monthly-days').find('.active').length<1){
+        dataValidationStrings.push(VALIDATION_ERRORS["noDaysSelected"]);
     }
 }
 
