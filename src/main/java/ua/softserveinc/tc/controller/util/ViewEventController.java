@@ -14,6 +14,7 @@ import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.User;
@@ -132,6 +133,13 @@ public class ViewEventController {
             return ValidationConstants.EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG;
         }
     }
+
+    @RequestMapping(value = "getmonthlyevents", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public String getMonthly(@RequestBody MonthlyEventDto monthlyEventDto) {
+        return new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto));
+    }
+
     @RequestMapping(value = "getroomproperty/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRoomProperty(@PathVariable long id) {
