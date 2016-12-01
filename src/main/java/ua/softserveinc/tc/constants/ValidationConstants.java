@@ -67,6 +67,7 @@ public final class ValidationConstants {
     public static final String EVENT_DESCRIPTION_LENGTH_ERROR_MSG = "Description  should be less than 250 characters";
     public static final String EVENT_INACTIVE_ROOM_ERROR_MSG = "You can't create event on inactive room. Please contact to admin";
     public static final String EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG = "End time must be bigger than start at least one minute";
+    public static final String EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG = "End date must be bigger than end at least one day";
     public static final String EMAIL_NOT_VALID = "registration.manager.emailNotValid";
     public static final String NAME_ERROR_MSG = "registration.kid.name";
     public static final String NAME_NOT_EDITTED = "registration.kid.nameNotEdited";

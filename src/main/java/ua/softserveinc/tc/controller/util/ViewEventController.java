@@ -82,11 +82,10 @@ public class ViewEventController {
 
     @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseEntity<String>  getAjax(@RequestBody EventDto eventDto, BindingResult bindingResult) {
-        eventValidator.validate(eventDto,bindingResult);
-        if (eventValidator.isSingleValid(eventDto))
-        {
-            if (bindingResult.hasErrors()){
+    public ResponseEntity<String> getAjax(@RequestBody EventDto eventDto, BindingResult bindingResult) {
+        eventValidator.validate(eventDto, bindingResult);
+        if (eventValidator.isSingleValid(eventDto)) {
+            if (bindingResult.hasErrors()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
             } else {
                 calendarService.create(genericMapper.toEntity(eventDto));
@@ -98,13 +97,11 @@ public class ViewEventController {
     }
 
     @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
-   // @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto, BindingResult bindingResult) {
-        eventValidator.validate(eventDto,bindingResult);
-        if (eventValidator.isSingleValid(eventDto))
-        {
-            if (bindingResult.hasErrors()){
+        eventValidator.validate(eventDto, bindingResult);
+        if (eventValidator.isSingleValid(eventDto)) {
+            if (bindingResult.hasErrors()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
             } else {
                 calendarService.updateEvent(genericMapper.toEntity(eventDto));
@@ -115,9 +112,6 @@ public class ViewEventController {
         }
     }
 
-
-
-
     @RequestMapping(value = "geteventfordelete", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public void getEventForDelete(@RequestBody EventDto eventDto) {
@@ -126,10 +120,18 @@ public class ViewEventController {
 
     @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
-        return new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto));
+    public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
+        eventValidator.validate(recurrentEventDto, bindingResult);
+        if (eventValidator.isReccurrentValid(recurrentEventDto)) {
+            if (bindingResult.hasErrors()) {
+                return bindingResult.getFieldError().getCode();
+            } else {
+                return new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto));
+            }
+        } else {
+            return ValidationConstants.EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG;
+        }
     }
-
     @RequestMapping(value = "getroomproperty/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRoomProperty(@PathVariable long id) {

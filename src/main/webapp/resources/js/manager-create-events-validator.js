@@ -52,7 +52,6 @@ function validateEventDialogData(eventType){
     var endDate = $.datepicker.parseDate("yy-mm-dd",$('#'+CREATE_EVENT_DIALOG_END_DATE_ID).val()); // 535
     var startTime = $("#"+CREATE_EVENT_DIALOG_START_TIME_ID).timepicker('getTime'); //538
     var endTime = $("#"+CREATE_EVENT_DIALOG_END_TIME_ID).timepicker('getTime'); //550
-    //TODO:
     isTextInputElementEmpty(CREATE_EVENT_DIALOG_INPUT_TITLE_ID);
     if(eventType==CREATE_SINGLE_EVENT){
         validateTime(startDate,null,startTime,endTime);

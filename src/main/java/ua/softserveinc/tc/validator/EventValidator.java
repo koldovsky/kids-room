@@ -7,6 +7,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.entity.Event;
@@ -27,7 +28,7 @@ public class EventValidator implements Validator {
     private Date endDate;
     private Date nowDate;
     private Calendar startDateCalendar;
-    private  Calendar endDateCalendar;
+    private Calendar endDateCalendar;
 
 
     private void dateSet(EventDto eventDto) throws ParseException {
@@ -47,7 +48,16 @@ public class EventValidator implements Validator {
         return Event.class.equals(aClass);
     }
 
-    public boolean isSingleValid(EventDto eventDto)  {
+    public boolean isReccurrentValid(RecurrentEventDto recurrentEventDto) {
+        try {
+            dateSet(recurrentEventDto);
+            return onlyDateSimpleDateFormat.parse(recurrentEventDto.getStartTime()).before(onlyDateSimpleDateFormat.parse(recurrentEventDto.getEndTime()));
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    public boolean isSingleValid(EventDto eventDto) {
         try {
             dateSet(eventDto);
             return onlyDateSimpleDateFormat.parse(eventDto.getStartTime()).equals(onlyDateSimpleDateFormat.parse(eventDto.getEndTime()));
@@ -55,6 +65,7 @@ public class EventValidator implements Validator {
             return false;
         }
     }
+
     @Override
     public void validate(Object o, Errors errors) {
         EventDto eventDto = (EventDto) o;
@@ -65,24 +76,23 @@ public class EventValidator implements Validator {
             ValidationUtils.rejectIfEmpty(errors, ValidationConstants.END_TIME, ValidationConstants.EMPTY_FIELD_MSG);
             ValidationUtils.rejectIfEmpty(errors, ValidationConstants.EVENT_COLOR, ValidationConstants.EMPTY_FIELD_MSG);
             if (eventDto.getDescription().length() > ValidationConstants.EVENT_DESCRIPTION_MAX_LENGHT) {
-                errors.rejectValue(ValidationConstants.EVENT_DESCRIPTION,ValidationConstants.EVENT_DESCRIPTION_LENGTH_ERROR_MSG);
+                errors.rejectValue(ValidationConstants.EVENT_DESCRIPTION, ValidationConstants.EVENT_DESCRIPTION_LENGTH_ERROR_MSG);
             }
             if (!roomService.findById(eventDto.getRoomId()).isActive()) {
-                errors.rejectValue(ValidationConstants.ROOM_ID,ValidationConstants.EVENT_INACTIVE_ROOM_ERROR_MSG);
+                errors.rejectValue(ValidationConstants.ROOM_ID, ValidationConstants.EVENT_INACTIVE_ROOM_ERROR_MSG);
             }
-            if (startDate.before(nowDate))
-            {
-                errors.rejectValue(ValidationConstants.START_TIME,ValidationConstants.EVENT_PAST_TIME_CREATION_MSG);
+            if (startDate.before(nowDate)) {
+                errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_PAST_TIME_CREATION_MSG);
             }
             if (startDateCalendar.get(Calendar.HOUR_OF_DAY) > endDateCalendar.get(Calendar.HOUR_OF_DAY)) {
-                errors.rejectValue(ValidationConstants.START_TIME,ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG);
+                errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG);
             } else if ((startDateCalendar.get(Calendar.HOUR_OF_DAY) == endDateCalendar.get(Calendar.HOUR_OF_DAY)) &&
-                    ((startDateCalendar.get(Calendar.MINUTE)+ValidationConstants.ONE_MINUTE) > endDateCalendar.get(Calendar.MINUTE)) ) {
-                errors.rejectValue(ValidationConstants.START_TIME,ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG);
+                    ((startDateCalendar.get(Calendar.MINUTE) + ValidationConstants.ONE_MINUTE) > endDateCalendar.get(Calendar.MINUTE))) {
+                errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG);
             }
         } catch (ParseException e) {
-            errors.rejectValue(ValidationConstants.START_TIME,ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);
-            errors.rejectValue(ValidationConstants.END_TIME,ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);
+            errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);
+            errors.rejectValue(ValidationConstants.END_TIME, ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);
         }
     }
 }

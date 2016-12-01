@@ -162,20 +162,12 @@ $(function () {
         if ($('#weekly-radio-button').is(':checked')) {
             $('#days-for-recurrent-form').attr('hidden', false);
             $('#end-date-picker').attr('disabled',false);
-            $("#dialog" ).off( "change", "#start-date-picker", function () {
-                $('#end-date-picker').val($('#start-date-picker').val());
-            });
         } else {
             $('#days-for-recurrent-form').attr('hidden', true);
         }
 
         if ($('#single-event-radio-button').is(':checked')) {
             $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled',true);
-            //TODO:HELLO WORLD
-            $("#dialog" ).on( "change", "#start-date-picker", function () {
-                $('#end-date-picker').val($('#start-date-picker').val());
-            });
-
         }
     });
 
@@ -539,6 +531,9 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
 
                 $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
             });
+        },
+        errors:function (xhr) {
+            callErrorDialog(xhr['responseText']);
         }
     });
 }
@@ -580,9 +575,7 @@ function sendToServerForUpdate(event, roomID) {
                 redrawBlockedTimeSpans(roomIdForHandler);
         },
         error: function (xhr) {
-
             callErrorDialog(xhr['responseText']);
-
         }
     });
 
