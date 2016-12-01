@@ -19,6 +19,12 @@ $(function () {
         modal: true
     });
 
+    $('#cancel-event-dialog').dialog ({
+        autoOpen: false,
+        modal:true,
+        width: 320,
+    });
+
     $('.modal-dialog-recurrently').dialog({
         modal: true,
         autoOpen: false
@@ -77,20 +83,59 @@ $(function () {
         }
     });
 
+
+    function deleteRecurrentEvents(recurrentId) {
+        allEvents.forEach(function (item) {
+            if (item.recurrentId === recurrentId) {
+                $('#calendar').fullCalendar('removeEvents', item.id);
+                sendToServerForDelete(item);
+            }
+        });
+    }
+
+    /**
+     * Deletes all recurrent events with given id starting from startDate
+     * and ending with endDate.
+     *
+     * @param recurrentId
+     * @param startDate
+     * @param endDate
+     */
+    function deleteRecurrentEventsForTime(recurrentId, startDate, endDate) {
+        var arStartDates, arEndDates;
+        $.each(allEvents, function (index, item) {
+            if (item.recurrentId === recurrentId) {
+                arStartDates = item.start.split('T');
+                arEndDates = item.end.split('T');
+                if(new Date(arStartDates[0]) >= new Date(startDate)
+                    && new Date(arEndDates[0]) <= new Date(endDate)) {
+                    $('#calendar').fullCalendar('removeEvents', item.id);
+                    sendToServerForDelete(item);
+                }
+            }
+        });
+    }
+
+    /**
+     * Deleting recurrent event
+     */
     $('#deleting-recurrent-event').click(function () {
         $('#dialog').dialog('close');
-        var myDialog = $('#confirmation-dialog-event-div');
-        myDialog.dialog('open');
-        $('#confirmYesEvent').click(function () {
-            deleteRecurrentEvents(info_event.calEvent.recurrentId);
-            clearEventDialogSingleMulti();
-            myDialog.dialog('close');
+        $('#cancel-event-dialog').dialog('open');
+        $('#yes-cancel-event-button').click(function() {
+            var startDate = $('#start-date-cancel-picker').val();
+            var endDate = $('#end-date-cancel-picker').val();
+
+            if (!validateRecurrentDates(info_event.calEvent.recurrentId, startDate, endDate))
+                return;
+            deleteRecurrentEventsForTime(info_event.calEvent.recurrentId, startDate, endDate);
+            $('#cancel-event-dialog').dialog('close');
         });
-        $('#confirmNoEvent').click(function () {
-            clearEventDialogSingleMulti();
-            myDialog.dialog('close');
+        $('#no-cancel-event-button').click(function() {
+            $('#cancel-event-dialog').dialog('close');
         });
-    })
+    });
+
     $('#deleting-recurrent-event').hover(function(){
         $(this).css('color','red');
         $(this).css('cursor','pointer ');
@@ -285,7 +330,6 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             var clickDate = date.format();
 
 
-
             if (clickDate.length < 12) {
                 clickDate = clickDate + 'T00:00:00';
             }
@@ -306,7 +350,6 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         },
 
         eventClick: function (calEvent) {
-
             if (calEvent.color === NOT_ACTIVE_EVENT) {
                 return;
             }
@@ -589,12 +632,15 @@ function editRecurrentEvent(recurrentEventForEditing){
     $('#days-for-recurrent-form').attr("hidden", false);
     if (recurrentEventForEditing) {
         $('#start-date-picker').val(recurrentEventForEditing.startDate);
+        $('#start-date-cancel-picker').val(recurrentEventForEditing.startDate);
         $('#end-date-picker').val(recurrentEventForEditing.endDate);
+        $('#end-date-cancel-picker').val(recurrentEventForEditing.endDate);
         $('#start-time-picker').timepicker('setTime', recurrentEventForEditing.startTime);
         $('#end-time-picker').timepicker('setTime', recurrentEventForEditing.endTime);
         $('#color-select').val(recurrentEventForEditing.color);
         $('#description').val(recurrentEventForEditing.description);
         $('#event-title').val(recurrentEventForEditing.title);
+        $('#event-cancel-title').html(recurrentEventForEditing.title);
         recurrentEventForEditing.weekDays.forEach(function (item) {
             switch (item) {
                 case 2:
