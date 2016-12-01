@@ -19,6 +19,7 @@ public final class EventConstants {
         public static final String ID_ROOM = "room";
         public static final String ID_RECURRENT = "id_recurrent";
         public static final String COLOR = "color";
+        public static final String TYPE = "type";
 
         public static final String REPOSITORY = "eventDao";
 

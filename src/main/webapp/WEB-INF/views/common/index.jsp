@@ -15,7 +15,8 @@
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
 
-<body>
+
+
 
 <sec:authorize access="hasRole('USER')">
 <div id="mobile" class="container">
@@ -348,12 +349,11 @@
         </button>
         <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
                 data-target=".bs-modal-lg-contact">
-            <spring:message code= "booking.makeBooking"/>
+            <spring:message code= "booking.contact"/>
         </button>
 
         <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div align="center">
@@ -594,7 +594,8 @@
                             <label for="end-date-picker"><spring:message code= "event.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
-                                <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate">
+                                <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate"
+                                disabled="true">
                             </div>
                             <div class="col-xs-6">
                                 <input id="end-time-picker" type="text" class="text-center time form-control timepicker" size="6"/>
@@ -609,16 +610,22 @@
                                         <br>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="single-event-radio-button"
-                                                          class="my-radio" checked><spring:message code="event.singleEvent"/></label>
+                                                          class="my-radio" checked>
+                                                <spring:message code="event.singleEvent"/></label>
                                         </div>
                                         <div class="radio-button">
                                             <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio">
                                                 <spring:message code="event.weeklyEvent"/></label>
                                         </div>
-                                        <div class="radio-button" hidden>
-                                            <label><input type="radio" name="optradio" id="monthly" class="my-radio">
+                                        <div class="radio-button">
+                                            <label><input type="radio" name="optradio" id="monthly-radio-button" class="my-radio">
                                                 <spring:message code="event.monthlyEvent"/></label>
                                         </div>
+                                    </div>
+                                    <div class="row col-xs-7" id="days-for-monthly-form" hidden>
+                                        <br><spring:message code="event.checkRequiredDays"/>
+                                        <table class = "table center" id="monthly-days">
+                                        </table>
                                     </div>
                                     <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                         <table class="table" id="days-for-recurrent">
@@ -933,10 +940,9 @@
     <c:when test="${pageContext.response.locale =='ua'}">
         <script src="resources/js/lib/messages-ua.js"></script>
     </c:when>
-
     <c:when test="${pageContext.response.locale != 'ua'}">
         <script src="resources/js/lib/messages.js"></script>
     </c:when>
 </c:choose>
 
-</body>
+

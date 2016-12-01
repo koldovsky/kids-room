@@ -3,11 +3,15 @@ package ua.softserveinc.tc.validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 
 /**
  * Created by TARAS on 29.06.2016.
@@ -32,9 +36,20 @@ public class TimeValidator implements Validator {
         }
     }
 
-    public boolean validateDate(String date)
-    {
+    public boolean validateDateFormat(String date) {
         return date.matches(ValidationConstants.DATE_REGEX);
+    }
+
+    public boolean validateDate(String startTime, String endTime) throws ParseException {
+        if(validateDateFormat(startTime) && validateDateFormat(endTime)) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
+            Date startDate = simpleDateFormat.parse(startTime);
+            Date endDate = simpleDateFormat.parse(endTime);
+
+            return !endDate.before(startDate);
+        }
+
+        return false;
     }
 
     public boolean validateBooking(Object target) {

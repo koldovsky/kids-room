@@ -56,6 +56,7 @@ $().ready(function() {
 });
 
 $().ready(function() {
+
     $('#deletingBooking').on('click', function() {
         $('#cancelModal').modal('show');
         $('#cancelButton').on('click', function() {
@@ -224,7 +225,7 @@ function refreshTable(bookingsState) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
                         + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id
                         + '" class="glyphicon glyphicon-info-sign"' + 'title="'
-                        + oData.comment +  '"' + ' onclick="callCommentDialog()"></span>');
+                        + oData.comment +  '"></span>');
                     } else {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>');
                     }
@@ -316,7 +317,6 @@ function setEndTime(id, time) {
 }
 
 function addHilighted(bookings) {
-
     $.each(bookings, function(index, value) {
         if (value.bookingState == "ACTIVE") {
             var row = table.row('#' + value.id).node();
@@ -425,6 +425,11 @@ function sendBookingToServerForCreate(bookingsArray) {
     });
 }
 
+$('#booking-table tbody').on('focus', '.inp-arrivalTime', function() {
+    var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
+    $(this).val(time);
+});
+
 $('#booking-table tbody').on('click', '#arrival-btn', function() {
     var tr = $(this).closest('tr');
     var id = table.row(tr).data().id;
@@ -432,17 +437,30 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
     setStartTime(id, time);
 });
 
-$('#booking-table tbody').on('focus', 'input', function() {
-    var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
-    $(this).val(time);
+
+$('#booking-table tbody').on('click', '.inp-leaveTime', function() {
+    var arrivalTime = $(this).parents('tr').find('.inp-ArrivalTime').val();
+    if (arrivalTime === "") {
+        $('#failureNoArriveTime').modal('show');
+    } else {
+        var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
+        $(this).val(time);
+
+        $('#booking-table tbody').on('click', '#leave-btn', function() {
+            var tr = $(this).closest('tr');
+            var id = table.row(tr).data().id;
+            var time = $(this).closest('td').find('input').val();
+            setEndTime(id, time);
+        });
+    }
 });
 
-$('#booking-table tbody').on('click', '#leave-btn', function() {
-    var tr = $(this).closest('tr');
-    var id = table.row(tr).data().id;
-    var time = $(this).closest('td').find('input').val();
-    setEndTime(id, time);
+$('#booking-table tbody').on('click', '[id^=comment]', function() {
+    var comment = $(this).attr('title');
+    $('#kidCommentMessage').find('h4').html(comment);
+    $('#kidCommentMessage').modal('show');
 });
+
 
 $('#booking-table tbody').on('click', '.edit-button-btn', function() {
     idBooking = $(this).closest('td').find('.book-id').attr('id');
@@ -470,3 +488,6 @@ function handler() {
     }
 }
 $( "#booking-table > tbody").on( "click", "tr", handler);
+
+
+

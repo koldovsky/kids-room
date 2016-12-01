@@ -5,6 +5,6 @@ function callCommentDialog()  {
     $('[id^=comment]').click(function() {
         var comment = $(this).attr('title');
             $('#kidCommentMessage').find('h4').html(comment);
-            $('#kidCommentMessage').modal('show');
+            $('#updatingInvalid').modal('show');
     });
 }
