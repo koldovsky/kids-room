@@ -27,11 +27,11 @@ var ELEMENT_FOR_ERROR_MESSAGES = '#validation-information';
  */
 function isNotEmptyDates(startDate, endDate) {
     var result = true;
-    if (typeof startDate === 'undefined' || startDate === null){
+    if (startDate == null) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.emptyStartDate);
         result = false;
     }
-    if (typeof endDate === 'undefined' || endDate === null){
+    if (endDate == null) {
         ERROR_MESSAGES_RECURRENT_CANCEL.push(messages.notCorrect.emptyEndDate);
         result = false;
     }
