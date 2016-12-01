@@ -767,7 +767,6 @@ function clearEventDialogSingleMulti(){
 function buildTableMonthly() { //generating table for DAYS_IN_MONTH day
     var tableHTML = '';
     var dayNum = 0;
-    var monthlyTable = document.getElementById("monthly-days");
     while (dayNum<=DAYS_IN_MONTH) {
         tableHTML+="<tr>";
            for(var j = 0; j<DAYS_IN_WEEK;j++) {
@@ -777,10 +776,11 @@ function buildTableMonthly() { //generating table for DAYS_IN_MONTH day
            }
         tableHTML+="</tr>";
     }
-    monthlyTable.innerHTML=tableHTML;
+    document.getElementById("monthly-days").innerHTML=tableHTML;
     $('table').find('td').click(function() {
         $(this).toggleClass("active");
     });
+
 }
 
 function closeDialog(divid) {

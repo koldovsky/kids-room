@@ -196,7 +196,7 @@ public class CalendarServiceImpl implements CalendarService {
         }
         if (listOfRecurrentEvent.get(0).getRecurrentType().equals("Monthly")) {
             int[] tempDays = new int[daysOfTheMonth.size()];
-            int index =0;
+            int index = 0;
             for (int day: daysOfTheMonth)
                 tempDays[index++] = day;
             return getMonthlyEventDto(listOfRecurrentEvent, tempDays);
