@@ -94,6 +94,8 @@ $(function () {
     }
 
     /**
+     * Deletes all recurrent events with given id starting from startDate
+     * and ending with endDate.
      *
      * @param recurrentId
      * @param startDate
@@ -101,7 +103,7 @@ $(function () {
      */
     function deleteRecurrentEventsForTime(recurrentId, startDate, endDate) {
         var arStartDates, arEndDates;
-        allEvents.forEach(function (item) {
+        $.each(allEvents, function (index, item) {
             if (item.recurrentId === recurrentId) {
                 arStartDates = item.start.split('T');
                 arEndDates = item.end.split('T');
@@ -115,7 +117,7 @@ $(function () {
     }
 
     /**
-     *
+     * Deleting recurrent event
      */
     $('#deleting-recurrent-event').click(function () {
         $('#dialog').dialog('close');
@@ -133,23 +135,6 @@ $(function () {
             $('#cancel-event-dialog').dialog('close');
         });
     });
-
-    /**
-    $('#deleting-recurrent-event').click(function () {
-        $('#dialog').dialog('close');
-        var myDialog = $('#confirmation-dialog-event-div');
-        myDialog.dialog('open');
-        $('#confirmYesEvent').click(function () {
-            deleteRecurrentEvents(info_event.calEvent.recurrentId);
-            clearEventDialogSingleMulti();
-            myDialog.dialog('close');
-        });
-        $('#confirmNoEvent').click(function () {
-            clearEventDialogSingleMulti();
-            myDialog.dialog('close');
-        });
-    })
-    */
 
     $('#deleting-recurrent-event').hover(function(){
         $(this).css('color','red');

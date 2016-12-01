@@ -12,7 +12,7 @@ var DATE_REGEXP = new RegExp(['^((\\d{2}(([02468][048])|([13579][26]))',
     '\\-((0?[1-9])|([1-2][0-9])|(30)))|(0?2\\-((0?[1-9])|([1-2][0-9])))))',
     '|(\\d{2}(([02468][1235679])|([13579][01345789]))\\-((((0?[13578])|(1[02]))',
     '\\-((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))',
-    '\\-((0?[1-9])|([1-2][0-9])|(30)))|(0?2\\-((0?[1-9])|(1[0-9])|(2[0-8]))))))$'].join['']
+    '\\-((0?[1-9])|([1-2][0-9])|(30)))|(0?2\\-((0?[1-9])|(1[0-9])|(2[0-8]))))))$'].join('')
 );
 var ERROR_MESSAGES_RECURRENT_CANCEL = [];
 var ELEMENT_FOR_ERROR_MESSAGES = '#validation-information';
@@ -139,7 +139,7 @@ function validateRecurrentDatesPeriod(recurrentId, startDate, endDate){
 function normalizeDate(date) {
     var result = date;
     var arDates;
-    if (startDate.length < 10) {
+    if (date.length < 10) {
         arDates = date.split("-");
         if (arDates[1].length < 2)
             arDates[1] = 0 + arDates[1];
@@ -178,20 +178,22 @@ function printErrorMessages(element) {
 function validateRecurrentDates(recurrentId, startDate, endDate) {
     var result = true;
     var normStartDate, normEndDate;
-    ERROR_MESSAGES_RECURRENT_CANCEL = [];
     $(ELEMENT_FOR_ERROR_MESSAGES).html("");
     if (!isNotEmptyDates(startDate, endDate) || !isRightFormatDates(startDate, endDate)) {
         printErrorMessages(ELEMENT_FOR_ERROR_MESSAGES);
+        ERROR_MESSAGES_RECURRENT_CANCEL = [];
         result = false;
     } else {
         normStartDate = normalizeDate(startDate);
         normEndDate = normalizeDate(endDate);
         if (!isNotInThePast(normStartDate, normEndDate, recurrentId)) {
             printErrorMessages(ELEMENT_FOR_ERROR_MESSAGES);
+            ERROR_MESSAGES_RECURRENT_CANCEL = [];
             result = false;
         }
         if (!validateRecurrentDatesPeriod(recurrentId, normStartDate, normEndDate)) {
             printErrorMessages(ELEMENT_FOR_ERROR_MESSAGES);
+            ERROR_MESSAGES_RECURRENT_CANCEL = [];
             result = false;
         }
     }

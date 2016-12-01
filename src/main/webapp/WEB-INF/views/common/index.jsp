@@ -884,7 +884,6 @@
 
                         <div class="col-xs-12">
                             <div class="row">
-                                <br>
                                 <div class="clearfix"></div>
                                 <br>
                                 <div id="validation-information-container" class="clearfix">
