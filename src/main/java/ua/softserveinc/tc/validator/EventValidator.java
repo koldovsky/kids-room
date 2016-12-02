@@ -68,8 +68,8 @@ public class EventValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        EventDto eventDto = (EventDto) o;
         try {
+            EventDto eventDto = (EventDto) o;
             dateSet(eventDto);
             ValidationUtils.rejectIfEmpty(errors, ValidationConstants.EVENT_TITLE, ValidationConstants.EVENT_EMPTY_TITLE_MSG);
             ValidationUtils.rejectIfEmpty(errors, ValidationConstants.START_TIME, ValidationConstants.EMPTY_FIELD_MSG);
@@ -93,6 +93,8 @@ public class EventValidator implements Validator {
         } catch (ParseException e) {
             errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);
             errors.rejectValue(ValidationConstants.END_TIME, ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);
+        } catch (ClassCastException ex) {
+            errors.rejectValue(ValidationConstants.EVENT_TITLE, ValidationConstants.EVENT_CAST_EXCEPTION);
         }
     }
 }

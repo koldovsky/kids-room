@@ -63,6 +63,7 @@ public final class ValidationConstants {
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
     public static final String EMPTY_FIELD_MSG = "registration.empty";
     public static final String EVENT_DATE_FORMAT_INVALID_MSG = "Can't convert data type";
+    public static final String EVENT_CAST_EXCEPTION = "Your date is wrong";
     public static final String EVENT_PAST_TIME_CREATION_MSG = "Must create new event in Present time";
     public static final String EVENT_DESCRIPTION_LENGTH_ERROR_MSG = "Description  should be less than 250 characters";
     public static final String EVENT_INACTIVE_ROOM_ERROR_MSG = "You can't create event on inactive room. Please contact to admin";
