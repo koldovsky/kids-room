@@ -9,8 +9,10 @@ messages = {
 		requiredLastName: 'The field last name can not be empty',
 		regexKidFirstName: 'To enter a first name, use only letters',
 		regexKidLastName: 'To enter a last name use only letters',
-		editFirstName : "Please enter at least 2 characters",
-		editLastName : "Please enter at least 2 characters"
+		toShortFirstName : 'Please enter at least ' + nameMinLength + ' characters',
+		toShortLastName : 'Please enter at least ' + nameMinLength + ' characters',
+		toLongFirstName : 'Please enter less ' + nameMaxLength + ' than  characters',
+		toLongLastName : 'Please enter less ' + nameMaxLength + ' than  characters'
 
     },
     date: {
