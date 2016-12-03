@@ -7,8 +7,8 @@ messages = {
 		invalidLastName : 'Invalid Last Name',
 		requiredFirstName: 'The field first name can not be empty', 
 		requiredLastName: 'The field last name can not be empty',
-		regexKidFirstName: 'To enter a first name, use only letters',
-		regexKidLastName: 'To enter a last name use only letters',
+		regexKidFirstName: 'First name can not contain special characters',
+		regexKidLastName: 'Last name can not contain special characters',
 		editFirstName : "Please enter at least 2 characters",
 		editLastName : "Please enter at least 2 characters"
 
