@@ -69,9 +69,15 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
           </div>
       </div>
 
+      <button class="btn btn-raised btn-primary" id = cancelBtn type="reset" name="action">
+        <spring:message code="user.cancel" />
+      </button>
+
       <button class="btn btn-raised btn-success" type="submit" name="action">
         <spring:message code="user.submit" />
       </button>
+
+
 
       <footer class="removekidmsg">
       <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
