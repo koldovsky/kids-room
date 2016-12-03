@@ -112,7 +112,7 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
             </div>
         </div>
     </div>
-<script src="resources/js/constants/general_constants.js"></script>
+
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script src="resources/js/validation-edit-kid.js"></script>

@@ -10,7 +10,7 @@ messages = {
 		regexKidFirstName: 'Для вводу імені використовуйте лише літери',
 		regexKidLastName: 'Для вводу прізвища використовуйте лише літери',
 		toShortFirstName : 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
-		toShortLastName : 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
+		toShortLastName : 'Будь ласка, введіть не менше ' + nameMinLength + ' символів.',
         toLongFirstName : 'Будь ласка, введіть менше ' + nameMaxLength + ' символів',
         toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів'
 	},
