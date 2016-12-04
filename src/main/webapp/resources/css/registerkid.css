@@ -29,6 +29,10 @@ form .required:after {
     text-color: red;
 }
 
+.btn-canceled{
+    color: #bfffae;
+    text-color: black;
+}
 
 input, textarea, label{
     text-align: center;

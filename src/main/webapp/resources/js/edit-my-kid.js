@@ -12,7 +12,7 @@ $(function () {
         var myDialog = $('#confirmation-dialog-div');
         myDialog.dialog('open');
         $('#confirmYes').click(function () {
-            takingKidOff()
+            takingKidOff();
             myDialog.dialog('close');
         });
         $('#confirmNo').click(function () {
@@ -25,7 +25,6 @@ $(function () {
     }, function(){
         $(this).css("color", "black");
     });
-
 });
 function takingKidOff() {
     // var kidId = kid.getId();
