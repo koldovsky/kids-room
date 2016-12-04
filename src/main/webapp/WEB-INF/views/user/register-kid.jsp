@@ -94,6 +94,9 @@
         <button class="btn btn-raised btn-success" type="submit" name="action">
             <spring:message code="user.submit"/>
         </button>
+        <button class="btn btn-raised btn-danger" type="reset" id="add-kid-cancel">
+            <spring:message code="cancel" />
+        </button>
 
         <footer class="bottom-msg">
             <p class="explanation"><spring:message code="requiredfield.explanation"/></p>

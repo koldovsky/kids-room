@@ -69,22 +69,18 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
           </div>
       </div>
 
-      <button class="btn btn-raised btn-primary" id = cancelBtn type="reset" name="action">
-        <spring:message code="user.cancel" />
-      </button>
-
       <button class="btn btn-raised btn-success" type="submit" name="action">
         <spring:message code="user.submit" />
       </button>
-
-
-
+      <button class="btn btn-raised btn-danger" type="reset" id="edit-kid-cancel">
+        <spring:message code="cancel" />
+      </button>
       <footer class="removekidmsg">
-      <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
-       <spring:message code="editkid.deactivatekid1" />
-      <div id="removeKids" style="text-decoration: underline">
-          <spring:message code="editkid.deactivatekid2"/>
-       </div>
+          <p class="explanation"> <spring:message code="requiredfield.explanation" /> </p>
+          <spring:message code="editkid.deactivatekid1" />
+          <div id="removeKids" style="text-decoration: underline">
+              <spring:message code="editkid.deactivatekid2"/>
+          </div>
       </footer>
     </div>
 </form:form>

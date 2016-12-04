@@ -1,4 +1,8 @@
 $(function () {
+    $('#edit-kid-cancel').click(function () {
+        var kidredirect="/home/mykids";
+        $(location).attr('href', kidredirect).reload(true);
+    });
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
         width: 350,
@@ -14,15 +18,12 @@ $(function () {
         $('#confirmNo').click(function () {
             myDialog.dialog('close');
         });
-    })
+    });
     $('#removeKids').hover(function(){
         $(this).css('color','red');
         $(this).css('cursor','pointer ');
     }, function(){
         $(this).css("color", "black");
-    });
-    $('#cancelBtn').click(function () {
-        location.href = "mykids";
     });
 });
 function takingKidOff() {
