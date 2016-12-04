@@ -57,6 +57,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 
 
 <body>
+<script type="text/javascript" src="resources/js/constants/general_constants.js"></script>
 <script type="text/javascript" src='resources/js/error.js'></script>
 <script type="text/javascript" src="resources/js/langswitcher.js"></script>
 <div class="wrapper">

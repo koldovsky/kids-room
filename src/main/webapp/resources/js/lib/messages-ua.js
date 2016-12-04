@@ -5,12 +5,14 @@ messages = {
 	kid : {
 		invalidFirstName : "Ви ввели ім'я невірно",
 		invalidLastName : 'Ви ввели прізвище невірно',
-		requiredFirstName: "Вкажіть будь ласка ім'я дитини", 
-		requiredLastName: "Вкажіть будь ласка прізвище дитини",
-		regexKidFirstName: 'Ім\'я не може містити спеціальні символи та цифри',
-		regexKidLastName: 'Прізвище не може містити спеціальні символи та цифри',
-		editFirstName : "Будь ласка, введіть не менше 2 символів.",
-		editLastName : "Будь ласка, введіть не менше 2 символів."
+		requiredFirstName: 'Вкажіть будь ласка ім\'я дитини',
+		requiredLastName: 'Вкажіть будь ласка прізвище дитини',
+		regexKidFirstName: 'Для вводу імені використовуйте лише літери',
+		regexKidLastName: 'Для вводу прізвища використовуйте лише літери',
+		toShortFirstName : 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
+		toShortLastName : 'Будь ласка, введіть не менше ' + nameMinLength + ' символів.',
+        toLongFirstName : 'Будь ласка, введіть менше ' + nameMaxLength + ' символів.',
+        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.'
 	},
     date: {
         fromBiggerThanTo:  "Початкова дата не повинна перевищувати кінцеву",
