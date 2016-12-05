@@ -62,7 +62,7 @@
                                 <li style="padding-right: 250px;">
                                     <a style="cursor: pointer" onclick="history.back()" >
                                         <span class="glyphicon glyphicon-arrow-left"></span>
-                                            Back
+                                            <spring:message code="properties.back"/>
                                     </a>
                                 </li>
                             </c:when>
