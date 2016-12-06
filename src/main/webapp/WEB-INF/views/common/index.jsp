@@ -921,6 +921,7 @@
 <c:choose>
     <c:when test="${pageContext.response.locale =='ua'}">
         <script src="resources/js/lib/messages-ua.js"></script>
+        <script src="resources/js/lib/callendar-ua.min.js"></script>
     </c:when>
     <c:when test="${pageContext.response.locale != 'ua'}">
         <script src="resources/js/lib/messages.js"></script>
