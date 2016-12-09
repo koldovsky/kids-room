@@ -439,20 +439,20 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
 
 
 $('#booking-table tbody').on('click', '.inp-leaveTime', function() {
+    var leaveTime = $(this).val();
     var arrivalTime = $(this).parents('tr').find('.inp-ArrivalTime').val();
     if (arrivalTime === "") {
         $('#failureNoArriveTime').modal('show');
-    } else {
+    } else if(leaveTime === "") {
         var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
         $(this).val(time);
-
-        $('#booking-table tbody').on('click', '#leave-btn', function() {
-            var tr = $(this).closest('tr');
-            var id = table.row(tr).data().id;
-            var time = $(this).closest('td').find('input').val();
-            setEndTime(id, time);
-        });
     }
+    $('#booking-table tbody').on('click', '#leave-btn', function() {
+        var tr = $(this).closest('tr');
+        var id = table.row(tr).data().id;
+        var time = $(this).closest('td').find('input').val();
+        setEndTime(id, time);
+    });
 });
 
 $('#booking-table tbody').on('click', '[id^=comment]', function() {
