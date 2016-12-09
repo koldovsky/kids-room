@@ -25,6 +25,7 @@ public class BookingDto implements Serializable{
     private String endTime;
     private Long startTimeMillis;
     private Long endTimeMillis;
+    private Long durationBooking;
     private String kidName;
     private String roomName;
     private String duration;
@@ -59,6 +60,7 @@ public class BookingDto implements Serializable{
         this.endTime=newBookingDto.endTime;
         this.startTimeMillis=newBookingDto.startTimeMillis;
         this.endTimeMillis=newBookingDto.endTimeMillis;
+        this.durationBooking = this.endTimeMillis - this.startTimeMillis;
         this.kidName=newBookingDto.kidName;
         this.roomName=newBookingDto.roomName;
         this.duration=newBookingDto.duration;
@@ -88,6 +90,7 @@ public class BookingDto implements Serializable{
         this.endTimeMillis=booking.getBookingEndTime().getTime();
         this.kidName = booking.getChild().getFullName();
         this.roomName = booking.getRoom().getAddress();
+        this.durationBooking = this.endTimeMillis - this.startTimeMillis;
         this.duration = booking.formatDuration();
         this.sum = booking.getSum();
         this.id = booking.getIdBook();
@@ -356,4 +359,11 @@ public class BookingDto implements Serializable{
         return weekDays;
     }
 
+    public Long getDurationBooking() {
+        return durationBooking;
+    }
+
+    public void setDurationBooking(Long durationBooking) {
+        this.durationBooking = durationBooking;
+    }
 }

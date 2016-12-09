@@ -177,6 +177,7 @@ function refreshTable(bookingsState) {
     var data = JSON.parse(results);
 
 
+
     if (!(table === null)) {
         table.destroy();
     }
@@ -204,23 +205,23 @@ function refreshTable(bookingsState) {
             }
         },
         rowId: 'id',
-        "columnDefs": [{
-            "searchable": false,
-            "orderable": false,
-            "targets": 0
+        'columnDefs': [{
+            'searchable': false,
+            'orderable': false,
+            'targets': 0
         }],
         "order": [
             [1, 'asc']
         ],
         'data': data,
         'columns': [{
-                "data": null
+                'data': null
             },
 
             {
-                "data": 'kidName',
-                "className": "kid-name",
-                "fnCreatedCell": function(nTd, sData, oData) {
+                'data': 'kidName',
+                'className': 'kid-name',
+                'fnCreatedCell': function(nTd, sData, oData) {
                     if (!(oData.comment == "")) {
                         $(nTd).html('<a href=profile?id=' + oData.idChild + '>' + oData.kidName + '</a>' + " "
                         + '<span data-toggle="tooltip"' + 'id="comment-'+oData.id
@@ -231,9 +232,9 @@ function refreshTable(bookingsState) {
                     }
                 }
             }, {
-                "data": "startTime",
-                "className": "edit-button",
-                "fnCreatedCell": function(nTd, sData, oData) {
+                'data': 'durationBooking',
+                'className': 'edit-button',
+                'fnCreatedCell': function(nTd, sData, oData) {
                     var td = '<span class="book-id" id =' + oData.id + '><span id="book-start-time">'
                     + oData.startTime + '</span> - ' + '<span id="book-end-time">' + oData.endTime + '</span></span>';
                     if(localStorage["bookingsState"] ==['BOOKED']){
@@ -243,17 +244,27 @@ function refreshTable(bookingsState) {
                     $(nTd).append(td);
                 }
             }, {
-                "className": 'arrivalTime',
-                "defaultContent": '<input type="time" class="form-control inp-arrivalTime" >'
-                + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-down" id="arrival-btn" ></button>'
+                'data': 'startTime',
+                'className': 'arrivalTime',
+                'fnCreatedCell': function(nTd) {
+                    var td = '<input type="time" class="form-control inp-arrivalTime" >'
+                        + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-down" id="arrival-btn" ></button>';
+                    $(nTd).empty();
+                    $(nTd).append(td);
+                }
             }, {
-                "className": 'leaveTime',
-                "defaultContent": '<input type="time" class="form-control inp-leaveTime">'
-                + '<button class="btn btn-sm btn-success glyphicon glyphicon-share-alt" id="leave-btn"></button>'
+                'data': 'endTime',
+                'className': 'leaveTime',
+                'fnCreatedCell': function(nTd) {
+                    var td = '<input type="time" class="form-control inp-leaveTime" >'
+                        + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-down" id="leave-btn" ></button>';
+                    $(nTd).empty();
+                    $(nTd).append(td);
+                }
             },
 
         ],
-        "pagingType": "simple_numbers"
+        'pagingType': 'simple_numbers'
     });
 
     table.on('order.dt search.dt', function() {
@@ -285,12 +296,12 @@ function setStartTime(id, startTime) {
     };
     $('#' + id).addClass('highlight-active');
     $.ajax({
-        url: "setTime",
+        url: 'setTime',
         contentType: 'application/json',
         data: JSON.stringify(inputData),
         type: 'POST',
         success: function() {
-            refreshTable(localStorage["bookingsState"]);
+            refreshTable(localStorage['bookingsState']);
         }
     });
 }
