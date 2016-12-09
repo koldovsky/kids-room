@@ -13,7 +13,7 @@ messages = {
 		toShortFirstName : 'Please enter at least ' + nameMinLength + ' characters',
 		toShortLastName : 'Please enter at least ' + nameMinLength + ' characters',
 		toLongFirstName : 'Please enter less ' + nameMaxLength + ' than  characters',
-		toLongLastName : 'Please enter less ' + nameMaxLength + ' than  characters'
+		toLongLastName : 'Please enter less ' + nameMaxLength + ' than  characters',
 
 		editFirstName : "Please enter at least 2 characters",
 		editLastName : "Please enter at least 2 characters",
@@ -69,7 +69,7 @@ messages = {
 			noDaysSelected: 'Recurrent: At least one day must be selected',
 			noKidsSelected: 'At least one kid must be selected',
 			bookingTypeMismatchWhenUpdating: 'Can\'t convert weekly booking to single',
-			incorrectData: 'Incorrect Data: '
+			incorrectData: 'Incorrect Data: ',
 
 			dateInThePast: "Date can't be in the past, current date is: ",
 			timeInThePast: "Start time can't be in the past, current time is: ",

@@ -13,13 +13,12 @@ messages = {
 		toShortFirstName : 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
 		toShortLastName : 'Будь ласка, введіть не менше ' + nameMinLength + ' символів.',
         toLongFirstName : 'Будь ласка, введіть менше ' + nameMaxLength + ' символів.',
-        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.'
+        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.',
 
 		editFirstName : "Будь ласка, введіть не менше 2 символів.",
 		editLastName : "Будь ласка, введіть не менше 2 символів.",
         editFirstNameWithDigits : "Ім'я не може складатись із чисел",
         editLastNameWithDigits : "Прізвище не може складатись із чисел"
-
 	},
     date: {
         fromBiggerThanTo:  'Початкова дата не повинна перевищувати кінцеву',
@@ -70,7 +69,7 @@ messages = {
 			noDaysSelected: 'Повторювані: Як мінімум один день повинен бути вибраним',
 			noKidsSelected: 'Як мінімум одна дитина повинна бути вибрана',
 			bookingTypeMismatchWhenUpdating: 'Неможливо перетворити щотижневе бронювання в одноденне',
-			incorrectData: 'Невірні дані: '
+			incorrectData: 'Невірні дані: ',
 
 			dateInThePast: "Дата не може бути в минулому, поточна дата: ",
 			timeInThePast: "Час початку не може бути в минулому, поточний час: ",
