@@ -692,7 +692,8 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="form-group">
                                 <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
-                                <input type="text" class="form-control" id="titleUpdate" placeholder="title">
+                                <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
+                                <input type="text" class="form-control" id="titleUpdate" placeholder="${titlePlaceHolder}">
                             </div>
 
                             <div class="form-group">
@@ -759,8 +760,9 @@
                                 <label for="descriptionUpdate">
                                     <spring:message code="event.description"></spring:message>
                                 </label>
+                                <spring:message code="event.descriptionPlaceHolder" var="descriptionPlaceHolder"/>
                                 <textarea type="text" class="form-control" id="descriptionUpdate"
-                                          placeholder="description"></textarea>
+                                          placeholder=${descriptionPlaceHolder}></textarea>
                             </div>
                             <br>
                             <div id="data-validation-information-string-container" class="clearfix">
