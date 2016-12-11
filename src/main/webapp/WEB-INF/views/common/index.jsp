@@ -844,6 +844,7 @@
             </div>
         </div>
     </div>
+
     <%--cancel-event-dialog--%>
     <div class="row">
         <div class="vertical-center-row">
@@ -851,40 +852,46 @@
                 <div id="cancel-event-dialog" class="dialog" hidden title="<spring:message code= "event.cancel"/>">
                     <form id="form-event-cancel">
                         <div>
-                            <p style="color:red;"><spring:message code= "cancel.warning" arguments='<span id="event-cancel-title"></span>'/></p>
+                            <p style="color:red;"><spring:message code="cancel.warning"
+                                arguments='<span id="event-cancel-title"></span>'/></p>
                         </div>
                         <br>
                         <div class="form-group">
-                            <label align-items="center"  for="start-date-cancel-picker"><spring:message code= "event.startDate"/></label>
-
-                            <div class=>
-                                <input id="start-date-cancel-picker" type="date" class=" form-control"  placeholder="startDate">
+                            <label align-items="center" for="start-date-cancel-picker"><spring:message
+                                code="event.startDate"/></label>
+                            <div>
+                                <input id="start-date-cancel-picker" type="date" class="form-control"
+                                    placeholder="startDate">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label align="center" for="end-date-cancel-picker"><spring:message code= "event.endDate"/></label>
+                            <label align="center" for="end-date-cancel-picker"><spring:message
+                                code="event.endDate"/></label>
                             <br>
-                            <div class=>
-                                <input id="end-date-cancel-picker" type="date" class="form-control" placeholder="endDate">
+                            <div>
+                                <input id="end-date-cancel-picker" type="date" class="form-control"
+                                    placeholder="endDate">
                             </div>
                         </div>
-
 
                         <div class="col-xs-12">
                             <div class="row">
                                 <div class="clearfix"></div>
                                 <br>
                                 <div id="validation-information-container" class="clearfix">
-                                    <p class="col-xs-12 data-validation-information-string" style="color:red" id="validation-information"></p>
+                                    <p class="col-xs-12 data-validation-information-string"
+                                       style="color:red;" id="validation-information"></p>
                                 </div>
                                 <br>
                                 <div class="clearfix"></div>
-                                <div class="col-xs-3">
-                                    <button type="button" class="btn btn-success live" id="yes-cancel-event-button"><spring:message code="yes"/></button>
+                                <div class="col-xs-6" style="text-align:center;">
+                                    <button type="button" class="btn btn-success btn-block"
+                                        id="yes-cancel-event-button"><spring:message code="yes"/></button>
                                 </div>
-                                <div align="right" class="col-xs-9">
-                                    <button type="button" class="btn btn-danger pull-right" id="no-cancel-event-button"><spring:message code="no"/></button>
+                                <div class="col-xs-6" style="text-align:center;">
+                                    <button type="button" class="btn btn-danger btn-block"
+                                        id="no-cancel-event-button"><spring:message code="no"/></button>
                                 </div>
                             </div>
                         </div>
