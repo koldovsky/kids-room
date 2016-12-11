@@ -62,7 +62,7 @@
 
 
         <div class="form-group">
-            <label class="required"><spring:message code="kid.gender"/></label>
+            <%--@declare id="gender"--%><label class="required"><spring:message code="kid.gender"/></label>
             <table>
                 <tr>
                     <td>
@@ -70,10 +70,11 @@
                             code="kid.boy"/>
                     </td>
                     <td>
-                        <form:radiobutton required="required" path="gender" value="FEMALE"/><spring:message
+                        <form:radiobutton name="Girl" path="gender" value="FEMALE"/><spring:message
                             code="kid.girl"/></td>
                 </tr>
             </table>
+            <label id="gender-error" class="error" for="gender"></label>
 
         </div>
 
