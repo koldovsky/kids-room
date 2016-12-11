@@ -525,7 +525,8 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="col-xs-12 form-group">
                                 <label for="event-title"><spring:message code= "event.title"/></label>
-                                <input type="text" class="form-control" id="event-title" placeholder="Event title">
+                                <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
+                                <input type="text" class="form-control" id="event-title" placeholder="${titlePlaceHolder}">
                             </div>
                             <div class="form-group">
                                 <label for="color-select"><spring:message code="event.chooseColor" /></label>
@@ -646,9 +647,10 @@
                                     <br><br><br><br><br><br><br><br><br><br>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
+                                        <spring:message code="event.descriptionPlaceHolder" var="descriptionPlaceHolder"/>
                                         <label for="description"> <spring:message code="event.labelForDescription"></spring:message> </label>
                                         <input type="text" size="15" class="form-control" id="description"
-                                               placeholder="description">
+                                               placeholder="${descriptionPlaceHolder}">
                                     </div>
                                     <br>
                                     <div id="data-validation-information-string-container" class="clearfix">
