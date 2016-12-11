@@ -48,18 +48,16 @@ public class KidProfileImageValidatorIml implements KidProfileImageValidator {
                 ImageIO.createImageInputStream(file.getInputStream())) {
             Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
 
+            out:
             while (readers.hasNext()) {
                 ImageReader reader = readers.next();
-                for (String imgFo : applicationConfigurator.getImageAcceptableFormats()) {
-                   String str =  reader.getFormatName().toLowerCase();
+                for (String imgFo : applicationConfigurator.getImageAcceptableFormats())
                     if (imgFo.toLowerCase().equals(reader.getFormatName().toLowerCase())) {
                         result = true;
-                        break;
+                        break out;
                     }
-                }
             }
         } catch(IOException e) {
-            result = false;
             log.error("Failed to save image", e);
         }
         return result;
