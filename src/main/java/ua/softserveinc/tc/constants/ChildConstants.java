@@ -24,6 +24,8 @@ public final class ChildConstants {
 
     public static final String GENDER = "gender";
 
+    public static final String ID_PARAMETER_KEY = "id";
+
     private ChildConstants() {
     }
 
