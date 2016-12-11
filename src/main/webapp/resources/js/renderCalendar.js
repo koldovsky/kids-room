@@ -10,6 +10,7 @@ var DAYS_IN_MONTH = 31;
 var DAYS_IN_WEEK = 7;
 
 
+
 $(function () {
 
     $('#update-recurrent-button').hide();
@@ -207,32 +208,38 @@ $(function () {
         $('#start-time-picker').timepicker('setTime', currentDate.toLocaleTimeString());
         $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
         $('#dialog').dialog('open');
+
     });
+
+    if ($('#single-event-radio-button').is(':checked')) {
+        $('#dialog').on('change','#start-date-picker',function () {
+            $('#end-date-picker').val($('#start-date-picker').val());
+        });
+    }
 
     $('.my-radio').click(function () {
         $('#end-date-picker').attr('disabled',false);
-        $("#dialog" ).off( "change", "#start-date-picker", function () {
-            $('#end-date-picker').val($('#start-date-picker').val());
-        });
         if ($('#weekly-radio-button').is(':checked')) {
             $('#days-for-recurrent-form').attr('hidden', false);
             $('#end-date-picker').attr('disabled',false);
+            $('#dialog').off('change','#start-date-picker');
         } else {
-
             $('#days-for-monthly-form').attr('hidden', true);
         }
         if($('#monthly-radio-button').is(':checked')) {
             buildTableMonthly();
             $('#days-for-monthly-form').attr('hidden', false);
             $('#days-for-recurrent-form').attr('hidden', true);
+            $('#dialog').off('change','#start-date-picker');
         }
         if ($('#single-event-radio-button').is(':checked')) {
             $('#days-for-monthly-form').attr('hidden', true);
             $('#days-for-recurrent-form').attr('hidden', true);
             $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled',true);
-            $("#dialog" ).on( "change", "#start-date-picker", function () {
+            $('#dialog').on('change','#start-date-picker',function () {
                 $('#end-date-picker').val($('#start-date-picker').val());
             });
+
         }
     });
 
