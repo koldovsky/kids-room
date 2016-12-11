@@ -6,9 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ChildConstants;
+import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
@@ -21,6 +23,10 @@ import ua.softserveinc.tc.util.FileUploadFormObject;
 import ua.softserveinc.tc.util.ImagesHolderUtil;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.LogicalRequestsValidator;
+import ua.softserveinc.tc.constants.ImageConstants;
+import ua.softserveinc.tc.validator.KidProfileImageValidator;
+import ua.softserveinc.tc.validator.NumberRequestValidator;
+import org.springframework.ui.Model;
 
 import javax.imageio.ImageIO;
 import java.io.ByteArrayInputStream;
@@ -41,6 +47,12 @@ public class ImagesController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private KidProfileImageValidator imageValidator;
+
+    @Autowired
+    private NumberRequestValidator numberRequestValidator;
+
     @Log
     private Logger log;
 
@@ -49,46 +61,46 @@ public class ImagesController {
 
 
     /**
-     * Uploading a new profile picture for a Child
+     * Uploading a new profile picture for a Child. There is a restriction
+     * that imposed on image format size. The precise values of this
+     * properties is set in application properties. When some restrictions
+     * are not met then appropriate message is sent to user form.
      *
-     * @param form an object holding the uploaded MultiPartFile
+     * @param fileForm an object holding the uploaded MultiPartFile
      * @param kidId ID of a Child
-     * @return redirects back to kid's profile view
+     * @return Model with uploaded image or error message
      */
-    @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.POST)
-    public String uploadImage(@ModelAttribute FileUploadFormObject form,
-                                    @PathVariable String kidId) throws AccessDeniedException {
-        if (!LogicalRequestsValidator.isRequestValid(kidId)) {
-            throw new ResourceNotFoundException();
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public Model uploadImage(@ModelAttribute(ImageConstants.IMAGE_UPLOAD_MODEL_ATTRIBUTE)
+                                FileUploadFormObject fileForm,
+                             @RequestParam(ChildConstants.ID_PARAMETER_KEY) String kidId,
+                             BindingResult bindingResult,
+                             Model model) {
+
+        model.addAttribute(ImageConstants.IMAGE_UPLOAD_MODEL_ATTRIBUTE, fileForm);
+        numberRequestValidator.validate(kidId, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return model;
         }
 
-        MultipartFile file = form.getFile();
+        MultipartFile file = fileForm.getFile();
         Long id = Long.parseLong(kidId);
         Child kid = childService.findById(id);
-
-        if (!file.isEmpty()) {
+        model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, kid);
+        imageValidator.validate(file, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return model;
+        }
 
             try {
-                if(file.getSize()/1024/1024 > applicationConfigurator.getMaxUploadImgSizeMb()){
-                    log.error("Image size is too big");
-                    return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
-                }
-
                 byte[] bytes = file.getBytes();
-
-                if(ImageIO.read(new ByteArrayInputStream(bytes)) == null){
-                    log.error("Uploaded image has a wrong extension");
-                    return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
-                }
-
                 kid.setImage(bytes);
                 childService.update(kid);
-            } catch (IOException | JpaSystemException exc){
+            } catch (IOException exc){
                 log.error("Failed to save image", exc);
-                return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
             }
-        }
-        return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
+
+        return model;
     }
 
     /**

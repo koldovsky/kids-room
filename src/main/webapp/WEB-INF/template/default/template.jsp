@@ -56,6 +56,16 @@ src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.1/boot
 <script type="text/javascript" src="resources/js/constants/general_constants.js"></script>
 <script type="text/javascript" src='resources/js/error.js'></script>
 <script type="text/javascript" src="resources/js/langswitcher.js"></script>
+
+<c:choose>
+  <c:when test="${pageContext.response.locale =='ua'}">
+    <script src="resources/js/lib/messages-ua.js"></script>
+  </c:when>
+  <c:when test="${pageContext.response.locale == 'en'}">
+    <script src="resources/js/lib/messages.js"></script>
+  </c:when>
+</c:choose>
+
 <div class="wrapper">
   <div class="header"><tiles:insertAttribute name="header" /></div>
 
