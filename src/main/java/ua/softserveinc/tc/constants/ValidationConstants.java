@@ -51,6 +51,7 @@ public final class ValidationConstants {
 
 
     public static final String EMAIL = "email";
+    public static final String IMAGE = "file";
     public static final String PASSWORD = "password";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String CONFIRM = "confirm";
@@ -75,6 +76,10 @@ public final class ValidationConstants {
     public static final String LASTNAME_ERROR_MSG = "registration.kid.lastName";
     public static final String FIRSTNAME_ERROR_MSG = "registration.kid.firstName";
     public static final String COMMENT_ERROR_MSG = "registration.kid.comment";
+    public static final String IMAGE_VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
+    public static final String IMAGE_VALIDATION_EMPTY_FILE = "image.validator.emptyFile";
+    public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE = "image.validator.TooBigSize";
+    public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT = "image.validator.badFormat";
 
     public static final String EVENT_EMPTY_TITLE_MSG = "event.emptyTitle";
     public static final String EVENT_START_NOT_EQUALS_END_MSG = "event.startDateNotEqualEnd";

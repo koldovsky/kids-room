@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags"%>
 
@@ -21,46 +22,47 @@
         </a>
         </div>
 
-<sec:authorize access="hasRole('USER')">
-         <form method="POST" modelAttribute="fileForm" action="uploadImage/${kid.id}" enctype="multipart/form-data">
+        <sec:authorize access="hasRole('USER')">
+            <form:form method="POST" modelAttribute="fileForm" action="profile?id=${kid.id}"
+                       enctype="multipart/form-data">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <label class="btn btn-raised btn-success glyphicon glyphicon-folder-open">
-                     &nbsp;<spring:message code="user.selectPhoto" />  <input path="file" type="file" accept=".jpg, .png"
-                     id="file-upload" name="file" style="display: none;">
+                     &nbsp;<spring:message code="user.selectPhoto" />
+                    <form:input path="file" type="file" accept=".jpg, .png"
+                        id="file-upload" name="file" style="display: none;" />
+                </label>
+                <input id="file-submit" style="display: none;" type="submit" data-bfi-disabled>
+                <br/>
+                <form:errors path="file" cssClass="error" htmlEscape="false" />
+            </form:form>
+            <p id="image-msg" style="display: none;">
+            <spring:message code="kid.image.msg" /></p>
+        </sec:authorize>
 
-                 </label>
-                    <input id="file-submit" style="display: none;" type="submit" data-bfi-disabled>
+    </div>
 
-                 <form:errors path="file" cssClass="error" />
-         </form>
-         <p id="image-msg" style="display: none;">
-         <spring:message code="kid.image.msg" /></p>
-         </sec:authorize>
+    <h2> ${kid.firstName} ${kid.lastName} </h2>
 
-        </div>
+    <hr>
+    <h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}</h3>
+    <h3> <spring:message code="kids.age" />: ${kid.getAge()}</h3>
+    <h4> <spring:message code="kid.comment" />: ${kid.comment}</h4>
 
- <h2> ${kid.firstName} ${kid.lastName} </h2>
-
-<hr></hr>
-<h3> <spring:message code="kid.date" />: ${kid.dateOfBirth}<h3>
-<h3> <spring:message code="kids.age" />: ${kid.getAge()}<h3>
-<h4> <spring:message code="kid.comment" />: ${kid.comment} </h4>
-
- <sec:authorize access="hasRole('USER')">
-<button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
+    <sec:authorize access="hasRole('USER')">
+    <button id="edit" class="btn btn-raised btn-info glyphicon glyphicon-pencil">
                 &nbsp;<spring:message code="button.edit" />
-        </button>
+    </button>
 
-</sec:authorize>
-<hr></hr>
-<div id="parent">
-    <h4> <spring:message code="kid.parent" /> </h4>
-    <h4> ${kid.getParentId().getFullName()}<h4>
-    <h4> ${kid.getParentId().getEmail()}<h4>
-    <h4> ${kid.getParentId().getPhoneNumber()}<h4>
-</div>
+    </sec:authorize>
+    <hr>
+    <div id="parent">
+        <h4> <spring:message code="kid.parent" /> </h4>
+        <h4> ${kid.getParentId().getFullName()}</h4>
+        <h4> ${kid.getParentId().getEmail()}</h4>
+        <h4> ${kid.getParentId().getPhoneNumber()}</h4>
+    </div>
 
-<div style="clear:both"></div>
+    <div style="clear:both"></div>
 
 </div>
 
