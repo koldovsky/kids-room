@@ -84,6 +84,13 @@ public interface ApplicationConfigurator {
     Integer getMaxUploadImgSizeMb();
 
     /**
+     * Returns array of acceptable image formats
+     *
+     * @return array of acceptable image formats
+     */
+    String[] getImageAcceptableFormats();
+
+    /**
      * Each day a letter is scheduled to users' e-mails reminding
      * about today's booking made by the user
      * the next 2 methods return the time of this action

@@ -56,7 +56,6 @@ public class Child implements Comparable<Child> {
     private Gender gender;
 
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
     @Column(name = ChildConstants.PROFILE_IMG)
     private byte[] image;
 

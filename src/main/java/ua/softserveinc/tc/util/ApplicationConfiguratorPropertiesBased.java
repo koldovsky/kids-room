@@ -71,6 +71,9 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${img.maxSize}")
     private Integer maxUploadImgSizeMb;
 
+    @Value("${image.acceptable.format}")
+    private String imageAcceptableFormats;
+
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
@@ -208,6 +211,11 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
         return maxUploadImgSizeMb;
     }
 
+    @Override
+    public String[] getImageAcceptableFormats() {
+        return  ImageFormatNormalizator(imageAcceptableFormats);
+    }
+
     public Integer getHourToSendEmailReminder() {
         return hoursToSendEmailReminder;
     }
@@ -215,5 +223,36 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Override
     public Integer getMinutesToSendEmailReminder() {
         return minutesToSendEmailReminder;
+    }
+
+    /**
+     * Receives a String of acceptable image formats and returns
+     * a String array of normalized image formats. The String of acceptable
+     * image formats must contains image extensions separated by
+     * whitespace any length. Method handles following image extension:
+     * .jpeg .jpg .jpe .jfif .jif .jfi .png .tiff .tif .bmp .dib. .gif
+     *
+     * @param formatString String of acceptable image formats
+     * @return String array of normalized image formats
+     */
+    private String[] ImageFormatNormalizator(String formatString) {
+        String[] arraysFormats = formatString.trim().split("\\s");
+        for (int i = 0; i < arraysFormats.length; i++)
+            switch (arraysFormats[i].toLowerCase()) {
+                case "jpg":
+                case "jpe":
+                case "jfif":
+                case "jif":
+                case "jfi":
+                    arraysFormats[i] = "jpeg";
+                    break;
+                case "tif":
+                    arraysFormats[i] = "tiff";
+                    break;
+                case "dib":
+                    arraysFormats[i] = "bmp";
+                    break;
+            }
+        return  arraysFormats;
     }
 }

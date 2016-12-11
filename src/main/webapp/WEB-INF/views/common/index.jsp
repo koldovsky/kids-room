@@ -921,15 +921,3 @@
 <script src='resources/js/header-user.js'></script>
 <script src='resources/js/userCalendar.js'></script>
 <script src='resources/js/recurrent-cancel-validator.js'></script>
-
-<c:choose>
-    <c:when test="${pageContext.response.locale =='ua'}">
-        <script src="resources/js/lib/messages-ua.js"></script>
-        <script src="resources/js/lib/callendar-ua.min.js"></script>
-    </c:when>
-    <c:when test="${pageContext.response.locale != 'ua'}">
-        <script src="resources/js/lib/messages.js"></script>
-    </c:when>
-</c:choose>
-
-
