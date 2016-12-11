@@ -32,12 +32,6 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${kids.maxAge}")
     private Integer kidsMaxAge;
 
-    @Value("${kids.maxNameLength}")
-    private Integer kidsMaxNameLength;
-
-    @Value("${kids.maxCommentLength}")
-    private Integer kidsMaxCommentLength;
-
     @Value("${calculation.time.minutes}")
     private Integer minutesToCalculateBookingsEveryDay;
 
@@ -102,12 +96,6 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
         this.kidsMaxAge = cDto.getKidsMaxAge();
         properties.setProperty("kids.maxAge", kidsMaxAge.toString());
 
-        this.kidsMaxNameLength = cDto.getKidsMaxNameLength();
-        properties.setProperty("kids.maxNameLength",kidsMaxNameLength.toString());
-
-        this.kidsMaxCommentLength = cDto.getKidsMaxCommentLength();
-        properties.setProperty("kids.maxCommentLength", kidsMaxCommentLength.toString());
-
         this.minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();
         properties.setProperty("calculation.time.minutes", minutesToCalculateBookingsEveryDay.toString());
 
@@ -162,16 +150,6 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Override
     public Integer getKidsMaxAge() {
         return kidsMaxAge;
-    }
-
-    @Override
-    public Integer getKidsMaxNameLength() {
-        return kidsMaxNameLength;
-    }
-
-    @Override
-    public Integer getKidsMaxCommentLength() {
-        return kidsMaxCommentLength;
     }
 
     @Override

@@ -48,10 +48,10 @@ public class RegisterNewKidController {
      * @return view name
      */
     @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
-    public String registerKid(Model model, HttpServletRequest request){
-        if(!model.containsAttribute(ChildConstants.View.KID_ATTRIBUTE)) {
+    public String registerKid(Model model, HttpServletRequest request) {
+        if (!model.containsAttribute(ChildConstants.View.KID_ATTRIBUTE)) {
             model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, new Child());
-            model.addAttribute("pageChecker","needBack");//value for checking the page in header.jsp
+            model.addAttribute("pageChecker", "needBack");//value for checking the page in header.jsp
         }
 
         request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
@@ -64,12 +64,12 @@ public class RegisterNewKidController {
      * Validates the invariants of the Child object and prepares it
      * for persistance into the database
      *
-     * @param child A Child object to be persisted into the database
-     * @param principal A Spring Security interface implementation
-     *                  that represents currently logged in account
+     * @param child         A Child object to be persisted into the database
+     * @param principal     A Spring Security interface implementation
+     *                      that represents currently logged in account
      * @param bindingResult A result holder for object binding
      * @return redirects to profile view if successful
-     *         or current view if failed
+     * or current view if failed
      */
     @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
     public String submit(
@@ -78,11 +78,11 @@ public class RegisterNewKidController {
             BindingResult bindingResult) {
 
         child.setParentId(userService.getUserByEmail(
-                        principal.getName()));
+                principal.getName()));
 
         childValidator.validate(child, bindingResult);
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return ChildConstants.View.KID_REGISTRATION;
         }
 
@@ -92,6 +92,7 @@ public class RegisterNewKidController {
 
     /**
      * Registers custom date format
+     *
      * @param binder
      */
     @InitBinder
