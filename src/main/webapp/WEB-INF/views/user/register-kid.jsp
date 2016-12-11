@@ -75,7 +75,6 @@
                 </tr>
             </table>
             <label id="gender-error" class="error" for="gender"></label>
-
         </div>
 
 
