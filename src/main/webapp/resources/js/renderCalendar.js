@@ -144,7 +144,7 @@ $(function () {
         $(this).css('color','red');
         $(this).css('cursor','pointer ');
     }, function(){
-        $(this).css("color", "black");
+        $(this).css('color', 'black');
     });
 
     $('#deleting-single-event').click(function () {
@@ -164,7 +164,7 @@ $(function () {
         $(this).css('color','red');
         $(this).css('cursor','pointer ');
     }, function(){
-        $(this).css("color", "black");
+        $(this).css('color', 'black');
     });
 
     $('#cancel-update').click(function () {
@@ -288,8 +288,8 @@ function selectRoomForManager(id) {
         success: function(result){
             result = result.split(' ');
 
-            result[0] += ":00";
-            result[1] += ":00";
+            result[0] += ':00';
+            result[1] += ':00';
 
             var startTime = result[0];
             var endTime = result[1];
@@ -370,7 +370,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             $('#event-title').val('');
             $('#start-date-picker').val(clickDate.substring(0, 10));
             $('#end-date-picker').val(clickDate.substring(0, 10));
-            if (clickDate.substring(11, 19) == "00:00:00"){
+            if (clickDate.substring(11, 19) == '00:00:00'){
                 $('#start-time-picker').timepicker('setTime', currentDate.toLocaleTimeString());
                 $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()))}
             else {$('#start-time-picker').timepicker('setTime', clickDate.substring(11, 19));
@@ -730,7 +730,7 @@ function editRecurrentEvent(recurrentEventForEditing){
     $('#update-recurrent-button').show();
     $('#create-button').hide();
     $('#deleting-recurrent-event').show();
-    $('#single-event-radio-button').prop("checked", false);
+    $('#single-event-radio-button').prop('checked', false);
 
     if (recurrentEventForEditing) {
         $('#start-date-picker').val(recurrentEventForEditing.startDate);
@@ -745,10 +745,10 @@ function editRecurrentEvent(recurrentEventForEditing){
         $('#event-cancel-title').html(recurrentEventForEditing.title);
 
         if (recurrentEventForEditing.monthDays) {
-            $('#monthly-radio-button').prop("checked", true);
+            $('#monthly-radio-button').prop('checked', true);
             $('#days-for-monthly-form').attr('hidden', false);
             $('#days-for-recurrent-form').attr('hidden', true);
-            $('#weekly-radio-button').prop("checked", false);
+            $('#weekly-radio-button').prop('checked', false);
             buildTableMonthly();
             recurrentEventForEditing.monthDays.forEach(function (item) {
                 $('#monthly-days').find('td').each(function () {
@@ -759,8 +759,8 @@ function editRecurrentEvent(recurrentEventForEditing){
             });
         }
         if (recurrentEventForEditing.weekDays) {
-            $('#weekly-radio-button').prop("checked", true);
-            $('#monthly-radio-button').prop("checked", false);
+            $('#weekly-radio-button').prop('checked', true);
+            $('#monthly-radio-button').prop('checked', false);
             $('#days-for-monthly-form').attr('hidden', true);
             $('#days-for-recurrent-form').attr('hidden', false);
             recurrentEventForEditing.weekDays.forEach(function (item) {
@@ -829,35 +829,35 @@ function clearEventDialogSingleMulti(){
     $('#create-button').show();
     $('#update-recurrent-button').hide();
     $('#deleting-recurrent-event').hide();
-    $("#single-event-radio-button").prop("disabled", false);
+    $('#single-event-radio-button').prop('disabled', false);
     var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    $('#days-for-monthly-form').attr("hidden", true);
+    $('#days-for-monthly-form').attr('hidden', true);
     $('#days-for-recurrent-form').attr('hidden', true);
-    $('#weekly-radio-button').prop( "checked", false )
-    $('#single-event-radio-button').prop( "checked", true )
+    $('#weekly-radio-button').prop( 'checked', false );
+    $('#single-event-radio-button').prop( 'checked', true );
     checkBoxesDays.forEach(function (item) {
         $('#' + item).attr('checked', false);
     });
-    $('#color-select').val("#1ba1e2");
-    $('#event-title').val("");
-    $('#description').val("");
+    $('#color-select').val('#1ba1e2');
+    $('#event-title').val('');
+    $('#description').val('');
 }
 
 function buildTableMonthly() { //generating table for DAYS_IN_MONTH day
     var tableHTML = '';
     var dayNum = 0;
     while (dayNum<=DAYS_IN_MONTH) {
-        tableHTML+="<tr>";
+        tableHTML+='<tr>';
            for(var j = 0; j<DAYS_IN_WEEK;j++) {
                dayNum++;
                if (dayNum>DAYS_IN_MONTH) break;
-               tableHTML+=("<td>" + (dayNum) + "</td>");
+               tableHTML+=('<td>' + (dayNum) + '</td>');
            }
-        tableHTML+="</tr>";
+        tableHTML+='</tr>';
     }
-    $("#monthly-days").html(tableHTML);
+    $('#monthly-days').html(tableHTML);
     $('table').find('td').click(function() {
-        $(this).toggleClass("active");
+        $(this).toggleClass('active');
     });
 
 }
