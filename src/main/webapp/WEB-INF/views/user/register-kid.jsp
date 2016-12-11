@@ -111,8 +111,3 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:when>
 </c:choose>
-
-
-
-
-
