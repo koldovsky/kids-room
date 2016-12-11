@@ -62,35 +62,36 @@
     <div class="vertical-center-row">
         <div align="center">
             <div id="bookingUpdatingDialog" hidden>
-                <form id="bookingUpdatingForm">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label><spring:message code="booking.createDate"/></label>
-                            <input type="date" id="data-edit" name="date" class="form-control"/>
-                        </div>
-                        <div class="input-group">
-                            <label><spring:message code="booking.createStartTime"/></label>
-                            <input id="bookingUpdatingStartTimepicker" type="text" name="start"
-                                   class="time form-control picker"/>
-                            <br>
-                            <div>
-                                <label><spring:message code="booking.createEndTime"/></label>
-                                <input id="bookingUpdatingEndTimepicker" type="text" name="end"
+                    <form id="bookingUpdatingForm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label><spring:message code="booking.createDate"/></label>
+                                <input type="date" id="data-edit" name="date" class="form-control"/>
+                            </div>
+                            <div class="input-group">
+                                <label><spring:message code="booking.createStartTime"/></label>
+                                <input id="bookingUpdatingStartTimepicker" type="text" name="start"
                                        class="time form-control picker"/>
-                            </div>
+                                <br>
+                                <div>
+                                    <label><spring:message code="booking.createEndTime"/></label>
+                                    <input id="bookingUpdatingEndTimepicker" type="text" name="end"
+                                           class="time form-control picker"/>
+                                </div>
 
-                            <div>
-
-                                <textarea type="text" class="form-control" id="kid-comment"
-                                          placeholder="Some comment"></textarea>
+                                <div>
+                                    <spring:message code="booking.commentPlaceHolder" var="commentPlaceHolder"/>
+                                    <textarea type="text" class="form-control" id="kid-comment"
+                                              placeholder="${commentPlaceHolder}"></textarea>
+                                </div>
                             </div>
+                            <button type="button" class="btn btn-success pull-left" id="updatingBooking"><spring:message
+                                    code="booking.updateBtn"/></button>
+                            <button type="button" class="btn btn-danger pull-right" id="deletingBooking"><spring:message
+                                    code="booking.deleteBtn"/></button>
                         </div>
-
-                        <input type="button" class="btn btn-success pull-left" id="updatingBooking" value="Update">
-                        <button type="button" class="btn btn-danger pull-right" id="deletingBooking">Delete</button>
-                    </div>
-                </form>
+                    </form>
             </div>
         </div>
     </div>

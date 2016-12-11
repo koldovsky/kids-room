@@ -111,7 +111,7 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
     <script src="resources/js/lib/messages-ua.js"></script>
 </c:when>
-<c:when test="${pageContext.response.locale!= 'ua'}">
+<c:when test="${pageContext.response.locale== 'en'}">
     <script src="resources/js/lib/messages.js"></script>
 </c:when>
 </c:choose>

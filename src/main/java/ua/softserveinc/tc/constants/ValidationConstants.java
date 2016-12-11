@@ -6,7 +6,10 @@ package ua.softserveinc.tc.constants;
  */
 public final class ValidationConstants {
     public static final int EVENT_DESCRIPTION_MAX_LENGHT = 250;
+    public static final int KID_COMMENT_MAX_LENGHT = 250;
     public static final int ONE_MINUTE = 1;
+    public static final int MAX_NAME_CHARACTER = 35;
+
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
     public static final String ONLY_DATE_FORMAT = "yyyy-MM-dd";

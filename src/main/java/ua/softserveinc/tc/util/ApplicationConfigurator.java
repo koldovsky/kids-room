@@ -20,18 +20,6 @@ public interface ApplicationConfigurator {
     Integer getKidsMaxAge();
 
     /**
-     *
-     * @return maximum allowed kid's name length
-     */
-    Integer getKidsMaxNameLength();
-
-    /**
-     *
-     * @return maximum allowed kid's comment length
-     */
-    Integer getKidsMaxCommentLength();
-
-    /**
      * @return a minimum period that a booking is to be made for
      */
     Integer getMinPeriodSize();
