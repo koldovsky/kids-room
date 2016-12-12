@@ -291,14 +291,3 @@
 <script src="resources/js/header-manager.js"></script>
 <script src="resources/js/comment-modal-message.js"></script>
 <script src="resources/js/available-places-manager.js"></script>
-
-<c:choose>
-    <c:when test="${pageContext.response.locale=='ua'}">
-        <script src="resources/js/lib/messages-ua.js"></script>
-    </c:when>
-    <c:when test="${pageContext.response.locale!= 'ua'}">
-        <script src="resources/js/lib/messages.js"></script>
-    </c:when>
-</c:choose>
-
-

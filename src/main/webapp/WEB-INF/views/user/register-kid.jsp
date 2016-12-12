@@ -62,7 +62,7 @@
 
 
         <div class="form-group">
-            <label class="required"><spring:message code="kid.gender"/></label>
+            <%--@declare id="gender"--%><label class="required"><spring:message code="kid.gender"/></label>
             <table>
                 <tr>
                     <td>
@@ -70,11 +70,11 @@
                             code="kid.boy"/>
                     </td>
                     <td>
-                        <form:radiobutton required="required" path="gender" value="FEMALE"/><spring:message
+                        <form:radiobutton name="Girl" path="gender" value="FEMALE"/><spring:message
                             code="kid.girl"/></td>
                 </tr>
             </table>
-
+            <label id="gender-error" class="error" for="gender"></label>
         </div>
 
 
@@ -109,14 +109,5 @@
 <c:choose>
 <c:when test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-    <script src="resources/js/lib/messages-ua.js"></script>
-</c:when>
-<c:when test="${pageContext.response.locale== 'en'}">
-    <script src="resources/js/lib/messages.js"></script>
 </c:when>
 </c:choose>
-
-
-
-
-
