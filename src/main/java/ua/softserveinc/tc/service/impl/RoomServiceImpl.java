@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
+import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.repo.RoomRepository;
@@ -41,6 +43,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private BookingDao bookingDao;
 
     private static
     @Log
@@ -214,6 +219,14 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return room.getCapacity() - maxReservedBookings;
     }
 
+    @Override
+    public List<BookingDto> getAllFutureBookings(Room room) {
+        return bookingDao.getBookings(new Date(), null, null, room, true, BookingState.BOOKED)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
     /**
      * @return today's active rooms for parent, based on {@link DayOff}
      */
@@ -230,5 +243,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                         .noneMatch(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
+
+
 
 }

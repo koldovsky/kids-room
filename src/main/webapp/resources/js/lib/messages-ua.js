@@ -9,10 +9,16 @@ messages = {
 		requiredLastName: 'Вкажіть будь ласка прізвище дитини',
 		regexKidFirstName: 'Для вводу імені використовуйте лише літери',
 		regexKidLastName: 'Для вводу прізвища використовуйте лише літери',
+
 		toShortFirstName : 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
 		toShortLastName : 'Будь ласка, введіть не менше ' + nameMinLength + ' символів.',
         toLongFirstName : 'Будь ласка, введіть менше ' + nameMaxLength + ' символів.',
-        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.'
+        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.',
+
+		editFirstName : "Будь ласка, введіть не менше 2 символів.",
+		editLastName : "Будь ласка, введіть не менше 2 символів.",
+        editFirstNameWithDigits : "Ім'я не може складатись із чисел",
+        editLastNameWithDigits : "Прізвище не може складатись із чисел"
 	},
     date: {
         fromBiggerThanTo:  'Початкова дата не повинна перевищувати кінцеву',
@@ -54,6 +60,7 @@ messages = {
 	},
 	event: {
 		errors: {
+
 			dateInThePast: 'Дата не може бути в минулому, поточна дата: ',
 			timeInThePast: 'Час початку не може бути в минулому, поточний час: ',
 			endTimeGreaterThanStartTime: 'Час закінчення повинен бути хоча б на хвилину більший за час початку',
@@ -62,7 +69,19 @@ messages = {
 			noDaysSelected: 'Повторювані: Як мінімум один день повинен бути вибраним',
 			noKidsSelected: 'Як мінімум одна дитина повинна бути вибрана',
 			bookingTypeMismatchWhenUpdating: 'Неможливо перетворити щотижневе бронювання в одноденне',
-			incorrectData: 'Невірні дані: '
+			incorrectData: 'Невірні дані: ',
+
+			dateInThePast: "Дата не може бути в минулому, поточна дата: ",
+			timeInThePast: "Час початку не може бути в минулому, поточний час: ",
+			endTimeGreaterThanStartTime: "Час закінчення повинен бути хоча б на хвилину більший за час початку",
+			minimalDatesDifference: "Повторювані: Дата закінчення повинна бути хоча б на день більшою за дату початку",
+			emptyTitle: "Назва повинна бути заповнена",
+			noDaysSelected: "Повторювані: Як мінімум один день повинен бути вибраним",
+			noKidsSelected: "Як мінімум одна дитина повинна бути вибрана",
+			bookingTypeMismatchWhenUpdating: "Неможливо перетворити щотижневе бронювання в одноденне",
+			incorrectData: "Невірні дані: ",
+			roomDeactivate: "Кімната не може бути деактивованою, оскільки вона має зареєстровані майбутні події. Будь ласка, сконтактуйтесь з менеджером."
+
 		}
     },
 	notCorrect: {
