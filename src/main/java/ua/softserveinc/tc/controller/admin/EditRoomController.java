@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.EscapedErrors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -18,6 +21,7 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -63,14 +67,14 @@ public class EditRoomController {
         Room room = this.roomService.findById(id);
         if(!room.isActive() || isRoomWithoutBookings(room)) {
             room.setActive(!room.isActive());
+            this.roomService.update(room);
         } else {
-            throw new AccessDeniedException("Only parents have access to this page");
+            return "redirect:/" + AdminConstants.EDIT_ROOM;
         }
-        this.roomService.update(room);
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 
-    public boolean isRoomWithoutBookings(Room room) {
+    private boolean isRoomWithoutBookings(Room room) {
         List<BookingDto> bookings = roomService.getAllFutureBookings(room);
         return bookings.isEmpty();
     }

@@ -130,6 +130,32 @@
         </div>
     </div>
 </div>
+<div id="positiveResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <br>
+                <h2><spring:message code="room.deactivatePosResult"/></h2>
+                <button id="positiveYesButton" class="btn  btn-success">
+                    <spring:message code="room.ok_button" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="negativeResultModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <br>
+                <h2><spring:message code="room.deactivateNegResult"/></h2>
+                <button id="negativeYesButton" class="btn  btn-success">
+                    <spring:message code="room.ok_button" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
