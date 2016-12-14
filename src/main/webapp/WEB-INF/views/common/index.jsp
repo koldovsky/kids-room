@@ -910,7 +910,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/moment.min.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/jquery.timepicker.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/seriousColorLegendUpdate.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/manager-create-events-validator.js'></script>

@@ -11,7 +11,7 @@
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.timepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js"></script>
 
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
