@@ -7,8 +7,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <link rel='stylesheet' href='resources/css/user-my-report.css'>
-<script src="resources/js/myBookings.js"></script>
-<script src="resources/js/printMyBookings.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/myBookings.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/printMyBookings.js"></script>
 
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
@@ -66,14 +66,4 @@
 
     </div>
 </div>
- <script src="resources/js/validation-my-booking.js"></script>
- <c:choose>
-<c:when test="${pageContext.response.locale =='ua'}">
-    <script src="resources/js/lib/messages-ua.js"></script>
-</c:when>
-
-<c:when test="${pageContext.response.locale != 'ua'}">
-    <script src="resources/js/lib/messages.js"></script>
-</c:when>
-</c:choose>
-
+ <script src="${pageContext.request.contextPath}/resources/js/validation-my-booking.js"></script>
