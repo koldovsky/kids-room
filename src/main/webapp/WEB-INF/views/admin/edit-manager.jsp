@@ -112,6 +112,6 @@
 </div>
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src='resources/js/edit-manager-confirmation.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/edit-manager-confirmation.js'></script>
 
 </body>

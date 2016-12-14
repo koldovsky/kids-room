@@ -905,15 +905,15 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src='resources/js/moment.min.js'></script>
-<script src="resources/js/jquery.timepicker.js"></script>
-<script src='resources/js/fullcalendar.js'></script>
-<script src="resources/js/seriousColorLegendUpdate.js"></script>
-<script src='resources/js/manager-create-events-validator.js'></script>
-<script src='resources/js/user-create-booking-validator.js'></script>
-<script src='resources/js/single-booking.js'></script>
-<script src='resources/js/renderCalendar.js'></script>
-<script src='resources/js/header-manager.js'></script>
-<script src='resources/js/header-user.js'></script>
-<script src='resources/js/userCalendar.js'></script>
-<script src='resources/js/recurrent-cancel-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/seriousColorLegendUpdate.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/manager-create-events-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/user-create-booking-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/single-booking.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/recurrent-cancel-validator.js'></script>

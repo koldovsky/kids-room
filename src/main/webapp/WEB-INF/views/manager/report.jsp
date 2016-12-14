@@ -5,9 +5,9 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 
-<script src="resources/js/report.js"></script>
-<script src="resources/js/pagination.js"></script>
-<script src="resources/js/header-manager.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/report.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 
 <div id="scroller">
     <div class="dateSelector">

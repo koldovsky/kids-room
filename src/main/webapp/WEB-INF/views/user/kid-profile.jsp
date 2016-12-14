@@ -11,7 +11,7 @@
 <%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
-<script src='resources/js/profile.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/profile.js'></script>
 
 <div class="kidsCard" data-id="${kid.id}" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
 

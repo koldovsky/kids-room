@@ -9,7 +9,7 @@
 
 <link rel='stylesheet' href='resources/css/mykidslist.css'>
 
-<script src="resources/js/mykidslist.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/mykidslist.js"></script>
 
 
 <div class="list" modelAttribute="<%=ChildConstants.View.MY_KIDS_LIST_ATTRIBUTE %>">
@@ -54,6 +54,4 @@
     </form>
 </c:if>
 
-
 </div>
-

@@ -23,6 +23,7 @@ import java.util.Date;
 public class EventValidator implements Validator {
     @Autowired
     private RoomService roomService;
+
     private DateFormat onlyDateSimpleDateFormat = new SimpleDateFormat(ValidationConstants.DATE_FORMAT);
     private Date startDate;
     private Date endDate;
