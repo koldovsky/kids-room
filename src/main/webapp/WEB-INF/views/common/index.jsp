@@ -395,7 +395,7 @@
                 </div>
             </div>
 
-        <div class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div id ="contactModal" class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
 
@@ -405,15 +405,11 @@
 
                             <br>
                             <h4 id="showRoomManagers"></h4>
-
                             <H4 id="roomPhone"></H4>
-
                             <br>
-
+                            <button id="closeContact" class="btn btn-success center-block "><spring:message code="close"/></button>
+                                <br><br>
                             <span>SoftServe Inc</span>
-
-
-
                         </div>
                     </div>
                 </div>

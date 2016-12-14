@@ -1051,7 +1051,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
             var beforeUpdate = calEvent.title;
 
-            $("#bookingUpdatingDialog").dialog("option", "title", beforeUpdate);
+            $('#bookingUpdatingDialog').dialog('option', 'title', beforeUpdate);
 
             $('#bookingUpdatingStartDate').val(calEvent.start.format().substring(0, 10));
             $('#bookingUpdatingEndDate').val(calEvent.end.format().substring(0, 10));
@@ -1157,6 +1157,10 @@ function showRoomManagers(managers) {
     $('#showRoomManagers').empty().append('Manager : ' + managers);
 }
 
+$('#closeContact').click(function () {
+    $('#contactModal').modal('hide');
+});
+
 function sendAjaxForRoomProperty(roomId) {
 }
 
@@ -1185,7 +1189,7 @@ function redrawBlockedTimeSpans(roomId) {
                     end: result[item],
                     color: BLOCKED,
                     borderColor: BORDER,
-                    editable: false,
+                    editable: false
 
                 }, true);
             });

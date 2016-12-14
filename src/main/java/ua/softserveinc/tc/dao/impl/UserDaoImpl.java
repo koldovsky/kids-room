@@ -64,7 +64,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
             return entityManager.createQuery(query).getSingleResult();
         } catch (NoResultException e) {
-            log.error("user" + firstName + " " + lastName + " doesnt exist");
+            log.error("user" + firstName + " " + lastName + " does`nt exist");
             return null;
         } catch (NonUniqueResultException e) {
             log.error("multiple users with " + firstName + " and " + lastName + "  exist");
