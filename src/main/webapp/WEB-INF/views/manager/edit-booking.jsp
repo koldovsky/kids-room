@@ -11,7 +11,7 @@
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.timepicker.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.timepicker.js"></script>
 
 <link rel='stylesheet' href='resources/css/edit-booking.css'>
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
@@ -287,7 +287,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="resources/js/edit-booking.js"></script>
-<script src="resources/js/header-manager.js"></script>
-<script src="resources/js/comment-modal-message.js"></script>
-<script src="resources/js/available-places-manager.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/edit-booking.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/comment-modal-message.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
