@@ -8,7 +8,7 @@
 <link rel='stylesheet' href='resources/css/registerkid.css'>
 <script src="${pageContext.request.contextPath}/resources/js/comment-box.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/kid-registration.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.min.js"></script>
 
 
 <form:form id="kidregistrform" enctype="application/x-www-form-urlencoded" action="registerkid"
