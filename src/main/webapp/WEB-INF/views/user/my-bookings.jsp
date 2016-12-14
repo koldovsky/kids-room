@@ -66,4 +66,4 @@
 
     </div>
 </div>
- <script src="${pageContext.request.contextPath}/resources/js/validation-my-booking.js"></script>
+ <script src="${pageContext.request.contextPath}/resources/js/validation/validation-my-booking.js"></script>

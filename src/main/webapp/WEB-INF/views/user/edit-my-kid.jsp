@@ -117,7 +117,7 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
 
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/validation-edit-kid.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-edit-kid.js"></script>
 
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">

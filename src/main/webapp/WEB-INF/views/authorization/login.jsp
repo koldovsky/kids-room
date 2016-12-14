@@ -57,4 +57,4 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
-<script src="${pageContext.request.contextPath}/resources/js/validation-login.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-login.js"></script>
