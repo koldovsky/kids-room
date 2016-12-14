@@ -5,7 +5,7 @@
 
 <link rel='stylesheet' href='resources/css/report.css'>
 
-<script src="resources/js/statistics.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/statistics.js"></script>
 
 <div id="scroller">
     <div class="dateSelector">
