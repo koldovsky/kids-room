@@ -7,7 +7,7 @@
 <link rel='stylesheet' href='resources/css/report.css'>
 <link rel='stylesheet' href='resources/css/disable-room-picker.css'>
 
-<script src="resources/js/pagination.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 
 <div id="scroller">
     <div class="dateSelector">
