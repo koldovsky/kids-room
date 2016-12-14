@@ -406,9 +406,9 @@
                             <br>
                             <h4 id="showRoomManagers"></h4>
                             <H4 id="roomPhone"></H4>
-                            <br>
+
                             <button id="closeContact" class="btn btn-success center-block "><spring:message code="close"/></button>
-                                <br><br>
+
                             <span>SoftServe Inc</span>
                         </div>
                     </div>
