@@ -8,7 +8,7 @@ var clickedEventRecurrentId;
 var BORDER = '#4caf50';
 var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
-var BLOCKED = '#ff0000'
+var BLOCKED = '#ff0000';
 var allBookings;
 var temporaryBookingId = -1;
 var blockedTimeSpanId = -2;
@@ -64,7 +64,7 @@ $(function () {
             duration: 500
         },
         open: function(event, ui) {
-            $('.data-validation-information-string').html("");
+            $('.data-validation-information-string').html('');
         },
         hide: {
             effect: 'clip',
@@ -74,39 +74,38 @@ $(function () {
 
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
-        modal:true,
         width: 350,
         modal: true
     });
 
     $('#bookingStartTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#bookingEndTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#bookingUpdatingStartTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#bookingUpdatingEndTimepicker').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#recurrent-booking-start-time').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#make-recurrent-booking').dialog({
@@ -131,10 +130,9 @@ $(function () {
             $('#delete-recurrent-booking').hide();
             $('#book').show();
 
-            // $("#make-recurrent-booking").dialog("option", "title", "New booking");
         },
         open: function(event, ui) {
-            $('.data-validation-information-string').html("");
+            $('.data-validation-information-string').html('');
         }
     });
 
@@ -154,9 +152,6 @@ $(function () {
         } else {
             editRecurrentBookingsReuest(info.recurrentId);
         }
-
-        // $('#single-update-booking').prop('checked', true);
-        // $('#recurrent-update-booking').prop('checked', false);
 
         $('#recurrent-change').dialog('close');
     });
@@ -191,7 +186,7 @@ $(function () {
         $('#confirmNo').click(function () {
             myDialog.dialog('close');
         });
-    })
+    });
     $('#delete-recurrent-booking').hover(function(){
         $(this).css('color','red');
         $(this).css('cursor','pointer ');
@@ -228,7 +223,7 @@ $(function () {
         var myDialog = $('#confirmation-dialog-div');
         myDialog.dialog('open');
         $('#confirmYes').click(function () {
-            cancelBooking(info.id)
+            cancelBooking(info.id);
             myDialog.dialog('close');
         });
         $('#confirmNo').click(function () {
@@ -285,10 +280,6 @@ $(function () {
     $('#cancel-changes').click(function () {
         closeBookingDialog();
     });
-
-
-
-
 });
 
 function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
@@ -660,7 +651,7 @@ function makeRecurrentBookings() {
 
             }
         }
-    )
+    );
     return true;
 }
 
@@ -847,8 +838,8 @@ function closeUpdatingDialog() {
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').attr('checked', false);
     });
-    $('#weekly-booking').prop( "checked", false );
-    $('#no-recurrent-booking').prop( "checked", true );
+    $('#weekly-booking').prop( 'checked', false );
+    $('#no-recurrent-booking').prop( 'checked', true );
     $('#days-for-recurrent-booking-form').attr('hidden', true);
     $('#make-recurrent-booking').dialog('close');
     $('#book').show();
@@ -863,12 +854,10 @@ function switchToSingleBookingDialog() {
     checkBoxesDays.forEach(function (item) {
         $('#' + item + '-booking').attr('checked', false);
     });
-    $('#weekly-booking').prop( "checked", false );
-    $('#no-recurrent-booking').prop( "checked", true );
+    $('#weekly-booking').prop( 'checked', false );
+    $('#no-recurrent-booking').prop( 'checked', true );
     $('#days-for-recurrent-booking-form').attr('hidden', true);
 }
-
-
 
 //tested
 function getComment(commentInputId) {
@@ -907,7 +896,6 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         slotDuration: '00:15:00',
 
         dayClick: function (date) {
-
 
             var clickDate = date.format();
 
@@ -952,11 +940,11 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                     $('#endTime').html(messages.date.endEventDate + '<b>' + calEvent.end.format('HH:mm'));
                     $('#eventDescription').html(messages.date.description);
                     textArea.css({
-                        "height": parseInt(eventInfo.css('height')) - 100,
-                        "width": parseInt(eventInfo.css('width')) - 30,
-                        "resize": "none"
+                        'height': parseInt(eventInfo.css('height')) - 100,
+                        'width': parseInt(eventInfo.css('width')) - 30,
+                        'resize': 'none'
                     });
-                    if (calEvent.description != "") {
+                    if (calEvent.description != '') {
                         textArea.val(eventDescription);
                     } else {
                         textArea.val(messages.info.noDescription);
@@ -973,7 +961,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                         cursorIsOverEvent = true;
                     }
                     else if (cursorIsOverEvent == true) {
-                        return
+                        return ;
                     }
 
                 }).mousemove(function (e) {
@@ -1028,8 +1016,8 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
 
         eventClick: function (calEvent, data, view) {
 
-            var eventDescription = "none";
-            if (calEvent.description != ""){
+            var eventDescription = 'none';
+            if (calEvent.description != ''){
                 eventDescription = calEvent.description
             }
 
@@ -1154,11 +1142,15 @@ function showRoomPhone(phoneNumber) {
 }
 
 function showRoomManagers(managers) {
-    $('#showRoomManagers').empty().append('Manager : ' + managers);
+    $('#showRoomManagers').append(managers);
 }
 
 $('#closeContact').click(function () {
     $('#contactModal').modal('hide');
+});
+
+$('#closeColorDesc').click(function () {
+    $('#colorDescryptionModal').modal('hide');
 });
 
 function sendAjaxForRoomProperty(roomId) {
