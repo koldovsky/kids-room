@@ -914,7 +914,7 @@
 <script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/seriousColorLegendUpdate.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/manager-create-events-validator.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/user-create-booking-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/user-create-booking-validator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/single-booking.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
