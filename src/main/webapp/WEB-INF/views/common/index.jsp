@@ -921,3 +921,8 @@
 <script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/recurrent-cancel-validator.js'></script>
+<c:choose>
+    <c:when test="${pageContext.response.locale=='ua'}">
+        <script src="${pageContext.request.contextPath}/resources/js/lib/callendar-ua.min.js"></script>
+    </c:when>
+</c:choose>
