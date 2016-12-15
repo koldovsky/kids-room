@@ -95,6 +95,9 @@ messages = {
 		pastEndDay: 'The end day can\'t be smaller than start Day',
 		wrongDateStartRange: 'The start day is out of range of chosen events',
 		wrongDateEndRange: 'The end day is out of range of chosen events'
+	},
+	adminValidation:{
+		required: 'The field is empty. Fill in the field please.'
 	}
 };
 

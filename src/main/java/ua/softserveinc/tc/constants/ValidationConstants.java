@@ -104,7 +104,7 @@ public final class ValidationConstants {
     //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
     public static final String NO_DAYS_FOR_BOOKING = "There are no days for booking";
-
+    public static final String SOFTSERVE_EMAIL_DOMAIN = "softserveinc.com";
 
     private ValidationConstants() {
     }
