@@ -352,7 +352,7 @@
                 <spring:message code= "booking.contact"/>
             </button>
 
-            <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div id="colorDescryptionModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-content">
@@ -385,7 +385,7 @@
                                     <canvas id="blob" width="600" height="400" hidden> </canvas>
                                     <br>
                                     </body>
-                                    <br>
+                                    <button id="closeColorDesc" class="btn btn-success center-block "><spring:message code="close"/></button>
                                 </div>
                                 <span id="softServeInc">SoftServe Inc</span>
                             </div>
@@ -395,25 +395,16 @@
                 </div>
             </div>
 
-        <div class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div id ="contactModal" class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <div class="modal-body">
-
                         <div align="center">
-
                             <br>
-                            <h4 id="showRoomManagers"></h4>
-
+                            <h4 id="showRoomManagers"><spring:message code="manager"/> : </h4>
                             <H4 id="roomPhone"></H4>
-
-                            <br>
-
+                            <button id="closeContact" class="btn btn-success center-block "><spring:message code="close"/></button>
                             <span>SoftServe Inc</span>
-
-
-
                         </div>
                     </div>
                 </div>
