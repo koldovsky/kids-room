@@ -1,6 +1,3 @@
-/**
- * Created by shuk on 19.11.16.
- */
 messages = {
 	kid : {
 		invalidFirstName : 'Invalid First Name',
@@ -15,10 +12,10 @@ messages = {
 		toLongFirstName : 'Please enter less ' + nameMaxLength + ' than  characters',
 		toLongLastName : 'Please enter less ' + nameMaxLength + ' than  characters',
 
-		editFirstName : "Please enter at least 2 characters",
-		editLastName : "Please enter at least 2 characters",
-        editFirstNameWithDigits : "First name can not contain digits",
-		editLastNameWithDigits : "Last name can not contain digits"
+		editFirstName : 'Please enter at least 2 characters',
+		editLastName : 'Please enter at least 2 characters',
+        editFirstNameWithDigits : 'First name can not contain digits',
+		editLastNameWithDigits : 'Last name can not contain digits'
 
     },
     date: {
@@ -60,7 +57,6 @@ messages = {
 	},
 	event: {
 		errors: {
-
 			dateInThePast: 'Date can\'t be in the past, current date is: ',
 			timeInThePast: 'Start time can\'t be in the past, current time is: ',
 			endTimeGreaterThanStartTime: 'End time must be at least one minute later than the start time',
@@ -70,18 +66,7 @@ messages = {
 			noKidsSelected: 'At least one kid must be selected',
 			bookingTypeMismatchWhenUpdating: 'Can\'t convert weekly booking to single',
 			incorrectData: 'Incorrect Data: ',
-
-			dateInThePast: "Date can't be in the past, current date is: ",
-			timeInThePast: "Start time can't be in the past, current time is: ",
-			endTimeGreaterThanStartTime: "End time must be at least one minute later than the start time",
-			minimalDatesDifference: "Recurrent: End date must be at least one day later than the start date",
-			emptyTitle: "Title can't be empty",
-			noDaysSelected: "Recurrent: At least one day must be selected",
-			noKidsSelected: "At least one kid must be selected",
-			bookingTypeMismatchWhenUpdating: "Can't convert weekly booking to single",
-			incorrectData: "Incorrect Data: ",
-            roomDeactivate: "Room cannot be inactive, when it has events and bookings that take place in the future. Please contact manager."
-
+            roomDeactivate: 'Room cannot be inactive, when it has events and bookings that take place in the future. Please contact manager.'
 		}
     },
 	notCorrect: {
@@ -97,6 +82,10 @@ messages = {
 		wrongDateEndRange: 'The end day is out of range of chosen events'
 	},
 	adminValidation:{
+        email: 'Email is invalid.',
+        firstName: 'Last Name is invalid.',
+		lastName: 'Last Name is invalid.',
+        phone: 'Phone number is invalid. Example +380991234567',
 		required: 'The field is empty. Fill in the field please.'
 	}
 };
