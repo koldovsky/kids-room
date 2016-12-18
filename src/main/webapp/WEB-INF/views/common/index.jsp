@@ -668,7 +668,7 @@
                                     <div class = "col-xs-12">
                                         <footer class="deleteBookingButtonLink">
                                             <div id="deleting-recurrent-event" style="text-decoration: underline; text-align: center;">
-                                                <spring:message code="event.deleteRecurrentEvent"/>
+                                                <spring:message code="event.cancelSeriesOfEvents"/>
                                             </div>
                                         </footer>
                                     </div>
