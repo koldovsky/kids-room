@@ -49,23 +49,18 @@
             <td>
                 <c:if test="${manager.active ne true}">
                     <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" style="display:none;">
+                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
                         <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                        <button type="submit" id="submit-manager-active-${manager.id}"
-                                style="display:none;" value="lock"></button>
                     </form:form>
-                    <button class="button-size-default button delete"
-                            onclick="idManager=${manager.id}"></button>
+                    <button class="button button-size-default delete submit-manager-active"></button>
+
                 </c:if>
                 <c:if test="${manager.active eq true}">
                     <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" style="display:none;">
+                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
                         <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                        <button type="submit" id="submit-manager-inactive-${manager.id}"
-                                style="display:none;" value="unlock"></button>
                     </form:form>
-                    <button class="button-size-default button save"
-                            onclick="idManager=${manager.id}"></button>
+                    <button class="button button-size-default save submit-manager-inactive"></button>
                 </c:if>
             </td>
         </tr>
