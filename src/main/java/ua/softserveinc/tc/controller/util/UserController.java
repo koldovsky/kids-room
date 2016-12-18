@@ -22,7 +22,7 @@ public class UserController {
         return UserConstants.Model.RULES_VIEW;
     }
 
-    @RequestMapping("/accessDenied")
+    @GetMapping("/accessDenied")
     public String handleError403() {
         return  ErrorConstants.ACCESS_DENIED_VIEW;
     }
