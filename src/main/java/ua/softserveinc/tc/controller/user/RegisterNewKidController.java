@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Child;
@@ -47,14 +47,15 @@ public class RegisterNewKidController {
      * @param model
      * @return view name
      */
-    @RequestMapping(value = "/registerkid", method = RequestMethod.GET)
+    @GetMapping("/registerkid")
     public String registerKid(Model model, HttpServletRequest request){
         if(!model.containsAttribute(ChildConstants.View.KID_ATTRIBUTE)) {
             model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, new Child());
             model.addAttribute("pageChecker","needBack");//value for checking the page in header.jsp
         }
 
-        request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
+        request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG,
+                applicationConfigurator.getObjectDto());
         return ChildConstants.View.KID_REGISTRATION;
     }
 
@@ -71,7 +72,7 @@ public class RegisterNewKidController {
      * @return redirects to profile view if successful
      *         or current view if failed
      */
-    @RequestMapping(value = "/registerkid", method = RequestMethod.POST)
+    @PostMapping("/registerkid")
     public String submit(
             @ModelAttribute(value = ChildConstants.View.KID_ATTRIBUTE) Child child,
             Principal principal,

@@ -6,7 +6,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.UserConstants;
@@ -55,8 +61,7 @@ public class EditMyKidPageController {
      * @throws ResourceNotFoundException if no such kid exists in the db
      * @throws AccessDeniedException     if requesting user has to permission for this action
      */
-    @RequestMapping(value = "/editmykid",
-            method = RequestMethod.GET)
+    @GetMapping("/editmykid")
     public ModelAndView selectKid(
             @RequestParam("kidId") String kidId,
             Principal principal,
@@ -82,7 +87,8 @@ public class EditMyKidPageController {
         model.setViewName(ChildConstants.View.KID_EDITING);
         model.getModelMap()
                 .addAttribute(ChildConstants.View.KID_ATTRIBUTE, kidToEdit);
-        request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG, applicationConfigurator.getObjectDto());
+        request.getSession().setAttribute(UserConstants.Model.ATRIBUTE_CONFIG,
+                applicationConfigurator.getObjectDto());
         model.getModelMap().addAttribute("pageChecker","needBack");//value for checking the page in header.jsp
         return model;
     }
@@ -97,8 +103,7 @@ public class EditMyKidPageController {
      * @return "My kids" view if successful
      * Editing form if an object failed to pass validation
      */
-    @RequestMapping(value = "/editmykid",
-            method = RequestMethod.POST)
+    @PostMapping("/editmykid")
     public String submit(
             @ModelAttribute(value = ChildConstants.View.KID_ATTRIBUTE) Child kidToEdit,
             Principal principal,
@@ -128,7 +133,7 @@ public class EditMyKidPageController {
      * @throws AccessDeniedException if requesting user has to permission for this action
      */
     @ResponseBody
-    @RequestMapping(value = "/remove-kid/{id}", method = RequestMethod.POST)
+    @PostMapping("/remove-kid/{id}")
     public void removeKid(@PathVariable("id") long id, Principal principal) {
         Child kidToRemove = childService.findById(id);
 

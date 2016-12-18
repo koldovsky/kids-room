@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.entity.Booking;
@@ -36,7 +35,6 @@ public class ReportParentController {
     @Autowired
     private BookingService bookingService;
 
-    @ResponseBody
     @GetMapping("/manager-report-parent")
     public ModelAndView parentBookings(@RequestParam(value = ReportConstants.START_DATE) String startDate,
                                        @RequestParam(value = ReportConstants.END_DATE) String endDate,
