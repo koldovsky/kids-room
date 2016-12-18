@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.dto;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.NumberFormat;
-import ua.softserveinc.tc.constants.ValidationConstants;
+
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -10,10 +8,6 @@ import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.validator.annotation.RateValidation;
 import ua.softserveinc.tc.validator.annotation.UniqueManagerValidation;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,32 +18,18 @@ public class RoomDto {
 
     private Long id;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.LETTERS_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String name;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.LETTERS_NUMBERS_SPACES_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String address;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.LETTERS_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String city;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.SIMPLY_PHONE_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     private String phoneNumber;
 
-    @NotNull(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @NumberFormat(style = NumberFormat.Style.NUMBER)
-    @Min(1)
-    @Max(200)
     private Integer capacity;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     private String workingHoursStart;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     private String workingHoursEnd;
 
     @UniqueManagerValidation

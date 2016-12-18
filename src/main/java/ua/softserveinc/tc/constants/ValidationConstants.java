@@ -9,7 +9,10 @@ public final class ValidationConstants {
     public static final int KID_COMMENT_MAX_LENGHT = 250;
     public static final int ONE_MINUTE = 1;
     public static final int MAX_NAME_CHARACTER = 35;
-
+    public static final int ROOM_FIELDS_MINIMUM_CHARACTER = 2;
+    public static final int ROOM_FIELDS_MAXIMUM_CHARACTER = 255;
+    public static final int ROOM_CAPACITY_MINIMUM = 1;
+    public static final int ROOM_CAPACITY_MAXIMUM = 200;
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
     public static final String ONLY_DATE_FORMAT = "yyyy-MM-dd";
@@ -17,11 +20,9 @@ public final class ValidationConstants {
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
     public static final String SIMPLY_PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
-    public static final String LETTERS_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦц" +
-            "ЧчШшЩщЬьЮюЯя]*$";
+    public static final String LETTERS_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]*$";
 
-    public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОо" +
-            "ПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\\s]*$";
+    public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\\s]*$";
 
     public static final String SIMPLE_EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
             "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -52,6 +53,13 @@ public final class ValidationConstants {
     public static final String EVENT_COLOR = "color";
     public static final String EVENT_DESCRIPTION = "description";
 
+    public static final String ROOM_NAME = "name";
+    public static final String ROOM_ADDRESS = "address";
+    public static final String ROOM_CITY = "city";
+    public static final String ROOM_PHONE_NUMBER = "phoneNumber";
+    public static final String ROOM_CAPACITY = "capacity";
+    public static final String ROOM_WORKING_HOURS_START = "workingHoursStart";
+    public static final String ROOM_WORKING_HOURS_END = "workingHoursEnd";
 
     public static final String EMAIL = "email";
     public static final String IMAGE = "file";
@@ -62,6 +70,16 @@ public final class ValidationConstants {
     public static final String TIME_IS_NOT_VALID = "administrator.timeStartEnd";
     public static final String TIME_FIELD = "timeStartEnd";
     public static final String DATE_FIELD = "date";
+
+    public static final String ROOM_EPMTY_MSG ="administrator.room.error.emptyField";
+    public static final String ROOM_INVALID_NAME_MSG="administrator.room.error.invalidName";
+    public static final String ROOM_INVALID_ADDRESS_MSG="administrator.room.error.invalidAddress";
+    public static final String ROOM_INVALID_CITY_MSG="administrator.room.error.invalidCity";
+    public static final String ROOM_INVALID_PHONE_MSG="administrator.room.error.invalidPhone";
+    public static final String ROOM_MIN_MAX_CHARACTERS_MSG="administrator.room.error.invalidMinMaxCharacter";
+    public static final String ROOM_WRONG_CAST_MSG="administrator.room.error.cast";
+    public static final String ROOM_WRONG_TIME_FORMAT="administrator.room.error.timeCast";
+    public static final String ROOM_MIN_MAX_CAPACITY="administrator.room.error.capacity";
 
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";

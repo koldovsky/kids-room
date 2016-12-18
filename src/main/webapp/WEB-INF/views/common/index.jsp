@@ -904,14 +904,14 @@
 <script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/seriousColorLegendUpdate.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/manager-create-events-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/manager-create-events-validator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/user-create-booking-validator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/single-booking.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/recurrent-cancel-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/recurrent-cancel-validator.js'></script>
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
         <script src="${pageContext.request.contextPath}/resources/js/lib/callendar-ua.min.js"></script>
