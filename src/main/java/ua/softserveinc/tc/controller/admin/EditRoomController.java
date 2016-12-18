@@ -2,8 +2,8 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
@@ -18,7 +18,6 @@ import java.util.List;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-@RequestMapping(value = "/adm-edit-room")
 public class EditRoomController {
 
     @Autowired
@@ -31,7 +30,7 @@ public class EditRoomController {
      *
      * @return model
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/adm-edit-room")
     public ModelAndView showAllRoomsForm() {
         List<Room> rooms = roomService.findAll();
 
@@ -49,7 +48,7 @@ public class EditRoomController {
      *
      * @return String value
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/adm-edit-room")
     public String roomBlockUnblock(@RequestParam Long id) {
         Room room = this.roomService.findById(id);
         room.setActive(!room.isActive());

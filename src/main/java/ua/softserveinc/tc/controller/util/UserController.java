@@ -12,12 +12,12 @@ import ua.softserveinc.tc.constants.UserConstants;
 public class UserController {
 
     @Secured({"ROLE_ANONYMOUS"})
-    @RequestMapping(value = "/login ", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return UserConstants.Model.LOGIN_VIEW;
     }
 
-    @RequestMapping(value = "/rules ", method = RequestMethod.GET)
+    @RequestMapping(value = "/rules", method = RequestMethod.GET)
     public String getRules() {
         return UserConstants.Model.RULES_VIEW;
     }

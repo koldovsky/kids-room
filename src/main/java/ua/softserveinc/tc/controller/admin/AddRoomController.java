@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.RoomDto;
@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
  */
 
 @Controller
-@RequestMapping(value = "/adm-add-room")
 public class AddRoomController {
 
     @Autowired
@@ -46,7 +45,7 @@ public class AddRoomController {
      *
      * @return mav (model into UI)
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/adm-add-room")
     public ModelAndView showAddRoomForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
@@ -64,7 +63,7 @@ public class AddRoomController {
      * @param roomDto (Data Transfer Object for Room, needed to get some fields in JSON)
      * @return string, witch redirect on other view
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/adm-add-room")
     public ModelAndView saveNewRoom(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                     BindingResult bindingResult) {
         this.timeValidator.validate(roomDto, bindingResult);

@@ -6,8 +6,8 @@ import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -29,7 +29,6 @@ import java.util.UUID;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-@RequestMapping(value = "/adm-add-manager")
 public class AddManagerController {
 
     @Log
@@ -54,7 +53,7 @@ public class AddManagerController {
      *
      * @return model
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/adm-add-manager")
     public ModelAndView showAddManagerForm() {
         ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
         model.addObject(AdminConstants.ATR_MANAGER, new User());
@@ -71,7 +70,7 @@ public class AddManagerController {
      * @param bindingResult
      * @return String value
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/adm-add-manager")
     public String saveNewManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                                  BindingResult bindingResult) {
         this.userValidator.validateManagerEmail(manager, bindingResult);
