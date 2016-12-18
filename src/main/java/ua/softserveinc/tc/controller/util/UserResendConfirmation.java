@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -43,14 +43,15 @@ public class UserResendConfirmation {
     @Log
     private static Logger log;
 
-    @RequestMapping(value = "/resendConfirmation", method = RequestMethod.GET)
+    @GetMapping("/resendConfirmation")
     public String sendConfirmation(Model model) {
         model.addAttribute(UserConstants.Entity.USER, new User());
         return UserConstants.Model.RESEND_MAIL_VIEW;
     }
 
-    @RequestMapping(value = "/resendConfirmation", method = RequestMethod.POST)
-    public String sendConfirmation(@ModelAttribute(UserConstants.Entity.USER) User currentUser, BindingResult bindingResult) {
+    @PostMapping("/resendConfirmation")
+    public String sendConfirmation(@ModelAttribute(UserConstants.Entity.USER) User currentUser,
+                                   BindingResult bindingResult) {
         String email = currentUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {

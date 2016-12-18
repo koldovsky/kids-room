@@ -50,8 +50,8 @@ public class ReportController {
         return model;
     }
 
-    @ResponseBody
     @GetMapping("/refreshParents/{startDate}/{endDate}/{roomId}")
+    @ResponseBody
     public String refreshView(@PathVariable String startDate,
                               @PathVariable String endDate,
                               @PathVariable Long roomId) {

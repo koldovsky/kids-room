@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/adm-days-off")
+@RequestMapping("/adm-days-off")
 @Slf4j
 public class DayOffController {
 
@@ -37,7 +37,7 @@ public class DayOffController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping(value = "/all")
+    @GetMapping("/all")
     public ResponseEntity<List<DayOff>> allDaysOff() {
         List<DayOff> daysOff = dayOffService.findAll().stream()
                 .sorted(Comparator.comparing(DayOff::getId).reversed())

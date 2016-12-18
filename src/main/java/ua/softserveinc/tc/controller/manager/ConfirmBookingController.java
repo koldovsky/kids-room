@@ -41,8 +41,8 @@ public class ConfirmBookingController {
         return modelAndView;
     }
 
-    @ResponseBody
     @GetMapping("getAmountOfChildren/{roomId}")
+    @ResponseBody
     public Long getAmountOfChildrenInTheRoom(@PathVariable Long roomId) {
         Room room = roomService.findById(roomId);
         return bookingRepository.countByRoomAndBookingState(room, BookingState.ACTIVE);

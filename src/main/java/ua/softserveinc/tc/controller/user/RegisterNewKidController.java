@@ -29,6 +29,7 @@ import java.util.Date;
  */
 @Controller
 public class RegisterNewKidController {
+
     @Autowired
     private ChildService childService;
 

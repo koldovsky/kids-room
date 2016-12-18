@@ -26,6 +26,7 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
  */
 @Controller
 public class ReportParentController {
+
     @Autowired
     private UserService userService;
 

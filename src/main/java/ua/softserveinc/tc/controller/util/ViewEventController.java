@@ -7,7 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
@@ -44,12 +49,10 @@ public class ViewEventController {
     @Autowired
     private UserService userService;
 
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public final String viewHome(Model model, Principal principal) {
 
         if (principal == null) {
-        //    return UserConstants.Model.LOGIN_VIEW;
             return "entrypoint";
         }
         String email = principal.getName();
@@ -74,52 +77,57 @@ public class ViewEventController {
     }
 
 
-    @RequestMapping(value = "getevents/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    @GetMapping(value = "getevents/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getEvents(@PathVariable int id) {
         return new Gson().toJson(calendarService.findEventByRoomId(id));
     }
 
 
-    @RequestMapping(value = "getnewevent", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "getnewevent", produces = "application/json")
     @ResponseBody
     public ResponseEntity<String> getAjax(@RequestBody EventDto eventDto, BindingResult bindingResult) {
         eventValidator.validate(eventDto, bindingResult);
         if (eventValidator.isSingleValid(eventDto)) {
             if (bindingResult.hasErrors()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        bindingResult.getFieldError().getCode());
             } else {
                 calendarService.create(genericMapper.toEntity(eventDto));
                 return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
             }
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
         }
     }
 
-    @RequestMapping(value = "geteventforupdate", method = RequestMethod.POST)
+    @PostMapping("geteventforupdate")
     @ResponseBody
-    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto, BindingResult bindingResult) {
+    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto,
+                                                    BindingResult bindingResult) {
         eventValidator.validate(eventDto, bindingResult);
         if (eventValidator.isSingleValid(eventDto)) {
             if (bindingResult.hasErrors()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        bindingResult.getFieldError().getCode());
             } else {
                 calendarService.updateEvent(genericMapper.toEntity(eventDto));
                 return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
             }
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
         }
     }
 
-    @RequestMapping(value = "geteventfordelete", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK)
+    @PostMapping("geteventfordelete")
+    @ResponseStatus(HttpStatus.OK)
     public void getEventForDelete(@RequestBody EventDto eventDto) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDto));
     }
 
-    @RequestMapping(value = "getrecurrentevents", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "getrecurrentevents", produces = "application/json")
     @ResponseBody
     public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
         eventValidator.validate(recurrentEventDto, bindingResult);
@@ -134,22 +142,21 @@ public class ViewEventController {
         }
     }
 
-    @RequestMapping(value = "getmonthlyevents", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "getmonthlyevents", produces = "application/json")
     @ResponseBody
     public String getMonthly(@RequestBody MonthlyEventDto monthlyEventDto) {
         return new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto));
     }
 
-    @RequestMapping(value = "getroomproperty/{id}", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    @GetMapping(value = "getroomproperty/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRoomProperty(@PathVariable long id) {
         return calendarService.getRoomWorkingHours(id) + " " + calendarService.getRoomCapacity(id);
     }
 
 
-    @RequestMapping(value = "getRecurrentEventForEditing/{recurrentEventId}",
-            method = RequestMethod.GET,
-            produces = "text/plain;charset=UTF-8")
+    @GetMapping(value = "getRecurrentEventForEditing/{recurrentEventId}",
+                produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getRecurrentBookingForEditing(@PathVariable  Long recurrentEventId) {
         return new Gson().toJson(calendarService.getRecurrentEventForEditingById(recurrentEventId));

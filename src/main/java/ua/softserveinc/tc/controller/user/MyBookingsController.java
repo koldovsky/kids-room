@@ -36,6 +36,7 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 @Controller
 public class MyBookingsController {
+
     @Autowired
     private UserService userService;
 

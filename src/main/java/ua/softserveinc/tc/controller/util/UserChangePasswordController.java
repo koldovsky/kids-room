@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.TokenConstants;
@@ -60,14 +60,15 @@ public class UserChangePasswordController {
     @Log
     private static Logger log;
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    @GetMapping("/resetPassword")
     public String changePassword(Model model) {
         model.addAttribute(UserConstants.Entity.USER, new User());
         return UserConstants.Model.FORGOT_PASSWORD_VIEW;
     }
 
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    public String resetPassword(@ModelAttribute(UserConstants.Entity.USER) User modelUser, BindingResult bindingResult) {
+    @PostMapping("/resetPassword")
+    public String resetPassword(@ModelAttribute(UserConstants.Entity.USER) User modelUser,
+                                BindingResult bindingResult) {
         String email = modelUser.getEmail();
         userValidator.validateEmail(email, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -86,7 +87,7 @@ public class UserChangePasswordController {
         return UserConstants.Model.SUCCESS_VIEW;
     }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+    @GetMapping("/changePassword")
     public String changePassword(Model model, @RequestParam(TokenConstants.TOKEN) String token) {
 
         Token verificationToken = tokenService.findByToken(token);
@@ -99,8 +100,9 @@ public class UserChangePasswordController {
         return UserConstants.Model.UPDATE_PASS_VIEW;
     }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public String savePassword(@ModelAttribute(UserConstants.Entity.USER) User modelUser, BindingResult bindingResult) {
+    @PostMapping("/changePassword")
+    public String savePassword(@ModelAttribute(UserConstants.Entity.USER) User modelUser,
+                               BindingResult bindingResult) {
         userValidator.validatePassword(modelUser, bindingResult);
         if (bindingResult.hasErrors()) {
             return UserConstants.Model.UPDATE_PASS_VIEW;

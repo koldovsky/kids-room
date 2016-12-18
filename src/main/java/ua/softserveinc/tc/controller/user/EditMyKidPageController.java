@@ -132,8 +132,8 @@ public class EditMyKidPageController {
      * @return "My kids" view
      * @throws AccessDeniedException if requesting user has to permission for this action
      */
-    @ResponseBody
     @PostMapping("/remove-kid/{id}")
+    @ResponseBody
     public void removeKid(@PathVariable("id") long id, Principal principal) {
         Child kidToRemove = childService.findById(id);
 

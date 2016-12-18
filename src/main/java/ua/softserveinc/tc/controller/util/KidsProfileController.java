@@ -3,8 +3,7 @@ package ua.softserveinc.tc.controller.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ChildConstants;
@@ -45,8 +44,7 @@ public class KidsProfileController {
      *          in case no kid with such ID exists
      *          OR invalid request was detected
      */
-    @RequestMapping(value = "/profile",
-            method = RequestMethod.GET)
+    @GetMapping("/profile")
     public ModelAndView getProfile(@RequestParam("id") String id, Principal principal)
             throws AccessDeniedException, ResourceNotFoundException{
         if(!LogicalRequestsValidator.isRequestValid(id)){
