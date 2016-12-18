@@ -3,9 +3,8 @@ package ua.softserveinc.tc.controller.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
@@ -31,7 +30,7 @@ public class ConfirmBookingController {
     @Autowired
     private RoomService roomService;
 
-    @RequestMapping(value = BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW)
+    @GetMapping(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW)
     public ModelAndView listBookings(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_CONF_BOOKING_VIEW);
@@ -43,7 +42,7 @@ public class ConfirmBookingController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "getAmountOfChildren/{roomId}", method = RequestMethod.GET)
+    @GetMapping("getAmountOfChildren/{roomId}")
     public Long getAmountOfChildrenInTheRoom(@PathVariable Long roomId) {
         Room room = roomService.findById(roomId);
         return bookingRepository.countByRoomAndBookingState(room, BookingState.ACTIVE);
