@@ -4,10 +4,10 @@ $('.for-table tbody').on('click', '#deactivateButton', function() {
     dialog.modal('show');
     $('#deactivateYesButton').click(function () {
         $(btn).parents('form').submit();
-        dialog.modal("hide");
+        dialog.modal('hide');
     });
     $('#deactivateNoButton').click(function () {
-        dialog.modal("hide");
+        dialog.modal('hide');
     });
 });
 
@@ -17,6 +17,6 @@ $('.for-table tbody').on('click', '#activateButton', function() {
     dialog.modal('show');
     $('#activateYesButton').click(function () {
         $(btn).parents('form').submit();
-        dialog.modal("hide");
+        dialog.modal('hide');
     });
 });

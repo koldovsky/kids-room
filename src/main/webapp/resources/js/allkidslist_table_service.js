@@ -1,9 +1,8 @@
-
 'use strict';
 
 function AllKidsTableService($http, $q) {
 
-    return({
+    return ({
         getActiveChildren: getActiveChildren,
         getAllChildren: getAllChildren,
         addChild: addChild,
@@ -14,106 +13,86 @@ function AllKidsTableService($http, $q) {
     });
 
     function getActiveChildren(roomId) {
-
         var request = $http({
-            method: "get",
-            url: "api/room/" + roomId + "/children",
+            method: 'get',
+            url: 'api/room/' + roomId + '/children',
             params: {
-                action: "get"
+                action: 'get'
             }
         });
-
-        return ( request.then( handleSuccess, handleError ) );
+        return ( request.then(handleSuccess, handleError) );
     }
 
     function getAllChildren() {
-
-            var request = $http({
-                method: "get",
-                url: "api/child",
-                params: {
-                    action: "get"
-                }
-            });
-
-            return ( request.then( handleSuccess, handleError ) );
-        }
-
-    function addChild( child ) {
-
-        var request = $http.post("api/child", child);
-
-        return ( request.then( handleSuccess, handleError ) );
-
+        var request = $http({
+            method: 'get',
+            url: 'api/child',
+            params: {
+                action: 'get'
+            }
+        });
+        return ( request.then(handleSuccess, handleError) );
     }
 
-    function searchChildren( field ) {
+    function addChild(child) {
+        var request = $http.post('api/child', child);
+        return ( request.then(handleSuccess, handleError) );
+    }
 
+    function searchChildren(field) {
         var request = $http({
-            method: "get",
-            url: "api/child/search",
+            method: 'get',
+            url: 'api/child/search',
             params: {
-                action: "get",
+                action: 'get',
                 field: field
             }
         });
-
-        return ( request.then( handleSuccess, handleError ) );
+        return ( request.then(handleSuccess, handleError) );
     }
 
-    function getParent( childId ) {
-
+    function getParent(childId) {
         var request = $http({
-            method: "get",
-            url: "api/child/" + childId + "/parent",
+            method: 'get',
+            url: 'api/child/' + childId + '/parent',
             params: {
-                action: "get"
+                action: 'get'
             }
         });
-
-        return ( request.then( handleSuccess, handleError ) );
+        return ( request.then(handleSuccess, handleError) );
     }
 
-    function searchParents( field ) {
-
+    function searchParents(field) {
         var request = $http({
-            method: "get",
-            url: "api/user/search",
+            method: 'get',
+            url: 'api/user/search',
             params: {
-                action: "get",
+                action: 'get',
                 field: field
             }
         });
-
-        return ( request.then( handleSuccess, handleError ) );
+        return ( request.then(handleSuccess, handleError) );
     }
 
-    function getLocale( locale ) {
-
-            var request = $http({
-                method: "get",
-                url: "api/localization/" + locale,
-                params: {
-                    action: "get"
-                }
-            });
-
-            return ( request.then( handleSuccess, handleError ) );
-        }
-
-    function handleError( response ) {
-
-        if (
-            ! angular.isObject( response.data ) ||
-            ! response.data.message
-            ) {
-            return( $q.reject( "An unknown error occurred." ) );
-        }
-
-        return( $q.reject( response.data.message ) );
+    function getLocale(locale) {
+        var request = $http({
+            method: 'get',
+            url: 'api/localization/' + locale,
+            params: {
+                action: 'get'
+            }
+        });
+        return ( request.then(handleSuccess, handleError) );
     }
 
-    function handleSuccess( response ) {
-        return( response.data );
+    function handleError(response) {
+        if (!angular.isObject(response.data) || !response.data.message) {
+            return ( $q.reject('An unknown error occurred.') );
+        }
+        return ( $q.reject(response.data.message) );
+    }
+
+    function handleSuccess(response) {
+        return ( response.data );
     }
 }
