@@ -20,6 +20,7 @@ public final class ValidationConstants {
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
     public static final String SIMPLY_PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
+    public static final String NAME_REGEX = "^[a-zA-Zа-яА-ЯЇїІіЄєҐґ`´ʼ’'\\-\\s]+$";
     public static final String LETTERS_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]*$";
 
     public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\\s]*$";
@@ -32,7 +33,7 @@ public final class ValidationConstants {
     public static final String DATE_IS_NOT_VALID = "Date is not valid";
 
     public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
-    public static final String NOT_EMPTY_MESSAGE = "May not be empty.";
+    public static final String NOT_EMPTY_MESSAGE = "Should not be empty.";
     public static final String NOT_VALID_MESSAGE = "Value is invalid.";
     public static final String DUPLICATE_BOOKING_MESSAGE = "Room is already booked for your kid at this time";
     public static final String ROOM_IS_FULL_MESSAGE = "This room is full at this time";
@@ -123,6 +124,9 @@ public final class ValidationConstants {
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
     public static final String NO_DAYS_FOR_BOOKING = "There are no days for booking";
 
+    public static final String ADMINISTRATOR_INCORRECT_FIRST_NAME = "administrator.addManager.name";
+    public static final String ADMINISTRATOR_INCORRECT_SECOND_NAME = "administrator.addManager.lastName";
+    public static final String ADMINISTRATOR_INCORRECT_PHONE = "administrator.addManager.phone";
 
     private ValidationConstants() {
     }

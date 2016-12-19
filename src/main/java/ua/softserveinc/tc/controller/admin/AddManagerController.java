@@ -74,6 +74,7 @@ public class AddManagerController {
     @RequestMapping(method = RequestMethod.POST)
     public String saveNewManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                                  BindingResult bindingResult) {
+        userValidator.validateManager(manager, bindingResult);
         this.userValidator.validateManagerEmail(manager, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.ADD_MANAGER;

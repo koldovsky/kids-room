@@ -15,4 +15,6 @@ public interface UserValidator extends Validator{
     void validateIfEmailExist(Object o, Errors errors);
 
     void validateManagerEmail(Object target, Errors errors);
+
+    void validateManager(Object target, Errors errors);
 }
