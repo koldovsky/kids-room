@@ -1,0 +1,24 @@
+{
+  "name": "kids-room",
+  "version": "1.0.0",
+  "description": "CONTRIBUTORS\r ------------\r * **[Nestor Sokil](https://github.com/nestorsokil)**\r * **[Volodymyr Rogulya](https://github.com/vrogulya)**\r * **[Vasyl Petryshak](https://github.com/Petryshakvasyl)**\r * **[Dmytro Krupa](https://github.com/KrupaDmytro)**\r * **[Eduard Litvinchuck](https://github.com/litvinchuck)**\r * **[Taras Zyhmunt](https://github.com/EditedBoy)**\r * **[Demian Bekesh](https://github.com/bahrianyi)**",
+  "main": "index.js",
+  "scripts": {
+    "eslint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koldovsky/kids-room.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koldovsky/kids-room/issues"
+  },
+  "homepage": "https://github.com/koldovsky/kids-room#readme",
+  "devDependencies": {
+    "eslint": "^3.12.0",
+    "eslint-config-google": "^0.7.1"
+  }
+}
