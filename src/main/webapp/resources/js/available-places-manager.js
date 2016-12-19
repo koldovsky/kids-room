@@ -1,4 +1,3 @@
-
 /**
  * Created by Sviatoslav Hryb on 27-Nov-16.
  */
@@ -13,7 +12,7 @@ var dailyNotCompletedBookings;  //array containing bookings DTO
  */
 function getNotCompletedBokings() {
     var time = $('#date-booking').val();
-    var idRoom = localStorage["roomId"];
+    var idRoom = localStorage['roomId'];
     var results;
     src = 'dailyNotCompletedBookings/' + time + '/' + idRoom;
     $.ajax({
@@ -22,7 +21,7 @@ function getNotCompletedBokings() {
         success: function (data) {
             results = data;
         },
-        error: function() {
+        error: function () {
             $('#free-spaces').html(messages.notCorrect.server);
         }
     });
@@ -96,10 +95,10 @@ function timeNormalize(time) {
         return null;
     }
     timeAr = time.split(":");
-    if(timeAr[0].length < 2){
+    if (timeAr[0].length < 2) {
         timeAr[0] = 0 + timeAr[0];
     }
-    if(timeAr[1].length < 2){
+    if (timeAr[1].length < 2) {
         timeAr[1] = 0 + timeAr[1];
     }
     return timeAr[0] + ":" + timeAr[1];
@@ -121,8 +120,8 @@ function getAndSetAvailablePlaces() {
     var timeStart = timeNormalize($('#bookingStartTimepicker').val());
     var timeEnd = timeNormalize($('#bookingEndTimepicker').val());
     if (timeStart != null && timeEnd != null) {
-        startTimeMillis = new Date(date + " " + timeStart + ":00").getTime();
-        endTimeMillis = new Date(date + " " + timeEnd + ":00").getTime();
+        startTimeMillis = new Date(date + ' ' + timeStart + ':00').getTime();
+        endTimeMillis = new Date(date + ' ' + timeEnd + ':00').getTime();
         availablePlaces = getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis);
     } else {
         availablePlaces = messages.notCorrect.time;
@@ -130,7 +129,7 @@ function getAndSetAvailablePlaces() {
     $('#free-spaces').html(availablePlaces);
 }
 
-$().ready(function() {
+$().ready(function () {
     $("#btn-add-kid").click(function () {
         getNotCompletedBokings();
         getAndSetAvailablePlaces();

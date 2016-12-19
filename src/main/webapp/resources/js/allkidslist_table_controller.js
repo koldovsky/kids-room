@@ -126,8 +126,7 @@ function AllKidsTableController($scope, $window, $location, allKidsTableService)
             .then(
                 function( locale ) {
                     applyLocale( locale );
-                }
-            )
+                })
     }
 
     function unifyName( person ) {

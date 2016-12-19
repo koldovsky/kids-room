@@ -5,11 +5,10 @@
 function AllKidsTable() {
 
     var link = function (scope, element, attrs) {
-    }
+    };
 
     var compile = function() {
-
-    }
+    };
 
     return {
         restrict: 'E',
