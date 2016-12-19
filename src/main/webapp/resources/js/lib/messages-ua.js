@@ -1,3 +1,6 @@
+/**
+ * Created by shuk on 19.11.16.
+ */
 messages = {
 	kid : {
 		invalidFirstName : 'Ви ввели ім\'я невірно',
@@ -57,7 +60,6 @@ messages = {
 	},
 	event: {
 		errors: {
-
 			dateInThePast: 'Дата не може бути в минулому, поточна дата: ',
 			timeInThePast: 'Час початку не може бути в минулому, поточний час: ',
 			endTimeGreaterThanStartTime: 'Час закінчення повинен бути хоча б на хвилину більший за час початку',
@@ -67,7 +69,6 @@ messages = {
 			noKidsSelected: 'Як мінімум одна дитина повинна бути вибрана',
 			bookingTypeMismatchWhenUpdating: 'Неможливо перетворити щотижневе бронювання в одноденне',
 			incorrectData: 'Невірні дані: ',
-
 			roomDeactivate: 'Кімната не може бути деактивованою, оскільки вона має зареєстровані майбутні події. Будь ласка, сконтактуйтесь з менеджером.'
 
 		}
@@ -83,6 +84,16 @@ messages = {
 		pastEndDay: 'Кінцева дата не може бути меншою за початкову',
 		wrongDateStartRange: 'Початкова дата є поза межами вибраних заходів',
 		wrongDateEndRange: 'Кінцева дата є поза межами вибраних заходів'
+	},
+	room: {
+		errors:{
+			invalidName: 'Невірно заповнене поле Назва',
+			invalidAdress: 'Невірно заповнене поле Адрес',
+			invalidCity: 'Невірно заповнене поле Місто',
+			invalidPhone: 'Невірно заповнене поле Номер телефону',
+			requiredWithEmptySpace: 'Поле потрібно заповнити'
+		}
+	}
 	},
     adminValidation:{
 		email: 'Некоректний емеіл',

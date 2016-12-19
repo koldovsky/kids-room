@@ -289,5 +289,4 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/edit-booking.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/comment-modal-message.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>

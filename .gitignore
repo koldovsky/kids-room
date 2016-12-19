@@ -5,6 +5,8 @@ Configuration edit s*.class
 WebContent/
 
 
+
+
 .idea
 *.jar
 *.war
@@ -16,3 +18,4 @@ WebContent/
 *.iml
 *.log
 src/main/resources/properties/hibernate.properties
+node_modules/

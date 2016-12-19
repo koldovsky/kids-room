@@ -1,49 +1,56 @@
-
-$(document).ready(function() {
-
-    $(function() {
-       $.validator.addMethod("regexName", function(value, element, regexpr) {
-          return regexpr.test(value);
-       }, "Invalid name.");
-       $.validator.addMethod("regexAddress", function(value, element, regexpr) {
-          return regexpr.test(value);
-       }, "Invalid address.");
-       $.validator.addMethod("regexCity", function(value, element, regexpr) {
-          return regexpr.test(value);
-       }, "Incorrect data, enter the correct data.");
-       $.validator.addMethod("regexPhone", function(value, element, regexpr) {
-          return regexpr.test(value);
-       }, "Invalid phone number.");
+$(document).ready(function () {
+        $.validator.addMethod("regexName", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, messages.room.errors.invalidName);
+        $.validator.addMethod("regexAddress", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, messages.room.errors.invalidAdress);
+        $.validator.addMethod("regexCity", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, messages.room.errors.invalidCity);
+        $.validator.addMethod("regexPhone", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, messages.room.errors.invalidPhone);
+    $.validator.addMethod("requiredWithEmptySpace", function (value) {
+        return value.trim().length != 0;
+        }, messages.room.errors.requiredWithEmptySpace);
         $('#roomForm').validate({
-            rules:{
+            rules: {
                 name: {
-                    required: true,
-                    regexName: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\s]+$/
+                    minlength: 1,
+                    maxlength: 255,
+                    requiredWithEmptySpace: true,
+                    regexName: /^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\s]+$/
                 },
-                address:{
-                    required: true,
-                    regexAddress: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя0-9\s]+$/
+                address: {
+                    minlength: 1,
+                    maxlength: 255,
+                    requiredWithEmptySpace: true,
+                    regexAddress: /^[a-zA-ZАа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\s]+$/
                 },
                 city: {
-                    required: true,
-                    regexCity: /^[a-zA-ZАаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя]+$/
+                    minlength: 1,
+                    maxlength: 255,
+                    requiredWithEmptySpace: true,
+                    regexCity: /^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+$/
                 },
-                phoneNumber:{
-                    required: true,
-                    regexPhone: /^\+(?:[0-9] ?){6,14}[0-9]$/,
+                phoneNumber: {
+                    minlength: 1,
+                    maxlength: 255,
+                    requiredWithEmptySpace: true,
+                    regexPhone: /^\+(?:[0-9] ?){6,14}[0-9]$/
                 },
                 capacity: {
                     min: 1,
                     max: 200,
                     required: true
                 },
-                workingHoursStart:{
+                workingHoursStart: {
                     required: true
                 },
-                workingHoursEnd:{
+                workingHoursEnd: {
                     required: true
                 }
             }
         });
     });
-});

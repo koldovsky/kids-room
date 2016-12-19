@@ -67,6 +67,7 @@ messages = {
 			bookingTypeMismatchWhenUpdating: 'Can\'t convert weekly booking to single',
 			incorrectData: 'Incorrect Data: ',
             roomDeactivate: 'Room cannot be inactive, when it has events and bookings that take place in the future. Please contact manager.'
+
 		}
     },
 	notCorrect: {
@@ -87,6 +88,15 @@ messages = {
 		lastName: 'Last Name is invalid.',
         phone: 'Phone number is invalid. Example +380991234567',
 		required: 'The field is empty. Fill in the field please.'
+	},
+	room: {
+		errors:{
+			invalidName: 'Invalid field Name',
+			invalidAdress: 'Invalid field Adress',
+			invalidCity: 'Invalid field City',
+			invalidPhone: 'Invalid field Phone',
+			requiredWithEmptySpace: 'This field must be required'
+		}
 	}
 };
 
