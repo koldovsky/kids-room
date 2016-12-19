@@ -13,7 +13,6 @@ function AllKidsTableService($http, $q) {
     });
 
     function getActiveChildren(roomId) {
-
         var request = $http({
             method: 'get',
             url: 'api/room/' + roomId + '/children',
@@ -21,12 +20,10 @@ function AllKidsTableService($http, $q) {
                 action: 'get'
             }
         });
-
         return ( request.then(handleSuccess, handleError) );
     }
 
     function getAllChildren() {
-
         var request = $http({
             method: 'get',
             url: 'api/child',
@@ -34,20 +31,15 @@ function AllKidsTableService($http, $q) {
                 action: 'get'
             }
         });
-
         return ( request.then(handleSuccess, handleError) );
     }
 
     function addChild(child) {
-
         var request = $http.post('api/child', child);
-
         return ( request.then(handleSuccess, handleError) );
-
     }
 
     function searchChildren(field) {
-
         var request = $http({
             method: 'get',
             url: 'api/child/search',
@@ -56,12 +48,10 @@ function AllKidsTableService($http, $q) {
                 field: field
             }
         });
-
         return ( request.then(handleSuccess, handleError) );
     }
 
     function getParent(childId) {
-
         var request = $http({
             method: 'get',
             url: 'api/child/' + childId + '/parent',
@@ -69,12 +59,10 @@ function AllKidsTableService($http, $q) {
                 action: 'get'
             }
         });
-
         return ( request.then(handleSuccess, handleError) );
     }
 
     function searchParents(field) {
-
         var request = $http({
             method: 'get',
             url: 'api/user/search',
@@ -83,12 +71,10 @@ function AllKidsTableService($http, $q) {
                 field: field
             }
         });
-
         return ( request.then(handleSuccess, handleError) );
     }
 
     function getLocale(locale) {
-
         var request = $http({
             method: 'get',
             url: 'api/localization/' + locale,

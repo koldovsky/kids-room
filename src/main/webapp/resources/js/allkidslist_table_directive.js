@@ -1,7 +1,6 @@
 
 'use strict';
 
-
 function AllKidsTable() {
 
     var link = function (scope, element, attrs) {

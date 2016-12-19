@@ -83,12 +83,12 @@ $('.input-group').find('#leaveTime').on('click', dateNow)
     .find('#arrivalTime').on('click', dateNow);
 
 
-$.getJSON("listBook", function (list) {
+$.getJSON('listBook', function (list) {
     $.each(list, function (index, value) {
-        if (value.bookingState == "ACTIVE") {
+        if (value.bookingState == 'ACTIVE') {
             $('#' + value.id).addClass('highlight-active')
                 .find('#arrivalTime').val(value.startTime);
-        } else if (value.bookingState == "COMPLETED") {
+        } else if (value.bookingState == 'COMPLETED') {
             $('#' + value.id).addClass('highlight-complet')
                 .find('#arrivalTime').val(value.startTime)
                 .find('#leaveTime').val(value.endTime);
@@ -100,13 +100,13 @@ function changeBooking(id) {
 
     $('#wrong-interval').hide();
     $('#fill-in').hide();
-    var idElement = "#" + id;
+    var idElement = '#' + id;
     $('#change-booking-modal').find('#change-booking').click(function () {
         var getData = $(this).closest('.modal-dialog');
         var inputDate = {
             id: id,
-            startTime: getData.find('#data').val() + " " + getData.find('#startTime').val(),
-            endTime: getData.find('#data').val() + " " + getData.find('#endTime').val(),
+            startTime: getData.find('#data').val() + ' ' + getData.find('#startTime').val(),
+            endTime: getData.find('#data').val() + ' ' + getData.find('#endTime').val()
         };
 
         $.ajax({
@@ -129,12 +129,12 @@ function changeBooking(id) {
 
 
 function selectRoomForManager(roomId) {
-    var src = 'manager-daily-booking/' + roomId;
+    var src = 'manager-daily-booking/' + roomIdF;
     $.ajax({
         url: src,
         success: function (data) {
             var bookings = JSON.parse(data);
-            var tr = "";
+            var tr = '';
             $.each(bookings, function (i, booking) {
                 var startButton = 'onclick=' + '"' + 'setStartTime(' + booking.id + ')"';
                 var endButton = 'onclick=' + '"' + 'setEndTime(' + booking.id + ')"';
@@ -155,10 +155,10 @@ function selectRoomForManager(roomId) {
             $('.trbooking').remove();
             $('.table').append(tr);
             $.each(bookings, function (index, value) {
-                if (value.bookingState == "ACTIVE") {
+                if (value.bookingState == 'ACTIVE') {
                     $('#' + value.id).addClass('highlight-active')
                         .find('#arrivalTime').val(value.startTime);
-                } else if (value.bookingState == "COMPLETED") {
+                } else if (value.bookingState == 'COMPLETED') {
                     $('#' + value.id).addClass('highlight-complet')
                         .find('#arrivalTime').val(value.startTime)
                         .find('#leaveTime').val(value.endTime);
@@ -167,11 +167,4 @@ function selectRoomForManager(roomId) {
 
         }
     });
-
 }
-
-
-
-
-
-
