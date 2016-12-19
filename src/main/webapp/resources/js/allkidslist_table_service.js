@@ -82,17 +82,13 @@ function AllKidsTableService($http, $q) {
                 action: 'get'
             }
         });
-
         return ( request.then(handleSuccess, handleError) );
     }
 
     function handleError(response) {
-
-        if (!(!angular.isObject(response.data) || !response.data.message)) {
-        } else {
+        if (!angular.isObject(response.data) || !response.data.message) {
             return ( $q.reject('An unknown error occurred.') );
         }
-
         return ( $q.reject(response.data.message) );
     }
 

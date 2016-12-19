@@ -21,7 +21,7 @@ function cancelBooking(idBook) {
 
 function setStartTime(idBooking) {
 
-    var idElement = "#" + idBooking;
+    var idElement = '#' + idBooking;
     var inputData = {
         startTime: $(idElement).find('#arrivalTime').val(),
         id: idBooking,
@@ -35,7 +35,7 @@ function setStartTime(idBooking) {
             var obj = JSON.parse(data);
             var bookingTime = $(idElement).find('.bookingTime');
             bookingTime.empty();
-            bookingTime.append(obj.startTime + " - " + obj.endTime);
+            bookingTime.append(obj.startTime + ' - ' + obj.endTime);
             $(idElement).addClass('highlight-active');
         }
     });
@@ -44,10 +44,10 @@ function setStartTime(idBooking) {
 
 function setEndTime(idBooking) {
 
-    var idElement = "#" + idBooking;
+    var idElement = '#' + idBooking;
     var inputData = {
         endTime: $(idElement).find('#leaveTime').val(),
-        id: idBooking,
+        id: idBooking
     };
 
     $.ajax({
@@ -67,7 +67,7 @@ function setEndTime(idBooking) {
                         var obj = JSON.parse(data);
                         var bookingTime = $(idElement).find('.bookingTime');
                         bookingTime.empty();
-                        bookingTime.append(obj.startTime + " - " + obj.endTime);
+                        bookingTime.append(obj.startTime + ' - ' + obj.endTime);
                         $(idElement).addClass('highlight-complet');
                     }
                 });
