@@ -51,9 +51,9 @@
             </div>
 
             <div class="form-group sizing-between">
-                <button type="submit" class="button button-confirm">OK</button>
+                <button type="submit" class="button button-confirm"><spring:message code = "administrator.save"/></button>
                 <button type="reset" class="button button-cancel"
-                        onclick="window.location.href='adm-edit-manager'">Cancel</button>
+                        onclick="window.location.href='adm-edit-manager'"><spring:message code="administrator.canc"/></button>
             </div>
 
          </form:form>

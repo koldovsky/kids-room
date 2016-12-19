@@ -50,11 +50,13 @@ public class UserValidatorImpl implements UserValidator {
                 .matches()) {
             errors.rejectValue(ValidationConstants.PHONE_NUMBER, ValidationConstants.PHONE_NUMBER_ERROR_MSG);
         }
+
         if (!Pattern.compile(ValidationConstants.EMAIL_REGEX)
                 .matcher(user.getEmail())
                 .matches()) {
             errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ERROR_MSG);
         }
+
         if (!user.getPassword().equals(user.getConfirm())) {
             errors.rejectValue(ValidationConstants.CONFIRM, ValidationConstants.NOT_CONFIRMED_MSG);
         }
@@ -103,4 +105,26 @@ public class UserValidatorImpl implements UserValidator {
             errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
         }
     }
+
+    public void validateManager(Object target, Errors errors) {
+        User manager = (User) target;
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.FIRST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+
+        if (!Pattern.compile(ValidationConstants.NAME_REGEX)
+                .matcher(manager.getFirstName()).matches()) {
+            errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.ADMINISTRATOR_INCORRECT_FIRST_NAME);
+        }
+
+        if (!Pattern.compile(ValidationConstants.NAME_REGEX)
+                .matcher(manager.getLastName()).matches()) {
+            errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.ADMINISTRATOR_INCORRECT_SECOND_NAME);
+        }
+
+        if (!Pattern.compile(ValidationConstants.PHONE_NUMBER_REGEX)
+                .matcher(manager.getPhoneNumber()).matches()) {
+            errors.rejectValue(ValidationConstants.PHONE_NUMBER, ValidationConstants.ADMINISTRATOR_INCORRECT_PHONE);
+        }
+    }
 }
+

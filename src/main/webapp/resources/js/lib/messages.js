@@ -1,6 +1,3 @@
-/**
- * Created by shuk on 19.11.16.
- */
 messages = {
 	kid : {
 		invalidFirstName : 'Invalid First Name',
@@ -15,10 +12,10 @@ messages = {
 		toLongFirstName : 'Please enter less ' + nameMaxLength + ' than  characters',
 		toLongLastName : 'Please enter less ' + nameMaxLength + ' than  characters',
 
-		editFirstName : "Please enter at least 2 characters",
-		editLastName : "Please enter at least 2 characters",
-        editFirstNameWithDigits : "First name can not contain digits",
-		editLastNameWithDigits : "Last name can not contain digits"
+		editFirstName : 'Please enter at least 2 characters',
+		editLastName : 'Please enter at least 2 characters',
+        editFirstNameWithDigits : 'First name can not contain digits',
+		editLastNameWithDigits : 'Last name can not contain digits'
 
     },
     date: {
@@ -84,6 +81,13 @@ messages = {
 		pastEndDay: 'The end day can\'t be smaller than start Day',
 		wrongDateStartRange: 'The start day is out of range of chosen events',
 		wrongDateEndRange: 'The end day is out of range of chosen events'
+	},
+	adminValidation:{
+        email: 'Email is invalid.',
+        firstName: 'Last Name is invalid.',
+		lastName: 'Last Name is invalid.',
+        phone: 'Phone number is invalid. Example +380991234567',
+		required: 'The field is empty. Fill in the field please.'
 	},
 	room: {
 		errors:{

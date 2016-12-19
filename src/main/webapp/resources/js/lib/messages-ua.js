@@ -15,10 +15,10 @@ messages = {
         toLongFirstName : 'Будь ласка, введіть менше ' + nameMaxLength + ' символів.',
         toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.',
 
-		editFirstName : "Будь ласка, введіть не менше 2 символів.",
-		editLastName : "Будь ласка, введіть не менше 2 символів.",
-        editFirstNameWithDigits : "Ім'я не може складатись із чисел",
-        editLastNameWithDigits : "Прізвище не може складатись із чисел"
+		editFirstName : 'Будь ласка, введіть не менше 2 символів.',
+		editLastName : 'Будь ласка, введіть не менше 2 символів.',
+        editFirstNameWithDigits : 'Ім\'я не може складатись із чисел',
+        editLastNameWithDigits : 'Прізвище не може складатись із чисел'
 	},
     date: {
         fromBiggerThanTo:  'Початкова дата не повинна перевищувати кінцеву',
@@ -94,4 +94,12 @@ messages = {
 			requiredWithEmptySpace: 'Поле потрібно заповнити'
 		}
 	}
+	},
+    adminValidation:{
+		email: 'Некоректний емеіл',
+		firstName: 'Ім\'я введено невірно',
+        lastName: 'Призвище введено невірно',
+		phone: 'Номер телефону є невірним. Приклад: +380991234567',
+        required: 'Поле є пустим. Будьласка заповніть поле.'
+    }
 };
