@@ -77,11 +77,11 @@ public class ChildDto {
         this.age = age;
     }
 
-    public Boolean getBirthday() {
+    public Boolean getIsBirthday() {
         return isBirthday;
     }
 
-    public void setBirthday(Boolean birthday) {
+    public void setIsBirthday(Boolean birthday) {
         isBirthday = birthday;
     }
 

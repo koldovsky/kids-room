@@ -19,7 +19,8 @@ public class JsonUtil {
      * @param <T>
      * @return List<T>
      */
-    public static <T> List<T> fromJsonList(final String json, final Class<T[]> clazz) {
+    public static <T> List<T> fromJsonList(final String json,
+                                           final Class<T[]> clazz) {
         return Arrays.asList(new Gson().fromJson(json, clazz));
     }
 

@@ -75,7 +75,7 @@ public class QuartzConfig {
         stFactory.setJobDetail(invokeSendReminder().getObject());
         stFactory.setName(QuartzConstants.SEND_REMINDER_TRIGGER);
         stFactory.setCronExpression("0 " + configurator.getMinutesToSendEmailReminder() +
-                " " + configurator.getHourToSendEmailReminder() + " 1/1 * ? *");
+                " " + configurator.getHoursToSendEmailReminder() + " 1/1 * ? *");
         return stFactory;
     }
 

@@ -18,7 +18,13 @@ public class RecurrentEventDto extends EventDto{
 
     public RecurrentEventDto() {
     }
-    public static RecurrentEventDto getRecurrentEventDto(List<Event> listOfRecurrentEvent, Set<Integer> weekDays) {
+
+    public RecurrentEventDto(Event event) {
+        super(event);
+    }
+
+    public static RecurrentEventDto getRecurrentEventDto(List<Event> listOfRecurrentEvent,
+                                                         Set<Integer> weekDays) {
         Event startDay = listOfRecurrentEvent.get(0);
         Event endDay = listOfRecurrentEvent.get(listOfRecurrentEvent.size() - 1);
         startDay.setEndTime(endDay.getEndTime());
@@ -27,11 +33,7 @@ public class RecurrentEventDto extends EventDto{
         return recurrentEventDto;
     }
 
-    public RecurrentEventDto(Event event) {
-        super(event);
-    }
-    public void setWeekDays(Set<Integer> weekDays)
-    {
+    public void setWeekDays(Set<Integer> weekDays) {
         this.weekDays=weekDays;
 
     }

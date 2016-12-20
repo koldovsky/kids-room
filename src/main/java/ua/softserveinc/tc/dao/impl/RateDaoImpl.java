@@ -26,7 +26,8 @@ public class RateDaoImpl extends BaseDaoImpl<Rate> implements RateDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Rate> criteria = builder.createQuery(Rate.class);
         Root<Rate> from = criteria.from(Rate.class);
-        criteria.select(from).where(builder.equal(from.get(RoomConstants.ID_ROOM),roomId));
+        criteria.select(from).where(builder.equal(
+                from.get(RoomConstants.ID_ROOM),roomId));
         return entityManager.createQuery(criteria).getResultList();
     }
 }

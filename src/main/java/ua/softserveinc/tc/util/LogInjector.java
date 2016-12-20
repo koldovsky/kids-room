@@ -13,12 +13,14 @@ import org.springframework.util.ReflectionUtils;
 public class LogInjector implements BeanPostProcessor {
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    public Object postProcessAfterInitialization(
+            Object bean, String beanName) throws BeansException {
         return bean;
     }
 
     @Override
-    public Object postProcessBeforeInitialization(final Object bean, String name) throws BeansException {
+    public Object postProcessBeforeInitialization(
+            final Object bean, String name) throws BeansException {
         ReflectionUtils.doWithFields(bean.getClass(), field -> {
             ReflectionUtils.makeAccessible(field);
             if (field.getAnnotation(Log.class) != null) {

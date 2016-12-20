@@ -102,9 +102,11 @@ public class BookingDto implements Serializable{
     }
 
 
-    public static BookingDto getBookingDto(final List<Booking> listOfRecurrentBooking, final Set<Integer> weekDays) {
+    public static BookingDto getBookingDto(final List<Booking> listOfRecurrentBooking,
+                                           final Set<Integer> weekDays) {
         Booking recurrentStartDay = listOfRecurrentBooking.get(0);
-        Booking recurrentEndDay = listOfRecurrentBooking.get(listOfRecurrentBooking.size() - 1);
+        Booking recurrentEndDay = listOfRecurrentBooking.get(
+                listOfRecurrentBooking.size() - 1);
         recurrentStartDay.setBookingEndTime(recurrentEndDay.getBookingEndTime());
         BookingDto recurrentBookingDto = new BookingDto(recurrentStartDay);
         recurrentBookingDto.setWeekDays(weekDays);
@@ -313,14 +315,6 @@ public class BookingDto implements Serializable{
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getDurtionLong() {
-        return durationLong;
-    }
-
-    public void setDurtionLong(Long durtionLong) {
-        this.durationLong = durtionLong;
     }
 
     public Long getIdChild() {

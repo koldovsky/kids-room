@@ -147,7 +147,7 @@ public class CalendarServiceImpl implements CalendarService {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateForMonthlyStart);
 
-        int[] days = monthlyEventDto.getDaysOfMonth();
+        int[] days = monthlyEventDto.getDaysOfTheMonth();
         Long newRecID = eventDao.getMaxRecurrentId() +1 ;
 
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {

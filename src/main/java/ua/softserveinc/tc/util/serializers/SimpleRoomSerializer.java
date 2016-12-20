@@ -19,7 +19,8 @@ public final class SimpleRoomSerializer  extends JsonSerializer<Set<Room>> {
 
     @Override
     public void serialize(final Set<Room> rooms, final JsonGenerator generator,
-                          final SerializerProvider provider) throws IOException, JsonProcessingException {
+                          final SerializerProvider provider)
+            throws IOException, JsonProcessingException {
         final Set<SimpleRoom> simpleRooms = new HashSet<>();
         for (final Room room : rooms) {
             simpleRooms.add(new SimpleRoom(room.getId(), room.getName()));

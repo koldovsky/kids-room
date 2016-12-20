@@ -21,7 +21,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     public List<T> findAll() {
         return entityManager
-                .createQuery("FROM " + entityClass.getSimpleName() + " ORDER BY id", getEntityClass())
+                .createQuery("FROM " + entityClass.getSimpleName()
+                        + " ORDER BY id", getEntityClass())
                 .getResultList();
     }
     @Transactional
@@ -44,7 +45,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     public void deleteAll() {
-        entityManager.createQuery("DELETE FROM " + entityClass.getSimpleName()).executeUpdate();
+        entityManager.createQuery("DELETE FROM "
+                + entityClass.getSimpleName()).executeUpdate();
     }
 
     @Transactional
@@ -54,7 +56,8 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     @SuppressWarnings("unchecked")
     protected final Class<T> getEntityClass() {
-        Class<?> entityClass = GenericTypeResolver.resolveTypeArgument(getClass(), BaseDaoImpl.class);
+        Class<?> entityClass = GenericTypeResolver
+                .resolveTypeArgument(getClass(), BaseDaoImpl.class);
 
         if (entityClass != null) {
             return (Class<T>) entityClass;
