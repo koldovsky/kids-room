@@ -93,7 +93,7 @@ public class UserChangePasswordController {
         Token verificationToken = tokenService.findByToken(token);
         User user = verificationToken.getUser();
         Authentication auth = new UsernamePasswordAuthenticationToken(
-                user, null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
+                user.getEmail(), null, userDetailsService.loadUserByUsername(user.getEmail()).getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
         tokenService.delete(verificationToken);
         model.addAttribute(UserConstants.Entity.USER, user);
@@ -107,7 +107,10 @@ public class UserChangePasswordController {
         if (bindingResult.hasErrors()) {
             return UserConstants.Model.UPDATE_PASS_VIEW;
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByEmail(email);
+        if(user == null)
+            return "entrypoint";
         user.setPassword(passwordEncoder.encode(modelUser.getPassword()));
         user.setConfirmed(true);
         userService.update(user);

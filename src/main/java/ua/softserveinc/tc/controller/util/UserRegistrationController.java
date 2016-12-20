@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller.util;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.constants.ReportConstants;
+import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -23,8 +26,10 @@ import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.validator.UserValidator;
+import java.util.Locale;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 @Controller
@@ -41,6 +46,13 @@ public class UserRegistrationController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private HttpServletRequest request;
+
 
     @Log
     private static Logger log;
@@ -81,11 +93,13 @@ public class UserRegistrationController {
         user.setConfirmed(true);
         userService.update(user);
         tokenService.delete(token);
-
+        Locale locale = (Locale)request.getSession().getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
+        if (locale == null)
+            locale = request.getLocale();
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/login");
-        model.getModelMap().addAttribute("confirm",
-                ValidationConstants.ConfigFields.SUCCESSFUL_CONFIRMATION_MESSAGE);
+        model.setViewName("login");
+        model.getModelMap().addAttribute(ReportConstants.CONFIRM_ATTRIBUTE,
+                messageSource.getMessage(ReportConstants.CONFIRM_MESSAGE, null, locale));
         return model;
     }
 }

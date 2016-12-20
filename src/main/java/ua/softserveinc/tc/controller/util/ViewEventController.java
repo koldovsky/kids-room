@@ -52,6 +52,8 @@ public class ViewEventController {
     @GetMapping("/")
     public final String viewHome(Model model, Principal principal) {
 
+        String resultView;
+
         if (principal == null) {
             return "entrypoint";
         }
@@ -64,16 +66,19 @@ public class ViewEventController {
                 model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
                 if(user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
-                    return ChildConstants.View.MY_KIDS;
-                }
-                return EventConstants.View.MAIN_PAGE;
+                    resultView = ChildConstants.View.MY_KIDS;
+                } else
+                    resultView = EventConstants.View.MAIN_PAGE;
+                break;
             case MANAGER:
                 model.addAttribute(UserConstants.Entity.ROOMS, userService.getActiveRooms(user));
-                return EventConstants.View.MAIN_PAGE;
+                resultView = EventConstants.View.MAIN_PAGE;
+                break;
             default:
                 model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
-                return AdminConstants.EDIT_ROOM;
+                resultView = AdminConstants.EDIT_ROOM;
         }
+        return resultView;
     }
 
 

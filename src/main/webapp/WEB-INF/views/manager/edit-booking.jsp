@@ -131,10 +131,10 @@
                                    placeholder="end time"/>
                             <br>
                         </div>
-                        <div id="kids">
-                        </div>
+                        <div class="block-center" id="kids">
                         <br>
-                        <input type="button" class="btn btn-success" id="booking" value="<spring:message code="booking.book"/>">
+                            <input type="button" class="btn btn-success block-center" id="booking" value="<spring:message code="booking.book"/>">
+                        </div>
                     </div>
                 </form>
             </div>

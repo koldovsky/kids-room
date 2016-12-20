@@ -17,11 +17,12 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.constants.URIConstants;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class MailServiceImpl implements MailService {
     });
 
     @Autowired
-    private ServletRequest request;
+    private HttpServletRequest request;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -50,7 +51,7 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ApplicationConfigurator configurator;
 
-
+    @SuppressWarnings("deprecation")
     private String getTextMessage(String template, Map<String, Object> model) {
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 MailConstants.EMAIL_TEMPLATE + template, MailConstants.UTF_8, model);
@@ -64,7 +65,21 @@ public class MailServiceImpl implements MailService {
     }
 
     private StringBuilder getLink(String partOfLink, String token) {
-        return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink).append(token);
+        return new StringBuilder().append(getBaseUrl()).append(partOfLink).append(token);
+    }
+
+    /**
+     * Return the base Url of the page.
+     *
+     * @return the base Url of the page
+     */
+    private String getBaseUrl() {
+            return request.getScheme()
+                    + URIConstants.SCHEMA_AND_SERVER_NAME_CONJUCTION
+                    + request.getServerName()
+                    + URIConstants.SERVER_NAME_AND_PORT_CONJUCTION
+                    + request.getServerPort()
+                    + request.getContextPath();
     }
 
     @Async

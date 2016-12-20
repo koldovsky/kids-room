@@ -112,6 +112,12 @@ select {
 #login-form a:hover{
     color: #4285F4;
 }
+
+.block-center {
+    text-align:center;
+    margin:auto;
+}
+
 #reg-form{
     min-width: 400px;
     padding: 30px;
@@ -149,12 +155,25 @@ select {
     left: 50%;
 }
 
+div.container4 {
+    height: 10em;
+    position: relative
+}
+
+div.container4 p {
+    font-size: 20pt;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
 #startlabel {
     background-color: #2196f3;
     border-radius: 5px;
 }
-
-
 
 #login-form .glyphicon{
     color: rgb(160,160,160);
@@ -204,6 +223,7 @@ div .error {
 div .successconfirmation {
     color: green;
     font-size: 1.3em;
+    margin-bottom: 20px;
 }
 .error .ui-dialog-title{
     color: #ff1200;
