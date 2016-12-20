@@ -9,10 +9,16 @@ messages = {
 		requiredLastName: 'Вкажіть будь ласка прізвище дитини',
 		regexKidFirstName: 'Для вводу імені використовуйте лише літери',
 		regexKidLastName: 'Для вводу прізвища використовуйте лише літери',
+
 		toShortFirstName : 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
 		toShortLastName : 'Будь ласка, введіть не менше ' + nameMinLength + ' символів.',
         toLongFirstName : 'Будь ласка, введіть менше ' + nameMaxLength + ' символів.',
-        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.'
+        toLongLastName : 'Будь ласка введіть менше ' + nameMaxLength + ' символів.',
+
+		editFirstName : 'Будь ласка, введіть не менше 2 символів.',
+		editLastName : 'Будь ласка, введіть не менше 2 символів.',
+        editFirstNameWithDigits : 'Ім\'я не може складатись із чисел',
+        editLastNameWithDigits : 'Прізвище не може складатись із чисел'
 	},
     date: {
         fromBiggerThanTo:  'Початкова дата не повинна перевищувати кінцеву',
@@ -62,7 +68,9 @@ messages = {
 			noDaysSelected: 'Повторювані: Як мінімум один день повинен бути вибраним',
 			noKidsSelected: 'Як мінімум одна дитина повинна бути вибрана',
 			bookingTypeMismatchWhenUpdating: 'Неможливо перетворити щотижневе бронювання в одноденне',
-			incorrectData: 'Невірні дані: '
+			incorrectData: 'Невірні дані: ',
+			roomDeactivate: 'Кімната не може бути деактивованою, оскільки вона має зареєстровані майбутні події. Будь ласка, сконтактуйтесь з менеджером.'
+
 		}
     },
 	notCorrect: {
@@ -76,5 +84,22 @@ messages = {
 		pastEndDay: 'Кінцева дата не може бути меншою за початкову',
 		wrongDateStartRange: 'Початкова дата є поза межами вибраних заходів',
 		wrongDateEndRange: 'Кінцева дата є поза межами вибраних заходів'
+	},
+	room: {
+		errors:{
+			invalidName: 'Невірно заповнене поле Назва',
+			invalidAdress: 'Невірно заповнене поле Адрес',
+			invalidCity: 'Невірно заповнене поле Місто',
+			invalidPhone: 'Невірно заповнене поле Номер телефону',
+			requiredWithEmptySpace: 'Поле потрібно заповнити'
+		}
 	}
+	},
+    adminValidation:{
+		email: 'Некоректний емеіл',
+		firstName: 'Ім\'я введено невірно',
+        lastName: 'Призвище введено невірно',
+		phone: 'Номер телефону є невірним. Приклад: +380991234567',
+        required: 'Поле є пустим. Будьласка заповніть поле.'
+    }
 };

@@ -153,3 +153,7 @@ textarea {
     padding: 10px;
     text-align:center;
 }
+
+#gender-error{
+    margin-top: 15px;
+}

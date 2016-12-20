@@ -12,14 +12,14 @@
   <meta name="viewport" content="width=device-width"/>
 <!--Bootstrap and jQuery -->
 
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+          integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
           integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script src="resources/js/lib/ui-bootstrap-tpls-2.1.3.min.js"></script>
 
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-          integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css">

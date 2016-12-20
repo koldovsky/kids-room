@@ -11,9 +11,6 @@ public class ConfigurationDto {
     private Integer kidsMinAge;
     private Integer kidsMaxAge;
 
-    private Integer kidsMaxNameLength;
-    private Integer kidsMaxCommentLength;
-
     private Integer minutesToCalculateBookingsEveryDay;
     private Integer hourToCalculateBookingsEveryDay;
 
@@ -44,8 +41,6 @@ public class ConfigurationDto {
     public ConfigurationDto(ApplicationConfigurator appConfig){
         this.kidsMinAge = appConfig.getKidsMinAge();
         this.kidsMaxAge = appConfig.getKidsMaxAge();
-        this.kidsMaxNameLength = appConfig.getKidsMaxNameLength();
-        this.kidsMaxCommentLength = appConfig.getKidsMaxCommentLength();
 
         this.minutesToCalculateBookingsEveryDay = appConfig.getMinutesToCalculateBookingsEveryDay();
         this.hourToCalculateBookingsEveryDay = appConfig.getHourToCalculateBookingsEveryDay();
@@ -82,23 +77,6 @@ public class ConfigurationDto {
     public void setKidsMaxAge(Integer kidsMaxAge) {
         this.kidsMaxAge = kidsMaxAge;
     }
-
-    public Integer getKidsMaxNameLength() {
-        return kidsMaxNameLength;
-    }
-
-    public void setKidsMaxNameLength(Integer kidsMaxNameLength) {
-        this.kidsMaxNameLength = kidsMaxNameLength;
-    }
-
-    public Integer getKidsMaxCommentLength() {
-        return kidsMaxCommentLength;
-    }
-
-    public void setKidsMaxCommentLength(Integer kidsMaxCommentLength) {
-        this.kidsMaxCommentLength = kidsMaxCommentLength;
-    }
-
 
     public Integer getMinutesToCalculateBookingsEveryDay() {
         return minutesToCalculateBookingsEveryDay;
@@ -222,12 +200,6 @@ public class ConfigurationDto {
 
         if (kidsMinAge != null ? !kidsMinAge.equals(that.kidsMinAge) : that.kidsMinAge != null) return false;
         if (kidsMaxAge != null ? !kidsMaxAge.equals(that.kidsMaxAge) : that.kidsMaxAge != null) return false;
-
-        if (kidsMaxNameLength != null ? !kidsMaxNameLength.equals(that.kidsMaxNameLength) :
-                that.kidsMaxNameLength != null) return false;
-        if (kidsMaxCommentLength != null ? !kidsMaxCommentLength.equals(that.kidsMaxNameLength) :
-                that.kidsMaxNameLength != null) return false;
-
         if (minutesToCalculateBookingsEveryDay != null
                 ? !minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)
                 : that.minutesToCalculateBookingsEveryDay != null)

@@ -7,9 +7,9 @@
 </div>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ng-dialog/0.6.1/js/ngDialog.min.js"></script>
-<script src="resources/js/allkidslist_table_controller.js"></script>
-<script src="resources/js/addbooking_controller.js"></script>
-<script src="resources/js/allkidslist_table_service.js"></script>
-<script src="resources/js/allkidslist_table_directive.js"></script>
-<script src="resources/js/allkidslist_app.js"></script>
-<script src="resources/js/header-manager.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/allkidslist_table_controller.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/addbooking_controller.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/allkidslist_table_service.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/allkidslist_table_directive.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/allkidslist_app.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>

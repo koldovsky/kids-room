@@ -121,7 +121,7 @@
                             onclick="window.location.href='adm-edit-room'">Cancel</button>
                 </div>
 
-                <script src="resources/js/room-dynamic-managers-rates.js"></script>
+                <script src="${pageContext.request.contextPath}/resources/js/room-dynamic-managers-rates.js"></script>
            </div>
 
         </form:form>
@@ -135,4 +135,4 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
-<script src="resources/js/validation-room.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>

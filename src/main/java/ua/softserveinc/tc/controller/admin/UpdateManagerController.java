@@ -12,6 +12,7 @@ import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.validator.UserValidator;
 
 import javax.validation.Valid;
 
@@ -26,6 +27,8 @@ public class UpdateManagerController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserValidator userValidator;
 
     /**
      * Method open "Update manager" view. Send model with values into view.
@@ -55,6 +58,7 @@ public class UpdateManagerController {
     @PostMapping("/adm-update-manager")
     public String submitManagerUpdate(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
                                       BindingResult bindingResult) {
+        userValidator.validateManager(manager, bindingResult);
         if (bindingResult.hasErrors()) {
             return AdminConstants.UPDATE_MANAGER;
         }

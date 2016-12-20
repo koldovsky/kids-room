@@ -48,9 +48,9 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="button button-confirm">OK</button>
+                <button type="submit" class="button button-confirm"><spring:message code = "administrator.ok"/></button>
                 <button type="reset" class="button button-cancel"
-                        onclick="window.location.href='adm-edit-manager'">Cancel</button>
+                        onclick="window.location.href='adm-edit-manager'"><spring:message code="administrator.canc"/></button>
             </div>
 
         </form:form>
@@ -65,4 +65,4 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
-<script src="resources/js/validation-manager.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager.js"></script>

@@ -6,9 +6,9 @@
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
-<script src="resources/js/comment-box.js"></script>
-<script src="resources/js/edit-my-kid.js"></script>
-<script scr="resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/comment-box.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/edit-my-kid.js"></script>
+<script scr="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
@@ -117,14 +117,10 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
 
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script src="resources/js/validation-edit-kid.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-edit-kid.js"></script>
 
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
         <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-        <script src="resources/js/lib/messages-ua.js"></script>
-    </c:when>
-    <c:when test="${pageContext.response.locale!= 'ua'}">
-        <script src="resources/js/lib/messages.js"></script>
     </c:when>
 </c:choose>

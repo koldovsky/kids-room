@@ -40,14 +40,12 @@ public class ChildValidator implements Validator{
         ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors, ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.EMPTY_FIELD_MSG);
 
-
-/**
- * check if the first and last names are corrent(if there is only 1 letter)
- * Error messages appear. "First Name" and "Last Name" fields are not edited.
- */
+        /**
+         * check if the first and last names are corrent(if there is only 1 letter)
+         * Error messages appear. "First Name" and "Last Name" fields are not edited.
+         */
         String fName = kidToValidate.getFirstName();
         String lName = kidToValidate.getLastName();
-
         if(fName.length() < MIN_NAME_CHARACTER) {
             errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.NAME_NOT_EDITTED);
         }
@@ -56,24 +54,23 @@ public class ChildValidator implements Validator{
         }
 
         int age = kidToValidate.getAge();
-
         if(age < configurator.getKidsMinAge() || age > configurator.getKidsMaxAge()){
             errors.rejectValue(ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.DATE_ERROR_MSG);
         }
 
         String comment = kidToValidate.getComment();
-
-        if (comment.length() > configurator.getKidsMaxCommentLength()) {
+        if (comment.length() > ValidationConstants.KID_COMMENT_MAX_LENGHT) {
             errors.rejectValue(ValidationConstants.COMMENT, ValidationConstants.COMMENT_ERROR_MSG);
         }
+
         String firstName = kidToValidate.getFirstName();
-        if (firstName.length() > configurator.getKidsMaxNameLength()) {
+        if (firstName.length() > ValidationConstants.MAX_NAME_CHARACTER) {
             errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.FIRSTNAME_ERROR_MSG);
         }
+
         String lastName = kidToValidate.getLastName();
-        if (lastName.length() > configurator.getKidsMaxNameLength()) {
+        if (lastName.length() > ValidationConstants.MAX_NAME_CHARACTER) {
             errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.LASTNAME_ERROR_MSG);
         }
-
     }
 }

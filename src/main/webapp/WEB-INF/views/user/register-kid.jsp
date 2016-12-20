@@ -6,9 +6,9 @@
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
 <link rel='stylesheet' href='resources/css/registerkid.css'>
-<script src="resources/js/comment-box.js"></script>
-<script src="resources/js/kid-registration.js"></script>
-<script src="resources/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/comment-box.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/kid-registration.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.min.js"></script>
 
 
 <form:form id="kidregistrform" enctype="application/x-www-form-urlencoded" action="registerkid"
@@ -62,7 +62,7 @@
 
 
         <div class="form-group">
-            <label class="required"><spring:message code="kid.gender"/></label>
+            <%--@declare id="gender"--%><label class="required"><spring:message code="kid.gender"/></label>
             <table>
                 <tr>
                     <td>
@@ -70,11 +70,11 @@
                             code="kid.boy"/>
                     </td>
                     <td>
-                        <form:radiobutton required="required" path="gender" value="FEMALE"/><spring:message
+                        <form:radiobutton name="Girl" path="gender" value="FEMALE"/><spring:message
                             code="kid.girl"/></td>
                 </tr>
             </table>
-
+            <label id="gender-error" class="error" for="gender"></label>
         </div>
 
 
@@ -105,18 +105,9 @@
 </form:form>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script src="resources/js/validation-kids.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/constants/validation-kids.js"></script>
 <c:choose>
 <c:when test="${pageContext.response.locale=='ua'}">
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-    <script src="resources/js/lib/messages-ua.js"></script>
-</c:when>
-<c:when test="${pageContext.response.locale!= 'ua'}">
-    <script src="resources/js/lib/messages.js"></script>
 </c:when>
 </c:choose>
-
-
-
-
-

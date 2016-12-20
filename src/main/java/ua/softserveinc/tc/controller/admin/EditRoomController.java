@@ -1,16 +1,19 @@
 package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Controller class for "Room list" view. It's main controller for editing rooms.
@@ -23,6 +26,7 @@ public class EditRoomController {
     @Autowired
     private RoomService roomService;
 
+    private Logger logger = Logger.getLogger("EditRoomController");
 
     /**
      * Method send  model with all rooms into view.
@@ -51,9 +55,18 @@ public class EditRoomController {
     @PostMapping("/adm-edit-room")
     public String roomBlockUnblock(@RequestParam Long id) {
         Room room = this.roomService.findById(id);
-        room.setActive(!room.isActive());
-
+        if(!room.isActive() || isRoomWithoutBookings(room)) {
+            room.setActive(!room.isActive());
+        } else {
+            throw new AccessDeniedException("Only parents have access to this page");
+        }
         this.roomService.update(room);
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
+
+    public boolean isRoomWithoutBookings(Room room) {
+        List<BookingDto> bookings = roomService.getAllFutureBookings(room);
+        return bookings.isEmpty();
+    }
+
 }

@@ -352,7 +352,7 @@
                 <spring:message code= "booking.contact"/>
             </button>
 
-            <div class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div id="colorDescryptionModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-content">
@@ -385,7 +385,7 @@
                                     <canvas id="blob" width="600" height="400" hidden> </canvas>
                                     <br>
                                     </body>
-                                    <br>
+                                    <button id="closeColorDesc" class="btn btn-success center-block "><spring:message code="close"/></button>
                                 </div>
                                 <span id="softServeInc">SoftServe Inc</span>
                             </div>
@@ -395,25 +395,16 @@
                 </div>
             </div>
 
-        <div class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div id ="contactModal" class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-
                     <div class="modal-body">
-
                         <div align="center">
-
                             <br>
-                            <h4 id="showRoomManagers"></h4>
-
+                            <h4 id="showRoomManagers"><spring:message code="manager"/> : </h4>
                             <H4 id="roomPhone"></H4>
-
-                            <br>
-
+                            <button id="closeContact" class="btn btn-success center-block "><spring:message code="close"/></button>
                             <span>SoftServe Inc</span>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -525,7 +516,8 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="col-xs-12 form-group">
                                 <label for="event-title"><spring:message code= "event.title"/></label>
-                                <input type="text" class="form-control" id="event-title" placeholder="Event title">
+                                <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
+                                <input type="text" class="form-control" id="event-title" placeholder="${titlePlaceHolder}">
                             </div>
                             <div class="form-group">
                                 <label for="color-select"><spring:message code="event.chooseColor" /></label>
@@ -646,9 +638,10 @@
                                     <br><br><br><br><br><br><br><br><br><br>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
+                                        <spring:message code="event.descriptionPlaceHolder" var="descriptionPlaceHolder"/>
                                         <label for="description"> <spring:message code="event.labelForDescription"></spring:message> </label>
                                         <input type="text" size="15" class="form-control" id="description"
-                                               placeholder="description">
+                                               placeholder="${descriptionPlaceHolder}">
                                     </div>
                                     <br>
                                     <div id="data-validation-information-string-container" class="clearfix">
@@ -690,7 +683,8 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="form-group">
                                 <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
-                                <input type="text" class="form-control" id="titleUpdate" placeholder="title">
+                                <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
+                                <input type="text" class="form-control" id="titleUpdate" placeholder="${titlePlaceHolder}">
                             </div>
 
                             <div class="form-group">
@@ -757,8 +751,9 @@
                                 <label for="descriptionUpdate">
                                     <spring:message code="event.description"></spring:message>
                                 </label>
+                                <spring:message code="event.descriptionPlaceHolder" var="descriptionPlaceHolder"/>
                                 <textarea type="text" class="form-control" id="descriptionUpdate"
-                                          placeholder="description"></textarea>
+                                          placeholder=${descriptionPlaceHolder}></textarea>
                             </div>
                             <br>
                             <div id="data-validation-information-string-container" class="clearfix">
@@ -912,15 +907,20 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src='resources/js/moment.min.js'></script>
-<script src="resources/js/jquery.timepicker.js"></script>
-<script src='resources/js/fullcalendar.js'></script>
-<script src="resources/js/seriousColorLegendUpdate.js"></script>
-<script src='resources/js/manager-create-events-validator.js'></script>
-<script src='resources/js/user-create-booking-validator.js'></script>
-<script src='resources/js/single-booking.js'></script>
-<script src='resources/js/renderCalendar.js'></script>
-<script src='resources/js/header-manager.js'></script>
-<script src='resources/js/header-user.js'></script>
-<script src='resources/js/userCalendar.js'></script>
-<script src='resources/js/recurrent-cancel-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/seriousColorLegendUpdate.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/manager-create-events-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/user-create-booking-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/single-booking.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/recurrent-cancel-validator.js'></script>
+<c:choose>
+    <c:when test="${pageContext.response.locale=='ua'}">
+        <script src="${pageContext.request.contextPath}/resources/js/lib/callendar-ua.min.js"></script>
+    </c:when>
+</c:choose>

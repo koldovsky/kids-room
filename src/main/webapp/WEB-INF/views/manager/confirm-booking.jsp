@@ -5,8 +5,8 @@
 <link rel='stylesheet' href='resources/css/listBookedChildren.css'>
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
-<script src="resources/js/bookedkids.js"></script>
-<script src="resources/js/header-manager.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bookedkids.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 
 <div class="tableDiv">
 	<table class="table">

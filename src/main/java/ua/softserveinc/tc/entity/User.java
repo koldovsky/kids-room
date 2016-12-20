@@ -42,19 +42,16 @@ public class User implements Serializable {
     @Column(name = UserConstants.Entity.ID_USER, nullable = false)
     private Long id;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     @Column(name = UserConstants.Entity.FIRST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String firstName;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
     @Column(name = UserConstants.Entity.LAST_NAME)
     @Field
     @Analyzer(definition = "ngram")
     private String lastName;
 
-    @NotEmpty
     @Email
     @Column(name = UserConstants.Entity.EMAIL, unique = true)
     @Field(store = Store.NO)
@@ -65,7 +62,6 @@ public class User implements Serializable {
     @Column(name = UserConstants.Entity.PASSWORD)
     private String password;
 
-
     private transient String confirm;
 
     @Column(name = UserConstants.Entity.CONFIRMED)
@@ -75,8 +71,6 @@ public class User implements Serializable {
     @Column(name = UserConstants.Entity.ACTIVE)
     private boolean active;
 
-    @NotEmpty(message = ValidationConstants.NOT_EMPTY_MESSAGE)
-    @Pattern(regexp = ValidationConstants.SIMPLY_PHONE_REGEX, message = ValidationConstants.NOT_VALID_MESSAGE)
     @Column(name = UserConstants.Entity.PHONE)
     @Field(store = Store.NO)
     @Analyzer(definition = "ngram")
