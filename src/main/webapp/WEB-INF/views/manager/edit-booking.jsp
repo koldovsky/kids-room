@@ -132,8 +132,10 @@
                                    placeholder="end time"/>
                             <br>
                         </div>
-                        <div class="block-center" id="kids">
+                        <div id="kids">
+                        </div>
                         <br>
+                        <div class="block-center">
                             <input type="button" class="btn btn-success block-center" id="booking" value="<spring:message code="booking.book"/>">
                         </div>
                     </div>
