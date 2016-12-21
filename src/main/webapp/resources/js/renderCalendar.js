@@ -1,6 +1,8 @@
 /**
  * Created by dima- on 12.05.2016.
  */
+
+
 var info_event;
 var creatingEvent;
 var allEvents;
@@ -8,7 +10,6 @@ var NOT_ACTIVE_EVENT = '#33cc33';
 var BORDER_COLOR = '#000000';
 var DAYS_IN_MONTH = 31;
 var DAYS_IN_WEEK = 7;
-
 
 $(function () {
 
@@ -40,7 +41,6 @@ $(function () {
     });
 
     $('#dialog').dialog({
-        // title: 'New event',
         modal: true,
         width: 550,
         autoOpen: false,
@@ -64,12 +64,11 @@ $(function () {
 
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
-        step: 1,
+        step: 1
     });
 
     $('#updating').dialog({
         autoOpen: false,
-        // title: 'Change event',
         modal: true,
         width: 400
     });
@@ -110,8 +109,8 @@ $(function () {
             if (item.recurrentId === recurrentId) {
                 arStartDates = item.start.split('T');
                 arEndDates = item.end.split('T');
-                if (new Date(arStartDates[0]) >= new Date(startDate)
-                    && new Date(arEndDates[0]) <= new Date(endDate)) {
+                if (new Date(arStartDates[0]) >= new Date(startDate) &&
+                    new Date(arEndDates[0]) <= new Date(endDate)) {
                     $('#calendar').fullCalendar('removeEvents', item.id);
                     sendToServerForDelete(item);
                 }
@@ -157,7 +156,7 @@ $(function () {
         });
         $('#confirmNoEvent').click(function () {
             myDialog.dialog('close');
-        })
+        });
     });
     $('#deleting-single-event').hover(function () {
         $(this).css('color', 'red');
@@ -314,7 +313,7 @@ function selectRoomForManager(id) {
                                 color: result[i].color,
                                 borderColor: BORDER_COLOR,
                                 recurrentId: result[i].recurrentId
-                            }
+                            };
                         }
                         renderCalendarForManager(objects, id, startTime, endTime);
                     } else {
@@ -344,9 +343,10 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
     info_event = {};
     creatingEvent = {};
     allEvents = objects;
-    $('.timepicker').timepicker('option', 'minTime', workingHoursStart);
-    $('.timepicker').timepicker('option', 'maxTime', workingHoursEnd);
-    $('.timepicker').timepicker({
+    var timepicker = $('.timepicker');
+    timepicker.timepicker('option', 'minTime', workingHoursStart);
+    timepicker.timepicker('option', 'maxTime', workingHoursEnd);
+    timepicker.timepicker({
         timeFormat: 'H:i',
         step: 1,
         minTime: workingHoursStart,
@@ -371,11 +371,11 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             $('#end-date-picker').val(clickDate.substring(0, 10));
             if (clickDate.substring(11, 19) == '00:00:00') {
                 $('#start-time-picker').timepicker('setTime', currentDate.toLocaleTimeString());
-                $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()))
+                $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
             }
             else {
                 $('#start-time-picker').timepicker('setTime', clickDate.substring(11, 19));
-                $('#end-time-picker').timepicker('setTime', endClickDate)
+                $('#end-time-picker').timepicker('setTime', endClickDate);
             }
             $('#dialog').dialog('open');
             creatingEvent.clickDate = clickDate;
@@ -391,7 +391,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             $('#startDayUpdate').val(calEvent.start.format().substring(0, 10));
             $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
             $('#descriptionUpdate').val(calEvent.description);
-            $('#color-select-single-event').val(calEvent.color)
+            $('#color-select-single-event').val(calEvent.color);
 
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
@@ -817,7 +817,7 @@ function editRecurrentEventRequest(eventRecurrentId) {
 
             editRecurrentEvent(recurrentEventForEditing);
         }
-    })
+    });
 }
 
 function deleteRecurrentEvents(recurrentId) {

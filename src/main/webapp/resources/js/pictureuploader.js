@@ -16,11 +16,11 @@
   })()*/
 
 
-document.querySelector('#image').addEventListener('change', function(){
+document.querySelector('#image').addEventListener('change', function () {
     var reader = new FileReader();
-    reader.onload = function(){
+    reader.onload = function () {
         var binaryString = this.result;
         document.querySelector('#result').innerHTML = binaryString;
-        }
+    };
     reader.readAsArrayBuffer(this.files[0]);
-  }, false);
+}, false);
