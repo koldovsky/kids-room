@@ -16,7 +16,7 @@ $().ready(function() {
     $('#confirmation-dialog-event-div').dialog ({
         autoOpen: false,
         modal:true,
-        width: 320,
+        width: 320
     });
 
     $('.button-size-default.button.delete').click(function() {
