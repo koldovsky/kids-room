@@ -5,6 +5,7 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.GenericMapper;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by IhorTovpinets on 29.11.2016.
@@ -13,11 +14,12 @@ public class MonthlyEventDto extends EventDto{
     @Autowired
     private GenericMapper<Event, EventDto> genericMapper;
 
-    private int[] daysOfTheMonth;
+    private Set<Integer> daysOfTheMonth;
 
     public MonthlyEventDto() {
     }
-    public static MonthlyEventDto getMonthlyEventDto(List<Event> listOfRecurrentEvent, int[] daysOfTheMonth) {
+
+    public static MonthlyEventDto getMonthlyEventDto(List<Event> listOfRecurrentEvent, Set<Integer> daysOfTheMonth) {
         Event startDay = listOfRecurrentEvent.get(0);
         Event endDay = listOfRecurrentEvent.get(listOfRecurrentEvent.size() - 1);
         startDay.setEndTime(endDay.getEndTime());
@@ -30,11 +32,11 @@ public class MonthlyEventDto extends EventDto{
         super(event);
     }
 
-    public void setDaysOfMonth(int[] daysOfTheMonth) {
+    public void setDaysOfMonth(Set<Integer> daysOfTheMonth) {
         this.daysOfTheMonth = daysOfTheMonth;
     }
 
-    public int[] getDaysOfMonth() {
+    public Set<Integer> getDaysOfMonth() {
         return daysOfTheMonth;
     }
 

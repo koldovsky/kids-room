@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.getUserByEmail(email);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("not found");
         }
         boolean accountNonExpired = true;
@@ -32,6 +32,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         roles.add(new SimpleGrantedAuthority(user.getRole().getAuthority()));
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                        user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
+                user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
     }
 }

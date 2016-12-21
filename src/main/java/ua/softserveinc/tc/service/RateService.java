@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface RateService extends BaseService<Rate> {
     Rate calculateAppropriateRate(long milliseconds, final List<Rate> rates);
+
     public Long calculateBookingCost(Booking booking);
 }

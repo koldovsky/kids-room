@@ -36,12 +36,12 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
         }
     }
 
-    public Long calculateBookingCost(Booking booking){
+    public Long calculateBookingCost(Booking booking) {
         List<Rate> rates = booking.getRoom().getRates();
         Rate closestRate = this.calculateAppropriateRate(booking.getDuration(), rates);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(booking.getDuration());
-        double minuteCostInCoins = (double)(closestRate.getPriceRate()*100/(closestRate.getHourRate()*60));
-        Long sum = (long)(minutes * minuteCostInCoins);
+        double minuteCostInCoins = (double) (closestRate.getPriceRate() * 100 / (closestRate.getHourRate() * 60));
+        Long sum = (long) (minutes * minuteCostInCoins);
         return sum;
     }
 }
