@@ -151,14 +151,12 @@ public class CalendarServiceImpl implements CalendarService {
                 DateUtil.toDateISOFormat(monthlyEventDto.getStartTime());
         Date dateForMonthlyEnd =
                 DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
-        //// TODO: 29.11.2016 if that data
-        // doesnt exist then exception - prevent it 2
 
         List<EventDto> res = new LinkedList<>();
-        Calendar calendarEndTime = Calendar.getInstance();
-        calendarEndTime.setTime(dateForMonthlyEnd);
+        Calendar calendarEndDate = Calendar.getInstance();
+        calendarEndDate.setTime(dateForMonthlyEnd);
 
-        Calendar calendarWithEndDate = Calendar.getInstance();
+        Calendar calendarWithEndTime = Calendar.getInstance();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateForMonthlyStart);
@@ -186,13 +184,13 @@ public class CalendarServiceImpl implements CalendarService {
                         monthlyEventDto.getDescription());
                 newRecurrentEvent.setStartTime(calendar.getTime());
 
-                calendarWithEndDate.setTime(calendar.getTime());
-                calendarWithEndDate.set(Calendar.HOUR_OF_DAY,
-                        calendarEndTime.get(Calendar.HOUR_OF_DAY));
-                calendarWithEndDate.set(Calendar.MINUTE,
-                        calendarEndTime.get(Calendar.MINUTE));
+                calendarWithEndTime.setTime(calendar.getTime());
+                calendarWithEndTime.set(Calendar.HOUR_OF_DAY,
+                        calendarEndDate.get(Calendar.HOUR_OF_DAY));
+                calendarWithEndTime.set(Calendar.MINUTE,
+                        calendarEndDate.get(Calendar.MINUTE));
 
-                newRecurrentEvent.setEndTime(calendarWithEndDate.getTime());
+                newRecurrentEvent.setEndTime(calendarWithEndTime.getTime());
                 newRecurrentEvent.setRecurrentId(newRecID);
                 newRecurrentEvent.setRoom(
                         roomDao.findById(monthlyEventDto.getRoomId()));
