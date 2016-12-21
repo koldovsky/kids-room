@@ -93,7 +93,6 @@ messages = {
 			invalidPhone: 'Невірно заповнене поле Номер телефону',
 			requiredWithEmptySpace: 'Поле потрібно заповнити'
 		}
-	}
 	},
     adminValidation:{
 		email: 'Некоректний емеіл',
