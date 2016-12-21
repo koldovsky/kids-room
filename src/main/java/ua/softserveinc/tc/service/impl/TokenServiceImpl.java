@@ -9,7 +9,8 @@ import ua.softserveinc.tc.server.exception.TokenInvalidException;
 import ua.softserveinc.tc.service.TokenService;
 
 @Service
-public class TokenServiceImpl extends BaseServiceImpl<Token> implements TokenService {
+public class TokenServiceImpl extends BaseServiceImpl<Token>
+        implements TokenService {
 
     @Autowired
     private TokenDao tokenDao;

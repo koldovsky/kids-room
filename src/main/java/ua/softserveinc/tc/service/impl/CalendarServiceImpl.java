@@ -104,15 +104,20 @@ public class CalendarServiceImpl implements CalendarService {
             for (String day : days) {
                 calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get(day));
 
-                if (dateForRecurrentEnd.getTime() < calendar.getTimeInMillis()) break;
-                if (dateForRecurrentStart.getTime() > calendar.getTimeInMillis()) continue;
+                if (dateForRecurrentEnd.getTime() <
+                        calendar.getTimeInMillis())
+                    break;
+                if (dateForRecurrentStart.getTime() >
+                        calendar.getTimeInMillis())
+                    continue;
 
                 Event newRecurrentEvent = new Event();
                 newRecurrentEvent.setName(recurrentEventDto.getName());
                 newRecurrentEvent.setDescription(
                         recurrentEventDto.getDescription());
                 newRecurrentEvent.setStartTime(calendar.getTime());
-                newRecurrentEvent.setRecurrentType(EventConstants.TypeOfRecurentEvent.WEEKLY);
+                newRecurrentEvent.setRecurrentType(
+                        EventConstants.TypeOfRecurentEvent.WEEKLY);
 
                 calendarWithEndDate.setTime(calendar.getTime());
                 calendarWithEndDate.set(
@@ -192,7 +197,8 @@ public class CalendarServiceImpl implements CalendarService {
                 newRecurrentEvent.setRoom(
                         roomDao.findById(monthlyEventDto.getRoomId()));
                 newRecurrentEvent.setColor(monthlyEventDto.getColor());
-                newRecurrentEvent.setRecurrentType(EventConstants.TypeOfRecurentEvent.MONTHLY);
+                newRecurrentEvent.setRecurrentType(
+                        EventConstants.TypeOfRecurentEvent.MONTHLY);
 
                 eventDao.create(newRecurrentEvent);
                 res.add(genericMapper.toDto(newRecurrentEvent));
@@ -211,17 +217,14 @@ public class CalendarServiceImpl implements CalendarService {
                 eventDao.getRecurrentEventByRecurrentId(recurrentEventId);
         Calendar calendar = Calendar.getInstance();
 
-        if (listOfRecurrentEvent.get(0).getRecurrentType() == EventConstants.TypeOfRecurentEvent.MONTHLY) {
+        if (listOfRecurrentEvent.get(0).getRecurrentType() ==
+                EventConstants.TypeOfRecurentEvent.MONTHLY) {
             Set <Integer> daysOfTheMonth = new HashSet<>();
             for (Event event : listOfRecurrentEvent) {
                 calendar.setTime(event.getStartTime());
                 daysOfTheMonth.add(calendar.get(Calendar.DAY_OF_MONTH));
             }
 
-           /* int[] tempDays = new int[daysOfTheMonth.size()];
-            int index = 0;
-            for (int day: daysOfTheMonth)
-                tempDays[index++] = day;*/
             return getMonthlyEventDto(listOfRecurrentEvent, daysOfTheMonth);
         }
         else {

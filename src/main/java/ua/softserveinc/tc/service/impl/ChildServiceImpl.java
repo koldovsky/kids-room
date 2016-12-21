@@ -10,7 +10,8 @@ import ua.softserveinc.tc.service.ChildService;
 import java.util.List;
 
 @Service
-public class ChildServiceImpl extends BaseServiceImpl<Child> implements ChildService {
+public class ChildServiceImpl extends BaseServiceImpl<Child>
+        implements ChildService {
 
     @Autowired
     private ChildDao childDao;

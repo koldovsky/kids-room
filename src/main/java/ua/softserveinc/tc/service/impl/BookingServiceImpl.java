@@ -29,7 +29,8 @@ import static ua.softserveinc.tc.dto.BookingDto.getBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 @Service
-public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
+public class BookingServiceImpl extends BaseServiceImpl<Booking>
+        implements BookingService {
 
     @Autowired
     private BookingDao bookingDao;
@@ -50,8 +51,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ChildDao childDao;
 
     @Override
-    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room) {
-        return bookingDao.getNotCompletedAndCancelledBookings(startDate, endDate, room);
+    public List<Booking> getNotCompletedAndCancelledBookings(
+            Date startDate, Date endDate, Room room) {
+        return bookingDao.getNotCompletedAndCancelledBookings(
+                startDate, endDate, room);
     }
 
     @Override
@@ -68,14 +71,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, Room room,
-                                     boolean includeLastDay, BookingState... bookingStates) {
-        return getBookings(startDate, endDate, null, room, includeLastDay, bookingStates);
+                                     boolean includeLastDay,
+                                     BookingState... bookingStates) {
+
+        return getBookings(startDate, endDate, null,
+                room, includeLastDay, bookingStates);
+
     }
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, User user,
-                                     Room room, boolean includeDay, BookingState... bookingStates) {
-        return bookingDao.getBookings(startDate, endDate, user, room, includeDay, bookingStates);
+                                     Room room, boolean includeDay,
+                                     BookingState... bookingStates) {
+
+        return bookingDao.getBookings(startDate, endDate, user,
+                room, includeDay, bookingStates);
     }
 
     @Override
@@ -143,8 +153,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public Date replaceBookingTime(Booking booking, String time) {
-        DateFormat dfDate = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
-        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
+        DateFormat dfDate = new SimpleDateFormat(
+                DateConstants.SHORT_DATE_FORMAT);
+        String dateString = dfDate.format(
+                booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(toDateAndTime(dateString));
         return calendar.getTime();
@@ -162,13 +174,17 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         User user = userDao.findById(bookingDto.getUserId());
         Room room = roomDao.findById(bookingDto.getRoomId());
 
-        Boolean isDuplicate = bookingDao.getBookingsByUserAndRoom(user, room).stream()
+        Boolean isDuplicate = bookingDao
+                .getBookingsByUserAndRoom(user, room).stream()
                 .filter(booking -> (booking.getRecurrentId() == null) ||
-                        (!booking.getRecurrentId().equals(bookingDto.getRecurrentId())))
+                        (!booking.getRecurrentId()
+                                .equals(bookingDto.getRecurrentId())))
                 .filter(booking ->
                         booking.getBookingEndTime().after(new Date()) &&
-                                booking.getBookingState() != BookingState.CANCELLED)
-                .map(booking -> BookingUtil.checkBookingTimeOverlap(bookingDto, booking))
+                                booking.getBookingState() !=
+                                        BookingState.CANCELLED)
+                .map(booking -> BookingUtil
+                        .checkBookingTimeOverlap(bookingDto, booking))
                 .filter(overlap -> overlap.equals(Boolean.TRUE))
                 .findAny().orElse(false);
         return isDuplicate;
@@ -204,7 +220,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO) {
+    public List<BookingDto> persistBookingsFromDtoAndSetId(
+            List<BookingDto> listDTO) {
         Objects.requireNonNull(listDTO, "listDTO must not be null");
         if (isAvailabilePlacesInTheRoom(listDTO)) {
             listDTO.forEach(bookingDTO -> {
@@ -220,7 +237,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
     }
 
-    public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
+    public List<BookingDto> getAllBookingsByUserAndRoom(
+            Long idUser, Long idRoom) {
         User user = userDao.findById(idUser);
         Room room = roomDao.findById(idRoom);
         return getBookings(null, null, user, room, true, BookingState.BOOKED)
@@ -238,7 +256,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      * All recurrent bookings have the same date,
      * this method use date only from first element in list
      */
-    public List<BookingDto> makeRecurrentBookings(List<BookingDto> bookingDtos) {
+    public List<BookingDto> makeRecurrentBookings(
+            List<BookingDto> bookingDtos) {
 
         String dateStart = bookingDtos.get(0).getStartTime();
         String dateEnd = bookingDtos.get(0).getEndTime();
@@ -266,10 +285,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         String[] days = bookingDtos.get(0).getDaysOfWeek().split(" ");
         Long newRecID = bookingDao.getMaxRecurrentId() + 1;
 
-        /*
-            This code make Map for bookings (using children)
-            and their new recurrent ID
-        */
         Map<Long, Long> recurrentMap = new HashMap<>(bookingDtos.size());
 
         for (BookingDto bookingDto : bookingDtos) {
@@ -281,16 +296,20 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         List<BookingDto> newRecurrentBooking = new LinkedList<>();
 
-        while (dateForRecurrentEnd.getTime() > calendarStartTime.getTimeInMillis()) {
+        while (dateForRecurrentEnd.getTime() >
+                calendarStartTime.getTimeInMillis()) {
             for (String day : days) {
 
                 List<BookingDto> dailyBookings = new LinkedList<>();
 
-                calendarStartTime.set(Calendar.DAY_OF_WEEK, daysOFWeek.get(day));
+                calendarStartTime.set(
+                        Calendar.DAY_OF_WEEK, daysOFWeek.get(day));
 
-                if (dateForRecurrentEnd.getTime() < calendarStartTime.getTimeInMillis())
+                if (dateForRecurrentEnd.getTime() <
+                        calendarStartTime.getTimeInMillis())
                     break;
-                if (dateForRecurrentStart.getTime() > calendarStartTime.getTimeInMillis())
+                if (dateForRecurrentStart.getTime() >
+                        calendarStartTime.getTimeInMillis())
                     continue;
 
                 for (BookingDto bookingDto : bookingDtos) {
@@ -299,11 +318,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                     booking.setBookingStartTime(calendarStartTime.getTime());
 
                     calendar1.setTime(calendarStartTime.getTime());
-                    calendar1.set(Calendar.HOUR_OF_DAY, calendarEndTime.get(Calendar.HOUR_OF_DAY));
-                    calendar1.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
+                    calendar1.set(Calendar.HOUR_OF_DAY,
+                            calendarEndTime.get(Calendar.HOUR_OF_DAY));
+                    calendar1.set(Calendar.MINUTE,
+                            calendarEndTime.get(Calendar.MINUTE));
 
                     booking.setBookingEndTime(calendar1.getTime());
-                    booking.setRecurrentId(recurrentMap.get(bookingDto.getKidId()));
+                    booking.setRecurrentId(recurrentMap.get(
+                            bookingDto.getKidId()));
                     booking.setRoom(room);
                     booking.setChild(childDao.findById(bookingDto.getKidId()));
                     booking.setComment(bookingDto.getComment());
@@ -335,7 +357,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return persistBookingsFromDtoAndSetId(newRecurrentBooking);
     }
 
-    private List<BookingDto> recurrentDtoToList(BookingDto recurrentBookingDto) {
+    private List<BookingDto> recurrentDtoToList(
+            BookingDto recurrentBookingDto) {
         String dateStart = recurrentBookingDto.getStartTime();
         String dateEnd = recurrentBookingDto.getEndTime();
         Date dateForRecurrentStart = DateUtil.toDateISOFormat(dateStart);
@@ -350,8 +373,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Long newRecID = bookingDao.getMaxRecurrentId() + 1;
         Room room = roomDao.findById(recurrentBookingDto.getRoomId());
         recurrentBookingDto.setRoom(room);
-        recurrentBookingDto.setChild(childDao.findById(recurrentBookingDto.getKidId()));
-        recurrentBookingDto.setUser(userDao.findById(recurrentBookingDto.getUserId()));
+        recurrentBookingDto.setChild(
+                childDao.findById(recurrentBookingDto.getKidId()));
+        recurrentBookingDto.setUser(
+                userDao.findById(recurrentBookingDto.getUserId()));
 
         List<BookingDto> newRecurrentBookingDto = new ArrayList<>();
 
@@ -401,7 +426,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDto> updateRecurrentBookings(BookingDto recurrentBookingDto) {
+    public List<BookingDto> updateRecurrentBookings(
+            BookingDto recurrentBookingDto) {
         Long recurrentId = recurrentBookingDto.getRecurrentId();
         List<Booking> recurrentBookingForDelete =
                 bookingDao.getRecurrentBookingsByRecurrentId(recurrentId);
@@ -409,7 +435,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             bdto.setBookingState(BookingState.CANCELLED);
         }
 
-        List<BookingDto> listOfRecurrentBooking = recurrentDtoToList(recurrentBookingDto);
+        List<BookingDto> listOfRecurrentBooking =
+                recurrentDtoToList(recurrentBookingDto);
         if (listOfRecurrentBooking.isEmpty()) {
             return listOfRecurrentBooking;
         }
@@ -422,7 +449,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         bookingDao.updateRecurrentBookingsDAO(recurrentBookingForDelete,
                 recurrentBookingForCreate);
         final ArrayList<BookingDto> recurrentBookings = new ArrayList<>();
-        recurrentBookingForCreate.forEach(b -> recurrentBookings.add(new BookingDto(b)));
+        recurrentBookingForCreate.forEach(b ->
+                recurrentBookings.add(new BookingDto(b)));
         return recurrentBookings;
     }
 }

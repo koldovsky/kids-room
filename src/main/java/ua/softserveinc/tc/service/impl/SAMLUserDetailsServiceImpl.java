@@ -25,7 +25,8 @@ import java.util.*;
 @Service
 public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SAMLUserDetailsServiceImpl.class);
+    private static final Logger LOG =
+            LoggerFactory.getLogger(SAMLUserDetailsServiceImpl.class);
 
 
     @Autowired
@@ -33,7 +34,8 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 
     public Object loadUserBySAML(SAMLCredential credential)
             throws UsernameNotFoundException {
-        Map<String, String> credentials = ADFSParser.parseCredentials(credential.getAttributes());
+        Map<String, String> credentials =
+                ADFSParser.parseCredentials(credential.getAttributes());
         String userEmail = credentials.get("emailaddress");
         User user = userService.getUserByEmail(userEmail);
 
@@ -43,7 +45,8 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
             user.setActive(true);
             user.setRole(Role.USER);
             user.setConfirmed(true);
-            user.setFirstName(credentials.getOrDefault("firstName", credentials.getOrDefault("name", "default")));
+            user.setFirstName(credentials.getOrDefault(
+                    "firstName", credentials.getOrDefault("name", "default")));
             user.setLastName(credentials.getOrDefault("lastName", "default"));
             user.setPassword("123");
             user.setPhoneNumber("+380000000000");
@@ -58,8 +61,10 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(user.getRole().getAuthority()));
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
+        return new org.springframework.security.core
+                .userdetails.User(user.getEmail(), user.getPassword(),
+                user.isConfirmed(), accountNonExpired,
+                credentialsNonExpired, user.isActive(), roles);
 
     }
 

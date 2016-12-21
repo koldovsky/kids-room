@@ -23,8 +23,10 @@ public interface BookingService extends BaseService<Booking> {
     Map<Room, Long> generateStatistics(List<Booking> bookings);
 
     /**
-     * Return list all of the bookings that have booking states BookingState.BOOKED
-     * and BookingState.Active. If any of the parameter is null the method will return
+     * Return list all of the bookings that have
+     * booking states BookingState.BOOKED
+     * and BookingState.Active. If any of the
+     * parameter is null the method will return
      * empty list.
      *
      * @param startDate the start date of period
@@ -32,17 +34,22 @@ public interface BookingService extends BaseService<Booking> {
      * @param room      the room of bookings
      * @return list of bookings
      */
-    List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room);
+    List<Booking> getNotCompletedAndCancelledBookings(
+            Date startDate, Date endDate, Room room);
 
-    List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates);
+    List<Booking> getBookings(Date startDate,
+                              Date endDate, BookingState... bookingStates);
 
-    List<Booking> getBookings(Date startDate, Date endDate, User user, BookingState... bookingStates);
+    List<Booking> getBookings(Date startDate, Date endDate,
+                              User user, BookingState... bookingStates);
 
     List<Booking> getBookings(Date startDate, Date endDate, Room room,
-                              boolean includeOneDay, BookingState... bookingStates);
+                              boolean includeOneDay,
+                              BookingState... bookingStates);
 
-    List<Booking> getBookings(Date startDate, Date endDate, User user, Room room,
-                              boolean includeLastDay, BookingState... bookingStates);
+    List<Booking> getBookings(Date startDate, Date endDate, User user,
+                              Room room, boolean includeLastDay,
+                              BookingState... bookingStates);
 
     Booking confirmBookingEndTime(BookingDto bookingDto);
 
@@ -54,13 +61,16 @@ public interface BookingService extends BaseService<Booking> {
 
     Boolean checkForDuplicateBookingSingle(BookingDto bookingDto);
 
-    List<BookingDto> persistBookingsFromDtoAndSetId(List<BookingDto> listDTO);
+    List<BookingDto> persistBookingsFromDtoAndSetId(
+            List<BookingDto> listDTO);
 
-    List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom);
+    List<BookingDto> getAllBookingsByUserAndRoom(
+            Long idUser, Long idRoom);
 
     Long getMaxRecurrentId();
 
-    List<BookingDto> makeRecurrentBookings(List<BookingDto> bookingDtos);
+    List<BookingDto> makeRecurrentBookings(
+            List<BookingDto> bookingDtos);
 
     BookingDto getRecurrentBookingForEditingById(long bookingId);
 
