@@ -2,13 +2,11 @@ package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,10 +25,8 @@ import ua.softserveinc.tc.validator.TimeValidator;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.text.DateFormat;
 import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 /**
@@ -40,6 +36,7 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 @Controller
 public class MyBookingsController {
+
     @Autowired
     private UserService userService;
 
@@ -61,7 +58,7 @@ public class MyBookingsController {
      * @throws ResourceNotFoundException
      * if any of the requesting resources were not found
      */
-    @RequestMapping(value = "/mybookings", method = RequestMethod.GET)
+    @GetMapping("/mybookings")
     public ModelAndView getMyBookings(Principal principal)
     throws AccessDeniedException{
         User current = userService.getUserByEmail(principal.getName());
@@ -90,7 +87,7 @@ public class MyBookingsController {
      * @throws ResourceNotFoundException
      * if any of the requesting resources were not found
      */
-    @RequestMapping(value = "mybookings/getbookings", method = RequestMethod.GET)
+    @GetMapping("mybookings/getbookings")
     @ResponseBody
     public ResponseEntity<String> getBookings(
                        @RequestParam(value = "startDate") String startDate,
@@ -100,7 +97,8 @@ public class MyBookingsController {
 
         if(!timeValidator.validateDate(startDate, endDate)) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DATE_IS_NOT_VALID);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.DATE_IS_NOT_VALID);
         }
         User currentUser = userService.getUserByEmail(principal.getName());
         if(currentUser.getRole() != Role.USER){

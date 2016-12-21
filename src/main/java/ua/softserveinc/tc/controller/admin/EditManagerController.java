@@ -2,8 +2,8 @@ package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
@@ -19,7 +19,6 @@ import java.util.List;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-@RequestMapping(value = "/adm-edit-manager")
 public class EditManagerController {
 
     @Autowired
@@ -32,7 +31,7 @@ public class EditManagerController {
      *
      * @return model
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/adm-edit-manager")
     public ModelAndView showAllManagersForm() {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
 
@@ -50,7 +49,7 @@ public class EditManagerController {
      *
      * @return String value
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/adm-edit-manager")
     public String managerBlockUnblock(@RequestParam Long id) {
         User manager = this.userService.findById(id);
         manager.setActive(!manager.isActive());

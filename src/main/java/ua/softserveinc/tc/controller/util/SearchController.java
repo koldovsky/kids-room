@@ -2,11 +2,9 @@ package ua.softserveinc.tc.controller.util;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import ua.softserveinc.tc.constants.SearchConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
@@ -24,7 +22,7 @@ import java.util.List;
 /**
  * Created by edward on 5/14/16.
  */
-@Controller
+@RestController
 public class SearchController {
 
     @Autowired
@@ -36,8 +34,7 @@ public class SearchController {
     @Autowired
     private BookingSearch bookingSearch;
 
-    @RequestMapping(value = SearchConstants.USER_SEARCH_URL, method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping(SearchConstants.USER_SEARCH_URL)
     public String searchUser(@RequestParam("field") String field) {
         List<UserDto> result = new ArrayList<>();
 
@@ -52,8 +49,7 @@ public class SearchController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = SearchConstants.CHILD_SEARCH_URL, method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping(SearchConstants.CHILD_SEARCH_URL)
     public String searchChild(@RequestParam("field") String field) {
         List<ChildDto> result = new ArrayList<>();
 
@@ -68,8 +64,7 @@ public class SearchController {
         return gson.toJson(result);
     }
 
-    @RequestMapping(value = SearchConstants.BOOKING_SEARCH_URL, method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping(SearchConstants.BOOKING_SEARCH_URL)
     public String searchBooking(@RequestParam("field") String field) {
         List<BookingDto> result = new ArrayList<>();
 

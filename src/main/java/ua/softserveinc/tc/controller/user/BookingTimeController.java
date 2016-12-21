@@ -4,9 +4,13 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -27,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Controller
+@RestController
 public class BookingTimeController {
 
     @Autowired
@@ -49,23 +53,24 @@ public class BookingTimeController {
     private BookingValidator bookingValidator;
 
 
-    @RequestMapping(value = "getroomproperty", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping("getroomproperty")
     public String getRoomProperty(@RequestBody Integer roomId) {
 
         return null;
     }
 
-    @RequestMapping(value = "makenewbooking", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos, BindingResult bindingResult) {
+    @PostMapping("makenewbooking")
+    public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos,
+                                             BindingResult bindingResult) {
         if (bookingService.checkForDuplicateBooking(dtos)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
         }
 
         for (BookingDto dto : dtos) {
             if (!this.timeValidator.validateBooking(dto)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        ValidationConstants.ENDTIME_BEFORE_STARTTIME);
             }
         }
         dtos.forEach(dto -> {
@@ -81,7 +86,8 @@ public class BookingTimeController {
         List<BookingDto> dto = bookingService.persistBookingsFromDtoAndSetId(dtos);
 
         if (dto.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ValidationConstants.ROOM_IS_FULL_MESSAGE);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
+                    ValidationConstants.ROOM_IS_FULL_MESSAGE);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dto));
@@ -89,17 +95,14 @@ public class BookingTimeController {
 
     }
 
-    @RequestMapping(value = "getallbookings/{idUser}/{idRoom}",
-            method = RequestMethod.GET,
-            produces = "text/plain;charset=UTF-8")
-    @ResponseBody
+    @GetMapping(value = "getallbookings/{idUser}/{idRoom}",
+                produces = "text/plain;charset=UTF-8")
     public String getAllBookings(@PathVariable Long idUser,
                                  @PathVariable Long idRoom) {
         return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
-    @RequestMapping(value = "/disabled", method = RequestMethod.GET)
-    @ResponseBody
+    @GetMapping("/disabled")
     public String getDisabledTime(@RequestParam Long roomID) {
         Room room = roomService.findById(roomID);
 
@@ -117,15 +120,16 @@ public class BookingTimeController {
         return JsonUtil.toJson(blockedPeriods);
     }
 
-    @RequestMapping(value = "makerecurrentbookings", method = RequestMethod.POST)
-    @ResponseBody
+    @PostMapping("makerecurrentbookings")
     public ResponseEntity<String>  makeRecurrentBookings(@RequestBody List<BookingDto> bookingDtos,
                                         BindingResult bindingResult) {
         if (bookingService.checkForDuplicateBooking(bookingDtos)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
         }
         if (!this.timeValidator.validateBooking(bookingDtos.get(0))) {
-            ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            ResponseEntity resp = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.ENDTIME_BEFORE_STARTTIME);
             return resp;
         }
         for (BookingDto bookingDto : bookingDtos) {
@@ -138,26 +142,25 @@ public class BookingTimeController {
             }
         }
         List<BookingDto> bookings = bookingService.makeRecurrentBookings(bookingDtos);
-        if (bookings.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
+        if (bookings.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ValidationConstants.NO_DAYS_FOR_BOOKING);
 
         return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(bookings));
     }
 
 
 
-    @RequestMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
-            method = RequestMethod.GET,
-            produces = "text/plain;charset=UTF-8")
-    @ResponseBody
+    @GetMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
+                produces = "text/plain;charset=UTF-8")
     public String getRecurrentBookingForEditing(@PathVariable  Long recurrentId) {
         return JsonUtil.toJson(bookingService.getRecurrentBookingForEditingById(recurrentId));
     }
 
 
 
-    @RequestMapping(value = "updaterecurrentbookings", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto, BindingResult bindingResult) {
+    @PostMapping("updaterecurrentbookings")
+    public ResponseEntity<String>  updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto,
+                                                               BindingResult bindingResult) {
         bookingValidator.validate(recurrentBookingDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
@@ -166,14 +169,15 @@ public class BookingTimeController {
         try {
             bookings = bookingService.updateRecurrentBookings(recurrentBookingDto);
         }catch (DuplicateBookingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
         }
         if (bookings.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ValidationConstants.NO_DAYS_FOR_BOOKING);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.NO_DAYS_FOR_BOOKING);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(JsonUtil.toJson(bookings));
     }
-
 
 }

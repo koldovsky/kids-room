@@ -46,7 +46,7 @@
         <!-- VERSION -->
 
         <java-version>1.8</java-version>
-        <org.springframework-version>4.2.6.RELEASE</org.springframework-version>
+        <org.springframework-version>4.3.4.RELEASE</org.springframework-version>
         <org.springframework.data-version>1.10.1.RELEASE</org.springframework.data-version>
         <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
         <org.springframework.spring-test-version>4.2.6.RELEASE</org.springframework.spring-test-version>
@@ -62,7 +62,7 @@
         <javax.jstl-version>1.2</javax.jstl-version>
         <javax.servlet-api-version>3.1.0</javax.servlet-api-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
-        <org.spring.securiry-version>4.0.4.RELEASE</org.spring.securiry-version>
+        <org.spring.securiry-version>4.2.0.RELEASE</org.spring.securiry-version>
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.1.7</logback.version>
 

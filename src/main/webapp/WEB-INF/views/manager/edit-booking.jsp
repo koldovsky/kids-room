@@ -135,7 +135,9 @@
                         <div id="kids">
                         </div>
                         <br>
-                        <input type="button" class="btn btn-success" id="booking" value="<spring:message code="booking.book"/>">
+                        <div class="block-center">
+                            <input type="button" class="btn btn-success block-center" id="booking" value="<spring:message code="booking.book"/>">
+                        </div>
                     </div>
                 </form>
             </div>
