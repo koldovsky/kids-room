@@ -73,5 +73,4 @@ public class ExceptionHandlingController {
         return "error-duplicate-booking";
     }
 
-
 }

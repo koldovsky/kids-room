@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.ConfigurationDto;
@@ -35,13 +35,13 @@ public class ConfigurationController {
     @Log
     private static Logger log;
 
-    @RequestMapping(value = "/adm-config", method = RequestMethod.GET)
+    @GetMapping("/adm-config")
     public String getConfiguration(Model model) {
         model.addAttribute(AdminConstants.ATR_CONFIG, appConfig.getObjectDto());
         return AdminConstants.EDIT_CONFIG;
     }
 
-    @RequestMapping(value = "/adm-config", method = RequestMethod.POST)
+    @PostMapping("/adm-config")
     public String setConfiguration(@ModelAttribute(value = AdminConstants.ATR_CONFIG) ConfigurationDto cDto,
                                    BindingResult bindingResult) {
         configValidator.validate(cDto, bindingResult);

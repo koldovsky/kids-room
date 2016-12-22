@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.entity.Child;
@@ -24,6 +23,7 @@ import java.util.List;
 
 @Controller
 public class MyKidsPageController {
+
     @Autowired
     private UserService userService;
 
@@ -31,7 +31,7 @@ public class MyKidsPageController {
      * @return "My Kids" view
      * @throws AccessDeniedException if requesting user has no permission to access this page
      */
-    @RequestMapping(value = ChildConstants.View.MY_KIDS, method = RequestMethod.GET)
+    @GetMapping(ChildConstants.View.MY_KIDS)
     public ModelAndView myKids(Principal principal)
     {
         ModelAndView model = new ModelAndView();

@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.dto.UserDto;
@@ -20,7 +19,10 @@ import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.*;
+import static ua.softserveinc.tc.util.DateUtil.dateNow;
+import static ua.softserveinc.tc.util.DateUtil.dateMonthAgo;
+import static ua.softserveinc.tc.util.DateUtil.toDate;
+import static ua.softserveinc.tc.util.DateUtil.getStringDate;
 
 
 @Controller
@@ -31,7 +33,7 @@ public class ReportController {
     @Autowired
     private RoomService roomService;
 
-    @RequestMapping(value = "/manager-report", method = RequestMethod.GET)
+    @GetMapping("/manager-report")
     public ModelAndView report(Principal principal) {
         ModelAndView model = new ModelAndView(ReportConstants.REPORT_VIEW);
         ModelMap modelMap = model.getModelMap();
@@ -48,8 +50,8 @@ public class ReportController {
         return model;
     }
 
+    @GetMapping("/refreshParents/{startDate}/{endDate}/{roomId}")
     @ResponseBody
-    @RequestMapping(value = "/refreshParents/{startDate}/{endDate}/{roomId}", method = RequestMethod.GET)
     public String refreshView(@PathVariable String startDate,
                               @PathVariable String endDate,
                               @PathVariable Long roomId) {

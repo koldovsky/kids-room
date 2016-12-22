@@ -1,15 +1,13 @@
 package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@RequestMapping(value = "/adm-days-off")
 public class DayOffPageController {
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/adm-days-off")
     public String getDaysOffPage() {
         return "adm-days-off";
     }
