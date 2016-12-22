@@ -113,10 +113,17 @@ public class BookingDto implements Serializable{
         return recurrentBookingDto;
     }
 
-    public void setWeekDays(Set<Integer> weekDays)
-    {
+    public void setWeekDays(Set<Integer> weekDays) {
         this.weekDays=weekDays;
 
+    }
+
+    public Long getDurtionLong() {
+        return durationLong;
+    }
+
+    public void setDurtionLong(Long durtionLong) {
+        this.durationLong = durtionLong;
     }
 
     public Booking getBookingObject() {

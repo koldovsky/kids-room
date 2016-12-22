@@ -1,6 +1,6 @@
 'use strict';
 
-App.factory('DayOffService', ['$http', '$q', function ($http) {
+App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
 
     var REST_URI_ALL = '/home/adm-days-off/all';
     var REST_URI_ROOMS = '/home/adm-edit-room/all';
