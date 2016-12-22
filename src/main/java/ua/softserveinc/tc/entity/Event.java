@@ -50,7 +50,7 @@ public class Event {
     private String color;
 
     @Column(name = EventConstants.Entity.TYPE)
-    private String recurrentType;
+    private EventConstants.TypeOfRecurentEvent recurrentType;
 
     public Long getRecurrentId() {
         return recurrentId;
@@ -179,11 +179,11 @@ public class Event {
                 " " + DateUtil.toIsoString(endTime) + " ";
     }
 
-    public void setRecurrentType(String recurrentType) {
-        this.recurrentType = recurrentType;
+    public EventConstants.TypeOfRecurentEvent getRecurrentType() {
+        return recurrentType;
     }
 
-    public String getRecurrentType() {
-        return recurrentType;
+    public void setRecurrentType(EventConstants.TypeOfRecurentEvent recurrentType) {
+        this.recurrentType = recurrentType;
     }
 }

@@ -35,6 +35,8 @@ public final class EventConstants {
     }
 
 
+    public enum TypeOfRecurentEvent {WEEKLY, MONTHLY}
+
     public static final class View {
 
         public static final String MAIN_PAGE = "index";

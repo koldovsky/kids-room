@@ -5,6 +5,7 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.EventService;
 
 @Service
-public class EventServiceImpl extends BaseServiceImpl<Event> implements EventService {
+public class EventServiceImpl extends BaseServiceImpl<Event>
+        implements EventService {
 
 }
