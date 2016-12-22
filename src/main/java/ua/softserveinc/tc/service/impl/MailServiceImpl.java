@@ -68,8 +68,7 @@ public class MailServiceImpl implements MailService {
     }
 
     private StringBuilder getLink(String partOfLink, String token) {
-        return new StringBuilder(MailConstants.HTTP).append(
-                request.getServerName()).append(partOfLink).append(token);
+        return new StringBuilder().append(getBaseUrl()).append(partOfLink).append(token);
     }
 
     /**
