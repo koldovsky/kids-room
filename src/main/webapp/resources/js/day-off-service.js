@@ -1,6 +1,6 @@
 'use strict';
 
-App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
+App.factory('DayOffService', ['$http', '$q', function ($http) {
 
     var REST_URI_ALL = '/home/adm-days-off/all';
     var REST_URI_ROOMS = '/home/adm-edit-room/all';
@@ -32,7 +32,7 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
     }
 
     function deleteDayOff(id) {
-       return $http.delete(REST_URI_DAY + id);
+        return $http.delete(REST_URI_DAY + id);
     }
 
     function getAllRooms() {
