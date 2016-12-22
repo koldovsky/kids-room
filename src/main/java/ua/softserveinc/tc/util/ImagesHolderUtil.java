@@ -19,11 +19,11 @@ public class ImagesHolderUtil {
     private static byte[] defaultPictureBoy = {};
     private static byte[] defaultPictureGirl = {};
 
-    static{
+    static {
         URL urlDefaultBoy = ImagesHolderUtil.class.getResource("/images/default-boy.jpg");
         URL urlDefaultGirl = ImagesHolderUtil.class.getResource("/images/default-girl.jpg");
         ByteArrayOutputStream outChild = new ByteArrayOutputStream(
-                ImageConstants.DEFAULT_SIZE_PHOTO_CHILD_IN_BITS);
+                ImageConstants.DEFAULT_SIZE_PHOTO_CHILD_IN_BYTES);
         try(InputStream inBoy = urlDefaultBoy.openStream();
             InputStream inGirl = urlDefaultGirl.openStream()) {
 
