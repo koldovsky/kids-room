@@ -41,6 +41,7 @@ public final class UserConstants {
     public static final String RESEND_MAIL_VIEW = "resend-mail";
     public static final String USER_DETAILS_SERVICE = "userDetailsService";
     public static final String ATRIBUTE_CONFIG = "config";
+    public static final String ENTRY_POINT = "entrypoint";
 
     private Model() {
     }

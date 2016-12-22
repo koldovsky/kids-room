@@ -5,6 +5,7 @@
 
 <div class="form-group-material-blue-400">
     <div class="col-sm-offset-4 col-xs-3" id="login-form">
+        <spring:message code="changePassword.inform.message" /> <br><br>
         <form:form action="changePassword" method="post" modelAttribute="<%=UserConstants.Entity.USER %>">
             <div class="form-group">
                 <span class="glyphicon glyphicon-lock"></span>
