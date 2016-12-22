@@ -30,7 +30,8 @@ import java.util.stream.Collectors;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 @Service
-public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
+public class RoomServiceImpl extends BaseServiceImpl<Room>
+        implements RoomService {
 
     @Autowired
     private ApplicationConfigurator appConfigurator;
@@ -69,7 +70,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      * @return map containing start-end pairs representing time periods
      */
     @Override
-    public Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end) {
+    public Map<String, String> getBlockedPeriods(
+            Room room, Calendar start, Calendar end) {
         Map<String, String> result = new TreeMap<>();
         while (start.compareTo(end) < 0) {
             result.putAll(getBlockedPeriodsForDay(room, start));
@@ -98,7 +100,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         return result;
     }
 
-    private Map<String, String> getBlockedPeriodsForDay(Room room, Calendar calendarStart) {
+    private Map<String, String> getBlockedPeriodsForDay(
+            Room room, Calendar calendarStart) {
         DateFormat timeFormat = new SimpleDateFormat(DateConstants.TIME_FORMAT);
 
         Calendar calendarEnd = Calendar.getInstance();
@@ -109,13 +112,15 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         try {
             Calendar temp = Calendar.getInstance();
             temp.setTime(timeFormat.parse(room.getWorkingHoursStart()));
-            calendarStart.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
+            calendarStart.set(Calendar.HOUR_OF_DAY,
+                    temp.get(Calendar.HOUR_OF_DAY));
             calendarStart.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
             calendarStart.set(Calendar.SECOND, 0);
             calendarStart.set(Calendar.MILLISECOND, 0);
 
             temp.setTime(timeFormat.parse(room.getWorkingHoursEnd()));
-            calendarEnd.set(Calendar.HOUR_OF_DAY, temp.get(Calendar.HOUR_OF_DAY));
+            calendarEnd.set(Calendar.HOUR_OF_DAY,
+                    temp.get(Calendar.HOUR_OF_DAY));
             calendarEnd.set(Calendar.MINUTE, temp.get(Calendar.MINUTE));
             calendarEnd.set(Calendar.SECOND, 0);
             calendarStart.set(Calendar.MILLISECOND, 0);
@@ -141,7 +146,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                 List<Booking> tempList = bookings.stream()
                         .filter(booking ->
                                 booking.getBookingStartTime().before(hi)
-                                        && booking.getBookingEndTime().after(lo))
+                                        && booking.getBookingEndTime()
+                                        .after(lo))
                         .collect(Collectors.toList());
                 if (room.getCapacity() <= tempList.size()) {
                     result.put(DateUtil.convertDateToString(lo),
@@ -170,7 +176,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         }
     }
 
-    private List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room) {
+    private List<Booking> reservedBookings(
+            Date dateLo, Date dateHi, Room room) {
         return roomDao.reservedBookings(dateLo, dateHi, room);
     }
 
@@ -178,21 +185,24 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      * The method finds the maximum people in the room for period of time
      * from dateLo to dateHi. All of the parameters must not be a null.
      *
-     * @param dateLo start of period
-     * @param dateHi end of period
+     * @param dateLo   start of period
+     * @param dateHi   end of period
      * @param bookings all reserved bookings in the time period
      * @return The maximum number of people that are simultaneously in the room
      */
-    private int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings) {
+    private int maxRangeReservedBookings(
+            Date dateLo, Date dateHi, List<Booking> bookings) {
         Objects.requireNonNull(dateLo, "dateLo must not be null");
         Objects.requireNonNull(dateHi, "dateHi must not be null");
         Objects.requireNonNull(bookings, "bookings must not be null");
         final long oneMinuteMillis = 60 * 1000;
         int maxReservedBookings = 0;
-        for (long ti = dateLo.getTime() + 1; ti < dateHi.getTime(); ti += oneMinuteMillis) {
+        for (long ti = dateLo.getTime() + 1;
+             ti < dateHi.getTime(); ti += oneMinuteMillis) {
             int temporaryMax = 0;
             for (Booking tab : bookings)
-                if (tab.getBookingStartTime().getTime() < ti && tab.getBookingEndTime().getTime() > ti)
+                if (tab.getBookingStartTime().getTime() < ti &&
+                        tab.getBookingEndTime().getTime() > ti)
                     temporaryMax++;
             if (temporaryMax > maxReservedBookings)
                 maxReservedBookings = temporaryMax;
@@ -210,18 +220,21 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
      * @param room   a requested room
      * @return number of places available in the room for the period
      */
-    public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
+    public Integer getAvailableSpaceForPeriod(
+            Date dateLo, Date dateHi, Room room) {
         Objects.requireNonNull(dateLo, "dateLo must not be null");
         Objects.requireNonNull(dateHi, "dateHi must not be null");
         Objects.requireNonNull(room, "room must not be null");
         List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
-        int maxReservedBookings = maxRangeReservedBookings(dateLo, dateHi, bookings);
+        int maxReservedBookings =
+                maxRangeReservedBookings(dateLo, dateHi, bookings);
         return room.getCapacity() - maxReservedBookings;
     }
 
     @Override
     public List<BookingDto> getAllFutureBookings(Room room) {
-        return bookingDao.getBookings(new Date(), null, null, room, true, BookingState.BOOKED)
+        return bookingDao.getBookings(
+                new Date(), null, null, room, true, BookingState.BOOKED)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
@@ -240,10 +253,10 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                 .filter(room -> room.getDaysOff().stream()
                         .noneMatch(day -> day.getEndDate().isEqual(today)))
                 .filter(room -> room.getDaysOff().stream()
-                        .noneMatch(day -> today.isAfter(day.getStartDate()) && today.isBefore(day.getEndDate())))
+                        .noneMatch(day -> today.isAfter(day.getStartDate()) &&
+                                today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
-
 
 
 }

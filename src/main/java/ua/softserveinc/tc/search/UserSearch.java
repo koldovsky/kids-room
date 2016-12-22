@@ -12,7 +12,7 @@ import ua.softserveinc.tc.entity.User;
 @Transactional
 public class UserSearch extends BaseSearch<User> {
 
-    public UserSearch(){
+    public UserSearch() {
         searchFields = SearchConstants.getUserSearchFields();
     }
 

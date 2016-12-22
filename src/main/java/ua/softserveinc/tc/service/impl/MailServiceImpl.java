@@ -17,11 +17,12 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.constants.URIConstants;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,15 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class MailServiceImpl implements MailService {
 
-    private ExecutorService executor = Executors.newFixedThreadPool(20, factory -> {
-        Thread thread = Executors.defaultThreadFactory().newThread(factory);
-        thread.setDaemon(true);
-        return thread;
-    });
+    private ExecutorService executor =
+            Executors.newFixedThreadPool(20, factory -> {
+                Thread thread = Executors.defaultThreadFactory().newThread(factory);
+                thread.setDaemon(true);
+                return thread;
+            });
 
     @Autowired
-    private ServletRequest request;
+    private HttpServletRequest request;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -50,13 +52,15 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private ApplicationConfigurator configurator;
 
-
+    @SuppressWarnings("deprecation")
     private String getTextMessage(String template, Map<String, Object> model) {
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                MailConstants.EMAIL_TEMPLATE + template, MailConstants.UTF_8, model);
+                MailConstants.EMAIL_TEMPLATE + template,
+                MailConstants.UTF_8, model);
     }
 
-    private Map<String, Object> getModel(User user, String partOfLink, String token) {
+    private Map<String, Object> getModel(User user, String partOfLink,
+                                         String token) {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, user);
         model.put(MailConstants.LINK, getLink(partOfLink, token));
@@ -64,12 +68,27 @@ public class MailServiceImpl implements MailService {
     }
 
     private StringBuilder getLink(String partOfLink, String token) {
-        return new StringBuilder(MailConstants.HTTP).append(request.getServerName()).append(partOfLink).append(token);
+        return new StringBuilder().append(getBaseUrl()).append(partOfLink).append(token);
+    }
+
+    /**
+     * Return the base Url of the page.
+     *
+     * @return the base Url of the page
+     */
+    private String getBaseUrl() {
+        return request.getScheme()
+                + URIConstants.SCHEMA_AND_SERVER_NAME_CONJUCTION
+                + request.getServerName()
+                + URIConstants.SERVER_NAME_AND_PORT_CONJUCTION
+                + request.getServerPort()
+                + request.getContextPath();
     }
 
     @Async
     @Override
-    public void sendMessage(String email, String subject, String text) throws MessagingException {
+    public void sendMessage(String email, String subject, String text)
+            throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
 
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -85,7 +104,8 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendReminder(User recipient, String subject, List<BookingDto> bookings)
+    public void sendReminder(User recipient, String subject,
+                             List<BookingDto> bookings)
             throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, recipient);
@@ -96,37 +116,49 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendRegisterMessage(String subject, User user, String token) throws MessagingException {
-        Map<String, Object> model = getModel(user, MailConstants.CONFIRM_USER_LINK, token);
-        sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_USER_VM, model));
+    public void sendRegisterMessage(String subject, User user,
+                                    String token) throws MessagingException {
+        Map<String, Object> model = getModel(
+                user, MailConstants.CONFIRM_USER_LINK, token);
+        sendMessage(user.getEmail(), subject,
+                getTextMessage(MailConstants.CONFIRM_USER_VM, model));
     }
 
     @Override
-    public void sendChangePassword(String subject, User user, String token) throws MessagingException {
-        Map<String, Object> model = getModel(user, MailConstants.CHANGE_PASS_LINK, token);
-        sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CHANGE_PASS_VM, model));
+    public void sendChangePassword(String subject, User user,
+                                   String token) throws MessagingException {
+        Map<String, Object> model = getModel(
+                user, MailConstants.CHANGE_PASS_LINK, token);
+        sendMessage(user.getEmail(), subject,
+                getTextMessage(MailConstants.CHANGE_PASS_VM, model));
     }
 
     @Override
-    public void buildConfirmRegisterManager(String subject, User user, String token) throws MessagingException {
-        Map<String, Object> model = getModel(user, MailConstants.CONFIRM_MANAGER_LINK, token);
-        sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
+    public void buildConfirmRegisterManager(
+            String subject, User user, String token) throws MessagingException {
+        Map<String, Object> model = getModel(
+                user, MailConstants.CONFIRM_MANAGER_LINK, token);
+        sendMessage(user.getEmail(), subject,
+                getTextMessage(MailConstants.CONFIRM_MANAGER_VM, model));
     }
 
     @Override
-    public void sendPaymentInfo(User user, String subject, Long sumTotal) throws MessagingException {
+    public void sendPaymentInfo(User user, String subject, Long sumTotal)
+            throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, user);
         model.put(ReportConstants.SUM_TOTAL, sumTotal);
         model.put(MailConstants.LINK, MailConstants.HTTP +
                 configurator.getServerName() + MailConstants.MY_BOOKINGS_LINK);
 
-        sendMessage(user.getEmail(), subject, getTextMessage(MailConstants.PAYMENT_VM, model));
+        sendMessage(user.getEmail(), subject,
+                getTextMessage(MailConstants.PAYMENT_VM, model));
     }
 
 
     @Override
-    public void sendDayOffReminder(User recipient, String subject, DayOff dayOff)
+    public void sendDayOffReminder(
+            User recipient, String subject, DayOff dayOff)
             throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, recipient);
@@ -138,7 +170,8 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendDayOffReminderAsync(User recipient, String subject, DayOff dayOff)
+    public void sendDayOffReminderAsync(
+            User recipient, String subject, DayOff dayOff)
             throws MessagingException {
 
         Map<String, Object> model = new HashMap<>();
@@ -149,7 +182,8 @@ public class MailServiceImpl implements MailService {
         executor.execute(() -> {
             try {
                 sendMessage(recipient.getEmail(),
-                        subject, getTextMessage(MailConstants.DAY_OFF_REMINDER_VM, model));
+                        subject, getTextMessage(
+                                MailConstants.DAY_OFF_REMINDER_VM, model));
             } catch (MessagingException me) {
                 log.error("Error sending e-mail", me);
             }

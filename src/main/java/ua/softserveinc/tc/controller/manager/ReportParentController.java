@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.entity.Booking;
@@ -28,6 +26,7 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
  */
 @Controller
 public class ReportParentController {
+
     @Autowired
     private UserService userService;
 
@@ -37,8 +36,7 @@ public class ReportParentController {
     @Autowired
     private BookingService bookingService;
 
-    @ResponseBody
-    @RequestMapping(value = "/manager-report-parent", method = RequestMethod.GET)
+    @GetMapping("/manager-report-parent")
     public ModelAndView parentBookings(@RequestParam(value = ReportConstants.START_DATE) String startDate,
                                        @RequestParam(value = ReportConstants.END_DATE) String endDate,
                                        @RequestParam(value = ReportConstants.ROOM_ID) Long roomId,

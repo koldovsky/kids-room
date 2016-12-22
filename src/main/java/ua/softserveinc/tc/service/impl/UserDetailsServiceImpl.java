@@ -21,9 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws
+            UsernameNotFoundException {
         User user = userService.getUserByEmail(email);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("not found");
         }
         boolean accountNonExpired = true;
@@ -31,7 +32,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority(user.getRole().getAuthority()));
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                        user.isConfirmed(), accountNonExpired, credentialsNonExpired, user.isActive(), roles);
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getPassword(),
+                user.isConfirmed(), accountNonExpired,
+                credentialsNonExpired, user.isActive(), roles);
     }
 }

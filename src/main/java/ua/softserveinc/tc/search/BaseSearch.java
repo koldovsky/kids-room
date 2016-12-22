@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by edward on 5/16/16.
  */
-public abstract class BaseSearch <T> {
+public abstract class BaseSearch<T> {
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -23,7 +23,8 @@ public abstract class BaseSearch <T> {
 
     @Transactional
     public List<T> search(String text) {
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+        FullTextEntityManager fullTextEntityManager =
+                Search.getFullTextEntityManager(entityManager);
 
         QueryBuilder queryBuilder =
                 fullTextEntityManager.getSearchFactory()

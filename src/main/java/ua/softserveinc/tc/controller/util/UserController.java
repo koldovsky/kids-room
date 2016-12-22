@@ -3,7 +3,7 @@ package ua.softserveinc.tc.controller.util;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 
@@ -12,17 +12,17 @@ import ua.softserveinc.tc.constants.UserConstants;
 public class UserController {
 
     @Secured({"ROLE_ANONYMOUS"})
-    @RequestMapping(value = "/login ", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String login() {
         return UserConstants.Model.LOGIN_VIEW;
     }
 
-    @RequestMapping(value = "/rules ", method = RequestMethod.GET)
+    @GetMapping("/rules")
     public String getRules() {
         return UserConstants.Model.RULES_VIEW;
     }
 
-    @RequestMapping("/accessDenied")
+    @GetMapping("/accessDenied")
     public String handleError403() {
         return  ErrorConstants.ACCESS_DENIED_VIEW;
     }

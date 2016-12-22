@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User>
+        implements UserService {
 
     @Autowired
     private UserDao userDao;
@@ -48,7 +49,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User getUserByEmail(String email)  {
+    public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
     }
 
@@ -70,7 +71,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public List<Room> getActiveRooms(User user) {
-        return  user.getRooms().stream()
+        return user.getRooms().stream()
                 .filter(Room::isActive)
                 .collect(Collectors.toList());
     }

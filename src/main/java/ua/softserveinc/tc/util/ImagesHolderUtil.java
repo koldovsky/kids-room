@@ -6,8 +6,11 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.io.IOException;
+import org.apache.commons.io.IOUtils;
+import ua.softserveinc.tc.constants.ImageConstants;
 
 /**
  * Created by Nestor on 22.06.2016.
@@ -18,8 +21,8 @@ public class ImagesHolderUtil {
     private static Logger log;
 
     //default non-null values
-    private static byte[] defaultPictureBoy = "pic-boy".getBytes();
-    private static byte[] defaultPictureGirl = "pic-girl".getBytes();
+    private static byte[] defaultPictureBoy = {};
+    private static byte[] defaultPictureGirl = {};
 
     public static byte[] getDefaultPictureBoy() {
         return defaultPictureBoy;
@@ -30,22 +33,20 @@ public class ImagesHolderUtil {
     }
 
     static{
-        File imgPathBoy = new File("src/main/resources/images/default-boy.jpg");
-        File imgPathGirl = new File("src/main/resources/images/default-girl.jpg");
+        URL urlDefaultBoy = ImagesHolderUtil.class.getResource("/images/default-boy.jpg");
+        URL urlDefaultGirl = ImagesHolderUtil.class.getResource("/images/default-girl.jpg");
+        ByteArrayOutputStream outChild = new ByteArrayOutputStream(
+                ImageConstants.DEFAULT_SIZE_PHOTO_CHILD_IN_BITS);
+        try(InputStream inBoy = urlDefaultBoy.openStream();
+            InputStream inGirl = urlDefaultGirl.openStream()) {
 
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(1000)){
-            BufferedImage bufferedImage = ImageIO.read(imgPathBoy);
-            ImageIO.write(bufferedImage, "jpg", baos);
-            baos.flush();
-            defaultPictureBoy = baos.toByteArray();
+            IOUtils.copy(inBoy, outChild);
+            defaultPictureBoy = outChild.toByteArray();
+            outChild.reset();
+            IOUtils.copy(inGirl, outChild);
+            defaultPictureGirl = outChild.toByteArray();
 
-            baos.reset();
-            bufferedImage = ImageIO.read(imgPathGirl);
-            ImageIO.write(bufferedImage, "jpg", baos);
-            baos.flush();
-            defaultPictureGirl = baos.toByteArray();
-
-        } catch (IOException ioe) {
+        } catch(IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
         }
 

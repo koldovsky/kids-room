@@ -16,7 +16,8 @@ import java.util.concurrent.TimeUnit;
 import static ua.softserveinc.tc.util.DateUtil.getRoundedHours;
 
 @Service
-public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateService {
+public class RateServiceImpl extends BaseServiceImpl<Rate>
+        implements RateService {
 
     @Override
     public Rate calculateAppropriateRate(long milliseconds, List<Rate> rates) {
@@ -32,16 +33,19 @@ public class RateServiceImpl extends BaseServiceImpl<Rate> implements RateServic
         if (min.isPresent()) {
             return min.get();
         } else {
-            return Collections.max(rates, Comparator.comparing(Rate::getHourRate));
+            return Collections.max(rates,
+                    Comparator.comparing(Rate::getHourRate));
         }
     }
 
-    public Long calculateBookingCost(Booking booking){
+    public Long calculateBookingCost(Booking booking) {
         List<Rate> rates = booking.getRoom().getRates();
-        Rate closestRate = this.calculateAppropriateRate(booking.getDuration(), rates);
+        Rate closestRate = this.calculateAppropriateRate(
+                booking.getDuration(), rates);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(booking.getDuration());
-        double minuteCostInCoins = (double)(closestRate.getPriceRate()*100/(closestRate.getHourRate()*60));
-        Long sum = (long)(minutes * minuteCostInCoins);
+        double minuteCostInCoins = (double) (closestRate.getPriceRate() * 100
+                / (closestRate.getHourRate() * 60));
+        Long sum = (long) (minutes * minuteCostInCoins);
         return sum;
     }
 }
