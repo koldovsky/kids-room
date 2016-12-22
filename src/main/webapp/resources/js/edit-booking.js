@@ -472,7 +472,7 @@ $('#booking-table tbody').on('click', '[id^=comment]', function() {
 
 $('#booking-table tbody').on('click', '.edit-button-btn', function() {
     idBooking = $(this).closest('td').find('.book-id').attr('id');
-    var comment = $('#comment-'+idBooking).attr('title');
+    var comment = $('#comment-' + idBooking).attr('title');
     var date = $('#date-booking').val();
     var startTime = $(this).closest('td').find('#book-start-time').text();
     var endTime = $(this).closest('td').find('#book-end-time').text();
