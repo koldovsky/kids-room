@@ -36,7 +36,6 @@ public class ImagesHolderUtil {
         } catch(IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
         }
-
     }
 
     private ImagesHolderUtil(){}

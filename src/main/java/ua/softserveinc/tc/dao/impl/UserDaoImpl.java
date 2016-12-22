@@ -29,21 +29,26 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     @Override
     public List<User> findAllUsersByRole(Role role) {
         return entityManager
-                .createQuery("from User where role = " + role.ordinal(), User.class)
+                .createQuery("from User where role = " +
+                        role.ordinal(), User.class)
                 .getResultList();
     }
 
     @Override
     public void deleteUserById(Long id) {
-        entityManager.createQuery("DELETE FROM User where id = " + id).executeUpdate();
+        entityManager.createQuery("DELETE FROM User where id = " + id)
+                .executeUpdate();
     }
 
     @Override
     public User getUserByEmail(String email) {
         try {
-            TypedQuery<User> query = entityManager.createNamedQuery(UserConstants.Entity.NQ_FIND_USER_BY_EMAIL, User.class);
+            TypedQuery<User> query = entityManager.createNamedQuery(
+                    UserConstants.Entity.NQ_FIND_USER_BY_EMAIL,
+                    User.class);
             return
-                    query.setParameter(UserConstants.Entity.EMAIL, email).getSingleResult();
+                    query.setParameter(UserConstants.Entity.EMAIL, email)
+                            .getSingleResult();
         } catch (NoResultException e) {
             log.error("This email doesn't exists.", e);
             return null;

@@ -19,17 +19,18 @@ public class MonthlyEventDto extends EventDto{
     public MonthlyEventDto() {
     }
 
-    public static MonthlyEventDto getMonthlyEventDto(List<Event> listOfRecurrentEvent, Set<Integer> daysOfTheMonth) {
+    public MonthlyEventDto(Event event) {
+        super(event);
+    }
+
+    public static MonthlyEventDto getMonthlyEventDto(List<Event> listOfRecurrentEvent,
+                                                     Set<Integer> daysOfTheMonth) {
         Event startDay = listOfRecurrentEvent.get(0);
         Event endDay = listOfRecurrentEvent.get(listOfRecurrentEvent.size() - 1);
         startDay.setEndTime(endDay.getEndTime());
         MonthlyEventDto monthlyEventDto = new MonthlyEventDto(startDay);
         monthlyEventDto.setDaysOfMonth(daysOfTheMonth);
         return monthlyEventDto;
-    }
-
-    public MonthlyEventDto(Event event) {
-        super(event);
     }
 
     public void setDaysOfMonth(Set<Integer> daysOfTheMonth) {

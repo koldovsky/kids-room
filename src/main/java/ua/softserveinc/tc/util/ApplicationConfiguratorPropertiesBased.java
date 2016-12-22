@@ -100,9 +100,11 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
         properties.setProperty("kids.maxAge", kidsMaxAge.toString());
 
         this.minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();
-        properties.setProperty("calculation.time.minutes", minutesToCalculateBookingsEveryDay.toString());
+        properties.setProperty("calculation.time.minutes",
+                minutesToCalculateBookingsEveryDay.toString());
 
-        this.hourToCalculateBookingsEveryDay = cDto.getHourToCalculateBookingsEveryDay();
+        this.hourToCalculateBookingsEveryDay = cDto.
+                getHourToCalculateBookingsEveryDay();
         properties.setProperty("calculation.time.hours", hourToCalculateBookingsEveryDay.toString());
 
         this.minutesToSendEmailReport = cDto.getMinutesToSendEmailReport();
@@ -216,7 +218,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
         return  ImageFormatNormalizator(imageAcceptableFormats);
     }
 
-    public Integer getHourToSendEmailReminder() {
+    public Integer getHoursToSendEmailReminder() {
         return hoursToSendEmailReminder;
     }
 
@@ -235,7 +237,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
      * @param formatString String of acceptable image formats
      * @return String array of normalized image formats
      */
-    private String[] ImageFormatNormalizator(String formatString) {
+    private static String[] ImageFormatNormalizator(String formatString) {
         String[] arraysFormats = formatString.trim().split("\\s");
         for (int i = 0; i < arraysFormats.length; i++)
             switch (arraysFormats[i].toLowerCase()) {

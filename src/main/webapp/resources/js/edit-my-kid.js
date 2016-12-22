@@ -1,6 +1,6 @@
 $(function () {
     $('#edit-kid-cancel').click(function () {
-        var kidredirect="/home/mykids";
+        var kidredirect='/home/mykids';
         $(location).attr('href', kidredirect).reload(true);
     });
     $('#confirmation-dialog-div').dialog({
@@ -23,20 +23,21 @@ $(function () {
         $(this).css('color','red');
         $(this).css('cursor','pointer ');
     }, function(){
-        $(this).css("color", "black");
+        $(this).css('color', 'black');
     });
 });
 function takingKidOff() {
     // var kidId = kid.getId();
-    var parameters = location.search.substring(1).split("&");
-    var kidMap = parameters[0].split("=");
+    var parameters = location.search.substring(1).split('&');
+    var kidMap = parameters[0].split('=');
     var kidId = kidMap[1];
-    var kidredirect="/home/mykids";
+    var kidredirect='/home/mykids';
     $.post('remove-kid/' + kidId)
-        .success(function (responseText) {
+        .success(function () {
             $(location).attr('href', kidredirect).reload(true);
         })
         .error(function (xhr, status, error) {
-            console.log("Error!" + error + "  status = " + status);
+            console.log('Error!' + error + ' status = ' + status);
         });
 }
+

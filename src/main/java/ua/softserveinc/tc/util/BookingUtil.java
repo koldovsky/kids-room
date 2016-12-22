@@ -18,10 +18,10 @@ public class BookingUtil {
     private BookingUtil(){}
 
     public static boolean checkBookingTimeOverlap(BookingDto checked, Booking booked) {
-        boolean result =  (!(
-                !(DateUtil.toDateISOFormat(checked.getEndTime()).after(booked.getBookingStartTime()))
-                        || !(DateUtil.toDateISOFormat(checked.getStartTime()).before(booked.getBookingEndTime()))
+        return (!(!(DateUtil.toDateISOFormat(checked.getEndTime())
+                .after(booked.getBookingStartTime()))
+                || !(DateUtil.toDateISOFormat(checked.getStartTime())
+                .before(booked.getBookingEndTime()))
         ) && checked.getKidId().equals(booked.getChild().getId()));
-        return result;
     }
 }

@@ -32,7 +32,7 @@ App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
     }
 
     function deleteDayOff(id) {
-       return $http.delete(REST_URI_DAY + id);
+        return $http.delete(REST_URI_DAY + id);
     }
 
     function getAllRooms() {

@@ -43,8 +43,10 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         query = builder.createQuery(Event.class);
         Root<Event> root = query.from(Event.class);
-        query.select(root).where(builder.equal(root.get(EventConstants.EntityClass.ID_RECURRENT), recurrentId)).
-                orderBy(builder.asc(root.get(EventConstants.EntityClass.START_TIME)));
+        query.select(root).where(builder.equal(root.get(
+                EventConstants.EntityClass.ID_RECURRENT), recurrentId)).
+                orderBy(builder.asc(root.get(
+                        EventConstants.EntityClass.START_TIME)));
         return entityManager.createQuery(query).getResultList();
     }
 }

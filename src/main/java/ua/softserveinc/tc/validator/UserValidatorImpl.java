@@ -99,31 +99,38 @@ public class UserValidatorImpl implements UserValidator {
 
         if (!Pattern.compile(ValidationConstants.SIMPLE_EMAIL_REGEX)
                 .matcher(manager.getEmail()).matches()) {
-            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_NOT_VALID);
+            errors.rejectValue(ValidationConstants.EMAIL,
+                    ValidationConstants.EMAIL_NOT_VALID);
         }
         if (this.userService.getUserByEmail(manager.getEmail()) != null) {
-            errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
+            errors.rejectValue(ValidationConstants.EMAIL,
+                    ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
         }
     }
 
     public void validateManager(Object target, Errors errors) {
         User manager = (User) target;
-        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.FIRST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
-        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.FIRST_NAME,
+                ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME,
+                ValidationConstants.EMPTY_FIELD_MSG);
 
         if (!Pattern.compile(ValidationConstants.NAME_REGEX)
                 .matcher(manager.getFirstName()).matches()) {
-            errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.ADMINISTRATOR_INCORRECT_FIRST_NAME);
+            errors.rejectValue(ValidationConstants.FIRST_NAME,
+                    ValidationConstants.ADMINISTRATOR_INCORRECT_FIRST_NAME);
         }
 
         if (!Pattern.compile(ValidationConstants.NAME_REGEX)
                 .matcher(manager.getLastName()).matches()) {
-            errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.ADMINISTRATOR_INCORRECT_SECOND_NAME);
+            errors.rejectValue(ValidationConstants.LAST_NAME,
+                    ValidationConstants.ADMINISTRATOR_INCORRECT_SECOND_NAME);
         }
 
         if (!Pattern.compile(ValidationConstants.PHONE_NUMBER_REGEX)
                 .matcher(manager.getPhoneNumber()).matches()) {
-            errors.rejectValue(ValidationConstants.PHONE_NUMBER, ValidationConstants.ADMINISTRATOR_INCORRECT_PHONE);
+            errors.rejectValue(ValidationConstants.PHONE_NUMBER,
+                    ValidationConstants.ADMINISTRATOR_INCORRECT_PHONE);
         }
     }
 }
