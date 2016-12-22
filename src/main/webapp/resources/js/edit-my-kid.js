@@ -40,3 +40,4 @@ function takingKidOff() {
             console.log('Error!' + error + ' status = ' + status);
         });
 }
+
