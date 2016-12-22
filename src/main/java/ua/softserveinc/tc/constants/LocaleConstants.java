@@ -18,9 +18,10 @@ public final class LocaleConstants {
             "kid.gender"
     };
 
-    private LocaleConstants(){}
+  private LocaleConstants() {
+  }
 
-    public static String[] getMessages(){
-        return messages;
-    }
+  public static String[] getMessages() {
+    return messages;
+  }
 }
