@@ -6,7 +6,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
@@ -20,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/adm-days-off")
+@RequestMapping("/adm-days-off")
 @Slf4j
 public class DayOffController {
 
@@ -30,7 +37,7 @@ public class DayOffController {
     @Autowired
     private RoomService roomService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping("/all")
     public ResponseEntity<List<DayOff>> allDaysOff() {
         List<DayOff> daysOff = dayOffService.findAll().stream()
                 .sorted(Comparator.comparing(DayOff::getId).reversed())
@@ -41,7 +48,7 @@ public class DayOffController {
         return new ResponseEntity<>(daysOff, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/day/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/day/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DayOff> getDayOff(@PathVariable("id") long id) {
 
         DayOff currentDay = dayOffService.findById(id);
@@ -52,7 +59,7 @@ public class DayOffController {
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/day/", method = RequestMethod.POST)
+    @PostMapping("/day/")
     public ResponseEntity<Void> createDayOff(@RequestBody DayOff dayOff, UriComponentsBuilder ucBuilder) {
         if (dayOffService.dayOffExist(dayOff.getName(), dayOff.getStartDate())) {
             log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
@@ -65,7 +72,7 @@ public class DayOffController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/day/{id}", method = RequestMethod.PUT)
+    @PutMapping("/day/{id}")
     public ResponseEntity<DayOff> updateDayOff(@PathVariable("id") long id, @RequestBody DayOff dayOff) {
         DayOff currentDay = dayOffService.findById(id);
 
@@ -87,7 +94,7 @@ public class DayOffController {
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/day/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/day/{id}")
     public ResponseEntity<DayOff> deleteUser(@PathVariable("id") long id) {
 
         DayOff currentDay = dayOffService.findById(id);

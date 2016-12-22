@@ -8,8 +8,7 @@
  * Created by Sviatoslav Hryb on 11-Dec-16.
  */
 
-var activeManagerStatus;
-var idManager;
+var currentFormElement;
 
 $().ready(function() {
 
@@ -19,36 +18,26 @@ $().ready(function() {
         width: 320,
     });
 
-    $('.button-size-default.button.delete').click(function() {
-        activeManagerStatus = false;
+    $('.submit-manager-active').click(function() {
+        currentFormElement =  $(this).prev('form');
+        $('#inactive-manager-span').hide();
         $('#active-manager-span').show();
         $('#confirmation-dialog-event-div').dialog('open');
     });
 
-    $('.button-size-default.button.save').click(function() {
-        activeManagerStatus = true;
+    $('.submit-manager-inactive').click(function() {
+        currentFormElement =  $(this).prev('form');
+        $('#active-manager-span').hide();
         $('#inactive-manager-span').show();
         $('#confirmation-dialog-event-div').dialog('open');
     });
 
     $('#confirmYesEvent').click(function() {
         $('#confirmation-dialog-event-div').dialog('close');
-        if (activeManagerStatus) {
-            $('#submit-manager-inactive-' + idManager).click();
-            $('#inactive-manager-span').hide();
-        }
-        else {
-            $('#submit-manager-active-' + idManager).click();
-            $('#active-manager-span').hide();
-        }
+        currentFormElement.submit();
     });
 
     $('#confirmNoEvent').click(function() {
         $('#confirmation-dialog-event-div').dialog('close');
-        if (activeManagerStatus)
-            $('#active-manager-span').hide();
-        else
-            $('#inactive-manager-span').hide();
     });
-
 });
