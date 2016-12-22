@@ -2,20 +2,11 @@ package ua.softserveinc.tc.validator;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import ua.softserveinc.tc.config.AppConfig;
 
 import java.text.ParseException;
 
-@DirtiesContext
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
-@WebAppConfiguration
+
 public class DateValidatorTest {
 
     @Autowired
@@ -46,8 +37,7 @@ public class DateValidatorTest {
     }
 
     @Test
-    public void testCorrectDateFormatExpectTrue()
-    {
+    public void testCorrectDateFormatExpectTrue() {
         final String correctDate = "2016-10-10";
         final boolean expected = true;
         final boolean actual = timeValidator.validateDateFormat(correctDate);
@@ -56,8 +46,7 @@ public class DateValidatorTest {
     }
 
     @Test
-    public void testInCorrectDateFormatExpectFalse()
-    {
+    public void testInCorrectDateFormatExpectFalse() {
         final String correctDate = "201611-10-102";
         final boolean expected = false;
         final boolean actual = timeValidator.validateDateFormat(correctDate);

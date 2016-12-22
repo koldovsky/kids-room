@@ -5,6 +5,11 @@ package ua.softserveinc.tc.validator;
  * Created unit tests for email validation.
  */
 
+/**
+ * Некоторые люди, сталкиваясь с проблемой, думают: «О, я воспользуюсь регулярными выражениями».
+    Теперь у них две проблемы.
+ * */
+
 import org.junit.Assert;
 import org.junit.Test;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -85,7 +90,15 @@ public class EmailValidatorTest {
                 "mkyong111@mkyong.com", "mkyong-100@mkyong.net",
                 "mkyong.100@mkyong.com.au", "mkyong@1.com",
                 "mkyong@gmail.com.com", "mkyong+100@gmail.com",
-                "mkyong-100@yahoo-test.com");
+                "mkyong-100@yahoo-test.com", "alex@yandex.ru",
+                "alex-27@yandex.com",
+                "alex.27@yandex.com",
+                "alex111@devcolibri.com",
+                "alex.100@devcolibri.com.ua",
+                "alex@1.com",
+                "alex@gmail.com.com",
+                "alex+27@gmail.com",
+                "alex-27@yandex-test.com");
 
         listOfEmails.forEach(item -> Assert.assertEquals("This should be [ " + item + " ] valid email address",
                 true,
@@ -98,11 +111,23 @@ public class EmailValidatorTest {
                 "mkyong123@gmail.a", "mkyong123@.com", "mkyong123@.com.com",
                 ".mkyong@mkyong.com", "mkyong()*@gmail.com", "mkyong@%*.com",
                 "mkyong..2002@gmail.com", "mkyong.@gmail.com",
-                "mkyong@mkyong@gmail.com", "mkyong@gmail.com.1a");
+                "mkyong@mkyong@gmail.com", "mkyong@gmail.com.1a", "devcolibri",
+                "alex@.com.ua",
+                "alex123@gmail.a",
+                "alex123@.com",
+                "alex123@.com.com",
+                ".alex@devcolibri.com",
+                "alex()*@gmail.com",
+                "alex@%*.com",
+                "alex..2013@gmail.com",
+                "alex.@gmail.com",
+                "alex@devcolibri@gmail.com",
+                "alex@gmail.com.1ua");
 
         listOfEmails.forEach(item -> Assert.assertNotEquals("This should be [ " + item + " ] invalid email address",
                 true,
                 item.matches(ValidationConstants.SIMPLE_EMAIL_REGEX)));
     }
+
 }
 
