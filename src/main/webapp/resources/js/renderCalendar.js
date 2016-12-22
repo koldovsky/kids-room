@@ -860,7 +860,7 @@ function buildTableMonthly() { //generating table for DAYS_IN_MONTH days
         tableHTML += '</tr>';
     }
     $('#monthly-days').html(tableHTML);
-    $('table').find('td').click(function () {
+    $('#monthly-days').find('td').click(function () {
         $(this).toggleClass('active');
     });
 
