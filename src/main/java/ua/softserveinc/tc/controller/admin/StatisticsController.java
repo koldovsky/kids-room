@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
@@ -20,7 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.*;
+import static ua.softserveinc.tc.util.DateUtil.dateNow;
+import static ua.softserveinc.tc.util.DateUtil.dateMonthAgo;
+import static ua.softserveinc.tc.util.DateUtil.toDate;
+import static ua.softserveinc.tc.util.DateUtil.getStringDate;
 
 @Controller
 public class StatisticsController {
@@ -29,7 +31,7 @@ public class StatisticsController {
     private BookingService bookingService;
 
 
-    @RequestMapping(value = "/adm-statistics", method = RequestMethod.GET)
+    @GetMapping("/adm-statistics")
     public ModelAndView statistics() {
         ModelAndView model = new ModelAndView(ReportConstants.STATISTICS_VIEW);
         ModelMap modelMap = model.getModelMap();
@@ -44,7 +46,7 @@ public class StatisticsController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/refreshRooms/{startDate}/{endDate}", method = RequestMethod.GET)
+    @GetMapping("/refreshRooms/{startDate}/{endDate}")
     public String refreshView(@PathVariable String startDate,
                               @PathVariable String endDate) {
         List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate), BookingState.COMPLETED);

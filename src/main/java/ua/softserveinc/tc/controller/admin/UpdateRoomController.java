@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-@RequestMapping(value = "/adm-update-room")
 public class UpdateRoomController {
 
     @Autowired
@@ -49,7 +48,7 @@ public class UpdateRoomController {
      *
      * @return mav (model into UI)
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/adm-update-room")
     public ModelAndView showUpdateRoomForm(@RequestParam Long id) {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
         Room room = this.roomService.findById(id);
@@ -70,7 +69,7 @@ public class UpdateRoomController {
      * @param roomDto (Data Transfer Object for Room, needed to get some fields in JSON)
      * @return string, which redirect on other view
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/adm-update-room")
     public ModelAndView submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                          BindingResult bindingResult) {
         this.timeValidator.validate(roomDto, bindingResult);

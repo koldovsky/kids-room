@@ -85,7 +85,8 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
-    public List<DayOff> findByNameOrStartDate(String name, LocalDate startDate) {
+    public List<DayOff> findByNameOrStartDate(
+            String name, LocalDate startDate) {
         return dayOffRepository.findByNameOrStartDate(name, startDate);
     }
 
@@ -107,8 +108,10 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
-    public List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate) {
-        return dayOffRepository.findByStartDateBetween(startDate, endDate);
+    public List<DayOff> findByStartDateBetween(
+            LocalDate startDate, LocalDate endDate) {
+        return dayOffRepository.findByStartDateBetween(
+                startDate, endDate);
     }
 
     @Override
@@ -130,7 +133,8 @@ public class DayOffServiceImpl implements DayOffService {
 
         return dayOffRepository.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
-                .filter(day -> DAYS.between(today, day.getStartDate()) == WEEK_LENGTH)
+                .filter(day -> DAYS.between(today,
+                        day.getStartDate()) == WEEK_LENGTH)
                 .sorted(Comparator.comparing(DayOff::getStartDate))
                 .collect(Collectors.toList());
     }
@@ -144,9 +148,11 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     @SneakyThrows
     public void sendDayOffInfo(DayOff day) {
-        List<User> activeUsers = userRepository.findByActiveTrueAndRoleNot(ADMINISTRATOR);
+        List<User> activeUsers = userRepository
+                .findByActiveTrueAndRoleNot(ADMINISTRATOR);
         for (User recipient : activeUsers) {
-            mailService.sendDayOffReminderAsync(recipient, MailConstants.DAY_OFF_REMINDER, day);
+            mailService.sendDayOffReminderAsync(
+                    recipient, MailConstants.DAY_OFF_REMINDER, day);
         }
     }
 
@@ -161,8 +167,10 @@ public class DayOffServiceImpl implements DayOffService {
         for (Room room : day.getRooms()) {
             eventRepository.saveAndFlush(Event.builder()
                     .name(day.getName())
-                    .startTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
-                    .endTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
+                    .startTime(asDate(day.getStartDate(),
+                            room.getWorkingHoursStart()))
+                    .endTime(asDate(day.getEndDate(),
+                            room.getWorkingHoursEnd()))
                     .room(room)
                     .color(EVENT_COLOR)
                     .description(DAY_OFF_DESCRIPTION)

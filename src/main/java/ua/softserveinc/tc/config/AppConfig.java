@@ -131,6 +131,7 @@ public class AppConfig {
     }
 
     @Bean
+    @SuppressWarnings("deprecation")
     public VelocityEngine getVelocityEngine() throws VelocityException, IOException {
         VelocityEngineFactory factory = new VelocityEngineFactory();
         Properties props = new Properties();

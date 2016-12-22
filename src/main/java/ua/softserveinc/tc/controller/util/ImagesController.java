@@ -3,14 +3,17 @@ package ua.softserveinc.tc.controller.util;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ChildConstants;
-import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Gender;
 import ua.softserveinc.tc.entity.Role;
@@ -28,8 +31,6 @@ import ua.softserveinc.tc.validator.KidProfileImageValidator;
 import ua.softserveinc.tc.validator.NumberRequestValidator;
 import org.springframework.ui.Model;
 
-import javax.imageio.ImageIO;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -41,6 +42,7 @@ import java.security.Principal;
 
 @Controller
 public class ImagesController {
+
     @Autowired
     private ChildService childService;
 
@@ -53,11 +55,11 @@ public class ImagesController {
     @Autowired
     private NumberRequestValidator numberRequestValidator;
 
-    @Log
-    private Logger log;
-
     @Autowired
     private ApplicationConfigurator applicationConfigurator;
+
+    @Log
+    private Logger log;
 
 
     /**
@@ -70,7 +72,7 @@ public class ImagesController {
      * @param kidId ID of a Child
      * @return Model with uploaded image or error message
      */
-    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    @PostMapping("/profile")
     public Model uploadImage(@ModelAttribute(ImageConstants.IMAGE_UPLOAD_MODEL_ATTRIBUTE)
                                 FileUploadFormObject fileForm,
                              @RequestParam(ChildConstants.ID_PARAMETER_KEY) String kidId,
@@ -113,8 +115,7 @@ public class ImagesController {
      * @throws ResourceNotFoundException
      * @throws AccessDeniedException
      */
-    @RequestMapping(value = "/images/{kidId}",
-            produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+    @GetMapping(value = "/images/{kidId}", produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     public byte[] getProfilePic(@PathVariable String kidId, Principal principal)
             throws
@@ -141,7 +142,7 @@ public class ImagesController {
         return  ImagesHolderUtil.getDefaultPictureBoy();
     }
 
-    @RequestMapping(value = "/uploadImage/{kidId}", method = RequestMethod.GET)
+    @GetMapping("/uploadImage/{kidId}")
     public String redirect(@PathVariable String kidId){
         return "redirect:/" + ChildConstants.View.KID_PROFILE + "?id=" + kidId;
     }

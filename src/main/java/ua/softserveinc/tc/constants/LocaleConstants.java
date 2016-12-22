@@ -5,6 +5,9 @@ package ua.softserveinc.tc.constants;
  */
 public final class LocaleConstants {
 
+    public static final String SESSION_LOCALE_ATTRIBUTE =
+            "org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE";
+
     private static final String[] messages = {
             "kids.name",
             "kids.parentsName",
@@ -15,9 +18,10 @@ public final class LocaleConstants {
             "kid.gender"
     };
 
-    private LocaleConstants(){}
+  private LocaleConstants() {
+  }
 
-    public static String[] getMessages(){
-        return messages;
-    }
+  public static String[] getMessages() {
+    return messages;
+  }
 }

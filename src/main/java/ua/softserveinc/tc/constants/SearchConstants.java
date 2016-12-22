@@ -5,13 +5,14 @@ package ua.softserveinc.tc.constants;
  */
 public final class SearchConstants {
 
+    public static final String CHILD_SEARCH_URL = "api/child/search";
+    public static final String USER_SEARCH_URL = "api/user/search";
+    public static final String BOOKING_SEARCH_URL = "api/booking/search";
+
     private static final String[] CHILD_SEARCH_FIELDS = {"firstName", "lastName"};
     private static final String[] USER_SEARCH_FIELDS = {"firstName", "lastName", "email", "phoneNumber"};
     private static final String[] BOOKING_SEARCH_FIELDS = {"child.firstName", "child.lastName"};
 
-    public static final String CHILD_SEARCH_URL = "api/child/search";
-    public static final String USER_SEARCH_URL = "api/user/search";
-    public static final String BOOKING_SEARCH_URL = "api/booking/search";
 
     private SearchConstants() {
     }

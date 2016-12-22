@@ -12,7 +12,8 @@ public interface RoomService extends BaseService<Room> {
 
     void saveOrUpdate(Room room);
 
-    Map<String, String> getBlockedPeriods(Room room, Calendar start, Calendar end);
+    Map<String, String> getBlockedPeriods(
+            Room room, Calendar start, Calendar end);
 
     Boolean isPossibleUpdate(BookingDto bookingDto);
 

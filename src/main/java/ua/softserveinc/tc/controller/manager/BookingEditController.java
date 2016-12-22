@@ -4,13 +4,22 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
-import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
@@ -46,7 +55,7 @@ public class BookingEditController {
     @Autowired
     private TimeValidator timeValidator;
 
-    @RequestMapping(value = BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
+    @GetMapping(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
     public ModelAndView editBookingModel(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW);
@@ -60,7 +69,7 @@ public class BookingEditController {
         return modelAndView;
     }
 
-    @RequestMapping(value = BookingConstants.Model.CANCEL_BOOKING, method = RequestMethod.GET)
+    @GetMapping(BookingConstants.Model.CANCEL_BOOKING)
     @ResponseBody
     public void cancelBooking(@PathVariable Long idBooking) {
         Booking booking = bookingService.findById(idBooking);
@@ -70,7 +79,7 @@ public class BookingEditController {
         bookingService.update(booking);
     }
 
-    @RequestMapping(value = BookingConstants.Model.SET_START_TIME, method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
@@ -80,7 +89,7 @@ public class BookingEditController {
         bookingService.update(booking);
     }
 
-    @RequestMapping(value = BookingConstants.Model.SET_END_TIME, method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = BookingConstants.Model.SET_END_TIME, consumes = "application/json")
     @ResponseBody
     public void setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.confirmBookingEndTime(bookingDto);
@@ -88,8 +97,7 @@ public class BookingEditController {
         bookingService.update(booking);
     }
 
-    @RequestMapping(value = "dailyBookings/{date}/{id}/{state}",
-            method = RequestMethod.GET)
+    @GetMapping("dailyBookings/{date}/{id}/{state}")
     @ResponseBody
     public String dailyBookingsByState(@PathVariable String date,
                                        @PathVariable Long id,
@@ -118,7 +126,7 @@ public class BookingEditController {
      * @param id id the room for which makes figuring out bookings
      * @return JSON with relevant information
      */
-    @RequestMapping(value = "dailyNotCompletedBookings/{date}/{id}", method = RequestMethod.GET)
+    @GetMapping("dailyNotCompletedBookings/{date}/{id}")
     @ResponseBody
     public String dailyNotCompletedBookings(@PathVariable String date, @PathVariable Long id) {
         Room room = roomService.findById(id);
@@ -131,8 +139,7 @@ public class BookingEditController {
     }
 
 
-    @RequestMapping(value = "change-booking", method = RequestMethod.POST,
-            consumes = "application/json")
+    @PostMapping(value = "change-booking", consumes = "application/json")
     @ResponseBody
     public Boolean isPossableUpdate(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.findById(bookingDto.getId());
@@ -150,7 +157,7 @@ public class BookingEditController {
         return false;
     }
 
-    @RequestMapping(value = "get-kids/{id}")
+    @GetMapping("get-kids/{id}")
     @ResponseBody
     public String listKids(@PathVariable Long id) {
         List<Child> kids = userService.getEnabledChildren(userService.findById(id));

@@ -24,13 +24,15 @@ public interface CalendarService {
 
     void deleteEvent(final Event event);
 
-    List<EventDto> createRecurrentEvents(final RecurrentEventDto recurrentEventDto);
+    List<EventDto> createRecurrentEvents(
+            final RecurrentEventDto recurrentEventDto);
 
     List<EventDto> createMonthlyEvents(final MonthlyEventDto monthlyEventDto);
 
     String getRoomWorkingHours(final long id);
 
     EventDto getRecurrentEventForEditingById(long recurrentEventId);
+
     /**
      * Return capacity (number of people) of the room
      *

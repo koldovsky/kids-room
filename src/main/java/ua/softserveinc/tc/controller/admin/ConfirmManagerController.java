@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.TokenConstants;
@@ -25,7 +25,6 @@ import ua.softserveinc.tc.validator.UserValidator;
  * Created by TARAS on 18.05.2016.
  */
 @Controller
-@RequestMapping(value = "/confirm-manager")
 public class ConfirmManagerController {
 
     @Autowired
@@ -50,7 +49,7 @@ public class ConfirmManagerController {
      * @param sToken
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping("/confirm-manager")
     public String showConfirmRegistrationForm(Model model, @RequestParam(TokenConstants.TOKEN) String sToken) {
         Token token = this.tokenService.findByToken(sToken);
         User manager = token.getUser();
@@ -70,7 +69,7 @@ public class ConfirmManagerController {
      * @param bindingResult
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("/confirm-manager")
     public String confirmPassword(@ModelAttribute(AdminConstants.ATR_MANAGER) User managerWithPassword,
                                   BindingResult bindingResult) {
         this.userValidator.validatePassword(managerWithPassword, bindingResult);
