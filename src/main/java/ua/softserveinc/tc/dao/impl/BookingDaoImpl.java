@@ -27,7 +27,8 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
 
         Root<Booking> root = query.from(Booking.class);
-        query.select(root).where(builder.equal(root.get(BookingConstants.Entity.USER), user),
+        query.select(root).where(
+                builder.equal(root.get(BookingConstants.Entity.USER), user),
                 builder.equal(root.get(BookingConstants.Entity.ROOM), room));
 
         return entityManager.createQuery(query).getResultList();
@@ -35,8 +36,9 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room,
-                                     boolean includeLastDay, BookingState... bookingStates) {
+    public List<Booking> getBookings(Date startDate, Date endDate, User user,
+                                     Room room, boolean includeLastDay,
+                                     BookingState... bookingStates) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
@@ -55,20 +57,28 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         }
 
         if (bookingStates.length > 0)
-            restrictions.add(root.get(BookingConstants.Entity.STATE).in(Arrays.asList(bookingStates)));
+            restrictions.add(root.get(BookingConstants.Entity.STATE)
+                    .in(Arrays.asList(bookingStates)));
         if (user != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.USER), user));
+            restrictions.add(builder.equal(
+                    root.get(BookingConstants.Entity.USER), user));
         if (room != null)
-            restrictions.add(builder.equal(root.get(BookingConstants.Entity.ROOM), room));
+            restrictions.add(builder.equal(
+                    root.get(BookingConstants.Entity.ROOM), room));
 
-        criteria.where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        criteria.orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
+        criteria.where(builder.and(
+                restrictions.toArray(new Predicate[restrictions.size()])));
+
+        criteria.orderBy(builder.asc(
+                root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override
-    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room){
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate,
+                                                             Date endDate,
+                                                             Room room){
         if (startDate == null || endDate == null || room == null) {
             return Collections.emptyList();
         }
@@ -78,9 +88,12 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         Root<Booking> root = query.from(Booking.class);
         query.select(root).where(
                 builder.and(
-                        builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
-                        builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate)),
-                        builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        builder.lessThan(root.get(
+                                BookingConstants.Entity.START_TIME), endDate),
+                        builder.greaterThan(root.get(
+                                BookingConstants.Entity.END_TIME), startDate)),
+                        builder.equal(root.get(
+                                BookingConstants.Entity.ROOM), room),
                         root.get(BookingConstants.Entity.STATE).in(
                                 BookingConstants.States.getActiveAndBooked()));
 
@@ -110,14 +123,17 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
-        query.select(root).where(builder.equal(root.get(BookingConstants.Entity.RECURRENTID), recurrentId)).
-                orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
+        query.select(root).where(builder.equal(
+                root.get(BookingConstants.Entity.RECURRENTID), recurrentId)).
+                orderBy(builder.asc(
+                        root.get(BookingConstants.Entity.START_TIME)));
         return entityManager.createQuery(query).getResultList();
     }
 
     @Override
     @Transactional(rollbackForClassName = {"Exception"})
-    public List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings, List<Booking> newBookings) {
+    public List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings,
+                                                    List<Booking> newBookings) {
         oldBookings.forEach(entityManager::merge);
         newBookings.forEach(entityManager::persist);
         return newBookings;

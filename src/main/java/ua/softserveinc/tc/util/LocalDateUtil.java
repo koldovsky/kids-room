@@ -17,16 +17,19 @@ import java.util.Date;
 public final class LocalDateUtil {
 
     public static Date asDate(LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(localDate.atStartOfDay().atZone(ZoneId
+                .systemDefault()).toInstant());
     }
 
     public static Date asDate(LocalDateTime localDateTime) {
-        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault())
+                .toInstant());
     }
 
     public static Date asDate(LocalDate date, String time) {
         try {
-            return new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(date + " " + time);
+            return new SimpleDateFormat("yyyy-MM-dd hh:mm")
+                    .parse(date + " " + time);
         } catch (ParseException e) {
             log.error(e.getMessage());
         }
@@ -34,10 +37,12 @@ public final class LocalDateUtil {
     }
 
     public static LocalDate asLocalDate(Date date) {
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        return Instant.ofEpochMilli(date.getTime())
+                .atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     public static LocalDateTime asLocalDateTime(Date date) {
-        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return Instant.ofEpochMilli(date.getTime())
+                .atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 }

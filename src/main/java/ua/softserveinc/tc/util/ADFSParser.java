@@ -22,7 +22,8 @@ public class ADFSParser {
                     credentials.putIfAbsent("firstName", name[0]);
                     credentials.putIfAbsent("lastName", name[1]);
                 } else {
-                    credentials.putIfAbsent(a.getName().substring(a.getName().lastIndexOf('/') + 1), text);
+                    credentials.putIfAbsent(a.getName()
+                            .substring(a.getName().lastIndexOf('/') + 1), text);
                 }
             }
         });

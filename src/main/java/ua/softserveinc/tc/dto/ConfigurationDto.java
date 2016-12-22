@@ -53,7 +53,7 @@ public class ConfigurationDto {
         this.hourToCleanUpBookings = appConfig.getHourToCleanUpBookings();
         this.minutesToCleanUpBookings = appConfig.getMinutesToCleanUpBookings();
 
-        this.hourToSendEmailReminder = appConfig.getHourToSendEmailReminder();
+        this.hourToSendEmailReminder = appConfig.getHoursToSendEmailReminder();
         this.minutesToSendEmailReminder = appConfig.getMinutesToSendEmailReminder();
 
         this.minPeriodSize = appConfig.getMinPeriodSize();
@@ -82,7 +82,8 @@ public class ConfigurationDto {
         return minutesToCalculateBookingsEveryDay;
     }
 
-    public void setMinutesToCalculateBookingsEveryDay(Integer minutesToCalculateBookingsEveryDay) {
+    public void setMinutesToCalculateBookingsEveryDay(
+            Integer minutesToCalculateBookingsEveryDay) {
         this.minutesToCalculateBookingsEveryDay = minutesToCalculateBookingsEveryDay;
     }
 
@@ -90,7 +91,8 @@ public class ConfigurationDto {
         return hourToCalculateBookingsEveryDay;
     }
 
-    public void setHourToCalculateBookingsEveryDay(Integer hourToCalculateBookingsEveryDay) {
+    public void setHourToCalculateBookingsEveryDay(
+            Integer hourToCalculateBookingsEveryDay) {
         this.hourToCalculateBookingsEveryDay = hourToCalculateBookingsEveryDay;
     }
 
@@ -187,7 +189,8 @@ public class ConfigurationDto {
         return minutesToSendEmailReminder;
     }
 
-    public void setMinutesToSendEmailReminder(Integer minutesToSendEmailReminder) {
+    public void setMinutesToSendEmailReminder(
+            Integer minutesToSendEmailReminder) {
         this.minutesToSendEmailReminder = minutesToSendEmailReminder;
     }
 
@@ -198,18 +201,23 @@ public class ConfigurationDto {
 
         ConfigurationDto that = (ConfigurationDto) o;
 
-        if (kidsMinAge != null ? !kidsMinAge.equals(that.kidsMinAge) : that.kidsMinAge != null) return false;
-        if (kidsMaxAge != null ? !kidsMaxAge.equals(that.kidsMaxAge) : that.kidsMaxAge != null) return false;
+        if (kidsMinAge != null ? !kidsMinAge.equals(that.kidsMinAge)
+                : that.kidsMinAge != null) return false;
+        if (kidsMaxAge != null ? !kidsMaxAge.equals(that.kidsMaxAge)
+                : that.kidsMaxAge != null) return false;
         if (minutesToCalculateBookingsEveryDay != null
-                ? !minutesToCalculateBookingsEveryDay.equals(that.minutesToCalculateBookingsEveryDay)
+                ? !minutesToCalculateBookingsEveryDay
+                .equals(that.minutesToCalculateBookingsEveryDay)
                 : that.minutesToCalculateBookingsEveryDay != null)
             return false;
         if (hourToCalculateBookingsEveryDay != null
-                ? !hourToCalculateBookingsEveryDay.equals(that.hourToCalculateBookingsEveryDay)
+                ? !hourToCalculateBookingsEveryDay
+                .equals(that.hourToCalculateBookingsEveryDay)
                 : that.hourToCalculateBookingsEveryDay != null)
             return false;
         if (minutesToSendEmailReport != null
-                ? !minutesToSendEmailReport.equals(that.minutesToSendEmailReport)
+                ? !minutesToSendEmailReport
+                .equals(that.minutesToSendEmailReport)
                 : that.minutesToSendEmailReport != null)
             return false;
         if (hourToSendEmailReport != null
@@ -229,7 +237,8 @@ public class ConfigurationDto {
                 : that.hourToCleanUpBookings != null)
             return false;
         if (minutesToCleanUpBookings != null
-                ? !minutesToCleanUpBookings.equals(that.minutesToCleanUpBookings)
+                ? !minutesToCleanUpBookings
+                .equals(that.minutesToCleanUpBookings)
                 : that.minutesToCleanUpBookings != null)
             return false;
         if (hourToSendEmailReminder != null
@@ -237,7 +246,8 @@ public class ConfigurationDto {
                 : that.hourToSendEmailReminder != null)
             return false;
         if (minutesToSendEmailReminder != null
-                ? !minutesToSendEmailReminder.equals(that.minutesToSendEmailReminder)
+                ? !minutesToSendEmailReminder
+                .equals(that.minutesToSendEmailReminder)
                 : that.minutesToSendEmailReminder != null)
             return false;
         if (minPeriodSize != null

@@ -97,7 +97,7 @@ public interface ApplicationConfigurator {
      *
      * @return hours
      */
-    Integer getHourToSendEmailReminder();
+    Integer getHoursToSendEmailReminder();
 
     /**
      * @return minutes

@@ -24,6 +24,8 @@ public class ImagesHolderUtil {
     private static byte[] defaultPictureBoy = {};
     private static byte[] defaultPictureGirl = {};
 
+    private ImagesHolderUtil(){}
+
     public static byte[] getDefaultPictureBoy() {
         return defaultPictureBoy;
     }
@@ -49,8 +51,5 @@ public class ImagesHolderUtil {
         } catch(IOException ioe) {
             log.error("Failed to load child's profile pic", ioe);
         }
-
     }
-
-    private ImagesHolderUtil(){}
 }

@@ -30,14 +30,16 @@ public class TokenDaoImpl extends BaseDaoImpl<Token> implements TokenDao {
 
     @Override
     public Token findByUser(User user) {
-        Query query = entityManager.createQuery("from Token where user.id = :user");
+        Query query = entityManager.createQuery(
+                "from Token where user.id = :user");
         query.setParameter(UserConstants.Entity.USER, user.getId());
         return (Token) query.getSingleResult();
     }
 
     @Override
     public Token findByToken(String token) {
-        TypedQuery<Token> query = entityManager.createQuery("from Token where token = :token", Token.class);
+        TypedQuery<Token> query = entityManager.createQuery(
+                "from Token where token = :token", Token.class);
 
         return query.setParameter(TokenConstants.TOKEN, token)
                 .getResultList()

@@ -15,7 +15,7 @@ $().ready(function() {
     $('#confirmation-dialog-event-div').dialog ({
         autoOpen: false,
         modal:true,
-        width: 320,
+        width: 320
     });
 
     $('.submit-manager-active').click(function() {
