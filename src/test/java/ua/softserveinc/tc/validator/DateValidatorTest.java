@@ -65,4 +65,3 @@ public class DateValidatorTest {
         Assert.assertEquals(message, expected, actual);
     }
 }
-
