@@ -542,13 +542,10 @@ function createSingleOrRecurrentEvents() {
             color: eventColor
         }),
         success: function (newId) {
-
             $('#calendar').fullCalendar('removeEvents', ev.id);
-
             ev.id = parseInt(newId);
             ev.backgroundColor = eventColor;
             ev.borderColor = BORDER_COLOR;
-
             $('#calendar').fullCalendar('renderEvent', ev);
 
         },
@@ -556,8 +553,6 @@ function createSingleOrRecurrentEvents() {
             $('#calendar').fullCalendar('removeEvents', ev.id);
             callErrorDialog(xhr['responseText']);
         }
-
-
     });
 
     $('#start-date-picker').val('');
@@ -608,9 +603,7 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
                 };
 
                 allEvents.push(newRecurrentEvent);
-
                 recurrentEventsForRender.push(newRecurrentEvent);
-
                 $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
             });
         },
