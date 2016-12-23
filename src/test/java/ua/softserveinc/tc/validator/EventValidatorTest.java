@@ -2,7 +2,6 @@ package ua.softserveinc.tc.validator;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.softserveinc.tc.dto.ConfigurationDto;
 import ua.softserveinc.tc.dto.EventDto;
 
 import javax.validation.ConstraintViolation;
@@ -13,9 +12,6 @@ import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by melancholiya on 20.12.2016.
- */
 public class EventValidatorTest {
     private Validator validator;
 

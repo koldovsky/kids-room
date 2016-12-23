@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import ua.softserveinc.tc.entity.User;
@@ -15,10 +14,6 @@ import ua.softserveinc.tc.util.UserUtils;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-/**
- * Created by melancholiya on 23.12.2016.
- */
 
 public class UserDetailsServiceTest {
 

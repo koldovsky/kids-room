@@ -5,9 +5,6 @@ import ua.softserveinc.tc.entity.Room;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by comp on 19.12.2016.
- */
 public class RoomUtils {
 
     public static List<Room> getListOfRooms()

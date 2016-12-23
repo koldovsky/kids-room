@@ -5,9 +5,6 @@ import ua.softserveinc.tc.entity.Booking;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by comp on 20.12.2016.
- */
 public class BoolkingUtils {
 
     public static List<Booking> getListOfBoolkings()

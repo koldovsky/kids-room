@@ -46,7 +46,8 @@ public class DateValidatorTest {
     }
 
     @Test
-    public void testCorrectDateFormatExpectTrue() {
+    public void testCorrectDateFormatExpectTrue()
+    {
         final String correctDate = "2016-10-10";
         final boolean expected = true;
         final boolean actual = timeValidator.validateDateFormat(correctDate);
@@ -55,7 +56,8 @@ public class DateValidatorTest {
     }
 
     @Test
-    public void testInCorrectDateFormatExpectFalse() {
+    public void testInCorrectDateFormatExpectFalse()
+    {
         final String correctDate = "201611-10-102";
         final boolean expected = false;
         final boolean actual = timeValidator.validateDateFormat(correctDate);
@@ -63,4 +65,3 @@ public class DateValidatorTest {
         Assert.assertEquals(message, expected, actual);
     }
 }
-

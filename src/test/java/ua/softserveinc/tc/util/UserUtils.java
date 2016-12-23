@@ -6,9 +6,6 @@ import ua.softserveinc.tc.entity.User;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by comp on 17.12.2016.
- */
 public class UserUtils {
 
     public static List<User> getListOfUser()

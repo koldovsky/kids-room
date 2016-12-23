@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
-import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
@@ -14,15 +13,10 @@ import ua.softserveinc.tc.service.impl.UserServiceImpl;
 import ua.softserveinc.tc.util.RoomUtils;
 import ua.softserveinc.tc.util.UserUtils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-
-/**
- * Created by melancholiya.
- */
 
 public class UserServiceTest {
 
@@ -35,11 +29,9 @@ public class UserServiceTest {
     @Mock
     User user;
 
-    @Spy
-    List<User> users = new ArrayList<>();
+    private List<User> users;
 
-    @Spy
-    List<Room> rooms = new ArrayList<>();
+    private List<Room> rooms;
 
     @Before
     public void beforeTests() {
@@ -150,7 +142,7 @@ public class UserServiceTest {
     @Test
     public void testEnableChildren() {
 
-
+        // todo: implement;
     }
 
 }

@@ -3,7 +3,6 @@ package ua.softserveinc.tc.validator;
 import org.junit.Before;
 import org.junit.Test;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -13,9 +12,6 @@ import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by meltnacholiya on 20.12.2016.
- */
 public class BookingValidatorTest {
 
     private Validator validator;
