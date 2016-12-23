@@ -43,12 +43,5 @@ public class UserDetailsServiceTest {
         verify(userDetailsService, times(1)).loadUserByUsername("someEmail");
     }
 
-    @Test
-    public void testNotNullUserByUsername() {
-        User user = UserUtils.getListOfUser().get(0);
-
-        when(this.userService.getUserByEmail(user.getEmail())).thenReturn(user);
-
-    }
 
 }
