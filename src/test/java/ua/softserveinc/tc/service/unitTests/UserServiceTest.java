@@ -3,13 +3,8 @@ package ua.softserveinc.tc.service.unitTests;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.*;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import ua.softserveinc.tc.config.TestBaseConfigClass;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
@@ -29,32 +24,6 @@ import static org.mockito.Mockito.*;
  * Created by melancholiya.
  */
 
-/**
- *  (+) List<User> findAll(List<Long> ids);
- * <p>
- *  (+/-) void deleteUserById(Long id);
- * <p>
- *  (+) User getUserByEmail(String email);
- * <p>
- * User getUserByName(String firstName, String lastName);
- * <p>
- * void createWithEncoder(User user);
- * <p>
- *  (+) List<User> findAllUsersByRole(Role role);
- * <p>
- *  (+) List<User> getActiveUsers(Date startDate, Date endDate, Room room);
- * <p>
- * List<Room> getActiveRooms(User user);
- * <p>
- * List<Child> getEnabledChildren(User user);
- */
-
-// todo: write where each test is used;
-
-@DirtiesContext
-@ContextConfiguration(classes = TestBaseConfigClass.class)
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 public class UserServiceTest {
 
     @InjectMocks
@@ -74,14 +43,12 @@ public class UserServiceTest {
 
     @Before
     public void beforeTests() {
-        // BlockJUnit4ClassRunnerWithParameters
+        // todo: use BlockJUnit4ClassRunnerWithParameters
         MockitoAnnotations.initMocks(this);
         users = UserUtils.getListOfUser();
         rooms = RoomUtils.getListOfRooms();
     }
 
-    // List<User> findAll(List<Long> ids);
-    // is using in update(manager)Controller;
     @Test
     public void testFindAllByListOfIds() {
         List<Long> listOfIds = UserUtils.getListOfIds3();
@@ -92,8 +59,9 @@ public class UserServiceTest {
         userService.findAll(listOfIds);
         verify(userDao, times(1)).findAll(listOfIds);
         Assert.assertArrayEquals(UserMessages.FIND_ALL_BY_ID_ERROR, userService.findAll(listOfIds).toArray(), users.toArray());
-
     }
+
+    // todo: write test for ListWithNoIds and expect some error;
 
     @Test
     public void testFindAll() {
@@ -106,17 +74,18 @@ public class UserServiceTest {
 
 
     // todo: change it to use mocks and not delete existing entries and also read about @Transactional annotation;
-//    @Test
+//    @Test(expected = IllegalAccessException.class)
 //    @Transactional
 //    public void testDeleteUserById() {
 //        System.out.println("Testing deleteUserById() method in userService. Test correct number of calls for deleteUserById()");
 //
-//        Mockito.when(this.userService).
-//                Mockito.verify(userDao, times(1)).deleteUserById(1L);
+//        Mockito.doThrow(new IllegalAccessException()).when(this.userDao).deleteUserById(1L);
+//        userService.deleteUserById(1L);
+//        Mockito.verify(userDao, times(1)).deleteUserById(1L);
 //    }
 
     @Test
-    // @Parameters
+    // todo: use JParams especially @Parameters
     public void testGetUserByEmail() {
         String email = "somevalidemail@gmail.com";
 
@@ -147,17 +116,17 @@ public class UserServiceTest {
         verify(userDao, times(1)).findAllUsersByRole(role);
 
         Assert.assertArrayEquals("Method findAllUsersByRole(Role role) doesn't work correctly",
-                                userService.findAllUsersByRole(role).toArray(),
-                                users.toArray());
+                userService.findAllUsersByRole(role).toArray(),
+                users.toArray());
 
     }
 
     @Test
     public void testGetActiveUsers() {
 
-        Date startDate = new Date(); // change start date;
-        Date endDate = new Date();  // change end date;
-        Room room = new Room(); // test room;
+        Date startDate = new Date();
+        Date endDate = new Date();
+        Room room = new Room();
 
         when(userDao.findActiveUsers(startDate, endDate, room)).thenReturn(users);
 
@@ -171,8 +140,6 @@ public class UserServiceTest {
     @Test
     public void testGetActiveRooms() {
 
-        // to test this I need to use integration test;
-
         when(user.getRooms()).thenReturn(rooms);
         userService.getActiveRooms(user);
 
@@ -181,30 +148,9 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testEnableChilden() {
+    public void testEnableChildren() {
 
-        System.out.println("");
-        userService.getEnabledChildren(user);
 
     }
-
-    /**
-     *
-     *
-
-     void deleteUserById(Long id);
-
-     User getUserByEmail(String email);
-
-     void createWithEncoder(User user);
-
-     List<User> findAllUsersByRole(Role role);
-
-     List<User> getActiveUsers(Date startDate, Date endDate, Room room);
-
-     List<Room> getActiveRooms(User user);
-
-     List<Child> getEnabledChildren(User user);
-     * */
 
 }

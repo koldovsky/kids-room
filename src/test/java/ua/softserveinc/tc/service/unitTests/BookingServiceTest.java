@@ -29,10 +29,6 @@ import java.util.GregorianCalendar;
  * Created by melancholiya.
  */
 
-@DirtiesContext
-@ContextConfiguration(classes = TestBaseConfigClass.class)
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 public class BookingServiceTest {
 
     @InjectMocks
