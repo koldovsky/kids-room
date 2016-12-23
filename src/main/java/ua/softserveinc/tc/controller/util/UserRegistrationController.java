@@ -97,7 +97,7 @@ public class UserRegistrationController {
         if (locale == null)
             locale = request.getLocale();
         ModelAndView model = new ModelAndView();
-        model.setViewName("login");
+        model.setViewName(UserConstants.Model.LOGIN_VIEW);
         model.getModelMap().addAttribute(ReportConstants.CONFIRM_ATTRIBUTE,
                 messageSource.getMessage(ReportConstants.CONFIRM_MESSAGE, null, locale));
         return model;
