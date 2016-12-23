@@ -26,9 +26,8 @@ html, body, .container {
     width: 300px;
     -webkit-box-shadow: 0px 0px 25px #979797;
     box-shadow: 0px 0px 25px #979797;
-
-
 }
+
 .container .eventInfo #eventTitle {
     margin-top: 10px;
     padding-top: 5px;
