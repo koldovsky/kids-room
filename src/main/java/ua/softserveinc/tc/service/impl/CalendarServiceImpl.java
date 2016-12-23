@@ -222,7 +222,6 @@ public class CalendarServiceImpl implements CalendarService {
                 calendar.setTime(event.getStartTime());
                 daysOfTheMonth.add(calendar.get(Calendar.DAY_OF_MONTH));
             }
-
             return getMonthlyEventDto(listOfRecurrentEvent, daysOfTheMonth);
         }
         else {

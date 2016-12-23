@@ -9,6 +9,10 @@ html, body, .container {
     display: table-cell;
     vertical-align: middle;
 }
+#days-for-monthly-form .active {
+    background: black;
+    color: white;
+}
 
 .eventInfo {
     height: 200px;

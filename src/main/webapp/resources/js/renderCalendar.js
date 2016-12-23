@@ -586,30 +586,10 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            var recurrentEventsForRender = [];
-
-            result.forEach(function (item, i) {
-                var newRecurrentEvent = {
-                    id: item.id,
-                    title: item.name,
-                    start: item.startTime,
-                    end: item.endTime,
-                    editable: false,
-                    type: 'event',
-                    description: item.description,
-                    color: item.color,
-                    borderColor: BORDER_COLOR,
-                    recurrentId: item.recurrentId
-                };
-
-                allEvents.push(newRecurrentEvent);
-                recurrentEventsForRender.push(newRecurrentEvent);
-                $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
-            });
+            popSetOfEvents(result);
         },
         errors: function (xhr) {
             callErrorDialog(xhr['responseText']);
-            popSetOfEvents(result);
         }
     });
 }
@@ -634,9 +614,57 @@ function popSetOfEvents(set) {
         allEvents.push(newRecurrentEvent);
 
         recurrentEventsForRender.push(newRecurrentEvent);
-
         $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
     });
+
+    animateCalendar(set[0].startTime, set[0].endTime, set[0].name);
+}
+
+function animateCalendar(startTime, endTime, setName) {
+    startTime = new Date(startTime);
+    endTime = new Date(endTime);
+    alert(startTime + endTime + setName);
+    var findTime = '.fc-content .fc-time';
+    var findName = '.fc-content .fc-title';
+
+    function getTime(date) {
+        time = '';
+        if (date.getHours() < 2) {
+            time += (date.getHours() - 2 + 24);
+        } else if ((date.getHours() - 2) < 10) {
+            time += '0' + (date.getHours() - 2);
+        } else
+            time += (date.getHours() - 2);
+        if ((date.getMinutes()) < 10) {
+            time += ':0' + date.getMinutes();
+        } else
+            time += ':' + date.getMinutes();
+        return time;
+    }
+
+    var setTime = getTime(startTime);
+    if ($('.fc-state-active').hasClass('fc-agendaWeek-button') ||
+        $('.fc-state-active').hasClass('fc-agendaDay-button')) {
+        setTime += ' - ' + getTime(endTime);
+        findTime += ' span';
+    }
+    alert(setTime + setName);
+    var elementsToAnimate = [];
+    $('#calendar').find(findTime).each(function () {
+        if (this.innerHTML == setTime) {
+            elementsToAnimate.push($(this).closest('.fc-event'));
+        }
+    });
+    elementsToAnimate.forEach(function (item, i) {
+        $(item).find(findName).each(function () {
+            if (this.innerHTML == setName) {
+                $(this).closest('.fc-event').addClass('animated').addClass('pulse').addClass('infinite');
+            }
+        });
+    });
+    setTimeout(function () {
+        $('.fc-event').removeClass("animated").removeClass("pulse").removeClass("infinite");
+    }, 4000);
 }
 function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
     $.ajax({
@@ -654,7 +682,7 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
             color: eventColor,
             borderColor: BORDER_COLOR
         }),
-        success: function (result) {
+        success: function (result) {////ToDo: get dates when event wasnt created
             popSetOfEvents(result);
         }
     });
@@ -694,7 +722,6 @@ function sendToServerForUpdate(event, roomID) {
             $('#calendar').fullCalendar('removeEvents', event.id);
             $('#calendar').fullCalendar('renderEvent', event, true);
             redrawBlockedTimeSpans(roomIdForHandler);
-            redrawBlockedTimeSpans(roomIdForHandler);
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
@@ -731,6 +758,7 @@ function editRecurrentEvent(recurrentEventForEditing) {
         $('#start-date-picker').val(recurrentEventForEditing.startDate);
         $('#start-date-cancel-picker').val(recurrentEventForEditing.startDate);
         $('#end-date-picker').val(recurrentEventForEditing.endDate);
+        $('#end-date-picker').prop('disabled', false);
         $('#end-date-cancel-picker').val(recurrentEventForEditing.endDate);
         $('#start-time-picker').timepicker('setTime', recurrentEventForEditing.startTime);
         $('#end-time-picker').timepicker('setTime', recurrentEventForEditing.endTime);
