@@ -40,7 +40,7 @@ public class RoomValidatorImpl implements RoomValidator {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_WORKING_HOURS_START, ValidationConstants.ROOM_EPMTY_MSG);
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_WORKING_HOURS_END, ValidationConstants.ROOM_EPMTY_MSG);
 
-            if (!Pattern.compile(ValidationConstants.LETTERS_REGEX)
+            if (!Pattern.compile(ValidationConstants.NAME_REGEX)
                     .matcher(roomToValidate.getName())
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_NAME, ValidationConstants.ROOM_INVALID_NAME_MSG);
@@ -50,7 +50,7 @@ public class RoomValidatorImpl implements RoomValidator {
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_ADDRESS, ValidationConstants.ROOM_INVALID_ADDRESS_MSG);
             }
-            if (!Pattern.compile(ValidationConstants.LETTERS_REGEX)
+            if (!Pattern.compile(ValidationConstants.NAME_REGEX)
                     .matcher(roomToValidate.getCity())
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_CITY, ValidationConstants.ROOM_INVALID_CITY_MSG);
