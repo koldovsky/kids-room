@@ -18,8 +18,7 @@ $(function () {
     $('#confirmation-dialog-event-div').dialog({
         autoOpen: false,
         modal: true,
-        width: 350,
-        modal: true
+        width: 350
     });
 
     $('#cancel-event-dialog').dialog({
@@ -60,7 +59,6 @@ $(function () {
         }
     });
 
-
     $('.timepicker').timepicker({
         timeFormat: 'H:i',
         step: 1
@@ -77,13 +75,11 @@ $(function () {
         modal: true
     });
 
-
     $('#updatingButton').click(function () {
         if (validateUpdateSingleDialog()) {
             updateSingleEvent();
         }
     });
-
 
     function deleteRecurrentEvents(recurrentId) {
         allEvents.forEach(function (item) {
@@ -157,6 +153,7 @@ $(function () {
             myDialog.dialog('close');
         });
     });
+
     $('#deleting-single-event').hover(function () {
         $(this).css('color', 'red');
         $(this).css('cursor', 'pointer ');
@@ -180,7 +177,6 @@ $(function () {
                 return;
         }
         createSingleOrRecurrentEvents();
-
     });
 
     $('#recurrent').click(function () {
@@ -206,7 +202,6 @@ $(function () {
         $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
         buildTableMonthly();
         $('#dialog').dialog('open');
-
     });
 
     if ($('#single-event-radio-button').is(':checked')) {
@@ -219,7 +214,7 @@ $(function () {
         $('#end-date-picker').attr('disabled', false);
         if ($('#weekly-radio-button').is(':checked')) {
             $('#days-for-recurrent-form').attr('hidden', false);
-            $('#days-for-monthly-form').attr('hidden',true);
+            $('#days-for-monthly-form').attr('hidden', true);
             $('#end-date-picker').attr('disabled', false);
             $('#dialog').off('change', '#start-date-picker');
         } else {
@@ -237,7 +232,6 @@ $(function () {
             $('#dialog').on('change', '#start-date-picker', function () {
                 $('#end-date-picker').val($('#start-date-picker').val());
             });
-
         }
     });
 
@@ -681,8 +675,11 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
             color: eventColor,
             borderColor: BORDER_COLOR
         }),
-        success: function (result) {////ToDo: get dates when event wasnt created
+        success: function (result) {
             popSetOfEvents(result);
+        },
+        error: function (xhr) {
+            callErrorDialog(xhr['responseText']);
         }
     });
 }

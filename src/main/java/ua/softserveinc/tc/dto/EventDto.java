@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.dto;
 
+import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.entity.Event;
 
 import java.text.DateFormat;
@@ -26,6 +27,8 @@ public class EventDto {
     private Long recurrentId;
 
     private String color;
+
+    private EventConstants.TypeOfRecurentEvent recurrentType;
 
     public EventDto() {
     }
@@ -123,5 +126,13 @@ public class EventDto {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public EventConstants.TypeOfRecurentEvent getRecurrentType() {
+        return recurrentType;
+    }
+
+    public void setRecurrentType(EventConstants.TypeOfRecurentEvent recurrentType) {
+        this.recurrentType = recurrentType;
     }
 }
