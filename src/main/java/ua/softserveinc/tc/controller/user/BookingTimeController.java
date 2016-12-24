@@ -55,7 +55,6 @@ public class BookingTimeController {
     }
 
     @PostMapping(value ="makenewbooking", produces = "application/json; charset=UTF-8")
-    @ResponseBody
     public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos,
                                              BindingResult bindingResult) {
         if (bookingService.checkForDuplicateBooking(dtos)) {
