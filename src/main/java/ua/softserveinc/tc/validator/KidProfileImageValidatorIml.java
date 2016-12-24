@@ -10,10 +10,15 @@ import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.util.Log;
 import org.slf4j.Logger;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import java.util.Iterator;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.StreamSupport;
+import java.util.Spliterators;
+import java.util.Spliterator;
 
 /**
  * Validator for checking file of class MultipartFile for validity.
@@ -31,36 +36,35 @@ public class KidProfileImageValidatorIml implements KidProfileImageValidator {
     private ApplicationConfigurator applicationConfigurator;
 
     @Override
-    public boolean isNotNullOrEmpty(MultipartFile file) {
-        return file != null && !file.isEmpty();
-    }
-
-    @Override
-    public boolean isHaveAcceptableSize(MultipartFile file) {
-        return file.getSize() <= applicationConfigurator.getMaxUploadImgSizeMb()
-                * ImageConstants.ONE_MEGA_BYTE_IN_BYTES;
-    }
-
-    @Override
-    public boolean isHaveAcceptableFormat(MultipartFile file) {
-        boolean result = false;
-        try (ImageInputStream iis =
-                ImageIO.createImageInputStream(file.getInputStream())) {
-            Iterator<ImageReader> readers = ImageIO.getImageReaders(iis);
-
-            out:
-            while (readers.hasNext()) {
-                ImageReader reader = readers.next();
-                for (String imgFo : applicationConfigurator.getImageAcceptableFormats())
-                    if (imgFo.toLowerCase().equals(reader.getFormatName().toLowerCase())) {
-                        result = true;
-                        break out;
-                    }
+    public boolean isCorrupted(MultipartFile file) {
+        BufferedImage image = null;
+        ImageReader imgReader = getImageReader(file);
+        if(imgReader != null) {
+            try (ImageInputStream inStream =
+                         ImageIO.createImageInputStream(file.getInputStream())) {
+                imgReader.setInput(inStream);
+                image = imgReader.read(0);
+            } catch (IOException e) {
+                log.error("Failed to read image from file : " + file, e);
+                image = null;
             }
-        } catch(IOException e) {
-            log.error("Failed to save image", e);
+        }
+        return image == null;
+    }
+
+    @Override
+    public boolean isAcceptableSize(MultipartFile file) {
+        boolean result = false;
+        if(file != null) {
+            result = file.getSize() <= applicationConfigurator.getMaxUploadImgSizeMb()
+                    * ImageConstants.ONE_MEGA_BYTE_IN_BYTES;
         }
         return result;
+    }
+
+    @Override
+    public boolean isAcceptableFormat(MultipartFile file) {
+        return isAcceptableFormat(getImageReader(file));
     }
 
     @Override
@@ -70,23 +74,79 @@ public class KidProfileImageValidatorIml implements KidProfileImageValidator {
             errors.rejectValue(ValidationConstants.IMAGE,
                     ValidationConstants.IMAGE_VALIDATION_NOT_CORRECT_USAGE);
         } else {
-            if (!isNotNullOrEmpty((MultipartFile)o))
+            if (((MultipartFile)o).isEmpty()) {
                 errors.rejectValue(ValidationConstants.IMAGE,
                         ValidationConstants.IMAGE_VALIDATION_EMPTY_FILE);
-            else {
-                if (!isHaveAcceptableSize((MultipartFile) o))
+            } else {
+                if (!isAcceptableSize((MultipartFile) o)) {
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE);
-                if (!isHaveAcceptableFormat((MultipartFile) o))
+                }
+                if (!isAcceptableFormat((MultipartFile) o)) {
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT);
+                } else if (isCorrupted((MultipartFile) o)) {
+                    errors.rejectValue(ValidationConstants.IMAGE,
+                            ValidationConstants.IMAGE_VALIDATION_CORRUPTION_FILE);
+                }
             }
         }
     }
 
+
     @Override
     public boolean supports(Class<?> aClass) {
         return MultipartFile.class.isAssignableFrom(aClass);
+    }
+
+    /*
+     * Returns object of the class ImageReader for given file of class MultipartFile
+     *
+     * @param file the file of the class MultipartFile
+     * @return object of the class ImageReader or null if here are no acceptable object
+     */
+    private ImageReader getImageReader (MultipartFile file) {
+        ImageReader result = null;
+        if (file != null) {
+            try (ImageInputStream inStream =
+                         ImageIO.createImageInputStream(file.getInputStream())) {
+                Iterator<ImageReader> readers = ImageIO.getImageReaders(inStream);
+                result = StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                        readers, Spliterator.IMMUTABLE), false)
+                        .filter(this::isAcceptableFormat)
+                        .findAny()
+                        .orElse(null);
+            } catch (IOException e) {
+                log.error("Failed to read image from file : " + file, e);
+            }
+        }
+        return result;
+    }
+
+    /*
+     * Checks if the given object of ImageReader belong to acceptable format.
+     * The acceptable format is set in application properties
+     *
+     * @param imgReader the object of ImageReader for checking
+     * @return true is format is acceptable, otherwise - false
+     */
+    private boolean isAcceptableFormat(ImageReader imgReader) {
+        boolean result = false;
+        if(imgReader != null) {
+            result = Arrays.stream(applicationConfigurator.getImageAcceptableFormats()).anyMatch(
+                    imgFo -> {
+                        boolean match = false;
+                        try {
+                            match = imgFo.toLowerCase()
+                                    .equals(imgReader.getFormatName().toLowerCase());
+                        } catch (IOException e) {
+                            log.error("Failed to read image. ImageReader:" + imgReader, e);
+                        }
+                        return match;
+                    }
+            );
+        }
+        return result;
     }
 
 }
