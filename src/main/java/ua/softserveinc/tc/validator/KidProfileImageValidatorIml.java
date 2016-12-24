@@ -69,23 +69,25 @@ public class KidProfileImageValidatorIml implements KidProfileImageValidator {
 
     @Override
     public void validate(Object o, Errors errors) {
+
         if (!(o instanceof MultipartFile)) {
             log.error("Validator error! Entered wrong object for validation");
             errors.rejectValue(ValidationConstants.IMAGE,
                     ValidationConstants.IMAGE_VALIDATION_NOT_CORRECT_USAGE);
         } else {
-            if (((MultipartFile)o).isEmpty()) {
+            MultipartFile imgFile = (MultipartFile)o;
+            if (imgFile.isEmpty()) {
                 errors.rejectValue(ValidationConstants.IMAGE,
                         ValidationConstants.IMAGE_VALIDATION_EMPTY_FILE);
             } else {
-                if (!isAcceptableSize((MultipartFile) o)) {
+                if (!isAcceptableSize(imgFile)) {
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE);
                 }
-                if (!isAcceptableFormat((MultipartFile) o)) {
+                if (!isAcceptableFormat(imgFile)) {
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT);
-                } else if (isCorrupted((MultipartFile) o)) {
+                } else if (isCorrupted(imgFile)) {
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_CORRUPTION_FILE);
                 }
