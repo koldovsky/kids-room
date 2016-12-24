@@ -310,6 +310,8 @@ function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
     var path = 'getevents/' + id;
     $.ajax({
         url: 'getroomproperty/' + id,
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
         success: function (result) {
             result = result.split(' ');
             result[0] += ":00";
@@ -318,7 +320,10 @@ function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
             var endTime = result[1];
 
             $.ajax({
-                url: path, success: function (result) {
+                url: path,
+                encoding:'UTF-8',
+                contentType: 'charset=UTF-8',
+                success: function (result) {
                     var objects;
                     if (result.length) {
                         objects = [];
@@ -363,7 +368,10 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
     bookingsArray = [];
     var pathForUploadingAllBookingsForUsers = 'getallbookings/' + userId + '/' + id;
     $.ajax({
-        url: pathForUploadingAllBookingsForUsers, success: function (result) {
+        url: pathForUploadingAllBookingsForUsers,
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
+        success: function (result) {
             result = JSON.parse(result);
             allBookings = result;
             var objectsLen = objects.length;
@@ -390,7 +398,10 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
 function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursEnd) {
     var path = 'disabled?roomID=' + id;
     $.ajax({
-        url: path, success: function (result) {
+            url: path,
+            encoding:'UTF-8',
+            contentType: 'charset=UTF-8',
+            success: function (result) {
             result = JSON.parse(result);
             var objectsLen = objects.length;
             var keyArr = Object.keys(result);
@@ -502,13 +513,9 @@ function sendBookingToServerForCreate(bookingsArray) {
             dataType: 'json',
             data: JSON.stringify(bookingsArray),
             success: function (result) {
-
                 var refresh = result;
-
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
-
                 refresh.forEach(function (item) {
-
                     $('#user-calendar').fullCalendar('renderEvent', {
                         id: item.id,
                         title: item.kidName,
@@ -554,7 +561,8 @@ function updateBooking() {
 function sendBookingToServerForUpdate(bookingForUpdate) {
     $.ajax({
         type: 'post',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'change-booking',
         dataType: 'json',
         data: JSON.stringify({
@@ -616,7 +624,8 @@ function makeRecurrentBookings() {
     $.ajax({
             url: 'makerecurrentbookings',
             type: 'post',
-            contentType: 'application/json',
+            encoding:'UTF-8',
+            contentType: 'application/json; charset=UTF-8',
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
@@ -688,10 +697,10 @@ function updateRecurrentBooking() {
 
     $('#comment-for-update-recurrency').val("");
     $.ajax({
-            // url: 'makerecurrentbookings',
             url: 'updaterecurrentbookings',
             type: 'post',
-            contentType: 'application/json',
+            encoding:'UTF-8',
+            contentType: 'application/json; charset=UTF-8',
             dataType: 'json',
             data: JSON.stringify(newEventAfterUpdate),
             success: function (result) {
@@ -735,6 +744,8 @@ function editRecurrentBookingsReuest (recurrentId) {
     $.ajax({
         url: path,
         type : 'GET',
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
         dataType : 'json',
         success: function (result) {
             recurrentBookingForEditing = {
@@ -801,7 +812,8 @@ function cancelBooking(bookingId) {
     $('#user-calendar').fullCalendar('removeEvents', bookingId);
     $.ajax({
         type: 'get',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'cancelBook/' + bookingId,
         dataType: 'json',
         data: JSON.stringify({})
@@ -1168,7 +1180,10 @@ function redrawBlockedTimeSpans(roomId) {
 
     var path = 'disabled?roomID=' + roomId;
     $.ajax({
-        url: path, success: function (result) {
+        url: path,
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
+        success: function (result) {
             result = JSON.parse(result);
 
             $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);

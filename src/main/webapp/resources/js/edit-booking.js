@@ -6,6 +6,8 @@ var table = null;
 var roomCapacity; // The capacity (number of people) current room
 
 $(function() {
+
+        $("#bookingDialog").attr("accept-charset", "UTF-8");
     if(localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }
@@ -34,6 +36,8 @@ $().ready(function() {
             var urlForKids = 'get-kids/' + idUser;
             $.ajax({
                 url: urlForKids,
+                encoding:'UTF-8',
+                contentType: 'charset=UTF-8',
                 success: function(result) {
                     var kids = JSON.parse(result);
                     $.each(kids, function(i, kid) {
@@ -105,6 +109,8 @@ function selectRoomForManager(roomId) {
     refreshTable(localStorage['bookingsState']);
     $.ajax({
         url: 'getroomproperty/' + roomId,
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
         success: function(result){
             result = result.split(' ');
             $('#bookingStartTimepicker').val(result[0]);
@@ -165,6 +171,8 @@ function refreshTable(bookingsState) {
             var result = null;
             $.ajax({
                 url: src,
+                encoding:'UTF-8',
+                contentType: 'charset=UTF-8',
                 async: false,
                 success: function(data) {
                     result = data;
@@ -296,7 +304,8 @@ function setStartTime(id, startTime) {
     $('#' + id).addClass('highlight-active');
     $.ajax({
         url: 'setTime',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
         type: 'POST',
         success: function() {
@@ -314,7 +323,8 @@ function setEndTime(id, time) {
         $('#' + id).addClass('highlight-complet');
         $.ajax({
             url: 'setEndTime',
-            contentType: 'application/json',
+            encoding:'UTF-8',
+            contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(inputData),
             type: 'POST',
             success: function() {
@@ -358,7 +368,8 @@ function updatingBooking(inputDate) {
     $.ajax({
         url: 'change-booking',
         type: 'POST',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputDate),
         success: function(data) {
             if (data) {
@@ -375,6 +386,8 @@ function updatingBooking(inputDate) {
 function addKids(getKidsUrl) {
     $.ajax({
         url: getKidsUrl,
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
         success: function(result) {
             var kids = JSON.parse(result);
             var kidsCount = kids.length;
@@ -407,7 +420,8 @@ function Booking(startTime, endTime, comment, kidId, roomId, userId) {
 function sendBookingToServerForCreate(bookingsArray) {
     $.ajax({
         type: 'post',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'makenewbooking',
         dataType: 'json',
         data: JSON.stringify(bookingsArray),
