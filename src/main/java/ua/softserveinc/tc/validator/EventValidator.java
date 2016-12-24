@@ -102,15 +102,15 @@ public class EventValidator implements Validator {
                     ((startDateCalendar.get(Calendar.MINUTE) + ValidationConstants.ONE_MINUTE) > endDateCalendar.get(Calendar.MINUTE))) {
                 errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG);
             }
-            if (eventDto.getRecurrentType()== EventConstants.TypeOfRecurentEvent.MONTHLY) {
+            if (eventDto.getRecurrentType() == EventConstants.TypeOfRecurentEvent.MONTHLY) {
                 MonthlyEventDto monthlyEventDto = (MonthlyEventDto) eventDto;
                 if (monthlyEventDto.getDaysOfMonth().isEmpty()) {
                     errors.rejectValue(ValidationConstants.RECURRENT_DAYS, ValidationConstants.NO_DAYS_FOR_RECURRENT_EVENT);
                 }
-                if (isMonthlyValid(monthlyEventDto)) {
+                if (!isMonthlyValid(monthlyEventDto)) {
                     errors.rejectValue(ValidationConstants.DATE_FIELD, ValidationConstants.DATE_DOESNT_EXIST);
                 }
-            } else if (eventDto.getRecurrentType()== EventConstants.TypeOfRecurentEvent.WEEKLY) {
+            } else if (eventDto.getRecurrentType() == EventConstants.TypeOfRecurentEvent.WEEKLY) {
                 RecurrentEventDto weeklyEventDto = (RecurrentEventDto) eventDto;
                 if (weeklyEventDto.getDaysOfWeek().isEmpty()) {
                     errors.rejectValue(ValidationConstants.RECURRENT_DAYS, ValidationConstants.NO_DAYS_FOR_RECURRENT_EVENT);
