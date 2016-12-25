@@ -75,8 +75,8 @@ public class RoomValidatorTest {
 
   @Test
   public void testStartDateBiggerThanEnd() {
-    roomDto.setWorkingHoursEnd("07:00");
-    roomDto.setWorkingHoursStart("20:00");
+    roomDto.setWorkingHoursStart("21:00");
+    roomDto.setWorkingHoursEnd("08:00");
     roomValidator.validate(roomDto, errors);
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.TIME_IS_NOT_VALID,
