@@ -73,10 +73,6 @@ public class RoomValidatorImpl implements RoomValidator {
             if ((roomCityLength < ValidationConstants.ROOM_FIELDS_MINIMUM_CHARACTER) || (roomCityLength > ValidationConstants.ROOM_FIELDS_MAXIMUM_CHARACTER)) {
                 errors.rejectValue(ValidationConstants.ROOM_CITY, ValidationConstants.ROOM_MIN_MAX_CHARACTERS_MSG);
             }
-            int roomPhoneLength = roomToValidate.getPhoneNumber().length();
-            if ((roomPhoneLength < ValidationConstants.ROOM_FIELDS_MINIMUM_CHARACTER) || (roomPhoneLength > ValidationConstants.ROOM_FIELDS_MAXIMUM_CHARACTER)) {
-                errors.rejectValue(ValidationConstants.ROOM_PHONE_NUMBER, ValidationConstants.ROOM_MIN_MAX_CHARACTERS_MSG);
-            }
             int roomCapacity = (roomToValidate.getCapacity() == null) ? 0 : roomToValidate.getCapacity();
             if ((roomCapacity < ValidationConstants.ROOM_CAPACITY_MINIMUM) || (roomCapacity > ValidationConstants.ROOM_CAPACITY_MAXIMUM)) {
                 errors.rejectValue(ValidationConstants.ROOM_CAPACITY, ValidationConstants.ROOM_MIN_MAX_CAPACITY);
