@@ -5,12 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -59,7 +54,7 @@ public class BookingTimeController {
         return null;
     }
 
-    @PostMapping("makenewbooking")
+    @PostMapping(value ="makenewbooking", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos,
                                              BindingResult bindingResult) {
         if (bookingService.checkForDuplicateBooking(dtos)) {

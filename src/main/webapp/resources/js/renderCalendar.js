@@ -277,6 +277,8 @@ function selectRoomForManager(id) {
 
     $.ajax({
         url: 'getroomproperty/' + id,
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
         success: function (result) {
             result = result.split(' ');
 
@@ -288,13 +290,13 @@ function selectRoomForManager(id) {
 
             $.ajax({
                 url: 'getevents/' + id,
-
+                encoding:'UTF-8',
+                contentType: 'charset=UTF-8',
                 success: function (result) {
                     var objects;
                     if (result.length) {
                         objects = [];
                         result = JSON.parse(result);
-
                         for (var i = 0; i < result.length; i++) {
                             objects[i] = {
                                 id: result[i].id,
@@ -567,7 +569,8 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
 
     $.ajax({
         type: 'post',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'getrecurrentevents',
         dataType: 'json',
         data: JSON.stringify({
@@ -662,7 +665,8 @@ function animateCalendar(startTime, endTime, setName) {
 function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
     $.ajax({
         type: 'post',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'getmonthlyevents',
         dataType: 'json',
         data: JSON.stringify({
@@ -702,7 +706,8 @@ function updateSingleEvent() {
 function sendToServerForUpdate(event, roomID) {
     $.ajax({
         type: 'post',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'geteventforupdate',
         dataType: 'json',
         data: JSON.stringify({
@@ -729,7 +734,8 @@ function sendToServerForUpdate(event, roomID) {
 function sendToServerForDelete(event) {
     $.ajax({
         type: 'post',
-        contentType: 'application/json',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         url: 'geteventfordelete',
         dataType: 'json',
         data: JSON.stringify({
@@ -814,6 +820,8 @@ function editRecurrentEventRequest(eventRecurrentId) {
     var path = 'getRecurrentEventForEditing/' + eventRecurrentId;
     $.ajax({
         type: 'GET',
+        encoding:'UTF-8',
+        contentType: 'charset=UTF-8',
         dataType: 'json',
         url: path,
         success: function (result) {

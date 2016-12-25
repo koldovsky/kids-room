@@ -103,6 +103,7 @@ public final class ValidationConstants {
     public static final String COMMENT_ERROR_MSG = "registration.kid.comment";
     public static final String IMAGE_VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
     public static final String IMAGE_VALIDATION_EMPTY_FILE = "image.validator.emptyFile";
+    public static final String IMAGE_VALIDATION_CORRUPTION_FILE = "image.validator.corruptedFile";
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE = "image.validator.TooBigSize";
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT = "image.validator.badFormat";
 

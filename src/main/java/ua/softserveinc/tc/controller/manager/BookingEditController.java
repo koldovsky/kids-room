@@ -97,7 +97,7 @@ public class BookingEditController {
         bookingService.update(booking);
     }
 
-    @GetMapping("dailyBookings/{date}/{id}/{state}")
+    @GetMapping(value = "dailyBookings/{date}/{id}/{state}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String dailyBookingsByState(@PathVariable String date,
                                        @PathVariable Long id,
@@ -126,7 +126,7 @@ public class BookingEditController {
      * @param id id the room for which makes figuring out bookings
      * @return JSON with relevant information
      */
-    @GetMapping("dailyNotCompletedBookings/{date}/{id}")
+    @GetMapping(value = "dailyNotCompletedBookings/{date}/{id}",produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String dailyNotCompletedBookings(@PathVariable String date, @PathVariable Long id) {
         Room room = roomService.findById(id);
@@ -157,7 +157,7 @@ public class BookingEditController {
         return false;
     }
 
-    @GetMapping("get-kids/{id}")
+    @GetMapping(value="get-kids/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String listKids(@PathVariable Long id) {
         List<Child> kids = userService.getEnabledChildren(userService.findById(id));

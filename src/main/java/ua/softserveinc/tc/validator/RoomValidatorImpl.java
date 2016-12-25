@@ -40,7 +40,7 @@ public class RoomValidatorImpl implements RoomValidator {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_WORKING_HOURS_START, ValidationConstants.ROOM_EPMTY_MSG);
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_WORKING_HOURS_END, ValidationConstants.ROOM_EPMTY_MSG);
 
-            if (!Pattern.compile(ValidationConstants.LETTERS_REGEX)
+            if (!Pattern.compile(ValidationConstants.NAME_REGEX)
                     .matcher(roomToValidate.getName())
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_NAME, ValidationConstants.ROOM_INVALID_NAME_MSG);
@@ -50,7 +50,7 @@ public class RoomValidatorImpl implements RoomValidator {
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_ADDRESS, ValidationConstants.ROOM_INVALID_ADDRESS_MSG);
             }
-            if (!Pattern.compile(ValidationConstants.LETTERS_REGEX)
+            if (!Pattern.compile(ValidationConstants.NAME_REGEX)
                     .matcher(roomToValidate.getCity())
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_CITY, ValidationConstants.ROOM_INVALID_CITY_MSG);
@@ -72,10 +72,6 @@ public class RoomValidatorImpl implements RoomValidator {
             int roomCityLength = roomToValidate.getCity().length();
             if ((roomCityLength < ValidationConstants.ROOM_FIELDS_MINIMUM_CHARACTER) || (roomCityLength > ValidationConstants.ROOM_FIELDS_MAXIMUM_CHARACTER)) {
                 errors.rejectValue(ValidationConstants.ROOM_CITY, ValidationConstants.ROOM_MIN_MAX_CHARACTERS_MSG);
-            }
-            int roomPhoneLength = roomToValidate.getPhoneNumber().length();
-            if ((roomPhoneLength < ValidationConstants.ROOM_FIELDS_MINIMUM_CHARACTER) || (roomPhoneLength > ValidationConstants.ROOM_FIELDS_MAXIMUM_CHARACTER)) {
-                errors.rejectValue(ValidationConstants.ROOM_PHONE_NUMBER, ValidationConstants.ROOM_MIN_MAX_CHARACTERS_MSG);
             }
             int roomCapacity = (roomToValidate.getCapacity() == null) ? 0 : roomToValidate.getCapacity();
             if ((roomCapacity < ValidationConstants.ROOM_CAPACITY_MINIMUM) || (roomCapacity > ValidationConstants.ROOM_CAPACITY_MAXIMUM)) {

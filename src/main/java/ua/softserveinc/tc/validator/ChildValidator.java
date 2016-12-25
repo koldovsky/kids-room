@@ -9,6 +9,8 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by Nestor on 12.05.2016.
  * A validator-class that handles Child objects validation
@@ -36,14 +38,22 @@ public class ChildValidator implements Validator{
     public void validate(Object o, Errors errors) {
         Child kidToValidate = (Child) o;
 
-        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.FIRST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
-        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
-        ValidationUtils.rejectIfEmpty(errors, ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.FIRST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.CHILD_DATE_OF_BIRTH, ValidationConstants.EMPTY_FIELD_MSG);
 
-        /**
-         * check if the first and last names are corrent(if there is only 1 letter)
-         * Error messages appear. "First Name" and "Last Name" fields are not edited.
-         */
+        if (!Pattern.compile(ValidationConstants.NAME_REGEX)
+            .matcher(kidToValidate.getFirstName())
+            .matches()) {
+            errors.rejectValue(ValidationConstants.FIRST_NAME, ValidationConstants.NAME_ERROR_MSG);
+        }
+
+        if (!Pattern.compile(ValidationConstants.NAME_REGEX)
+            .matcher(kidToValidate.getLastName())
+            .matches()) {
+            errors.rejectValue(ValidationConstants.LAST_NAME, ValidationConstants.NAME_ERROR_MSG);
+        }
+
         String fName = kidToValidate.getFirstName();
         String lName = kidToValidate.getLastName();
         if(fName.length() < MIN_NAME_CHARACTER) {
