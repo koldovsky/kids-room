@@ -1,25 +1,19 @@
 package ua.softserveinc.tc.validator;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import ua.softserveinc.tc.config.AppConfig;
 
 import java.text.ParseException;
 
-@DirtiesContext
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
-@WebAppConfiguration
 public class DateValidatorTest {
 
-    @Autowired
-    public TimeValidator timeValidator;
+    private TimeValidator timeValidator;
+
+    @Before
+    public void init(){
+        timeValidator = new TimeValidator();
+    }
 
     @Test
     public void testCorrectTimeExpectTrue() throws ParseException {
