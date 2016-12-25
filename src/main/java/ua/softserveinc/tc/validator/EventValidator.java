@@ -54,7 +54,8 @@ public class EventValidator implements Validator {
     public boolean isReccurrentValid(RecurrentEventDto recurrentEventDto) {
         try {
             dateSet(recurrentEventDto);
-            return onlyDateSimpleDateFormat.parse(recurrentEventDto.getStartTime()).before(onlyDateSimpleDateFormat.parse(recurrentEventDto.getEndTime()));
+            return onlyDateSimpleDateFormat.parse(recurrentEventDto.getStartTime()).before(
+                    onlyDateSimpleDateFormat.parse(recurrentEventDto.getEndTime()));
         } catch (ParseException e) {
             return false;
         }
@@ -63,7 +64,8 @@ public class EventValidator implements Validator {
     public boolean isMonthlyValid(MonthlyEventDto monthlyEventDto) {
         try {
             dateSet(monthlyEventDto);
-            return onlyDateSimpleDateFormat.parse(monthlyEventDto.getStartTime()).before(onlyDateSimpleDateFormat.parse(monthlyEventDto.getEndTime()));
+            return onlyDateSimpleDateFormat.parse(monthlyEventDto.getStartTime()).before(
+                    onlyDateSimpleDateFormat.parse(monthlyEventDto.getEndTime()));
         } catch (ParseException e) {
             return false;
         }

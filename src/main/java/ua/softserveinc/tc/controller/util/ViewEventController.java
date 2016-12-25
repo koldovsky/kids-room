@@ -150,12 +150,15 @@ public class ViewEventController {
     }
 
     @PostMapping(value = "getmonthlyevents", produces = "application/json")
-    public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto, BindingResult bindingResult) {
+    public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto,
+                                             BindingResult bindingResult) {
         eventValidator.validate(monthlyEventDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Gson().toJson(bindingResult.getFieldError().getCode()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new Gson().toJson(bindingResult.getFieldError().getCode()));
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto)));
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto)));
         }
     }
 
