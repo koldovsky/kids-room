@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
@@ -52,7 +54,18 @@ public class EventValidator implements Validator {
     public boolean isReccurrentValid(RecurrentEventDto recurrentEventDto) {
         try {
             dateSet(recurrentEventDto);
-            return onlyDateSimpleDateFormat.parse(recurrentEventDto.getStartTime()).before(onlyDateSimpleDateFormat.parse(recurrentEventDto.getEndTime()));
+            return onlyDateSimpleDateFormat.parse(recurrentEventDto.getStartTime()).before(
+                    onlyDateSimpleDateFormat.parse(recurrentEventDto.getEndTime()));
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    public boolean isMonthlyValid(MonthlyEventDto monthlyEventDto) {
+        try {
+            dateSet(monthlyEventDto);
+            return onlyDateSimpleDateFormat.parse(monthlyEventDto.getStartTime()).before(
+                    onlyDateSimpleDateFormat.parse(monthlyEventDto.getEndTime()));
         } catch (ParseException e) {
             return false;
         }
@@ -90,6 +103,20 @@ public class EventValidator implements Validator {
             } else if ((startDateCalendar.get(Calendar.HOUR_OF_DAY) == endDateCalendar.get(Calendar.HOUR_OF_DAY)) &&
                     ((startDateCalendar.get(Calendar.MINUTE) + ValidationConstants.ONE_MINUTE) > endDateCalendar.get(Calendar.MINUTE))) {
                 errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG);
+            }
+            if (eventDto.getRecurrentType() == EventConstants.TypeOfRecurentEvent.MONTHLY) {
+                MonthlyEventDto monthlyEventDto = (MonthlyEventDto) eventDto;
+                if (monthlyEventDto.getDaysOfMonth().isEmpty()) {
+                    errors.rejectValue(ValidationConstants.RECURRENT_DAYS, ValidationConstants.NO_DAYS_FOR_RECURRENT_EVENT);
+                }
+                if (!isMonthlyValid(monthlyEventDto)) {
+                    errors.rejectValue(ValidationConstants.DATE_FIELD, ValidationConstants.DATE_DOESNT_EXIST);
+                }
+            } else if (eventDto.getRecurrentType() == EventConstants.TypeOfRecurentEvent.WEEKLY) {
+                RecurrentEventDto weeklyEventDto = (RecurrentEventDto) eventDto;
+                if (weeklyEventDto.getDaysOfWeek().isEmpty()) {
+                    errors.rejectValue(ValidationConstants.RECURRENT_DAYS, ValidationConstants.NO_DAYS_FOR_RECURRENT_EVENT);
+                }
             }
         } catch (ParseException e) {
             errors.rejectValue(ValidationConstants.START_TIME, ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG);

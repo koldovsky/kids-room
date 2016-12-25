@@ -1,8 +1,10 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;
+import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.entity.Event;
 
 import javax.persistence.EntityManager;
@@ -36,6 +38,13 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
             return 0L;
         }
         return result;
+    }
+
+    @Transactional
+    public void saveSetOfEvents(List<Event> listToSave) {
+        for (Event event: listToSave) {
+            entityManager.persist(event);
+        }
     }
 
     public List<Event> getRecurrentEventByRecurrentId(Long recurrentId) {

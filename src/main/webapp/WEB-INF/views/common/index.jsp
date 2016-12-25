@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href='resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
 <link href='resources/css/formForCalendar.css' rel='stylesheet'/>
 <link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
