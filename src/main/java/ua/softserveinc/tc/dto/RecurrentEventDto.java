@@ -7,19 +7,23 @@ import ua.softserveinc.tc.mapper.GenericMapper;
 import java.util.List;
 import java.util.Set;
 
-public class RecurrentEventDto extends EventDto{
+public class RecurrentEventDto extends EventDto {
 
     @Autowired
     private GenericMapper<Event, EventDto> genericMapper;
 
     private String daysOfWeek;
 
-    private Set <Integer> weekDays;
+    private Set<Integer> weekDays;
 
     public RecurrentEventDto() {
     }
 
     public RecurrentEventDto(Event event) {
+        super(event);
+    }
+
+    public RecurrentEventDto(EventDto event) {
         super(event);
     }
 
@@ -34,9 +38,14 @@ public class RecurrentEventDto extends EventDto{
     }
 
     public void setWeekDays(Set<Integer> weekDays) {
-        this.weekDays=weekDays;
+        this.weekDays = weekDays;
 
     }
+
+    public Set<Integer> getWeekDays() {
+        return weekDays;
+    }
+
     public Event toEvent() {
         EventDto eventDto = new EventDto();
         eventDto.setName(this.getName());

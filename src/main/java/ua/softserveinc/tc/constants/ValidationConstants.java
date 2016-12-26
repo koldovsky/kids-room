@@ -54,7 +54,8 @@ public final class ValidationConstants {
     public static final String EVENT_TITLE = "name";
     public static final String EVENT_COLOR = "color";
     public static final String EVENT_DESCRIPTION = "description";
-    public static final String RECURRENT_DAYS = "description";
+    public static final String MONTH_RECURRENT_DAYS = "daysOfTheMonth";
+    public static final String WEEK_RECURRENT_DAYS = "daysOfWeek";
 
     public static final String ROOM_NAME = "name";
     public static final String ROOM_ADDRESS = "address";
