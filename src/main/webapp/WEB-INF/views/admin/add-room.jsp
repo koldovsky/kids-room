@@ -102,23 +102,21 @@
                         </div>
 
                         <div class="form-group sizing-between">
-                            <div class="header-rate">
                                 <label class="for-field"><spring:message code="administrator.room.rate"/></label>
                                 <label class="for-field1"><spring:message
                                         code="administrator.room.rate.hourRate"/></label>
                                 <label class="for-field3"><spring:message
                                         code="administrator.room.rate.priceRate"/></label>
-                            </div>
                             <fieldset data-ng-repeat="rate in rates">
                                 <label class="for-field1">
+                                    <spring:message code="administrator.room.rate.hourRate" var="hourRatePlaceHolder"/>
                                     <input type="number" ng-model="rate.hourRate" hourRate="" class="form-control"
-                                           placeholder=
-                                            <spring:message code="administrator.room.rate.hourRate"/>/>
+                                           placeholder="${hourRatePlaceHolder}"/>
                                 </label>
                                 <label class="for-field2">
+                                    <spring:message code="administrator.room.rate.priceRate" var="priceRatePlaceHolder"/>
                                     <input type="number" ng-model="rate.priceRate" priceRate="" class="form-control"
-                                           placeholder=
-                                            <spring:message code="administrator.room.rate.priceRate"/>/>
+                                           placeholder="${priceRatePlaceHolder}"/>
                                 </label>
                             </fieldset>
                             <br>

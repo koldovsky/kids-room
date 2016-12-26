@@ -111,16 +111,16 @@
                             </div>
                             <fieldset data-ng-repeat="rate in rates">
                                 <label class="for-field1">
+                                    <spring:message code="administrator.room.rate.hourRate" var="hourRatePlaceHolder"/>
                                     <input id="myText" type="text" ng-model="rate.hourRate" hourRate=""
                                            class="form-control"
-                                           placeholder=
-                                            <spring:message code="administrator.room.rate.hourRate"/>/>
+                                           placeholder="${hourRatePlaceHolder}"/>
                                 </label>
                                 <label class="for-field2">
                                     <input id="myText" type="text" ng-model="rate.priceRate" priceRate=""
                                            class="form-control"
-                                           placeholder=
-                                            <spring:message code="administrator.room.rate.priceRate"/>/>
+                                            <spring:message code="administrator.room.rate.priceRate" var="priceRatePlaceHolder"/>
+                                           placeholder="${priceRatePlaceHolder}"/>
                                 </label>
                             </fieldset>
                             <br>
