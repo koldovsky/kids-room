@@ -45,7 +45,7 @@ html, body, .container {
 }
 
 .highlight-active{
-    background-color: #C4DAF4;
+    background-color: #85eb6b;
 }
 
 .highlightedRed {
@@ -53,7 +53,7 @@ html, body, .container {
 }
 
 .highlight-complet {
-    background-color: #C0C0C0;
+    background-color: #e5f448;
 }
 
 #create-booking-btn{
