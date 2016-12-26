@@ -255,7 +255,8 @@ function refreshTable(bookingsState) {
             'className': 'arrivalTime',
             'fnCreatedCell': function(nTd) {
                 var td = '<input type="time" class="form-control inp-arrivalTime" >'
-                    + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-down" id="arrival-btn" ></button>';
+                    + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
+                    'data-toggle="tooltip" title="' + messages.booking.hint.arrivedTime + '" id="arrival-btn" ></button>';
                 $(nTd).empty();
                 $(nTd).append(td);
             }
@@ -265,7 +266,8 @@ function refreshTable(bookingsState) {
             'className': 'leaveTime',
             'fnCreatedCell': function(nTd) {
                 var td = '<input type="time" class="form-control inp-leaveTime" >'
-                    + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-down" id="leave-btn" ></button>';
+                    + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
+                    'data-toggle="tooltip" title="' + messages.booking.hint.leaveTime + '" id="leave-btn" ></button>';
                 $(nTd).empty();
                 $(nTd).append(td);
             }
