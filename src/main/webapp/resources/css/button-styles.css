@@ -99,7 +99,31 @@
     content: "\270E";
 }
 
-
 .add:before    { content: "\271A"; }
 .delete:before { content: "\2718";}
 .cross:before  { content: "\2716"; }
+
+.admin-icon-confirm{
+    font-size: 2.0em;
+    color: green;
+}
+.admin-icon-notconfirm{
+    font-size: 2.0em;
+    color: red;
+}
+.btn{
+    margin: 0;
+}
+
+.btn-add-manager{
+    width: 130px;
+}
+#btn-inactive{
+    background-color: #e7dbd2;
+}
+#btn-active{
+    background-color: #d3e7bf;
+}
+#btn-edit {
+    height: 35px;
+}
