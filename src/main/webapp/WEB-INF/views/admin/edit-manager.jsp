@@ -1,15 +1,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 
 <link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <link rel='stylesheet' href='resources/css/flow-form.css'>
-
+<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
 
 <body>
 <div class="for-table table-responsive">
@@ -17,6 +17,7 @@
         <tr class="hide-border">
             <th colspan="7" class="set-standard-color">
                 <legend class="for-table"><strong class="title-font">
+                    <i class="glyphicon glyphicon-user"></i>
                     <spring:message code="administrator.listManagers"/></strong></legend></th>
         </tr>
         <tr></tr>
@@ -39,11 +40,11 @@
             <td>${manager.lastName}</td>
             <td>${manager.phoneNumber}</td>
             <td>
-                <c:if test="${manager.confirmed eq true}"><img src="resources/img/ok.png" class="img-size"></c:if>
-                <c:if test="${manager.confirmed ne true}"><img src="resources/img/no.png" class="img-size"></c:if>
+                <c:if test="${manager.confirmed eq true}"><i class="admin-icon-confirm glyphicon glyphicon-ok-circle"></i></c:if>
+                <c:if test="${manager.confirmed ne true}"><i class="admin-icon-notconfirm glyphicon glyphicon-remove-circle"></i></c:if>
             </td>
-            <td><a href="adm-update-manager?id=${manager.id}" tabindex="-1"><button
-                    class="button-size-default button edit"></button></a>
+            <td><a href="adm-update-manager?id=${manager.id}" tabindex="-1"><button id="btn-edit"
+                    class="btn btn-raised btn-info"><i class="glyphicon glyphicon-pencil"></i></button></a>
             </td>
 
             <td>
@@ -52,7 +53,7 @@
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
                         <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                     </form:form>
-                    <button class="button button-size-default delete submit-manager-active"></button>
+                    <button id = "btn-inactive" class="btn btn-raised btn-default delete submit-manager-active"></button>
 
                 </c:if>
                 <c:if test="${manager.active eq true}">
@@ -60,7 +61,7 @@
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
                         <input id="manager" name="manager" type="hidden" value="${manager.id}" />
                     </form:form>
-                    <button class="button button-size-default save submit-manager-inactive"></button>
+                    <button  id = "btn-active" class="btn btn-raised btn-default save submit-manager-inactive"></button>
                 </c:if>
             </td>
         </tr>
@@ -70,15 +71,14 @@
         <tr>
             <th colspan="7" class="hide-border set-standard-color">
                 <a href="adm-add-manager" tabindex="-1">
-                    <button type="button" class="button-add button">
+                    <button type="button" class="btn btn-raised btn-primary btn-add-manager">
                             <spring:message code="administrator.add"/></button></a>
             </th>
         </tr>
     </table>
 
     <%--confirmation-dialog--%>
-    <div class="row">
-        <div class="modal-dialog modal-lg vertical-center-row">
+    <div class="row hidden">
             <div align="center">
                 <div id="confirmation-dialog-event-div" class="ui-dialog" title=<spring:message
                         code="event.confirmTitle" /> >
@@ -102,7 +102,6 @@
                     </form>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 
