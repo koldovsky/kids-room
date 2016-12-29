@@ -13,16 +13,17 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
+import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 /**
@@ -94,11 +95,13 @@ public class EventValidatorTest {
     @Test
     public void testEventRoom() {
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has No Error", !errorsForSingle.hasFieldErrors(ValidationConstants.ROOM_ID));
+        Assert.assertTrue("Has No Error",
+                !errorsForSingle.hasFieldErrors(ValidationConstants.ROOM_ID));
         when(room.isActive()).thenReturn(false);
         eventValidator.validate(eventDto, errorsForSingle);
         Assert.assertTrue("HasErrors", errorsForSingle.hasErrors());
-        Assert.assertEquals("Room is not Active", ValidationConstants.EVENT_INACTIVE_ROOM_ERROR_MSG,
+        Assert.assertEquals("Room is not Active",
+                ValidationConstants.EVENT_INACTIVE_ROOM_ERROR_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.ROOM_ID).getCode());
     }
 
@@ -106,7 +109,8 @@ public class EventValidatorTest {
     public void testTitle() {
         eventDto.setName("");
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has name error", errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_TITLE));
+        Assert.assertTrue("Has name error",
+                errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_TITLE));
         Assert.assertEquals("name is empty", ValidationConstants.EVENT_EMPTY_TITLE_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.EVENT_TITLE).getCode());
     }
@@ -115,7 +119,8 @@ public class EventValidatorTest {
     public void testColor() {
         eventDto.setColor("");
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has color error", errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_COLOR));
+        Assert.assertTrue("Has color error",
+                errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_COLOR));
         Assert.assertEquals("color is empty", ValidationConstants.EMPTY_FIELD_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.EVENT_COLOR).getCode());
     }
@@ -136,7 +141,8 @@ public class EventValidatorTest {
                 "The length should be more then 250 chars :/ " +
                 "The length should be more then 250 chars :/ ");
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has description Error", errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_DESCRIPTION));
+        Assert.assertTrue("Has description Error",
+                errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_DESCRIPTION));
         Assert.assertEquals("description is more then 250 chars",
                 ValidationConstants.EVENT_DESCRIPTION_LENGTH_ERROR_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.EVENT_DESCRIPTION).getCode());
@@ -146,15 +152,18 @@ public class EventValidatorTest {
     public void testOkDescription() {
         eventDto.setDescription("This description is ok");
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Description has no Error", !errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_DESCRIPTION));
+        Assert.assertTrue("Description has no Error",
+                !errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_DESCRIPTION));
     }
 
     @Test
     public void testStartTimeEmpty() {
         eventDto.setStartTime("");
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has startTime Error", errorsForSingle.hasFieldErrors(ValidationConstants.START_TIME));
-        Assert.assertEquals("startTime is empty", ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG,
+        Assert.assertTrue("Has startTime Error",
+                errorsForSingle.hasFieldErrors(ValidationConstants.START_TIME));
+        Assert.assertEquals("startTime is empty",
+                ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.START_TIME).getCode());
     }
 
@@ -162,8 +171,10 @@ public class EventValidatorTest {
     public void testEndTimeEmpty() {
         eventDto.setEndTime("");
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has endTime Error", errorsForSingle.hasFieldErrors(ValidationConstants.END_TIME));
-        Assert.assertEquals("endTime is empty", ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG,
+        Assert.assertTrue("Has endTime Error",
+                errorsForSingle.hasFieldErrors(ValidationConstants.END_TIME));
+        Assert.assertEquals("endTime is empty",
+                ValidationConstants.EVENT_DATE_FORMAT_INVALID_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.END_TIME).getCode());
     }
 
@@ -174,8 +185,10 @@ public class EventValidatorTest {
         DateFormat sdf = new SimpleDateFormat(ValidationConstants.DATE_FORMAT);
         eventDto.setStartTime(sdf.format(start.getTime()));
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("Has startTime Error", errorsForSingle.hasFieldErrors(ValidationConstants.START_TIME));
-        Assert.assertEquals("startTime is empty", ValidationConstants.EVENT_PAST_TIME_CREATION_MSG,
+        Assert.assertTrue("Has startTime Error",
+                errorsForSingle.hasFieldErrors(ValidationConstants.START_TIME));
+        Assert.assertEquals("startTime is empty",
+                ValidationConstants.EVENT_PAST_TIME_CREATION_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.START_TIME).getCode());
         Assert.assertTrue("Has one error", errorsForSingle.getAllErrors().size() < 2);
     }
@@ -190,8 +203,10 @@ public class EventValidatorTest {
         eventDto.setEndTime(sdf.format(end.getTime()));
         eventDto.setStartTime(sdf.format(start.getTime()));
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("error with start<end time", errorsForSingle.hasFieldErrors(ValidationConstants.START_TIME));
-        Assert.assertEquals("startTime is empty", ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG,
+        Assert.assertTrue("error with start<end time",
+                errorsForSingle.hasFieldErrors(ValidationConstants.START_TIME));
+        Assert.assertEquals("startTime is empty",
+                ValidationConstants.EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG,
                 errorsForSingle.getFieldError(ValidationConstants.START_TIME).getCode());
         Assert.assertTrue("Has one error", errorsForSingle.getAllErrors().size() < 2);
     }
@@ -199,16 +214,20 @@ public class EventValidatorTest {
     @Test
     public void testClassCastException() {
         eventValidator.validate(monthlyEventDto, errorsForMonthly);
-        Assert.assertTrue("classCastException", !errorsForMonthly.hasFieldErrors(ValidationConstants.EVENT_TITLE));
+        Assert.assertTrue("classCastException",
+                !errorsForMonthly.hasFieldErrors(ValidationConstants.EVENT_TITLE));
 
         eventValidator.validate(eventDto, errorsForSingle);
-        Assert.assertTrue("classCastException", !errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_TITLE));
+        Assert.assertTrue("classCastException",
+                !errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_TITLE));
 
         eventValidator.validate(recurrentEventDto, errorsForWeekly);
-        Assert.assertTrue("classCastException", !errorsForWeekly.hasFieldErrors(ValidationConstants.EVENT_TITLE));
+        Assert.assertTrue("classCastException",
+                !errorsForWeekly.hasFieldErrors(ValidationConstants.EVENT_TITLE));
 
         eventValidator.validate(roomService, errorsForSingle);
-        Assert.assertTrue("classCastException", errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_TITLE));
+        Assert.assertTrue("classCastException",
+                errorsForSingle.hasFieldErrors(ValidationConstants.EVENT_TITLE));
         Assert.assertEquals("class is not ok", ValidationConstants.EVENT_CAST_EXCEPTION,
                 errorsForSingle.getFieldError(ValidationConstants.EVENT_TITLE).getCode());
     }
@@ -216,7 +235,8 @@ public class EventValidatorTest {
     @Test
     public void testMonthlyEventNullPointerForDays() {
         eventValidator.validate(monthlyEventDto, errorsForMonthly);
-        Assert.assertTrue("Has days for recurrent", errorsForMonthly.hasFieldErrors(ValidationConstants.MONTH_RECURRENT_DAYS));
+        Assert.assertTrue("Has days for recurrent",
+                errorsForMonthly.hasFieldErrors(ValidationConstants.MONTH_RECURRENT_DAYS));
         Assert.assertEquals("null pointer", ValidationConstants.NO_DAYS_FOR_RECURRENT_EVENT,
                 errorsForMonthly.getFieldError(ValidationConstants.MONTH_RECURRENT_DAYS).getCode());
     }
@@ -269,5 +289,28 @@ public class EventValidatorTest {
         Assert.assertTrue(errorsForWeekly.hasErrors());
         Assert.assertEquals("empty list", ValidationConstants.NO_DAYS_FOR_RECURRENT_EVENT,
                 errorsForWeekly.getFieldError(ValidationConstants.WEEK_RECURRENT_DAYS).getCode());
+    }
+
+    @Test
+    public void isEventValid() {
+        Assert.assertTrue(eventValidator.isSingleValid(eventDto));
+        eventDto.setStartTime("28-12-2016");
+        Assert.assertFalse(eventValidator.isSingleValid(eventDto));
+        eventDto.setStartTime("notValidForTime");
+        Assert.assertFalse(eventValidator.isSingleValid(eventDto));
+
+        Assert.assertTrue(eventValidator.isReccurrentValid(recurrentEventDto));
+        String tempEndTime = recurrentEventDto.getEndTime();
+        recurrentEventDto.setEndTime(recurrentEventDto.getStartTime());
+        recurrentEventDto.setStartTime(tempEndTime);
+        Assert.assertFalse(eventValidator.isReccurrentValid(recurrentEventDto));
+        recurrentEventDto.setStartTime("notValidTime");
+        Assert.assertFalse(eventValidator.isReccurrentValid(recurrentEventDto));
+    }
+
+    @Test
+    public void supportTest() {
+        Assert.assertTrue(eventValidator.supports(Event.class));
+        Assert.assertFalse(eventValidator.supports(roomService.getClass()));
     }
 }
