@@ -6,12 +6,12 @@ var table = null;
 var roomCapacity; // The capacity (number of people) current room
 
 $(function() {
-
-        $("#bookingDialog").attr("accept-charset", "UTF-8");
+    $("#bookingDialog").attr("accept-charset", "UTF-8");
     if(localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }
 });
+
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
 $('#bookingStartTimepicker').val('07:00');
 $('#bookingEndTimepicker').val('20:00');
@@ -513,5 +513,8 @@ function handler() {
 }
 $('#booking-table > tbody').on( 'click', 'tr', handler);
 
+$('#closeBookingsLegend').click(function () {
+    $('#bookingLegendModal').modal('hide');
+});
 
 

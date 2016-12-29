@@ -27,10 +27,14 @@
         <div id="nav-group">
             <nav>
                 <ul class="nav nav-pills">
-                    <button id="btn-all" class="btn btn-raised" onclick="allBooking()"><spring:message code="booking.allKids"/></button>
-                    <button id="btn-booked" class="btn btn-raised" onclick="bookedBooking()"><spring:message code="booking.bookedKids"/></button>
-                    <button id="btn-active" class="btn btn-raised" onclick="activeBooking()"><spring:message code="booking.arrivedKids"/></button>
-                    <button id="btn-leaved" class="btn btn-raised" onclick="leavedBooking()"><spring:message code="booking.leftKids"/></button>
+                    <button id="btn-all" class="btn btn-raised" onclick="allBooking()"><spring:message
+                            code="booking.allKids"/></button>
+                    <button id="btn-booked" class="btn btn-raised" onclick="bookedBooking()"><spring:message
+                            code="booking.bookedKids"/></button>
+                    <button id="btn-active" class="btn btn-raised" onclick="activeBooking()"><spring:message
+                            code="booking.arrivedKids"/></button>
+                    <button id="btn-leaved" class="btn btn-raised" onclick="leavedBooking()"><spring:message
+                            code="booking.leftKids"/></button>
                 </ul>
             </nav>
         </div>
@@ -54,10 +58,63 @@
             <tbody>
             </tbody>
         </table>
+        <div class="container col-xs-12">
+            <button type="button" class="btn btn-success btn-responsive pull-center" data-toggle="modal"
+                    data-target=".bs-modal-lg-colourInfo">
+                <span class="glyphicon glyphicon-info-sign"> </span>
+            </button>
+        </div>
+    </div>
+
+</div>
+<div id="bookingLegendModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class=" modal-body ">
+                <div align="center">
+                    <div class="col-xs-3">
+                        <span class="glyphicon glyphicon-stop"></span>
+                        <div>
+                            <spring:message code="manager.booking.boked"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <span class="active glyphicon glyphicon-stop"></span>
+                        <div>
+                            <spring:message code="manager.booking.arrived"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <span class="completed glyphicon glyphicon-stop"></span>
+                        <div>
+                            <spring:message code="manager.booking.left"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <span class="selected glyphicon glyphicon-stop"></span>
+                        <div>
+                            <spring:message code="manager.booking.selected"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <body class="kidsInfo" onload="init();">
+                        <canvas id="blob" width="600" height="400" hidden></canvas>
+                        </body>
+                        <button id="closeBookingsLegend" class="btn btn-success center-block "><spring:message
+                                code="close"/></button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <div class="block-center">
+                        SoftServe Inc
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-</div>
-
 <div class="container">
     <div class="vertical-center-row">
         <div align="center">
@@ -136,7 +193,8 @@
                         </div>
                         <br>
                         <div class="block-center">
-                            <input type="button" class="btn btn-success block-center" id="booking" value="<spring:message code="booking.book"/>">
+                            <input type="button" class="btn btn-success block-center" id="booking"
+                                   value="<spring:message code="booking.book"/>">
                         </div>
                     </div>
                 </form>
@@ -153,7 +211,8 @@
                     <br>
                     <h3><spring:message code="booking.incorrectArrive"/></h3>
                     <h4><spring:message code="booking.enterCorrectTime"/></h4>
-                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="booking.close"/></button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
 
                 </div>
             </div>
@@ -167,8 +226,9 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <h4><spring:message code="booking.updated"/> </h4>
-                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="booking.close"/> </button>
+                    <h4><spring:message code="booking.updated"/></h4>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
                 </div>
 
             </div>
@@ -182,7 +242,8 @@
                 <div align="center">
                     <br>
                     <h4></h4>
-                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code ="modal.okay"/></button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                            code="modal.okay"/></button>
                 </div>
             </div>
         </div>
@@ -196,7 +257,8 @@
                 <p><spring:message code="booking.noAvailablePlaces"/></p>
             </div>
             <div class="modal-body">
-                <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message code="booking.close"/> </button>
+                <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                        code="booking.close"/></button>
             </div>
         </div>
     </div>
@@ -208,8 +270,9 @@
             <div class="modal-body-err">
                 <div align="center">
                     <br>
-                    <h4><spring:message code="booking.noAvailablePlaces"/> </h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
+                    <h4><spring:message code="booking.noAvailablePlaces"/></h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
                 </div>
 
             </div>
@@ -223,8 +286,9 @@
             <div class="modal-body-err">
                 <div align="center">
                     <br>
-                    <h4><spring:message code="booking.duplicateError"/> </h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
+                    <h4><spring:message code="booking.duplicateError"/></h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
                 </div>
 
             </div>
@@ -246,7 +310,7 @@
 	74.1,108.4 48.2,86.4 "/>
 </svg>
                     </div>
-                    <h2><spring:message code="booking.creatingNewBooking"/> </h2>
+                    <h2><spring:message code="booking.creatingNewBooking"/></h2>
                 </div>
             </div>
         </div>
@@ -280,8 +344,9 @@
             <div class="modal-body-err">
                 <div align="center">
                     <br>
-                    <h4><spring:message code="booking.noArriveTime"/> </h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message code="booking.close"/></button>
+                    <h4><spring:message code="booking.noArriveTime"/></h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
                 </div>
 
             </div>

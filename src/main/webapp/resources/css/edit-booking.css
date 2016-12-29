@@ -130,3 +130,22 @@ html, body, .container {
 #bookingUpdatingDialog textarea {
     resize : none;
 }
+#bookingLegendModal [class*="glyphicon-stop"]{
+    padding-top: 20px;
+    font-size: 50px;
+    vertical-align: middle;
+}
+#bookingLegendModal [class*="modal-footer"]{
+    padding-top: 100px;
+}
+.active{
+    color: #85eb6b;;
+}
+.completed{
+    color: #e5f448;
+}
+.selected{
+    color: #bababa;
+}
+
+
