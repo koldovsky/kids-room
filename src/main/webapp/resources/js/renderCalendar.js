@@ -680,7 +680,8 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            popSetOfEvents(result);
+            popSetOfEvents(result.eventsCreated);
+            eventsWereNotCreated(result.datesWhenNotCreated);
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
@@ -837,7 +838,6 @@ function editRecurrentEventRequest(eventRecurrentId) {
                 monthDays: result.daysOfTheMonth,
                 title: result.name
             };
-
             editRecurrentEvent(recurrentEventForEditing);
         }
     });

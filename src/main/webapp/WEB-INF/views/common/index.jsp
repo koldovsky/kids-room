@@ -515,7 +515,7 @@
                     <div id="dialog" class="dialog" hidden title="<spring:message code= "event.new"/>">
                         <form id="form">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            <div class="col-xs-12 form-group">
+                            <div class="form-group">
                                 <label for="event-title"><spring:message code= "event.title"/></label>
                                 <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
                                 <input type="text" class="form-control" id="event-title" placeholder="${titlePlaceHolder}">
@@ -904,6 +904,7 @@
 
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
+<div id="warning-dialog" class="cen" type="hidden"></div>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
