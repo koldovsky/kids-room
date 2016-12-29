@@ -213,10 +213,8 @@ public class CalendarServiceImpl implements CalendarService {
             calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
         eventDao.saveSetOfEvents(res);
-        System.out.println(daysWerentCreated.toString());
-        EventsCreatingResultsDto resultsDto = new EventsCreatingResultsDto(
+        return new EventsCreatingResultsDto(
                 eventService.getListOfEventDto(res), daysWerentCreated);
-        return resultsDto;
     }
 
     @Override

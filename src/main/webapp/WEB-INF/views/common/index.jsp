@@ -14,9 +14,7 @@
 <link href='resources/css/flow-form.css' rel='stylesheet'/>
 <link href='resources/css/manager-no-rooms.css' rel='stylesheet'/>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
-
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css"/>
 
 
 <sec:authorize access="hasRole('USER')">
@@ -30,7 +28,7 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="form-group">
                                 <label for="bookingUpdatingStartDate">
-                                    <spring:message code= "booking.startDate"/>
+                                    <spring:message code="booking.startDate"/>
                                 </label>
                                 <br>
                                 <div class="col-xs-6  ">
@@ -49,7 +47,7 @@
 
                             <div class="form-group">
                                 <label for="bookingUpdatingEndDate">
-                                    <spring:message code= "booking.endDate"/>
+                                    <spring:message code="booking.endDate"/>
                                 </label>
                                 <br>
                                 <div class="col-xs-6  ">
@@ -67,20 +65,22 @@
                             <textarea class="col-xs-12" type="text" id="child-comment-update"></textarea>
                             <br>
                             <div id="data-validation-information-string-container" class="clearfix">
-                                <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                                <p class="col-xs-12 data-validation-information-string" style="color:red"
+                                   id="data-validation-information-string"></p>
                             </div>
                             <br>
                             <button type="button" class="btn btn-success" id="updatingBooking">
-                                <spring:message code= "booking.update"/>
+                                <spring:message code="booking.update"/>
                             </button>
                             <button type="button" class="btn btn-danger pull-right" id="deletingBookingCancel">
-                                <spring:message code= "cancel"/>
+                                <spring:message code="cancel"/>
                             </button>
 
-                            <div class = "col-xs-12">
+                            <div class="col-xs-12">
 
                                 <footer class="deleteBookingButtonLink">
-                                    <div id="deleting-single-booking" style="text-decoration: underline; text-align: center;">
+                                    <div id="deleting-single-booking"
+                                         style="text-decoration: underline; text-align: center;">
                                         <spring:message code="booking.deleteBooking"/>
                                     </div>
                                 </footer>
@@ -98,18 +98,20 @@
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
-                    <div id="make-recurrent-booking" class="dialog" hidden title=<spring:message code= "booking.newBooking"/>>
+                    <div id="make-recurrent-booking" class="dialog" hidden title=<spring:message
+                            code="booking.newBooking"/>>
                         <form id="recurrent-booking-form">
                             <!--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> -->
 
 
                             <div class="form-group">
                                 <label for="recurrent-booking-start-date">
-                                    <spring:message code= "booking.startDate"/>
+                                    <spring:message code="booking.startDate"/>
                                 </label>
                                 <br>
                                 <div class="col-xs-6 choose-booking">
-                                    <input type="date" class="text-center form-control" id="recurrent-booking-start-date"
+                                    <input type="date" class="text-center form-control"
+                                           id="recurrent-booking-start-date"
                                            placeholder="startDate">
                                 </div>
                                 <div class="col-xs-6">
@@ -121,7 +123,7 @@
 
                             <div class="form-group">
                                 <label for="recurrent-booking-end-date">
-                                    <spring:message code= "booking.endDate"/>
+                                    <spring:message code="booking.endDate"/>
                                 </label>
                                 <br>
                                 <div class="col-xs-6 choose-booking">
@@ -129,7 +131,8 @@
                                            placeholder="endDate" disabled="true">
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="recurrent-booking-end-time" type="text" class="text-center time form-control timepicker"
+                                    <input id="recurrent-booking-end-time" type="text"
+                                           class="text-center time form-control timepicker"
                                            size="6"/>
                                 </div>
                             </div>
@@ -144,13 +147,14 @@
                                                 <label><input type="radio" name="optradio-bookingform"
                                                               id="no-recurrent-booking"
                                                               class="booking-radio" checked>
-                                                    <spring:message code= "booking.singleBooking"/>
+                                                    <spring:message code="booking.singleBooking"/>
                                                 </label>
                                             </div>
                                             <div class="radio-button">
-                                                <label><input type="radio" name="optradio-bookingform" id="weekly-booking"
+                                                <label><input type="radio" name="optradio-bookingform"
+                                                              id="weekly-booking"
                                                               class="booking-radio">
-                                                    <spring:message code= "booking.weeklyBooking"/>
+                                                    <spring:message code="booking.weeklyBooking"/>
                                                 </label>
                                             </div>
                                         </div>
@@ -161,26 +165,32 @@
                                                 <tbody>
                                                 <tr>
                                                     <td><label><input type="checkbox" id="Monday-booking" value="Mon"
-                                                                      class="day"> <spring:message code= "monday"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="monday"/></label><br>
                                                     </td>
                                                     <td><label><input type="checkbox" id="Tuesday-booking" value="Tue"
-                                                                      class="day"> <spring:message code= "tuestay"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="tuestay"/></label><br>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label><input type="checkbox" id="Wednesday-booking" value="Wed"
-                                                                      class="day"> <spring:message code= "wednesday"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="wednesday"/></label><br>
                                                     </td>
                                                     <td><label><input type="checkbox" id="Thursday-booking" value="Thu"
-                                                                      class="day"> <spring:message code= "thursday"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="thursday"/></label><br>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label><input type="checkbox" id="Friday-booking" value="Fri"
-                                                                      class="day"> <spring:message code= "friday"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="friday"/></label><br>
                                                     </td>
                                                     <td><label><input type="checkbox" id="Saturday-booking" value="Sat"
-                                                                      class="day"> <spring:message code= "saturday"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="saturday"/></label><br>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -190,7 +200,7 @@
 
                                     <div class="clearfix"></div>
                                     <div id="child-selector">
-                                        <br><spring:message code= "kid.select"/><br>
+                                        <br><spring:message code="kid.select"/><br>
                                         <table>
                                             <c:forEach items="${kids}" var="kids" varStatus="loop">
 
@@ -207,10 +217,12 @@
                                                       hidden>Comment
                                                     for ${kids.firstName}:</span>
 
-                                                    <textarea type="text" class="col-xs-12" id="child-comment-${kids.id}"
+                                                    <textarea type="text" class="col-xs-12"
+                                                              id="child-comment-${kids.id}"
                                                               hidden></textarea>
 
-                                                    <input type="text" id="comment-${loop.index}" value="${kids.id}" hidden>
+                                                    <input type="text" id="comment-${loop.index}" value="${kids.id}"
+                                                           hidden>
                                                     <br>
                                                 </tr>
                                             </c:forEach>
@@ -226,29 +238,32 @@
 
                                     <br>
                                     <div id="data-validation-information-string-container" class="clearfix">
-                                        <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                                        <p class="col-xs-12 data-validation-information-string" style="color:red"
+                                           id="data-validation-information-string"></p>
                                     </div>
 
                                     <div class="clearfix">
                                             <%--<div class="col-xs-4 row">--%>
-                                        <button type="button" class="btn btn-success" id="update-recurrent-booking" hidden="true">
-                                            <spring:message code= "booking.update"/>
+                                        <button type="button" class="btn btn-success" id="update-recurrent-booking"
+                                                hidden="true">
+                                            <spring:message code="booking.update"/>
                                         </button>
                                         <button type="button" class="btn btn-success" id="book">
-                                            <spring:message code= "booking.book"/>
+                                            <spring:message code="booking.book"/>
                                         </button>
                                             <%--                                    </div>
                                                                                 <div class="col-xs-4 row ">--%>
                                         <button type="button" class="btn btn-danger pull-right" id="cancel-changes">
-                                            <spring:message code= "cancel"/>
+                                            <spring:message code="cancel"/>
                                         </button>
                                             <%--</div>--%>
                                     </div>
                                     <br>
-                                    <div class = "col-xs-12">
+                                    <div class="col-xs-12">
 
                                         <footer class="delete-recurrent-booking">
-                                            <div id="delete-recurrent-booking" style="text-decoration: underline; text-align: center;" hidden="true">
+                                            <div id="delete-recurrent-booking"
+                                                 style="text-decoration: underline; text-align: center;" hidden="true">
                                                 <spring:message code="booking.deleteBooking"/>
                                             </div>
                                         </footer>
@@ -262,7 +277,8 @@
             </div>
         </div>
 
-        <div id="duplicate-booking-dialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div id="duplicate-booking-dialog" class="modal fade" tabindex="-1" role="dialog"
+             aria-labelledby="myLargeModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -279,13 +295,13 @@
                                               stroke-miterlimit="10" points="113,52.8 74.1,108.4 48.2,86.4 "/>
                                     </svg>
                             </div>
-                            <h2><spring:message code= "booking.created"/></h2><br>
-                            <h4><spring:message code= "booking.duplicate"/></h4>
+                            <h2><spring:message code="booking.created"/></h2><br>
+                            <h4><spring:message code="booking.duplicate"/></h4>
                             <button type="button" class="btn btn-success pull-right" id="createDuplicateBooking">
-                                <spring:message code= "yes"/>
+                                <spring:message code="yes"/>
                             </button>
                             <button type="button" class="btn btn-danger pull-right" id="omitCreateDuplicateBooking">
-                                <spring:message code= "no"/>
+                                <spring:message code="no"/>
                             </button>
                             <br><br>
                         </div>
@@ -298,24 +314,24 @@
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
-                    <div id="recurrent-change" title = "<spring:message code= "booking.edit"/>" class="dialog" hidden>
+                    <div id="recurrent-change" title="<spring:message code= "booking.edit"/>" class="dialog" hidden>
                         <form id="choose-updating-booking-form">
                             <div class="radio-button">
                                 <label><input type="radio" id="single-update-booking" name="radio-check" checked>
-                                    <spring:message code= "recurrent.justThisOneBooking"/>
+                                    <spring:message code="recurrent.justThisOneBooking"/>
                                 </label>
                             </div>
                             <div class="radio-button">
                                 <label><input type="radio" id="recurrent-update-booking" name="radio-check">
-                                    <spring:message code= "recurrent.allSeries"/>
+                                    <spring:message code="recurrent.allSeries"/>
                                 </label>
                             </div>
 
                             <button type="button" class="btn btn-success" id="confirm-choose-booking">
-                                <spring:message code= "ok"/>
+                                <spring:message code="ok"/>
                             </button>
                             <button type="button" class="btn btn-danger pull-right" id="close-choose">
-                                <spring:message code= "cancel"/>
+                                <spring:message code="cancel"/>
                             </button>
 
                         </form>
@@ -342,109 +358,132 @@
             <%--create-new-booking--%>
         <div class="container col-xs-12">
             <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
-                    data-target=".bs-modal-lg-colourInfo" >
+                    data-target=".bs-modal-lg-colourInfo">
                 <span class="glyphicon glyphicon-info-sign"> </span>
             </button>
             <button type="button" class="btn btn-success btn-responsive" id="create-new-booking">
-                <spring:message code= "booking.makeBooking"/>
+                <spring:message code="booking.makeBooking"/>
             </button>
             <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
                     data-target=".bs-modal-lg-contact">
-                <spring:message code= "booking.contact"/>
+                <spring:message code="booking.contact"/>
             </button>
 
-            <div id="colorDescryptionModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div id="colorDescryptionModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-content">
+                            <div class="modal-body">
+                                <div align="center">
+                                    <br>
+                                    <div class="col-xs-4">
+                                        <h1><span style="vertical-align:middle ;color: #4CAF50;"
+                                                  class="glyphicon glyphicon-stop"></span></h1> <spring:message
+                                            code="yourBooking"/>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h1><span style="vertical-align:middle ;color: #EEEEEE;"
+                                                  class="glyphicon glyphicon-stop"></span></h1> <spring:message
+                                            code="room"/>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h1><span style="vertical-align:middle ;color: #ff0000;"
+                                                  class="glyphicon glyphicon-stop"></span></h1> <spring:message
+                                            code="bookedRoom"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <h3>
+                                            <span style="vertical-align:middle ;color: #d3af37;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #84fff7;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #4CAF50;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #f98e2e;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #636363;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                        </h3>
+                                        <h3><span style="vertical-align:middle ;color: #1ba1e2;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #044d92;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span id="loadEaster" style="vertical-align:middle ;color: #9b3aa1;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #ffcd5c;"
+                                                  class="glyphicon glyphicon-stop"></span>
+                                            <span style="vertical-align:middle ;color: #eb6f63;"
+                                                  class="glyphicon glyphicon-stop"></span></h3>
+                                        <spring:message code="events"/>
+                                        <br>
+                                        <body class="kidsInfo" onload="init();">
+                                        <canvas id="blob" width="600" height="400" hidden></canvas>
+                                        <br>
+                                        </body>
+                                        <button id="closeColorDesc" class="btn btn-success center-block ">
+                                            <spring:message code="close"/></button>
+                                    </div>
+                                    <span id="softServeInc">SoftServe Inc</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contactModal" class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog"
+                 aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
                         <div class="modal-body">
                             <div align="center">
                                 <br>
-                                <div class="col-xs-4">
-                                    <h1  > <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "yourBooking"/>
-                                </div> <div class="col-xs-4">
-                                <h1  > <span style="vertical-align:middle ;color: #EEEEEE;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "room"/>
-                            </div> <div class="col-xs-4">
-                                <h1  > <span style="vertical-align:middle ;color: #ff0000;" class="glyphicon glyphicon-stop" ></span></h1> <spring:message code= "bookedRoom"/>
+                                <h4 id="showRoomManagers"><spring:message code="manager"/> : </h4>
+                                <H4 id="roomPhone"></H4>
+                                <button id="closeContact" class="btn btn-success center-block "><spring:message
+                                        code="close"/></button>
+                                <span>SoftServe Inc</span>
                             </div>
-                                <div class="col-xs-12">
-                                    <h3  >
-                                        <span style="vertical-align:middle ;color: #d3af37;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #84fff7;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #4CAF50;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #f98e2e;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #636363;" class="glyphicon glyphicon-stop" ></span>
-                                    </h3>
-                                    <h3  > <span style="vertical-align:middle ;color: #1ba1e2;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #044d92;" class="glyphicon glyphicon-stop" ></span>
-                                        <span id="loadEaster" style="vertical-align:middle ;color: #9b3aa1;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #ffcd5c;" class="glyphicon glyphicon-stop" ></span>
-                                        <span style="vertical-align:middle ;color: #eb6f63;" class="glyphicon glyphicon-stop" ></span>  </h3>
-                                    <spring:message code= "events"/>
-                                    <br>
-                                    <body class="kidsInfo" onload="init();" >
-                                    <canvas id="blob" width="600" height="400" hidden> </canvas>
-                                    <br>
-                                    </body>
-                                    <button id="closeColorDesc" class="btn btn-success center-block "><spring:message code="close"/></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id='user-calendar'></div>
+        </div>
+
+            <%--confirmation-dialog--%>
+        <div class="modal fade">
+            <div class="modal-dialog">
+                <div aclass="modal-body text-center">
+                    <div id="confirmation-dialog-div" class="ui-dialog" title=
+                        <spring:message code="booking.confirmTitle"/> hidden>
+                        <form id="confirm-your-choice">
+                            <div class="confirmDelete">
+                                <p><span style="text-align:center;">
+                                <spring:message code="booking.confirmCancelQuestion1"/> </span></p>
+                                <p><span style="text-align:center;">
+                                <spring:message code="booking.confirmCancelQuestion2"/></span></p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-6" style="text-align: center">
+                                    <button type="button" class="btn btn-success" id="confirmYes">
+                                        <spring:message code="booking.confirmYes"/>
+                                    </button>
                                 </div>
-                                <span id="softServeInc">SoftServe Inc</span>
+                                <div class=col-xs-6" style="text-align: center">
+                                    <button type="button" class="btn btn-danger" id="confirmNo">
+                                        <spring:message code="booking.confirmNo"/>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        <div id ="contactModal" class="modal fade bs-modal-lg-contact" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div align="center">
-                            <br>
-                            <h4 id="showRoomManagers"><spring:message code="manager"/> : </h4>
-                            <H4 id="roomPhone"></H4>
-                            <button id="closeContact" class="btn btn-success center-block "><spring:message code="close"/></button>
-                            <span>SoftServe Inc</span>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div id='user-calendar'></div>
-    </div>
-
-    <%--confirmation-dialog--%>
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div aclass="modal-body text-center">
-                <div id="confirmation-dialog-div" class="ui-dialog"  title=<spring:message code= "booking.confirmTitle" /> hidden>
-                    <form id="confirm-your-choice">
-                        <div class= "confirmDelete">
-                            <p><span style="text-align:center;" >
-                                <spring:message code= "booking.confirmCancelQuestion1"/> </span> </p>
-                            <p><span style="text-align:center;" >
-                                <spring:message code= "booking.confirmCancelQuestion2"/></span> </p>
-                        </div>
-                        <div class="col-xs-12" >
-                            <div class="col-xs-6" style = "text-align: center">
-                                <button type="button"  class="btn btn-success" id="confirmYes">
-                                    <spring:message code= "booking.confirmYes"/>
-                                </button>
-                            </div>
-                            <div class = col-xs-6" style = "text-align: center">
-                                <button type="button" class="btn btn-danger" id="confirmNo">
-                                    <spring:message code= "booking.confirmNo"/>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="loading" hidden>Loading&#8230;</div>
+        <div class="loading" hidden>Loading&#8230;</div>
     </div>
 </sec:authorize>
 <sec:authorize access="hasRole('MANAGER')">
@@ -457,7 +496,7 @@
           <span class="label label-warning" id="radius">
           <spring:message code="manager.oops"/></span>
             </h1>
-            <h3 class="center"><spring:message code="manager.noRooms" /></h3>
+            <h3 class="center"><spring:message code="manager.noRooms"/></h3>
         </div>
         <div class="desert">
             <div class="tumbleweed"></div>
@@ -474,14 +513,16 @@
                                 <input type="text" class="form-control" id="recurrent-event-title" placeholder="title">
                             </div>
                             <div class="form-group">
-                                <label for="recurrent-event-start-date"><spring:message code="booking.startDate"/></label>
+                                <label for="recurrent-event-start-date"><spring:message
+                                        code="booking.startDate"/></label>
                                 <br>
                                 <div class="col-xs-6">
                                     <input type="date" class="form-control" id="recurrent-event-start-date"
                                            placeholder="startDate">
                                 </div>
                                 <div class="col-xs-5">
-                                    <input id="recurrent-event-start-time" type="text" class="time form-control timepicker"
+                                    <input id="recurrent-event-start-time" type="text"
+                                           class="time form-control timepicker"
                                            size="6"/>
                                 </div>
                             </div>
@@ -493,16 +534,19 @@
                                            placeholder="endDate">
                                 </div>
                                 <div class="col-xs-5">
-                                    <input id="recurrent-event-end-time" type="text" class="time form-control timepicker"
+                                    <input id="recurrent-event-end-time" type="text"
+                                           class="time form-control timepicker"
                                            size="6"/>
                                 </div>
                             </div>
                             <br><br>
-                            <label for="recurrent-event-description"><spring:message code="recurrent.description" /></label>
+                            <label for="recurrent-event-description"><spring:message
+                                    code="recurrent.description"/></label>
                             <textarea class="form-control" id="recurrent-event-description"
                                       placeholder="description" cols="30"></textarea>
                             <div class="col-xs-6">
-                                <button type="button" class="btn btn-success" id="recurrent-event-create"><spring:message code="booking.create"/></button>
+                                <button type="button" class="btn btn-success" id="recurrent-event-create">
+                                    <spring:message code="booking.create"/></button>
                             </div>
                         </form>
                     </div>
@@ -516,65 +560,70 @@
                         <form id="form">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="form-group">
-                                <label for="event-title"><spring:message code= "event.title"/></label>
+                                <label for="event-title"><spring:message code="event.title"/></label>
                                 <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
-                                <input type="text" class="form-control" id="event-title" placeholder="${titlePlaceHolder}">
+                                <input type="text" class="form-control" id="event-title"
+                                       placeholder="${titlePlaceHolder}">
                             </div>
                             <div class="form-group">
-                                <label for="color-select"><spring:message code="event.chooseColor" /></label>
+                                <label for="color-select"><spring:message code="event.chooseColor"/></label>
                                 <select id="color-select">
                                     <option value="#eb6f63" style="background:red">
-                                        <spring:message code= "color.red"/>
+                                        <spring:message code="color.red"/>
                                     </option>
                                     <option value="#ffcd5c" style="background:yellow">
-                                        <spring:message code= "color.yellow"/>
+                                        <spring:message code="color.yellow"/>
                                     </option>
                                     <option value="#9b3aa1" style="background:purple">
-                                        <spring:message code= "color.purple"/>
+                                        <spring:message code="color.purple"/>
                                     </option>
                                     <option value="#044d92" style="background:blue">
-                                        <spring:message code= "color.blue"/>
+                                        <spring:message code="color.blue"/>
                                     </option>
                                     <option value="#1ba1e2" style="background:#6AA4C1" selected="selected">
-                                        <spring:message code= "color.lightBlue"/>
+                                        <spring:message code="color.lightBlue"/>
                                     </option>
                                     <option value="#636363" style="background:grey">
-                                        <spring:message code= "color.grey"/>
+                                        <spring:message code="color.grey"/>
                                     </option>
                                     <option value="#51d466" style="background:green">
-                                        <spring:message code= "color.green"/>
+                                        <spring:message code="color.green"/>
                                     </option>
                                     <option value="#f98e2e" style="background:orange">
-                                        <spring:message code= "color.orange"/>
+                                        <spring:message code="color.orange"/>
                                     </option>
                                     <option value="#84fff7" style="background:aqua">
-                                        <spring:message code= "color.aqua"/>
+                                        <spring:message code="color.aqua"/>
                                     </option>
                                     <option value="#d3af37" style="background:gold">
-                                        <spring:message code= "color.gold"/><br></option>
+                                        <spring:message code="color.gold"/><br></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="start-date-picker"><spring:message code= "event.startDate"/></label>
+                                <label for="start-date-picker"><spring:message code="event.startDate"/></label>
                                 <br>
                                 <div class="col-xs-6">
-                                    <input id="start-date-picker" type="date" class="text-center form-control"  placeholder="startDate">
+                                    <input id="start-date-picker" type="date" class="text-center form-control"
+                                           placeholder="startDate">
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="start-time-picker" type="text" class=" text-center time form-control timepicker" size="6"/>
+                                    <input id="start-time-picker" type="text"
+                                           class=" text-center time form-control timepicker" size="6"/>
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group">
-                                <label for="end-date-picker"><spring:message code= "event.endDate"/></label>
+                                <label for="end-date-picker"><spring:message code="event.endDate"/></label>
                                 <br>
                                 <div class="col-xs-6">
-                                    <input id="end-date-picker" type="date" class="text-center form-control" placeholder="endDate"
+                                    <input id="end-date-picker" type="date" class="text-center form-control"
+                                           placeholder="endDate"
                                            disabled="true">
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="end-time-picker" type="text" class="text-center time form-control timepicker" size="6"/>
+                                    <input id="end-time-picker" type="text"
+                                           class="text-center time form-control timepicker" size="6"/>
                                 </div>
                             </div>
 
@@ -585,50 +634,59 @@
                                         <div class="row col-xs-4">
                                             <br>
                                             <div class="radio-button">
-                                                <label><input type="radio" name="optradio" id="single-event-radio-button"
+                                                <label><input type="radio" name="optradio"
+                                                              id="single-event-radio-button"
                                                               class="my-radio" checked>
                                                     <spring:message code="event.singleEvent"/></label>
                                             </div>
                                             <div class="radio-button">
-                                                <label><input type="radio" name="optradio" id="weekly-radio-button" class="my-radio">
+                                                <label><input type="radio" name="optradio" id="weekly-radio-button"
+                                                              class="my-radio">
                                                     <spring:message code="event.weeklyEvent"/></label>
                                             </div>
                                             <div class="radio-button">
-                                                <label><input type="radio" name="optradio" id="monthly-radio-button" class="my-radio">
+                                                <label><input type="radio" name="optradio" id="monthly-radio-button"
+                                                              class="my-radio">
                                                     <spring:message code="event.monthlyEvent"/></label>
                                             </div>
                                         </div>
                                         <div class="row col-xs-7" id="days-for-monthly-form" hidden>
                                             <br><spring:message code="event.checkRequiredDays"/>
-                                            <table class = "table center" id="monthly-days">
+                                            <table class="table center" id="monthly-days">
                                             </table>
                                         </div>
                                         <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                             <table class="table" id="days-for-recurrent">
                                                 <br>
-                                                <thead > <spring:message code="event.checkRequiredDays"/></thead>
+                                                <thead><spring:message code="event.checkRequiredDays"/></thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><label><input type="checkbox" id="Monday" value="Mon" class="day">
+                                                    <td><label><input type="checkbox" id="Monday" value="Mon"
+                                                                      class="day">
                                                         <spring:message code="monday"/></label><br>
                                                     </td>
-                                                    <td><label><input type="checkbox" id="Tuesday" value="Tue" class="day">
+                                                    <td><label><input type="checkbox" id="Tuesday" value="Tue"
+                                                                      class="day">
                                                         <spring:message code="tuestay"/></label><br>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label><input type="checkbox" id="Wednesday" value="Wed"
-                                                                      class="day"> <spring:message code="wednesday"/></label><br>
+                                                                      class="day"> <spring:message
+                                                            code="wednesday"/></label><br>
                                                     </td>
-                                                    <td><label><input type="checkbox" id="Thursday" value="Thu" class="day">
+                                                    <td><label><input type="checkbox" id="Thursday" value="Thu"
+                                                                      class="day">
                                                         <spring:message code="thursday"/></label><br>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><label><input type="checkbox" id="Friday" value="Fri" class="day">
+                                                    <td><label><input type="checkbox" id="Friday" value="Fri"
+                                                                      class="day">
                                                         <spring:message code="friday"/></label><br>
                                                     </td>
-                                                    <td><label><input type="checkbox" id="Saturday" value="Sat" class="day">
+                                                    <td><label><input type="checkbox" id="Saturday" value="Sat"
+                                                                      class="day">
                                                         <spring:message code="saturday"/></label><br>
                                                     </td>
                                                 </tr>
@@ -639,29 +697,36 @@
                                     <br><br><br><br><br><br><br><br><br><br>
                                     <div class="clearfix"></div>
                                     <div class="col-sm-12">
-                                        <spring:message code="event.descriptionPlaceHolder" var="descriptionPlaceHolder"/>
-                                        <label for="description"> <spring:message code="event.labelForDescription"></spring:message> </label>
+                                        <spring:message code="event.descriptionPlaceHolder"
+                                                        var="descriptionPlaceHolder"/>
+                                        <label for="description"> <spring:message
+                                                code="event.labelForDescription"></spring:message> </label>
                                         <input type="text" size="15" class="form-control" id="description"
                                                placeholder="${descriptionPlaceHolder}">
                                     </div>
                                     <br>
                                     <div id="data-validation-information-string-container" class="clearfix">
-                                        <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                                        <p class="col-xs-12 data-validation-information-string" style="color:red"
+                                           id="data-validation-information-string"></p>
                                     </div>
                                     <br>
                                     <div class="clearfix"></div>
                                     <div class="col-xs-3">
-                                        <button type="button" class="btn btn-success" id="update-recurrent-button" hidden="true">
+                                        <button type="button" class="btn btn-success" id="update-recurrent-button"
+                                                hidden="true">
                                             <spring:message code="booking.update"/>
                                         </button>
-                                        <button type="button" class="btn btn-success live" id="create-button"><spring:message code="booking.create"/></button>
+                                        <button type="button" class="btn btn-success live" id="create-button">
+                                            <spring:message code="booking.create"/></button>
                                     </div>
                                     <div align="right" class="col-xs-9">
-                                        <button type="button" class="btn btn-danger pull-right" id="cancel"><spring:message code="cancel"/></button>
+                                        <button type="button" class="btn btn-danger pull-right" id="cancel">
+                                            <spring:message code="cancel"/></button>
                                     </div>
-                                    <div class = "col-xs-12">
+                                    <div class="col-xs-12">
                                         <footer class="deleteBookingButtonLink">
-                                            <div id="deleting-recurrent-event" style="text-decoration: underline; text-align: center;">
+                                            <div id="deleting-recurrent-event"
+                                                 style="text-decoration: underline; text-align: center;">
                                                 <spring:message code="event.cancelSeriesOfEvents"/>
                                             </div>
                                         </footer>
@@ -678,73 +743,81 @@
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
-                    <div id="updating" class="dialog" hidden title = "<spring:message code="event.changeEvent"></spring:message>">
+                    <div id="updating" class="dialog" hidden
+                         title="<spring:message code="event.changeEvent"></spring:message>">
                         <form id="updatingForm">
 
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <div class="form-group">
-                                <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
+                                <label for="titleUpdate"> <spring:message
+                                        code="event.labelForTitle"></spring:message> </label>
                                 <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
-                                <input type="text" class="form-control" id="titleUpdate" placeholder="${titlePlaceHolder}">
+                                <input type="text" class="form-control" id="titleUpdate"
+                                       placeholder="${titlePlaceHolder}">
                             </div>
 
                             <div class="form-group">
-                                <label for="color-select"> <spring:message code="event.chooseColor"></spring:message> </label>
+                                <label for="color-select"> <spring:message
+                                        code="event.chooseColor"></spring:message> </label>
                                 <select id="color-select-single-event">
                                     <option value="#eb6f63" style="background:red">
-                                        <spring:message code= "color.red"/>
+                                        <spring:message code="color.red"/>
                                     </option>
                                     <option value="#ffcd5c" style="background:yellow">
-                                        <spring:message code= "color.yellow"/>
+                                        <spring:message code="color.yellow"/>
                                     </option>
                                     <option value="#9b3aa1" style="background:purple">
-                                        <spring:message code= "color.purple"/>
+                                        <spring:message code="color.purple"/>
                                     </option>
                                     <option value="#044d92" style="background:blue">
-                                        <spring:message code= "color.blue"/>
+                                        <spring:message code="color.blue"/>
                                     </option>
                                     <option value="#1ba1e2" style="background:#6AA4C1" selected="selected">
-                                        <spring:message code= "color.lightBlue"/>
+                                        <spring:message code="color.lightBlue"/>
                                     </option>
                                     <option value="#636363" style="background:grey">
-                                        <spring:message code= "color.grey"/>
+                                        <spring:message code="color.grey"/>
                                     </option>
                                     <option value="#51d466" style="background:green">
-                                        <spring:message code= "color.green"/>
+                                        <spring:message code="color.green"/>
                                     </option>
                                     <option value="#f98e2e" style="background:orange">
-                                        <spring:message code= "color.orange"/>
+                                        <spring:message code="color.orange"/>
                                     </option>
                                     <option value="#84fff7" style="background:aqua">
-                                        <spring:message code= "color.aqua"/>
+                                        <spring:message code="color.aqua"/>
                                     </option>
                                     <option value="#d3af37" style="background:gold">
-                                        <spring:message code= "color.gold"/><br></option>
+                                        <spring:message code="color.gold"/><br></option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="startDayUpdate"> <spring:message code="event.startDate"></spring:message> </label>
+                                <label for="startDayUpdate"> <spring:message
+                                        code="event.startDate"></spring:message> </label>
                                 <br>
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control" id="startDayUpdate" placeholder="startDate"
                                            readonly>
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="startTimeUpdate" type="text" class="text-center time form-control timepicker" size="6"/>
+                                    <input id="startTimeUpdate" type="text"
+                                           class="text-center time form-control timepicker" size="6"/>
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group">
-                                <label for="endDateUpdate"> <spring:message code="event.endDate"></spring:message> </label>
+                                <label for="endDateUpdate"> <spring:message
+                                        code="event.endDate"></spring:message> </label>
                                 <br>
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control" id="endDateUpdate" placeholder="endDate"
                                            readonly>
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="endTimeUpdate" type="text" class="text-center time form-control timepicker" size="6"/>
+                                    <input id="endTimeUpdate" type="text"
+                                           class="text-center time form-control timepicker" size="6"/>
                                 </div>
                             </div>
                             <br>
@@ -758,7 +831,8 @@
                             </div>
                             <br>
                             <div id="data-validation-information-string-container" class="clearfix">
-                                <p class="col-xs-12 data-validation-information-string" style="color:red" id="data-validation-information-string"></p>
+                                <p class="col-xs-12 data-validation-information-string" style="color:red"
+                                   id="data-validation-information-string"></p>
                             </div>
                             <br>
                             <button type="button" class="btn btn-success" id="updatingButton">
@@ -768,9 +842,10 @@
                                 <spring:message code="cancel"></spring:message>
                             </button>
 
-                            <div class = "col-xs-12">
+                            <div class="col-xs-12">
                                 <footer class="deleteEventButtonLink">
-                                    <div id="deleting-single-event" style="text-decoration: underline; text-align: center;">
+                                    <div id="deleting-single-event"
+                                         style="text-decoration: underline; text-align: center;">
                                         <spring:message code="event.deleteEvent"/>
                                     </div>
                                 </footer>
@@ -786,27 +861,37 @@
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
-                    <div id="choose-updating-type" class="dialog" hidden title=<spring:message code= "recurrent.event.title"/>>
+                    <div id="choose-updating-type" class="dialog" hidden title=<spring:message
+                            code="recurrent.event.title"/>>
                         <form id="choose-updating-form">
 
                             <div class="lableBoard">
-                                <label><small><i><ins><spring:message code="recurrent.editEventMessage"/></ins></i></small></label>
+                                <label>
+                                    <small><i>
+                                        <ins><spring:message code="recurrent.editEventMessage"/></ins>
+                                    </i></small>
+                                </label>
                             </div>
                             <div class="radio-button">
-                                <label><input type="radio" id="single-update" name="radio" checked> <spring:message code="recurrent.justThisOneEvent"/></label>
+                                <label><input type="radio" id="single-update" name="radio" checked> <spring:message
+                                        code="recurrent.justThisOneEvent"/></label>
                             </div>
                             <div class="radio-button">
-                                <label><input type="radio" id="recurrent-update" name="radio"> <spring:message code="recurrent.allSeries"/></label>
+                                <label><input type="radio" id="recurrent-update" name="radio"> <spring:message
+                                        code="recurrent.allSeries"/></label>
                             </div>
-                            <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose"> <spring:message code="ok"/></button>
-                            <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose"> <spring:message code="cancel"/></button>
+                            <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose">
+                                <spring:message code="ok"/></button>
+                            <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose">
+                                <spring:message code="cancel"/></button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <button type="button" class="btn btn-success" id="create-new-event"><spring:message code="event.new"/></button>
+            <button type="button" class="btn btn-success" id="create-new-event"><spring:message
+                    code="event.new"/></button>
             <div id='calendar'></div>
         </div>
     </c:if>
@@ -815,23 +900,24 @@
     <div class="row">
         <div class="modal-dialog modal-lg vertical-center-row ">
             <div align="center">
-                <div id="confirmation-dialog-event-div" class="ui-dialog"  title=<spring:message code= "event.confirmTitle" /> hidden>
+                <div id="confirmation-dialog-event-div" class="ui-dialog" title=
+                    <spring:message code="event.confirmTitle"/> hidden>
                     <form id="confirm-your-choice-event">
-                        <div class= "confirmDelete">
-                            <p><span style="text-align:center;" >
-                                <spring:message code= "event.confirmCancelQuestion1"/> </span> </p>
-                            <p><span style="text-align:center;" >
-                                <spring:message code= "event.confirmCancelQuestion2"/></span> </p>
+                        <div class="confirmDelete">
+                            <p><span style="text-align:center;">
+                                <spring:message code="event.confirmCancelQuestion1"/> </span></p>
+                            <p><span style="text-align:center;">
+                                <spring:message code="event.confirmCancelQuestion2"/></span></p>
                         </div>
-                        <div class="col-xs-12" >
-                            <div class="col-xs-6" style = "text-align: center">
-                                <button type="button"  class="btn btn-success" id="confirmYesEvent">
-                                    <spring:message code= "event.confirmYes"/>
+                        <div class="col-xs-12">
+                            <div class="col-xs-6" style="text-align: center">
+                                <button type="button" class="btn btn-success" id="confirmYesEvent">
+                                    <spring:message code="event.confirmYes"/>
                                 </button>
                             </div>
-                            <div class = col-xs-6" style = "text-align: center">
+                            <div class=col-xs-6" style="text-align: center">
                                 <button type="button" class="btn btn-danger" id="confirmNoEvent">
-                                    <spring:message code= "event.confirmNo"/>
+                                    <spring:message code="event.confirmNo"/>
                                 </button>
                             </div>
                         </div>
@@ -849,25 +935,25 @@
                     <form id="form-event-cancel">
                         <div>
                             <p style="color:red;"><spring:message code="cancel.warning"
-                                arguments='<span id="event-cancel-title"></span>'/></p>
+                                                                  arguments='<span id="event-cancel-title"></span>'/></p>
                         </div>
                         <br>
                         <div class="form-group">
                             <label align-items="center" for="start-date-cancel-picker"><spring:message
-                                code="event.startDate"/></label>
+                                    code="event.startDate"/></label>
                             <div>
                                 <input id="start-date-cancel-picker" type="date" class="form-control"
-                                    placeholder="startDate">
+                                       placeholder="startDate">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label align="center" for="end-date-cancel-picker"><spring:message
-                                code="event.endDate"/></label>
+                                    code="event.endDate"/></label>
                             <br>
                             <div>
                                 <input id="end-date-cancel-picker" type="date" class="form-control"
-                                    placeholder="endDate">
+                                       placeholder="endDate">
                             </div>
                         </div>
 
@@ -883,11 +969,11 @@
                                 <div class="clearfix"></div>
                                 <div class="col-xs-6" style="text-align:center;">
                                     <button type="button" class="btn btn-success btn-block"
-                                        id="yes-cancel-event-button"><spring:message code="yes"/></button>
+                                            id="yes-cancel-event-button"><spring:message code="yes"/></button>
                                 </div>
                                 <div class="col-xs-6" style="text-align:center;">
                                     <button type="button" class="btn btn-danger btn-block"
-                                        id="no-cancel-event-button"><spring:message code="no"/></button>
+                                            id="no-cancel-event-button"><spring:message code="no"/></button>
                                 </div>
                             </div>
                         </div>
@@ -904,7 +990,7 @@
 
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
-<div id="warning-dialog" class="cen" type="hidden"></div>
+<div id="warning-dialog" type="hidden"></div>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
