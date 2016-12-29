@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.mockito.Matchers.anyDouble;
 import static org.mockito.Mockito.when;
 
 /**
