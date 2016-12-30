@@ -66,7 +66,7 @@ To start project you need to:
 ` src/main/resources/properties/properties/hibernate.properties`:
 ```properties
 jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/kidsroom
+jdbc.url = jdbc:mysql://localhost:3306/kidsroom?characterEncoding=UTF-8
 jdbc.username = root
 jdbc.password = password
 hibernate.dialect = org.hibernate.dialect.MySQLDialect
