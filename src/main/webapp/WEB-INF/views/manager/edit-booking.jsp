@@ -98,17 +98,13 @@
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <body class="kidsInfo" onload="init();">
-                        <canvas id="blob" width="600" height="400" hidden></canvas>
-                        </body>
-                        <button id="closeBookingsLegend" class="btn btn-success center-block "><spring:message
-                                code="close"/></button>
+                        <button id="closeBookingsLegend" class="btn btn-success center-block ">
+                            <spring:message code="close"/></button>
                     </div>
                 </div>
                 <div class="modal-footer">
-
                     <div class="block-center">
-                        SoftServe Inc
+                        <span id="softServeInc">SoftServe Inc</span>
                     </div>
                 </div>
             </div>
