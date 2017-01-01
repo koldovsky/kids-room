@@ -243,6 +243,7 @@ $(function () {
 
         if ($('#recurrent-update').is(':checked')) {
             $('#choose-updating-type').dialog('close');
+            $('#dialog').off('change', '#start-date-picker');
             editRecurrentEventRequest(info_event.calEvent.recurrentId);
         }
     });
@@ -681,7 +682,9 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
         }),
         success: function (result) {
             popSetOfEvents(result.eventsCreated);
-            eventsWereNotCreated(result.datesWhenNotCreated);
+            if(result.datesWhenNotCreated) {
+                eventsWereNotCreated(result.datesWhenNotCreated);
+            }
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);

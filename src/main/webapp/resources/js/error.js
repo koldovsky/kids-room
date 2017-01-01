@@ -19,7 +19,7 @@ function eventsWereNotCreated(datesWhenNotCreated) {
     var contentForDialog = '<div>' + messages.event.errors.cannotCreateEventsForNonExistingDates +
         '</div><br>';
     datesWhenNotCreated.forEach(function (item) {
-        contentForDialog += item + '<br>'
+        contentForDialog += item + '<br>';
     });
     $('#warning-dialog').html(contentForDialog);
     $('#warning-dialog').attr('title', 'Warning').text(contentForDialog).dialog({
