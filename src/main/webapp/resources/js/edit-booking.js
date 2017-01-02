@@ -12,12 +12,10 @@ $(function() {
     if(localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }
-    localStorage
 });
 
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
- // $('#bookingStartTimepicker').val('07:00');//todo refactor this maybe get times from server
- // $('#bookingEndTimepicker').val('20:00');
+
 function validateData(startTime, endTime) {
     var isValid = startTime !== '' && endTime !== '';
     return isValid;
