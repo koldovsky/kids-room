@@ -45,7 +45,7 @@ html, body, .container {
 }
 
 .highlight-active{
-    background-color: #C4DAF4;
+    background-color: #85eb6b;
 }
 
 .highlightedRed {
@@ -53,7 +53,7 @@ html, body, .container {
 }
 
 .highlight-complet {
-    background-color: #C0C0C0;
+    background-color: #D7D8DA;
 }
 
 #create-booking-btn{
@@ -89,7 +89,7 @@ html, body, .container {
 }
 
 .table-edit tr:hover {
-    background-color:  #D7D8DA;
+    background-color: #adadad;
 }
 
 .row{
@@ -130,3 +130,22 @@ html, body, .container {
 #bookingUpdatingDialog textarea {
     resize : none;
 }
+#bookingLegendModal [class*="glyphicon-stop"]{
+    padding-top: 20px;
+    font-size: 50px;
+    vertical-align: middle;
+}
+#bookingLegendModal [class*="modal-footer"]{
+    padding-top: 100px;
+}
+.active{
+    color: #85eb6b;;
+}
+.completed{
+    color: #d6d6d6;
+}
+.selected{
+    color: #adadad;
+}
+
+
