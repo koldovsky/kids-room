@@ -82,6 +82,9 @@ public class BookingEditController {
     @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
+        if(!timeValidator.validateRoomTime(bookingDto)){
+            return;
+        }
         Booking booking = bookingService.confirmBookingStartTime(bookingDto);
         if (!(booking.getBookingState() == BookingState.COMPLETED)) {
             booking.setBookingState(BookingState.ACTIVE);

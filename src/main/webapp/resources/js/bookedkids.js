@@ -25,6 +25,7 @@ function setStartTime(idBooking) {
     var inputData = {
         startTime: $(idElement).find('#arrivalTime').val(),
         id: idBooking,
+        roomId : localStorage['roomId']
     };
     $.ajax({
         url: 'setTime',
