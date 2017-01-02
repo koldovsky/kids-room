@@ -53,7 +53,7 @@ html, body, .container {
 }
 
 .highlight-complet {
-    background-color: #e5f448;
+    background-color: #D7D8DA;
 }
 
 #create-booking-btn{
@@ -89,7 +89,7 @@ html, body, .container {
 }
 
 .table-edit tr:hover {
-    background-color:  #D7D8DA;
+    background-color: #adadad;
 }
 
 .row{
@@ -142,10 +142,10 @@ html, body, .container {
     color: #85eb6b;;
 }
 .completed{
-    color: #e5f448;
+    color: #d6d6d6;
 }
 .selected{
-    color: #bababa;
+    color: #adadad;
 }
 
 

@@ -215,6 +215,41 @@
         </div>
     </div>
 </div>
+
+<div id="startTimeOutOfRange" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div align="center">
+                    <br>
+                    <h3><spring:message code="booking.arrivalOutOfRange"/></h3>
+                    <h4><spring:message code="booking.enterCorrectTime"/></h4>
+                    <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="endTimeOutOfRange" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div align="center">
+                    <br>
+                    <h3><spring:message code="booking.arrivalOutOfRange"/></h3>
+                    <h4><spring:message code="booking.enterCorrectTime"/></h4>
+                    <button id="setEndTime" type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                            code="booking.ok"/></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
+                            code="booking.canceled"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="updatingSuccess" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">

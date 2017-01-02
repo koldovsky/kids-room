@@ -4,17 +4,20 @@ var dateNow = new Date();
 var bookingsState = localStorage['bookingsState'];
 var table = null;
 var roomCapacity; // The capacity (number of people) current room
+var roomWorkingStartTime;
+var roomWorkingEndTime;
 
 $(function() {
     $("#bookingDialog").attr("accept-charset", "UTF-8");
     if(localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }
+    localStorage
 });
 
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
-$('#bookingStartTimepicker').val('07:00');
-$('#bookingEndTimepicker').val('20:00');
+ // $('#bookingStartTimepicker').val('07:00');//todo refactor this maybe get times from server
+ // $('#bookingEndTimepicker').val('20:00');
 function validateData(startTime, endTime) {
     var isValid = startTime !== '' && endTime !== '';
     return isValid;
@@ -40,7 +43,7 @@ $().ready(function() {
                 contentType: 'charset=UTF-8',
                 success: function(result) {
                     var kids = JSON.parse(result);
-                    $.each(kids, function(i, kid) {
+                    $.each(kids, function(  i, kid) {
                         var kidId = kid.id;
                         if ($('#checkboxKid' + kid.id).is(':checked')) {
                             var comment = ($('#child-comment-' + kid.id).val());
@@ -113,15 +116,15 @@ function selectRoomForManager(roomId) {
         contentType: 'charset=UTF-8',
         success: function(result){
             result = result.split(' ');
+
             $('#bookingStartTimepicker').val(result[0]);
             $('#bookingEndTimepicker').val(result[1]);
-            result[0] += ':00';
-            result[1] += ':00';
 
-            var startTime = result[0];
-            var endTime = result[1];
-            $('.picker').timepicker('option', 'minTime', startTime);
-            $('.picker').timepicker('option', 'maxTime', endTime);
+            roomWorkingStartTime = result[0];
+            roomWorkingEndTime = result[1];
+
+            $('.picker').timepicker('option', 'minTime', roomWorkingStartTime);
+            $('.picker').timepicker('option', 'maxTime', roomWorkingEndTime);
 
             roomCapacity = result[2];
         }
@@ -298,12 +301,30 @@ function checkTablePage() {
             $('#booking-table_previous').hide();
     });
 }
+
+function validateRoomTime(time){
+    var result = false;
+    if(time != '' && time >= roomWorkingStartTime && time <= roomWorkingEndTime){
+        result = true;
+    }
+    return result;
+}
+
 function setStartTime(id, startTime) {
+
+    if(validateRoomTime(startTime)) {
+       sendStartTime(id, startTime);
+    } else {
+        $('#startTimeOutOfRange').modal('show');
+    }
+}
+
+function sendStartTime(id , startTime) {
     var inputData = {
         startTime: startTime,
         id: id,
+        roomId : localStorage['roomId']
     };
-    $('#' + id).addClass('highlight-active');
     $.ajax({
         url: 'setTime',
         encoding:'UTF-8',
@@ -311,33 +332,49 @@ function setStartTime(id, startTime) {
         data: JSON.stringify(inputData),
         type: 'POST',
         success: function() {
+            $('#' + id).addClass('highlight-active');
             refreshTable(localStorage['bookingsState']);
         }
     });
 }
 
+$('#setEndTime').click(function () {
+    var id = $('#endTimeOutOfRange').data('id');
+    var time = $('#endTimeOutOfRange').data('time');
+    sendEndTime(id, time);
+});
+
 function setEndTime(id, time) {
-    var inputData = {
-        endTime: time,
-        id: id,
-    };
     if ($('#' + id).find('.inp-arrivalTime').val() < $('#' + id).find('.inp-leaveTime').val()) {
-        $('#' + id).addClass('highlight-complet');
-        $.ajax({
-            url: 'setEndTime',
-            encoding:'UTF-8',
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(inputData),
-            type: 'POST',
-            success: function() {
-                refreshTable(localStorage['bookingsState']);
-            }
-        });
+       if(validateRoomTime(time)) {
+           sendEndTime(id, time);
+       } else {
+           $('#endTimeOutOfRange').data('id', id);
+           $('#endTimeOutOfRange').data('time', time);
+           $('#endTimeOutOfRange').modal('show');
+       }
     } else {
         $('#invalidTimeModal').modal('show');
     }
 }
 
+function sendEndTime(id, endTime) {
+    var inputData = {
+        endTime: endTime,
+        id: id
+    };
+    $.ajax({
+        url: 'setEndTime',
+        encoding:'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(inputData),
+        type: 'POST',
+        success: function() {
+            $('#' + id).addClass('highlight-complet');
+            refreshTable(localStorage['bookingsState']);
+        }
+    });
+}
 function addHilighted(bookings) {
     $.each(bookings, function(index, value) {
         if (value.bookingState == 'ACTIVE') {
@@ -443,6 +480,7 @@ function sendBookingToServerForCreate(bookingsArray) {
             if (thrownError === 'Not Acceptable') $('#creatingfailue1').modal('show');
             else if (thrownError === 'Bad Request') $('#creatingfailue2').modal('show');
             else {
+                //todo refatcor this tresh
                 alert('Unfortunately could not create new booking, please contact admin');
             }
         }
