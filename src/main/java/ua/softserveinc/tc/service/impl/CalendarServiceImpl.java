@@ -171,26 +171,21 @@ public class CalendarServiceImpl implements CalendarService {
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
             for (int day : days) {
 
-                if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH) >= day) {
-                    calendar.set(Calendar.DAY_OF_MONTH, day);
-                } else {
-                    if( (calendarEndDate.get(Calendar.MONTH)==calendar.get(Calendar.MONTH)) &&
-                            (calendarEndDate.get(Calendar.DAY_OF_MONTH)<day)) {
-                        break;
-                    } else {
-                        daysWerentCreated.add(day + "/" + (calendar.get(Calendar.MONTH) + 1) +
-                                "/" + calendar.get(Calendar.YEAR));
-                        continue;
-                    }
+                if ((calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
+                        (calendarEndDate.get(Calendar.DAY_OF_MONTH) < day)) {
+                    break;
                 }
 
-                if (dateForMonthlyStart.getTime() >
-                        calendar.getTimeInMillis()) {
+                if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH) >= day) {
+                    calendar.set(Calendar.DAY_OF_MONTH, day);
+                    if (dateForMonthlyStart.getTime() >
+                            calendar.getTimeInMillis()) {
+                        continue;
+                    }
+                } else {
+                    daysWerentCreated.add(day + "/" + (calendar.get(Calendar.MONTH) + 1) +
+                            "/" + calendar.get(Calendar.YEAR));
                     continue;
-                }
-                if (dateForMonthlyEnd.getTime() <
-                        calendar.getTimeInMillis()) {
-                    break;
                 }
 
                 Event newRecurrentEvent = new Event();
