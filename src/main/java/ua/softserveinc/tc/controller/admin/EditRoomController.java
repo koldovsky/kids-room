@@ -55,18 +55,9 @@ public class EditRoomController {
     @PostMapping("/adm-edit-room")
     public String roomBlockUnblock(@RequestParam Long id) {
         Room room = this.roomService.findById(id);
-        if(!room.isActive() || isRoomWithoutBookings(room)) {
-            room.setActive(!room.isActive());
-        } else {
-            throw new AccessDeniedException("Only parents have access to this page");
-        }
+        room.setActive(!room.isActive());
         this.roomService.update(room);
         return "redirect:/" + AdminConstants.EDIT_ROOM;
-    }
-
-    public boolean isRoomWithoutBookings(Room room) {
-        List<BookingDto> bookings = roomService.getAllFutureBookings(room);
-        return bookings.isEmpty();
     }
 
 }
