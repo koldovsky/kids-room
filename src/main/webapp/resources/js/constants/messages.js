@@ -98,6 +98,12 @@ messages = {
             invalidPhone: 'Invalid field Phone',
             requiredWithEmptySpace: 'This field must be required'
         }
+    },
+    booking: {
+        hint: {
+            leaveTime: 'Press to set leave time',
+            arrivedTime: 'Press to set arrival time'
+        }
     }
 };
 

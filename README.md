@@ -49,7 +49,7 @@ To start project you need to:
  2. Create new database with command: "CREATE DATABASE database_name;".
  3. Create file "hibernate.properties" with appropriate code.
  4. Enter properties of your computer for that commands:
-    - Set "jdbc.url = jdbc:mysql://localhost:3306/database_name"
+    - Set "jdbc.url = jdbc:mysql://localhost:3306/database_name?characterEncoding=UTF-8"
     - Set jdbc.username = root (by default "root", check that name on your computer)
     - Set jdbc.password = root (by default "root", check that name on your computer)
  5. Create Tomcat configuration:
@@ -66,7 +66,7 @@ To start project you need to:
 ` src/main/resources/properties/properties/hibernate.properties`:
 ```properties
 jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/kidsroom
+jdbc.url = jdbc:mysql://localhost:3306/kidsroom?characterEncoding=UTF-8
 jdbc.username = root
 jdbc.password = password
 hibernate.dialect = org.hibernate.dialect.MySQLDialect
