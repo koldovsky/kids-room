@@ -6,6 +6,7 @@ import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
+import ua.softserveinc.tc.dto.EventsCreatingResultsDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
 import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.entity.Event;
@@ -146,7 +147,7 @@ public class CalendarServiceImpl implements CalendarService {
         return eventService.getListOfEventDto(res);
     }
 
-    public final List<EventDto> createMonthlyEvents(
+    public final EventsCreatingResultsDto createMonthlyEvents(
             final MonthlyEventDto monthlyEventDto) {
 
         Date dateForMonthlyStart =
@@ -154,6 +155,7 @@ public class CalendarServiceImpl implements CalendarService {
         Date dateForMonthlyEnd =
                 DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
 
+        List<String> daysWerentCreated = new LinkedList<>();
         List<Event> res = new LinkedList<>();
         Calendar calendarEndDate = Calendar.getInstance();
         calendarEndDate.setTime(dateForMonthlyEnd);
@@ -169,18 +171,20 @@ public class CalendarServiceImpl implements CalendarService {
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
             for (int day : days) {
 
-                if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH) >= day) {
-                    calendar.set(Calendar.DAY_OF_MONTH, day);
-                } else {
-                    continue;
-                }
-
-                if (dateForMonthlyEnd.getTime() <
-                        calendar.getTimeInMillis()) {
+                if ((calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
+                        (calendarEndDate.get(Calendar.DAY_OF_MONTH) < day)) {
                     break;
                 }
-                if (dateForMonthlyStart.getTime() >
-                        calendar.getTimeInMillis()) {
+
+                if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH) >= day) {
+                    calendar.set(Calendar.DAY_OF_MONTH, day);
+                    if (dateForMonthlyStart.getTime() >
+                            calendar.getTimeInMillis()) {
+                        continue;
+                    }
+                } else {
+                    daysWerentCreated.add(day + "/" + (calendar.get(Calendar.MONTH) + 1) +
+                            "/" + calendar.get(Calendar.YEAR));
                     continue;
                 }
 
@@ -210,7 +214,8 @@ public class CalendarServiceImpl implements CalendarService {
             calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
         eventDao.saveSetOfEvents(res);
-        return eventService.getListOfEventDto(res);
+        return new EventsCreatingResultsDto(
+                eventService.getListOfEventDto(res), daysWerentCreated);
     }
 
     @Override
