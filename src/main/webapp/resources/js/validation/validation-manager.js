@@ -16,19 +16,19 @@ $(document).ready(function() {
             rules:{
                 email: {
                    required: true,
-                   regEmail: emailRegex
+                   regEmail: constants.regex.emailRegex
                 },
                 firstName: {
                    required: true,
-                   regexFirstName: nameRegex
+                   regexFirstName: constants.regex.nameRegex
                 },
                 lastName: {
                    required: true,
-                   regexLastName: nameRegex
+                   regexLastName: constants.regex.nameRegex
                 },
                 phoneNumber:{
                    required: true,
-                   regexPhone: phoneRegex
+                   regexPhone: constants.regex.phoneRegex
                 }
             }
         });

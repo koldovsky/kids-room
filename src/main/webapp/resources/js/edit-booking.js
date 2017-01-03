@@ -8,7 +8,7 @@ var roomWorkingStartTime;
 var roomWorkingEndTime;
 
 $(function() {
-    $("#bookingDialog").attr("accept-charset", "UTF-8");
+    $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if(localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }

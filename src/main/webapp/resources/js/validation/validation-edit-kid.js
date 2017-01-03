@@ -11,15 +11,15 @@ $(document).ready(function() {
 
                 firstName: {
                     required: true,
-                    regexKidFirstName: nameRegex,
-                    minlength: nameMinLength,
-                    maxlength: nameMaxLength
+                    regexKidFirstName: constants.regex.nameRegex,
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
                 },
                 lastName: {
                     required: true,
-                    regexKidLastName: nameRegex,
-                    minlength: nameMinLength,
-                    maxlength: nameMaxLength
+                    regexKidLastName: constants.regex.nameRegex,
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
                 }
             },
             messages: {

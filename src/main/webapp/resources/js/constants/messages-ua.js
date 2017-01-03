@@ -1,7 +1,7 @@
 /**
  * Created by shuk on 19.11.16.
  */
-messages = {
+const messages = {
     kid: {
         invalidFirstName: 'Ви ввели ім\'я невірно',
         invalidLastName: 'Ви ввели прізвище невірно',
@@ -10,10 +10,10 @@ messages = {
         regexKidFirstName: 'Для вводу імені використовуйте лише літери',
         regexKidLastName: 'Для вводу прізвища використовуйте лише літери',
 
-        toShortFirstName: 'Будь ласка, введіть не менше ' + nameMinLength + 'символів.',
-        toShortLastName: 'Будь ласка, введіть не менше ' + nameMinLength + ' символів.',
-        toLongFirstName: 'Будь ласка, введіть менше ' + nameMaxLength + ' символів.',
-        toLongLastName: 'Будь ласка введіть менше ' + nameMaxLength + ' символів.',
+        toShortFirstName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + 'символів.',
+        toShortLastName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + ' символів.',
+        toLongFirstName: 'Будь ласка, введіть менше ' + constants.parameters.nameMaxLength + ' символів.',
+        toLongLastName: 'Будь ласка введіть менше ' + constants.parameters.nameMaxLength + ' символів.',
 
         editFirstName: 'Будь ласка, введіть не менше 2 символів.',
         editLastName: 'Будь ласка, введіть не менше 2 символів.',
