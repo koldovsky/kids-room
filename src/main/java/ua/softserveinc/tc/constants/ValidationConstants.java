@@ -35,9 +35,7 @@ public final class ValidationConstants {
     public static final String NO_SPACES_MESSAGE = "Value is invalid. Can not enter spaces.";
     public static final String NOT_EMPTY_MESSAGE = "Should not be empty.";
     public static final String NOT_VALID_MESSAGE = "Value is invalid.";
-    public static final String DUPLICATE_BOOKING_MESSAGE = "Room is already booked for your kid at this time";
     public static final String ROOM_IS_FULL_MESSAGE = "This room is full at this time";
-    public static final String ENDTIME_BEFORE_STARTTIME = "End time can't be before start time";
 
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
@@ -50,9 +48,19 @@ public final class ValidationConstants {
     public static final String USER_ID = "userId";
     public static final String KID_ID = "kidId";
     public static final String ROOM_ID = "roomId";
+    public static final String DAYS_OF_WEEK = "daysOfWeek";
     public static final String EVENT_TITLE = "name";
     public static final String EVENT_COLOR = "color";
     public static final String EVENT_DESCRIPTION = "description";
+
+    public static final String RECURRENT_BOOKING = "idBook";
+    public static final String VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
+    public static final String END_TIME_BEFORE_START_TIME = "endtime.before.starttime";
+    public static final String BAD_TIME_FORMAT = "bad.time.format";
+    public static final String DUPLICATE_BOOKING_MESSAGE = "duplicate.booking";
+    public static final String DUPLICATE_BOOKINGS_MESSAGE = "Sorry, room is already booked for your kid at this time";
+    public static final String NO_DAYS_FOR_BOOKING = "no.day.forBook";
+
 
     public static final String ROOM_NAME = "name";
     public static final String ROOM_ADDRESS = "address";
@@ -101,6 +109,7 @@ public final class ValidationConstants {
     public static final String COMMENT_ERROR_MSG = "registration.kid.comment";
     public static final String IMAGE_VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
     public static final String IMAGE_VALIDATION_EMPTY_FILE = "image.validator.emptyFile";
+    public static final String IMAGE_VALIDATION_CORRUPTION_FILE = "image.validator.corruptedFile";
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE = "image.validator.TooBigSize";
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT = "image.validator.badFormat";
 
@@ -122,11 +131,13 @@ public final class ValidationConstants {
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
     //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
-    public static final String NO_DAYS_FOR_BOOKING = "There are no days for booking";
 
     public static final String ADMINISTRATOR_INCORRECT_FIRST_NAME = "administrator.addManager.name";
     public static final String ADMINISTRATOR_INCORRECT_SECOND_NAME = "administrator.addManager.lastName";
     public static final String ADMINISTRATOR_INCORRECT_PHONE = "administrator.addManager.phone";
+
+
+
 
     private ValidationConstants() {
     }

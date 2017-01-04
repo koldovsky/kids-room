@@ -9,7 +9,7 @@ var BORDER = '#4caf50';
 var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
 var BLOCKED = '#ff0000';
-var allBookings;
+var allBookings = [];
 var temporaryBookingId = -1;
 var blockedTimeSpanId = -2;
 
@@ -365,7 +365,6 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
     $.ajax({
         url: pathForUploadingAllBookingsForUsers, success: function (result) {
             result = JSON.parse(result);
-            allBookings = result;
             var objectsLen = objects.length;
             result.forEach(function (item, i) {
                 objects[objectsLen + i] = {
@@ -381,6 +380,7 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
                     comment: item.comment,
                     recurrentId: item.recurrentId
                 };
+                allBookings.push(objects[objectsLen + i]);
             });
             renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursEnd);
         }
@@ -620,6 +620,7 @@ function makeRecurrentBookings() {
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
+                var newBookingsArray = $('#user-calendar').fullCalendar('clientEvents');
                 result.forEach(function (item, i) {
                     var newBooking = {
                         id: item.id,
@@ -634,12 +635,14 @@ function makeRecurrentBookings() {
                         comment: item.comment,
                         recurrentId: item.recurrentId
                     };
-
-                    allBookings[allBookings.length + i] = newBooking;
-
-                    $('#user-calendar').fullCalendar('renderEvent', newBooking,true);
-
+                    allBookings.push(newBooking);
+                    newBookingsArray.push(newBooking);
                 });
+
+                $('#user-calendar').fullCalendar('removeEvents');
+                $('#user-calendar').fullCalendar('addEventSource', newBookingsArray);
+                $('#user-calendar').fullCalendar('refetchEvents');
+
                 $('.loading').hide();
 
                 $('#duplicate-booking-dialog').modal('show');
@@ -688,7 +691,6 @@ function updateRecurrentBooking() {
 
     $('#comment-for-update-recurrency').val("");
     $.ajax({
-            // url: 'makerecurrentbookings',
             url: 'updaterecurrentbookings',
             type: 'post',
             contentType: 'application/json',
@@ -710,12 +712,9 @@ function updateRecurrentBooking() {
                         comment: item.comment,
                         recurrentId: item.recurrentId
                     };
-                    allBookings[allBookings.length + i] = newBooking;
+                    allBookings.push(newBooking);
 
                     $('#user-calendar').fullCalendar('renderEvent', newBooking,true);
-                    // $('#user-calendar').fullCalendar( 'refetchEvents' );
-                    // $('#user-calendar').fullCalendar( 'rerenderEvents' );
-
                 });
             },
             error: function (xhr) {
@@ -811,21 +810,22 @@ function cancelBooking(bookingId) {
 
 function cancelRecurrentBookings(recurrentId) {
     var bookingsForDelete = [];
-    var arrayForIndexesOfDeletingBookings = [];
+    var remainingBookings = [];
 
     allBookings.forEach(function (item, i) {
         if (item.recurrentId === recurrentId) {
             bookingsForDelete.push(item);
-            arrayForIndexesOfDeletingBookings.push(i);
+        } else {
+            remainingBookings.push(item);
         }
     });
-    arrayForIndexesOfDeletingBookings.forEach(function (item) {
-        allBookings.splice(item, 1);
-    });
+
     bookingsForDelete.forEach(function (item) {
         $('#user-calendar').fullCalendar('removeEvents', item.id);
         cancelBooking(item.id);
-    })
+    });
+
+    allBookings = remainingBookings;
 }
 
 function closeBookingDialog() {
@@ -1053,9 +1053,6 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#bookingUpdatingStartTimepicker').timepicker('setTime', newDate);
             $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);
 
-
-            // $("#make-recurrent-booking").dialog("option", "title", beforeUpdate);
-
             $('#recurrent-booking-start-date').val(calEvent.start.format().substring(0, 10));
             $('#recurrent-booking-end-date').val(calEvent.end.format().substring(0, 10));
             $('#recurrent-booking-start-time').timepicker('setTime', newDate);
@@ -1122,21 +1119,8 @@ function makeUTCTime(time, date) {
     time.setSeconds(date.getUTCSeconds());
     return time;
 }
-/*
-function getDisabledTime(dateLo, dateHi, roomId) {
-    var urls = 'disabled?roomID=' + roomId + '&dateLo=' + dateLo + '&dateHi=' + dateHi;
-    $.ajax({
-        url: urls,
-        contentType: 'application/json',
-        dataType: 'text',
-        success: function (result) {
-            // alert(result);
-        }
-    });
-}
-*/
-//tested
 
+//tested
 function showRoomPhone(phoneNumber) {
     $('#roomPhone').empty().append('<span class="glyphicon glyphicon-earphone"></span>' + ' ' + phoneNumber);
 }

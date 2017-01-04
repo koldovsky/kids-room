@@ -3,6 +3,7 @@ package ua.softserveinc.tc.validator;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
+
 /**
  * Interface of validator for checking if the file of class MultipartFile
  * (represent image) is not null, or empty, less or equals than maximum
@@ -14,14 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 public interface KidProfileImageValidator extends Validator {
 
     /**
-     * Checks if the given reference file is not null or is not
-     * consists object with size equals 0.
+     * Checks if the given file is corrupted in context of image.
      *
-     * @param file reference of interface MultipartFile for checking
-     * @return true if file is not null and relevant object is not null,
-     * otherwise return false.
+     * @param file object of interface MultipartFile for checking
+     * @return true if the file is corrupted, otherwise - false.
      */
-    boolean isNotNullOrEmpty(MultipartFile file);
+    boolean isCorrupted(MultipartFile file);
 
     /**
      * Checks if the given object e has acceptable size.
@@ -31,7 +30,7 @@ public interface KidProfileImageValidator extends Validator {
      * @param file object of interface MultipartFile for checking
      * @return true if file is an acceptable format, otherwise return false.
      */
-    boolean isHaveAcceptableSize(MultipartFile file);
+    boolean isAcceptableSize(MultipartFile file);
 
     /**
      * Checks if the given object e is in acceptable format.
@@ -41,6 +40,6 @@ public interface KidProfileImageValidator extends Validator {
      * @param file object of interface MultipartFile for checking
      * @return true if file is in acceptable format, otherwise return false.
      */
-    boolean isHaveAcceptableFormat(MultipartFile file);
+    boolean isAcceptableFormat(MultipartFile file);
 
 }

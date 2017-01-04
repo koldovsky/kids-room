@@ -45,13 +45,17 @@ public final class BookingConstants {
 
     public static final String ROOM = "room";
 
+    public static final String CHILD = "child";
+
     public static final String STATE = "bookingState";
 
     public static final String START_TIME = "bookingStartTime";
 
     public static final String END_TIME = "bookingEndTime";
 
-    public static final String RECURRENTID = "recurrentId";
+    public static final String RECURRENT_ID = "recurrentId";
+
+    public static final String ID_OF_BOOKING = "idBook";
 
     private Entity() {
     }

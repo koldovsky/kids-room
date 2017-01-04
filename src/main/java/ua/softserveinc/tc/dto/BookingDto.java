@@ -6,9 +6,7 @@ import ua.softserveinc.tc.entity.*;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -16,7 +14,7 @@ import java.util.Set;
  */
 
 
-public class BookingDto implements Serializable{
+public class BookingDto implements Serializable {
 
     private Long id;
     private String date;
@@ -54,51 +52,64 @@ public class BookingDto implements Serializable{
     }
 
     public BookingDto(BookingDto newBookingDto) {
-        this.date=newBookingDto.date;
-        this.endDate=newBookingDto.endDate;
-        this.startTime=newBookingDto.startTime;
-        this.endTime=newBookingDto.endTime;
-        this.startTimeMillis=newBookingDto.startTimeMillis;
-        this.endTimeMillis=newBookingDto.endTimeMillis;
-        this.durationBooking = this.endTimeMillis - this.startTimeMillis;
-        this.kidName=newBookingDto.kidName;
-        this.roomName=newBookingDto.roomName;
-        this.duration=newBookingDto.duration;
-        this.idChild=newBookingDto.idChild;
-        this.durationLong=newBookingDto.durationLong;
-        this.bookingState=newBookingDto.bookingState;
-        this.comment=newBookingDto.comment;
-        this.recurrentId=newBookingDto.recurrentId;
-        this.userId=newBookingDto.userId;
-        this.kidId=newBookingDto.kidId;
-        this.roomId=newBookingDto.roomId;
-        this.daysOfWeek=newBookingDto.daysOfWeek;
-        this.weekDays=newBookingDto.weekDays;
-        this.child=newBookingDto.child;
-        this.user=newBookingDto.user;
-        this.room=newBookingDto.room;
+        id = newBookingDto.id;
+        date = newBookingDto.date;
+        endDate = newBookingDto.endDate;
+        startTime = newBookingDto.startTime;
+        endTime = newBookingDto.endTime;
+        startTimeMillis = newBookingDto.startTimeMillis;
+        endTimeMillis = newBookingDto.endTimeMillis;
+        if (endTimeMillis != null && startTimeMillis != null) {
+            durationBooking = endTimeMillis - startTimeMillis;
+        } else if (dateEndTime != null && dateStartTime != null) {
+            durationBooking = dateEndTime.getTime() - dateStartTime.getTime();
+        } else {
+            durationBooking = 0L;
+        }
+        kidName = newBookingDto.kidName;
+        roomName = newBookingDto.roomName;
+        duration = newBookingDto.duration;
+        idChild = newBookingDto.idChild;
+        durationLong = newBookingDto.durationLong;
+        bookingState = newBookingDto.bookingState;
+        comment = newBookingDto.comment;
+        recurrentId = newBookingDto.recurrentId;
+        userId = newBookingDto.userId;
+        kidId = newBookingDto.kidId;
+        roomId = newBookingDto.roomId;
+        daysOfWeek = newBookingDto.daysOfWeek;
+        weekDays = newBookingDto.weekDays;
+        child = newBookingDto.child;
+        user = newBookingDto.user;
+        room = newBookingDto.room;
     }
 
     public BookingDto(Booking booking) {
         DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
-        this.date = df.format(booking.getBookingStartTime());
-        this.endDate = df.format(booking.getBookingEndTime());
+        date = df.format(booking.getBookingStartTime());
+        endDate = df.format(booking.getBookingEndTime());
         df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
-        this.startTime = df.format(booking.getBookingStartTime());
-        this.endTime = df.format(booking.getBookingEndTime());
-        this.startTimeMillis=booking.getBookingStartTime().getTime();
-        this.endTimeMillis=booking.getBookingEndTime().getTime();
-        this.kidName = booking.getChild().getFullName();
-        this.roomName = booking.getRoom().getAddress();
-        this.durationBooking = this.endTimeMillis - this.startTimeMillis;
-        this.duration = booking.formatDuration();
-        this.sum = booking.getSum();
-        this.id = booking.getIdBook();
-        this.bookingState = booking.getBookingState();
-        this.durationLong = booking.getDuration();
-        this.idChild = booking.getChild().getId();
-        this.comment = booking.getComment();
-        this.recurrentId = booking.getRecurrentId();
+        startTime = df.format(booking.getBookingStartTime());
+        endTime = df.format(booking.getBookingEndTime());
+        startTimeMillis = booking.getBookingStartTime().getTime();
+        endTimeMillis = booking.getBookingEndTime().getTime();
+        kidName = booking.getChild().getFullName();
+        roomName = booking.getRoom().getAddress();
+        if (endTimeMillis != null && startTimeMillis != null) {
+            durationBooking = endTimeMillis - startTimeMillis;
+        } else if (dateEndTime != null && dateStartTime != null) {
+            durationBooking = dateEndTime.getTime() - dateStartTime.getTime();
+        } else {
+            durationBooking = 0L;
+        }
+        duration = booking.formatDuration();
+        sum = booking.getSum();
+        id = booking.getIdBook();
+        bookingState = booking.getBookingState();
+        durationLong = booking.getDuration();
+        idChild = booking.getChild().getId();
+        comment = booking.getComment();
+        recurrentId = booking.getRecurrentId();
     }
 
 
@@ -114,7 +125,7 @@ public class BookingDto implements Serializable{
     }
 
     public void setWeekDays(Set<Integer> weekDays) {
-        this.weekDays=weekDays;
+        this.weekDays = weekDays;
 
     }
 
@@ -136,10 +147,72 @@ public class BookingDto implements Serializable{
         booking.setUser(user);
         booking.setBookingState(bookingState);
         booking.setRecurrentId(recurrentId);
-        long duraion = booking.getBookingEndTime().getTime() -
-                booking.getBookingStartTime().getTime();
-        booking.setDuration(duraion);
+        if (durationLong == null) {
+            booking.setDuration(dateEndTime.getTime() - dateStartTime.getTime());
+        } else {
+            booking.setDuration(durationLong);
+        }
+        if (sum == null) {
+            booking.setSum(0L);
+        }
         return booking;
+    }
+
+    /**
+     * Creates new object BookingDto with the same data as 'this' object
+     * and set start and end time. Returns resulting object.
+     *
+     * @param dates the dates of start and end times
+     * @return resulting list of BookingDto
+     */
+    public BookingDto getNewBookingDto(Date[] dates) {
+        BookingDto bookingDto = new BookingDto();
+        bookingDto.setId(id);
+        bookingDto.setRoom(room);
+        bookingDto.setUser(user);
+        bookingDto.setChild(child);
+        bookingDto.setRecurrentId(recurrentId);
+        bookingDto.setDateStartTime(dates[0]);
+        bookingDto.setDateEndTime(dates[1]);
+        bookingDto.setStartTime(DateConstants.DATE_FORMAT_OBJECT.format(dates[0]));
+        bookingDto.setEndTime(DateConstants.DATE_FORMAT_OBJECT.format(dates[1]));
+        bookingDto.setBookingState(BookingState.BOOKED);
+        bookingDto.setSum(0L);
+        bookingDto.setDurationLong(dates[1].getTime() - dates[0].getTime());
+        bookingDto.setComment(comment);
+        bookingDto.setIdChild(idChild);
+        bookingDto.setKidId(kidId);
+        bookingDto.setKidName(child.getFullName());
+        return bookingDto;
+    }
+
+    /**
+     * Receives list of BookingsDto and set for each element appropriate id
+     * from list of Booking than return resulting list of BookingDto
+     *
+     * @param dtos     list of BookingDto
+     * @param bookings list of Booking
+     * @return list of set BookingDto
+     */
+    public static List<BookingDto> setIdToListOfBookingDto(List<BookingDto> dtos, List<Booking> bookings) {
+        Iterator<BookingDto> iteratorDto = dtos.iterator();
+        Iterator<Booking> iteratorBook = bookings.iterator();
+        while (iteratorDto.hasNext() && iteratorBook.hasNext()) {
+            iteratorDto.next().setId(iteratorBook.next().getIdBook());
+        }
+        return dtos;
+    }
+
+    /**
+     * Receives list of BookingDto and returns list of Bookings.
+     *
+     * @param dtos given list of BookingDto
+     * @return list of appropriate Bookings
+     */
+    public static List<Booking> getListOfBookingObjects(List<BookingDto> dtos) {
+        List<Booking> listOfBookings = new ArrayList<>();
+        dtos.forEach(singleDto -> listOfBookings.add(singleDto.getBookingObject()));
+        return listOfBookings;
     }
 
     public Child getChild() {
@@ -186,7 +259,6 @@ public class BookingDto implements Serializable{
         DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
         this.endTime = df.format(dateEndTime);
     }
-
 
     public String getComment() {
         return comment;
@@ -264,7 +336,9 @@ public class BookingDto implements Serializable{
         return endTimeMillis;
     }
 
-    public void setStartTime(String startTime) {this.startTime = startTime;}
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
     public void setStartTime(Date startTime) {
         DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
@@ -356,7 +430,7 @@ public class BookingDto implements Serializable{
         this.endDate = endDate;
     }
 
-    public Set<Integer> getWeekDays(){
+    public Set<Integer> getWeekDays() {
         return weekDays;
     }
 

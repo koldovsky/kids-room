@@ -2,7 +2,6 @@
  * Created by dima- on 12.05.2016.
  */
 
-
 var info_event;
 var creatingEvent;
 var allEvents;
