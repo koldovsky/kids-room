@@ -61,7 +61,7 @@ public class BookingValidatorImpl implements BookingValidator {
         }
 
         if (startTime.after(endTime)) {
-            errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.END_TIME_BEFORE_START_TIME);
         }
 
         if ( userService.findById(bookingDto.getUserId()) == null) {

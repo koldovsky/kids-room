@@ -78,9 +78,9 @@ public class MailServiceImpl implements MailService {
      */
     private String getBaseUrl() {
         return request.getScheme()
-                + URIConstants.SCHEMA_AND_SERVER_NAME_CONJUCTION
+                + URIConstants.SCHEMA_AND_SERVER_NAME_CONJUNCTION
                 + request.getServerName()
-                + URIConstants.SERVER_NAME_AND_PORT_CONJUCTION
+                + URIConstants.SERVER_NAME_AND_PORT_CONJUNCTION
                 + request.getServerPort()
                 + request.getContextPath();
     }

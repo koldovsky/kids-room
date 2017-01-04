@@ -23,7 +23,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,6 +46,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
 
     @Autowired
     private BookingDao bookingDao;
+
+
 
     private static
     @Log
@@ -83,7 +84,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
             Iterator<String> i = keys.iterator();
             String baseKey = i.next();
             while (i.hasNext()) {
-                String nextKey = (String) i.next();
+                String nextKey = i.next();
                 String value = result.get(baseKey);
                 if (value.compareTo(nextKey) == 0) {
 
@@ -92,7 +93,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
                 } else {
                     i.remove();
 
-                    baseKey = (String) i.next();
+                    baseKey = i.next();
                 }
             }
         }
@@ -176,36 +177,26 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
         }
     }
 
-    private List<Booking> reservedBookings(
-            Date dateLo, Date dateHi, Room room) {
+    @Override
+    public List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room) {
         return roomDao.reservedBookings(dateLo, dateHi, room);
     }
 
-    /**
-     * The method finds the maximum people in the room for period of time
-     * from dateLo to dateHi. All of the parameters must not be a null.
-     *
-     * @param dateLo   start of period
-     * @param dateHi   end of period
-     * @param bookings all reserved bookings in the time period
-     * @return The maximum number of people that are simultaneously in the room
-     */
-    private int maxRangeReservedBookings(
-            Date dateLo, Date dateHi, List<Booking> bookings) {
-        Objects.requireNonNull(dateLo, "dateLo must not be null");
-        Objects.requireNonNull(dateHi, "dateHi must not be null");
-        Objects.requireNonNull(bookings, "bookings must not be null");
-        final long oneMinuteMillis = 60 * 1000;
+    @Override
+    public int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings) {
         int maxReservedBookings = 0;
         for (long ti = dateLo.getTime() + 1;
-             ti < dateHi.getTime(); ti += oneMinuteMillis) {
+             ti < dateHi.getTime(); ti += DateConstants.ONE_MINUTE_MILLIS) {
             int temporaryMax = 0;
-            for (Booking tab : bookings)
+            for (Booking tab : bookings) {
                 if (tab.getBookingStartTime().getTime() < ti &&
-                        tab.getBookingEndTime().getTime() > ti)
+                        tab.getBookingEndTime().getTime() > ti) {
                     temporaryMax++;
-            if (temporaryMax > maxReservedBookings)
+                }
+            }
+            if (temporaryMax > maxReservedBookings) {
                 maxReservedBookings = temporaryMax;
+            }
         }
         return maxReservedBookings;
     }
@@ -220,14 +211,9 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
      * @param room   a requested room
      * @return number of places available in the room for the period
      */
-    public Integer getAvailableSpaceForPeriod(
-            Date dateLo, Date dateHi, Room room) {
-        Objects.requireNonNull(dateLo, "dateLo must not be null");
-        Objects.requireNonNull(dateHi, "dateHi must not be null");
-        Objects.requireNonNull(room, "room must not be null");
+    public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
         List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
-        int maxReservedBookings =
-                maxRangeReservedBookings(dateLo, dateHi, bookings);
+        int maxReservedBookings = maxRangeReservedBookings(dateLo, dateHi, bookings);
         return room.getCapacity() - maxReservedBookings;
     }
 

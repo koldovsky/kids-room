@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
@@ -29,18 +30,17 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
-        CriteriaQuery<Booking> where = query.select(root).where
-                (builder.and(
-                        builder.lessThan(root.get("bookingStartTime"), dateHi),
-                        builder.greaterThan(
-                                root.get("bookingEndTime"), dateLo)),
-                        builder.equal(root.get("room"), room),
-                        builder.or(
-                                builder.equal(root.get("bookingState"),
-                                        BookingState.BOOKED),
-                                builder.equal(root.get("bookingState"),
-                                        BookingState.ACTIVE)));
-
+        query.select(root).where(
+                builder.and(
+                    builder.lessThan(root.get("bookingStartTime"), dateHi),
+                    builder.greaterThan(root.get("bookingEndTime"), dateLo)
+                ),
+                builder.equal(root.get("room"), room),
+                builder.or(
+                        builder.equal(root.get("bookingState"), BookingState.BOOKED),
+                        builder.equal(root.get("bookingState"), BookingState.ACTIVE)
+                )
+        );
         return entityManager.createQuery(query).getResultList();
     }
 }

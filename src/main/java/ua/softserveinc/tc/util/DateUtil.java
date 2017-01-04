@@ -142,4 +142,35 @@ public final class DateUtil {
         return df.format(date);
     }
 
+    /**
+     * Translate the short form of the day of the week to int value
+     * that is appropriate for Calendar day of week.
+     *
+     * @param day the given short form of the day
+     * @return translated int value
+     */
+    public static Integer getDayOfWeek(String day) {
+        return DateConstants.DaysOfWeek.getDaysOfWeek().get(day);
+    }
+
+    /**
+     * Translate the array of short forms of the days of the week to
+     * array of int values that is appropriate for Calendar days of week.
+     *
+     * @param days the given array of short forms of the days
+     * @return translated array of int values
+     */
+    public static int[] getIntDaysOfWeek(String[] days) {
+        int[] result = new int[days.length];
+
+        for(int i = 0; i < days.length; i++) {
+            Integer dayOfWeek = getDayOfWeek(days[i]);
+            if(dayOfWeek == null) {
+                result = new int[0];
+                break;
+            }
+            result[i] = dayOfWeek;
+        }
+        return result;
+    }
 }
