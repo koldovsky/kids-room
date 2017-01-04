@@ -1,4 +1,4 @@
-messages = {
+const messages = {
     kid: {
         invalidFirstName: 'Invalid First Name',
         invalidLastName: 'Invalid Last Name',
@@ -7,10 +7,10 @@ messages = {
         regexKidFirstName: 'To enter a first name, use only letters',
         regexKidLastName: 'To enter a last name use only letters',
 
-        toShortFirstName: 'Please enter at least ' + nameMinLength + ' characters',
-        toShortLastName: 'Please enter at least ' + nameMinLength + ' characters',
-        toLongFirstName: 'Please enter less ' + nameMaxLength + ' than  characters',
-        toLongLastName: 'Please enter less ' + nameMaxLength + ' than  characters',
+        toShortFirstName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+        toShortLastName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+        toLongFirstName: 'Please enter less ' + constants.parameters.nameMaxLength + ' than  characters',
+        toLongLastName: 'Please enter less ' + constants.parameters.nameMaxLength + ' than  characters',
 
         editFirstName: 'Please enter at least 2 characters',
         editLastName: 'Please enter at least 2 characters',
@@ -106,4 +106,3 @@ messages = {
         }
     }
 };
-
