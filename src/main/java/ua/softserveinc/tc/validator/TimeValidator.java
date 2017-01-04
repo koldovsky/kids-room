@@ -58,7 +58,7 @@ public class TimeValidator implements Validator {
         return false;
     }
 
-    public boolean validateRoomTime(BookingDto bookingDto) {
+    public boolean validateRoomStartTime(BookingDto bookingDto) {
         LocalTime dateStartTimeWorking = LocalTime.parse(roomService
                 .findById(bookingDto.getRoomId()).getWorkingHoursStart());
         LocalTime dateEndTimeWorking = LocalTime .parse(roomService
@@ -70,9 +70,9 @@ public class TimeValidator implements Validator {
 
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
-        String startTime = booking.getStartTime().substring(11);
-        String endTime = booking.getEndTime().substring(11);
+        LocalTime startTime = LocalTime.parse(booking.getStartTime());
+        LocalTime endTime = LocalTime.parse(booking.getEndTime());
 
-        return startTime.compareTo(endTime) <= 0;
+        return !startTime.isAfter(endTime);
     }
 }
