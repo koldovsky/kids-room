@@ -1,14 +1,12 @@
 package ua.softserveinc.tc.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
-import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
 
