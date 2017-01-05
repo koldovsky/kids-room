@@ -16,6 +16,7 @@ public final class ValidationConstants {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
     public static final String ONLY_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_DOESNT_EXIST = "date.not.exist";
     public static final String PASSWORD_REGEX = "^(\\S){8,24}$";
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -52,6 +53,8 @@ public final class ValidationConstants {
     public static final String EVENT_TITLE = "name";
     public static final String EVENT_COLOR = "color";
     public static final String EVENT_DESCRIPTION = "description";
+    public static final String MONTH_RECURRENT_DAYS = "daysOfTheMonth";
+    public static final String WEEK_RECURRENT_DAYS = "daysOfWeek";
 
     public static final String RECURRENT_BOOKING = "idBook";
     public static final String VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
@@ -80,15 +83,15 @@ public final class ValidationConstants {
     public static final String TIME_FIELD = "timeStartEnd";
     public static final String DATE_FIELD = "date";
 
-    public static final String ROOM_EPMTY_MSG ="administrator.room.error.emptyField";
-    public static final String ROOM_INVALID_NAME_MSG="administrator.room.error.invalidName";
-    public static final String ROOM_INVALID_ADDRESS_MSG="administrator.room.error.invalidAddress";
-    public static final String ROOM_INVALID_CITY_MSG="administrator.room.error.invalidCity";
-    public static final String ROOM_INVALID_PHONE_MSG="administrator.room.error.invalidPhone";
-    public static final String ROOM_MIN_MAX_CHARACTERS_MSG="administrator.room.error.invalidMinMaxCharacter";
-    public static final String ROOM_WRONG_CAST_MSG="administrator.room.error.cast";
-    public static final String ROOM_WRONG_TIME_FORMAT="administrator.room.error.timeCast";
-    public static final String ROOM_MIN_MAX_CAPACITY="administrator.room.error.capacity";
+    public static final String ROOM_EPMTY_MSG = "administrator.room.error.emptyField";
+    public static final String ROOM_INVALID_NAME_MSG = "administrator.room.error.invalidName";
+    public static final String ROOM_INVALID_ADDRESS_MSG = "administrator.room.error.invalidAddress";
+    public static final String ROOM_INVALID_CITY_MSG = "administrator.room.error.invalidCity";
+    public static final String ROOM_INVALID_PHONE_MSG = "administrator.room.error.invalidPhone";
+    public static final String ROOM_MIN_MAX_CHARACTERS_MSG = "administrator.room.error.invalidMinMaxCharacter";
+    public static final String ROOM_WRONG_CAST_MSG = "administrator.room.error.cast";
+    public static final String ROOM_WRONG_TIME_FORMAT = "administrator.room.error.timeCast";
+    public static final String ROOM_MIN_MAX_CAPACITY = "administrator.room.error.capacity";
 
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
@@ -131,6 +134,8 @@ public final class ValidationConstants {
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
     //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
+    public static final String NO_DAYS_FOR_RECURRENT_EVENT = "recurrent.daysNotSellected";
+
 
     public static final String ADMINISTRATOR_INCORRECT_FIRST_NAME = "administrator.addManager.name";
     public static final String ADMINISTRATOR_INCORRECT_SECOND_NAME = "administrator.addManager.lastName";
@@ -145,9 +150,6 @@ public final class ValidationConstants {
     public static final class ConfigFields {
         public static final String MIN_AGE = "kidsMinAge";
         public static final String MAX_AGE = "kidsMaxAge";
-        public static final String MAX_NAME_LENGTH = "kidsMaxNameLength";
-        public static final String MAX_COMMENT_LENGTH = "kidsMaxCommentLength";
-
 
         public static final String CALCULATION_HOUR = "hourToCalculateBookingsEveryDay";
         public static final String CALCULATION_MINUTE = "minutesToCalculateBookingsEveryDay";

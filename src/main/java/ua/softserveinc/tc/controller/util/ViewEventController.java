@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,7 +67,7 @@ public class ViewEventController {
                 model.addAttribute(UserConstants.Entity.ROOMS, roomService.getTodayActiveRooms());
                 model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
-                if(user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
+                if (user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
                     resultView = ChildConstants.View.MY_KIDS;
                 } else
                     resultView = EventConstants.View.MAIN_PAGE;
@@ -134,7 +136,7 @@ public class ViewEventController {
 
     @PostMapping(value = "getrecurrentevents", produces = "application/json")
     @ResponseBody
-    public String gerRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
+    public String getRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
         eventValidator.validate(recurrentEventDto, bindingResult);
         if (eventValidator.isReccurrentValid(recurrentEventDto)) {
             if (bindingResult.hasErrors()) {
@@ -148,9 +150,16 @@ public class ViewEventController {
     }
 
     @PostMapping(value = "getmonthlyevents", produces = "application/json")
-    @ResponseBody
-    public String getMonthly(@RequestBody MonthlyEventDto monthlyEventDto) {
-        return new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto));
+    public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto,
+                                             BindingResult bindingResult) {
+        eventValidator.validate(monthlyEventDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new Gson().toJson(bindingResult.getFieldError().getCode()));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto)));
+        }
     }
 
     @GetMapping(value = "getroomproperty/{id}", produces = "text/plain;charset=UTF-8")
@@ -161,9 +170,9 @@ public class ViewEventController {
 
 
     @GetMapping(value = "getRecurrentEventForEditing/{recurrentEventId}",
-                produces = "text/plain;charset=UTF-8")
+            produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String getRecurrentBookingForEditing(@PathVariable  Long recurrentEventId) {
+    public String getRecurrentBookingForEditing(@PathVariable Long recurrentEventId) {
         return new Gson().toJson(calendarService.getRecurrentEventForEditingById(recurrentEventId));
     }
 

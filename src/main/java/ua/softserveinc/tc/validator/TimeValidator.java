@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -7,6 +8,8 @@ import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +21,9 @@ import java.util.Date;
  */
 @Component
 public class TimeValidator implements Validator {
+
+    @Autowired
+    private RoomService roomService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -52,10 +58,20 @@ public class TimeValidator implements Validator {
         return false;
     }
 
+    public boolean validateRoomTime(BookingDto bookingDto) {
+        LocalTime dateStartTimeWorking = LocalTime.parse(roomService
+                .findById(bookingDto.getRoomId()).getWorkingHoursStart());
+        LocalTime dateEndTimeWorking = LocalTime .parse(roomService
+                .findById(bookingDto.getRoomId()).getWorkingHoursEnd());
+        LocalTime  startTime = LocalTime.parse(bookingDto.getStartTime());
+
+        return dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime);
+    }
+
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
-        String startTime=booking.getStartTime().substring(11);
-        String endTime=booking.getEndTime().substring(11);
+        String startTime = booking.getStartTime().substring(11);
+        String endTime = booking.getEndTime().substring(11);
 
         return startTime.compareTo(endTime) <= 0;
     }

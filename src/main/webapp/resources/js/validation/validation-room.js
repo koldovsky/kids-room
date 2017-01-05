@@ -20,7 +20,7 @@ $(document).ready(function () {
                     minlength: 1,
                     maxlength: 255,
                     requiredWithEmptySpace: true,
-                    regexName: /^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\s]+$/
+                    regexName: constants.regex.nameRegex
                 },
                 address: {
                     minlength: 1,
@@ -32,13 +32,13 @@ $(document).ready(function () {
                     minlength: 1,
                     maxlength: 255,
                     requiredWithEmptySpace: true,
-                    regexCity: /^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+$/
+                    regexCity: constants.regex.nameRegex
                 },
                 phoneNumber: {
                     minlength: 1,
                     maxlength: 255,
                     requiredWithEmptySpace: true,
-                    regexPhone: /^\+(?:[0-9] ?){6,14}[0-9]$/
+                    regexPhone: constants.regex.phoneRegex
                 },
                 capacity: {
                     min: 1,

@@ -1,14 +1,14 @@
 
-.buttons{
+.buttons {
     display: inline-block;
     background: #eeeeee; /* Old browsers */
     background: -moz-linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* Opera11.10+ */
-    background: -ms-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* IE10+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
-    background: linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* W3C */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #eeeeee), color-stop(100%, #eeeeee)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#eeeeee', GradientType=0); /* IE6-9 */
+    background: linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* W3C */
     border: 1px solid #a1a1a1;
     padding: 0 2em;
     margin: 0.5em;
@@ -18,7 +18,7 @@
     border-radius: .2em;
 }
 
-.buttons:before{
+.buttons:before {
     float: left;
     width: 1em;
     text-align: center;
@@ -28,7 +28,7 @@
     pointer-events: none;
 }
 
-.button{
+.button {
     border-radius: 12px;
     box-shadow: 2px 2px 1px grey;
     color: white;
@@ -47,7 +47,7 @@
     background-color: rgb(51, 153, 255);
 }
 
-.button-confirm{
+.button-confirm {
     font-size: 16px;
     margin: 10px;
     height: 40px;
@@ -55,7 +55,7 @@
     background-color: rgb(0, 153, 255);
 }
 
-.button-cancel{
+.button-cancel {
     font-size: 16px;
     margin: 10px;
     height: 40px;
@@ -67,7 +67,7 @@
     margin: 0px;
     height: 35px;
     width: 60px;
-    line-height : 24px;
+    line-height: 24px;
 
 }
 
@@ -85,21 +85,64 @@
     margin-top: 23%;
 }
 
-
 .delete:before {
     color: red;
     content: "\2718";
 }
-.save:before   {
+
+.save:before {
     color: green;
     content: "\2714";
 }
-.edit:before   {
+
+.edit:before {
     color: blue;
     content: "\270E";
 }
 
+.add:before {
+    content: "\271A";
+}
 
-.add:before    { content: "\271A"; }
-.delete:before { content: "\2718";}
-.cross:before  { content: "\2716"; }
+.delete:before {
+    content: "\2718";
+}
+
+.cross:before {
+    content: "\2716";
+}
+
+.admin-icon-confirm {
+    font-size: 2.0em;
+    color: green;
+}
+
+.admin-icon-notconfirm {
+    font-size: 2.0em;
+    color: red;
+}
+
+.btn {
+    margin: 0;
+}
+
+.btn-add-manager {
+    width: 130px;
+}
+
+.btn-add-room {
+    width: 170px;
+    height: 40px;
+}
+
+#btn-inactive, #activateButton {
+    background-color: #e7dbd2;
+}
+
+#btn-active, #deactivateButton {
+    background-color: #d3e7bf;
+}
+
+#btn-edit, #btn-edit-room {
+    height: 35px;
+}

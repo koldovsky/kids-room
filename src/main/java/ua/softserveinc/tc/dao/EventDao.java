@@ -7,4 +7,5 @@ import java.util.List;
 public interface EventDao extends BaseDao<Event>{
     Long getMaxRecurrentId();
     List<Event> getRecurrentEventByRecurrentId(Long recurrentId);
+    void saveSetOfEvents(List<Event> listToSave);
 }

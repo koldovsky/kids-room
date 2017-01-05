@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.dto;
 
+import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.entity.Event;
 
 import java.text.DateFormat;
@@ -27,6 +28,8 @@ public class EventDto {
 
     private String color;
 
+    private EventConstants.TypeOfRecurentEvent recurrentType;
+
     public EventDto() {
     }
 
@@ -44,6 +47,18 @@ public class EventDto {
         this.roomId = event.getRoom().getId();
     }
 
+    public EventDto(EventDto event) {
+        this.name = event.getName();
+        this.startTime = event.getStartTime();
+        this.endTime = event.getEndTime();
+        this.ageLow = event.getAgeLow();
+        this.ageHigh = event.getAgeHigh();
+        this.id = event.getId();
+        this.description = event.getDescription();
+        this.recurrentId = event.getRecurrentId();
+        this.color = event.getColor();
+        this.roomId = event.getRoomId();
+    }
 
     public Long getRecurrentId() {
         return recurrentId;
@@ -123,5 +138,13 @@ public class EventDto {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public EventConstants.TypeOfRecurentEvent getRecurrentType() {
+        return recurrentType;
+    }
+
+    public void setRecurrentType(EventConstants.TypeOfRecurentEvent recurrentType) {
+        this.recurrentType = recurrentType;
     }
 }
