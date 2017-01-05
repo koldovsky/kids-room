@@ -56,6 +56,13 @@ public class AppConfig {
         return tilesConfigurer;
     }
 
+    private Properties connectionProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("useUnicode", environment.getRequiredProperty("useUnicode"));
+        properties.setProperty("characterEncoding", environment.getRequiredProperty("characterEncoding"));
+        return properties;
+    }
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -63,6 +70,7 @@ public class AppConfig {
         dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
         dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
         dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        dataSource.setConnectionProperties(connectionProperties());
         return dataSource;
     }
 
