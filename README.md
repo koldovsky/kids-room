@@ -47,7 +47,7 @@ on Runner tab set VM Options:
 To start project you need to:
  1. Download MySql 5.7 on your computer.
  2. Create new database with command: 
- "CREATE DATABASE database_name DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;".
+    "CREATE DATABASE database_name DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;".
  3. Create file "hibernate.properties" with appropriate code.
  4. Enter properties of your computer for that commands:
     - Set "jdbc.url = jdbc:mysql://localhost:3306/database_name"
@@ -67,9 +67,9 @@ To start project you need to:
 ` src/main/resources/properties/properties/hibernate.properties`:
 ```properties
 jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/mydbkidsf
-jdbc.username = root
-jdbc.password = 199630
+jdbc.url = jdbc:mysql://localhost:3306/{database}
+jdbc.username = {username}
+jdbc.password = {password}
 useUnicode = yes
 characterEncoding = utf8
 hibernate.dialect = org.hibernate.dialect.MySQLDialect
