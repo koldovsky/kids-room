@@ -288,7 +288,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
             List<Booking> persistedBookings =
                     bookingDao.persistRecurrentBookings(bookingsForPersisting);
-            BookingDto.setIdToListOfBookingDto(resultDto, persistedBookings);
+            BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
             resultDto = listDTO;
         }
 
