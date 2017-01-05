@@ -50,10 +50,10 @@ INSERT INTO rates(id_rate, hour_rate, price_rate, id_room)  VALUES (5, 4, 90, 2)
 INSERT INTO events(id_event, age_high, age_low, description, end_time, name, start_time, room) VALUES (1, 3, 5, 'NO', '2016-07-10 14:00:00', 'EVENT1', '2016-07-10 13:45:00', 6);
 INSERT INTO events(id_event, age_high, age_low, description, end_time, name, start_time, room) VALUES (2, 3, 5, 'NO', '2016-07-07 20:00:00', 'EVENT2', '2016-07-07 17:45:00', 8);
 
-INSERT INTO  bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (1, '2016-07-17 15:15:00', '2016-07-17 16:30:00', 23, 57, 3, 0, 0, 0,'');
-INSERT INTO  bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (2, '2016-05-13 15:00:00', '2016-05-13 16:30:00', 27, 72, 3, 2, 0, 0,'Do not talk to the kid about his favourite cat. The cat has run away and the kid is unhappy abou it');
-INSERT INTO  bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (3, '2016-07-27 16:45:00', '2016-07-27 18:30:00', 22, 54, 4, 2, 0, 0,'');
-INSERT INTO  bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (27, '2016-05-23 15:30:00', '2016-05-23 16:45:00', 48, 129, 1, 0, 0, 0,'Could you controll that the kid drinks his tea, please');
+INSERT INTO bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (1, '2016-07-17 15:15:00', '2016-07-17 16:30:00', 23, 57, 3, 0, 0, 0,'');
+INSERT INTO bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (2, '2016-05-13 15:00:00', '2016-05-13 16:30:00', 27, 72, 3, 2, 0, 0,'Do not talk to the kid about his favourite cat. The cat has run away and the kid is unhappy abou it');
+INSERT INTO bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (3, '2016-07-27 16:45:00', '2016-07-27 18:30:00', 22, 54, 4, 2, 0, 0,'');
+INSERT INTO bookings (id_book, booking_start_time, booking_end_time, id_user, id_child, id_room,  booking_state, duration, sum, comment) VALUES (27, '2016-05-23 15:30:00', '2016-05-23 16:45:00', 48, 129, 1, 0, 0, 0,'Could you controll that the kid drinks his tea, please');
 
 INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (1, 'Teachers day','2016-10-02', '2016-10-02');
 INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (2, 'Day Off','2016-10-03', '2016-10-06');
