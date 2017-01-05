@@ -8,6 +8,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DefaultPropertiesPersister;
 import ua.softserveinc.tc.dto.ConfigurationDto;
+import ua.softserveinc.tc.constants.UtilConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,52 +94,54 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
         Properties properties = new Properties();
 
-        this.kidsMinAge = cDto.getKidsMinAge();
+        kidsMinAge = cDto.getKidsMinAge();
         properties.setProperty("kids.minAge", kidsMinAge.toString());
 
-        this.kidsMaxAge = cDto.getKidsMaxAge();
+        kidsMaxAge = cDto.getKidsMaxAge();
         properties.setProperty("kids.maxAge", kidsMaxAge.toString());
 
-        this.minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();
+        minutesToCalculateBookingsEveryDay = cDto.getMinutesToCalculateBookingsEveryDay();
         properties.setProperty("calculation.time.minutes",
                 minutesToCalculateBookingsEveryDay.toString());
 
-        this.hourToCalculateBookingsEveryDay = cDto.
+        hourToCalculateBookingsEveryDay = cDto.
                 getHourToCalculateBookingsEveryDay();
         properties.setProperty("calculation.time.hours", hourToCalculateBookingsEveryDay.toString());
 
-        this.minutesToSendEmailReport = cDto.getMinutesToSendEmailReport();
+        minutesToSendEmailReport = cDto.getMinutesToSendEmailReport();
         properties.setProperty("emailreport.time.minutes", minutesToSendEmailReport.toString());
 
-        this.hourToSendEmailReport = cDto.getHourToSendEmailReport();
+        hourToSendEmailReport = cDto.getHourToSendEmailReport();
         properties.setProperty("emailreport.time.hours", hourToSendEmailReport.toString());
 
-        this.dayToSendEmailReport = cDto.getDayToSendEmailReport();
+        dayToSendEmailReport = cDto.getDayToSendEmailReport();
         properties.setProperty("emailreport.time.date", dayToSendEmailReport.toString());
 
-        this.daysToCleanUpBookings = cDto.getDaysToCleanUpBookings();
+        daysToCleanUpBookings = cDto.getDaysToCleanUpBookings();
         properties.setProperty("cleaning.days", daysToCleanUpBookings.toString());
 
-        this.hourToCleanUpBookings = cDto.getHourToCleanUpBookings();
+        hourToCleanUpBookings = cDto.getHourToCleanUpBookings();
         properties.setProperty("cleaning.hour", hourToCleanUpBookings.toString());
 
-        this.minutesToCleanUpBookings = cDto.getMinutesToCleanUpBookings();
+        minutesToCleanUpBookings = cDto.getMinutesToCleanUpBookings();
         properties.setProperty("cleaning.minutes", minutesToCleanUpBookings.toString());
 
-        this.hoursToSendEmailReminder = cDto.getHourToSendEmailReminder();
+        hoursToSendEmailReminder = cDto.getHourToSendEmailReminder();
         properties.setProperty("reminder.hour", hoursToSendEmailReminder.toString());
 
-        this.minutesToSendEmailReminder = cDto.getMinutesToSendEmailReminder();
+        minutesToSendEmailReminder = cDto.getMinutesToSendEmailReminder();
         properties.setProperty("reminder.minutes", minutesToSendEmailReminder.toString());
 
-        this.minPeriodSize = cDto.getMinPeriodSize();
+        minPeriodSize = cDto.getMinPeriodSize();
         properties.setProperty("booking.minPeriod", minPeriodSize.toString());
 
-        this.serverName = cDto.getServerName();
+        serverName = cDto.getServerName();
         properties.setProperty("server.name", serverName);
 
-        this.maxUploadImgSizeMb = cDto.getMaxUploadImgSizeMb();
+        maxUploadImgSizeMb = cDto.getMaxUploadImgSizeMb();
         properties.setProperty("img.maxSize", maxUploadImgSizeMb.toString());
+
+        properties.setProperty("image.acceptable.format", imageAcceptableFormats);
 
         File propsFile = new File("src/main/resources/properties/application.properties");
         OutputStream out = new FileOutputStream(propsFile);
@@ -238,7 +241,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
      * @return String array of normalized image formats
      */
     private static String[] ImageFormatNormalizator(String formatString) {
-        String[] arraysFormats = formatString.trim().split("\\s");
+        String[] arraysFormats = formatString.trim().split(UtilConstants.WHITE_SPACE_REGEXP);
         for (int i = 0; i < arraysFormats.length; i++)
             switch (arraysFormats[i].toLowerCase()) {
                 case "jpg":
