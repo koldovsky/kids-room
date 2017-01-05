@@ -46,10 +46,11 @@ on Runner tab set VM Options:
 
 To start project you need to:
  1. Download MySql 5.7 on your computer.
- 2. Create new database with command: "CREATE DATABASE database_name;".
+ 2. Create new database with command: 
+ "CREATE DATABASE database_name DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;".
  3. Create file "hibernate.properties" with appropriate code.
  4. Enter properties of your computer for that commands:
-    - Set "jdbc.url = jdbc:mysql://localhost:3306/database_name?characterEncoding=UTF-8"
+    - Set "jdbc.url = jdbc:mysql://localhost:3306/database_name"
     - Set jdbc.username = root (by default "root", check that name on your computer)
     - Set jdbc.password = root (by default "root", check that name on your computer)
  5. Create Tomcat configuration:
@@ -66,9 +67,11 @@ To start project you need to:
 ` src/main/resources/properties/properties/hibernate.properties`:
 ```properties
 jdbc.driverClassName = com.mysql.jdbc.Driver
-jdbc.url = jdbc:mysql://localhost:3306/kidsroom?characterEncoding=UTF-8
+jdbc.url = jdbc:mysql://localhost:3306/mydbkidsf
 jdbc.username = root
-jdbc.password = password
+jdbc.password = 199630
+useUnicode=yes
+characterEncoding=utf8
 hibernate.dialect = org.hibernate.dialect.MySQLDialect
 hibernate.show_sql = true
 hibernate.format_sql = true
