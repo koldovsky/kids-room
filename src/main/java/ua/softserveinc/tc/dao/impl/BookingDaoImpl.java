@@ -39,8 +39,12 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
             if(!characteristics.getListOfIdOfRecurrentBookings().isEmpty()) {
                 criteria.select(root).where(
                         builder.and(
-                                root.get(BookingConstants.Entity.RECURRENT_ID)
-                                        .in(characteristics.getListOfIdOfRecurrentBookings()).not(),
+                                builder.or(
+                                    root.get(BookingConstants.Entity.RECURRENT_ID)
+                                            .isNull(),
+                                    root.get(BookingConstants.Entity.RECURRENT_ID)
+                                            .in(characteristics.getListOfIdOfRecurrentBookings()).not()
+                                ),
                                 commonPredicate
                         )
                 );

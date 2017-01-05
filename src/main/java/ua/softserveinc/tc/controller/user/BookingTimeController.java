@@ -64,7 +64,7 @@ public class BookingTimeController {
                                              BindingResult bindingResult) {
         if (bookingService.hasDuplicateBookings(dtos)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+                    ValidationConstants.DUPLICATE_BOOKINGS_MESSAGE);
         }
 
         for (BookingDto dto : dtos) {
@@ -157,7 +157,7 @@ public class BookingTimeController {
             bookings = bookingService.updateRecurrentBookings(recurrentBookingDto);
         }catch (DuplicateBookingException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+                    ValidationConstants.DUPLICATE_BOOKINGS_MESSAGE);
         }
         if (bookings.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(

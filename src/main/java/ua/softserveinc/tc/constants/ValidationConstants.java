@@ -58,6 +58,7 @@ public final class ValidationConstants {
     public static final String END_TIME_BEFORE_START_TIME = "endtime.before.starttime";
     public static final String BAD_TIME_FORMAT = "bad.time.format";
     public static final String DUPLICATE_BOOKING_MESSAGE = "duplicate.booking";
+    public static final String DUPLICATE_BOOKINGS_MESSAGE = "Sorry, room is already booked for your kid at this time";
     public static final String NO_DAYS_FOR_BOOKING = "no.day.forBook";
 
 

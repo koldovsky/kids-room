@@ -620,6 +620,7 @@ function makeRecurrentBookings() {
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
+                var newBookingsArray = $('#user-calendar').fullCalendar('clientEvents');
                 result.forEach(function (item, i) {
                     var newBooking = {
                         id: item.id,
@@ -635,10 +636,13 @@ function makeRecurrentBookings() {
                         recurrentId: item.recurrentId
                     };
                     allBookings.push(newBooking);
+                    newBookingsArray.push(newBooking);
                 });
+
                 $('#user-calendar').fullCalendar('removeEvents');
-                $('#user-calendar').fullCalendar('addEventSource', allBookings);
+                $('#user-calendar').fullCalendar('addEventSource', newBookingsArray);
                 $('#user-calendar').fullCalendar('refetchEvents');
+
                 $('.loading').hide();
 
                 $('#duplicate-booking-dialog').modal('show');

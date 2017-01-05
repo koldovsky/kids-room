@@ -95,7 +95,15 @@ public class BookingDto implements Serializable {
         endTimeMillis = booking.getBookingEndTime().getTime();
         kidName = booking.getChild().getFullName();
         roomName = booking.getRoom().getAddress();
-        durationBooking = endTimeMillis - startTimeMillis;
+
+        if (endTimeMillis != null && startTimeMillis != null) {
+            durationBooking = endTimeMillis - startTimeMillis;
+        } else if (dateEndTime != null && dateStartTime != null) {
+            durationBooking = dateEndTime.getTime() - dateStartTime.getTime();
+        } else {
+            durationBooking = 0L;
+        }
+
         duration = booking.formatDuration();
         sum = booking.getSum();
         id = booking.getIdBook();

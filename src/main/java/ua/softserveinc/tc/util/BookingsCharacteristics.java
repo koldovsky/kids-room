@@ -35,6 +35,7 @@ public class BookingsCharacteristics {
      * @return list of the rooms
      */
     public List<Room> getListOfRoomOfBookings() {
+
         return listOfRoomOfBookings;
     }
 
@@ -44,6 +45,7 @@ public class BookingsCharacteristics {
      * @return the list of the children
      */
     public List<Child> getChildrenListOfBookings() {
+
         return childrenListOfBookings;
     }
 
@@ -53,6 +55,7 @@ public class BookingsCharacteristics {
      * @return the array of the children
      */
     public Date[] getDatesOfBookings() {
+
         return datesOfBookings;
     }
 
@@ -62,6 +65,7 @@ public class BookingsCharacteristics {
      * @return the start date of the bookings
      */
     public Date getStartDateOfBookings() {
+
         return datesOfBookings[0];
     }
 
@@ -71,6 +75,7 @@ public class BookingsCharacteristics {
      * @return the end date of the bookings
      */
     public Date getEndDateOfBookings() {
+
         return datesOfBookings[1];
     }
 
@@ -80,6 +85,7 @@ public class BookingsCharacteristics {
      * @return the list of the id of the bookings
      */
     public List<Long> getListOfIdOfBookings() {
+
         return listOfIdOfBookings;
     }
 
@@ -89,6 +95,7 @@ public class BookingsCharacteristics {
      * @return the list of the id of the bookings
      */
     public List<Long> getListOfIdOfRecurrentBookings() {
+
         return listOfIdOfRecurrentBookings;
     }
 
@@ -123,6 +130,7 @@ public class BookingsCharacteristics {
          */
         public Builder setRoomOfBookings(List<Room> rooms) {
             listOfRoomOfBookings = rooms;
+
             return this;
         }
 
@@ -134,6 +142,7 @@ public class BookingsCharacteristics {
          */
         public Builder setChildrenListOfBookings(List<Child> children) {
             childrenListOfBookings = children;
+
             return this;
         }
 
@@ -146,6 +155,7 @@ public class BookingsCharacteristics {
          */
         public Builder setDatesOfBookings(Date[] dates) {
             datesOfBookings = dates;
+
             return this;
         }
 
@@ -157,6 +167,7 @@ public class BookingsCharacteristics {
          */
         public Builder setListOfIdOfBookings(List<Long> idBookings) {
             listOfIdOfBookings = idBookings;
+
             return this;
         }
 
@@ -168,6 +179,7 @@ public class BookingsCharacteristics {
          */
         public Builder setListOfIdOfRecurrentBookings(List<Long> idRecurrent) {
             listOfIdOfRecurrentBookings = idRecurrent;
+
             return this;
         }
 
