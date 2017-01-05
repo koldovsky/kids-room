@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @NamedQueries({
-        @NamedQuery(name = UserConstants.Entity.NQ_FIND_USER_BY_EMAIL, query = "from User WHERE email = :email")
+        @NamedQuery(name = UserConstants.Entity.NQ_FIND_USER_BY_EMAIL, query = "select u from User u WHERE u.email = :email")
 })
 @Entity
 @Table(name = UserConstants.Entity.TABLE_NAME_USER)

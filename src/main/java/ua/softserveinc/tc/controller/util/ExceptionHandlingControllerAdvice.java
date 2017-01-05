@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller.util;
 
+import org.slf4j.Logger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -13,6 +14,8 @@ import ua.softserveinc.tc.server.exception.BadUploadException;
 import ua.softserveinc.tc.server.exception.DuplicateBookingException;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.server.exception.TokenInvalidException;
+import ua.softserveinc.tc.util.Log;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Nestor on 18.05.2016.
@@ -20,16 +23,17 @@ import ua.softserveinc.tc.server.exception.TokenInvalidException;
  */
 
 @ControllerAdvice
-public class ExceptionHandlingController {
+public class ExceptionHandlingControllerAdvice {
+
+    @Log
+    private Logger log;
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler({
             NoHandlerFoundException.class,
             ResourceNotFoundException.class
     })
-    public String handleError404() {
-        return ErrorConstants.NOT_FOUND_VIEW;
-    }
+    public String handleError404() { return ErrorConstants.NOT_FOUND_VIEW; }
 
     @ResponseStatus
     @ExceptionHandler(TokenInvalidException.class)
@@ -62,9 +66,16 @@ public class ExceptionHandlingController {
      * @return "Bad Upload" view
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({JpaSystemException.class, BadUploadException.class})
+    @ExceptionHandler(BadUploadException.class)
     public String badUpload() {
         return "error-bad-upload";
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(JpaSystemException.class)
+    public String jpaExceptionHandler(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        return "criticalRuntimeException";
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

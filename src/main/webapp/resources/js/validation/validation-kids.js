@@ -6,19 +6,19 @@ $(document).ready(function() {
         $('#kidregistrform').validate({
             rules: {
                 firstName: {
-                    regexName: nameRegex,
+                    regexName: constants.regex.nameRegex,
                     required: true,
-                    minlength: nameMinLength,
-                    maxlength: nameMaxLength
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
                 },
                 lastName: {
-                    regexName: nameRegex,
+                    regexName: constants.regex.nameRegex,
                     required: true,
-                    minlength: nameMinLength,
-                    maxlength: nameMaxLength
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
                 },
                 comment: {
-                    maxlength: commentMaxLength
+                    maxlength: constants.parameters.commentMaxLength
                 }
             },
             messages: {

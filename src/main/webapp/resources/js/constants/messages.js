@@ -1,4 +1,4 @@
-messages = {
+const messages = {
     kid: {
         invalidFirstName: 'Invalid First Name',
         invalidLastName: 'Invalid Last Name',
@@ -7,10 +7,10 @@ messages = {
         regexKidFirstName: 'To enter a first name, use only letters',
         regexKidLastName: 'To enter a last name use only letters',
 
-        toShortFirstName: 'Please enter at least ' + nameMinLength + ' characters',
-        toShortLastName: 'Please enter at least ' + nameMinLength + ' characters',
-        toLongFirstName: 'Please enter less ' + nameMaxLength + ' than  characters',
-        toLongLastName: 'Please enter less ' + nameMaxLength + ' than  characters',
+        toShortFirstName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+        toShortLastName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+        toLongFirstName: 'Please enter less ' + constants.parameters.nameMaxLength + ' than  characters',
+        toLongLastName: 'Please enter less ' + constants.parameters.nameMaxLength + ' than  characters',
 
         editFirstName: 'Please enter at least 2 characters',
         editLastName: 'Please enter at least 2 characters',
@@ -67,7 +67,8 @@ messages = {
             bookingTypeMismatchWhenUpdating: 'Can\'t convert weekly booking to single',
             incorrectData: 'Incorrect Data: ',
             roomDeactivate: 'Room cannot be inactive, when it has events and bookings that take place in the future. Please contact manager.',
-            dateDoesntExits: 'Chosen date doesn\'t exist, please select valid date'
+            dateDoesntExits: 'Chosen date doesn\'t exist, please select valid date',
+            cannotCreateEventsForNonExistingDates: 'For some dates events cannot be created as soon as dates do not exist.'
         }
     },
     notCorrect: {
@@ -105,4 +106,3 @@ messages = {
         }
     }
 };
-

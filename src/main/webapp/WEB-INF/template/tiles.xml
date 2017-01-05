@@ -70,6 +70,10 @@
         <put-attribute name="body" value="/WEB-INF/views/errors/internal-error.jsp"/>
     </definition>
 
+    <definition name="criticalRuntimeException" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/common-message.jsp"/>
+    </definition>
+
     <!-- Admin -->
     <definition name="adm-add-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/add-manager.jsp"/>

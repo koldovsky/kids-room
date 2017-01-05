@@ -20,7 +20,7 @@ $(document).ready(function () {
                     minlength: 1,
                     maxlength: 255,
                     requiredWithEmptySpace: true,
-                    regexName: nameRegex
+                    regexName: constants.regex.nameRegex
                 },
                 address: {
                     minlength: 1,
@@ -32,13 +32,13 @@ $(document).ready(function () {
                     minlength: 1,
                     maxlength: 255,
                     requiredWithEmptySpace: true,
-                    regexCity: nameRegex
+                    regexCity: constants.regex.nameRegex
                 },
                 phoneNumber: {
                     minlength: 1,
                     maxlength: 255,
                     requiredWithEmptySpace: true,
-                    regexPhone: phoneRegex
+                    regexPhone: constants.regex.phoneRegex
                 },
                 capacity: {
                     min: 1,

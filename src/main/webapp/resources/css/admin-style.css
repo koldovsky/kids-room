@@ -155,7 +155,7 @@ th.th-size {
     margin-left: 10px;
 }
 
-.dropdown-custom li span{
+.dropdown-custom li span {
     margin-left: 10px;
     font-family: Helvetica, Arial, Verdana;
     font-size: 1.10em;
@@ -205,4 +205,11 @@ th.th-size {
     background-color: #00aa9a !important;
 }
 
+.glyphicon-room {
+    color: black;
+    font-size: 1.2em;
+}
 
+.header-rate {
+    margin-bottom: 50px;
+}
