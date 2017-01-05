@@ -1,11 +1,8 @@
 package ua.softserveinc.tc.validator;
 
-import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 
 /**
  * Interface of validator for checking if the file of class MultipartFile
