@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller.admin;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,15 +64,15 @@ public class EditRoomController {
      * @return String value
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String roomBlockUnblock(@RequestParam Long id) {
+    public ResponseEntity<String> roomBlockUnblock(@RequestParam Long id) {
         Room room = this.roomService.findById(id);
         if(!room.isActive() || isRoomWithoutBookings(room)) {
             room.setActive(!room.isActive());
             this.roomService.update(room);
         } else {
-            return "redirect:/" + AdminConstants.EDIT_ROOM;
+            return ResponseEntity.status(HttpStatus.OK).body("error");
         }
-        return "redirect:/" + AdminConstants.EDIT_ROOM;
+        return ResponseEntity.status(HttpStatus.OK).body("success");
     }
 
     private boolean isRoomWithoutBookings(Room room) {

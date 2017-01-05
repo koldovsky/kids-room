@@ -9,27 +9,24 @@ $('.for-table tbody').on('click', '#deactivateButton', function() {
             url: 'adm-edit-room?id=' + roomNum,
             dataType: 'json',
             sync: true,
-            success: function() {
-                alert("S ");
-                window.location.reload();
-                // var dialog = $('#positiveResultModa');
-                // dialog.modal('show');
-                // $('#negativeYesButton').click(function () {
-                //     dialog.modal("hide");
-                // });
-            },
-            error: function() {
-                alert("E ");
-                window.location.reload();
-                // var dialog = $('#negativeResultModal');
-                // dialog.modal("show");
-                // $('#negativeYesButton').click(function () {
-                //     dialog.modal("hide");
-                // });
+            complete:  function (xhr) {
+               var response = xhr['responseText'];
+               var dialog, yes_button;
+               if(response == "success") {
+                   dialog = $('#positiveResultModal');
+                   yes_button  = $('#positiveYesButton');
+               } else {
+                   dialog = $('#negativeResultModal');
+                   yes_button  = $('#negativeYesButton');
+               }
+               dialog.modal("show");
+               yes_button.click(function () {
+                   dialog.modal("hide");
+                   window.location.reload();
+               });
             }
         });
         dialog.modal("hide");
-
     });
     $('#deactivateNoButton').click(function () {
         dialog.modal("hide");
