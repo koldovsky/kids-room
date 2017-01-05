@@ -76,8 +76,7 @@ public class RegisterNewKidController {
     @PostMapping("/registerkid")
     public String submit(
             @ModelAttribute(value = ChildConstants.View.KID_ATTRIBUTE) Child child,
-            Principal principal,
-            BindingResult bindingResult) {
+            Principal principal, BindingResult bindingResult) {
 
         child.setParentId(userService.getUserByEmail(
                 principal.getName()));
