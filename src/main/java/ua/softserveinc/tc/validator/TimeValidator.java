@@ -9,6 +9,7 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,10 +42,22 @@ public class TimeValidator implements Validator {
         }
     }
 
+    /**
+     * Verify if the date matches the date regex
+     * @param date date that will be checked
+     * @return boolean value with result of verifing
+     */
     public boolean validateDateFormat(String date) {
         return date.matches(ValidationConstants.DATE_REGEX);
     }
 
+    /**
+     * Verify if start date is not later then end date
+     * @param startTime start date value
+     * @param endTime end date value
+     * @return boolean balue the result of verifing if the start date isn`t later then end date
+     * @throws ParseException throws if date format is wrong
+     */
     public boolean validateDate(String startTime, String endTime) throws ParseException {
         if(validateDateFormat(startTime) && validateDateFormat(endTime)) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
@@ -57,7 +70,14 @@ public class TimeValidator implements Validator {
         return false;
     }
 
-    public boolean validateRoomStartTime(BookingDto bookingDto) {
+    /**
+     * verify if start booking time is in the range of
+     * room working time
+     * @param bookingDto booking that will be verified
+     * @return true if start booking time is in the range of room working times
+     * otherway return false
+     */
+    public boolean validateRoomTime(BookingDto bookingDto) {
         LocalTime dateStartTimeWorking = LocalTime.parse(roomService
                 .findById(bookingDto.getRoomId()).getWorkingHoursStart());
         LocalTime dateEndTimeWorking = LocalTime .parse(roomService
@@ -67,6 +87,11 @@ public class TimeValidator implements Validator {
         return dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime);
     }
 
+    /**
+     * verify if booking start time isn`t later than booking end time
+     * @param target booking object that will be verified
+     * @return return true if start time isn`t later than end time
+     */
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
         LocalTime startTime = LocalTime.parse(booking.getStartTime().substring(11));
