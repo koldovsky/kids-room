@@ -9,12 +9,10 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
