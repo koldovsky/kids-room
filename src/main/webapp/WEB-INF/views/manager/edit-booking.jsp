@@ -354,9 +354,8 @@
                 <br>
                 <h2><spring:message code="booking.cancel"/></h2>
                 <p class="cancelName ">
-                    <spring:message code="booking.confirmCancelQuestion1"/>
-                    <br>
-                    <spring:message code="booking.confirmCancelQuestion2"/>
+                    <spring:message code="booking.confirmCancelQuestion"/>
+
                 </p>
                 <button id="cancelButton" class="btn  btn-success    ">
                     <spring:message code="booking.confirmCancel"/>

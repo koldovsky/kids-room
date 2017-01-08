@@ -468,7 +468,7 @@
                                 <form id="confirm-your-choice">
                                     <div class="confirmDelete">
                                         <p>
-                                            <spring:message code="booking.confirmCancelQuestion"/> </span>
+                                            <spring:message code="booking.confirmCancelQuestion"/>
                                         </p>
                                     </div>
                                     <div>

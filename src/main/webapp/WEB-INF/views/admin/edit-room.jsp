@@ -116,9 +116,6 @@
             <div class="modal-body text-center">
                 <br>
                 <h2><spring:message code="room.deactivate"/></h2>
-                <p class="cancelName ">
-                    <spring:message code="booking.confirmCancelQuestion2"/>
-                </p>
                 <button id="deactivateYesButton" class="btn  btn-success">
                     <spring:message code="room.yes_button"/>
                 </button>
