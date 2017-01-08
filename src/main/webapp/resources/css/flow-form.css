@@ -19,6 +19,10 @@
     padding-right: 0;
 }
 
+.btn-delete-event-booking {
+    width: 45%;
+}
+
 #ui-id-5 {
     text-align: center;
 }

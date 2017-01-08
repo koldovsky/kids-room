@@ -336,7 +336,7 @@
                             <button type="button" class="btn btn-success btn-edit-event-booking" id="confirm-choose-booking">
                                 <spring:message code="ok"/>
                             </button>
-                            <button type="button" class="btn btn-danger  btn-edit-event-booking" pull-right" id="close-choose">
+                            <button type="button" class="btn btn-danger  btn-edit-event-booking pull-right" id="close-choose">
                                 <spring:message code="cancel"/>
                             </button>
 
@@ -907,22 +907,18 @@
                     <spring:message code="event.confirmTitle"/> hidden>
                     <form id="confirm-your-choice-event">
                         <div class="confirmDelete">
-                            <p><span style="text-align:center;">
-                                <spring:message code="event.confirmCancelQuestion1"/> </span></p>
-                            <p><span style="text-align:center;">
-                                <spring:message code="event.confirmCancelQuestion2"/></span></p>
+                            <p>
+                                <spring:message code="event.confirmCancelQuestion"/>
+                            </p>
                         </div>
-                        <div class="col-xs-12">
-                            <div class="col-xs-6" style="text-align: center">
-                                <button type="button" class="btn btn-success" id="confirmYesEvent">
-                                    <spring:message code="event.confirmYes"/>
-                                </button>
-                            </div>
-                            <div class=col-xs-6" style="text-align: center">
-                                <button type="button" class="btn btn-danger" id="confirmNoEvent">
-                                    <spring:message code="event.confirmNo"/>
-                                </button>
-                            </div>
+                        <div>
+                            <button type="button" class="btn btn-success btn-delete-event-booking" id="confirmYesEvent">
+                                <spring:message code="event.confirmYes"/>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-delete-event-booking pull-right"
+                                    id="confirmNoEvent">
+                                <spring:message code="event.confirmNo"/>
+                            </button>
                         </div>
                     </form>
                 </div>
