@@ -460,35 +460,32 @@
         </div>
 
             <%--confirmation-dialog--%>
-        <div class="modal fade">
-            <div class="modal-dialog">
-                <div aclass="modal-body text-center">
-                    <div id="confirmation-dialog-div" class="ui-dialog" title=
-                        <spring:message code="booking.confirmTitle"/> hidden>
-                        <form id="confirm-your-choice">
-                            <div class="confirmDelete">
-                                <p><span style="text-align:center;">
-                                <spring:message code="booking.confirmCancelQuestion1"/> </span></p>
-                                <p><span style="text-align:center;">
-                                <spring:message code="booking.confirmCancelQuestion2"/></span></p>
+                <div class="modal fade">
+                    <div class="modal-dialog">
+                        <div aclass="modal-body text-center">
+                            <div id="confirmation-dialog-div" class="ui-dialog" title=
+                                <spring:message code="booking.confirmTitle"/> hidden>
+                                <form id="confirm-your-choice">
+                                    <div class="confirmDelete">
+                                        <p>
+                                            <spring:message code="booking.confirmCancelQuestion"/> </span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-success btn-delete-event-booking"
+                                                id="confirmYes">
+                                            <spring:message code="booking.confirmYes"/>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-delete-event-booking pull-right"
+                                                id="confirmNo">
+                                            <spring:message code="booking.confirmNo"/>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-xs-12">
-                                <div class="col-xs-6" style="text-align: center">
-                                    <button type="button" class="btn btn-success" id="confirmYes">
-                                        <spring:message code="booking.confirmYes"/>
-                                    </button>
-                                </div>
-                                <div class=col-xs-6" style="text-align: center">
-                                    <button type="button" class="btn btn-danger" id="confirmNo">
-                                        <spring:message code="booking.confirmNo"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
         <div class="loading" hidden>Loading&#8230;</div>
     </div>
 </sec:authorize>
