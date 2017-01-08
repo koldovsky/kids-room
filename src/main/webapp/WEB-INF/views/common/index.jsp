@@ -310,12 +310,18 @@
             </div>
         </div>
 
+
             <%--recurrent-change--%>
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
                     <div id="recurrent-change" title="<spring:message code= "booking.edit"/>" class="dialog" hidden>
                         <form id="choose-updating-booking-form">
+                            <div class="lableBoard">
+                                <label class="small">
+                                    <spring:message code="recurrent.editMessage"/>
+                                </label>
+                            </div>
                             <div class="radio-button">
                                 <label><input type="radio" id="single-update-booking" name="radio-check" checked>
                                     <spring:message code="recurrent.justThisOneBooking"/>
@@ -327,10 +333,10 @@
                                 </label>
                             </div>
 
-                            <button type="button" class="btn btn-success" id="confirm-choose-booking">
+                            <button type="button" class="btn btn-success btn-edit-event-booking" id="confirm-choose-booking">
                                 <spring:message code="ok"/>
                             </button>
-                            <button type="button" class="btn btn-danger pull-right" id="close-choose">
+                            <button type="button" class="btn btn-danger  btn-edit-event-booking" pull-right" id="close-choose">
                                 <spring:message code="cancel"/>
                             </button>
 
@@ -861,15 +867,12 @@
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
-                    <div id="choose-updating-type" class="dialog" hidden title=<spring:message
-                            code="recurrent.event.title"/>>
+                    <div id="choose-updating-type" title="<spring:message
+                            code="recurrent.event.title"/>" class="dialog" hidden>
                         <form id="choose-updating-form">
-
                             <div class="lableBoard">
-                                <label>
-                                    <small><i>
-                                        <ins><spring:message code="recurrent.editEventMessage"/></ins>
-                                    </i></small>
+                                <label class="small">
+                                    <spring:message code="recurrent.editMessage"/>
                                 </label>
                             </div>
                             <div class="radio-button">
@@ -880,9 +883,9 @@
                                 <label><input type="radio" id="recurrent-update" name="radio"> <spring:message
                                         code="recurrent.allSeries"/></label>
                             </div>
-                            <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose">
+                            <button type="button" class="btn btn-success btn-edit-event-booking" id="confirm-choose">
                                 <spring:message code="ok"/></button>
-                            <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose">
+                            <button type="button" class="btn btn-danger btn-edit-event-booking pull-right" id="cancel-choose">
                                 <spring:message code="cancel"/></button>
                         </form>
                     </div>
