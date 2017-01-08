@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.validator;
 
-import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,7 +10,6 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
-import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.entity.Event;
 
@@ -100,7 +98,7 @@ public class EventValidator implements Validator {
                 errors.rejectValue(ValidationConstants.EVENT_DESCRIPTION,
                         ValidationConstants.EVENT_DESCRIPTION_LENGTH_ERROR_MSG);
             }
-            if (!roomService.findById(eventDto.getRoomId()).isActive()) {
+            if (!roomService.findByIdTransactional(eventDto.getRoomId()).isActive()) {
                 errors.rejectValue(ValidationConstants.ROOM_ID,
                         ValidationConstants.EVENT_INACTIVE_ROOM_ERROR_MSG);
             }

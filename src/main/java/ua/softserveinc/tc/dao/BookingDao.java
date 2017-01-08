@@ -1,14 +1,15 @@
 package ua.softserveinc.tc.dao;
 
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 
-import java.util.Date;
 import java.util.List;
 
+/**
+ * DAO for bookings.
+ *
+ * Rewritten by Sviatoslav Hryb on 05.10.2017
+ */
 public interface BookingDao extends BaseDao<Booking> {
 
     /**
@@ -24,18 +25,6 @@ public interface BookingDao extends BaseDao<Booking> {
      * @return the list of resulting bookings
      */
     List<Booking> getDuplicateBookings(BookingsCharacteristics characteristics);
-
-    /**
-     * Return list all of the bookings that have booking states BookingState.BOOKED
-     * and BookingState.Active. If any of the parameters is a null the method
-     * will returns empty list.
-     *
-     * @param startDate the start date of period
-     * @param endDate the end date of period
-     * @param room the room of bookings
-     * @return list of bookings
-     */
-    List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room);
 
     /**
      * Returns the max existed recurrent booking id. If no recurrent id exists
@@ -54,8 +43,13 @@ public interface BookingDao extends BaseDao<Booking> {
      */
     List<Booking> persistRecurrentBookings(List<Booking> bookings);
 
-    List<Booking> getBookings(Date startDate, Date endDate, User user, Room room,
-                              boolean includeLastDay, BookingState... bookingStates);
+    /**
+     * Gets the all bookings for given booking characteristics.
+     *
+     * @param characteristics the given characteristics
+     * @return the list of appropriate bookings
+     */
+    List<Booking> getBookings(BookingsCharacteristics characteristics);
 
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 

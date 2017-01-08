@@ -53,7 +53,7 @@ public class KidsProfileController {
 
         Long idL = Long.parseLong(id);
         User current = userService.getUserByEmail(principal.getName());
-        Child kid = childService.findById(idL);
+        Child kid = childService.findByIdTransactional(idL);
 
         if(current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {
             throw new AccessDeniedException("Have to be manager or parent");

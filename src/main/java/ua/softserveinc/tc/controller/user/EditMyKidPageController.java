@@ -73,7 +73,7 @@ public class EditMyKidPageController {
 
         Long id = Long.parseLong(kidId);
         User current = userService.getUserByEmail(principal.getName());
-        Child kidToEdit = childService.findById(id);
+        Child kidToEdit = childService.findByIdTransactional(id);
 
         if (!kidToEdit.getParentId().equals(current)) {
             throw new AccessDeniedException("You do not have access to this page");
@@ -118,7 +118,7 @@ public class EditMyKidPageController {
         }
 
         //if there was a profile pic, we will keep it
-        kidToEdit.setImage(childService.findById(kidToEdit.getId()).getImage());
+        kidToEdit.setImage(childService.findByIdTransactional(kidToEdit.getId()).getImage());
 
         childService.update(kidToEdit);
         return "redirect:/" + ChildConstants.View.MY_KIDS;
@@ -135,7 +135,7 @@ public class EditMyKidPageController {
     @PostMapping("/remove-kid/{id}")
     @ResponseBody
     public void removeKid(@PathVariable("id") long id, Principal principal) {
-        Child kidToRemove = childService.findById(id);
+        Child kidToRemove = childService.findByIdTransactional(id);
 
         if (!userService.getUserByEmail(principal.getName()).equals(kidToRemove.getParentId())) { // TODO: PUT THIS TO ANOTHER METHOD -- is...()
             throw new AccessDeniedException("You do not have access to this page");

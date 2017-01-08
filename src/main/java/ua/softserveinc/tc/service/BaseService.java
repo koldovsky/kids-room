@@ -8,7 +8,9 @@ public interface BaseService<T> {
 
     T update(T entity);
 
-    T findById(Object id);
+    T findByIdTransactional(Object id);
+
+    T findEntityById(Object id);
 
     void delete(T entity);
 

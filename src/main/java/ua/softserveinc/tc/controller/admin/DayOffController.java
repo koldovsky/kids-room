@@ -86,7 +86,7 @@ public class DayOffController {
 
         Set<Room> currentRooms = new HashSet<>();
         for (Room room : dayOff.getRooms()) {
-            currentRooms.add(roomService.findById(room.getId()));
+            currentRooms.add(roomService.findByIdTransactional(room.getId()));
         }
         currentDay.setRooms(currentRooms);
 

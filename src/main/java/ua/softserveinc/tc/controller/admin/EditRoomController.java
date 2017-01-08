@@ -54,7 +54,7 @@ public class EditRoomController {
      */
     @PostMapping("/adm-edit-room")
     public String roomBlockUnblock(@RequestParam Long id) {
-        Room room = this.roomService.findById(id);
+        Room room = this.roomService.findByIdTransactional(id);
         if(!room.isActive() || isRoomWithoutBookings(room)) {
             room.setActive(!room.isActive());
         } else {

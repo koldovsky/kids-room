@@ -9,7 +9,6 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,9 +59,9 @@ public class TimeValidator implements Validator {
 
     public boolean validateRoomTime(BookingDto bookingDto) {
         LocalTime dateStartTimeWorking = LocalTime.parse(roomService
-                .findById(bookingDto.getRoomId()).getWorkingHoursStart());
+                .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursStart());
         LocalTime dateEndTimeWorking = LocalTime .parse(roomService
-                .findById(bookingDto.getRoomId()).getWorkingHoursEnd());
+                .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursEnd());
         LocalTime  startTime = LocalTime.parse(bookingDto.getStartTime());
 
         return dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime);

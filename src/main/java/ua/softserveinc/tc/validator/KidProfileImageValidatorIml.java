@@ -76,18 +76,28 @@ public class KidProfileImageValidatorIml implements KidProfileImageValidator {
                     ValidationConstants.IMAGE_VALIDATION_NOT_CORRECT_USAGE);
         } else {
             MultipartFile imgFile = (MultipartFile)o;
+
             if (imgFile.isEmpty()) {
                 errors.rejectValue(ValidationConstants.IMAGE,
                         ValidationConstants.IMAGE_VALIDATION_EMPTY_FILE);
             } else {
-                if (!isAcceptableSize(imgFile)) {
+                boolean acceptableSize = isAcceptableSize(imgFile);
+                boolean acceptableFormat = isAcceptableFormat(imgFile);
+
+                if (!acceptableSize && acceptableFormat) {
+
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE);
-                }
-                if (!isAcceptableFormat(imgFile)) {
+                } else if (acceptableSize && !acceptableFormat) {
+
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT);
+                } else if (!acceptableFormat) {
+
+                    errors.rejectValue(ValidationConstants.IMAGE,
+                            ValidationConstants.IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE_FORMAT);
                 } else if (isCorrupted(imgFile)) {
+
                     errors.rejectValue(ValidationConstants.IMAGE,
                             ValidationConstants.IMAGE_VALIDATION_CORRUPTION_FILE);
                 }

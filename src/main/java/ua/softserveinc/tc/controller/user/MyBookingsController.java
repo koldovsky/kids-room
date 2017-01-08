@@ -27,7 +27,8 @@ import java.security.Principal;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
-import static ua.softserveinc.tc.util.DateUtil.toDate;
+import ua.softserveinc.tc.util.DateUtil;
+import java.util.Date;
 
 /**
  * Created by Nestor on 14.05.2016.
@@ -104,8 +105,10 @@ public class MyBookingsController {
         if(currentUser.getRole() != Role.USER){
             throw new AccessDeniedException("Have to be a User");
         }
-        List<Booking> myBookings = bookingService.getBookings(toDate(startDate),
-                toDate(endDate), currentUser, BookingState.COMPLETED);
+
+        List<Booking> myBookings = bookingService.getBookings(
+                new Date[] {DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
+                currentUser, BookingState.COMPLETED);
         List<BookingDto> dtos = myBookings
                 .stream()
                 .map(BookingDto::new)

@@ -39,6 +39,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         entityManager.remove(entityManager.merge(entity));
     }
 
+    @Transactional
     public void deleteAll() {
         entityManager.createQuery("DELETE FROM "
                 + entityClass.getSimpleName()).executeUpdate();

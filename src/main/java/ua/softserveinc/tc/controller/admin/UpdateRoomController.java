@@ -51,7 +51,7 @@ public class UpdateRoomController {
     @GetMapping("/adm-update-room")
     public ModelAndView showUpdateRoomForm(@RequestParam Long id) {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
-        Room room = this.roomService.findById(id);
+        Room room = this.roomService.findByIdTransactional(id);
         RoomDto roomDto = new RoomDto(room);
 
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_ROOM);

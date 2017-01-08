@@ -18,7 +18,6 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -82,7 +81,7 @@ public class EventValidatorTest {
         eventDto.setColor("Green");
         eventDto.setDescription("");
         eventDto.setRoomId(1L);
-        when(roomService.findById(1L)).thenReturn(room);
+        when(roomService.findByIdTransactional(1L)).thenReturn(room);
         when(room.isActive()).thenReturn(true);
         monthlyEventDto = new MonthlyEventDto(eventDto);
         recurrentEventDto = new RecurrentEventDto(eventDto);

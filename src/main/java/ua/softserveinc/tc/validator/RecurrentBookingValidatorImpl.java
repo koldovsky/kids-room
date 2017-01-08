@@ -3,10 +3,15 @@ package ua.softserveinc.tc.validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-import ua.softserveinc.tc.constants.*;
+import ua.softserveinc.tc.constants.UtilConstants;
+import ua.softserveinc.tc.constants.DateConstants;;
+import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import ua.softserveinc.tc.service.BookingService;
@@ -41,7 +46,7 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
 
     private boolean hasCorrectDaysOfWeek(List<BookingDto> dtoList) {
 
-        return Arrays.stream(dtoList.get(0).getDaysOfWeek()
+        return Arrays.stream(dtoList.get(0).getDaysOfWeek().trim()
                 .split(UtilConstants.WHITE_SPACE_REGEXP)).allMatch(
                 weekDay -> DateUtil.getDayOfWeek(weekDay) != null);
     }
@@ -102,30 +107,26 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
     public boolean validate(List<BookingDto> dto) {
         boolean result = true;
         errors.clear();
-        Locale locale = (Locale) request.getSession().getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
-        if (locale == null) {
-            locale = request.getLocale();
-        }
-        if (dto == null || dto.isEmpty() || hasNull(dto) || !hasCorrectData(dto)
-                || !hasCorrectDaysOfWeek(dto)) {
 
-            errors.add(messageSource.getMessage(
-                    ValidationConstants.VALIDATION_NOT_CORRECT_USAGE, null, locale));
+        if (dto == null || dto.isEmpty() || hasNull(dto) || !hasCorrectDaysOfWeek(dto)) {
+            errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+
             result = false;
         } else {
             if (!hasCorrectTimeFormats(dto)) {
-                errors.add(messageSource.getMessage(
-                        ValidationConstants.BAD_TIME_FORMAT, null, locale));
+                errors.add(ValidationConstants.BAD_TIME_FORMAT);
 
                 result = false;
             } else if (isBadTimeRelations(dto)) {
-                errors.add(messageSource.getMessage(
-                        ValidationConstants.END_TIME_BEFORE_START_TIME, null, locale));
+                errors.add(ValidationConstants.END_TIME_BEFORE_START_TIME);
+
+                result = false;
+            } else if (!hasCorrectData(dto)) {
+                errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
 
                 result = false;
             } else if (hasDuplicateBooking(dto)) {
-                errors.add(messageSource.getMessage(
-                        ValidationConstants.DUPLICATE_BOOKING_MESSAGE, null, locale));
+                errors.add(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
 
                 result = false;
             }

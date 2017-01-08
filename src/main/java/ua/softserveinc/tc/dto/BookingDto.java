@@ -1,12 +1,20 @@
 package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.constants.DateConstants;
-import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Date;
 
 
 /**
