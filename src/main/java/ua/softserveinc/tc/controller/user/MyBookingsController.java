@@ -87,7 +87,7 @@ public class MyBookingsController {
      * @throws ResourceNotFoundException
      * if any of the requesting resources were not found
      */
-    @GetMapping("mybookings/getbookings")
+    @GetMapping(value = "mybookings/getbookings", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public ResponseEntity<String> getBookings(
                        @RequestParam(value = "startDate") String startDate,
