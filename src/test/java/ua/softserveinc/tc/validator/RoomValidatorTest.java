@@ -14,6 +14,7 @@ import ua.softserveinc.tc.dto.RoomDto;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -36,16 +37,14 @@ public class RoomValidatorTest {
   public void setRoomValidator() {
     MockitoAnnotations.initMocks(this);
     roomValidator = new RoomValidatorImpl();
-    roomDto = new RoomDto();
+    when(roomDto.getName()).thenReturn("Room");
+    when(roomDto.getAddress()).thenReturn("Pasternaka");
+    when(roomDto.getCapacity()).thenReturn(4);
+    when(roomDto.getCity()).thenReturn("Lviv");
+    when(roomDto.getPhoneNumber()).thenReturn("+380672211204");
+    when(roomDto.getWorkingHoursStart()).thenReturn("07:00");
+    when(roomDto.getWorkingHoursEnd()).thenReturn("20:00");
     errors = new BindException(roomDto, "roomDto");
-    roomDto.setName("Room");
-    roomDto.setAddress("Pasternaka 4");
-    roomDto.setCapacity(4);
-    roomDto.setCity("Lviv");
-    roomDto.setPhoneNumber("+380672211204");
-    roomDto.setWorkingHoursStart("07:00");
-    roomDto.setWorkingHoursEnd("20:00");
-
   }
 
   @Test
@@ -63,10 +62,10 @@ public class RoomValidatorTest {
 
   @Test
   public void testCapacity() {
-    roomDto.setCapacity(0);
+    when(roomDto.getCapacity()).thenReturn(0);
     roomValidator.validate(roomDto, errors);
     assertTrue(errors.hasErrors());
-    roomDto.setCapacity(201);
+    when(roomDto.getCapacity()).thenReturn(201);
     roomValidator.validate(roomDto, errors);
     assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.ROOM_MIN_MAX_CAPACITY,
@@ -75,8 +74,8 @@ public class RoomValidatorTest {
 
   @Test
   public void testStartDateBiggerThanEnd() {
-    roomDto.setWorkingHoursStart("21:00");
-    roomDto.setWorkingHoursEnd("08:00");
+    when(roomDto.getWorkingHoursStart()).thenReturn("21:00");
+    when(roomDto.getWorkingHoursEnd()).thenReturn("08:00");
     roomValidator.validate(roomDto, errors);
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.TIME_IS_NOT_VALID,
@@ -85,8 +84,8 @@ public class RoomValidatorTest {
 
   @Test
   public void testWrongDate() {
-    roomDto.setWorkingHoursEnd("String");
-    roomDto.setWorkingHoursStart("10:99");
+    when(roomDto.getWorkingHoursStart()).thenReturn("String");
+    when(roomDto.getWorkingHoursEnd()).thenReturn("10:99");
     roomValidator.validate(roomDto, errors);
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.ROOM_WRONG_TIME_FORMAT,
@@ -95,10 +94,10 @@ public class RoomValidatorTest {
 
   @Test
   public void testRegex() {
-    roomDto.setName("!@#!#!@#");
-    roomDto.setAddress("Wrong @!~");
-    roomDto.setCity("2131231");
-    roomDto.setPhoneNumber("+312asf");
+    when(roomDto.getName()).thenReturn("!@#!#!@#");
+    when(roomDto.getAddress()).thenReturn("Wrong @!~");
+    when(roomDto.getCity()).thenReturn("2131231");
+    when(roomDto.getPhoneNumber()).thenReturn("+312asf");
     roomValidator.validate(roomDto, errors);
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.ROOM_INVALID_NAME_MSG,
@@ -113,12 +112,13 @@ public class RoomValidatorTest {
 
   @Test
   public void testFieldLenght() {
-    roomDto.setName("Q");
-    roomDto.setAddress("MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols" +
+
+    when(roomDto.getName()).thenReturn("N");
+    when(roomDto.getAddress()).thenReturn("MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols" +
         "MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols" +
         "MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols" +
         "MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols");
-    roomDto.setCity("L");
+    when(roomDto.getCity()).thenReturn("L");
     roomValidator.validate(roomDto, errors);
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.ROOM_MIN_MAX_CHARACTERS_MSG,
@@ -131,7 +131,6 @@ public class RoomValidatorTest {
 
   @Test
   public void testWrongDto() {
-    bookingDto = new BookingDto();
     roomValidator.validate(bookingDto, errors);
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.ROOM_WRONG_CAST_MSG,
