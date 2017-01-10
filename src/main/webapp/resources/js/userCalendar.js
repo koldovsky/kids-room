@@ -436,16 +436,19 @@ function makeISOTime(clickDate, idOfTimePicker) {
     var timepickerHours = installedTime.getHours();
     if (timepickerMinutes === 0) {
         timepickerMinutes = '00';
-    } else {
+    } else if(timepickerMinutes < 10) {
+        timepickerMinutes = '0' + timepickerMinutes;
+    } else{
         timepickerMinutes = timepickerMinutes.toString();
     }
 
-    if (timepickerHours < 10) {
+    if(timepickerHours === 0) {
+        timepickerHours = '00';
+    } else if (timepickerHours < 10) {
         timepickerHours = '0' + timepickerHours.toString();
     } else {
         timepickerHours = timepickerHours.toString();
     }
-
     return clickDate.substring(0, 11) + timepickerHours + ':' +
         timepickerMinutes + clickDate.substring(16);
 }

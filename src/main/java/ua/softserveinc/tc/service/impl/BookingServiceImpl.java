@@ -26,12 +26,14 @@ import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.constants.UtilConstants;
 import ua.softserveinc.tc.util.TwoTuple;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
@@ -82,6 +84,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Autowired
     private RecurrentBookingValidator recurrentBookingValidator;
+
+    @Autowired
+    private BookingValidator bookingValidator;
 
     @Override
     public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate,
@@ -325,6 +330,27 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    @Transactional
+    public TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos) {
+        TwoTuple<List<BookingDto>, String> result;
+
+        if (!bookingValidator.validate(bookingDtos)) {
+            result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
+
+        } else {
+            List<BookingDto> bookings = saveBookings(bookingDtos);
+
+            if (bookings.isEmpty()) {
+                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
+            } else {
+                result = new TwoTuple<>(bookings, null);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
     public boolean normalizeBookingDtoObjects(List<BookingDto> dtoList) {
         boolean result = true;
         BookingDto singleDto = dtoList.get(0);
@@ -351,7 +377,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 dto.setDateEndTime(endTime);
             });
         } catch (ResourceNotFoundException e) {
-            result = false;
+            result = e.getCause() != null && e.getCause().getClass() == ParseException.class;
         }
 
         return result;
@@ -404,10 +430,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     /*
-     * Persist all Bookings that are represented by the objects of BookingDto.
+     * Persist all recurrent Bookings that are represented by the objects of BookingDto.
      * Return the list of persistent objects of BookingDto
      *
-     * @param bookingDtos the list of objects of BookingsDto
+     * @param bookingDtos the list of recurrent objects of BookingsDto
      * @return list persisted objects of BookingDto
      */
     private List<BookingDto> saveRecurrentBookings(List<BookingDto> bookingDtos) {
@@ -415,6 +441,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         List<BookingDto> listOfBookingDtos = prepareBookingDtoForPersisting(bookingDtos);
 
         return persistBookingsFromDto(listOfBookingDtos);
+    }
+
+    /*
+    * Persist all Bookings that are represented by the objects of BookingDto.
+    * Return the list of persistent objects of BookingDto
+    *
+    * @param bookingDtos the list of objects of BookingsDto
+    * @return list persisted objects of BookingDto
+    */
+    private List<BookingDto> saveBookings(List<BookingDto> bookingDtos) {
+        normalizeBookingDtoObjects(bookingDtos);
+        bookingDtos.forEach(dto -> {
+            dto.setBookingState(BookingState.BOOKED);
+            dto.setSum(0L);
+            dto.setDurationLong(dto.getDateEndTime().getTime() - dto.getDateStartTime().getTime());
+            dto.setKidName(dto.getChild().getFullName());
+        });
+
+        return persistBookingsFromDto(bookingDtos);
     }
 
     /*

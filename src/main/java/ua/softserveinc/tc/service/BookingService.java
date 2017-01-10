@@ -120,17 +120,30 @@ public interface BookingService extends BaseService<Booking> {
     List<BookingDto> persistBookingsFromDto(List<BookingDto> listDTO);
 
     /**
-     * Receives the list of BookingDto objects. Then validates the input parameter for
-     * correctness. If any of the input parameters are not correct or the system failed
-     * to persist all of the bookings from the dto then method returns TwoTuple where
-     * first field is equals to null, and second equals string error code for localization.
-     * Otherwise returns TwoTuple where first field is list of persisted BookingDto objects,
-     * and second equals to null.
+     * Receives the list of recurrent BookingDto objects. Then validates the input parameter
+     * for correctness and persist all the objects. If any of the input parameters are not
+     * correct or the system failed to persist all of the bookings from the dto then method
+     * returns TwoTuple where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
+     * BookingDto objects, and second equals to null.
      *
      * @param bookingDtos list of BookingsDto objects
      * @return appropriate TwoTuple object
      */
     TwoTuple<List<BookingDto>, String> makeRecurrentBookings(List<BookingDto> bookingDtos);
+
+    /**
+     * Receives the list of BookingDto objects. Then validates the input parameter for
+     * correctness and persist all the objects. If any of the input parameters are not
+     * correct or the system failed to persist all of the bookings from the dto then method
+     * returns TwoTuple where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
+     * BookingDto objects, and second equals to null.
+     *
+     * @param bookingDtos list of BookingsDto objects
+     * @return appropriate TwoTuple object
+     */
+    TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos);
 
     /**
      * Normalizes the list of BookingDto objects. Set if not exists room,
