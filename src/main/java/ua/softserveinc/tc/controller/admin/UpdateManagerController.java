@@ -38,7 +38,7 @@ public class UpdateManagerController {
      */
     @GetMapping("/adm-update-manager")
     public ModelAndView showUpdateManagerForm(@RequestParam Long id) {
-        User manager = this.userService.findById(id);
+        User manager = this.userService.findByIdTransactional(id);
 
         ModelAndView model = new ModelAndView(AdminConstants.UPDATE_MANAGER);
         model.getModelMap().addAttribute(AdminConstants.ATR_MANAGER, manager);

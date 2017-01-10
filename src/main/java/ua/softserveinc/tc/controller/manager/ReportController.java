@@ -56,7 +56,7 @@ public class ReportController {
                               @PathVariable String endDate,
                               @PathVariable Long roomId) {
 
-        Room room = roomService.findById(roomId);
+        Room room = roomService.findByIdTransactional(roomId);
 
         List<User> users = userService.getActiveUsers(toDate(startDate), toDate(endDate), room);
         Gson gson = new Gson();

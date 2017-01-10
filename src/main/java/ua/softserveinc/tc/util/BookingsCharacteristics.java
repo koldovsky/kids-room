@@ -2,6 +2,8 @@ package ua.softserveinc.tc.util;
 
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.BookingState;
 
 import java.util.Date;
 import java.util.List;
@@ -9,34 +11,36 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 /**
- * The immutable class that represent the characteristics of the made Bookings.
- * The characteristics are: list of the rooms, list of the children, array of the
- * dates of the bookings, list of the id of the bookings, list of the id of the
- * recurrent bookings. If you don't want have all of the characteristics, you just
- * not set that values. In that case the appropriate values will be assigned with
- * empty list or array with null values.
+ * The class that represent the characteristics of the made Bookings.
+ * The characteristics are: list of the rooms, list of the children, list of users,
+ * list of bookings states, array of the dates of the bookings, list of the id of
+ * the bookings, list of the id of the recurrent bookings. If you don't want have
+ * all of the characteristics, you just not set that values. In that case the
+ * appropriate values will be assigned with empty list or array with null values.
  * To create object of this class, you should first create object of inner class
- * Builder, then set all characteristics and finally invoke build method. The
- * class is thread safe.
+ * Builder, then set all characteristics and finally invoke build method.
+ * <strong></>The class is not thread safe!</strong>
  * <p>
  * Created by Sviatoslav Hryb on 02-Jan-17.
  */
 public class BookingsCharacteristics {
 
-    private final List<Room> listOfRoomOfBookings;
-    private final List<Child> childrenListOfBookings;
-    private final Date[] datesOfBookings;
-    private final List<Long> listOfIdOfBookings;
-    private final List<Long> listOfIdOfRecurrentBookings;
+    private final List<Room> rooms;
+    private final List<Child> children;
+    private final List<User> users;
+    private final List<BookingState> bookingsStates;
+    private final Date[] dates;
+    private final List<Long> idsOfBookings;
+    private final List<Long> recurrentIdsOfBookings;
 
     /**
      * Returns the list of the rooms.
      *
      * @return list of the rooms
      */
-    public List<Room> getListOfRoomOfBookings() {
+    public List<Room> getRooms() {
 
-        return listOfRoomOfBookings;
+        return new ArrayList<>(rooms);
     }
 
     /**
@@ -44,9 +48,29 @@ public class BookingsCharacteristics {
      *
      * @return the list of the children
      */
-    public List<Child> getChildrenListOfBookings() {
+    public List<Child> getChildren() {
 
-        return childrenListOfBookings;
+        return new ArrayList<>(children);
+    }
+
+    /**
+     * Returns the list of the users.
+     *
+     * @return list of the users
+     */
+    public List<User> getUsers() {
+
+        return new ArrayList<>(users);
+    }
+
+    /**
+     * Returns the list of the BookingsState.
+     *
+     * @return list of the bookings states
+     */
+    public List<BookingState> getBookingsStates() {
+
+        return new ArrayList<>(bookingsStates);
     }
 
     /**
@@ -54,9 +78,9 @@ public class BookingsCharacteristics {
      *
      * @return the array of the children
      */
-    public Date[] getDatesOfBookings() {
+    public Date[] getDates() {
 
-        return datesOfBookings;
+        return new Date[] {dates[0], dates[1]};
     }
 
     /**
@@ -66,7 +90,7 @@ public class BookingsCharacteristics {
      */
     public Date getStartDateOfBookings() {
 
-        return datesOfBookings[0];
+        return dates[0];
     }
 
     /**
@@ -76,7 +100,7 @@ public class BookingsCharacteristics {
      */
     public Date getEndDateOfBookings() {
 
-        return datesOfBookings[1];
+        return dates[1];
     }
 
     /**
@@ -84,9 +108,9 @@ public class BookingsCharacteristics {
      *
      * @return the list of the id of the bookings
      */
-    public List<Long> getListOfIdOfBookings() {
+    public List<Long> getIdsOfBookings() {
 
-        return listOfIdOfBookings;
+        return new ArrayList<>(idsOfBookings);
     }
 
     /**
@@ -94,19 +118,114 @@ public class BookingsCharacteristics {
      *
      * @return the list of the id of the bookings
      */
-    public List<Long> getListOfIdOfRecurrentBookings() {
+    public List<Long> getRecurrentIdsOfBookings() {
 
-        return listOfIdOfRecurrentBookings;
+        return new ArrayList<>(recurrentIdsOfBookings);
     }
 
+    /**
+     * Checks if this object has set rooms
+     *
+     * @return true if rooms are set, otherwise - false
+     */
+    public boolean hasSetRooms() {
+
+        return !rooms.isEmpty();
+    }
+
+    /**
+     * Checks if this object has set children
+     *
+     * @return true if children are set, otherwise - false
+     */
+    public boolean hasSetChildren() {
+
+        return !children.isEmpty();
+    }
+
+    /**
+     * Checks if this object has set users
+     *
+     * @return true if users are set, otherwise - false
+     */
+    public boolean hasSetUsers() {
+
+        return !users.isEmpty();
+    }
+
+    /**
+     * Checks if this object has set bookings states
+     *
+     * @return true if bookings states are set, otherwise - false
+     */
+    public boolean hasSetBookingsStates() {
+
+        return !bookingsStates.isEmpty();
+    }
+
+    /**
+     * Checks if this object has set dates
+     *
+     * @return true if dates are set, otherwise - false
+     */
+    public boolean hasSetDates() {
+
+        return getStartDateOfBookings() != null && getEndDateOfBookings() != null;
+    }
+
+    /**
+     * Checks if this object has set only start date
+     *
+     * @return true if only start date are set, otherwise - false
+     */
+    public boolean hasSetOnlyStartDate() {
+
+        return getStartDateOfBookings() != null && getEndDateOfBookings() == null;
+    }
+
+    /**
+     * Checks if this object has set only end date
+     *
+     * @return true if only end date are set, otherwise - false
+     */
+    public boolean hasSetOnlyEndDate() {
+
+        return getStartDateOfBookings() == null && getEndDateOfBookings() != null;
+    }
+
+    /**
+     * Checks if this object has set ids of bookings
+     *
+     * @return true if ids of bookings are set, otherwise - false
+     */
+    public boolean hasSetIdsOfBookings() {
+
+        return !idsOfBookings.isEmpty();
+    }
+
+    /**
+     * Checks if this object has set recurrent ids of bookings
+     *
+     * @return true if recurrent ids are set, otherwise - false
+     */
+    public boolean hasSetRecurrentIdsOfBookings() {
+
+        return !recurrentIdsOfBookings.isEmpty();
+    }
+
+    /**
+     * Checks if this object is correct for duplicate bookings checks
+     *
+     * @return true is this object os correct, otherwise - false.
+     */
     public boolean isCorrectFotDuplicateCheck() {
 
-        return listOfIdOfRecurrentBookings.stream().noneMatch(recurrentId -> recurrentId == null)
-                && Arrays.stream(datesOfBookings).noneMatch(date -> date == null)
-                && listOfIdOfBookings.stream().noneMatch(idBooking -> idBooking == null)
-                && childrenListOfBookings.stream().noneMatch(child -> child == null)
-                && listOfRoomOfBookings.stream().noneMatch(room -> room == null)
-                && !childrenListOfBookings.isEmpty();
+        return recurrentIdsOfBookings.stream().noneMatch(recurrentId -> recurrentId == null)
+                && Arrays.stream(dates).noneMatch(date -> date == null)
+                && idsOfBookings.stream().noneMatch(idBooking -> idBooking == null)
+                && children.stream().noneMatch(child -> child == null)
+                && rooms.stream().noneMatch(room -> room == null)
+                && !children.isEmpty();
 
     }
 
@@ -116,11 +235,13 @@ public class BookingsCharacteristics {
      */
     public static class Builder {
 
-        private List<Room> listOfRoomOfBookings;
-        private List<Child> childrenListOfBookings;
-        private Date[] datesOfBookings;
-        private List<Long> listOfIdOfBookings;
-        private List<Long> listOfIdOfRecurrentBookings;
+        private List<Room> rooms;
+        private List<Child> children;
+        private List<User> users;
+        private List<BookingState> bookingsStates;
+        private Date[] dates;
+        private List<Long> idsOfBookings;
+        private List<Long> recurrentIdsOfBookings;
 
         /**
          * Sets the list of the rooms.
@@ -128,8 +249,8 @@ public class BookingsCharacteristics {
          * @param rooms the list of the rooms.
          * @return builder objects
          */
-        public Builder setRoomOfBookings(List<Room> rooms) {
-            listOfRoomOfBookings = rooms;
+        public Builder setRooms(List<Room> rooms) {
+            this.rooms = rooms;
 
             return this;
         }
@@ -140,8 +261,32 @@ public class BookingsCharacteristics {
          * @param children the list of the children.
          * @return builder objects
          */
-        public Builder setChildrenListOfBookings(List<Child> children) {
-            childrenListOfBookings = children;
+        public Builder setChildren(List<Child> children) {
+            this.children = children;
+
+            return this;
+        }
+
+        /**
+         * Sets the list of the users.
+         *
+         * @param users the list of the users.
+         * @return builder objects
+         */
+        public Builder setUsers(List<User> users) {
+            this.users = users;
+
+            return this;
+        }
+
+        /**
+         * Sets the list of the bookings states.
+         *
+         * @param bookingsStates the list of the bookings states.
+         * @return builder objects
+         */
+        public Builder setBookingsStates(List<BookingState> bookingsStates) {
+            this.bookingsStates = bookingsStates;
 
             return this;
         }
@@ -153,8 +298,8 @@ public class BookingsCharacteristics {
          * @param dates the array of the children
          * @return builder objects
          */
-        public Builder setDatesOfBookings(Date[] dates) {
-            datesOfBookings = dates;
+        public Builder setDates(Date[] dates) {
+            this.dates = dates;
 
             return this;
         }
@@ -162,11 +307,11 @@ public class BookingsCharacteristics {
         /**
          * Sets the list of the id of the bookings
          *
-         * @param idBookings the list of the id of the bookings
+         * @param idsOfBookings the list of the id of the bookings
          * @return builder objects
          */
-        public Builder setListOfIdOfBookings(List<Long> idBookings) {
-            listOfIdOfBookings = idBookings;
+        public Builder setIdsOfBookings(List<Long> idsOfBookings) {
+            this.idsOfBookings = idsOfBookings;
 
             return this;
         }
@@ -174,11 +319,11 @@ public class BookingsCharacteristics {
         /**
          * Sets the list of the id of the recurrent bookings
          *
-         * @param idRecurrent the list of the id of the recurrent bookings
+         * @param recurrentIdsOfBookings the list of the id of the recurrent bookings
          * @return builder objects
          */
-        public Builder setListOfIdOfRecurrentBookings(List<Long> idRecurrent) {
-            listOfIdOfRecurrentBookings = idRecurrent;
+        public Builder setRecurrentIdsOfBookings(List<Long> recurrentIdsOfBookings) {
+            this.recurrentIdsOfBookings = recurrentIdsOfBookings;
 
             return this;
         }
@@ -190,16 +335,14 @@ public class BookingsCharacteristics {
          */
         public BookingsCharacteristics build() {
 
-            if (listOfRoomOfBookings == null)
-                listOfRoomOfBookings = new ArrayList<>();
-            if (childrenListOfBookings == null)
-                childrenListOfBookings = new ArrayList<>();
-            if (datesOfBookings == null)
-                datesOfBookings = new Date[]{null, null};
-            if (listOfIdOfBookings == null)
-                listOfIdOfBookings = new ArrayList<>();
-            if (listOfIdOfRecurrentBookings == null)
-                listOfIdOfRecurrentBookings = new ArrayList<>();
+            rooms = (rooms == null) ? new ArrayList<>() : rooms;
+            children = (children == null) ? new ArrayList<>() : children;
+            users = (users == null) ? new ArrayList<>() : users;
+            bookingsStates = (bookingsStates == null) ? new ArrayList<>() : bookingsStates;
+            dates = (dates == null) ? new Date[] {null, null} : dates;
+            idsOfBookings = (idsOfBookings == null) ? new ArrayList<>() : idsOfBookings;
+            recurrentIdsOfBookings =
+                    (recurrentIdsOfBookings == null) ? new ArrayList<>() : recurrentIdsOfBookings;
 
             return new BookingsCharacteristics(this);
         }
@@ -208,10 +351,12 @@ public class BookingsCharacteristics {
 
     private BookingsCharacteristics(Builder builder) {
 
-        listOfRoomOfBookings = builder.listOfRoomOfBookings;
-        childrenListOfBookings = builder.childrenListOfBookings;
-        datesOfBookings = builder.datesOfBookings;
-        listOfIdOfBookings = builder.listOfIdOfBookings;
-        listOfIdOfRecurrentBookings = builder.listOfIdOfRecurrentBookings;
+        rooms = builder.rooms;
+        children = builder.children;
+        dates = builder.dates;
+        idsOfBookings = builder.idsOfBookings;
+        recurrentIdsOfBookings = builder.recurrentIdsOfBookings;
+        users = builder.users;
+        bookingsStates = builder.bookingsStates;
     }
 }

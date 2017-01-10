@@ -30,6 +30,7 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
         Root<Booking> root = query.from(Booking.class);
+
         query.select(root).where(
                 builder.and(
                     builder.lessThan(root.get("bookingStartTime"), dateHi),

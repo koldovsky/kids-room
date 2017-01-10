@@ -52,9 +52,10 @@ public class EditRoomController {
      */
     @PostMapping("/adm-edit-room")
     public String roomBlockUnblock(@RequestParam Long id) {
-        Room room = this.roomService.findById(id);
+        Room room = this.roomService.findByIdTransactional(id);
         room.setActive(!room.isActive());
         this.roomService.update(room);
+      
         return "redirect:/" + AdminConstants.EDIT_ROOM;
     }
 

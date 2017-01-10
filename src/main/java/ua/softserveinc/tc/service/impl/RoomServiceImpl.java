@@ -9,21 +9,30 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.Date;
+import java.util.Calendar;
+
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -164,7 +173,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
 
     @Override
     public Boolean isPossibleUpdate(BookingDto bookingDto) {
-        Booking booking = bookingService.findById(bookingDto.getId());
+        Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
         Room room = booking.getRoom();
         Date dateLo = toDateAndTime(bookingDto.getStartTime());
         Date dateHi = toDateAndTime(bookingDto.getEndTime());
@@ -219,8 +228,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
 
     @Override
     public List<BookingDto> getAllFutureBookings(Room room) {
-        return bookingDao.getBookings(
-                new Date(), null, null, room, true, BookingState.BOOKED)
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(new Date[] {new Date(), null})
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Collections.singletonList(BookingState.BOOKED))
+                .build();
+
+        return bookingDao.getBookings(characteristic)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());

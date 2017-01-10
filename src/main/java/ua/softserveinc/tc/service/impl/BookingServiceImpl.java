@@ -1,16 +1,12 @@
 package ua.softserveinc.tc.service.impl;
 
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
-import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.dao.RoomDao;
@@ -33,25 +29,27 @@ import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.constants.UtilConstants;
-
-import javax.servlet.http.HttpServletRequest;
+import ua.softserveinc.tc.util.TwoTuple;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Date;
-import java.util.Map;
-import java.util.Calendar;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
+import java.util.Map;
 import java.util.HashSet;
-import java.util.Locale;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
+/*
+ * Rewritten by Sviatoslav Hryb on 05.10.2017
+ */
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
 
@@ -83,45 +81,50 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     private ChildDao childDao;
 
     @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
     private RecurrentBookingValidator recurrentBookingValidator;
-
-    @Autowired
-    private HttpServletRequest request;
 
     @Override
     public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate,
                                                              Room room) {
 
-        return bookingDao.getNotCompletedAndCancelledBookings(startDate, endDate, room);
+        return getBookings(new Date[]{startDate, endDate}, room,
+                BookingConstants.States.getActiveAndBooked());
     }
 
     @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
-        return getBookings(startDate, endDate, null, null, true, bookingStates);
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(new Date[]{startDate, endDate})
+                .setBookingsStates(Arrays.asList(bookingStates))
+                .build();
+        return getBookings(characteristic);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user,
-                                     BookingState... bookingStates) {
-
-        return getBookings(startDate, endDate, user, null, true, bookingStates);
+    public List<Booking> getBookings(Date[] dates, User user, BookingState... bookingStates) {
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(dates)
+                .setUsers(Collections.singletonList(user))
+                .setBookingsStates(Arrays.asList(bookingStates))
+                .build();
+        return getBookings(characteristic);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, Room room, boolean includeLastDay,
-                                     BookingState... bookingStates) {
+    public List<Booking> getBookings(Date[] dates, Room room, BookingState... bookingStates) {
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(dates)
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Arrays.asList(bookingStates))
+                .build();
 
-        return getBookings(startDate, endDate, null, room, includeLastDay, bookingStates);
+        return getBookings(characteristic);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user, Room room,
-                                     boolean includeDay, BookingState... bookingStates) {
+    public List<Booking> getBookings(BookingsCharacteristics characteristics) {
 
-        return bookingDao.getBookings(startDate, endDate, user, room, includeDay, bookingStates);
+        return bookingDao.getBookings(characteristics);
     }
 
     @Override
@@ -163,7 +166,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public Booking confirmBookingStartTime(BookingDto bookingDto) {
-        Booking booking = findById(bookingDto.getId());
+        Booking booking = findByIdTransactional(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getStartTime());
         booking.setBookingStartTime(date);
         resetSumAndDuration(booking);
@@ -172,7 +175,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public Booking confirmBookingEndTime(BookingDto bookingDto) {
-        Booking booking = findById(bookingDto.getId());
+        Booking booking = findByIdTransactional(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
         calculateAndSetSum(booking);
@@ -239,14 +242,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         User user = userDao.findById(idUser);
         Room room = roomDao.findById(idRoom);
 
-        return getBookings(null, null, user, room, true, BookingState.BOOKED)
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setUsers(Collections.singletonList(user))
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Collections.singletonList(BookingState.BOOKED))
+                .build();
+
+        return getBookings(characteristic)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean hasDuplicateBookings(List<BookingDto> listDto) {
         BookingDto singleDto = listDto.get(0);
         normalizeBookingDtoObjects(listDto);
@@ -271,10 +279,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         return listDatesOfBooking.stream().anyMatch(dates ->
                 bookingDao.getDuplicateBookings(
                         new BookingsCharacteristics.Builder()
-                                .setChildrenListOfBookings(children)
-                                .setDatesOfBookings(dates)
-                                .setListOfIdOfBookings(idBookings)
-                                .setListOfIdOfRecurrentBookings(recurrentId)
+                                .setChildren(children)
+                                .setDates(dates)
+                                .setIdsOfBookings(idBookings)
+                                .setRecurrentIdsOfBookings(recurrentId)
                                 .build()
                 ).size() > 0
         );
@@ -288,7 +296,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
             List<Booking> persistedBookings =
                     bookingDao.persistRecurrentBookings(bookingsForPersisting);
-            BookingDto.setIdToListOfBookingDto(resultDto, persistedBookings);
+            BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
             resultDto = listDTO;
         }
 
@@ -297,44 +305,35 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public ResponseEntity<String> makeRecurrentBookings(List<BookingDto> bookingDtos) {
-        ResponseEntity<String> resultResponse;
+    public TwoTuple<List<BookingDto>, String> makeRecurrentBookings(List<BookingDto> bookingDtos) {
+        TwoTuple<List<BookingDto>, String> result;
 
         if (!recurrentBookingValidator.validate(bookingDtos)) {
-            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(recurrentBookingValidator.getErrors().get(0));
+            result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
 
         } else {
             List<BookingDto> bookings = saveRecurrentBookings(bookingDtos);
 
             if (bookings.isEmpty()) {
-                Locale locale = (Locale) request.getSession()
-                        .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
-
-                if (locale == null) {
-                    locale = request.getLocale();
-                }
-                resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageSource
-                        .getMessage(ValidationConstants.NO_DAYS_FOR_BOOKING, null, locale));
+                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
             } else {
-                resultResponse = ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(bookings));
+                result = new TwoTuple<>(bookings, null);
             }
         }
 
-        return resultResponse;
+        return result;
     }
 
     @Override
-    @Transactional(readOnly = true)
     public boolean normalizeBookingDtoObjects(List<BookingDto> dtoList) {
         boolean result = true;
         BookingDto singleDto = dtoList.get(0);
 
         try {
             Room room = (singleDto.getRoom() == null) ?
-                    roomService.findById(singleDto.getRoomId()) : singleDto.getRoom();
+                    roomService.findEntityById(singleDto.getRoomId()) : singleDto.getRoom();
             User user = (singleDto.getUser() == null) ?
-                    userService.findById(singleDto.getUserId()) : singleDto.getUser();
+                    userService.findEntityById(singleDto.getUserId()) : singleDto.getUser();
             dtoList.forEach(dto -> {
                 if (dto.getIdChild() == null) {
                     dto.setIdChild(dto.getKidId());
@@ -344,7 +343,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 Date endTime = (dto.getDateEndTime() == null) ?
                         DateUtil.toDateISOFormat(dto.getEndTime()) : dto.getDateEndTime();
                 Child child = (dto.getChild() == null) ?
-                        childService.findById(dto.getIdChild()) : dto.getChild();
+                        childService.findEntityById(dto.getIdChild()) : dto.getChild();
                 dto.setUser(user);
                 dto.setRoom(room);
                 dto.setChild(child);
@@ -366,7 +365,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      * @return true if there is a duplicate bookings, otherwise
      * return false.
      */
-    @Transactional(readOnly = true)
     private boolean hasDuplicateBookings(BookingDto dto) {
         List<BookingDto> listOfBookingsDto = new ArrayList<>();
         listOfBookingsDto.add(dto);
@@ -382,7 +380,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      * @param listDTO list of BookingDto
      * @return true if there is available places in the room
      */
-    @Transactional
     private boolean hasAvailablePlacesInTheRoom(List<BookingDto> listDTO) {
         int availablePlaces = 0;
         int needPlaces = 1;
@@ -413,7 +410,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      * @param bookingDtos the list of objects of BookingsDto
      * @return list persisted objects of BookingDto
      */
-    @Transactional
     private List<BookingDto> saveRecurrentBookings(List<BookingDto> bookingDtos) {
         setRecurrentIds(bookingDtos);
         List<BookingDto> listOfBookingDtos = prepareBookingDtoForPersisting(bookingDtos);
@@ -559,7 +555,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      *
      * @param bookingDtos the given list of BookingDto objects.
      */
-    @Transactional
     private void setRecurrentIds(List<BookingDto> bookingDtos) {
         Long maxRecurrentId = bookingDtos.get(0).getRecurrentId();
 

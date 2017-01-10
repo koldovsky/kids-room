@@ -115,6 +115,7 @@ public final class ValidationConstants {
     public static final String IMAGE_VALIDATION_CORRUPTION_FILE = "image.validator.corruptedFile";
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE = "image.validator.TooBigSize";
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_FORMAT = "image.validator.badFormat";
+    public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE_FORMAT = "image.validator.badSizeFormat";
 
     public static final String EVENT_EMPTY_TITLE_MSG = "event.emptyTitle";
     public static final String EVENT_START_NOT_EQUALS_END_MSG = "event.startDateNotEqualEnd";

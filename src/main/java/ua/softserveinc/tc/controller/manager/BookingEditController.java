@@ -72,7 +72,7 @@ public class BookingEditController {
     @GetMapping(BookingConstants.Model.CANCEL_BOOKING)
     @ResponseBody
     public void cancelBooking(@PathVariable Long idBooking) {
-        Booking booking = bookingService.findById(idBooking);
+        Booking booking = bookingService.findByIdTransactional(idBooking);
         booking.setBookingState(BookingState.CANCELLED);
         booking.setSum(0L);
         booking.setDuration(0L);
@@ -105,11 +105,10 @@ public class BookingEditController {
     public String dailyBookingsByState(@PathVariable String date,
                                        @PathVariable Long id,
                                        @PathVariable BookingState[] state) {
-        Room room = roomService.findById(id);
-        final boolean includeOneDay = false;
+        Room room = roomService.findByIdTransactional(id);
         Date dateLo = toDateAndTime(date + " " + room.getWorkingHoursStart());
         Date dateHi = toDateAndTime(date + " " + room.getWorkingHoursEnd());
-        List<Booking> bookings = bookingService.getBookings(dateLo, dateHi, room, includeOneDay, state);
+        List<Booking> bookings = bookingService.getBookings(new Date[]{dateLo, dateHi}, room, state);
 
         if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
             Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
@@ -132,7 +131,7 @@ public class BookingEditController {
     @GetMapping(value = "dailyNotCompletedBookings/{date}/{id}",produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String dailyNotCompletedBookings(@PathVariable String date, @PathVariable Long id) {
-        Room room = roomService.findById(id);
+        Room room = roomService.findByIdTransactional(id);
         Date startDate = toDateAndTime(date + " " + room.getWorkingHoursStart());
         Date endDate = toDateAndTime(date + " " + room.getWorkingHoursEnd());
         List<Booking> bookings = bookingService.getNotCompletedAndCancelledBookings(startDate, endDate, room);
@@ -145,7 +144,7 @@ public class BookingEditController {
     @PostMapping(value = "change-booking", consumes = "application/json")
     @ResponseBody
     public Boolean isPossableUpdate(@RequestBody BookingDto bookingDto) {
-        Booking booking = bookingService.findById(bookingDto.getId());
+        Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
         Date startTime = toDateAndTime(bookingDto.getStartTime());
         Date endTime = toDateAndTime(bookingDto.getEndTime());
         if (!this.timeValidator.validateBooking(bookingDto)) return false;
@@ -163,7 +162,7 @@ public class BookingEditController {
     @GetMapping(value="get-kids/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String listKids(@PathVariable Long id) {
-        List<Child> kids = userService.getEnabledChildren(userService.findById(id));
+        List<Child> kids = userService.getEnabledChildren(userService.findByIdTransactional(id));
         Gson gson = new Gson();
         return gson.toJson(kids.stream()
                 .map(ChildDto::new)

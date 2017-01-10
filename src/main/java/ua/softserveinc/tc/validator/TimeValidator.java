@@ -79,9 +79,9 @@ public class TimeValidator implements Validator {
      */
     public boolean validateRoomTime(BookingDto bookingDto) {
         LocalTime dateStartTimeWorking = LocalTime.parse(roomService
-                .findById(bookingDto.getRoomId()).getWorkingHoursStart());
+                .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursStart());
         LocalTime dateEndTimeWorking = LocalTime .parse(roomService
-                .findById(bookingDto.getRoomId()).getWorkingHoursEnd());
+                .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursEnd());
         LocalTime  startTime = LocalTime.parse(bookingDto.getStartTime());
 
         return dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime);

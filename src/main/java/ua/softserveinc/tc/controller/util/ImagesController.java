@@ -87,7 +87,7 @@ public class ImagesController {
 
         MultipartFile file = fileForm.getFile();
         Long id = Long.parseLong(kidId);
-        Child kid = childService.findById(id);
+        Child kid = childService.findByIdTransactional(id);
         model.addAttribute(ChildConstants.View.KID_ATTRIBUTE, kid);
         imageValidator.validate(file, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -127,7 +127,7 @@ public class ImagesController {
         }
         Long id = Long.parseLong(kidId);
 
-        Child kid = childService.findById(id);
+        Child kid = childService.findByIdTransactional(id);
 
         User current = userService.getUserByEmail(principal.getName());
         if (current.getRole() != Role.MANAGER && !current.equals(kid.getParentId())) {

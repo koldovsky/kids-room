@@ -10,7 +10,7 @@ import ua.softserveinc.tc.dto.BookingDto;
  * kidId, roomId, userId, daysOfWeek. Also checks if the endTime
  * is not before startTime and if the startTime is not in the past,
  * and if there are not duplicate bookings.
- * <p>
+ *
  * Created by Sviatoslav Hryb on 27-Dec-16.
  */
 public interface RecurrentBookingValidator {

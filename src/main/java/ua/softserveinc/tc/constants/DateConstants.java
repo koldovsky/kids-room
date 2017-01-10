@@ -25,6 +25,12 @@ public final class DateConstants {
 
     public static final String TIME_FORMAT = "HH:mm";
 
+    public static final String BEGIN_OF_THE_DAY_TIME = "00:00:00";
+
+    public static final String END_OF_THE_DAY_TIME = "23:59:59";
+
+    public static final int T_POSITION_IN_DATE_STRING = 10;
+
     public static final String T_DATE_SPLITTER = "T";
 
     public static final String COLON_TIME_SPLITTER = ":";

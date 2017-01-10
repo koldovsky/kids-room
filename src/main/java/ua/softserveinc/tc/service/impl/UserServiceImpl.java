@@ -3,12 +3,9 @@ package ua.softserveinc.tc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.softserveinc.tc.dao.BookingDao;
+
 import ua.softserveinc.tc.dao.UserDao;
-import ua.softserveinc.tc.entity.Child;
-import ua.softserveinc.tc.entity.Role;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.UserService;
 
 import java.util.Date;
@@ -21,9 +18,6 @@ public class UserServiceImpl extends BaseServiceImpl<User>
 
     @Autowired
     private UserDao userDao;
-
-    @Autowired
-    private BookingDao bookingDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

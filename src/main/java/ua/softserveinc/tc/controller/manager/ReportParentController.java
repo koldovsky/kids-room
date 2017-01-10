@@ -15,11 +15,14 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
-import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 /**
  * Created by Demian on 08.05.2016.
@@ -43,7 +46,7 @@ public class ReportParentController {
                                        @RequestParam(value = ReportConstants.EMAIL) String email,
                                        Principal principal) {
 
-        Room room = roomService.findById(roomId);
+        Room room = roomService.findByIdTransactional(roomId);
         User manager = userService.getUserByEmail(principal.getName());
 
         if (!room.getManagers().contains(manager)) {
@@ -51,10 +54,19 @@ public class ReportParentController {
         }
 
         User parent = userService.getUserByEmail(email);
-        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate),
-                parent, room, true, BookingState.COMPLETED);
 
-        Long sumTotal = bookingService.getSumTotal(bookings);
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(new Date[] {DateUtil.toBeginOfDayDate(startDate),
+                        DateUtil.toEndOfDayDate(endDate)})
+                .setUsers(Collections.singletonList(parent))
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Collections.singletonList(BookingState.COMPLETED))
+                .build();
+
+        List<Booking> bookings = bookingService.getBookings(characteristic);
+
+        Long sumTotal =  bookingService.getSumTotal(bookings);
+
 
         ModelAndView modelAndView = new ModelAndView(ReportConstants.PARENT_VIEW);
         ModelMap modelMap = modelAndView.getModelMap();

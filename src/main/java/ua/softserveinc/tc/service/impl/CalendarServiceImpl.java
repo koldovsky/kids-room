@@ -55,18 +55,18 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public final List<EventDto> findEventByRoomId(final long roomId) {
-        return eventMapper.toDto(roomService.findById(roomId).getEvents());
+        return eventMapper.toDto(roomService.findByIdTransactional(roomId).getEvents());
     }
 
     @Override
     public String getRoomWorkingHours(final long id) {
-        return roomService.findById(id).getWorkingHoursStart() +
-                " " + roomService.findById(id).getWorkingHoursEnd();
+        return roomService.findByIdTransactional(id).getWorkingHoursStart() +
+                " " + roomService.findByIdTransactional(id).getWorkingHoursEnd();
     }
 
     @Override
     public String getRoomCapacity(long id) {
-        return roomService.findById(id).getCapacity().toString();
+        return roomService.findByIdTransactional(id).getCapacity().toString();
     }
 
     @Override
