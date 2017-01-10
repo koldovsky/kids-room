@@ -10,7 +10,7 @@
 
 <body>
 <div class="for-table table-responsive">
-    <table class="for-table table table-hover reg-form" style="width: 85%;">
+    <table id=roomTable class="for-table table table-hover reg-form" style="width: 85%;">
         <tr class="hide-border">
             <th colspan="10" class="set-standard-color">
                 <strong class="title-font"><spring:message code="administrator.listRooms"/></strong>
@@ -33,6 +33,7 @@
         <c:forEach var="room" items="${roomList}">
         <c:if test="${room.active eq true}"><tr class="room"></c:if>
         <c:if test="${room.active ne true}"><tr class="tr-not-active"></c:if>
+            <td class="hidden">${room.id}</td>
             <td>${room.name}</td>
             <td>${room.address}</td>
             <td class="city">${room.city}</td>
@@ -71,16 +72,15 @@
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                         <input id="room" name="manager" type="hidden" value="${room.id}" />
-                        <button id = "activateButton" type="button" value="lock"
-                                class="button button-size-default delete"></button>
+                        <button type="button" value="lock"
+                                class="button button-size-default delete activateButton"></button>
                     </form:form>
                 </c:if>
                 <c:if test="${room.active eq true}">
                     <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
                     <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
                        <input id="room" name="room" type="hidden" value="${room.id}" />
-                       <button id = "deactivateButton" type="button"
-                               class="button button-size-default save"></button>
+                       <button type="button" class="button button-size-default save deactivateButton"></button>
                     </form:form>
                 </c:if>
             </td>
@@ -102,11 +102,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <br>
-                <h2><spring:message code="room.deactivate"/></h2>
-                <p class="cancelName ">
-                    <spring:message code="booking.confirmCancelQuestion2"/>
-                </p>
+                <div class="lead">
+                    <p class="cancelName ">
+                        <spring:message code="room.deactivate"/>
+                    </p>
+                </div>
+                <div id ="warningMesages"></div>
                 <button id="deactivateYesButton" class="btn  btn-success">
                     <spring:message code="room.yes_button" />
                 </button>
@@ -135,11 +136,5 @@
 <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminRoomSearch.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room-button.js'></script>
-
-<c:choose>
-    <c:when test="${pageContext.response.locale=='ua'}">
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-   </c:when>
-</c:choose>
 
 </body>

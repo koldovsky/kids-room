@@ -1,17 +1,27 @@
 package ua.softserveinc.tc.validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.service.RoomService;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @Component
 public class RoomValidatorImpl implements RoomValidator {
+
+    @Autowired
+    private RoomService roomService;
 
     /**
      * This Validator validates just RoomDto instances
@@ -91,5 +101,17 @@ public class RoomValidatorImpl implements RoomValidator {
         } else {
             errors.rejectValue(ValidationConstants.ROOM_NAME, ValidationConstants.ROOM_WRONG_CAST_MSG);
         }
+    }
+
+    public List<String> checkRoomBookings(Room room){
+        List<String> warnings = new ArrayList<>();
+        if(roomService.hasActiveBooking(room)) {
+            warnings.add(ValidationConstants.ROOM_HAS_ACTIVE_BOOKINGS);
+        }
+        if(roomService.hasPlanningBooking(room)) {
+            warnings.add(ValidationConstants.ROOM_HAS_PLANNING_BOOKING);
+        }
+
+        return warnings;
     }
 }

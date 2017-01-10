@@ -91,6 +91,10 @@ const messages = {
             invalidCity: 'Невірно заповнене поле Місто',
             invalidPhone: 'Невірно заповнене поле Номер телефону',
             requiredWithEmptySpace: 'Поле потрібно заповнити'
+        },
+        warnings: {
+            active: 'Попередження! У кімнаті перебувають діти.',
+            planning: 'Попередження! У кімнаті є здійсненні бронювання.'
         }
     },
     adminValidation: {

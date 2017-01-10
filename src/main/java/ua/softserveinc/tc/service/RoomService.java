@@ -22,4 +22,10 @@ public interface RoomService extends BaseService<Room> {
     List<Room> getTodayActiveRooms();
 
     List<BookingDto> getAllFutureBookings(Room room);
+
+    Room changeActiveState(Long id);
+
+    boolean hasPlanningBooking(Room room);
+
+    boolean hasActiveBooking(Room room);
 }

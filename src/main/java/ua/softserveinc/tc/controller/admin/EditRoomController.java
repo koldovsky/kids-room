@@ -1,16 +1,21 @@
 package ua.softserveinc.tc.controller.admin;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.validator.RoomValidatorImpl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -24,6 +29,9 @@ public class EditRoomController {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private RoomValidatorImpl roomValidator;
+
     private Logger logger = Logger.getLogger("EditRoomController");
 
     /**
@@ -35,27 +43,37 @@ public class EditRoomController {
     @GetMapping("/adm-edit-room")
     public ModelAndView showAllRoomsForm() {
         List<Room> rooms = roomService.findAll();
-
         ModelAndView model = new ModelAndView(AdminConstants.EDIT_ROOM);
         model.addObject(AdminConstants.ROOM_LIST, rooms);
 
         return model;
     }
 
-
     /**
-     * Method receive room id from view. Set setActive() for room opposite to previous value.
-     * This mean record will lock or unlock, based on the received state.
-     * Redirect into view, which mapped by AdminConstants.EDIT_ROOM const.
-     *
-     * @return String value
+     * change room active state
+     * @param id room id
+     * @return room with change active state
      */
     @PostMapping("/adm-edit-room")
+    @ResponseBody
     public String roomBlockUnblock(@RequestParam Long id) {
-        Room room = this.roomService.findById(id);
-        room.setActive(!room.isActive());
-        this.roomService.update(room);
-        return "redirect:/" + AdminConstants.EDIT_ROOM;
+        //todo deactivate all boockings cascade
+        RoomDto roomDto = new RoomDto(roomService.changeActiveState(id));
+
+        return new Gson().toJson(roomDto);
     }
 
+    /**
+     * get booking warnings if bookings is active or have planning bookings
+     * @param id room id
+     * @return
+     */
+    @GetMapping("/adm-edit-room/is-active-booking")
+    @ResponseBody
+    public String roomIsActiveBooking(@RequestParam Long id) {
+        Room room = roomService.findById(id);
+        List<String> warnings = roomValidator.checkRoomBookings(room);
+
+        return new Gson().toJson(warnings);
+    }
 }

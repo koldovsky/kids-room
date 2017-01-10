@@ -96,6 +96,10 @@ const messages = {
             invalidCity: 'Invalid field City',
             invalidPhone: 'Invalid field Phone',
             requiredWithEmptySpace: 'This field must be required'
+        },
+        warnings: {
+            active: 'Warning! Room has active bookings',
+            planning: 'Warning! Room has planned bookings'
         }
     },
     booking: {

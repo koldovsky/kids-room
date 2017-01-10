@@ -237,6 +237,31 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
         }
     }
 
+    /**
+     * get all active bookings from the room
+     * @param room room with bookings
+     * @return list of active bookings in the room
+     */
+    public List<BookingDto> getAllActiveBookingsInTheRoom(Room room) {
+        return getBookings(null, null, null, room, true, BookingState.ACTIVE)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * get all planned bookings from the room
+     * @param room room with bookings
+     * @return list of planned bookings in the room
+     */
+    public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
+        List<BookingDto> bookingDtos = getBookings(null, null, null, room, true, BookingState.BOOKED)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+        return bookingDtos;
+    }
+
     public List<BookingDto> getAllBookingsByUserAndRoom(
             Long idUser, Long idRoom) {
         User user = userDao.findById(idUser);
