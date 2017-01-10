@@ -9,16 +9,17 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.impl.RoomServiceImpl;
+import static org.mockito.Mockito.when;
 
 import java.text.ParseException;
 
 public class TimeValidatorTest {
 
+    @Mock
     private Room room;
 
-
+    @Mock
     private BookingDto bookingDto;
 
     @Mock
@@ -30,53 +31,50 @@ public class TimeValidatorTest {
     @Before
     public void init(){
         MockitoAnnotations.initMocks(this);
-        room = new Room();
-        bookingDto = new BookingDto();
-
-        room.setWorkingHoursStart("07:00");
-        room.setWorkingHoursEnd("20:00");
-        bookingDto.setRoomId(1L);
-        bookingDto.setStartTime("08:00");
-        Mockito.when(roomService.findById(bookingDto.getRoomId())).thenReturn(room);
+        when(room.getWorkingHoursStart()).thenReturn("07:00");
+        when(room.getWorkingHoursEnd()).thenReturn("20:00");
+        when(bookingDto.getRoomId()).thenReturn(1L);
+        when(bookingDto.getStartTime()).thenReturn("08:00");
+        when(roomService.findById(bookingDto.getRoomId())).thenReturn(room);
     }
 
     @Test
     public void validateRoomStartTimePassCorectParameters(){
-        Assert.assertTrue(timeValidator.validateRoomStartTime(bookingDto));
+        Assert.assertTrue(timeValidator.validateRoomTime(bookingDto));
     }
 
     @Test
     public void validateRoomStartTimePassStartTimeOutOfRange(){
         final String startTime = "21:30";
-        bookingDto.setStartTime(startTime);
-        Assert.assertFalse(timeValidator.validateRoomStartTime(bookingDto));
+        when(bookingDto.getStartTime()).thenReturn(startTime);
+        Assert.assertFalse(timeValidator.validateRoomTime(bookingDto));
     }
 
     @Test
     public void validateBookingPassCorrectParameters(){
-        bookingDto.setStartTime("07:00");
-        bookingDto.setEndTime("16:00");
+        when(bookingDto.getStartTime()).thenReturn("2016-11-11T07:00");
+        when(bookingDto.getEndTime()).thenReturn("2016-11-11T16:00");
         Assert.assertTrue(timeValidator.validateBooking(bookingDto));
     }
 
     @Test
     public void validateBookingPassStartTimeLaterThenEnd(){
-        bookingDto.setStartTime("10:00");
-        bookingDto.setEndTime("09:00");
+        when(bookingDto.getStartTime()).thenReturn("2016-11-11T10:00");
+        when(bookingDto.getEndTime()).thenReturn("2016-11-11T09:00");
         Assert.assertFalse(timeValidator.validateBooking(bookingDto));
     }
 
     @Test
     public void validateBookingPassStartTimeEqualsEnd(){
-        bookingDto.setStartTime("09:00");
-        bookingDto.setEndTime("09:00");
+        when(bookingDto.getStartTime()).thenReturn("2016-11-11T09:00");
+        when(bookingDto.getEndTime()).thenReturn("2016-11-11T09:00");
         Assert.assertTrue(timeValidator.validateBooking(bookingDto));
     }
 
     @Test
     public void testCorrectTimeExpectTrue() throws ParseException {
         final String startDate = "2016-11-11";
-        final String endDate = "2016-12-31";
+        final String endDate = "2016-12-12";
         final String message = "end date should be greater than end date";
         Assert.assertTrue(message, timeValidator.validateDate(startDate, endDate));
     }

@@ -13,6 +13,7 @@ import ua.softserveinc.tc.util.DateUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -94,8 +95,8 @@ public class TimeValidator implements Validator {
      */
     public boolean validateBooking(Object target) {
         BookingDto booking = (BookingDto) target;
-        LocalTime startTime = LocalTime.parse(booking.getStartTime().substring(11));
-        LocalTime endTime = LocalTime.parse(booking.getEndTime().substring(11));
+        LocalTime startTime = LocalDateTime.parse(booking.getStartTime()).toLocalTime();
+        LocalTime endTime = LocalDateTime.parse(booking.getEndTime()).toLocalTime();
 
         return !startTime.isAfter(endTime);
     }
