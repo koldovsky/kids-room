@@ -71,7 +71,7 @@ public class EditRoomController {
     @GetMapping("/adm-edit-room/is-active-booking")
     @ResponseBody
     public String roomIsActiveBooking(@RequestParam Long id) {
-        Room room = roomService.findById(id);
+        Room room = roomService.findByIdTransactional(id);
         List<String> warnings = roomValidator.checkRoomBookings(room);
 
         return new Gson().toJson(warnings);

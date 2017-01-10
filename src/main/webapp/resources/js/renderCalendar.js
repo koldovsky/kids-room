@@ -2,7 +2,6 @@
  * Created by dima- on 12.05.2016.
  */
 
-
 var info_event;
 var creatingEvent;
 var allEvents;
@@ -243,6 +242,7 @@ $(function () {
 
         if ($('#recurrent-update').is(':checked')) {
             $('#choose-updating-type').dialog('close');
+            $('#dialog').off('change', '#start-date-picker');
             editRecurrentEventRequest(info_event.calEvent.recurrentId);
         }
     });
@@ -680,7 +680,10 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            popSetOfEvents(result);
+            popSetOfEvents(result.eventsCreated);
+            if(result.datesWhenNotCreated) {
+                eventsWereNotCreated(result.datesWhenNotCreated);
+            }
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
@@ -837,7 +840,6 @@ function editRecurrentEventRequest(eventRecurrentId) {
                 monthDays: result.daysOfTheMonth,
                 title: result.name
             };
-
             editRecurrentEvent(recurrentEventForEditing);
         }
     });

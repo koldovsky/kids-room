@@ -15,7 +15,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     @Transactional(readOnly = true)
-    public T findById(Object id) {
+    public T findByIdTransactional(Object id) {
+
+        return findEntityById(id);
+    }
+
+    public T findEntityById(Object id) {
         T obj  = baseDao.findById(id);
         if(obj == null) {
             throw new ResourceNotFoundException();

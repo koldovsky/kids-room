@@ -61,17 +61,17 @@ public class BookingValidatorImpl implements BookingValidator {
         }
 
         if (startTime.after(endTime)) {
-            errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.ENDTIME_BEFORE_STARTTIME);
+            errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.END_TIME_BEFORE_START_TIME);
         }
 
-        if ( userService.findById(bookingDto.getUserId()) == null) {
+        if ( userService.findByIdTransactional(bookingDto.getUserId()) == null) {
             errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.USER_NOT_EXIST);
         }
 
-        if (childService.findById(bookingDto.getKidId()) == null) {
+        if (childService.findByIdTransactional(bookingDto.getKidId()) == null) {
             errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.CHILD_NOT_EXIST);
         }
-        Room room = roomService.findById(bookingDto.getRoomId());
+        Room room = roomService.findByIdTransactional(bookingDto.getRoomId());
         if (room == null) {
             errors.rejectValue(ValidationConstants.EMAIL, ValidationConstants.ROOM_NOT_EXIST);
         }

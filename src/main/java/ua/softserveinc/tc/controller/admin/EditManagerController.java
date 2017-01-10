@@ -51,7 +51,7 @@ public class EditManagerController {
      */
     @PostMapping("/adm-edit-manager")
     public String managerBlockUnblock(@RequestParam Long id) {
-        User manager = this.userService.findById(id);
+        User manager = this.userService.findByIdTransactional(id);
         manager.setActive(!manager.isActive());
 
         this.userService.update(manager);

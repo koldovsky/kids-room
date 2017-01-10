@@ -77,7 +77,7 @@ public class ConfirmManagerController {
             return AdminConstants.CONFIRM_MANAGER;
         }
 
-        User manager = this.userService.findById(managerWithPassword.getId());
+        User manager = this.userService.findByIdTransactional(managerWithPassword.getId());
         manager.setPassword(this.passwordEncoder.encode(managerWithPassword.getPassword()));
         manager.setConfirmed(true);
 

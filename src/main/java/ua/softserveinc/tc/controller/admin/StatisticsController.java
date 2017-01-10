@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.dateNow;
 import static ua.softserveinc.tc.util.DateUtil.dateMonthAgo;
-import static ua.softserveinc.tc.util.DateUtil.toDate;
+import ua.softserveinc.tc.util.DateUtil;
 import static ua.softserveinc.tc.util.DateUtil.getStringDate;
 
 @Controller
@@ -49,7 +49,8 @@ public class StatisticsController {
     @GetMapping("/refreshRooms/{startDate}/{endDate}")
     public String refreshView(@PathVariable String startDate,
                               @PathVariable String endDate) {
-        List<Booking> bookings = bookingService.getBookings(toDate(startDate), toDate(endDate), BookingState.COMPLETED);
+        List<Booking> bookings = bookingService.getBookings(DateUtil.toBeginOfDayDate(startDate),
+                DateUtil.toEndOfDayDate(endDate), BookingState.COMPLETED);
         Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
         Gson gson = new Gson();
 

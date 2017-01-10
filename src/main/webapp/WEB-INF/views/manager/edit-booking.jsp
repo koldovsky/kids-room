@@ -60,7 +60,7 @@
         </table>
         <div class="container col-xs-12">
             <button type="button" class="btn btn-success btn-responsive pull-center" data-toggle="modal"
-                    data-target=".bs-modal-lg-colourInfo">
+                    data-target=".bs-modal-lg-colourInfo" title = "<spring:message code='booking.legend'/>" >
                 <span class="glyphicon glyphicon-info-sign"> </span>
             </button>
         </div>
@@ -161,7 +161,7 @@
                             <p><spring:message code="manager.available.rooms"/> <span id="free-spaces"></span></p>
                         </div>
                         <label for="selectUser"><spring:message code="booking.chooseParent"/></label>
-                        <select id="selectUser" name="select" onchange="selectUser();" class="form-control">
+                        <select id="selectUser" name="select" class="form-control">
                             <label> Please choose kid</label>
                             <option value=" " disabled selected hidden></option>
                             <c:forEach items="${users}" var="user">
@@ -238,11 +238,11 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <h3><spring:message code="booking.arrivalOutOfRange"/></h3>
-                    <h4><spring:message code="booking.enterCorrectTime"/></h4>
-                    <button id="setEndTime" type="button" class="btn btn-success" data-dismiss="modal"><spring:message
+                    <div class="lead"><spring:message code="booking.arrivalOutOfRange"/></div>
+                    <div class="lead"><spring:message code="booking.warningTime"/></div>
+                    <button id="setEndTime" type="button" class="btn btn-success warningBtn" data-dismiss="modal"><spring:message
                             code="booking.ok"/></button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
+                    <button type="button" class="btn btn-danger warningBtn" data-dismiss="modal"><spring:message
                             code="booking.canceled"/></button>
                 </div>
             </div>
@@ -253,7 +253,6 @@
 <div id="updatingSuccess" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-body">
                 <div align="center">
                     <br>
@@ -261,7 +260,6 @@
                     <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
                             code="booking.close"/></button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -294,10 +292,9 @@
         </div>
     </div>
 </div>
-<div id="creatingfailue1" class="modal fade">
+<div id="noAvailablePlace" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-body-err">
                 <div align="center">
                     <br>
@@ -305,15 +302,13 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
                             code="booking.close"/></button>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-<div id="creatingfailue2" class="modal fade">
+<div id="duplicateError" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-body-err">
                 <div align="center">
                     <br>
@@ -321,7 +316,20 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
                             code="booking.close"/></button>
                 </div>
-
+            </div>
+        </div>
+    </div>
+</div>
+<div id="globalError" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body-err">
+                <div align="center">
+                    <br>
+                    <h4><spring:message code="booking.globalError"/></h4>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
+                            code="booking.close"/></button>
+                </div>
             </div>
         </div>
     </div>
@@ -354,9 +362,8 @@
                 <br>
                 <h2><spring:message code="booking.cancel"/></h2>
                 <p class="cancelName ">
-                    <spring:message code="booking.confirmCancelQuestion1"/>
-                    <br>
-                    <spring:message code="booking.confirmCancelQuestion2"/>
+                    <spring:message code="booking.confirmCancelQuestion"/>
+
                 </p>
                 <button id="cancelButton" class="btn  btn-success    ">
                     <spring:message code="booking.confirmCancel"/>
@@ -388,3 +395,4 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/edit-booking.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-booking-time.js"></script>

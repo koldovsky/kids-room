@@ -51,8 +51,8 @@
             </div>
 
             <div class="form-group sizing-between">
-                <button type="submit" class="button button-confirm"><spring:message code = "administrator.save"/></button>
-                <button type="reset" class="button button-cancel"
+                <button type="submit" class="btn btn-raised btn-success"><spring:message code = "administrator.save"/></button>
+                <button type="reset" class="btn btn-raised btn-danger"
                         onclick="window.location.href='adm-edit-manager'"><spring:message code="administrator.canc"/></button>
             </div>
 
@@ -62,9 +62,9 @@
     </table>
 </div>
 
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <c:if test="${pageContext.response.locale=='ua'}">
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager.js"></script>

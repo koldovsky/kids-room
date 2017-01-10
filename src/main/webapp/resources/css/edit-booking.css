@@ -148,4 +148,7 @@ html, body, .container {
     color: #adadad;
 }
 
+.warningBtn{
+    width: 120px !important;
+}
 

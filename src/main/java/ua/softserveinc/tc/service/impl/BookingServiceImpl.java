@@ -1,8 +1,12 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
+import ua.softserveinc.tc.constants.ValidationConstants;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.dao.RoomDao;
@@ -13,33 +17,59 @@ import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.DuplicateBookingException;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.BookingUtil;
+import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.util.DateUtil;
+import ua.softserveinc.tc.util.Log;
+import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.validator.RecurrentBookingValidator;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
+import ua.softserveinc.tc.constants.UtilConstants;
+import ua.softserveinc.tc.util.TwoTuple;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Objects;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.Map;
+import java.util.HashSet;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
+/*
+ * Rewritten by Sviatoslav Hryb on 05.10.2017
+ */
 @Service
-public class BookingServiceImpl extends BaseServiceImpl<Booking>
-        implements BookingService {
+public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
 
-    @Autowired
-    private BookingDao bookingDao;
+    @Log
+    private Logger log;
 
     @Autowired
     private RateService rateService;
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private ChildService childService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private BookingDao bookingDao;
 
     @Autowired
     private UserDao userDao;
@@ -50,49 +80,57 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
     @Autowired
     private ChildDao childDao;
 
+    @Autowired
+    private RecurrentBookingValidator recurrentBookingValidator;
+
     @Override
-    public List<Booking> getNotCompletedAndCancelledBookings(
-            Date startDate, Date endDate, Room room) {
-        return bookingDao.getNotCompletedAndCancelledBookings(
-                startDate, endDate, room);
+    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate,
+                                                             Room room) {
+
+        return getBookings(new Date[]{startDate, endDate}, room,
+                BookingConstants.States.getActiveAndBooked());
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate,
-                                     BookingState... bookingStates) {
-        return getBookings(startDate, endDate, null, null, true, bookingStates);
+    public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(new Date[]{startDate, endDate})
+                .setBookingsStates(Arrays.asList(bookingStates))
+                .build();
+        return getBookings(characteristic);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate,
-                                     User user, BookingState... bookingStates) {
-        return getBookings(startDate, endDate, user, null, true, bookingStates);
+    public List<Booking> getBookings(Date[] dates, User user, BookingState... bookingStates) {
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(dates)
+                .setUsers(Collections.singletonList(user))
+                .setBookingsStates(Arrays.asList(bookingStates))
+                .build();
+        return getBookings(characteristic);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, Room room,
-                                     boolean includeLastDay,
-                                     BookingState... bookingStates) {
+    public List<Booking> getBookings(Date[] dates, Room room, BookingState... bookingStates) {
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(dates)
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Arrays.asList(bookingStates))
+                .build();
 
-        return getBookings(startDate, endDate, null,
-                room, includeLastDay, bookingStates);
-
+        return getBookings(characteristic);
     }
 
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user,
-                                     Room room, boolean includeDay,
-                                     BookingState... bookingStates) {
+    public List<Booking> getBookings(BookingsCharacteristics characteristics) {
 
-        return bookingDao.getBookings(startDate, endDate, user,
-                room, includeDay, bookingStates);
+        return bookingDao.getBookings(characteristics);
     }
 
     @Override
     public void calculateAndSetDuration(Booking booking) {
-        long difference = booking.getBookingEndTime().getTime() -
-                booking.getBookingStartTime().getTime();
-
+        long difference = booking.getBookingEndTime().getTime()
+                - booking.getBookingStartTime().getTime();
         booking.setDuration(difference);
     }
 
@@ -128,7 +166,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
 
     @Override
     public Booking confirmBookingStartTime(BookingDto bookingDto) {
-        Booking booking = findById(bookingDto.getId());
+        Booking booking = findByIdTransactional(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getStartTime());
         booking.setBookingStartTime(date);
         resetSumAndDuration(booking);
@@ -137,7 +175,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
 
     @Override
     public Booking confirmBookingEndTime(BookingDto bookingDto) {
-        Booking booking = findById(bookingDto.getId());
+        Booking booking = findByIdTransactional(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
         calculateAndSetSum(booking);
@@ -153,287 +191,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
 
     @Override
     public Date replaceBookingTime(Booking booking, String time) {
-        DateFormat dfDate = new SimpleDateFormat(
-                DateConstants.SHORT_DATE_FORMAT);
-        String dateString = dfDate.format(
-                booking.getBookingStartTime()) + " " + time;
+        DateFormat dfDate = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
+        String dateString = dfDate.format(booking.getBookingStartTime()) + " " + time;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(toDateAndTime(dateString));
         return calendar.getTime();
-    }
-
-    public Boolean checkForDuplicateBooking(List<BookingDto> listDto) {
-
-        for (BookingDto x : listDto) {
-            if (checkForDuplicateBookingSingle(x)) return true;
-        }
-        return false;
-    }
-
-    public Boolean checkForDuplicateBookingSingle(BookingDto bookingDto) {
-        User user = userDao.findById(bookingDto.getUserId());
-        Room room = roomDao.findById(bookingDto.getRoomId());
-
-        Boolean isDuplicate = bookingDao
-                .getBookingsByUserAndRoom(user, room).stream()
-                .filter(booking -> (booking.getRecurrentId() == null) ||
-                        (!booking.getRecurrentId()
-                                .equals(bookingDto.getRecurrentId())))
-                .filter(booking ->
-                        booking.getBookingEndTime().after(new Date()) &&
-                                booking.getBookingState() !=
-                                        BookingState.CANCELLED)
-                .map(booking -> BookingUtil
-                        .checkBookingTimeOverlap(bookingDto, booking))
-                .filter(overlap -> overlap.equals(Boolean.TRUE))
-                .findAny().orElse(false);
-        return isDuplicate;
-    }
-
-    /**
-     * The method finds out is there available space in
-     * the rooms for given listDTO. The listDto must not
-     * be null.
-     *
-     * @param listDTO list of BookingDto
-     * @return true if there is available places in the room
-     */
-    private boolean isAvailabilePlacesInTheRoom(List<BookingDto> listDTO) {
-        Objects.requireNonNull(listDTO, "listDTO must not be null");
-        int availablePlaces = 0;
-        int needPlaces = 1;
-        Date theSameDay = null;
-        for (BookingDto bdto : listDTO) {
-            if (bdto.getDateStartTime().equals(theSameDay)) {
-                needPlaces++;
-                continue;
-            } else if (theSameDay != null && availablePlaces < needPlaces)
-                return false;
-            needPlaces = 1;
-            theSameDay = bdto.getDateStartTime();
-            availablePlaces = roomService.getAvailableSpaceForPeriod(
-                    bdto.getDateStartTime(),
-                    bdto.getDateEndTime(),
-                    bdto.getRoom());
-        }
-        return availablePlaces >= needPlaces;
-    }
-
-    @Override
-    public List<BookingDto> persistBookingsFromDtoAndSetId(
-            List<BookingDto> listDTO) {
-        Objects.requireNonNull(listDTO, "listDTO must not be null");
-        if (isAvailabilePlacesInTheRoom(listDTO)) {
-            listDTO.forEach(bookingDTO -> {
-                Booking booking = bookingDTO.getBookingObject();
-                booking.setSum(0L);
-                booking.setDuration(0L);
-                bookingDao.create(booking);
-                bookingDTO.setId(booking.getIdBook());
-            });
-            return listDTO;
-        } else {
-            return Collections.emptyList();
-        }
-    }
-
-    /**
-     * get all active bookings from the room
-     * @param room room with bookings
-     * @return list of active bookings in the room
-     */
-    public List<BookingDto> getAllActiveBookingsInTheRoom(Room room) {
-        return getBookings(null, null, null, room, true, BookingState.ACTIVE)
-                .stream()
-                .map(BookingDto::new)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * get all planned bookings from the room
-     * @param room room with bookings
-     * @return list of planned bookings in the room
-     */
-    public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
-        List<BookingDto> bookingDtos = getBookings(null, null, null, room, true, BookingState.BOOKED)
-                .stream()
-                .map(BookingDto::new)
-                .collect(Collectors.toList());
-        return bookingDtos;
-    }
-
-    public List<BookingDto> getAllBookingsByUserAndRoom(
-            Long idUser, Long idRoom) {
-        User user = userDao.findById(idUser);
-        Room room = roomDao.findById(idRoom);
-        return getBookings(null, null, user, room, true, BookingState.BOOKED)
-                .stream()
-                .map(BookingDto::new)
-                .collect(Collectors.toList());
-    }
-
-    public Long getMaxRecurrentId() {
-        return bookingDao.getMaxRecurrentId();
-    }
-
-
-    /**
-     * All recurrent bookings have the same date,
-     * this method use date only from first element in list
-     */
-    public List<BookingDto> makeRecurrentBookings(
-            List<BookingDto> bookingDtos) {
-
-        String dateStart = bookingDtos.get(0).getStartTime();
-        String dateEnd = bookingDtos.get(0).getEndTime();
-
-        Date dateForRecurrentStart = DateUtil.toDateISOFormat(dateStart);
-        Date dateForRecurrentEnd = DateUtil.toDateISOFormat(dateEnd);
-
-        Map<String, Integer> daysOFWeek = new HashMap<>();
-        daysOFWeek.put("Sun", Calendar.SUNDAY);
-        daysOFWeek.put("Mon", Calendar.MONDAY);
-        daysOFWeek.put("Tue", Calendar.TUESDAY);
-        daysOFWeek.put("Wed", Calendar.WEDNESDAY);
-        daysOFWeek.put("Thu", Calendar.THURSDAY);
-        daysOFWeek.put("Fri", Calendar.FRIDAY);
-        daysOFWeek.put("Sat", Calendar.SATURDAY);
-
-        Calendar calendar1 = Calendar.getInstance();
-
-        Calendar calendarEndTime = Calendar.getInstance();
-        calendarEndTime.setTime(dateForRecurrentEnd);
-
-        Calendar calendarStartTime = Calendar.getInstance();
-        calendarStartTime.setTime(dateForRecurrentStart);
-
-        String[] days = bookingDtos.get(0).getDaysOfWeek().split(" ");
-        Long newRecID = bookingDao.getMaxRecurrentId() + 1;
-
-        Map<Long, Long> recurrentMap = new HashMap<>(bookingDtos.size());
-
-        for (BookingDto bookingDto : bookingDtos) {
-            recurrentMap.put(bookingDto.getKidId(), newRecID);
-            newRecID++;
-        }
-
-        Room room = roomDao.findById(bookingDtos.get(0).getRoomId());
-
-        List<BookingDto> newRecurrentBooking = new LinkedList<>();
-
-        while (dateForRecurrentEnd.getTime() >
-                calendarStartTime.getTimeInMillis()) {
-            for (String day : days) {
-
-                List<BookingDto> dailyBookings = new LinkedList<>();
-
-                calendarStartTime.set(
-                        Calendar.DAY_OF_WEEK, daysOFWeek.get(day));
-
-                if (dateForRecurrentEnd.getTime() <
-                        calendarStartTime.getTimeInMillis())
-                    break;
-                if (dateForRecurrentStart.getTime() >
-                        calendarStartTime.getTimeInMillis())
-                    continue;
-
-                for (BookingDto bookingDto : bookingDtos) {
-                    Booking booking = new Booking();
-
-                    booking.setBookingStartTime(calendarStartTime.getTime());
-
-                    calendar1.setTime(calendarStartTime.getTime());
-                    calendar1.set(Calendar.HOUR_OF_DAY,
-                            calendarEndTime.get(Calendar.HOUR_OF_DAY));
-                    calendar1.set(Calendar.MINUTE,
-                            calendarEndTime.get(Calendar.MINUTE));
-
-                    booking.setBookingEndTime(calendar1.getTime());
-                    booking.setRecurrentId(recurrentMap.get(
-                            bookingDto.getKidId()));
-                    booking.setRoom(room);
-                    booking.setChild(childDao.findById(bookingDto.getKidId()));
-                    booking.setComment(bookingDto.getComment());
-                    booking.setDuration(0L);
-
-                    booking.setUser(userDao.findById(bookingDto.getUserId()));
-
-                    //FIXME: fix this 'buf'
-                    BookingDto buf = booking.getDto();
-                    buf.setRoom(room);
-                    buf.setRoomId(room.getId());
-
-                    buf.setDateStartTime(DateUtil.toDateISOFormat(
-                            DateUtil.toIsoString(calendarStartTime.getTime())));
-                    buf.setDateEndTime(DateUtil.toDateISOFormat(
-                            DateUtil.toIsoString(calendar1.getTime())));
-
-                    buf.setUser(userDao.findById(bookingDto.getUserId()));
-                    buf.setBookingState(BookingState.BOOKED);
-                    buf.setChild(childDao.findById(buf.getIdChild()));
-                    dailyBookings.add(buf);
-                }
-                newRecurrentBooking.addAll(dailyBookings);
-            }
-            calendarStartTime.add(Calendar.WEEK_OF_YEAR, 1);
-            calendarStartTime.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));
-        }
-        if (newRecurrentBooking.isEmpty()) return newRecurrentBooking;
-        return persistBookingsFromDtoAndSetId(newRecurrentBooking);
-    }
-
-    private List<BookingDto> recurrentDtoToList(
-            BookingDto recurrentBookingDto) {
-        String dateStart = recurrentBookingDto.getStartTime();
-        String dateEnd = recurrentBookingDto.getEndTime();
-        Date dateForRecurrentStart = DateUtil.toDateISOFormat(dateStart);
-        Date dateForRecurrentEnd = DateUtil.toDateISOFormat(dateEnd);
-
-        Calendar calendarEndTime = Calendar.getInstance();
-        calendarEndTime.setTime(dateForRecurrentEnd);
-
-        Calendar calendarStartTime = Calendar.getInstance();
-        calendarStartTime.setTime(dateForRecurrentStart);
-
-        Long newRecID = bookingDao.getMaxRecurrentId() + 1;
-        Room room = roomDao.findById(recurrentBookingDto.getRoomId());
-        recurrentBookingDto.setRoom(room);
-        recurrentBookingDto.setChild(
-                childDao.findById(recurrentBookingDto.getKidId()));
-        recurrentBookingDto.setUser(
-                userDao.findById(recurrentBookingDto.getUserId()));
-
-        List<BookingDto> newRecurrentBookingDto = new ArrayList<>();
-
-        Calendar iterationDayStartTime = calendarStartTime;
-        Calendar iterationDayEndTime = (Calendar) iterationDayStartTime.clone();
-
-        iterationDayEndTime.set(Calendar.HOUR_OF_DAY,
-                calendarEndTime.get(Calendar.HOUR_OF_DAY));
-        iterationDayEndTime.set(Calendar.MINUTE,
-                calendarEndTime.get(Calendar.MINUTE));
-        calendarEndTime.add(Calendar.DAY_OF_MONTH, 1);
-        while (iterationDayEndTime.before(calendarEndTime)) {
-            if (recurrentBookingDto.getWeekDays().contains(
-                    iterationDayEndTime.get(Calendar.DAY_OF_WEEK))) {
-                BookingDto newBbooking = new BookingDto(recurrentBookingDto);
-                newBbooking.setDateStartTime(iterationDayStartTime.getTime());
-                newBbooking.setDateEndTime(iterationDayEndTime.getTime());
-                newBbooking.setBookingState(BookingState.BOOKED);
-                newBbooking.setKidName(newBbooking.getChild().getFullName());
-                newBbooking.setRoomName(newBbooking.getRoom().getAddress());
-                newBbooking.setIdChild(newBbooking.getChild().getId());
-                newRecurrentBookingDto.add(newBbooking);
-                if (checkForDuplicateBookingSingle(newBbooking)) {
-                    throw new DuplicateBookingException();
-                }
-                newBbooking.setRecurrentId(newRecID);
-            }
-            iterationDayStartTime.add(Calendar.DAY_OF_MONTH, 1);
-            iterationDayEndTime.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        return newRecurrentBookingDto;
     }
 
     @Override
@@ -451,17 +213,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
     }
 
     @Override
-    public List<BookingDto> updateRecurrentBookings(
-            BookingDto recurrentBookingDto) {
+    public List<BookingDto> updateRecurrentBookings(BookingDto recurrentBookingDto) {
         Long recurrentId = recurrentBookingDto.getRecurrentId();
-        List<Booking> recurrentBookingForDelete =
-                bookingDao.getRecurrentBookingsByRecurrentId(recurrentId);
+        List<Booking> recurrentBookingForDelete = bookingDao.getRecurrentBookingsByRecurrentId(recurrentId);
         for (Booking bdto : recurrentBookingForDelete) {
             bdto.setBookingState(BookingState.CANCELLED);
         }
 
-        List<BookingDto> listOfRecurrentBooking =
-                recurrentDtoToList(recurrentBookingDto);
+        List<BookingDto> listOfRecurrentBooking = recurrentDtoToList(recurrentBookingDto);
         if (listOfRecurrentBooking.isEmpty()) {
             return listOfRecurrentBooking;
         }
@@ -471,11 +230,414 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking>
             recurrentBookingForCreate.add(bdto.getBookingObject());
         }
 
-        bookingDao.updateRecurrentBookingsDAO(recurrentBookingForDelete,
-                recurrentBookingForCreate);
+        bookingDao.updateRecurrentBookingsDAO(recurrentBookingForDelete, recurrentBookingForCreate);
         final ArrayList<BookingDto> recurrentBookings = new ArrayList<>();
-        recurrentBookingForCreate.forEach(b ->
-                recurrentBookings.add(new BookingDto(b)));
+        recurrentBookingForCreate.forEach(b -> recurrentBookings.add(new BookingDto(b)));
+
         return recurrentBookings;
+    }
+
+    @Override
+    public List<BookingDto> getAllBookingsByUserAndRoom(Long idUser, Long idRoom) {
+        User user = userDao.findById(idUser);
+        Room room = roomDao.findById(idRoom);
+
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setUsers(Collections.singletonList(user))
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Collections.singletonList(BookingState.BOOKED))
+                .build();
+
+        return getBookings(characteristic)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean hasDuplicateBookings(List<BookingDto> listDto) {
+        BookingDto singleDto = listDto.get(0);
+        normalizeBookingDtoObjects(listDto);
+
+        List<Child> children = new ArrayList<>();
+        List<Long> idBookings = new ArrayList<>();
+        List<Long> recurrentId = new ArrayList<>();
+
+        listDto.forEach(dto -> {
+            if (dto.getChild() != null) {
+                children.add(dto.getChild());
+            }
+            if (dto.getId() != null) {
+                idBookings.add(dto.getId());
+            }
+            if (dto.getRecurrentId() != null) {
+                recurrentId.add(dto.getRecurrentId());
+            }
+        });
+        List<Date[]> listDatesOfBooking = getDatesFromAnyBookingDto(singleDto);
+
+        return listDatesOfBooking.stream().anyMatch(dates ->
+                bookingDao.getDuplicateBookings(
+                        new BookingsCharacteristics.Builder()
+                                .setChildren(children)
+                                .setDates(dates)
+                                .setIdsOfBookings(idBookings)
+                                .setRecurrentIdsOfBookings(recurrentId)
+                                .build()
+                ).size() > 0
+        );
+    }
+
+    @Override
+    public List<BookingDto> persistBookingsFromDto(List<BookingDto> listDTO) {
+        List<BookingDto> resultDto = Collections.emptyList();
+
+        if (hasAvailablePlacesInTheRoom(listDTO)) {
+            List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
+            List<Booking> persistedBookings =
+                    bookingDao.persistRecurrentBookings(bookingsForPersisting);
+            BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
+            resultDto = listDTO;
+        }
+
+        return resultDto;
+    }
+
+    @Override
+    @Transactional
+    public TwoTuple<List<BookingDto>, String> makeRecurrentBookings(List<BookingDto> bookingDtos) {
+        TwoTuple<List<BookingDto>, String> result;
+
+        if (!recurrentBookingValidator.validate(bookingDtos)) {
+            result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
+
+        } else {
+            List<BookingDto> bookings = saveRecurrentBookings(bookingDtos);
+
+            if (bookings.isEmpty()) {
+                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
+            } else {
+                result = new TwoTuple<>(bookings, null);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean normalizeBookingDtoObjects(List<BookingDto> dtoList) {
+        boolean result = true;
+        BookingDto singleDto = dtoList.get(0);
+
+        try {
+            Room room = (singleDto.getRoom() == null) ?
+                    roomService.findEntityById(singleDto.getRoomId()) : singleDto.getRoom();
+            User user = (singleDto.getUser() == null) ?
+                    userService.findEntityById(singleDto.getUserId()) : singleDto.getUser();
+            dtoList.forEach(dto -> {
+                if (dto.getIdChild() == null) {
+                    dto.setIdChild(dto.getKidId());
+                }
+                Date startTime = (dto.getDateStartTime() == null) ?
+                        DateUtil.toDateISOFormat(dto.getStartTime()) : dto.getDateStartTime();
+                Date endTime = (dto.getDateEndTime() == null) ?
+                        DateUtil.toDateISOFormat(dto.getEndTime()) : dto.getDateEndTime();
+                Child child = (dto.getChild() == null) ?
+                        childService.findEntityById(dto.getIdChild()) : dto.getChild();
+                dto.setUser(user);
+                dto.setRoom(room);
+                dto.setChild(child);
+                dto.setDateStartTime(startTime);
+                dto.setDateEndTime(endTime);
+            });
+        } catch (ResourceNotFoundException e) {
+            result = false;
+        }
+
+        return result;
+    }
+
+    /*
+     * Checks if there is a duplicated booking for the given
+     * object of BookingDto. The given object should not be null.
+     *
+     * @param dto the list of objects of BookingsDto
+     * @return true if there is a duplicate bookings, otherwise
+     * return false.
+     */
+    private boolean hasDuplicateBookings(BookingDto dto) {
+        List<BookingDto> listOfBookingsDto = new ArrayList<>();
+        listOfBookingsDto.add(dto);
+
+        return hasDuplicateBookings(listOfBookingsDto);
+    }
+
+    /*
+     * The method finds out is there available space in
+     * the rooms for given listDTO. The listDto must not
+     * be null.
+     *
+     * @param listDTO list of BookingDto
+     * @return true if there is available places in the room
+     */
+    private boolean hasAvailablePlacesInTheRoom(List<BookingDto> listDTO) {
+        int availablePlaces = 0;
+        int needPlaces = 1;
+        Date theSameDay = null;
+
+        for (BookingDto bdto : listDTO) {
+            if (bdto.getDateStartTime().equals(theSameDay)) {
+                needPlaces++;
+                continue;
+            } else if (theSameDay != null && availablePlaces < needPlaces) {
+                return false;
+            }
+            needPlaces = 1;
+            theSameDay = bdto.getDateStartTime();
+            availablePlaces = roomService.getAvailableSpaceForPeriod(
+                    bdto.getDateStartTime(),
+                    bdto.getDateEndTime(),
+                    bdto.getRoom());
+        }
+
+        return availablePlaces >= needPlaces;
+    }
+
+    /*
+     * Persist all Bookings that are represented by the objects of BookingDto.
+     * Return the list of persistent objects of BookingDto
+     *
+     * @param bookingDtos the list of objects of BookingsDto
+     * @return list persisted objects of BookingDto
+     */
+    private List<BookingDto> saveRecurrentBookings(List<BookingDto> bookingDtos) {
+        setRecurrentIds(bookingDtos);
+        List<BookingDto> listOfBookingDtos = prepareBookingDtoForPersisting(bookingDtos);
+
+        return persistBookingsFromDto(listOfBookingDtos);
+    }
+
+    /*
+     * Constructs and returns the list of the arrays of the Date objects
+     * from given BookingDto object. If the given object is null, then the
+     * empty list will be returned. The array of Date object has length
+     * of 2 and consists the start date of booking on index 0, and end date
+     * of booking on index 1.
+     *
+     * @param dto the given BookingDto objects
+     * @return the list of arrays of Date objects
+     */
+    private List<Date[]> getDatesFromAnyBookingDto(BookingDto dto) {
+        List<Date[]> listOfBookings = new ArrayList<>();
+        if (dto.getDaysOfWeek() == null) {
+            Date[] startAndEndDates = new Date[2];
+            startAndEndDates[0] = dto.getDateStartTime();
+            startAndEndDates[1] = dto.getDateEndTime();
+            listOfBookings.add(startAndEndDates);
+        } else {
+            listOfBookings = getDatesFromRecurrentBookingDto(dto);
+
+        }
+
+        return listOfBookings;
+    }
+
+    /**
+     * get all active bookings from the room
+     * @param room room with bookings
+     * @return list of active bookings in the room
+     */
+    public List<BookingDto> getAllActiveBookingsInTheRoom(Room room) {
+        return getBookings(null, room, BookingState.ACTIVE)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * get all planned bookings from the room
+     * @param room room with bookings
+     * @return list of planned bookings in the room
+     */
+    public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
+        List<BookingDto> bookingDtos = getBookings(null, room, BookingState.BOOKED)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+        return bookingDtos;
+    }
+
+    /*
+     * Constructs and returns the list of the arrays of the Date objects
+     * from given recurrent BookingDto object. If the given object is null,
+     * then the empty list will be returned. The array of Date object has length
+     * of 2 and consists the start date of booking on index 0, and end date
+     * of booking on index 1.
+     *
+     * @param dto the given BookingDto objects
+     * @return the list of arrays of Date objects
+     */
+    private List<Date[]> getDatesFromRecurrentBookingDto(BookingDto dto) {
+        List<Date[]> resultDates = new ArrayList<>();
+
+        if (dto != null) {
+            Date dateRecurrentStart = DateUtil.toDateISOFormat(dto.getStartTime());
+            Date dateRecurrentEnd = DateUtil.toDateISOFormat(dto.getEndTime());
+            Calendar calendarAlternateTime = Calendar.getInstance();
+            calendarAlternateTime.setTime(dateRecurrentStart);
+
+            int[] bookingDuration = getBookingDuration(dto); // index 0 -> hours; index 1 -> minutes
+            int[] intDaysOfWeek = DateUtil.getIntDaysOfWeek(
+                    dto.getDaysOfWeek().trim().split(UtilConstants.WHITE_SPACE_REGEXP));
+
+            while (calendarAlternateTime.getTimeInMillis() < dateRecurrentEnd.getTime()) {
+                for (int dayOfWeek : intDaysOfWeek) {
+                    calendarAlternateTime.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+                    if (calendarAlternateTime.getTimeInMillis() > dateRecurrentEnd.getTime()) {
+                        break;
+                    }
+                    if (calendarAlternateTime.getTimeInMillis() < dateRecurrentStart.getTime()) {
+                        continue;
+                    }
+                    Date[] startAndEndDates = new Date[2];  //index 0 -> startDate; index 1 -> endDate
+                    startAndEndDates[0] = calendarAlternateTime.getTime();
+                    startAndEndDates[1] = getEndBookingDate(calendarAlternateTime, bookingDuration);
+                    resultDates.add(startAndEndDates);
+                }
+
+                calendarAlternateTime.add(Calendar.WEEK_OF_YEAR, 1);
+                calendarAlternateTime.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+            }
+        }
+
+        return resultDates;
+    }
+
+    /*
+     * Returns array that contains hours, minutes and seconds of duration of booking
+     * from BookingDto.
+     *
+     * @param bDto BookingDto object. Must not be null.
+     * @return array of duration.
+     */
+    private int[] getBookingDuration(BookingDto bDto) {
+        String[] startTime = bDto.getStartTime()
+                .split(DateConstants.T_DATE_SPLITTER)[1] //Times part
+                .split(DateConstants.COLON_TIME_SPLITTER);
+        String[] endTime = bDto.getEndTime()
+                .split(DateConstants.T_DATE_SPLITTER)[1] //Times part
+                .split(DateConstants.COLON_TIME_SPLITTER);
+        int duration[] = new int[startTime.length];
+
+        try {
+            for (int i = 0; i < startTime.length; i++) {
+                duration[i] = Integer.valueOf(endTime[i]) - Integer.valueOf(startTime[i]);
+            }
+        } catch (NumberFormatException e) {
+            log.error("BookingDto has inappropriate state", e);
+            duration = new int[0];
+        }
+
+        return duration;
+    }
+
+    /*
+     * Return end date from giving start day and duration.
+     *
+     * @param startDate the start date. Must not be null
+     * @param duration the duration of booking. Must not be null
+     * @return the end date of booking
+     */
+    private Date getEndBookingDate(Calendar startDate, int[] duration) {
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(startDate.getTime());
+        endDate.add(Calendar.HOUR, duration[0]);
+        endDate.add(Calendar.MINUTE, duration[1]);
+
+        return endDate.getTime();
+    }
+
+    /*
+     * Creating series of BookingDto for persisting.
+     *
+     * @param given composite BookingDto
+     * @return list of preparing BookingsDto
+     */
+    private List<BookingDto> prepareBookingDtoForPersisting(List<BookingDto> bookingDtos) {
+        List<BookingDto> resultBookingsDto = new ArrayList<>();
+        normalizeBookingDtoObjects(bookingDtos);
+
+        getDatesFromRecurrentBookingDto(bookingDtos.get(0)).forEach(dates ->
+                bookingDtos.forEach(dto ->
+                        resultBookingsDto.add(dto.getNewBookingDto(dates))));
+
+        return resultBookingsDto;
+    }
+
+    /*
+     * Set a new recurrent Id for each object of the list of the BookingDto
+     * objects. The given list must not be null or empty. The recurrent Id
+     * for each object must be the same and can be a null.
+     *
+     * @param bookingDtos the given list of BookingDto objects.
+     */
+    private void setRecurrentIds(List<BookingDto> bookingDtos) {
+        Long maxRecurrentId = bookingDtos.get(0).getRecurrentId();
+
+        if (maxRecurrentId == null) {
+            maxRecurrentId = bookingDao.getMaxRecurrentId();
+            for (BookingDto dto : bookingDtos) {
+                dto.setRecurrentId(++maxRecurrentId);
+            }
+        }
+    }
+
+
+    private List<BookingDto> recurrentDtoToList(BookingDto recurrentBookingDto) {
+        String dateStart = recurrentBookingDto.getStartTime();
+        String dateEnd = recurrentBookingDto.getEndTime();
+        Date dateForRecurrentStart = DateUtil.toDateISOFormat(dateStart);
+        Date dateForRecurrentEnd = DateUtil.toDateISOFormat(dateEnd);
+
+        Calendar calendarEndTime = Calendar.getInstance();
+        calendarEndTime.setTime(dateForRecurrentEnd);
+
+        Calendar calendarStartTime = Calendar.getInstance();
+        calendarStartTime.setTime(dateForRecurrentStart);
+
+        Long newRecID = bookingDao.getMaxRecurrentId() + 1;
+        Room room = roomDao.findById(recurrentBookingDto.getRoomId());
+        recurrentBookingDto.setRoom(room);
+        recurrentBookingDto.setChild(childDao.findById(recurrentBookingDto.getKidId()));
+        recurrentBookingDto.setUser(userDao.findById(recurrentBookingDto.getUserId()));
+
+        List<BookingDto> newRecurrentBookingDto = new ArrayList<>();
+
+        Calendar iterationDayStartTime = calendarStartTime;
+        Calendar iterationDayEndTime = (Calendar) iterationDayStartTime.clone();
+
+        iterationDayEndTime.set(Calendar.HOUR_OF_DAY, calendarEndTime.get(Calendar.HOUR_OF_DAY));
+        iterationDayEndTime.set(Calendar.MINUTE, calendarEndTime.get(Calendar.MINUTE));
+        calendarEndTime.add(Calendar.DAY_OF_MONTH, 1);
+        while (iterationDayEndTime.before(calendarEndTime)) {
+            if (recurrentBookingDto.getWeekDays().contains(iterationDayEndTime.get(Calendar.DAY_OF_WEEK))) {
+                BookingDto newBbooking = new BookingDto(recurrentBookingDto);
+                newBbooking.setDateStartTime(iterationDayStartTime.getTime());
+                newBbooking.setDateEndTime(iterationDayEndTime.getTime());
+                newBbooking.setBookingState(BookingState.BOOKED);
+                newBbooking.setKidName(newBbooking.getChild().getFullName());
+                newBbooking.setRoomName(newBbooking.getRoom().getAddress());
+                newBbooking.setIdChild(newBbooking.getChild().getId());
+                newRecurrentBookingDto.add(newBbooking);
+                if (hasDuplicateBookings(newBbooking)) {
+                    throw new DuplicateBookingException();
+                }
+                newBbooking.setRecurrentId(newRecID);
+            }
+            iterationDayStartTime.add(Calendar.DAY_OF_MONTH, 1);
+            iterationDayEndTime.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return newRecurrentBookingDto;
     }
 }

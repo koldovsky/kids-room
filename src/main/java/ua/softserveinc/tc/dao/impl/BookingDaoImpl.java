@@ -5,68 +5,119 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.Collections;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+/*
+ * Rewritten by Sviatoslav Hryb on 05.10.2017
+ */
 @Repository
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Booking> getBookingsByUserAndRoom(User user, Room room) {
+    @Override
+    public List<Booking> getDuplicateBookings(BookingsCharacteristics characteristics) {
+        List<Booking> resultList = Collections.singletonList(new Booking());
+
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
+        Root<Booking> root = criteria.from(Booking.class);
 
-        Root<Booking> root = query.from(Booking.class);
-        query.select(root).where(
-                builder.equal(root.get(BookingConstants.Entity.USER), user),
-                builder.equal(root.get(BookingConstants.Entity.ROOM), room));
+        if (characteristics.isCorrectFotDuplicateCheck()) {
 
-        return entityManager.createQuery(query).getResultList();
+            List<Predicate> restrictions = new ArrayList<>();
+            if (characteristics.hasSetRecurrentIdsOfBookings()) {
+                restrictions.add(builder.or(
+                        root.get(BookingConstants.Entity.RECURRENT_ID)
+                                .isNull(),
+                        root.get(BookingConstants.Entity.RECURRENT_ID)
+                                .in(characteristics.getRecurrentIdsOfBookings()).not()
+                ));
+
+            } else if (characteristics.hasSetIdsOfBookings()) {
+                restrictions.add(root.get(BookingConstants.Entity.ID_OF_BOOKING)
+                        .in(characteristics.getIdsOfBookings()).not());
+
+            }
+
+            restrictions.addAll(Arrays.asList(
+                    root.get(BookingConstants.Entity.CHILD)
+                            .in(characteristics.getChildren()),
+                    builder.lessThan(root.get(BookingConstants.Entity.START_TIME),
+                            characteristics.getEndDateOfBookings()),
+                    builder.greaterThan(root.get(BookingConstants.Entity.END_TIME),
+                            characteristics.getStartDateOfBookings()),
+                    root.get(BookingConstants.Entity.STATE).in(
+                            (Object[]) BookingConstants.States.getActiveAndBooked())
+            ));
+
+            criteria.select(root).where(builder.and(
+                    restrictions.toArray(new Predicate[restrictions.size()])));
+
+
+            resultList = entityManager.createQuery(criteria).getResultList();
+        }
+
+        return resultList;
     }
 
-
     @Override
-    public List<Booking> getBookings(Date startDate, Date endDate, User user,
-                                     Room room, boolean includeLastDay,
-                                     BookingState... bookingStates) {
+    @Transactional(readOnly = true)
+    public List<Booking> getBookings(BookingsCharacteristics characteristics) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
         List<Predicate> restrictions = new ArrayList<>();
-        if (startDate != null && endDate != null) {
-            //add one day for including last day in parent report
-            if(includeLastDay) {
-                Calendar c = Calendar.getInstance();
-                c.setTime(endDate);
-                c.add(Calendar.DATE, 1);
-                endDate = c.getTime();
-            }
-            restrictions.add(builder.between(root.get(
-                    BookingConstants.Entity.START_TIME), startDate, endDate));
+        if (characteristics.hasSetDates()) {
+            restrictions.add(builder.and(
+                    builder.lessThan(root.get(BookingConstants.Entity.START_TIME),
+                            characteristics.getEndDateOfBookings()),
+                    builder.greaterThan(root.get(BookingConstants.Entity.END_TIME),
+                            characteristics.getStartDateOfBookings())
+            ));
         }
 
-        if (bookingStates.length > 0)
-            restrictions.add(root.get(BookingConstants.Entity.STATE)
-                    .in(Arrays.asList(bookingStates)));
-        if (user != null)
-            restrictions.add(builder.equal(
-                    root.get(BookingConstants.Entity.USER), user));
-        if (room != null)
-            restrictions.add(builder.equal(
-                    root.get(BookingConstants.Entity.ROOM), room));
+        if (characteristics.hasSetOnlyStartDate()) {
+            restrictions.add(builder.greaterThanOrEqualTo(root.get(BookingConstants.Entity.START_TIME),
+                    characteristics.getStartDateOfBookings()));
+        }
 
-        criteria.where(builder.and(
+        if (characteristics.hasSetOnlyEndDate()) {
+            restrictions.add(builder.lessThanOrEqualTo(root.get(BookingConstants.Entity.END_TIME),
+                    characteristics.getEndDateOfBookings()));
+        }
+
+        if (characteristics.hasSetBookingsStates()) {
+            restrictions.add(root.get(BookingConstants.Entity.STATE)
+                    .in(characteristics.getBookingsStates()));
+        }
+        if (characteristics.hasSetUsers()) {
+            restrictions.add(root.get(BookingConstants.Entity.USER)
+                    .in(characteristics.getUsers()));
+        }
+        if (characteristics.hasSetRooms()) {
+            restrictions.add(root.get(BookingConstants.Entity.ROOM)
+                    .in(characteristics.getRooms()));
+        }
+        if (characteristics.hasSetChildren()) {
+            restrictions.add(root.get(BookingConstants.Entity.CHILD)
+                    .in(characteristics.getChildren()));
+        }
+
+        criteria.select(root).where(builder.and(
                 restrictions.toArray(new Predicate[restrictions.size()])));
 
         criteria.orderBy(builder.asc(
@@ -76,58 +127,32 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
-    public List<Booking> getNotCompletedAndCancelledBookings(Date startDate,
-                                                             Date endDate,
-                                                             Room room){
-        if (startDate == null || endDate == null || room == null) {
-            return Collections.emptyList();
-        }
-
+    public long getMaxRecurrentId() {
+        Long result;
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-        query.select(root).where(
-                builder.and(
-                        builder.lessThan(root.get(
-                                BookingConstants.Entity.START_TIME), endDate),
-                        builder.greaterThan(root.get(
-                                BookingConstants.Entity.END_TIME), startDate)),
-                        builder.equal(root.get(
-                                BookingConstants.Entity.ROOM), room),
-                        root.get(BookingConstants.Entity.STATE).in(
-                                BookingConstants.States.getActiveAndBooked()));
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        Root<Booking> root = criteria.from(Booking.class);
 
-        return entityManager.createQuery(query).getResultList();
-    }
+        criteria.select(builder.max(root.get(BookingConstants.Entity.RECURRENT_ID)));
 
-    public Long getMaxRecurrentId() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        result = entityManager.createQuery(criteria).getSingleResult();
 
-        CriteriaQuery<Long> q = cb.createQuery(Long.class);
-        Root<Booking> r = q.from(Booking.class);
-        Expression maxExpression = cb.max(r.get("recurrentId"));
-
-        CriteriaQuery<Long> select = q.select(maxExpression);
-
-        TypedQuery<Long> typedQuery = entityManager.createQuery(select);
-
-        Long result = typedQuery.getSingleResult();
-        if (result == null) {
-            return 0L;
-        }
-        return result;
+        return (result != null) ? result : 0L;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Booking> getRecurrentBookingsByRecurrentId(Long recurrentId) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
-        Root<Booking> root = query.from(Booking.class);
-        query.select(root).where(builder.equal(
-                root.get(BookingConstants.Entity.RECURRENTID), recurrentId)).
+        CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
+        Root<Booking> root = criteria.from(Booking.class);
+
+        criteria.select(root).where(builder.equal(
+                root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId)).
                 orderBy(builder.asc(
                         root.get(BookingConstants.Entity.START_TIME)));
-        return entityManager.createQuery(query).getResultList();
+
+        return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override
@@ -137,5 +162,13 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         oldBookings.forEach(entityManager::merge);
         newBookings.forEach(entityManager::persist);
         return newBookings;
+    }
+
+    @Override
+    public List<Booking> persistRecurrentBookings(List<Booking> bookings) {
+        List<Booking> resultBookings = new ArrayList<>();
+        bookings.forEach(booking -> resultBookings.add(entityManager.merge(booking)));
+        return resultBookings;
+
     }
 }

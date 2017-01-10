@@ -79,7 +79,7 @@ public class ApiController {
      */
     @GetMapping(ApiConstants.USER_REST_BY_ID_URL)
     public String getUserById(@PathVariable long id) {
-        User user = userService.findById(id);
+        User user = userService.findByIdTransactional(id);
         Gson gson = new Gson();
 
         return gson.toJson(new UserDto(user));
@@ -124,7 +124,7 @@ public class ApiController {
      */
     @GetMapping(ApiConstants.CHILD_BY_ID_REST_URL)
     public String getChildById(@PathVariable long id) {
-        Child child = childService.findById(id);
+        Child child = childService.findByIdTransactional(id);
         Gson gson = new Gson();
 
         return gson.toJson(new ChildDto(child));
@@ -139,7 +139,7 @@ public class ApiController {
     @GetMapping(ApiConstants.GET_ACTIVE_CHILDREN_IN_ROOM_URL)
     public String getChildrenInRoom(@PathVariable long roomId) {
         List<ChildDto> result = new ArrayList<>();
-        List<Child> children = childService.getActiveChildrenInRoom(roomService.findById(roomId));
+        List<Child> children = childService.getActiveChildrenInRoom(roomService.findByIdTransactional(roomId));
 
         for (Child child : children) {
             result.add(new ChildDto(child));
@@ -157,7 +157,7 @@ public class ApiController {
      */
     @GetMapping(ApiConstants.GET_CHILD_PARENT_REST_URL)
     public String getParentByChild(@PathVariable long id) {
-        Child child = childService.findById(id);
+        Child child = childService.findByIdTransactional(id);
         User user = child.getParentId();
         Gson gson = new Gson();
 

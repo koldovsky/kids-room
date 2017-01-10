@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.util;
 
+import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
@@ -10,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
+import ua.softserveinc.tc.constants.DateConstants;
 
 /**
  * Created by Demian on 07.06.2016.
@@ -24,8 +27,8 @@ public final class DateUtil {
     private static DateFormat simpleTimeFormat = new SimpleDateFormat(
             DateConstants.TIME_FORMAT);
 
-    @Log
-    private static Logger log;
+
+    private static Logger log = LoggerFactory.getLogger(DateUtil.class);
 
     private DateUtil() {
         // Suppresses default constructor, ensuring non-instantiability.
@@ -142,4 +145,81 @@ public final class DateUtil {
         return df.format(date);
     }
 
+    /**
+     * Transforms the given string to the Date object and set the begin
+     * of the day to the given date. The given date must be in either of
+     * two formats: YYY-MM-DD'T'HH:mm:ss or YYY-MM-DD
+     *
+     * @param date the given date
+     * @return the resulted day object
+     */
+    public static Date toBeginOfDayDate(String date) {
+
+        return toDateISOFormat(
+                getStringDatePartOfDateString(date)
+                        + DateConstants.T_DATE_SPLITTER
+                        + DateConstants.BEGIN_OF_THE_DAY_TIME);
+    }
+
+    /**
+     * Transforms the given string to the Date object and set the end
+     * of the day to the given date. The given date must be in either of
+     * two formats: YYY-MM-DD'T'HH:mm:ss or YYY-MM-DD
+     *
+     * @param date the given date
+     * @return the resulted day object
+     */
+    public static Date toEndOfDayDate(String date) {
+
+        return toDateISOFormat(
+                getStringDatePartOfDateString(date)
+                + DateConstants.T_DATE_SPLITTER
+                + DateConstants.END_OF_THE_DAY_TIME);
+    }
+
+    /**
+     * Translate the short form of the day of the week to int value
+     * that is appropriate for Calendar day of week.
+     *
+     * @param day the given short form of the day
+     * @return translated int value
+     */
+    public static Integer getDayOfWeek(String day) {
+        return DateConstants.DaysOfWeek.getDaysOfWeek().get(day);
+    }
+
+    /**
+     * Translate the array of short forms of the days of the week to
+     * array of int values that is appropriate for Calendar days of week.
+     *
+     * @param days the given array of short forms of the days
+     * @return translated array of int values
+     */
+    public static int[] getIntDaysOfWeek(String[] days) {
+        int[] result = new int[days.length];
+
+        for(int i = 0; i < days.length; i++) {
+            Integer dayOfWeek = getDayOfWeek(days[i]);
+            if(dayOfWeek == null) {
+                result = new int[0];
+                break;
+            }
+            result[i] = dayOfWeek;
+        }
+        return result;
+    }
+
+    /*
+     * Gets the string part of the date that is represented String object.
+     * If the given date is not in the format YYY-MM-DD'T'HH:mm:ss than
+     * this date will be returned.
+     *
+     * @param date the given date
+     * @return the date part of the date
+     */
+    private static String getStringDatePartOfDateString(String date) {
+
+        return Pattern.matches(DateConstants.DATE_T_TIME_REGEXP, date) ?
+            date.substring(0, DateConstants.T_POSITION_IN_DATE_STRING) : date;
+    }
 }

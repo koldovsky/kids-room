@@ -9,21 +9,30 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.Date;
+import java.util.Calendar;
+
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
@@ -81,7 +90,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
             Iterator<String> i = keys.iterator();
             String baseKey = i.next();
             while (i.hasNext()) {
-                String nextKey = (String) i.next();
+                String nextKey = i.next();
                 String value = result.get(baseKey);
                 if (value.compareTo(nextKey) == 0) {
 
@@ -90,7 +99,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
                 } else {
                     i.remove();
 
-                    baseKey = (String) i.next();
+                    baseKey = i.next();
                 }
             }
         }
@@ -161,7 +170,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
 
     @Override
     public Boolean isPossibleUpdate(BookingDto bookingDto) {
-        Booking booking = bookingService.findById(bookingDto.getId());
+        Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
         Room room = booking.getRoom();
         Date dateLo = toDateAndTime(bookingDto.getStartTime());
         Date dateHi = toDateAndTime(bookingDto.getEndTime());
@@ -174,36 +183,26 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
         }
     }
 
-    private List<Booking> reservedBookings(
-            Date dateLo, Date dateHi, Room room) {
+    @Override
+    public List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room) {
         return roomDao.reservedBookings(dateLo, dateHi, room);
     }
 
-    /**
-     * The method finds the maximum people in the room for period of time
-     * from dateLo to dateHi. All of the parameters must not be a null.
-     *
-     * @param dateLo   start of period
-     * @param dateHi   end of period
-     * @param bookings all reserved bookings in the time period
-     * @return The maximum number of people that are simultaneously in the room
-     */
-    private int maxRangeReservedBookings(
-            Date dateLo, Date dateHi, List<Booking> bookings) {
-        Objects.requireNonNull(dateLo, "dateLo must not be null");
-        Objects.requireNonNull(dateHi, "dateHi must not be null");
-        Objects.requireNonNull(bookings, "bookings must not be null");
-        final long oneMinuteMillis = 60 * 1000;
+    @Override
+    public int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings) {
         int maxReservedBookings = 0;
         for (long ti = dateLo.getTime() + 1;
-             ti < dateHi.getTime(); ti += oneMinuteMillis) {
+             ti < dateHi.getTime(); ti += DateConstants.ONE_MINUTE_MILLIS) {
             int temporaryMax = 0;
-            for (Booking tab : bookings)
+            for (Booking tab : bookings) {
                 if (tab.getBookingStartTime().getTime() < ti &&
-                        tab.getBookingEndTime().getTime() > ti)
+                        tab.getBookingEndTime().getTime() > ti) {
                     temporaryMax++;
-            if (temporaryMax > maxReservedBookings)
+                }
+            }
+            if (temporaryMax > maxReservedBookings) {
                 maxReservedBookings = temporaryMax;
+            }
         }
         return maxReservedBookings;
     }
@@ -218,21 +217,21 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
      * @param room   a requested room
      * @return number of places available in the room for the period
      */
-    public Integer getAvailableSpaceForPeriod(
-            Date dateLo, Date dateHi, Room room) {
-        Objects.requireNonNull(dateLo, "dateLo must not be null");
-        Objects.requireNonNull(dateHi, "dateHi must not be null");
-        Objects.requireNonNull(room, "room must not be null");
+    public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
         List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
-        int maxReservedBookings =
-                maxRangeReservedBookings(dateLo, dateHi, bookings);
+        int maxReservedBookings = maxRangeReservedBookings(dateLo, dateHi, bookings);
         return room.getCapacity() - maxReservedBookings;
     }
 
     @Override
     public List<BookingDto> getAllFutureBookings(Room room) {
-        return bookingDao.getBookings(
-                new Date(), null, null, room, true, BookingState.BOOKED)
+        BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
+                .setDates(new Date[] {new Date(), null})
+                .setRooms(Collections.singletonList(room))
+                .setBookingsStates(Collections.singletonList(BookingState.BOOKED))
+                .build();
+
+        return bookingDao.getBookings(characteristic)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
@@ -244,14 +243,12 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
      */
     @Override
     public Room changeActiveState(Long id) {
-        Room room = findById(id);
+        Room room = findByIdTransactional(id);
         room.setActive(!room.isActive());
         update(room);
 
         return room;
     }
-
-
 
     @Override
     public boolean hasPlanningBooking(Room room) {
