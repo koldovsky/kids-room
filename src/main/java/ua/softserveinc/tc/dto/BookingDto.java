@@ -255,9 +255,10 @@ public class BookingDto implements Serializable {
 
     public void setDateStartTime(Date dateStartTime) {
         this.dateStartTime = dateStartTime;
-        DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
-        this.startTime = df.format(dateStartTime);
-
+        if(startTime == null) {
+            DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
+            startTime = df.format(dateStartTime);
+        }
     }
 
     public Date getDateEndTime() {
@@ -266,8 +267,10 @@ public class BookingDto implements Serializable {
 
     public void setDateEndTime(Date dateEndTime) {
         this.dateEndTime = dateEndTime;
-        DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
-        this.endTime = df.format(dateEndTime);
+        if(endTime == null) {
+            DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
+            endTime = df.format(dateEndTime);
+        }
     }
 
     public String getComment() {

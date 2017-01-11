@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +16,13 @@ import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.server.exception.DuplicateBookingException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.JsonUtil;
-import ua.softserveinc.tc.validator.BookingValidator;
+import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 import ua.softserveinc.tc.validator.TimeValidator;
 import ua.softserveinc.tc.util.TwoTuple;
 
@@ -33,10 +30,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Collections;
 import java.util.Calendar;
 import java.util.Locale;
 
-
+/*
+ * Updated by Sviatoslav Hryb on 11-Jan-2017
+ */
 @RestController
 public class BookingTimeController {
 
@@ -56,7 +56,7 @@ public class BookingTimeController {
     private TimeValidator timeValidator;
 
     @Autowired
-    private BookingValidator bookingValidator;
+    private RecurrentBookingValidator recurrentBookingValidator;
 
     @Autowired
     private MessageSource messageSource;
@@ -69,43 +69,6 @@ public class BookingTimeController {
     public String getRoomProperty(@RequestBody Integer roomId) {
 
         return null;
-    }
-
-    @Transactional
-    @PostMapping(value = "makenewbooking", produces = "application/json; charset=UTF-8")
-    public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos,
-                                             BindingResult bindingResult) {
-        if (bookingService.hasDuplicateBookings(dtos)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ValidationConstants.DUPLICATE_BOOKINGS_MESSAGE);
-        }
-
-        for (BookingDto dto : dtos) {
-            if (!this.timeValidator.validateBooking(dto)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                        ValidationConstants.END_TIME_BEFORE_START_TIME);
-            }
-        }
-        dtos.forEach(dto -> {
-            dto.setUser(userDao.findById(dto.getUserId()));
-            dto.setChild(childService.findByIdTransactional(dto.getKidId()));
-            dto.setRoom(roomService.findByIdTransactional(dto.getRoomId()));
-            dto.setBookingState(BookingState.BOOKED);
-            dto.setKidName(childService.findByIdTransactional(dto.getKidId()).getFullName());
-            dto.setDateStartTime(DateUtil.toDateISOFormat(dto.getStartTime()));
-            dto.setDateEndTime(DateUtil.toDateISOFormat(dto.getEndTime()));
-        });
-
-        List<BookingDto> dto = bookingService.persistBookingsFromDto(dtos);
-
-        if (dto.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
-                    ValidationConstants.ROOM_IS_FULL_MESSAGE);
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dto));
-
-
     }
 
     @GetMapping(value = "getallbookings/{idUser}/{idRoom}",
@@ -134,9 +97,9 @@ public class BookingTimeController {
     }
 
     /**
-     * Receives the list of BookingDto objects from POST http method. If any of the input
-     * parameters are not correct or the system failed to persist all of the bookings from
-     * the dto then method returns ResponseEntity with "Bad Request" http status (400).
+     * Receives the list of BookingDto objects from POST http method and send them for persisting.
+     * If any of the input parameters are not correct or the system failed to persist all of the
+     * bookings from the dto then method returns ResponseEntity with "Bad Request" http status (400).
      * Otherwise returns list of the persisted Bookings in the BookingsDto objects in the body
      * of object of ResponseEntity with http status "OK" (200).
      *
@@ -144,25 +107,27 @@ public class BookingTimeController {
      * @return ResponseEntity with appropriate http status and body that consists list of
      * the BookingsDto objects that represents persisted bookings
      */
+    @PostMapping(value = "makenewbooking", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<String> getBooking(@RequestBody List<BookingDto> dtos) {
+
+        return  getResponseEntity(bookingService.makeBookings(dtos));
+    }
+
+    /**
+     * Receives the list of recurrent BookingDto objects from POST http method and send them for
+     * persisting. If any of the input parameters are not correct or the system failed to persist
+     * all of the bookings from the dto then method returns ResponseEntity with "Bad Request" http
+     * status (400). Otherwise returns list of the persisted Bookings in the BookingsDto objects in
+     * the body of object of ResponseEntity with http status "OK" (200).
+     *
+     * @param dtos list of BookingsDto objects
+     * @return ResponseEntity with appropriate http status and body that consists list of
+     * the BookingsDto objects that represents persisted bookings
+     */
     @PostMapping(value = "makerecurrentbookings", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> makeRecurrentBookings(@RequestBody List<BookingDto> dtos) {
-        ResponseEntity<String> resultResponse;
-        Locale locale = (Locale) request.getSession()
-                .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
-        locale = (locale == null) ? request.getLocale() : locale;
 
-        TwoTuple<List<BookingDto>, String> result = bookingService.makeRecurrentBookings(dtos);
-
-        if (result.getFirst() == null) {
-            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(messageSource.getMessage(result.getSecond(), null, locale));
-
-        } else {
-            resultResponse = ResponseEntity.status(HttpStatus.OK)
-                    .body(new Gson().toJson(result.getFirst()));
-        }
-
-        return resultResponse;
+        return  getResponseEntity(bookingService.makeRecurrentBookings(dtos));
     }
 
     @GetMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
@@ -172,12 +137,17 @@ public class BookingTimeController {
     }
 
 
-    @PostMapping("updaterecurrentbookings")
+    @PostMapping(value = "updaterecurrentbookings", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> updateRecurrentBookingsCtrl(@RequestBody BookingDto recurrentBookingDto,
                                                               BindingResult bindingResult) {
-        bookingValidator.validate(recurrentBookingDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getFieldError().getCode());
+        Locale locale = (Locale) request.getSession()
+                .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
+        locale = (locale == null) ? request.getLocale() : locale;
+
+        if (!recurrentBookingValidator.validate(Collections.singletonList(recurrentBookingDto))) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(messageSource.getMessage(
+                            recurrentBookingValidator.getErrors().get(0), null, locale));
         }
         List<BookingDto> bookings = new ArrayList<>();
         try {
@@ -194,4 +164,33 @@ public class BookingTimeController {
         return ResponseEntity.status(HttpStatus.OK).body(JsonUtil.toJson(bookings));
     }
 
+    /*
+     * Receives a TwoTuple that can contains a list of BookingDto objects
+     * or Error string message. If a TwoTuple contains aforementioned list
+     * then method returns a ResponseEntity with status "Ok" (200) and the
+     * given list in its body. If a TwoTuple contains aforementioned error
+     * message then method returns a ResponseEntity with status "Bad Request"
+     * (400) and the given error message in its body. The given error message
+     * is localized according to the user locale.
+     *
+     * @param resultTuple the given TwoTuple
+     * @return resulting ResponseEntity
+     */
+    private ResponseEntity<String> getResponseEntity(TwoTuple<List<BookingDto>, String> resultTuple) {
+        ResponseEntity<String> resultResponse;
+        Locale locale = (Locale) request.getSession()
+                .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
+        locale = (locale == null) ? request.getLocale() : locale;
+
+        if (resultTuple.getFirst() == null) {
+            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(messageSource.getMessage(resultTuple.getSecond(), null, locale));
+
+        } else {
+            resultResponse = ResponseEntity.status(HttpStatus.OK)
+                    .body(new Gson().toJson(resultTuple.getFirst()));
+        }
+
+        return resultResponse;
+    }
 }
