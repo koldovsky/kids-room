@@ -19,7 +19,7 @@ import ua.softserveinc.tc.entity.Room;
  * Created by Sviatoslav Hryb on 09-Jan-17.
  */
 @Component
-public class InputDateValidatorImpl implements InputDateValidator {
+public class InputDateValidatorImpl implements InputDateTimeValidator {
 
     @Autowired
     private RoomService roomService;

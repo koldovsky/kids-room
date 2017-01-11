@@ -14,7 +14,7 @@ import java.util.List;
  * in list must have the same user, room and dates.
  * Created by Sviatoslav Hryb on 09-Jan-17.
  */
-public interface InputDateValidator {
+public interface InputDateTimeValidator {
     /**
      * Returns the list of errors messages that occurred. If there are
      * no errors then empty list will be returned
