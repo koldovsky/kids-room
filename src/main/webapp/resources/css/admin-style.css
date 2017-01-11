@@ -213,3 +213,17 @@ th.th-size {
 .header-rate {
     margin-bottom: 50px;
 }
+.warningMessage {
+    font-size: 20px;
+    font-weight: bold;
+    color: #383838;
+}
+.messageActive {
+    padding-top: 20px;
+    font-weight: bold;
+}
+
+.admWarningBtn {
+    margin: 10px !important;
+    width: 100px;
+}

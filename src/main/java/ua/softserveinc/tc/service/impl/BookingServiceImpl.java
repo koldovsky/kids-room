@@ -436,9 +436,35 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             listOfBookings.add(startAndEndDates);
         } else {
             listOfBookings = getDatesFromRecurrentBookingDto(dto);
+
         }
 
         return listOfBookings;
+    }
+
+    /**
+     * get all active bookings from the room
+     * @param room room with bookings
+     * @return list of active bookings in the room
+     */
+    public List<BookingDto> getAllActiveBookingsInTheRoom(Room room) {
+        return getBookings(null, room, BookingState.ACTIVE)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * get all planned bookings from the room
+     * @param room room with bookings
+     * @return list of planned bookings in the room
+     */
+    public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
+        List<BookingDto> bookingDtos = getBookings(null, room, BookingState.BOOKED)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+        return bookingDtos;
     }
 
     /*

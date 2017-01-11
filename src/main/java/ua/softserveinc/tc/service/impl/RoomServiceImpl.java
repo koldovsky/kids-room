@@ -56,11 +56,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
     @Autowired
     private BookingDao bookingDao;
 
-
-
-    private static
     @Log
-    Logger log;
+    private static Logger log;
 
     @Override
     public List<Room> findAll() {
@@ -238,6 +235,29 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * function change room state
+     * @param id Room id
+     */
+    @Override
+    public Room changeActiveState(Long id) {
+        Room room = findByIdTransactional(id);
+        room.setActive(!room.isActive());
+        update(room);
+
+        return room;
+    }
+
+    @Override
+    public boolean hasPlanningBooking(Room room) {
+        return !bookingService.getAllPlannedBookingsInTheRoom(room).isEmpty();
+    }
+
+    @Override
+    public boolean hasActiveBooking(Room room) {
+        return !bookingService.getAllActiveBookingsInTheRoom(room).isEmpty();
     }
 
     /**
