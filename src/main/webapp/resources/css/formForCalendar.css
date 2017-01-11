@@ -79,3 +79,8 @@ html, body, .container {
 .bookingbutton {
     width: 125px;
 }
+
+#user-description {
+    height: 60%;
+    resize: none;
+}
