@@ -72,6 +72,21 @@ $(function () {
         }
     });
 
+    $('#userDescriptionDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 400,
+        height: 260,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
         width: 350,
