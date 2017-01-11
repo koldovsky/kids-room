@@ -114,16 +114,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <div class="lead">
+                <div class="lead messageActive">
                     <p class="cancelName ">
                         <spring:message code="room.deactivate"/>
                     </p>
                 </div>
                 <div id ="warningMesages"></div>
-                <button id="deactivateYesButton" class="btn  btn-success">
+                <button id="deactivateYesButton" class="btn  btn-success admWarningBtn">
                     <spring:message code="room.yes_button"/>
                 </button>
-                <button id="deactivateNoButton" class="btn btn-danger" data-dismiss="modal">
+                <button id="deactivateNoButton" class="btn btn-danger admWarningBtn" data-dismiss="modal">
                     <spring:message code="room.no_button"/>
                 </button>
             </div>
@@ -134,9 +134,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <br>
-                <h2><spring:message code="room.activate"/></h2>
-                <button id="activateYesButton" class="btn  btn-success">
+                <div class="lead messageActive">
+                    <spring:message code="room.activate"/>
+                </div>
+                <button id="activateYesButton" class="btn  btn-success ">
                     <spring:message code="room.ok_button"/>
                 </button>
             </div>
