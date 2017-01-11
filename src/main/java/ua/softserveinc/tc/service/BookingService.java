@@ -19,6 +19,10 @@ import java.util.Map;
  */
 public interface BookingService extends BaseService<Booking> {
 
+    List<BookingDto> getAllActiveBookingsInTheRoom(Room room);
+
+    List<BookingDto> getAllPlannedBookingsInTheRoom(Room room);
+
     void calculateAndSetSum(Booking booking);
 
     void calculateAndSetDuration(Booking booking);

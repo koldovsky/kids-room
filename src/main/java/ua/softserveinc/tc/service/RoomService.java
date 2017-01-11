@@ -24,6 +24,12 @@ public interface RoomService extends BaseService<Room> {
 
     List<BookingDto> getAllFutureBookings(Room room);
 
+    Room changeActiveState(Long id);
+
+    boolean hasPlanningBooking(Room room);
+
+    boolean hasActiveBooking(Room room);
+
     /**
      * Returns list of reserved booking for given period of time
      * for given room

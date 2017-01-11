@@ -19,6 +19,35 @@
 
 <sec:authorize access="hasRole('USER')">
     <div id="mobile" class="container">
+            <%--userEventDescription--%>
+        <div class="row">
+            <div class="vertical-center-row">
+                <div align="center">
+                    <div id="userDescriptionDialog" class="dialog" hidden>
+                        <form id="eventDescriptionForm">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                            <div class="form-group">
+                                <label class="col-xs-6" for="eventDescriptionStartAt">
+                                    <spring:message code="event.startAt"/>
+                                    <input type="text" class="text-center form-control" id="eventDescriptionStartAt"
+                                           readonly>
+                                </label>
+                                <label class="col-xs-6" for="eventDescriptionEndAt">
+                                    <spring:message code="event.endAt"/>
+                                    <input type="text" class="text-center form-control" id="eventDescriptionEndAt"
+                                           readonly>
+                                </label>
+                                <br>
+                            </div>
+                            <label>
+                                <spring:message code="event.description"/>
+                            </label>
+                            <textarea class="col-xs-12" type="text" id="user-description"></textarea>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
             <%--bookingUpdatingDialog--%>
         <div class="row">
             <div class="vertical-center-row">
@@ -310,12 +339,18 @@
             </div>
         </div>
 
+
             <%--recurrent-change--%>
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
                     <div id="recurrent-change" title="<spring:message code= "booking.edit"/>" class="dialog" hidden>
                         <form id="choose-updating-booking-form">
+                            <div class="lableBoard">
+                                <label class="small">
+                                    <spring:message code="recurrent.editMessage"/>
+                                </label>
+                            </div>
                             <div class="radio-button">
                                 <label><input type="radio" id="single-update-booking" name="radio-check" checked>
                                     <spring:message code="recurrent.justThisOneBooking"/>
@@ -327,10 +362,10 @@
                                 </label>
                             </div>
 
-                            <button type="button" class="btn btn-success" id="confirm-choose-booking">
+                            <button type="button" class="btn btn-success btn-edit-event-booking" id="confirm-choose-booking">
                                 <spring:message code="ok"/>
                             </button>
-                            <button type="button" class="btn btn-danger pull-right" id="close-choose">
+                            <button type="button" class="btn btn-danger  btn-edit-event-booking pull-right" id="close-choose">
                                 <spring:message code="cancel"/>
                             </button>
 
@@ -454,35 +489,32 @@
         </div>
 
             <%--confirmation-dialog--%>
-        <div class="modal fade">
-            <div class="modal-dialog">
-                <div aclass="modal-body text-center">
-                    <div id="confirmation-dialog-div" class="ui-dialog" title=
-                        <spring:message code="booking.confirmTitle"/> hidden>
-                        <form id="confirm-your-choice">
-                            <div class="confirmDelete">
-                                <p><span style="text-align:center;">
-                                <spring:message code="booking.confirmCancelQuestion1"/> </span></p>
-                                <p><span style="text-align:center;">
-                                <spring:message code="booking.confirmCancelQuestion2"/></span></p>
+                <div class="modal fade">
+                    <div class="modal-dialog">
+                        <div aclass="modal-body text-center">
+                            <div id="confirmation-dialog-div" class="ui-dialog" title=
+                                <spring:message code="booking.confirmTitle"/> hidden>
+                                <form id="confirm-your-choice">
+                                    <div class="confirmDelete">
+                                        <p>
+                                            <spring:message code="booking.confirmCancelQuestion"/>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-success btn-delete-event-booking"
+                                                id="confirmYes">
+                                            <spring:message code="booking.confirmYes"/>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-delete-event-booking pull-right"
+                                                id="confirmNo">
+                                            <spring:message code="booking.confirmNo"/>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-xs-12">
-                                <div class="col-xs-6" style="text-align: center">
-                                    <button type="button" class="btn btn-success" id="confirmYes">
-                                        <spring:message code="booking.confirmYes"/>
-                                    </button>
-                                </div>
-                                <div class=col-xs-6" style="text-align: center">
-                                    <button type="button" class="btn btn-danger" id="confirmNo">
-                                        <spring:message code="booking.confirmNo"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
         <div class="loading" hidden>Loading&#8230;</div>
     </div>
 </sec:authorize>
@@ -861,15 +893,12 @@
         <div class="row">
             <div class="vertical-center-row">
                 <div align="center">
-                    <div id="choose-updating-type" class="dialog" hidden title=<spring:message
-                            code="recurrent.event.title"/>>
+                    <div id="choose-updating-type" title="<spring:message
+                            code="recurrent.event.title"/>" class="dialog" hidden>
                         <form id="choose-updating-form">
-
                             <div class="lableBoard">
-                                <label>
-                                    <small><i>
-                                        <ins><spring:message code="recurrent.editEventMessage"/></ins>
-                                    </i></small>
+                                <label class="small">
+                                    <spring:message code="recurrent.editMessage"/>
                                 </label>
                             </div>
                             <div class="radio-button">
@@ -880,9 +909,9 @@
                                 <label><input type="radio" id="recurrent-update" name="radio"> <spring:message
                                         code="recurrent.allSeries"/></label>
                             </div>
-                            <button type="button" class="btn btn-success btn-edit-event" id="confirm-choose">
+                            <button type="button" class="btn btn-success btn-edit-event-booking" id="confirm-choose">
                                 <spring:message code="ok"/></button>
-                            <button type="button" class="btn btn-danger btn-edit-event" id="cancel-choose">
+                            <button type="button" class="btn btn-danger btn-edit-event-booking pull-right" id="cancel-choose">
                                 <spring:message code="cancel"/></button>
                         </form>
                     </div>
@@ -904,22 +933,18 @@
                     <spring:message code="event.confirmTitle"/> hidden>
                     <form id="confirm-your-choice-event">
                         <div class="confirmDelete">
-                            <p><span style="text-align:center;">
-                                <spring:message code="event.confirmCancelQuestion1"/> </span></p>
-                            <p><span style="text-align:center;">
-                                <spring:message code="event.confirmCancelQuestion2"/></span></p>
+                            <p>
+                                <spring:message code="event.confirmCancelQuestion"/>
+                            </p>
                         </div>
-                        <div class="col-xs-12">
-                            <div class="col-xs-6" style="text-align: center">
-                                <button type="button" class="btn btn-success" id="confirmYesEvent">
-                                    <spring:message code="event.confirmYes"/>
-                                </button>
-                            </div>
-                            <div class=col-xs-6" style="text-align: center">
-                                <button type="button" class="btn btn-danger" id="confirmNoEvent">
-                                    <spring:message code="event.confirmNo"/>
-                                </button>
-                            </div>
+                        <div>
+                            <button type="button" class="btn btn-success btn-delete-event-booking" id="confirmYesEvent">
+                                <spring:message code="event.confirmYes"/>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-delete-event-booking pull-right"
+                                    id="confirmNoEvent">
+                                <spring:message code="event.confirmNo"/>
+                            </button>
                         </div>
                     </form>
                 </div>

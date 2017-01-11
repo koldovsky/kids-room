@@ -135,12 +135,12 @@
     height: 40px;
 }
 
-#btn-inactive, #activateButton {
-    background-color: #e7dbd2;
+.activateButton {
+    background-color: #e7dbd2 !important;
 }
 
-#btn-active, #deactivateButton {
-    background-color: #d3e7bf;
+.deactivateButton {
+    background-color: #d3e7bf !important;
 }
 
 #btn-edit, #btn-edit-room {

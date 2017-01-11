@@ -12,16 +12,6 @@ $(function() {
     if(localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
     }
-});
-
-$('#date-booking').val(dateNow.toISOString().substr(0, 10));
-
-function validateData(startTime, endTime) {
-    var isValid = startTime !== '' && endTime !== '';
-    return isValid;
-}
-
-$().ready(function() {
     $('#booking-table').show();
     $('[data-toggle="tooltip"]').tooltip();
     $('#booking').click(function() {
@@ -33,7 +23,7 @@ $().ready(function() {
         var startISOtime = date + 'T' + startTime + ':00';
         var endISOtime = date + 'T' + endTime + ':00';
 
-        if (validateData(startTime, endTime)) {
+        if (validateEmptyTime(startTime, endTime)) {
             var urlForKids = 'get-kids/' + idUser;
             $.ajax({
                 url: urlForKids,
@@ -41,7 +31,7 @@ $().ready(function() {
                 contentType: 'charset=UTF-8',
                 success: function(result) {
                     var kids = JSON.parse(result);
-                    $.each(kids, function(  i, kid) {
+                    $.each(kids, function(i, kid) {
                         var kidId = kid.id;
                         if ($('#checkboxKid' + kid.id).is(':checked')) {
                             var comment = ($('#child-comment-' + kid.id).val());
@@ -56,11 +46,7 @@ $().ready(function() {
         } else {
             $('#bookingStartTimepicker').css('background-color', 'red');
         }
-
     });
-});
-
-$().ready(function() {
 
     $('#deletingBooking').on('click', function() {
         $('#cancelModal').modal('show');
@@ -72,6 +58,7 @@ $().ready(function() {
             $('#bookingUpdatingDialog').dialog('close');
         });
     });
+
     $('#updatingBooking').click(function() {
         var getData = $('#data-edit').val();
         var inputDate = {
@@ -91,20 +78,21 @@ $().ready(function() {
         var getKidsUrl = 'get-kids/' + idUser;
         addKids(getKidsUrl);
     });
-});
 
-$(function() {
     $('#date-booking').change(function() {
         refreshTable(localStorage['bookingsState']);
     });
+
     $('.picker').timepicker({
         timeFormat: 'H:i',
         step: 1,
-        minTime: '07:00',
-        maxTime: '20:00'
+        minTime: roomWorkingStartTime,
+        maxTime: roomWorkingEndTime
     });
 
 });
+
+$('#date-booking').val(dateNow.toISOString().substr(0, 10));
 
 function selectRoomForManager(roomId) {
     refreshTable(localStorage['bookingsState']);
@@ -114,16 +102,12 @@ function selectRoomForManager(roomId) {
         contentType: 'charset=UTF-8',
         success: function(result){
             result = result.split(' ');
-
             $('#bookingStartTimepicker').val(result[0]);
             $('#bookingEndTimepicker').val(result[1]);
-
             roomWorkingStartTime = result[0];
             roomWorkingEndTime = result[1];
-
             $('.picker').timepicker('option', 'minTime', roomWorkingStartTime);
             $('.picker').timepicker('option', 'maxTime', roomWorkingEndTime);
-
             roomCapacity = result[2];
         }
     });
@@ -153,12 +137,16 @@ function chekBookingState(){
     $('.btn-raised').removeClass('btn-info');
     if(localStorage['bookingsState'] === 'ACTIVE,BOOKED,CALCULATE_SUM,COMPLETED'){
         $('#btn-all').addClass('btn-info');
-    } else if(localStorage['bookingsState'] === 'ACTIVE'){
-        $('#btn-active').addClass('btn-info');
-    } else if(localStorage['bookingsState'] ==='COMPLETED'){
-        $('#btn-leaved').addClass('btn-info');
-    } else{
-        $('#btn-booked').addClass('btn-info');
+    } else {
+        if (localStorage['bookingsState'] === 'ACTIVE') {
+            $('#btn-active').addClass('btn-info');
+        } else {
+            if (localStorage['bookingsState'] === 'COMPLETED') {
+                $('#btn-leaved').addClass('btn-info');
+            } else {
+                $('#btn-booked').addClass('btn-info');
+            }
+        }
     }
 }
 
@@ -244,8 +232,8 @@ function refreshTable(bookingsState) {
             'fnCreatedCell': function(nTd, sData, oData) {
                 var td = '<span class="book-id" id =' + oData.id + '><span id="book-start-time">'
                     + oData.startTime + '</span> - ' + '<span id="book-end-time">' + oData.endTime + '</span></span>';
-                if(localStorage['bookingsState'] ==['BOOKED']){
-                    td+= '<button class="btn btn-sm glyphicon glyphicon-edit edit-button-btn"></button>';
+                if(localStorage['bookingsState'] == ['BOOKED']) {
+                    td += '<button class="btn btn-sm glyphicon glyphicon-edit edit-button-btn"></button>';
                 }
                 $(nTd).empty();
                 $(nTd).append(td);
@@ -288,6 +276,7 @@ function refreshTable(bookingsState) {
     addHilighted(data);
     checkTablePage();
 }
+
 function checkTablePage() {
     $('#booking-table_previous').hide();
     $('#booking-table_paginate').click(function () {
@@ -298,14 +287,6 @@ function checkTablePage() {
         if ($('#booking-table_paginate').find('.active a.page-link').html() == 1)
             $('#booking-table_previous').hide();
     });
-}
-
-function validateRoomTime(time){
-    var result = false;
-    if(time != '' && time >= roomWorkingStartTime && time <= roomWorkingEndTime){
-        result = true;
-    }
-    return result;
 }
 
 function setStartTime(id, startTime) {
@@ -373,6 +354,7 @@ function sendEndTime(id, endTime) {
         }
     });
 }
+
 function addHilighted(bookings) {
     $.each(bookings, function(index, value) {
         if (value.bookingState == 'ACTIVE') {
@@ -389,7 +371,6 @@ function addHilighted(bookings) {
 }
 
 function cancelBooking() {
-
     var str = 'cancelBook/' + idBooking;
     $.ajax({
         url: str,
@@ -475,18 +456,21 @@ function sendBookingToServerForCreate(bookingsArray) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            if (thrownError === 'Not Acceptable') $('#creatingfailue1').modal('show');
-            else if (thrownError === 'Bad Request') $('#creatingfailue2').modal('show');
-            else {
-                //todo refatcor this tresh
-                alert('Unfortunately could not create new booking, please contact admin');
+            if (thrownError === 'Not Acceptable') {
+                $('#noAvailablePlace').modal('show');
+            } else {
+                if (thrownError === 'Bad Request') {
+                    $('#duplicateError').modal('show');
+                } else {
+                    $('#globalError').modal('show');
+                }
             }
         }
     });
 }
 
 $('#booking-table tbody').on('focus', '.inp-arrivalTime', function() {
-    var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
+    var time = new Date().toString().match(constants.regex.timeRegex)[0];
     $(this).val(time);
 });
 
@@ -504,7 +488,7 @@ $('#booking-table tbody').on('click', '.inp-leaveTime', function() {
     if (arrivalTime === '') {
         $('#failureNoArriveTime').modal('show');
     } else if(leaveTime === '') {
-        var time = new Date().toString().match(/\d{2}:\d{2}/)[0];
+        var time = new Date().toString().match(constants.regex.timeRegex)[0];
         $(this).val(time);
     }
     $('#booking-table tbody').on('click', '#leave-btn', function() {
@@ -547,6 +531,7 @@ function handler() {
         $(this).addClass('highlight-row');
     }
 }
+
 $('#booking-table > tbody').on( 'click', 'tr', handler);
 
 $('#closeBookingsLegend').click(function () {

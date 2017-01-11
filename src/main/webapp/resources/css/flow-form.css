@@ -4,14 +4,25 @@
     opacity: 0.93;
     color: white;
 }
+
 .lableBoard {
-    border: 4px double black;
-    background: #beccff;
-    padding: 10px;
+    border: 4px outset #2196f3;
+    text-align: start;
+    background: rgb(255, 255, 255);
+    padding: 5px;
+    margin-bottom: 10px;
 }
-.btn-edit-event {
+
+.btn-edit-event-booking {
+    width: 45%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.btn-delete-event-booking {
     width: 45%;
 }
+
 #ui-id-5 {
     text-align: center;
 }
@@ -19,4 +30,3 @@
 #monthly-days td {
     cursor: hand;
 }
-
