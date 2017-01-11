@@ -19,6 +19,35 @@
 
 <sec:authorize access="hasRole('USER')">
     <div id="mobile" class="container">
+            <%--userEventDescription--%>
+        <div class="row">
+            <div class="vertical-center-row">
+                <div align="center">
+                    <div id="userDescriptionDialog" class="dialog" hidden>
+                        <form id="eventDescriptionForm">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                            <div class="form-group">
+                                <label class="col-xs-6" for="eventDescriptionStartAt">
+                                    <spring:message code="event.startAt"/>
+                                    <input type="text" class="text-center form-control" id="eventDescriptionStartAt"
+                                           readonly>
+                                </label>
+                                <label class="col-xs-6" for="eventDescriptionEndAt">
+                                    <spring:message code="event.endAt"/>
+                                    <input type="text" class="text-center form-control" id="eventDescriptionEndAt"
+                                           readonly>
+                                </label>
+                                <br>
+                            </div>
+                            <label>
+                                <spring:message code="event.description"/>
+                            </label>
+                            <textarea class="col-xs-12" type="text" id="user-description"></textarea>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
             <%--bookingUpdatingDialog--%>
         <div class="row">
             <div class="vertical-center-row">
