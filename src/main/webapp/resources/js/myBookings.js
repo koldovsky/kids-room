@@ -111,3 +111,4 @@ var tableToExcel = (function () {
         paginate();
     };
 })();
+
