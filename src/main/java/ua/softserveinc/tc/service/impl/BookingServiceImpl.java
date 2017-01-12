@@ -460,11 +460,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      * @return list of planned bookings in the room
      */
     public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
-        List<BookingDto> bookingDtos = getBookings(null, room, BookingState.BOOKED)
+        return getBookings(null, room, BookingState.BOOKED)
                 .stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList());
-        return bookingDtos;
     }
 
     /*
