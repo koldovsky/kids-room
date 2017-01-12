@@ -62,7 +62,6 @@ function validateEventDialogData(eventType) {
         dataValidationStrings.push(messages.event.errors.dateDoesntExits);
         timeIsValid = false;
     }
-    //alert(startDate + ' ' + timeIsValid );
     var startTime = $("#" + CREATE_EVENT_DIALOG_START_TIME_ID).timepicker('getTime'); //538
     var endTime = $("#" + CREATE_EVENT_DIALOG_END_TIME_ID).timepicker('getTime'); //550
     isTextInputElementEmpty(CREATE_EVENT_DIALOG_INPUT_TITLE_ID);
