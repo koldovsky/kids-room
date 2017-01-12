@@ -254,15 +254,17 @@ $(function () {
 
     $('#update-recurrent-button').click(function () {
         var valid = false;
-        if (isRadioButtonSelected(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON))
-            valid = validateEventDialogData(CREATE_RECURRENT_EVENT);
-        else if (isRadioButtonSelected(CREATE_EVENT_DIALOG_MONTHLY_EVENT_RADIOBUTTON))
-            valid = validateEventDialogData(CREATE_MONTHLY_EVENT);
+        if (isRadioButtonSelected(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
+            valid = validateEventDialogData(UPDATE_RECURRENT_EVENT);
+        }
+        else {
+            valid = validateEventDialogData(UPDATE_MONTHLY_EVENT);
+        }
         if (valid) {
-            deleteRecurrentEvents(info_event.calEvent.recurrentId);
-            createSingleOrRecurrentEvents();
+            createSingleOrRecurrentEvents(info_event.calEvent.recurrentId);
         }
     });
+
 
 });
 
@@ -277,7 +279,7 @@ function selectRoomForManager(id) {
 
     $.ajax({
         url: 'getroomproperty/' + id,
-        encoding:'UTF-8',
+        encoding: 'UTF-8',
         contentType: 'charset=UTF-8',
         success: function (result) {
             result = result.split(' ');
@@ -290,7 +292,7 @@ function selectRoomForManager(id) {
 
             $.ajax({
                 url: 'getevents/' + id,
-                encoding:'UTF-8',
+                encoding: 'UTF-8',
                 contentType: 'charset=UTF-8',
                 success: function (result) {
                     var objects;
@@ -472,7 +474,7 @@ function increaseTimeByHour(date) {
     return endTimeHours.concat(date.substring(2, 8));
 }
 
-function createSingleOrRecurrentEvents() {
+function createSingleOrRecurrentEvents(idIfEdited) {
     var startDateForCreatingRecurrentEvents = $('#start-date-picker').val() + 'T00:00:00';
     var endDate = $('#end-date-picker').val() + 'T00:00:00';
     var eventColor = $('#color-select').val();
@@ -500,7 +502,7 @@ function createSingleOrRecurrentEvents() {
                 indexForRecurrentDay++;
             }
         });
-        sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor);
+        sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor, idIfEdited);
         $('#start-date-picker').val('');
         clearEventDialogSingleMulti();
         $('#dialog').dialog('close');
@@ -514,7 +516,7 @@ function createSingleOrRecurrentEvents() {
             daysWhenEventIsRecurrent.push(this.innerHTML);
         });
 
-        sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent, eventColor);
+        sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent, eventColor, idIfEdited);
         $('#start-date-picker').val('');
         clearEventDialogSingleMulti();
         $('#dialog').dialog('close');
@@ -558,7 +560,7 @@ function createSingleOrRecurrentEvents() {
     closeDialog('dialog');
 }
 
-function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
+function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor, idIfEdited) {
     var stringWithDaysForRecurrent = '';
 
     dayWhenEventIsRecurrent.forEach(function (item) {
@@ -569,7 +571,7 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
 
     $.ajax({
         type: 'post',
-        encoding:'UTF-8',
+        encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         url: 'getrecurrentevents',
         dataType: 'json',
@@ -584,6 +586,7 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
+            deleteRecurrentEvents(idIfEdited);
             popSetOfEvents(result);
         },
         errors: function (xhr) {
@@ -662,10 +665,10 @@ function animateCalendar(startTime, endTime, setName) {
         $('.fc-event').removeClass("animated").removeClass("pulse").removeClass("infinite");
     }, 4000);
 }
-function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor) {
+function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor, idIfEdited) {
     $.ajax({
         type: 'post',
-        encoding:'UTF-8',
+        encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         url: 'getmonthlyevents',
         dataType: 'json',
@@ -680,9 +683,12 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            popSetOfEvents(result.eventsCreated);
-            if(result.datesWhenNotCreated) {
+            deleteRecurrentEvents(idIfEdited);
+            if (result.datesWhenNotCreated.length) {
                 eventsWereNotCreated(result.datesWhenNotCreated);
+            }
+            if (result.eventsCreated.length) {
+                popSetOfEvents(result.eventsCreated);
             }
         },
         error: function (xhr) {
@@ -709,7 +715,7 @@ function updateSingleEvent() {
 function sendToServerForUpdate(event, roomID) {
     $.ajax({
         type: 'post',
-        encoding:'UTF-8',
+        encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         url: 'geteventforupdate',
         dataType: 'json',
@@ -737,7 +743,7 @@ function sendToServerForUpdate(event, roomID) {
 function sendToServerForDelete(event) {
     $.ajax({
         type: 'post',
-        encoding:'UTF-8',
+        encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         url: 'geteventfordelete',
         dataType: 'json',
@@ -823,7 +829,7 @@ function editRecurrentEventRequest(eventRecurrentId) {
     var path = 'getRecurrentEventForEditing/' + eventRecurrentId;
     $.ajax({
         type: 'GET',
-        encoding:'UTF-8',
+        encoding: 'UTF-8',
         contentType: 'charset=UTF-8',
         dataType: 'json',
         url: path,

@@ -65,6 +65,7 @@ const messages = {
             noDaysSelected: 'Recurrent: At least one day must be selected',
             noKidsSelected: 'At least one kid must be selected',
             bookingTypeMismatchWhenUpdating: 'Can\'t convert weekly booking to single',
+            eventTypeMismatchWhenUpdating: 'Type of event cannot be changed',
             incorrectData: 'Incorrect Data: ',
             roomDeactivate: 'Room cannot be inactive, when it has events and bookings that take place in the future. Please contact manager.',
             dateDoesntExits: 'Chosen date doesn\'t exist, please select valid date',

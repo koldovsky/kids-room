@@ -50,6 +50,11 @@ function validateUpdateSingleDialog() {
 }
 
 function validateEventDialogData(eventType) {
+    if (eventType == UPDATE_RECURRENT_EVENT || eventType == UPDATE_MONTHLY_EVENT) {
+        if (isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)) {
+            dataValidationStrings.push(messages.event.errors.eventTypeMismatchWhenUpdating);
+        }
+    }
     var startDate = $.datepicker.parseDate("yy-mm-dd", $('#' + CREATE_EVENT_DIALOG_START_DATE_ID).val()); // 535
     var endDate = $.datepicker.parseDate("yy-mm-dd", $('#' + CREATE_EVENT_DIALOG_END_DATE_ID).val()); // 535
     var timeIsValid = true;
@@ -60,23 +65,19 @@ function validateEventDialogData(eventType) {
     var startTime = $("#" + CREATE_EVENT_DIALOG_START_TIME_ID).timepicker('getTime'); //538
     var endTime = $("#" + CREATE_EVENT_DIALOG_END_TIME_ID).timepicker('getTime'); //550
     isTextInputElementEmpty(CREATE_EVENT_DIALOG_INPUT_TITLE_ID);
-    if (eventType == CREATE_SINGLE_EVENT && timeIsValid) {
-        validateTime(startDate, null, startTime, endTime);
+    if (timeIsValid) {
+        if (eventType == CREATE_SINGLE_EVENT) {
+            validateTime(startDate, null, startTime, endTime);
+        } else {
+            validateTime(startDate, endDate, startTime, endTime);
+        }
     }
-    if (eventType == CREATE_RECURRENT_EVENT || eventType == UPDATE_RECURRENT_EVENT && timeIsValid) {
-        validateTime(startDate, endDate, startTime, endTime);
+    if (eventType == CREATE_RECURRENT_EVENT || eventType == UPDATE_RECURRENT_EVENT) {
         validateDaysOfWeekSelection(CREATE_EVENT_DIALOG_DAYS_OF_WEEK);
     }
 
-    if (eventType == CREATE_MONTHLY_EVENT || eventType == UPDATE_MONTHLY_EVENT && timeIsValid) {
-        validateTime(startDate, endDate, startTime, endTime);
+    if (eventType == CREATE_MONTHLY_EVENT || eventType == UPDATE_MONTHLY_EVENT) {
         validateDaysOfMonthSelection();
-    }
-
-    if (eventType == UPDATE_RECURRENT_EVENT) {
-        if (isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)) {
-            dataValidationStrings.push(messages.event.errors.bookingTypeMismatchWhenUpdating);
-        }
     }
 
     return isValidationSuccessful();
