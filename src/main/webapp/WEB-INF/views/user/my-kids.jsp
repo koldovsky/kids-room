@@ -7,7 +7,7 @@
 
 <%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 
-<link rel='stylesheet' href='resources/css/mykidslist.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/mykidslist.css'>
 
 <script src="${pageContext.request.contextPath}/resources/js/mykidslist.js"></script>
 
@@ -31,7 +31,7 @@
 </c:if>
 
 <c:if test="${!kids.isEmpty()}">
-    <img id="icon-png" src="resources/img/kids_icon.png" />
+    <img id="icon-png" src="${pageContext.request.contextPath}/resources/img/kids_icon.png" />
     <h2>
         <spring:message code="kid.list" />
     </h2>

@@ -6,7 +6,7 @@
 <c:url value="/j_spring_security_check" var="allBookingsPerParentURL" />
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<link rel='stylesheet' href='resources/css/user-my-report.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/user-my-report.css'>
 <script src="${pageContext.request.contextPath}/resources/js/myBookings.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/printMyBookings.js"></script>
 

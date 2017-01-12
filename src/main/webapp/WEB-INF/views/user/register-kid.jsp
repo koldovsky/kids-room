@@ -6,7 +6,7 @@
 <%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
-<link rel='stylesheet' href='resources/css/registerkid.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/registerkid.css'>
 <script src="${pageContext.request.contextPath}/resources/js/comment-box.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/kid-registration.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 <form:form id="kidregistrform" enctype="application/x-www-form-urlencoded" action="registerkid"
            method="post" modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>">
 
-    <img class="icon-png" src="resources/img/edit.png"/>
+    <img class="icon-png" src="${pageContext.request.contextPath}/resources/img/edit.png"/>
     <h2>
         <spring:message code="kid.register"/>
     </h2>

@@ -4,12 +4,12 @@
 
 <%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
-<link rel='stylesheet' href='resources/css/admin-config.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/admin-config.css'>
 
 <form:form class = "config"  enctype="application/x-www-form-urlencoded"
 modelAttribute="<%=AdminConstants.ATR_CONFIG %>" action="adm-config" method="post">
 
-<img id="config-logo"src="resources/img/config.png"/>
+<img id="config-logo"src="${pageContext.request.contextPath}/resources/img/config.png"/>
 <h3 id="title"><spring:message code="administrator.configuration" /></h3>
 
 <form:errors path="errorMsg" cssClass="error" />

@@ -6,15 +6,15 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 
 
-<link rel="stylesheet" type="text/css" href="resources/css/jquery.timepicker.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js"></script>
 
-<link rel='stylesheet' href='resources/css/edit-booking.css'>
-<link href='resources/css/flow-form.css' rel='stylesheet'/>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/edit-booking.css'>
+<link href='${pageContext.request.contextPath}/resources/css/flow-form.css' rel='stylesheet'/>
 
 <div class="container">
     <div class="table-edit">
@@ -364,6 +364,6 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/edit-booking.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-booking-time.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-booking-time.js"></script>

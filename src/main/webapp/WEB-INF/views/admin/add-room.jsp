@@ -5,8 +5,8 @@
 <%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
 
-<link rel="stylesheet" type="text/css" href="resources/css/admin-style.css">
-<link rel="stylesheet" type="text/css" href="resources/css/button-styles.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
 
 
 <body>

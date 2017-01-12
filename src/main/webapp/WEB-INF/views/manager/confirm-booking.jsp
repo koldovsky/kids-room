@@ -2,7 +2,7 @@
 <%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<link rel='stylesheet' href='resources/css/listBookedChildren.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/listBookedChildren.css'>
 <c:url value="/j_spring_security_check" var="listChildrenURL" />
 
 <script src="${pageContext.request.contextPath}/resources/js/bookedkids.js"></script>

@@ -27,7 +27,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
 
         CriteriaQuery<Long> q = cb.createQuery(Long.class);
         Root<Event> r = q.from(Event.class);
-        Expression maxExpression = cb.max(r.get("recurrentId"));
+        Expression<Long> maxExpression = cb.max(r.get("recurrentId"));
 
         CriteriaQuery<Long> select = q.select(maxExpression);
 
