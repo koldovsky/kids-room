@@ -67,10 +67,11 @@ const messages = {
             noDaysSelected: 'Повторювані: Як мінімум один день повинен бути вибраним',
             noKidsSelected: 'Як мінімум одна дитина повинна бути вибрана',
             bookingTypeMismatchWhenUpdating: 'Неможливо перетворити щотижневе бронювання в одноденне',
+            eventTypeMismatchWhenUpdating: 'Неможливо змінити тип події',
             incorrectData: 'Невірні дані: ',
             roomDeactivate: 'Кімната не може бути деактивованою, оскільки вона має зареєстровані майбутні події. Будь ласка, сконтактуйтесь з менеджером.',
             dateDoesntExits: 'Вказаної дати не має у календарі, будь ласка, оберіть інакшу',
-            cannotCreateEventsForNonExistingDates: 'Не вдалось створити події на певні дати, так як дат не існує'
+            cannotCreateEventsForNonExistingDates: 'Не вдалось створити події на певні дати, так як їх не має у календарі'
         }
     },
     notCorrect: {

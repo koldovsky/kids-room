@@ -157,8 +157,11 @@ public class CalendarServiceImpl implements CalendarService {
 
         List<String> daysWerentCreated = new LinkedList<>();
         List<Event> res = new LinkedList<>();
+
         Calendar calendarEndDate = Calendar.getInstance();
         calendarEndDate.setTime(dateForMonthlyEnd);
+        Calendar calendarStartDate = Calendar.getInstance();
+        calendarStartDate.setTime(dateForMonthlyStart);
 
         Calendar calendarWithEndTime = Calendar.getInstance();
 
@@ -171,6 +174,11 @@ public class CalendarServiceImpl implements CalendarService {
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
             for (int day : days) {
 
+                if ((calendar.get(Calendar.MONTH) == calendarStartDate.get(Calendar.MONTH)) &&
+                        (calendarStartDate.get(Calendar.DAY_OF_MONTH) > day)) {
+                    continue;
+                }
+
                 if ((calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
                         (calendarEndDate.get(Calendar.DAY_OF_MONTH) < day)) {
                     break;
@@ -178,10 +186,6 @@ public class CalendarServiceImpl implements CalendarService {
 
                 if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH) >= day) {
                     calendar.set(Calendar.DAY_OF_MONTH, day);
-                    if (dateForMonthlyStart.getTime() >
-                            calendar.getTimeInMillis()) {
-                        continue;
-                    }
                 } else {
                     daysWerentCreated.add(day + "/" + (calendar.get(Calendar.MONTH) + 1) +
                             "/" + calendar.get(Calendar.YEAR));
@@ -214,6 +218,7 @@ public class CalendarServiceImpl implements CalendarService {
             calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
         eventDao.saveSetOfEvents(res);
+
         return new EventsCreatingResultsDto(
                 eventService.getListOfEventDto(res), daysWerentCreated);
     }
