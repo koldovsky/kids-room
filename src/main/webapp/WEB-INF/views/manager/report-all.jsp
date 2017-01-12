@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url value="/j_spring_security_check" var="allURL" />
 
-<link rel='stylesheet' href='resources/css/report.css'>
-<link rel='stylesheet' href='resources/css/disable-room-picker.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/report.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/disable-room-picker.css'>
 
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 

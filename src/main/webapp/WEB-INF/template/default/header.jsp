@@ -5,8 +5,8 @@
 
 <div class="tophead">
     <div class="logo">
-        <a href="/home">
-        <img src="resources/img/logo.png" width="300"  />
+        <a href="<c:url value="/home"/>">
+        <img src="${pageContext.request.contextPath}/resources/img/logo.png" width="300"  />
         </a>
     </div>
 </div>
