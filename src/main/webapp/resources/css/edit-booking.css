@@ -130,25 +130,28 @@ html, body, .container {
 #bookingUpdatingDialog textarea {
     resize : none;
 }
-#bookingLegendModal [class*="glyphicon-stop"]{
+#bookingLegendModal [class*="glyphicon-stop"] {
     padding-top: 20px;
     font-size: 50px;
     vertical-align: middle;
 }
-#bookingLegendModal [class*="modal-footer"]{
+#bookingLegendModal [class*="modal-footer"] {
     padding-top: 100px;
 }
-.active{
+.active {
     color: #85eb6b;;
 }
-.completed{
+.completed {
     color: #d6d6d6;
 }
-.selected{
+.selected {
     color: #adadad;
 }
-
-.warningBtn{
+.warningBtn {
     width: 120px !important;
 }
+.errorMessage {
+    padding-top: 20px;
+}
+
 
