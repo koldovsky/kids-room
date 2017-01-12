@@ -204,7 +204,9 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div align="center">
-
+                    <br>
+                    <h3><spring:message code="booking.incorrectArrive"/></h3>
+                    <h4><spring:message code="booking.enterCorrectTime"/></h4>
                     <button type="button" class="btn btn-success" data-dismiss="modal"><spring:message
                             code="booking.close"/></button>
 
