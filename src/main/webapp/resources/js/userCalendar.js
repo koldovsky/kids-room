@@ -72,6 +72,21 @@ $(function () {
         }
     });
 
+    $('#userDescriptionDialog').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 400,
+        height: 260,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
         width: 350,
@@ -436,16 +451,19 @@ function makeISOTime(clickDate, idOfTimePicker) {
     var timepickerHours = installedTime.getHours();
     if (timepickerMinutes === 0) {
         timepickerMinutes = '00';
-    } else {
+    } else if(timepickerMinutes < 10) {
+        timepickerMinutes = '0' + timepickerMinutes;
+    } else{
         timepickerMinutes = timepickerMinutes.toString();
     }
 
-    if (timepickerHours < 10) {
+    if(timepickerHours === 0) {
+        timepickerHours = '00';
+    } else if (timepickerHours < 10) {
         timepickerHours = '0' + timepickerHours.toString();
     } else {
         timepickerHours = timepickerHours.toString();
     }
-
     return clickDate.substring(0, 11) + timepickerHours + ':' +
         timepickerMinutes + clickDate.substring(16);
 }
@@ -939,106 +957,14 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             $('#make-recurrent-booking').dialog('open');
         },
 
-        eventMouseover: function (calEvent) {
-
-            cursorIsOverEvent = false;
-            var eventInfo = $('.eventInfo');
-            var textArea = $('#text-area');
-
-            if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
-                if (calEvent.description != "") {
-                    eventDescription = calEvent.description
-                }
-
-                $(this).mouseover(function (e) {
-                    $(this).css('z-index', 10000);
-                    $('#eventTitle').html(calEvent.title);
-                    $('#startTime').html(messages.date.startEventDate + '<b>' + calEvent.start.format('HH:mm'));
-                    $('#endTime').html(messages.date.endEventDate + '<b>' + calEvent.end.format('HH:mm'));
-                    $('#eventDescription').html(messages.date.description);
-                    textArea.css({
-                        'height': parseInt(eventInfo.css('height')) - 100,
-                        'width': parseInt(eventInfo.css('width')) - 30,
-                        'resize': 'none'
-                    });
-                    if (calEvent.description != '') {
-                        textArea.val(eventDescription);
-                    } else {
-                        textArea.val(messages.info.noDescription);
-                    }
-                    eventInfo.delay(200).fadeTo(200, 1);
-
-                    eventInfo.mouseover(function () {
-                        eventInfo.show();
-                    });
-
-                    if (cursorIsOverEvent == false) {
-                        cursorOverEventX = e.pageX;
-                        cursorOverEventY = e.pageY;
-                        cursorIsOverEvent = true;
-                    }
-                    else if (cursorIsOverEvent == true) {
-                        return;
-                    }
-
-                }).mousemove(function (e) {
-
-                    var eventInfoHeight = parseInt(eventInfo.css('height'));
-                    var eventInfoWidth = parseInt(eventInfo.css('width'));
-                    var windowWidth = $(document).width();
-                    var windowHeight = $(document).height();
-
-                    if (cursorOverEventX > windowWidth - eventInfoWidth * 1.5) {
-                        if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
-                            eventInfo.css('top', e.pageY - eventInfoHeight);
-                            eventInfo.css('left', e.pageX - eventInfoWidth);
-                        } else {
-                            eventInfo.css('top', e.pageY + 20);
-                            eventInfo.css('left', e.pageX - eventInfoWidth);
-                        }
-                    } else {
-                        if (cursorOverEventY > windowHeight - eventInfoHeight * 2) {
-                            eventInfo.css('top', e.pageY - eventInfoHeight);
-                            eventInfo.css('left', e.pageX + 10);
-                        } else {
-                            eventInfo.css('top', e.pageY + 20);
-                            eventInfo.css('left', e.pageX + 10);
-                        }
-                    }
-                });
-            }
-        },
-
-        eventMouseout: function (calEvent) {
-            $(document).ready(function () {
-                if (calEvent.type === 'event') {
-                    cursorIsOverEvent = false;
-                    var countdown;
-                    var eventInfo = $(".eventInfo");
-
-                    eventInfo.show().hover(function () {
-                        clearTimeout(countdown);
-                    });
-
-                    countdown = setTimeout(function () {
-                        eventInfo.hide();
-                    }, 1000);
-
-                    eventInfo.mouseout(function () {
-                        eventInfo.hide();
-                    });
-                }
-            });
-        },
-
         eventClick: function (calEvent, data, view) {
 
-            var eventDescription = 'none';
-            if (calEvent.description != '') {
-                eventDescription = calEvent.description
-            }
-
             if (calEvent.type === 'event' || calEvent.color === NOT_SYNCHRONIZED) {
+                $('#bookingUpdatingDialog').dialog('option', 'title', calEvent.title);
+                $('#user-description').val(calEvent.description);
+                $('#eventDescriptionStartAt').val(calEvent.start.format('HH:mm'));
+                $('#eventDescriptionEndAt').val(calEvent.end.format('HH:mm'));
+                $('#userDescriptionDialog').dialog('open');
                 return;
             }
 

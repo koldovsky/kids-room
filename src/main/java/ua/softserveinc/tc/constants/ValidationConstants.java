@@ -61,12 +61,12 @@ public final class ValidationConstants {
 
     public static final String RECURRENT_BOOKING = "idBook";
     public static final String VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
-    public static final String END_TIME_BEFORE_START_TIME = "endtime.before.starttime";
-    public static final String BAD_TIME_FORMAT = "bad.time.format";
+    public static final String END_TIME_BEFORE_START_TIME = "timeValidation.endTimeBeforeStart";
+    public static final String BAD_TIME_FORMAT = "timeValidation.badTimeFormat";
+    public static final String OUT_OF_WORKING_HOURS = "timeValidation.outOfWorkingHours";
     public static final String DUPLICATE_BOOKING_MESSAGE = "duplicate.booking";
     public static final String DUPLICATE_BOOKINGS_MESSAGE = "Sorry, room is already booked for your kid at this time";
     public static final String NO_DAYS_FOR_BOOKING = "no.day.forBook";
-
 
     public static final String ROOM_NAME = "name";
     public static final String ROOM_ADDRESS = "address";
