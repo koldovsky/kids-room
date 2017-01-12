@@ -456,15 +456,8 @@ function sendBookingToServerForCreate(bookingsArray) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            if (thrownError === 'Not Acceptable') {
-                $('#noAvailablePlace').modal('show');
-            } else {
-                if (thrownError === 'Bad Request') {
-                    $('#duplicateError').modal('show');
-                } else {
-                    $('#globalError').modal('show');
-                }
-            }
+            $('#errorMessage').html(xhr.responseText);
+            $('#errorWindow').modal('show');
         }
     });
 }

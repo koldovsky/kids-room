@@ -292,41 +292,12 @@
         </div>
     </div>
 </div>
-<div id="noAvailablePlace" class="modal fade">
+<div id="errorWindow" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body-err">
                 <div align="center">
-                    <br>
-                    <h4><spring:message code="booking.noAvailablePlaces"/></h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
-                            code="booking.close"/></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="duplicateError" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body-err">
-                <div align="center">
-                    <br>
-                    <h4><spring:message code="booking.duplicateError"/></h4>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
-                            code="booking.close"/></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="globalError" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body-err">
-                <div align="center">
-                    <br>
-                    <h4><spring:message code="booking.globalError"/></h4>
+                    <div id="errorMessage" class="lead errorMessage"></div>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><spring:message
                             code="booking.close"/></button>
                 </div>
