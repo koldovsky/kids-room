@@ -511,6 +511,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .collect(Collectors.toList());
     }
 
+    public void cancelAllActiveAndPlannedRoomBookings(Room room) {
+        bookingDao.cancellActiveAndPlannedBookingsInRoom(room);
+    }
+
     /*
      * Constructs and returns the list of the arrays of the Date objects
      * from given recurrent BookingDto object. If the given object is null,

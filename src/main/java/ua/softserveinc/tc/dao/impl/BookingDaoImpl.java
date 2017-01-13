@@ -5,18 +5,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.Collections;
-import java.util.List;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /*
  * Rewritten by Sviatoslav Hryb on 05.10.2017
@@ -162,6 +161,19 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         oldBookings.forEach(entityManager::merge);
         newBookings.forEach(entityManager::persist);
         return newBookings;
+    }
+
+    @Override
+    @Transactional
+    public void cancellActiveAndPlannedBookingsInRoom(Room room) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Booking> criteriaUpdate = builder.createCriteriaUpdate(Booking.class);
+        Root<Booking> root = criteriaUpdate.from(Booking.class);
+        criteriaUpdate.set(BookingConstants.Entity.STATE, BookingState.CANCELLED)
+                .where(builder.and(builder.equal(root.get(BookingConstants.Entity.ROOM), room)),
+                       builder.or(builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.ACTIVE),
+                       builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.BOOKED)));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 
     @Override
