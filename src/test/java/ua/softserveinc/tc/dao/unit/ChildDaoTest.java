@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.dao;
+package ua.softserveinc.tc.dao.unit;
 
 import org.junit.Assert;
 import org.junit.Before;

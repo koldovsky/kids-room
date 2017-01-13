@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.dao;
+package ua.softserveinc.tc.dao.integration;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;

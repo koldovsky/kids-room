@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.dao;
+package ua.softserveinc.tc.dao.unit;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;

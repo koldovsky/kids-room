@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.dao;
+package ua.softserveinc.tc.dao.integration;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
@@ -18,10 +18,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.categories.IntegrationTest;
 import ua.softserveinc.tc.config.TestBaseConfigClass;
-import ua.softserveinc.tc.dao.TokenDao;
-import ua.softserveinc.tc.dao.UserDao;
-import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.messaging.TokenMessages;
+import ua.softserveinc.tc.dao.EventDao;
 
 @Category(IntegrationTest.class)
 @DirtiesContext
@@ -31,32 +28,17 @@ import ua.softserveinc.tc.messaging.TokenMessages;
         TransactionalTestExecutionListener.class,
         DbUnitTestExecutionListener.class})
 @WebAppConfiguration
-public class TokenDaoIT {
+public class EventDaoIT {
 
     @Autowired
-    private TokenDao tokenDao;
+    private EventDao eventDao;
 
-    @Autowired
-    private UserDao userDao;
-
-    @DatabaseSetup(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = "classpath:eventDao/no-event.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = "classpath:eventDao/no-event.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
-    public void testFindByUser() {
-        User user = userDao.getUserByEmail("user@softserveinc.com");
-        Assert.assertEquals(TokenMessages.FIND_BY_USER_ERROR, "abcd", tokenDao.findByUser(user).getToken());
-    }
-
-    @DatabaseSetup(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testFindByToken() {
-        User user = userDao.getUserByEmail("user@softserveinc.com");
-        Assert.assertEquals(TokenMessages.FIND_BY_TOKEN_ERROR, Long.valueOf(1L),
-                tokenDao.findByToken("abcd").getId());
-
-        Assert.assertEquals(TokenMessages.FIND_BY_TOKEN_ERROR, user.getFirstName(),
-                tokenDao.findByToken("abcd").getUser().getFirstName());
+    public void testGetMaxRecurrentIdIfThereIsNoEvent() {
+        Assert.assertEquals(Long.valueOf(0), eventDao.getMaxRecurrentId());
     }
 
 }
+
