@@ -6,10 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.impl.UserDetailsServiceImpl;
-import ua.softserveinc.tc.util.UserUtils;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

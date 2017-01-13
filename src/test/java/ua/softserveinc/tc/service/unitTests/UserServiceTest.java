@@ -9,8 +9,6 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.impl.UserServiceImpl;
-import ua.softserveinc.tc.util.RoomUtils;
-import ua.softserveinc.tc.util.UserUtils;
 
 import java.util.Date;
 import java.util.List;

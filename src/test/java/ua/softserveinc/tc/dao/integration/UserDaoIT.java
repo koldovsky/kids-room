@@ -21,7 +21,6 @@ import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.util.UserUtils;
 
 import java.util.Arrays;
 import java.util.List;

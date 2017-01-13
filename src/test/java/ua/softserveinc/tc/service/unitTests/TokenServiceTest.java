@@ -1,17 +1,13 @@
 package ua.softserveinc.tc.service.unitTests;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import ua.softserveinc.tc.dao.TokenDao;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.impl.TokenServiceImpl;
-import ua.softserveinc.tc.util.TokenUtils;
-import ua.softserveinc.tc.util.UserUtils;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

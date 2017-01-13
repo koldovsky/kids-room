@@ -11,7 +11,6 @@ import ua.softserveinc.tc.dao.impl.ChildDaoImpl;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.messaging.ChildMessages;
-import ua.softserveinc.tc.util.ChildsUtils;
 
 import java.text.ParseException;
 import java.util.List;
