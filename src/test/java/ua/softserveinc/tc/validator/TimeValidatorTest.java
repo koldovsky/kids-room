@@ -35,7 +35,7 @@ public class TimeValidatorTest {
         when(room.getWorkingHoursEnd()).thenReturn("20:00");
         when(bookingDto.getRoomId()).thenReturn(1L);
         when(bookingDto.getStartTime()).thenReturn("08:00");
-        when(roomService.findById(bookingDto.getRoomId())).thenReturn(room);
+        // when(roomService.findById(bookingDto.getRoomId())).thenReturn(room);
     }
 
     @Test

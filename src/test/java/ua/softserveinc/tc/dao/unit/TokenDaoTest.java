@@ -14,6 +14,8 @@ import ua.softserveinc.tc.dao.impl.TokenDaoImpl;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.messaging.TokenMessages;
+import ua.softserveinc.tc.util.TokenUtils;
+import ua.softserveinc.tc.util.UserUtils;
 
 import static junitparams.JUnitParamsRunner.$;
 import static org.mockito.Mockito.times;
