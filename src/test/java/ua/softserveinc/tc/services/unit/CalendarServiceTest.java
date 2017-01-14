@@ -62,10 +62,10 @@ public class CalendarServiceTest {
     @Test
     @Parameters(method = "getEvents")
     public void testFindEventByRoomId(List<Event> listOfEvent, Long roomId) {
-        when(roomService.findById(roomId)).thenReturn(new Room());
-        when(roomService.findById(roomId).getEvents()).thenReturn(listOfEvent);
+        when(roomService.findEntityById(roomId)).thenReturn(new Room());
+        when(roomService.findEntityById(roomId).getEvents()).thenReturn(listOfEvent);
 
-        verify(roomService, times(0)).findById(roomId);
+        verify(roomService, times(0)).findEntityById(roomId);
     }
 
     private static final Object[] getEvents() {
