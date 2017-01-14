@@ -30,7 +30,7 @@ $('.for-table tbody').on('click', '.activateButton', function () {
 
 function changeActiveRoomState(roomId, btn) {
     var src = 'adm-edit-room?id=' + roomId;
-    var inputData = {id: roomId};
+    var inputData = {id : roomId};
     $.ajax({
         url: src,
         type: 'POST',
@@ -43,7 +43,7 @@ function changeActiveRoomState(roomId, btn) {
 
 function verifyRoomBookingState(roomId) {
     var src = 'adm-edit-room\\warnings';
-    var inputData = {id: roomId};
+    var inputData = {id : roomId};
     var warningMessages = [];
     $.ajax({
         url: src,
@@ -57,9 +57,9 @@ function verifyRoomBookingState(roomId) {
                 if (data.includes(constants.room.warnings.planning)) {
                     warningMessages.push(messages.room.warnings.planning);
                 }
-                $('#warningMesages').html('');
+                $('#warningMessages').html('');
                 $.each(warningMessages, function (index, value) {
-                    $('#warningMesages').append('<div class = warningMessage>' + value + '</div>');
+                    $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
                 })
             }
         }
