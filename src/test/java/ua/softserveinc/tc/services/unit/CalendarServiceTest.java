@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.services;
+package ua.softserveinc.tc.services.unit;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;

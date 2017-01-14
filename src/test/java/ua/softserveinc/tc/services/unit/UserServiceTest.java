@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.services;
+package ua.softserveinc.tc.services.unit;
 
 import org.junit.Assert;
 import org.junit.Before;
