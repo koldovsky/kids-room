@@ -39,9 +39,15 @@ public interface BookingService extends BaseService<Booking> {
 
     Date replaceBookingTime(Booking booking, String time);
 
-    BookingDto getRecurrentBookingForEditingById(long bookingId);
-
-    List<BookingDto> updateRecurrentBookings(BookingDto recurrentBookingDtos);
+    /**
+     * Create BookingDto object that contains start and end date for recurrent period of time,
+     * and weekdays arrays. If the input parameter is null or is not corresponding to existed
+     * recurrent Id then method returns null.
+     *
+     * @param recurrentId the given recurrent Id
+     * @return the appropriate BookingDto object
+     */
+    BookingDto getRecurrentBookingForEditingById(long recurrentId);
 
     /**
      * Gets the all bookings by given start and end date, booking states.
@@ -148,6 +154,19 @@ public interface BookingService extends BaseService<Booking> {
      * @return appropriate TwoTuple object
      */
     TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos);
+
+    /**
+     * Receives the BookingDto object. Then validates the input parameter for
+     * correctness and update all the objects. If any of the input parameters are not
+     * correct or the system failed to update all of the bookings from the dto then method
+     * returns TwoTuple where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
+     * BookingDto objects, and second equals to null.
+     *
+     * @param bookingDto the BookingsDto object
+     * @return appropriate TwoTuple object
+     */
+    TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto);
 
     /**
      * Normalizes the list of BookingDto objects. Set if not exists room,

@@ -141,34 +141,24 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Booking> getRecurrentBookingsByRecurrentId(Long recurrentId) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
         criteria.select(root).where(builder.equal(
-                root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId)).
-                orderBy(builder.asc(
+                root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId))
+                    .orderBy(builder.asc(
                         root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override
-    @Transactional(rollbackForClassName = {"Exception"})
-    public List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings,
-                                                    List<Booking> newBookings) {
-        oldBookings.forEach(entityManager::merge);
-        newBookings.forEach(entityManager::persist);
-        return newBookings;
-    }
-
-    @Override
     public List<Booking> persistRecurrentBookings(List<Booking> bookings) {
-        List<Booking> resultBookings = new ArrayList<>();
-        bookings.forEach(booking -> resultBookings.add(entityManager.merge(booking)));
-        return resultBookings;
+        bookings.forEach(entityManager::persist);
+
+        return bookings;
 
     }
 }
