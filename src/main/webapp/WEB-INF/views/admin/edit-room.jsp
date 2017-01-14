@@ -119,7 +119,7 @@
                         <spring:message code="room.deactivate"/>
                     </p>
                 </div>
-                <div id ="warningMesages"></div>
+                <div id ="warningMessages"></div>
                 <button id="deactivateYesButton" class="btn  btn-success admWarningBtn">
                     <spring:message code="room.yes_button"/>
                 </button>

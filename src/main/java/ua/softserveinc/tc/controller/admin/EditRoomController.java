@@ -57,7 +57,6 @@ public class EditRoomController {
     @PostMapping("/adm-edit-room")
     @ResponseBody
     public String roomBlockUnblock(@RequestParam Long id) {
-        //todo deactivate all boockings cascade
         RoomDto roomDto = new RoomDto(roomService.changeActiveState(id));
 
         return new Gson().toJson(roomDto);
@@ -68,7 +67,7 @@ public class EditRoomController {
      * @param id room id
      * @return
      */
-    @GetMapping("/adm-edit-room/is-active-booking")
+    @GetMapping("/adm-edit-room/warnings")
     @ResponseBody
     public String roomIsActiveBooking(@RequestParam Long id) {
         Room room = roomService.findByIdTransactional(id);

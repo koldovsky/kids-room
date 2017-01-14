@@ -139,7 +139,7 @@
     background-color: #e7dbd2 !important;
 }
 
-.deactivateButton {
+#btn-active, .deactivateButton {
     background-color: #d3e7bf !important;
 }
 
