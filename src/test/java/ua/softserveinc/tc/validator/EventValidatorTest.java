@@ -30,22 +30,16 @@ import static org.mockito.Mockito.when;
  */
 public class EventValidatorTest {
 
-    @Mock
     private EventDto eventDto;
 
-    @Mock
     private MonthlyEventDto monthlyEventDto;
 
-    @Mock
     private RecurrentEventDto recurrentEventDto;
 
-    @Mock
     private Errors errorsForSingle;
 
-    @Mock
     private Errors errorsForMonthly;
 
-    @Mock
     private Errors errorsForWeekly;
 
     @Mock
@@ -65,8 +59,6 @@ public class EventValidatorTest {
         errorsForSingle = new BindException(eventDto, "event");
         errorsForMonthly = new BindException(monthlyEventDto, "eventMonthly");
         errorsForWeekly = new BindException(recurrentEventDto, "eventRecurrent");
-        monthlyEventDto.setRecurrentType(EventConstants.TypeOfRecurentEvent.MONTHLY);
-        recurrentEventDto.setRecurrentType(EventConstants.TypeOfRecurentEvent.WEEKLY);
     }
 
     public void initEventDto() {
@@ -81,14 +73,21 @@ public class EventValidatorTest {
         eventDto.setColor("Green");
         eventDto.setDescription("");
         eventDto.setRoomId(1L);
+
         when(roomService.findByIdTransactional(1L)).thenReturn(room);
         when(room.isActive()).thenReturn(true);
+
+
         monthlyEventDto = new MonthlyEventDto(eventDto);
         recurrentEventDto = new RecurrentEventDto(eventDto);
+
         end.add(Calendar.DAY_OF_MONTH, 2);
-        recurrentEventDto.setEndTime(sdf.format(end.getTime()));
         String recurrentDays = "Mon";
+        recurrentEventDto.setEndTime(sdf.format(end.getTime()));
         recurrentEventDto.setDaysOfWeek(recurrentDays);
+
+        monthlyEventDto.setRecurrentType(EventConstants.TypeOfRecurentEvent.MONTHLY);
+        recurrentEventDto.setRecurrentType(EventConstants.TypeOfRecurentEvent.WEEKLY);
     }
 
     @Test

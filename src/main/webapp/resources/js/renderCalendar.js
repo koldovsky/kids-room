@@ -50,11 +50,11 @@ $(function () {
         },
         show: {
             effect: 'drop',
-            duration: 500
+            duration: 250
         },
         hide: {
-            effect: 'clip',
-            duration: 500
+            effect: 'drop',
+            duration: 250
         }
     });
 
@@ -475,6 +475,8 @@ function increaseTimeByHour(date) {
 }
 
 function createSingleOrRecurrentEvents(idIfEdited) {
+    $('#dialog').dialog('close');
+    $('.loading').show();
     var startDateForCreatingRecurrentEvents = $('#start-date-picker').val() + 'T00:00:00';
     var endDate = $('#end-date-picker').val() + 'T00:00:00';
     var eventColor = $('#color-select').val();
@@ -505,7 +507,6 @@ function createSingleOrRecurrentEvents(idIfEdited) {
         sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor, idIfEdited);
         $('#start-date-picker').val('');
         clearEventDialogSingleMulti();
-        $('#dialog').dialog('close');
         closeDialog('dialog');
         return;
     }
@@ -515,11 +516,9 @@ function createSingleOrRecurrentEvents(idIfEdited) {
         $('#monthly-days').find('.active').each(function () {
             daysWhenEventIsRecurrent.push(this.innerHTML);
         });
-
         sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent, eventColor, idIfEdited);
         $('#start-date-picker').val('');
         clearEventDialogSingleMulti();
-        $('#dialog').dialog('close');
         closeDialog('dialog');
         return;
     }
@@ -551,12 +550,14 @@ function createSingleOrRecurrentEvents(idIfEdited) {
         error: function (xhr) {
             $('#calendar').fullCalendar('removeEvents', ev.id);
             callErrorDialog(xhr['responseText']);
+        },
+        complete: function() {
+            $('.loading').hide();
         }
     });
 
     $('#start-date-picker').val('');
     clearEventDialogSingleMulti();
-    $('#dialog').dialog('close');
     closeDialog('dialog');
 }
 
@@ -591,6 +592,9 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, 
         },
         errors: function (xhr) {
             callErrorDialog(xhr['responseText']);
+        },
+        complete: function() {
+            $('.loading').hide();
         }
     });
 }
@@ -693,7 +697,11 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
+        },
+        complete: function () {
+            $('.loading').hide();
         }
+
     });
 }
 
