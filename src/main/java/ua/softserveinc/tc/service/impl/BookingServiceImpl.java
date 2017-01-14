@@ -194,31 +194,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .collect(Collectors.toList());
     }
 
-    /**
-     * get all active bookings from the room
-     * @param room room with bookings
-     * @return list of active bookings in the room
-     */
-    public List<BookingDto> getAllActiveBookingsInTheRoom(Room room) {
-        return getBookings(null, room, BookingState.ACTIVE)
-                .stream()
-                .map(BookingDto::new)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * get all planned bookings from the room
-     * @param room room with bookings
-     * @return list of planned bookings in the room
-     */
-    public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
-        List<BookingDto> bookingDtos = getBookings(null, room, BookingState.BOOKED)
-                .stream()
-                .map(BookingDto::new)
-                .collect(Collectors.toList());
-        return bookingDtos;
-    }
-
     @Override
     public List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate,
                                                              Room room) {
@@ -530,6 +505,35 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         return listOfBookings;
     }
+
+    /**
+     * get all active bookings from the room
+     * @param room room with bookings
+     * @return list of active bookings in the room
+     */
+    public List<BookingDto> getAllActiveBookingsInTheRoom(Room room) {
+        return getBookings(null, room, BookingState.ACTIVE)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * get all planned bookings from the room
+     * @param room room with bookings
+     * @return list of planned bookings in the room
+     */
+    public List<BookingDto> getAllPlannedBookingsInTheRoom(Room room) {
+        return getBookings(null, room, BookingState.BOOKED)
+                .stream()
+                .map(BookingDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public void cancelAllActiveAndPlannedRoomBookings(Room room) {
+        bookingDao.cancellActiveAndPlannedBookingsInRoom(room);
+    }
+
 
     /*
      * Constructs and returns the list of the arrays of the Date objects
