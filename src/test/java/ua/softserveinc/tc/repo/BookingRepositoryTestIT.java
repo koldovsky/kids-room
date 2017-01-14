@@ -45,7 +45,7 @@ public class BookingRepositoryTestIT {
     @DatabaseTearDown(value = "classpath:bookingRepository/multiple-bookings.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testCountByRoomAndBookingStateWhenThereIsMultipleBookings() {
-        Long count = bookingRepository.countByRoomAndBookingState(roomService.findById(1L), BookingState.ACTIVE);
+        Long count = bookingRepository.countByRoomAndBookingState(roomService.findEntityById(1L), BookingState.ACTIVE);
         Assert.assertEquals(BookingMessages.COUNT_BY_ROOM_AND_BOOKING_STATE, Long.valueOf(2), count);
     }
 
