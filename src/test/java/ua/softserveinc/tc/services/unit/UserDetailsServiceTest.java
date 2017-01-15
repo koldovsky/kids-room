@@ -1,11 +1,13 @@
-package ua.softserveinc.tc.service.unitTests;
+package ua.softserveinc.tc.services.unit;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import ua.softserveinc.tc.categories.UnitTest;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.impl.UserDetailsServiceImpl;
@@ -15,6 +17,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Category(UnitTest.class)
 public class UserDetailsServiceTest {
 
     @InjectMocks
@@ -25,7 +28,6 @@ public class UserDetailsServiceTest {
 
     @Before
     public void beforeTests() {
-        // todo: use BlockJUnit4ClassRunnerWithParameters
         MockitoAnnotations.initMocks(this);
     }
 
@@ -33,6 +35,7 @@ public class UserDetailsServiceTest {
     public void testLoadNullUserByUsername() {
         when(this.userDetailsService.loadUserByUsername("userEmail")).thenReturn(null);
         userDetailsService.loadUserByUsername("userEmail");
+
         verify(userDetailsService, times(1)).loadUserByUsername("someEmail");
     }
 
@@ -40,6 +43,7 @@ public class UserDetailsServiceTest {
     public void testAnotherNullUserByUsername() {
         when(this.userService.getUserByEmail("someEmail")).thenReturn(null);
         userDetailsService.loadUserByUsername("someEmail");
+
         verify(userDetailsService, times(1)).loadUserByUsername("someEmail");
     }
 
