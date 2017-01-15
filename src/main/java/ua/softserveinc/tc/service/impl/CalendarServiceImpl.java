@@ -94,10 +94,8 @@ public class CalendarServiceImpl implements CalendarService {
         daysOFWeek.put("Fri", Calendar.FRIDAY);
         daysOFWeek.put("Sat", Calendar.SATURDAY);
 
-        Calendar calendarEndTime = Calendar.getInstance();
-        calendarEndTime.setTime(dateForRecurrentEnd);
-
-        Calendar calendarWithEndDate = Calendar.getInstance();
+        Calendar calendarEndDate = Calendar.getInstance();
+        calendarEndDate.setTime(dateForRecurrentEnd);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateForRecurrentStart);
@@ -109,34 +107,18 @@ public class CalendarServiceImpl implements CalendarService {
             for (String day : days) {
                 calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get(day));
 
-                if (dateForRecurrentEnd.getTime() <
-                        calendar.getTimeInMillis())
+                if (dateForRecurrentEnd.getTime() < calendar.getTimeInMillis()) {
                     break;
-                if (dateForRecurrentStart.getTime() >
-                        calendar.getTimeInMillis())
+                }
+                if (dateForRecurrentStart.getTime() > calendar.getTimeInMillis()) {
                     continue;
+                }
 
-                Event newRecurrentEvent = new Event();
-                newRecurrentEvent.setName(recurrentEventDto.getName());
-                newRecurrentEvent.setDescription(
-                        recurrentEventDto.getDescription());
-                newRecurrentEvent.setStartTime(calendar.getTime());
+                Event newRecurrentEvent = genericMapper.toEntity(recurrentEventDto);
                 newRecurrentEvent.setRecurrentType(
                         EventConstants.TypeOfRecurentEvent.WEEKLY);
-
-                calendarWithEndDate.setTime(calendar.getTime());
-                calendarWithEndDate.set(
-                        Calendar.HOUR_OF_DAY,
-                        calendarEndTime.get(Calendar.HOUR_OF_DAY));
-                calendarWithEndDate.set(
-                        Calendar.MINUTE,
-                        calendarEndTime.get(Calendar.MINUTE));
-
-                newRecurrentEvent.setEndTime(calendarWithEndDate.getTime());
+                newRecurrentEvent.setTime(calendar, calendarEndDate);
                 newRecurrentEvent.setRecurrentId(newRecID);
-                newRecurrentEvent.setRoom(
-                        roomDao.findById(recurrentEventDto.getRoomId()));
-                newRecurrentEvent.setColor(recurrentEventDto.getColor());
 
                 res.add(newRecurrentEvent);
             }
@@ -163,8 +145,6 @@ public class CalendarServiceImpl implements CalendarService {
         Calendar calendarStartDate = Calendar.getInstance();
         calendarStartDate.setTime(dateForMonthlyStart);
 
-        Calendar calendarWithEndTime = Calendar.getInstance();
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateForMonthlyStart);
 
@@ -178,7 +158,6 @@ public class CalendarServiceImpl implements CalendarService {
                         (calendarStartDate.get(Calendar.DAY_OF_MONTH) > day)) {
                     continue;
                 }
-
                 if ((calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
                         (calendarEndDate.get(Calendar.DAY_OF_MONTH) < day)) {
                     break;
@@ -192,31 +171,18 @@ public class CalendarServiceImpl implements CalendarService {
                     continue;
                 }
 
-                Event newRecurrentEvent = new Event();
-                newRecurrentEvent.setName(monthlyEventDto.getName());
-                newRecurrentEvent.setDescription(
-                        monthlyEventDto.getDescription());
-                newRecurrentEvent.setStartTime(calendar.getTime());
-
-                calendarWithEndTime.setTime(calendar.getTime());
-                calendarWithEndTime.set(Calendar.HOUR_OF_DAY,
-                        calendarEndDate.get(Calendar.HOUR_OF_DAY));
-                calendarWithEndTime.set(Calendar.MINUTE,
-                        calendarEndDate.get(Calendar.MINUTE));
-
-                newRecurrentEvent.setEndTime(calendarWithEndTime.getTime());
-                newRecurrentEvent.setRecurrentId(newRecID);
-                newRecurrentEvent.setRoom(
-                        roomDao.findById(monthlyEventDto.getRoomId()));
-                newRecurrentEvent.setColor(monthlyEventDto.getColor());
+                Event newRecurrentEvent = genericMapper.toEntity(monthlyEventDto);
                 newRecurrentEvent.setRecurrentType(
                         EventConstants.TypeOfRecurentEvent.MONTHLY);
+                newRecurrentEvent.setRecurrentId(newRecID);
+                newRecurrentEvent.setTime(calendar, calendarEndDate);
 
                 res.add(newRecurrentEvent);
             }
             calendar.add(Calendar.MONTH, 1);
             calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
+
         eventDao.saveSetOfEvents(res);
 
         return new EventsCreatingResultsDto(

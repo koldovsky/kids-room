@@ -186,8 +186,9 @@ $(function () {
     $('#create-new-event').click(function () {
         var newEventDate = $('#calendar').fullCalendar('getDate').format();
         var currentDate = new Date();
+        $('#single-event-radio-button').prop("checked", true);
         $('#start-date-picker').val(newEventDate.substring(0, 10));
-        $('#end-date-picker').val(newEventDate.substring(0, 10));
+        setEndDateForSingle();
         $('#start-time-picker').timepicker('setTime', currentDate.toLocaleTimeString());
         $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
         buildTableMonthly();
@@ -195,9 +196,7 @@ $(function () {
     });
 
     if ($('#single-event-radio-button').is(':checked')) {
-        $('#dialog').on('change', '#start-date-picker', function () {
-            $('#end-date-picker').val($('#start-date-picker').val());
-        });
+        setEndDateForSingle();
     }
 
     $('.my-radio').click(function () {
@@ -218,10 +217,7 @@ $(function () {
         if ($('#single-event-radio-button').is(':checked')) {
             $('#days-for-monthly-form').attr('hidden', true);
             $('#days-for-recurrent-form').attr('hidden', true);
-            $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled', true);
-            $('#dialog').on('change', '#start-date-picker', function () {
-                $('#end-date-picker').val($('#start-date-picker').val());
-            });
+            setEndDateForSingle();
         }
     });
 
@@ -256,6 +252,12 @@ $(function () {
     });
 });
 
+function setEndDateForSingle() {
+    $('#end-date-picker').val($('#start-date-picker').val()).attr('disabled', true);
+    $('#dialog').on('change', '#start-date-picker', function () {
+        $('#end-date-picker').val($('#start-date-picker').val());
+    });
+}
 /**
  *  This function gets events from controller.
  *  After that call renderCalendarForManager for rendering
@@ -573,30 +575,31 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
     });
 }
 function popSetOfEvents(set) {
+    if (set.length) {
+        var recurrentEventsForRender = [];
 
-    var recurrentEventsForRender = [];
+        set.forEach(function (item, i) {
+            var newRecurrentEvent = {
+                id: item.id,
+                title: item.name,
+                start: item.startTime,
+                end: item.endTime,
+                editable: false,
+                type: 'event',
+                description: item.description,
+                color: item.color,
+                borderColor: BORDER_COLOR,
+                recurrentId: item.recurrentId
+            };
 
-    set.forEach(function (item, i) {
-        var newRecurrentEvent = {
-            id: item.id,
-            title: item.name,
-            start: item.startTime,
-            end: item.endTime,
-            editable: false,
-            type: 'event',
-            description: item.description,
-            color: item.color,
-            borderColor: BORDER_COLOR,
-            recurrentId: item.recurrentId
-        };
+            allEvents.push(newRecurrentEvent);
 
-        allEvents.push(newRecurrentEvent);
+            recurrentEventsForRender.push(newRecurrentEvent);
+            $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
+        });
 
-        recurrentEventsForRender.push(newRecurrentEvent);
-        $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
-    });
-
-    animateCalendar(set[0].startTime, set[0].endTime, set[0].name);
+        animateCalendar(set[0].startTime, set[0].endTime, set[0].name);
+    }
 }
 
 function animateCalendar(startTime, endTime, setName) {
@@ -662,13 +665,11 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            deleteRecurrentEvents(recurrentEvents.recurrentId);
             if (result.datesWhenNotCreated.length) {
                 eventsWereNotCreated(result.datesWhenNotCreated);
             }
-            if (result.eventsCreated.length) {
-                popSetOfEvents(result.eventsCreated);
-            }
+            deleteRecurrentEvents(recurrentEvents.recurrentId);
+            popSetOfEvents(result.eventsCreated);
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
