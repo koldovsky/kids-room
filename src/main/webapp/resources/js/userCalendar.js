@@ -764,6 +764,7 @@ function updateRecurrentBooking() {
                     xhr.responseText="Server Error";
                 }
                 $('#user-calendar').fullCalendar('removeEvents', temporaryBookingId);
+                $('.loading').hide();
                 callErrorDialog(xhr['responseText']);
         }
     });

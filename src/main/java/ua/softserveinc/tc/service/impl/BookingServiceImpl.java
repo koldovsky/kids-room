@@ -155,7 +155,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public BookingDto getRecurrentBookingForEditingById(long bookingId) {
         BookingDto result = null;
         List<Booking> listOfRecurrentBooking =
