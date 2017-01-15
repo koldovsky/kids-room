@@ -68,30 +68,26 @@ public class CreateUpdateBookingsController {
      * Receives the recurrent Id from GET http method and create BookingDto object that contains
      * start and end date for recurrent period of time, and weekdays arrays.
      * If the input parameter is null or is not corresponding to existed recurrent Id then method
-     * returns ResponseEntity with "Bad Request" http status (400). Otherwise returns the BookingsDto
-     * object in the body of object of ResponseEntity with http status "OK" (200).
+     * returns ResponseEntity with "Bad Request" http status (400). Otherwise returns the
+     * BookingsDto object in the body of object of ResponseEntity with http status "OK" (200).
      *
      * @param recurrentId the given recurrent Id
-     * @return ResponseEntity with appropriate http status and body that consists the BookingsDto object
+     * @return ResponseEntity with appropriate http status and body that consists the BookingsDto
+     * object
      */
     @GetMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
                 produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> getRecurrentBookingForEditing(@PathVariable Long recurrentId) {
         ResponseEntity<String> resultResponse;
-        Locale locale = (Locale) request.getSession()
-                .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
-        locale = (locale == null) ? request.getLocale() : locale;
 
         BookingDto resultBookingDto = bookingService
                 .getRecurrentBookingForEditingById(recurrentId);
 
         if(resultBookingDto != null) {
-            resultResponse = ResponseEntity.status(HttpStatus.OK)
-                    .body(new Gson().toJson(resultBookingDto));
+            resultResponse = getResponseEntity(true, new Gson().toJson(resultBookingDto));
         } else {
-            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(messageSource.getMessage(
-                            ValidationConstants.VALIDATION_NOT_CORRECT_USAGE, null, locale));
+            resultResponse =
+                    getResponseEntity(false, ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
         }
 
         return resultResponse;
@@ -100,7 +96,7 @@ public class CreateUpdateBookingsController {
     /**
      * Receives the list of BookingDto objects from POST http method and send them for persisting.
      * If any of the input parameters are not correct or the system failed to persist all of the
-     * bookings from the dto then method returns ResponseEntity with "Bad Request" http status (400).
+     * bookings from the dto then method returns ResponseEntity with "Bad Request" http status(400).
      * Otherwise returns list of the persisted Bookings in the BookingsDto objects in the body
      * of object of ResponseEntity with http status "OK" (200).
      *
@@ -132,11 +128,11 @@ public class CreateUpdateBookingsController {
     }
 
     /**
-     * Receives the BookingDto object from POST http method and send them for updating. If any of the
-     * input parameters are not correct or the system failed to update all of the bookings from the dto
-     * then the method returns ResponseEntity with "Bad Request" http status (400). Otherwise returns
-     * list of the updated Bookings in the BookingsDto objects in the body of object of ResponseEntity
-     * with http status "OK" (200).
+     * Receives the BookingDto object from POST http method and send them for updating. If any
+     * of the input parameters are not correct or the system failed to update all of the bookings
+     * from the dto then the method returns ResponseEntity with "Bad Request" http status (400).
+     * Otherwise returns list of the updated Bookings in the BookingsDto objects in the body of
+     * object of ResponseEntity with http status "OK" (200).
      *
      * @param dto the BookingsDto object
      * @return ResponseEntity with appropriate http status and body that consists list of
@@ -149,33 +145,29 @@ public class CreateUpdateBookingsController {
     }
 
     /**
-     * Receives the recurrent id of bookings from GET http method and send them for cancelling. If
-     * input parameter is null or number of cancelled bookings is then the method returns ResponseEntity
-     * with "Bad Request" http status (400) and this number. Otherwise returns number of the cancelled
-     * Bookings in the body of object of ResponseEntity with http status "OK" (200).
+     * Receives the recurrent id of bookings from GET http method and send them for cancelling.
+     * If input parameter is null or number of cancelled bookings is then the method returns
+     * ResponseEntity with "Bad Request" http status (400) and this number. Otherwise returns
+     * number of the cancelled Bookings in the body of object of ResponseEntity with http status
+     * "OK" (200).
      *
      * @param recurrentId the recurrent id of bookings
-     * @return ResponseEntity with appropriate http status and body that consists number of cancelled
-     * bookings
+     * @return ResponseEntity with appropriate http status and body that consists number of
+     * cancelled bookings
      */
     @GetMapping(value = "cancelrecurrentbookings/{recurrentId}",
             produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> cancelBooking(@PathVariable Long recurrentId) {
         ResponseEntity<String> resultResponse;
-        Locale locale = (Locale) request.getSession()
-                .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
-        locale = (locale == null) ? request.getLocale() : locale;
 
         int numOfCancelledEntities = (recurrentId != null) ?
                 bookingService.cancelBookingsByRecurrentId(recurrentId) : 0;
 
         if(numOfCancelledEntities != 0) {
-            resultResponse = ResponseEntity.status(HttpStatus.OK)
-                    .body(new Gson().toJson(numOfCancelledEntities));
+            resultResponse = getResponseEntity(true, new Gson().toJson(numOfCancelledEntities));
         } else {
-            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(messageSource.getMessage(
-                            ValidationConstants.VALIDATION_NOT_CORRECT_USAGE, null, locale));
+            resultResponse =
+                    getResponseEntity(false, ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
         }
 
         return resultResponse;
@@ -193,19 +185,44 @@ public class CreateUpdateBookingsController {
      * @param resultTuple the given TwoTuple
      * @return resulting ResponseEntity
      */
-    private ResponseEntity<String> getResponseEntity(TwoTuple<List<BookingDto>, String> resultTuple) {
+    private ResponseEntity<String> getResponseEntity(TwoTuple<List<BookingDto>,
+                                                     String> resultTuple) {
+        ResponseEntity<String> resultResponse;
+
+        if (resultTuple.getFirst() == null) {
+            resultResponse = getResponseEntity(false, resultTuple.getSecond());
+        } else {
+            resultResponse = getResponseEntity(true, new Gson().toJson(resultTuple.getFirst()));
+        }
+
+        return resultResponse;
+    }
+
+    /*
+     * Creates and returns ResponseBody object according to given httpStatus and response
+     * body. If the httpStatus is false than it is interpreted as "Bad Request" http status
+     * (400), otherwise - as http status "OK" (200). If status is Ok then body of the resulting
+     * ResponseEntity is set to responseBody input parameter without changes. Otherwise the
+     * given parameter is interpreted as error code and is translated into language according
+     * to locale.
+     *
+     * @param the httpStatus the given http status
+     * @param the responseBody the JSON object, or error code for localization
+     * @return the resulting ResponseEntity
+     */
+    private ResponseEntity<String> getResponseEntity(boolean httpStatus, String responseBody) {
         ResponseEntity<String> resultResponse;
         Locale locale = (Locale) request.getSession()
                 .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
         locale = (locale == null) ? request.getLocale() : locale;
 
-        if (resultTuple.getFirst() == null) {
-            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(messageSource.getMessage(resultTuple.getSecond(), null, locale));
+        if (!httpStatus) {
+            resultResponse = ResponseEntity.badRequest()
+                    .body(messageSource.getMessage(responseBody, null, locale));
 
         } else {
-            resultResponse = ResponseEntity.status(HttpStatus.OK)
-                    .body(new Gson().toJson(resultTuple.getFirst()));
+            resultResponse = ResponseEntity.ok()
+                    .body(responseBody);
         }
 
         return resultResponse;

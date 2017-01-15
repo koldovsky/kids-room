@@ -199,7 +199,7 @@ $(function () {
         myDialog.dialog('open');
         $('#comment-for-one-child-updating').hide();
         $('#confirmYes').click(function () {
-            cancelRecurrentBookingsOnyByOne(info.calEvent.recurrentId);
+            cancelRecurrentBookings(info.calEvent.recurrentId);
             myDialog.dialog('close');
         });
         $('#confirmNo').click(function () {
@@ -871,8 +871,14 @@ function deleteCanceledRecurrentBookingsFromArray(recurrentId, bookings) {
     return remainingLocalBookings;
 }
 
+/**
+ * Deletes all bookings with given recurrent id from calendar and global
+ * allBookings array.
+ *
+ * @param recurrentId the given recurrent Id
+ */
 function cancelRecurrentBookings(recurrentId) {
-    var remainingBookings = [];
+    var userCalendar = $('#user-calendar');
 
     $.ajax({
         type: 'get',
@@ -880,21 +886,15 @@ function cancelRecurrentBookings(recurrentId) {
         contentType: 'application/json; charset=UTF-8',
         url: 'cancelrecurrentbookings/' + recurrentId,
         dataType: 'json',
-        success: function (result) {
-            var indexesOfCancelledBookings = JSON.parse(result);
+        success: function () {
+            var newBookingsArray = userCalendar.fullCalendar('clientEvents');
+            newBookingsArray = deleteCanceledRecurrentBookingsFromArray(
+                recurrentId, newBookingsArray);
 
-            $('#user-calendar').fullCalendar('removeEvents', function(booking) {
+            userCalendar.fullCalendar('removeEvents');
+            userCalendar.fullCalendar('addEventSource', newBookingsArray);
+            userCalendar.fullCalendar('refetchEvents');
 
-                return $.inArray(booking.id, indexesOfCancelledBookings) >= 0;
-            });
-
-            allBookings.forEach(function (item) {
-                if (item.recurrentId !== recurrentId) {
-                    remainingBookings.push(item);
-                }
-            });
-
-            allBookings = remainingBookings;
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);

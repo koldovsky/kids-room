@@ -355,6 +355,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    @Transactional
     public int cancelBookingsByRecurrentId(long recurrentId) {
         return bookingDao.cancelBookingsByRecurrentId(recurrentId);
     }
