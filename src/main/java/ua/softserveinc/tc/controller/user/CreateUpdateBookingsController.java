@@ -6,9 +6,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
@@ -146,7 +149,7 @@ public class CreateUpdateBookingsController {
 
     /**
      * Receives the recurrent id of bookings from GET http method and send them for cancelling.
-     * If input parameter is null or number of cancelled bookings is then the method returns
+     * If input parameter is null or number of cancelled bookings is 0 then the method returns
      * ResponseEntity with "Bad Request" http status (400) and this number. Otherwise returns
      * number of the cancelled Bookings in the body of object of ResponseEntity with http status
      * "OK" (200).
@@ -157,7 +160,7 @@ public class CreateUpdateBookingsController {
      */
     @GetMapping(value = "cancelrecurrentbookings/{recurrentId}",
             produces = "text/plain; charset=UTF-8")
-    public ResponseEntity<String> cancelBooking(@PathVariable Long recurrentId) {
+    public ResponseEntity<String> cancelRecurrentBookings(@PathVariable Long recurrentId) {
         ResponseEntity<String> resultResponse;
 
         int numOfCancelledEntities = (recurrentId != null) ?
@@ -171,6 +174,26 @@ public class CreateUpdateBookingsController {
         }
 
         return resultResponse;
+    }
+
+    /**
+     * Receives the id of booking from GET http method and send it for cancelling.
+     * If input parameter is null or represent not existed booking then the method returns
+     * ResponseEntity with "Bad Request" http status (400) and number 0. Otherwise returns
+     * 1 in the body of object of ResponseEntity with http status "OK" (200).
+     *
+     * @param idBooking the given booking id
+     * @return ResponseEntity with appropriate http status and body that consists number of
+     * cancelled bookings
+     */
+    @GetMapping(value = "cancelBooking/{idBooking}", produces = "text/plain; charset=UTF-8")
+    public ResponseEntity<String> cancelBooking(@PathVariable Long idBooking) {
+        Booking booking = bookingService.findByIdTransactional(idBooking);
+        booking.setBookingState(BookingState.CANCELLED);
+        booking.setSum(0L);
+        booking.setDuration(0L);
+        bookingService.update(booking);
+        return getResponseEntity(true, new Gson().toJson("GOOD RESPONSE"));
     }
 
     /*

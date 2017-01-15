@@ -837,9 +837,11 @@ function cancelBooking(bookingId) {
         type: 'get',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
-        url: 'cancelBook/' + bookingId,
+        url: 'cancelBooking/' + bookingId,
         dataType: 'json',
-        data: JSON.stringify({})
+        error: function (xhr) {
+            callErrorDialog(xhr['responseText']);
+        }
     });
     redrawBlockedTimeSpans(roomIdForHandler);
 }
@@ -900,26 +902,6 @@ function cancelRecurrentBookings(recurrentId) {
             callErrorDialog(xhr['responseText']);
         }
     });
-}
-
-function cancelRecurrentBookingsOnyByOne(recurrentId) {
-    var bookingsForDelete = [];
-    var remainingBookings = [];
-
-    allBookings.forEach(function (item) {
-        if (item.recurrentId === recurrentId) {
-            bookingsForDelete.push(item);
-        } else {
-            remainingBookings.push(item);
-        }
-    });
-
-    bookingsForDelete.forEach(function (item) {
-        $('#user-calendar').fullCalendar('removeEvents', item.id);
-        cancelBooking(item.id);
-    });
-
-    allBookings = remainingBookings;
 }
 
 function closeBookingDialog() {
@@ -1141,9 +1123,6 @@ $('#closeContact').click(function () {
 $('#closeColorDesc').click(function () {
     $('#colorDescryptionModal').modal('hide');
 });
-
-function sendAjaxForRoomProperty(roomId) {
-}
 
 function increaseTimeByHour(date) {
     var currentDate = new Date();
