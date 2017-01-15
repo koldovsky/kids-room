@@ -3,10 +3,8 @@ package ua.softserveinc.tc.controller.user;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -28,7 +26,7 @@ import java.util.Locale;
  * Rewritten by Sviatoslav Hryb on 11-Jan-2017
  */
 @RestController
-public class CreateUpdateBookingsController {
+public class CRUDBookingsController {
 
     @Autowired
     private RoomService roomService;
@@ -188,12 +186,19 @@ public class CreateUpdateBookingsController {
      */
     @GetMapping(value = "cancelBooking/{idBooking}", produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> cancelBooking(@PathVariable Long idBooking) {
-        Booking booking = bookingService.findByIdTransactional(idBooking);
-        booking.setBookingState(BookingState.CANCELLED);
-        booking.setSum(0L);
-        booking.setDuration(0L);
-        bookingService.update(booking);
-        return getResponseEntity(true, new Gson().toJson("GOOD RESPONSE"));
+        ResponseEntity<String> resultResponse;
+
+        int numOfCancelledEntities = (idBooking != null) ?
+                bookingService.cancelBookingById(idBooking) : 0;
+
+        if(numOfCancelledEntities != 0) {
+            resultResponse = getResponseEntity(true, new Gson().toJson(numOfCancelledEntities));
+        } else {
+            resultResponse =
+                    getResponseEntity(false, ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+        }
+
+        return resultResponse;
     }
 
     /*

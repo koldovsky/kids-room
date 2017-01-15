@@ -131,18 +131,14 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
     @Override
     public int cancelBookingsByRecurrentId(long recurrentId) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaUpdate<Booking> update = builder.createCriteriaUpdate(Booking.class);
-        Root<Booking> root = update.from(Booking.class);
 
-        update
-                .set(root.get(BookingConstants.Entity.STATE), BookingState.CANCELLED)
-                .set(root.get(BookingConstants.Entity.SUM), 0L)
-                .set(root.get(BookingConstants.Entity.DURATION), 0L)
-                    .where(builder.equal(
-                            root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId));
+        return cancelBookingsWherePathAndValue(BookingConstants.Entity.RECURRENT_ID, recurrentId);
+    }
 
-        return entityManager.createQuery(update).executeUpdate();
+    @Override
+    public int cancelBookingById(long bookingId) {
+
+        return cancelBookingsWherePathAndValue(BookingConstants.Entity.ID_OF_BOOKING, bookingId);
     }
 
     @Override
@@ -192,5 +188,28 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         return bookings;
 
+    }
+
+    /*
+     * Set the state to Cancelled, sum and duration to 0 for all booking with given
+     * path and value of path
+     *
+     * @param path the given path
+     * @param bookingId the given value of path
+     * @return the number of entities deleted
+     */
+    private int cancelBookingsWherePathAndValue(String path, long value) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Booking> update = builder.createCriteriaUpdate(Booking.class);
+        Root<Booking> root = update.from(Booking.class);
+
+        update
+                .set(root.get(BookingConstants.Entity.STATE), BookingState.CANCELLED)
+                .set(root.get(BookingConstants.Entity.SUM), 0L)
+                .set(root.get(BookingConstants.Entity.DURATION), 0L)
+                .where(builder.equal(
+                        root.get(path), value));
+
+        return entityManager.createQuery(update).executeUpdate();
     }
 }

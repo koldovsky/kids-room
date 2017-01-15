@@ -44,12 +44,4 @@ public interface RecurrentBookingValidator {
      * @return true if given list is valid, otherwise - false
      */
     boolean isValidToUpdate(List<BookingDto> listDto);
-
-    /**
-     * Checks if the list of BookingDto objects is valid for removing.
-     *
-     * @param listDto the given list of BookingDto objects
-     * @return true if given list is valid, otherwise - false
-     */
-    boolean isValidToRemove(List<BookingDto> listDto);
 }

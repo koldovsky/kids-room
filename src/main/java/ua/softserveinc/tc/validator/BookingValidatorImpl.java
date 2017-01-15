@@ -86,12 +86,6 @@ public class BookingValidatorImpl implements BookingValidator {
         return result;
     }
 
-    @Override
-    public boolean isValidToRemove(List<BookingDto> listDto) {
-        errors.clear();
-        return isValidToUpdate(listDto);
-    }
-
     /*
      * Checks if the any of the BookingDto from the given list has null.
      *

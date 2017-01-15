@@ -42,12 +42,22 @@ public interface BookingService extends BaseService<Booking> {
     Date replaceBookingTime(Booking booking, String time);
 
     /**
-     * Set state to Cancelled, sum and duration to 0 for all booking with given Id
+     * Set state to Cancelled, sum and duration to 0 for all booking with given
+     * recurrent Id
      *
      * @param recurrentId the given recurrent Id
-     * @return the number of entities updated or deleted
+     * @return the number of entities deleted
      */
     int cancelBookingsByRecurrentId(long recurrentId);
+
+    /**
+     * Set state to Cancelled, sum and duration to 0 for all booking with given
+     * booking Id
+     *
+     * @param bookingId the given recurrent Id
+     * @return the number of entities deleted
+     */
+    int cancelBookingById(long bookingId);
 
     /**
      * Create BookingDto object that contains start and end date for recurrent period of time,

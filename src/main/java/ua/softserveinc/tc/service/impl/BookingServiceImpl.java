@@ -361,6 +361,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    @Transactional
+    public int cancelBookingById(long bookingId) {
+        return bookingDao.cancelBookingById(bookingId);
+    }
+
+    @Override
     public boolean normalizeBookingDtoObjects(List<BookingDto> dtoList) {
         boolean result = true;
         BookingDto singleDto = dtoList.get(0);
