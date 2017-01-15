@@ -576,8 +576,6 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
 }
 function popSetOfEvents(set) {
     if (set.length) {
-        var recurrentEventsForRender = [];
-
         set.forEach(function (item, i) {
             var newRecurrentEvent = {
                 id: item.id,
@@ -591,13 +589,11 @@ function popSetOfEvents(set) {
                 borderColor: BORDER_COLOR,
                 recurrentId: item.recurrentId
             };
-
             allEvents.push(newRecurrentEvent);
-
-            recurrentEventsForRender.push(newRecurrentEvent);
-            $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
         });
-
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', allEvents);
+        $('#calendar').fullCalendar('refetchEvents');
         animateCalendar(set[0].startTime, set[0].endTime, set[0].name);
     }
 }
@@ -680,6 +676,16 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
     });
 }
 
+function deleteRecurrentEvents(recurrentId) {
+    var remainingAllEvents = [];
+    allEvents.forEach (function (item) {
+        if (item.recurrentId !== recurrentId) {
+            remainingAllEvents.push(item);
+        }
+    });
+    allEvents = remainingAllEvents;
+}
+
 function updateSingleEvent() {
     var eventForUpdate = {
         id: info_event.calEvent.id,
@@ -690,7 +696,7 @@ function updateSingleEvent() {
         description: $('#descriptionUpdate').val(),
         color: $('#color-select-single-event').val(),
     };
-    sendToServerForUpdate(eventForUpdate, info_event.roomID); //localStorage['roomId']
+    sendToServerForUpdate(eventForUpdate, info_event.roomID);
     $('#updating').dialog('close');
 }
 function sendToServerForUpdate(event, roomID) {
@@ -829,16 +835,6 @@ function editRecurrentEventRequest(eventRecurrentId) {
             editRecurrentEvent(recurrentEventForEditing);
         }
     });
-}
-
-function deleteRecurrentEvents(recurrentId) {
-    if (recurrentId != null) {
-        allEvents.forEach(function (item) {
-            if (item.recurrentId === recurrentId) {
-                $('#calendar').fullCalendar('removeEvents', item.id);
-            }
-        });
-    }
 }
 
 function clearEventDialogSingleMulti() {
