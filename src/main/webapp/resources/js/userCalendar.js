@@ -746,10 +746,9 @@ function updateRecurrentBooking() {
                         comment: item.comment,
                         recurrentId: item.recurrentId
                     };
+
                     allBookings.push(newBooking);
                     newBookingsArray.push(newBooking);
-
-                    $('#user-calendar').fullCalendar('renderEvent', newBooking,true);
                 });
 
                 $('#user-calendar').fullCalendar('removeEvents');
