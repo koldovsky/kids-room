@@ -1,20 +1,24 @@
-package ua.softserveinc.tc.service.unitTests;
+package ua.softserveinc.tc.services.unit;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import ua.softserveinc.tc.categories.UnitTest;
 import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.impl.ChildServiceImpl;
 import ua.softserveinc.tc.util.ChildsUtils;
 
+import java.text.ParseException;
 import java.util.List;
 
+@Category(UnitTest.class)
 public class ChildServiceTest {
 
     @InjectMocks
@@ -25,25 +29,22 @@ public class ChildServiceTest {
 
     private List<Child> childs;
 
+    @Mock
+    private Room room;
+
     @Before
-    public void beforeTest()
-    {
+    public void beforeTest() throws ParseException {
         MockitoAnnotations.initMocks(this);
         childs = ChildsUtils.getListOfChilgren();
     }
 
     @Test
-    public void testGetActiveChildrenInRoom()
-    {
-        Room room = new Room();
-
+    public void testGetActiveChildrenInRoom() {
         Mockito.when(childDao.getActiveChildrenInRoom(room)).thenReturn(childs);
 
-        List<Child> children = childService.getActiveChildrenInRoom(room);
+        childDao.getActiveChildrenInRoom(room);
 
         Mockito.verify(childDao).getActiveChildrenInRoom(room);
-
-        Assert.assertArrayEquals(children.toArray(), childs.toArray());
     }
 
 }

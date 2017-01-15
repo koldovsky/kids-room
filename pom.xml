@@ -79,6 +79,10 @@
         <org.webjars.jquery-version>2.2.3</org.webjars.jquery-version>
 
         <junit-version>4.12</junit-version>
+        <com.github.springtestdbunit-test-version>1.2.1</com.github.springtestdbunit-test-version>
+        <org.unitils-test-version>3.4.2</org.unitils-test-version>
+        <org.dbunit-test-version>2.5.1</org.dbunit-test-version>
+        <pl.pragmatists-version>0.3.6</pl.pragmatists-version>
 
         <javax.mail-version>1.4.7</javax.mail-version>
         <org.apache.velocity-version>1.7</org.apache.velocity-version>
@@ -273,6 +277,38 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.springtestdbunit</groupId>
+            <artifactId>spring-test-dbunit</artifactId>
+            <version>${com.github.springtestdbunit-test-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.unitils</groupId>
+            <artifactId>unitils-dbunit</artifactId>
+            <version>${org.unitils-test-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>${pl.pragmatists-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${org.dbunit-test-version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>org.json</groupId>

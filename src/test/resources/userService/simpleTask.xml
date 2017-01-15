@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <Users id_user="1" email="user@softserveinc.com" first_name="Alan" last_name="Bom"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="0"
+           confirmed="true" active="true"/>
+    <Users id_user="2" email="manager@softserveinc.com" first_name="Jackson" last_name="Bim"
+           password="$2a$08$B.5vcvm4BiBF9DdPgyKH4.1Z9wOGL9Rv9Iy1sDsniHMOOGXCZ11Je" phone_number="+380987654321" role="1"
+           confirmed="true" active="true"/>
+
+</dataset>
