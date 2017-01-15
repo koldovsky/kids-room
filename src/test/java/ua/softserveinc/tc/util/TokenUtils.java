@@ -7,8 +7,7 @@ import java.util.List;
 
 public class TokenUtils {
 
-    public static List<Token> getListOfTokens()
-    {
+    public static List<Token> getListOfTokens() {
         Token token1 = new Token();
 
         token1.setId(1L);
