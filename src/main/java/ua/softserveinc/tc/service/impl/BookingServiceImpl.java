@@ -312,16 +312,18 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Transactional
     public TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto) {
         TwoTuple<List<BookingDto>, String> result;
+        List<Booking> cancelledBookings;
         List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
 
         if (!recurrentBookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
             result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
 
         } else {
-            cancelRecurrentBookings(listOfDtoForUpdate);
+            cancelledBookings = cancelRecurrentBookings(listOfDtoForUpdate);
             List<BookingDto> bookings = saveRecurrentBookings(listOfDtoForUpdate);
 
             if (bookings.isEmpty()) {
+                denyCancellationWithinTransaction(cancelledBookings);
                 result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
             } else {
                 result = new TwoTuple<>(bookings, null);
@@ -656,5 +658,20 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         for (BookingDto dto : bookingDtos) {
             dto.setRecurrentId(++maxRecurrentId);
         }
+    }
+
+    /*
+     * Deny the cancellation of bookings within one transaction that are not yet
+     * committed. The method set the state of bookings to BOOKED, so the method works
+     * correct only if the previous state was BOOKED. If input parameter is null then
+     * method returns without throwing any exceptions.
+     *
+     * @param bookingDtos the given list of BookingDto objects.
+     */
+    private void denyCancellationWithinTransaction(List<Booking> bookings) {
+        if(bookings == null) {
+            return;
+        }
+        bookings.forEach(booking -> booking.setBookingState(BookingState.BOOKED));
     }
 }

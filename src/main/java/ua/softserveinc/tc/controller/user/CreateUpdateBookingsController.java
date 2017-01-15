@@ -30,7 +30,7 @@ import java.util.Locale;
  * Rewritten by Sviatoslav Hryb on 11-Jan-2017
  */
 @RestController
-public class BookingTimeController {
+public class CreateUpdateBookingsController {
 
     @Autowired
     private RoomService roomService;
