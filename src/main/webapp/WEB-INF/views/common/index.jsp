@@ -515,9 +515,9 @@
                         </div>
                     </div>
                 </div>
-        <div class="loading" hidden>Loading&#8230;</div>
     </div>
 </sec:authorize>
+<div class="loading" hidden>Loading&#8230;</div>
 <sec:authorize access="hasRole('MANAGER')">
     <c:forEach items="${managersRoom}" var="r">
         ${r.id}
