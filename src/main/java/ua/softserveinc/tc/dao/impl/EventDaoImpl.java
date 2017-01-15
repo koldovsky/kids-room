@@ -45,12 +45,13 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
     }
 
     @Override
+    @Transactional
     public void deleteByRecurrentId(Long idRecurrent) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaDelete<Event> delete = cb.createCriteriaDelete(Event.class);
-        Root<Event> r = delete.from(Event.class);
-        ParameterExpression<Long> p = cb.parameter(Long.class);
+        Root r = delete.from(Event.class);
         delete.where(cb.equal(r.get("recurrentId"),idRecurrent));
+        entityManager.createQuery(delete).executeUpdate();
     }
 
     public List<Event> getRecurrentEventByRecurrentId(Long recurrentId) {

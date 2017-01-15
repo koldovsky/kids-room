@@ -159,6 +159,27 @@ public class ViewEventController {
         }
     }
 
+    @PostMapping(value = "getrecurrenteventsforupdate", produces = "application/json")
+    public ResponseEntity<String> getRecurrentUpdate(
+            @RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
+        eventValidator.validate(recurrentEventDto, bindingResult);
+        if (eventValidator.isReccurrentValid(recurrentEventDto)) {
+            if (bindingResult.hasErrors()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        new Gson().toJson(bindingResult.getFieldError().getCode()));
+            } else {
+                eventService.deleteRecurrentEvent(recurrentEventDto.getRecurrentId());
+                System.out.println("\n\n\n\n\n\n recid in controller" + recurrentEventDto.getRecurrentId());
+                return ResponseEntity.status(HttpStatus.OK).body(
+                        new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto)));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG);
+        }
+    }
+
+
     @PostMapping(value = "getmonthlyevents", produces = "application/json")
     public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto,
                                              BindingResult bindingResult) {
