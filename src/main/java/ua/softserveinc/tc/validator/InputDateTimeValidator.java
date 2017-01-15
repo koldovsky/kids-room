@@ -10,7 +10,7 @@ import java.util.List;
  * format, start date are not in the past, end date are not before start date,
  * start and end dates are in the range of workings hours. To correct working of
  * this class, each of the given dto object must has correct room id. Otherwise method
- * validate will return false and produces not correct error message. Each BookingDto
+ * isValidToInsert will return false and produces not correct error message. Each BookingDto
  * in list must have the same user, room and dates.
  * Created by Sviatoslav Hryb on 09-Jan-17.
  */

@@ -27,7 +27,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
+import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Service
 public class RoomServiceImpl extends BaseServiceImpl<Room>
@@ -164,8 +164,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
     public Boolean isPossibleUpdate(BookingDto bookingDto) {
         Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
         Room room = booking.getRoom();
-        Date dateLo = toDateAndTime(bookingDto.getStartTime());
-        Date dateHi = toDateAndTime(bookingDto.getEndTime());
+        Date dateLo = toDateISOFormat(bookingDto.getStartTime());
+        Date dateHi = toDateISOFormat(bookingDto.getEndTime());
         List<Booking> list = reservedBookings(dateLo, dateHi, room);
         if (list.contains(booking)) {
             list.remove(booking);

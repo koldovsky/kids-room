@@ -54,9 +54,6 @@ public interface BookingDao extends BaseDao<Booking> {
 
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 
-    List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings,
-                                             List<Booking> newBookings);
-
     /**
      * Cancell all active and planned bookings in the room
      * @param room where the bookings will be cancelled
