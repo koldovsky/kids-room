@@ -27,6 +27,7 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
+import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.EventValidator;
@@ -50,6 +51,9 @@ public class ViewEventController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EventService eventService;
 
     @GetMapping("/")
     public final String viewHome(Model model, Principal principal) {
@@ -135,31 +139,43 @@ public class ViewEventController {
     }
 
     @PostMapping(value = "getrecurrentevents", produces = "application/json")
-    @ResponseBody
-    public String getRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
+    public ResponseEntity<String> getRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, BindingResult bindingResult) {
         eventValidator.validate(recurrentEventDto, bindingResult);
+        ResponseEntity<String> response;
         if (eventValidator.isReccurrentValid(recurrentEventDto)) {
             if (bindingResult.hasErrors()) {
-                return bindingResult.getFieldError().getCode();
+                response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        new Gson().toJson(bindingResult.getFieldError().getCode()));
             } else {
-                return new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto));
+                if (recurrentEventDto.getRecurrentId() != null) {
+                    eventService.deleteRecurrentEvent(recurrentEventDto.getRecurrentId());
+                }
+                response = ResponseEntity.status(HttpStatus.OK).body(
+                        new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto)));
             }
         } else {
-            return ValidationConstants.EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG;
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    ValidationConstants.EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG);
         }
+        return response;
     }
 
     @PostMapping(value = "getmonthlyevents", produces = "application/json")
     public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto,
                                              BindingResult bindingResult) {
         eventValidator.validate(monthlyEventDto, bindingResult);
+        ResponseEntity<String> response;
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new Gson().toJson(bindingResult.getFieldError().getCode()));
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(
+            if (monthlyEventDto.getRecurrentId() != null) {
+                eventService.deleteRecurrentEvent(monthlyEventDto.getRecurrentId());
+            }
+            response = ResponseEntity.status(HttpStatus.OK).body(
                     new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto)));
         }
+        return response;
     }
 
     @GetMapping(value = "getroomproperty/{id}", produces = "text/plain;charset=UTF-8")
@@ -167,7 +183,6 @@ public class ViewEventController {
     public String getRoomProperty(@PathVariable long id) {
         return calendarService.getRoomWorkingHours(id) + " " + calendarService.getRoomCapacity(id);
     }
-
 
     @GetMapping(value = "getRecurrentEventForEditing/{recurrentEventId}",
             produces = "text/plain;charset=UTF-8")

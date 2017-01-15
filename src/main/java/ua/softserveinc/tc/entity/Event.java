@@ -6,6 +6,7 @@ import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.util.DateUtil;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -185,5 +186,16 @@ public class Event {
 
     public void setRecurrentType(EventConstants.TypeOfRecurentEvent recurrentType) {
         this.recurrentType = recurrentType;
+    }
+
+    public void setTime(Calendar calendarWithStartTime, Calendar calendarEndDateAndTime) {
+        Calendar calendarWithEndTime = Calendar.getInstance();
+        calendarWithEndTime.setTime(calendarWithStartTime.getTime());
+        calendarWithEndTime.set(Calendar.HOUR_OF_DAY,
+                calendarEndDateAndTime.get(Calendar.HOUR_OF_DAY));
+        calendarWithEndTime.set(Calendar.MINUTE,
+                calendarEndDateAndTime.get(Calendar.MINUTE));
+        this.setStartTime(calendarWithStartTime.getTime());
+        this.setEndTime(calendarWithEndTime.getTime());
     }
 }
