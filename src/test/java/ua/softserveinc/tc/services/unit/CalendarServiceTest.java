@@ -53,6 +53,9 @@ public class CalendarServiceTest {
     @Mock
     private RoomDao roomDao;
 
+    @Mock
+    private static List<Event> eventList;
+
     @Before
     public void initialization() {
         MockitoAnnotations.initMocks(this);
@@ -66,11 +69,14 @@ public class CalendarServiceTest {
         when(roomService.findEntityById(roomId).getEvents()).thenReturn(listOfEvent);
 
         verify(roomService, times(0)).findEntityById(roomId);
+
+        roomService.findEntityById(roomId);
+        verify(roomService, times(1)).findEntityById(roomId);
     }
 
     private static final Object[] getEvents() {
         return $(
-                $(Arrays.asList(new Event(), new Event(), new Event()), 0L)
+                $(eventList, 0L)
         );
     }
 

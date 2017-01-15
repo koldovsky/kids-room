@@ -1,22 +1,17 @@
 package ua.softserveinc.tc.services.unit;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.*;
-import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.categories.UnitTest;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.messaging.UserMessages;
 import ua.softserveinc.tc.service.impl.UserServiceImpl;
-import ua.softserveinc.tc.util.RoomUtils;
 import ua.softserveinc.tc.util.UserUtils;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.*;

@@ -4,6 +4,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import junitparams.JUnitParamsRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -39,6 +40,15 @@ public class EventDaoIT {
     public void testGetMaxRecurrentIdIfThereIsNoEvent() {
         Assert.assertEquals(Long.valueOf(0), eventDao.getMaxRecurrentId());
     }
+
+    @DatabaseSetup(value = "classpath:eventDao/events.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = "classpath:eventDao/events.xml", type = DatabaseOperation.DELETE_ALL)
+    @Test
+    public void testGetRecurrentEventByRecurrentIdIfThereAreMultipleEvents() {
+        Assert.assertEquals(Long.valueOf(1), eventDao.getRecurrentEventByRecurrentId(1L).get(0).getId());
+    }
+
+
 
 }
 

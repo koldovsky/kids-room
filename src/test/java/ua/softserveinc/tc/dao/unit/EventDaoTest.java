@@ -29,6 +29,9 @@ public class EventDaoTest {
     @Mock
     private EventDaoImpl eventDao;
 
+    @Mock
+    private static List<Event> eventList;
+
     @Before
     public void initialization() {
         MockitoAnnotations.initMocks(this);
@@ -56,7 +59,7 @@ public class EventDaoTest {
 
     private static final Object[] getEventList() throws ParseException {
         return $(
-                $(EventUtils.getListOfEvents(), 1L)
+                $(eventList, 1L)
         );
     }
 

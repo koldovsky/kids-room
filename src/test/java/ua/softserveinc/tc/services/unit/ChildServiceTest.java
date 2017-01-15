@@ -27,6 +27,7 @@ public class ChildServiceTest {
     @Mock
     private ChildDao childDao;
 
+    @Mock
     private List<Child> childs;
 
     @Mock
@@ -35,7 +36,6 @@ public class ChildServiceTest {
     @Before
     public void beforeTest() throws ParseException {
         MockitoAnnotations.initMocks(this);
-        childs = ChildsUtils.getListOfChilgren();
     }
 
     @Test

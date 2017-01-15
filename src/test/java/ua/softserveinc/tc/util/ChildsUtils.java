@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ChildsUtils {
 
-    public static List<Child> getListOfChilgren() throws ParseException {
+    public static List<Child> getListOfChildren() throws ParseException {
         Child child1 = new Child();
 
         child1.setId(1L);

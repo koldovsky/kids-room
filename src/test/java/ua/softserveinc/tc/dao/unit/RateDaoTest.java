@@ -27,6 +27,9 @@ public class RateDaoTest {
     @Mock
     private RateDaoImpl rateDao;
 
+    @Mock
+    private static List<Rate> rateList;
+
     @Before
     public void initialization() {
         MockitoAnnotations.initMocks(this);
@@ -44,7 +47,7 @@ public class RateDaoTest {
 
     private static final Object[] getListOfRates() {
         return $(
-                $(RateUtils.getListOfRates(), 1L)
+                $(rateList, 1L)
         );
     }
 
