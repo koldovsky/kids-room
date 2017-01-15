@@ -251,49 +251,10 @@ $(function () {
             valid = validateEventDialogData(UPDATE_MONTHLY_EVENT);
         }
         if (valid) {
-            updateRecurrentEvents(info_event.calEvent.recurrentId);
+            createSingleOrRecurrentEvents(info_event.calEvent.recurrentId);
         }
     });
 });
-
-function updateRecurrentEvents(recurrentId) {
-    $('#dialog').dialog('close');
-    $('.loading').show();
-    var startDateForCreatingRecurrentEvents = $('#start-date-picker').val() + 'T00:00:00';
-    var endDate = $('#end-date-picker').val() + 'T00:00:00';
-
-    var ev = {
-        id: recurrentId,
-        title: $('#event-title').val(),
-        start: makeISOTime(startDateForCreatingRecurrentEvents, 'start-time-picker'),
-        end: makeISOTime(endDate, 'end-time-picker'),
-        backgroundColor: NOT_ACTIVE_EVENT,
-        borderColor: NOT_ACTIVE_EVENT,
-        editable: false,
-        description: $('#description').val(),
-        color: $('#color-select').val()
-    };
-
-    if ($('#weekly-radio-button').is(':checked')) {
-        var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var dayWhenEventIsRecurrent = [];
-        var indexForRecurrentDay = 0;
-        checkBoxesDays.forEach(function (item) {
-            var ckbox = $('#' + item);
-            if (ckbox.is(':checked')) {
-                dayWhenEventIsRecurrent[indexForRecurrentDay] = ckbox.val();
-                indexForRecurrentDay++;
-            }
-        });
-        sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent);
-    } else if ($('#monthly-radio-button').is(':checked')) {
-        var daysWhenEventIsRecurrent = [];
-        $('#monthly-days').find('.active').each(function () {
-            daysWhenEventIsRecurrent.push(this.innerHTML);
-        });
-        sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent);
-    }
-}
 
 /**
  *  This function gets events from controller.
@@ -510,6 +471,7 @@ function createSingleOrRecurrentEvents(idIfEdited) {
 
     var ev = {
         id: -1,
+        recurrentId: idIfEdited,
         title: $('#event-title').val(),
         start: makeISOTime(startDateForCreatingRecurrentEvents, 'start-time-picker'),
         end: makeISOTime(endDate, 'end-time-picker'),
@@ -517,7 +479,7 @@ function createSingleOrRecurrentEvents(idIfEdited) {
         borderColor: NOT_ACTIVE_EVENT,
         editable: false,
         description: $('#description').val(),
-        color: eventColor
+        color: eventColor,
     };
     if ($('#weekly-radio-button').is(':checked')) {
         var checkBoxesDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -530,13 +492,13 @@ function createSingleOrRecurrentEvents(idIfEdited) {
                 indexForRecurrentDay++;
             }
         });
-        sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent, eventColor, idIfEdited);
+        sendRecurrentEventsForCreate(ev, dayWhenEventIsRecurrent);
     } else if ($('#monthly-radio-button').is(':checked')) {
         var daysWhenEventIsRecurrent = [];
         $('#monthly-days').find('.active').each(function () {
             daysWhenEventIsRecurrent.push(this.innerHTML);
         });
-        sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent, eventColor, idIfEdited);
+        sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent);
     } else {
         $('#calendar').fullCalendar('renderEvent', ev, true);
         $('#calendar').fullCalendar('unselect');
@@ -559,7 +521,6 @@ function createSingleOrRecurrentEvents(idIfEdited) {
                 ev.backgroundColor = eventColor;
                 ev.borderColor = BORDER_COLOR;
                 $('#calendar').fullCalendar('renderEvent', ev);
-
             },
             error: function (xhr) {
                 $('#calendar').fullCalendar('removeEvents', ev.id);
@@ -589,7 +550,7 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
         url: 'getrecurrentevents',
         dataType: 'json',
         data: JSON.stringify({
-            recurrentId: recurrentEvents.id,
+            recurrentId: recurrentEvents.recurrentId,
             name: recurrentEvents.title,
             startTime: recurrentEvents.start,
             endTime: recurrentEvents.end,
@@ -600,7 +561,7 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            deleteRecurrentEvents(recurrentEvents.id);
+            deleteRecurrentEvents(recurrentEvents.recurrentId);
             popSetOfEvents(result);
         },
         errors: function (xhr) {
@@ -690,7 +651,7 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
         url: 'getmonthlyevents',
         dataType: 'json',
         data: JSON.stringify({
-            recurrentId: recurrentEvents.id,
+            recurrentId: recurrentEvents.recurrentId,
             name: recurrentEvents.title,
             startTime: recurrentEvents.start,
             endTime: recurrentEvents.end,
@@ -701,7 +662,7 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            deleteRecurrentEvents(recurrentEvents.id);
+            deleteRecurrentEvents(recurrentEvents.recurrentId);
             if (result.datesWhenNotCreated.length) {
                 eventsWereNotCreated(result.datesWhenNotCreated);
             }
@@ -728,9 +689,7 @@ function updateSingleEvent() {
         description: $('#descriptionUpdate').val(),
         color: $('#color-select-single-event').val(),
     };
-
-    sendToServerForUpdate(eventForUpdate, info_event.roomID);
-
+    sendToServerForUpdate(eventForUpdate, info_event.roomID); //localStorage['roomId']
     $('#updating').dialog('close');
 }
 function sendToServerForUpdate(event, roomID) {
@@ -752,7 +711,7 @@ function sendToServerForUpdate(event, roomID) {
         success: function () {
             $('#calendar').fullCalendar('removeEvents', event.id);
             $('#calendar').fullCalendar('renderEvent', event, true);
-            redrawBlockedTimeSpans(roomIdForHandler);
+            redrawBlockedTimeSpans(roomID);
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
