@@ -522,6 +522,7 @@ function createSingleOrRecurrentEvents(idIfEdited) {
                 ev.id = parseInt(newId);
                 ev.backgroundColor = eventColor;
                 ev.borderColor = BORDER_COLOR;
+                allEvents.push(ev);
                 $('#calendar').fullCalendar('renderEvent', ev);
             },
             error: function (xhr) {
@@ -563,7 +564,8 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            deleteRecurrentEvents(recurrentEvents.recurrentId);
+            if (recurrentEvents.recurrentId)
+                deleteRecurrentEvents(recurrentEvents.recurrentId);
             popSetOfEvents(result);
         },
         errors: function (xhr) {
@@ -664,7 +666,8 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             if (result.datesWhenNotCreated.length) {
                 eventsWereNotCreated(result.datesWhenNotCreated);
             }
-            deleteRecurrentEvents(recurrentEvents.recurrentId);
+            if (recurrentEvents.recurrentId)
+                deleteRecurrentEvents(recurrentEvents.recurrentId);
             popSetOfEvents(result.eventsCreated);
         },
         error: function (xhr) {
@@ -678,7 +681,7 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
 
 function deleteRecurrentEvents(recurrentId) {
     var remainingAllEvents = [];
-    allEvents.forEach (function (item) {
+    allEvents.forEach(function (item) {
         if (item.recurrentId !== recurrentId) {
             remainingAllEvents.push(item);
         }
@@ -724,7 +727,6 @@ function sendToServerForUpdate(event, roomID) {
             callErrorDialog(xhr['responseText']);
         }
     });
-
 }
 
 function sendToServerForDelete(event) {
@@ -871,7 +873,6 @@ function buildTableMonthly() { //generating table for DAYS_IN_MONTH days
     $('#monthly-days').find('td').click(function () {
         $(this).toggleClass('active');
     });
-
 }
 
 function closeDialog(divid) {
