@@ -42,6 +42,14 @@ public interface BookingService extends BaseService<Booking> {
     Date replaceBookingTime(Booking booking, String time);
 
     /**
+     * Set state to Cancelled, sum and duration to 0 for all booking with given Id
+     *
+     * @param recurrentId the given recurrent Id
+     * @return the number of entities updated or deleted
+     */
+    int cancelBookingsByRecurrentId(long recurrentId);
+
+    /**
      * Create BookingDto object that contains start and end date for recurrent period of time,
      * and weekdays arrays. If the input parameter is null or is not corresponding to existed
      * recurrent Id then method returns null.

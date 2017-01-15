@@ -199,7 +199,7 @@ $(function () {
         myDialog.dialog('open');
         $('#comment-for-one-child-updating').hide();
         $('#confirmYes').click(function () {
-            cancelRecurrentBookings(info.calEvent.recurrentId);
+            cancelRecurrentBookingsOnyByOne(info.calEvent.recurrentId);
             myDialog.dialog('close');
         });
         $('#confirmNo').click(function () {
@@ -212,15 +212,6 @@ $(function () {
     }, function () {
         $(this).css("color", "black");
     });
-
-    /*
-     $('#deleting-recurrent-booking').click(function () {
-     $('#make-recurrent-booking').dialog('close');
-     cancelRecurrentBookings(info.calEvent.recurrentId);
-     });
-
-     */
-
 
     $('#updatingBooking').click(function () {
         if (!validateSingleBookingUpdateDialogData())
@@ -530,7 +521,8 @@ function sendBookingToServerForCreate(bookingsArray) {
     if (!empty) {
         $.ajax({
             type: 'post',
-            contentType: 'application/json',
+            encoding: 'UTF-8',
+            contentType: 'application/json; charset=UTF-8',
             url: 'makenewbooking',
             dataType: 'json',
             data: JSON.stringify(bookingsArray),
@@ -880,10 +872,41 @@ function deleteCanceledRecurrentBookingsFromArray(recurrentId, bookings) {
 }
 
 function cancelRecurrentBookings(recurrentId) {
+    var remainingBookings = [];
+
+    $.ajax({
+        type: 'get',
+        encoding: 'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        url: 'cancelrecurrentbookings/' + recurrentId,
+        dataType: 'json',
+        success: function (result) {
+            var indexesOfCancelledBookings = JSON.parse(result);
+
+            $('#user-calendar').fullCalendar('removeEvents', function(booking) {
+
+                return $.inArray(booking.id, indexesOfCancelledBookings) >= 0;
+            });
+
+            allBookings.forEach(function (item) {
+                if (item.recurrentId !== recurrentId) {
+                    remainingBookings.push(item);
+                }
+            });
+
+            allBookings = remainingBookings;
+        },
+        error: function (xhr) {
+            callErrorDialog(xhr['responseText']);
+        }
+    });
+}
+
+function cancelRecurrentBookingsOnyByOne(recurrentId) {
     var bookingsForDelete = [];
     var remainingBookings = [];
 
-    allBookings.forEach(function (item, i) {
+    allBookings.forEach(function (item) {
         if (item.recurrentId === recurrentId) {
             bookingsForDelete.push(item);
         } else {

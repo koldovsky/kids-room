@@ -5,12 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -151,6 +146,39 @@ public class CreateUpdateBookingsController {
     public ResponseEntity<String> updateRecurrentBookings(@RequestBody BookingDto dto) {
 
         return  getResponseEntity(bookingService.updateRecurrentBookings(dto));
+    }
+
+    /**
+     * Receives the recurrent id of bookings from GET http method and send them for cancelling. If
+     * input parameter is null or number of cancelled bookings is then the method returns ResponseEntity
+     * with "Bad Request" http status (400) and this number. Otherwise returns number of the cancelled
+     * Bookings in the body of object of ResponseEntity with http status "OK" (200).
+     *
+     * @param recurrentId the recurrent id of bookings
+     * @return ResponseEntity with appropriate http status and body that consists number of cancelled
+     * bookings
+     */
+    @GetMapping(value = "cancelrecurrentbookings/{recurrentId}",
+            produces = "text/plain; charset=UTF-8")
+    public ResponseEntity<String> cancelBooking(@PathVariable Long recurrentId) {
+        ResponseEntity<String> resultResponse;
+        Locale locale = (Locale) request.getSession()
+                .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
+        locale = (locale == null) ? request.getLocale() : locale;
+
+        int numOfCancelledEntities = (recurrentId != null) ?
+                bookingService.cancelBookingsByRecurrentId(recurrentId) : 0;
+
+        if(numOfCancelledEntities != 0) {
+            resultResponse = ResponseEntity.status(HttpStatus.OK)
+                    .body(new Gson().toJson(numOfCancelledEntities));
+        } else {
+            resultResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(messageSource.getMessage(
+                            ValidationConstants.VALIDATION_NOT_CORRECT_USAGE, null, locale));
+        }
+
+        return resultResponse;
     }
 
     /*

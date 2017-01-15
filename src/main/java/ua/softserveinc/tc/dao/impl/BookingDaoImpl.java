@@ -130,6 +130,22 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
+    public int cancelBookingsByRecurrentId(long recurrentId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Booking> update = builder.createCriteriaUpdate(Booking.class);
+        Root<Booking> root = update.from(Booking.class);
+
+        update
+                .set(root.get(BookingConstants.Entity.STATE), BookingState.CANCELLED)
+                .set(root.get(BookingConstants.Entity.SUM), 0L)
+                .set(root.get(BookingConstants.Entity.DURATION), 0L)
+                    .where(builder.equal(
+                            root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId));
+
+        return entityManager.createQuery(update).executeUpdate();
+    }
+
+    @Override
     public long getMaxRecurrentId() {
         Long result;
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

@@ -52,6 +52,14 @@ public interface BookingDao extends BaseDao<Booking> {
      */
     List<Booking> getBookings(BookingsCharacteristics characteristics);
 
+    /**
+     * Set state to Cancelled, sum and duration to 0 for all booking with given Id
+     *
+     * @param recurrentId the given recurrent Id
+     * @return the number of entities updated or deleted
+     */
+    int cancelBookingsByRecurrentId(long recurrentId);
+
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 
     /**

@@ -355,6 +355,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public int cancelBookingsByRecurrentId(long recurrentId) {
+        return bookingDao.cancelBookingsByRecurrentId(recurrentId);
+    }
+
+    @Override
     public boolean normalizeBookingDtoObjects(List<BookingDto> dtoList) {
         boolean result = true;
         BookingDto singleDto = dtoList.get(0);
