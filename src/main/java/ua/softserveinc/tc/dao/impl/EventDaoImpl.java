@@ -10,10 +10,7 @@ import ua.softserveinc.tc.entity.Event;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository(EventConstants.Entity.REPOSITORY)
@@ -45,6 +42,15 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
         for (Event event: listToSave) {
             entityManager.persist(event);
         }
+    }
+
+    @Override
+    public void deleteByRecurrentId(Long idRecurrent) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Event> delete = cb.createCriteriaDelete(Event.class);
+        Root<Event> r = delete.from(Event.class);
+        ParameterExpression<Long> p = cb.parameter(Long.class);
+        delete.where(cb.equal(r.get("recurrentId"),idRecurrent));
     }
 
     public List<Event> getRecurrentEventByRecurrentId(Long recurrentId) {

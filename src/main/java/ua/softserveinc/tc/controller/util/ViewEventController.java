@@ -27,6 +27,7 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
+import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.EventValidator;
@@ -50,6 +51,9 @@ public class ViewEventController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EventService eventService;
 
     @GetMapping("/")
     public final String viewHome(Model model, Principal principal) {
@@ -132,6 +136,12 @@ public class ViewEventController {
     @ResponseStatus(HttpStatus.OK)
     public void getEventForDelete(@RequestBody EventDto eventDto) {
         calendarService.deleteEvent(genericMapper.toEntity(eventDto));
+    }
+
+    @PostMapping("getrecurrenteventfordelete")
+    @ResponseStatus(HttpStatus.OK)
+    public void getRecurrentForDelete(@RequestBody Long idRecurrent) {
+        eventService.deleteRecurrentEvent(idRecurrent);
     }
 
     @PostMapping(value = "getrecurrentevents", produces = "application/json")

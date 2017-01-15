@@ -748,7 +748,17 @@ function sendToServerForDelete(event) {
             roomId: localStorage['roomId'],
             endTime: event.end
         })
+    });
+}
 
+function sendRecurrentToServerForDelete(idRecurrent) {
+    $.ajax({
+        type: 'post',
+        encoding: 'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        url: 'getrecurrenteventfordelete',
+        dataType: 'json',
+        data: JSON.stringify(idRecurrent)
     });
 }
 
@@ -849,9 +859,9 @@ function deleteRecurrentEvents(recurrentId) {
     allEvents.forEach(function (item) {
         if (item.recurrentId === recurrentId) {
             $('#calendar').fullCalendar('removeEvents', item.id);
-            sendToServerForDelete(item);
         }
     });
+    sendRecurrentToServerForDelete(recurrentId);
 }
 
 function clearEventDialogSingleMulti() {
