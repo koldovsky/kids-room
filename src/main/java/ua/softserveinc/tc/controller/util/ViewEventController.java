@@ -169,7 +169,6 @@ public class ViewEventController {
                         new Gson().toJson(bindingResult.getFieldError().getCode()));
             } else {
                 eventService.deleteRecurrentEvent(recurrentEventDto.getRecurrentId());
-                System.out.println("\n\n\n\n\n\n recid in controller" + recurrentEventDto.getRecurrentId());
                 return ResponseEntity.status(HttpStatus.OK).body(
                         new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto)));
             }
@@ -188,6 +187,9 @@ public class ViewEventController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     new Gson().toJson(bindingResult.getFieldError().getCode()));
         } else {
+            if(monthlyEventDto.getRecurrentId()!=null) {
+                eventService.deleteRecurrentEvent(monthlyEventDto.getRecurrentId());
+            }
             return ResponseEntity.status(HttpStatus.OK).body(
                     new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto)));
         }

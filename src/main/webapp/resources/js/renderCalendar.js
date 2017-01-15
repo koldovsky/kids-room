@@ -300,7 +300,7 @@ function updateRecurrentEvents(recurrentId) {
         $('#monthly-days').find('.active').each(function () {
             daysWhenEventIsRecurrent.push(this.innerHTML);
         });
-        sendMonthlyEventsForUpdate(ev, daysWhenEventIsRecurrent);
+        sendMonthlyEventsForCreate(ev, daysWhenEventIsRecurrent);
     }
 }
 
@@ -770,7 +770,7 @@ function animateCalendar(startTime, endTime, setName) {
         $('.fc-event').removeClass("animated").removeClass("pulse").removeClass("infinite");
     }, 4000);
 }
-function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor, idIfEdited) {
+function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
     $.ajax({
         type: 'post',
         encoding: 'UTF-8',
@@ -778,17 +778,18 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, ev
         url: 'getmonthlyevents',
         dataType: 'json',
         data: JSON.stringify({
+            recurrentId: recurrentEvents.id,
             name: recurrentEvents.title,
             startTime: recurrentEvents.start,
             endTime: recurrentEvents.end,
             daysOfMonth: dayWhenEventIsRecurrent,
             roomId: localStorage['roomId'],
             description: recurrentEvents.description,
-            color: eventColor,
+            color: recurrentEvents.color,
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            deleteRecurrentEvents(idIfEdited);
+            deleteRecurrentEvents(recurrentEvents.id);
             if (result.datesWhenNotCreated.length) {
                 eventsWereNotCreated(result.datesWhenNotCreated);
             }
