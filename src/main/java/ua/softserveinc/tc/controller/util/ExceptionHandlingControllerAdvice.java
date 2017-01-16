@@ -29,15 +29,18 @@ public class ExceptionHandlingControllerAdvice {
     private Logger log;
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ExceptionHandler({
-            NoHandlerFoundException.class,
-            ResourceNotFoundException.class
-    })
-    public String handleError404() { return ErrorConstants.NOT_FOUND_VIEW; }
+    @ExceptionHandler({NoHandlerFoundException.class, ResourceNotFoundException.class})
+    public String handleError404(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
+        return ErrorConstants.NOT_FOUND_VIEW;
+    }
 
     @ResponseStatus
     @ExceptionHandler(TokenInvalidException.class)
-    public String handleError() {
+    public String handleError(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return ErrorConstants.TOKEN_NOT_FOUND_VIEW;
     }
 
@@ -49,13 +52,17 @@ public class ExceptionHandlingControllerAdvice {
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AccessDeniedException.class)
-    public String handleError403() {
+    public String handleError403(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return ErrorConstants.ACCESS_DENIED_VIEW;
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyResultDataAccessException.class)
-    public String handleError500() {
+    public String handleError500(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return ErrorConstants.INTERNAL_SERVER_ERROR_VIEW;
     }
 
@@ -67,20 +74,25 @@ public class ExceptionHandlingControllerAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BadUploadException.class)
-    public String badUpload() {
+    public String badUpload(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return "error-bad-upload";
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(JpaSystemException.class)
     public String jpaExceptionHandler(HttpServletRequest req, Exception ex) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return "criticalRuntimeException";
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicateBookingException.class)
-    public String duplicateBooking() {
+    public String duplicateBooking(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return "error-duplicate-booking";
     }
 
