@@ -213,15 +213,6 @@ $(function () {
         $(this).css("color", "black");
     });
 
-    /*
-     $('#deleting-recurrent-booking').click(function () {
-     $('#make-recurrent-booking').dialog('close');
-     cancelRecurrentBookings(info.calEvent.recurrentId);
-     });
-
-     */
-
-
     $('#updatingBooking').click(function () {
         if (!validateSingleBookingUpdateDialogData())
             return;
@@ -530,7 +521,8 @@ function sendBookingToServerForCreate(bookingsArray) {
     if (!empty) {
         $.ajax({
             type: 'post',
-            contentType: 'application/json',
+            encoding: 'UTF-8',
+            contentType: 'application/json; charset=UTF-8',
             url: 'makenewbooking',
             dataType: 'json',
             data: JSON.stringify(bookingsArray),
@@ -845,9 +837,11 @@ function cancelBooking(bookingId) {
         type: 'get',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
-        url: 'cancelBook/' + bookingId,
+        url: 'cancelBooking/' + bookingId,
         dataType: 'json',
-        data: JSON.stringify({})
+        error: function (xhr) {
+            callErrorDialog(xhr['responseText']);
+        }
     });
     redrawBlockedTimeSpans(roomIdForHandler);
 }
@@ -879,24 +873,35 @@ function deleteCanceledRecurrentBookingsFromArray(recurrentId, bookings) {
     return remainingLocalBookings;
 }
 
+/**
+ * Deletes all bookings with given recurrent id from calendar and global
+ * allBookings array.
+ *
+ * @param recurrentId the given recurrent Id
+ */
 function cancelRecurrentBookings(recurrentId) {
-    var bookingsForDelete = [];
-    var remainingBookings = [];
+    var userCalendar = $('#user-calendar');
 
-    allBookings.forEach(function (item, i) {
-        if (item.recurrentId === recurrentId) {
-            bookingsForDelete.push(item);
-        } else {
-            remainingBookings.push(item);
+    $.ajax({
+        type: 'get',
+        encoding: 'UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        url: 'cancelrecurrentbookings/' + recurrentId,
+        dataType: 'json',
+        success: function () {
+            var newBookingsArray = userCalendar.fullCalendar('clientEvents');
+            newBookingsArray = deleteCanceledRecurrentBookingsFromArray(
+                recurrentId, newBookingsArray);
+
+            userCalendar.fullCalendar('removeEvents');
+            userCalendar.fullCalendar('addEventSource', newBookingsArray);
+            userCalendar.fullCalendar('refetchEvents');
+
+        },
+        error: function (xhr) {
+            callErrorDialog(xhr['responseText']);
         }
     });
-
-    bookingsForDelete.forEach(function (item) {
-        $('#user-calendar').fullCalendar('removeEvents', item.id);
-        cancelBooking(item.id);
-    });
-
-    allBookings = remainingBookings;
 }
 
 function closeBookingDialog() {
@@ -1118,9 +1123,6 @@ $('#closeContact').click(function () {
 $('#closeColorDesc').click(function () {
     $('#colorDescryptionModal').modal('hide');
 });
-
-function sendAjaxForRoomProperty(roomId) {
-}
 
 function increaseTimeByHour(date) {
     var currentDate = new Date();

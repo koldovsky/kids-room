@@ -86,12 +86,6 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
         return result;
     }
 
-    @Override
-    public boolean isValidToRemove(List<BookingDto> listDto) {
-        errors.clear();
-        return isValidToUpdate(listDto);
-    }
-
     /*
      * Checks if all of the BookingDto from the given list has correct days of week.
      *
