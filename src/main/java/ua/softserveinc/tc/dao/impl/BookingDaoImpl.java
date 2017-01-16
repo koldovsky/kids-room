@@ -28,7 +28,7 @@ import java.util.List;
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<Booking> getDuplicateBookings(BookingsCharacteristics characteristics) {

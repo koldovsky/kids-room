@@ -357,12 +357,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     @Transactional
     public int cancelBookingsByRecurrentId(long recurrentId) {
+
         return bookingDao.cancelBookingsByRecurrentId(recurrentId);
     }
 
     @Override
     @Transactional
     public int cancelBookingById(long bookingId) {
+
         return bookingDao.cancelBookingById(bookingId);
     }
 
@@ -568,7 +570,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             Calendar calendarAlternateTime = Calendar.getInstance();
             calendarAlternateTime.setTime(dateRecurrentStart);
 
-            int[] bookingDuration = getBookingDuration(dto); // index 0 -> hours; index 1 -> minutes
+            int[] bookingDuration = getBookingDuration(dto); //index 0 = hours; index 1 = minutes
             int[] intDaysOfWeek = DateUtil.getIntDaysOfWeek(
                     dto.getDaysOfWeek().trim().split(UtilConstants.WHITE_SPACE_REGEXP));
 
@@ -581,7 +583,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                     if (calendarAlternateTime.getTimeInMillis() < dateRecurrentStart.getTime()) {
                         continue;
                     }
-                    Date[] startAndEndDates = new Date[2];  //index 0 -> startDate; index 1 -> endDate
+                    Date[] startAndEndDates = new Date[2]; //index 0 = startDate; index 1 = endDate
                     startAndEndDates[0] = calendarAlternateTime.getTime();
                     startAndEndDates[1] = getEndBookingDate(calendarAlternateTime, bookingDuration);
                     resultDates.add(startAndEndDates);
