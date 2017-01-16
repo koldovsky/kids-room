@@ -36,10 +36,10 @@ public class UniqueManagerValidationImpl implements ConstraintValidator<UniqueMa
     public boolean isValid(String value, ConstraintValidatorContext context) {
         List<UserDto> managers = JsonUtil.fromJsonList(value, UserDto[].class);
 
-        if (managers.stream().filter(manager -> (manager.getId() == null)).findFirst().isPresent()) {
+        if (managers.stream().anyMatch(manager -> (manager.getId() == null))) {
             return false;
         }
         Map<Long, Long> map = managers.stream().collect(Collectors.groupingBy(UserDto::getId, Collectors.counting()));
-        return !map.values().stream().filter(en -> en > 1).findFirst().isPresent();
+        return map.values().stream().noneMatch(en -> en > 1);
     }
 }
