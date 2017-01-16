@@ -129,7 +129,6 @@ public class EditMyKidPageController {
      *
      * @param id        ID of a child (GET param)
      * @param principal Spring-provided object containing requesting user info
-     * @return "My kids" view
      * @throws AccessDeniedException if requesting user has to permission for this action
      */
     @PostMapping("/remove-kid/{id}")

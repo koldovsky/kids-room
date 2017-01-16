@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.LocaleConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
@@ -97,9 +95,9 @@ public class CRUDBookingsController {
     /**
      * Receives the list of BookingDto objects from POST http method and send them for persisting.
      * If any of the input parameters are not correct or the system failed to persist all of the
-     * bookings from the dto then method returns ResponseEntity with "Bad Request" http status(400).
-     * Otherwise returns list of the persisted Bookings in the BookingsDto objects in the body
-     * of object of ResponseEntity with http status "OK" (200).
+     * bookings from the dto then method returns ResponseEntity with "Bad Request" http status
+     * (400). Otherwise returns list of the persisted Bookings in the BookingsDto objects in the
+     * body of object of ResponseEntity with http status "OK" (200).
      *
      * @param dtos list of BookingsDto objects
      * @return ResponseEntity with appropriate http status and body that consists list of
