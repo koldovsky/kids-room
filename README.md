@@ -15,6 +15,14 @@ LV-193.Java:
 * **[Bohdan Kononchuk](https://github.com/Kononchuk-B)**
 * **[Sviatoslav Dubyniak](https://github.com/Sviatko)**
 
+LV-211.Java:
+
+* **[Sviatoslav Hryb](https://github.com/hrybs)**
+* **[Vitalij Fedyna](https://github.com/VitalijF)**
+* **[Andrii Okhrymovych](https://github.com/andryspo)**
+* **[Tovpinets Ihor](https://github.com/Pitcity)**
+* **[Hutor Valeriia](https://github.com/ValeryGutor)**
+* **[Volodymyr Mesherjak](https://github.com/merkan3k)**
 
 PROJECT MANAGERS
 ------------
