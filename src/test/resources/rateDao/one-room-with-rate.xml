@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <Rooms id_room="1" address_room="Pasternaka 8" capacity_room="40" name_room="Kvitkova" phone_room="+380947715038"
+           city_room="Lviv" active="true" working_start_hour="07:00" working_end_hour="20:00"/>
+
+    <Rates id_rate="1" hour_rate="2" price_rate="300" id_room="1"/>
+
+</dataset>

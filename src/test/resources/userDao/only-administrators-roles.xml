@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <Users id_user="1" email="user@softserveinc.com" first_name="Alan" last_name="Bom"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="2"
+           confirmed="true" active="true"/>
+
+    <Users id_user="2" email="parent1@softserveinc.com" first_name="Mario" last_name="Kara"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="2"
+           confirmed="true" active="true"/>
+
+    <Users id_user="3" email="parent2@softserveinc.com" first_name="Miron" last_name="Tereh"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="2"
+           confirmed="true" active="false"/>
+
+</dataset>

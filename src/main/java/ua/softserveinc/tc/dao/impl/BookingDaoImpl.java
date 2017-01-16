@@ -5,18 +5,21 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.Collections;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /*
  * Rewritten by Sviatoslav Hryb on 05.10.2017
@@ -127,6 +130,18 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
+    public int cancelBookingsByRecurrentId(long recurrentId) {
+
+        return cancelBookingsWherePathAndValue(BookingConstants.Entity.RECURRENT_ID, recurrentId);
+    }
+
+    @Override
+    public int cancelBookingById(long bookingId) {
+
+        return cancelBookingsWherePathAndValue(BookingConstants.Entity.ID_OF_BOOKING, bookingId);
+    }
+
+    @Override
     public long getMaxRecurrentId() {
         Long result;
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -141,34 +156,60 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Booking> getRecurrentBookingsByRecurrentId(Long recurrentId) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> criteria = builder.createQuery(Booking.class);
         Root<Booking> root = criteria.from(Booking.class);
 
         criteria.select(root).where(builder.equal(
-                root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId)).
-                orderBy(builder.asc(
+                root.get(BookingConstants.Entity.RECURRENT_ID), recurrentId))
+                    .orderBy(builder.asc(
                         root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
 
     @Override
-    @Transactional(rollbackForClassName = {"Exception"})
-    public List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings,
-                                                    List<Booking> newBookings) {
-        oldBookings.forEach(entityManager::merge);
-        newBookings.forEach(entityManager::persist);
-        return newBookings;
+    @Transactional
+    public void cancellActiveAndPlannedBookingsInRoom(Room room) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Booking> criteriaUpdate = builder.createCriteriaUpdate(Booking.class);
+        Root<Booking> root = criteriaUpdate.from(Booking.class);
+        criteriaUpdate.set(BookingConstants.Entity.STATE, BookingState.CANCELLED)
+                .where(builder.and(builder.equal(root.get(BookingConstants.Entity.ROOM), room)),
+                       builder.or(builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.ACTIVE),
+                       builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.BOOKED)));
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 
     @Override
     public List<Booking> persistRecurrentBookings(List<Booking> bookings) {
-        List<Booking> resultBookings = new ArrayList<>();
-        bookings.forEach(booking -> resultBookings.add(entityManager.merge(booking)));
-        return resultBookings;
+        bookings.forEach(entityManager::persist);
 
+        return bookings;
+
+    }
+
+    /*
+     * Set the state to Cancelled, sum and duration to 0 for all booking with given
+     * path and value of path
+     *
+     * @param path the given path
+     * @param bookingId the given value of path
+     * @return the number of entities deleted
+     */
+    private int cancelBookingsWherePathAndValue(String path, long value) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<Booking> update = builder.createCriteriaUpdate(Booking.class);
+        Root<Booking> root = update.from(Booking.class);
+
+        update
+                .set(root.get(BookingConstants.Entity.STATE), BookingState.CANCELLED)
+                .set(root.get(BookingConstants.Entity.SUM), 0L)
+                .set(root.get(BookingConstants.Entity.DURATION), 0L)
+                .where(builder.equal(
+                        root.get(path), value));
+
+        return entityManager.createQuery(update).executeUpdate();
     }
 }

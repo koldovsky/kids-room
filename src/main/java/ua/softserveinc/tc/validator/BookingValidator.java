@@ -35,5 +35,13 @@ public interface BookingValidator{
      * @param listDto list of given BookingDto
      * @return true if validation is passed, otherwise - false
      */
-    boolean validate(List<BookingDto> listDto);
+    boolean isValidToInsert(List<BookingDto> listDto);
+
+    /**
+     * Checks if the list of BookingDto objects is valid for updating.
+     *
+     * @param listDto the given list of BookingDto objects
+     * @return true if given list is valid, otherwise - false
+     */
+    boolean isValidToUpdate(List<BookingDto> listDto);
 }

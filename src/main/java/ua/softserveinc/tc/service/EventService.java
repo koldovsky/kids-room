@@ -8,4 +8,8 @@ import java.util.List;
 public interface EventService extends BaseService<Event> {
 
     List<EventDto> getListOfEventDto(List<Event> listOfEvents);
+
+    void deleteRecurrentEvent(Long idRecurrent);
+
+
 }

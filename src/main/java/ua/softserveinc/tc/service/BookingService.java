@@ -27,6 +27,8 @@ public interface BookingService extends BaseService<Booking> {
 
     void calculateAndSetDuration(Booking booking);
 
+    void cancelAllActiveAndPlannedRoomBookings(Room room);
+
     Long getSumTotal(List<Booking> bookings);
 
     Map<User, Long> generateAReport(List<Booking> bookings);
@@ -39,9 +41,33 @@ public interface BookingService extends BaseService<Booking> {
 
     Date replaceBookingTime(Booking booking, String time);
 
-    BookingDto getRecurrentBookingForEditingById(long bookingId);
+    /**
+     * Set state to Cancelled, sum and duration to 0 for all booking with given
+     * recurrent Id
+     *
+     * @param recurrentId the given recurrent Id
+     * @return the number of entities deleted
+     */
+    int cancelBookingsByRecurrentId(long recurrentId);
 
-    List<BookingDto> updateRecurrentBookings(BookingDto recurrentBookingDtos);
+    /**
+     * Set state to Cancelled, sum and duration to 0 for all booking with given
+     * booking Id
+     *
+     * @param bookingId the given recurrent Id
+     * @return the number of entities deleted
+     */
+    int cancelBookingById(long bookingId);
+
+    /**
+     * Create BookingDto object that contains start and end date for recurrent period of time,
+     * and weekdays arrays. If the input parameter is null or is not corresponding to existed
+     * recurrent Id then method returns null.
+     *
+     * @param recurrentId the given recurrent Id
+     * @return the appropriate BookingDto object
+     */
+    BookingDto getRecurrentBookingForEditingById(long recurrentId);
 
     /**
      * Gets the all bookings by given start and end date, booking states.
@@ -148,6 +174,19 @@ public interface BookingService extends BaseService<Booking> {
      * @return appropriate TwoTuple object
      */
     TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos);
+
+    /**
+     * Receives the BookingDto object. Then validates the input parameter for
+     * correctness and update all the objects. If any of the input parameters are not
+     * correct or the system failed to update all of the bookings from the dto then method
+     * returns TwoTuple where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
+     * BookingDto objects, and second equals to null.
+     *
+     * @param bookingDto the BookingsDto object
+     * @return appropriate TwoTuple object
+     */
+    TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto);
 
     /**
      * Normalizes the list of BookingDto objects. Set if not exists room,

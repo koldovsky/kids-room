@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import java.util.List;
@@ -51,8 +52,29 @@ public interface BookingDao extends BaseDao<Booking> {
      */
     List<Booking> getBookings(BookingsCharacteristics characteristics);
 
+    /**
+     * Set the state to Cancelled, sum and duration to 0 for all booking with given
+     * recurrent Id
+     *
+     * @param recurrentId the given recurrent Id
+     * @return the number of entities deleted
+     */
+    int cancelBookingsByRecurrentId(long recurrentId);
+
+    /**
+     * Set the state to Cancelled, sum and duration to 0 for all booking with given
+     * bookings Id
+     *
+     * @param bookingId the given recurrent Id
+     * @return the number of entities deleted
+     */
+    int cancelBookingById(long bookingId);
+
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 
-    List<Booking> updateRecurrentBookingsDAO(List<Booking> oldBookings,
-                                             List<Booking> newBookings);
+    /**
+     * Cancell all active and planned bookings in the room
+     * @param room where the bookings will be cancelled
+     */
+    void cancellActiveAndPlannedBookingsInRoom(Room room);
 }

@@ -1,10 +1,14 @@
 package ua.softserveinc.tc.validator;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +23,10 @@ public class BookingValidatorImpl implements BookingValidator {
     private BookingService bookingService;
 
     @Autowired
-    InputDateValidatorImpl inputDateValidator;
+    private InputDateValidatorImpl inputDateValidator;
+
+    @Log
+    private Logger log;
 
     private final List<String> errors = new ArrayList<>();
 
@@ -29,7 +36,7 @@ public class BookingValidatorImpl implements BookingValidator {
     }
 
     @Override
-    public boolean validate(List<BookingDto> dto) {
+    public boolean isValidToInsert(List<BookingDto> dto) {
         boolean result = true;
         errors.clear();
 
@@ -51,6 +58,29 @@ public class BookingValidatorImpl implements BookingValidator {
 
                 result = false;
             }
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean isValidToUpdate(List<BookingDto> listDto) {
+        boolean result;
+        errors.clear();
+
+        if(!isValidToInsert(listDto)) {
+
+            result = false;
+        } else {
+            BookingDto singleDto = listDto.get(0);
+            Booking booking = null;
+            try {
+                booking = bookingService.findEntityById(singleDto.getId());
+            } catch (ResourceNotFoundException e) {
+                errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+                log.error("Not existed booking entity");
+            }
+            result = booking != null;
         }
 
         return result;

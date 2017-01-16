@@ -9,33 +9,25 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
-import ua.softserveinc.tc.util.BookingsCharacteristics;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Collections;
-import java.util.TreeMap;
-import java.util.Date;
-import java.util.Calendar;
-
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
+import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Service
 public class RoomServiceImpl extends BaseServiceImpl<Room>
@@ -172,8 +164,8 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
     public Boolean isPossibleUpdate(BookingDto bookingDto) {
         Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
         Room room = booking.getRoom();
-        Date dateLo = toDateAndTime(bookingDto.getStartTime());
-        Date dateHi = toDateAndTime(bookingDto.getEndTime());
+        Date dateLo = toDateISOFormat(bookingDto.getStartTime());
+        Date dateHi = toDateISOFormat(bookingDto.getEndTime());
         List<Booking> list = reservedBookings(dateLo, dateHi, room);
         if (list.contains(booking)) {
             list.remove(booking);
@@ -239,12 +231,17 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
 
     /**
      * function change room state
+     * if room state is change to inactive
+     * all bookings in the room are cancelled
      * @param id Room id
      */
     @Override
     public Room changeActiveState(Long id) {
         Room room = findByIdTransactional(id);
         room.setActive(!room.isActive());
+        if(!room.isActive()) {
+            bookingService.cancelAllActiveAndPlannedRoomBookings(room);
+        }
         update(room);
 
         return room;

@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
+import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Controller
 public class BookingEditController {
@@ -145,8 +146,8 @@ public class BookingEditController {
     @ResponseBody
     public Boolean isPossableUpdate(@RequestBody BookingDto bookingDto) {
         Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
-        Date startTime = toDateAndTime(bookingDto.getStartTime());
-        Date endTime = toDateAndTime(bookingDto.getEndTime());
+        Date startTime = toDateISOFormat(bookingDto.getStartTime());
+        Date endTime = toDateISOFormat(bookingDto.getEndTime());
         if (!this.timeValidator.validateBooking(bookingDto)) return false;
         if (roomService.isPossibleUpdate(bookingDto)) {
             booking.setBookingEndTime(endTime);

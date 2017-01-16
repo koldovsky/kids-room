@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.validator;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.UtilConstants;
@@ -10,8 +11,12 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.util.DateUtil;
+import ua.softserveinc.tc.util.Log;
 
 /*
  * Created by Sviatoslav Hryb on 27-Dec-16.
@@ -19,14 +24,14 @@ import ua.softserveinc.tc.util.DateUtil;
 @Component
 public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator {
 
+    @Log
+    private Logger log;
+
     @Autowired
     private BookingService bookingService;
 
     @Autowired
-    InputDateValidatorImpl inputDateValidator;
-
-    @Autowired
-    BookingValidator bookingValidator;
+    private BookingValidator bookingValidator;
 
     private final List<String> errors = new ArrayList<>();
 
@@ -36,7 +41,7 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
     }
 
     @Override
-    public boolean validate(List<BookingDto> dto) {
+    public boolean isValidToInsert(List<BookingDto> dto) {
         boolean result = true;
         errors.clear();
 
@@ -45,10 +50,37 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
             errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
 
             result = false;
-        } else if (!bookingValidator.validate(dto)) {
+        } else if (!bookingValidator.isValidToInsert(dto)) {
                 errors.add(bookingValidator.getErrors().get(0));
 
                 result = false;
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean isValidToUpdate(List<BookingDto> listDto) {
+        boolean result = true;
+        errors.clear();
+
+        if(!isValidToInsert(listDto)) {
+
+            result = false;
+        } else {
+            BookingDto singleDto = listDto.get(0);
+            Booking booking = null;
+            try {
+                booking = bookingService.findEntityById(singleDto.getId());
+            } catch (ResourceNotFoundException e) {
+                log.error("Not existed booking entity");
+            }
+            if (booking == null || !booking.getRecurrentId().equals(singleDto.getRecurrentId())
+                    || booking.getBookingState() != BookingState.BOOKED) {
+                errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+
+                result = false;
+            }
         }
 
         return result;

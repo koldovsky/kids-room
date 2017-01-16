@@ -55,6 +55,8 @@ public final class BookingConstants {
 
     public static final String RECURRENT_ID = "recurrentId";
 
+    public static final String DURATION = "duration";
+
     public static final String ID_OF_BOOKING = "idBook";
 
     private Entity() {
