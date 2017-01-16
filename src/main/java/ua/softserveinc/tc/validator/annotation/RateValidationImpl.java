@@ -36,18 +36,16 @@ public class RateValidationImpl implements ConstraintValidator<RateValidation, S
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         List<Rate> rates = JsonUtil.fromJsonList(value, Rate[].class);
-
-        if (rates.stream().filter(rate -> (rate.getHourRate() == null || rate.getPriceRate() == null))
-                .findFirst().isPresent()) {
+        if (rates.stream().anyMatch(rate -> (rate.getHourRate() == null || rate.getPriceRate() == null))) {
             return false;
         }
-        if (rates.stream().filter(rate -> (rate.getHourRate() > 24 || rate.getHourRate() < 1)).findFirst().isPresent()) {
+        if (rates.stream().anyMatch(rate -> (rate.getHourRate() > 24 || rate.getHourRate() < 1))) {
             return false;
         }
-        if (rates.stream().filter(rate -> (rate.getPriceRate() < 0)).findFirst().isPresent()){
+        if (rates.stream().anyMatch(rate -> (rate.getPriceRate() < 0))){
             return false;
         }
         Map<Integer, Long> map = rates.stream().collect(Collectors.groupingBy(Rate::getHourRate, Collectors.counting()));
-        return !map.values().stream().filter(en -> en > 1).findFirst().isPresent();
+        return map.values().stream().noneMatch(en -> en > 1);
     }
 }
