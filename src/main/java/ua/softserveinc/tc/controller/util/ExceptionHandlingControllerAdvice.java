@@ -35,7 +35,7 @@ public class ExceptionHandlingControllerAdvice {
             ResourceNotFoundException.class
     })
     public String handleError404(HttpServletRequest req, Exception ex) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
         return ErrorConstants.NOT_FOUND_VIEW; }
 
 
