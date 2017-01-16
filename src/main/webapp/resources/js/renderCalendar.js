@@ -75,9 +75,12 @@ $(function () {
     });
 
     $('#updatingButton').click(function () {
-        if (validateUpdateSingleDialog()) {
+        cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
+        // if (isSingleUpdateFormValid()) {
             updateSingleEvent();
-        }
+        // } else {
+        //     printGeneralMessage(GENERAL_ERROR_FIELD);
+        // }
     });
 
     function deleteRecurrentEvents(recurrentId) {
@@ -165,12 +168,17 @@ $(function () {
     });
 
     $('#create-button').click(function () {
+        cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
         if (isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)) {
-            if (!validateEventDialogData(CREATE_SINGLE_EVENT))
+            if (!isCreateEventFormValid(CREATE_SINGLE_EVENT)) {
+                printGeneralMessage(GENERAL_ERROR_FIELD);
                 return;
+            }
         } else if (isRadioButtonSelected(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
-            if (!validateEventDialogData(CREATE_RECURRENT_EVENT))
+            if (!isCreateEventFormValid(CREATE_RECURRENT_EVENT)) {
+                printGeneralMessage(GENERAL_ERROR_FIELD);
                 return;
+            }
         } else if (isRadioButtonSelected(CREATE_EVENT_DIALOG_MONTHLY_EVENT_RADIOBUTTON)) {
             if (!validateEventDialogData(CREATE_MONTHLY_EVENT))
                 return;
@@ -253,9 +261,13 @@ $(function () {
     });
 
     $('#update-recurrent-button').click(function () {
+        cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
         var valid = false;
-        if (isRadioButtonSelected(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
-            valid = validateEventDialogData(UPDATE_RECURRENT_EVENT);
+        if (isRadioButtonChecked(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
+            valid = isCreateEventFormValid(UPDATE_RECURRENT_EVENT);
+            if (!valid){
+                printGeneralMessage(GENERAL_ERROR_FIELD);
+            }
         }
         else {
             valid = validateEventDialogData(UPDATE_MONTHLY_EVENT);
@@ -546,18 +558,29 @@ function createSingleOrRecurrentEvents(idIfEdited) {
             ev.backgroundColor = eventColor;
             ev.borderColor = BORDER_COLOR;
             $('#calendar').fullCalendar('renderEvent', ev);
-
+            $('#start-date-picker').val('');
+            clearEventDialogSingleMulti();
+            $('#dialog').dialog('close');
+            closeDialog('dialog');
         },
         error: function (xhr) {
-            $('#calendar').fullCalendar('removeEvents', ev.id);
-            callErrorDialog(xhr['responseText']);
+            if (xhr.status == 406) {
+                $('#calendar').fullCalendar('removeEvents', ev.id);
+                $('#dialog').dialog('close');
+                closeDialog('dialog');
+                callErrorDialog(xhr['responseText']);
+            } else {
+                $('#calendar').fullCalendar('removeEvents', ev.id);
+                printServerError(GENERAL_ERROR_FIELD,xhr['responseText']);
+        }
+
         }
     });
 
-    $('#start-date-picker').val('');
-    clearEventDialogSingleMulti();
-    $('#dialog').dialog('close');
-    closeDialog('dialog');
+}
+
+function printServerError(errorField,responsetext) {
+    $("."+errorField).html(responsetext);
 }
 
 function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent, eventColor, idIfEdited) {
@@ -710,7 +733,6 @@ function updateSingleEvent() {
 
     sendToServerForUpdate(eventForUpdate, info_event.roomID);
 
-    $('#updating').dialog('close');
 }
 function sendToServerForUpdate(event, roomID) {
     $.ajax({
@@ -730,11 +752,16 @@ function sendToServerForUpdate(event, roomID) {
         }),
         success: function () {
             $('#calendar').fullCalendar('removeEvents', event.id);
+            event.borderColor = BORDER_COLOR;
             $('#calendar').fullCalendar('renderEvent', event, true);
-            redrawBlockedTimeSpans(roomIdForHandler);
+            $('#updating').dialog('close');
         },
         error: function (xhr) {
-            callErrorDialog(xhr['responseText']);
+            if (xhr.status == 406) {
+                $('#updating').dialog('close');
+                callErrorDialog(xhr['responseText']);
+            } else
+                printServerError(GENERAL_ERROR_FIELD,xhr['responseText']);
         }
     });
 

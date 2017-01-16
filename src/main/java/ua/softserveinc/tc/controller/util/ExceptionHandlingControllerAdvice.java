@@ -33,7 +33,9 @@ public class ExceptionHandlingControllerAdvice {
             NoHandlerFoundException.class,
             ResourceNotFoundException.class
     })
-    public String handleError404() { return ErrorConstants.NOT_FOUND_VIEW; }
+    public String handleError404(HttpServletRequest req, Exception ex) {
+        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        return ErrorConstants.NOT_FOUND_VIEW; }
 
     @ResponseStatus
     @ExceptionHandler(TokenInvalidException.class)

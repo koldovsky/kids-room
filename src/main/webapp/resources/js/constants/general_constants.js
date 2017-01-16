@@ -12,11 +12,13 @@ const constants = {
         }
     },
     parameters: {
+        titleMaxLenght: 255,
+        descriptionMaxLenght: 250,
         nameMinLength : 2,
         nameMaxLength : 35,
         commentMaxLength : 250,
         hoursInDay : 24,
         timeZone : 2
     }
-}
+};
 

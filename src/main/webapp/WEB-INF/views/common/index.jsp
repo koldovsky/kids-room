@@ -98,7 +98,7 @@
                                    id="data-validation-information-string"></p>
                             </div>
                             <br>
-                            <button type="button" class="btn btn-success" id="updatingBooking">
+                            <button type="submit" class="btn btn-success" id="updatingBooking">
                                 <spring:message code="booking.update"/>
                             </button>
                             <button type="button" class="btn btn-danger pull-right" id="deletingBookingCancel">
@@ -882,8 +882,6 @@
                                     </div>
                                 </footer>
                             </div>
-
-
                         </form>
                     </div>
                 </div>
@@ -1016,7 +1014,9 @@
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
 <div id="warning-dialog" type="hidden"></div>
-
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -1024,10 +1024,12 @@
 <script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/seriousColorLegendUpdate.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/validation/manager-create-events-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/constants/manager-create-events-constants.js'></script>
+<script src="${pageContext.request.contextPath}/resources/js/validation/event-validator.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/user-create-booking-validator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/single-booking.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/validation/eventValidator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>

@@ -1,5 +1,5 @@
 /**
- * Created by shuk on 19.11.16.
+ * Created by Vitalij Fedyna on 19.11.16.
  */
 const messages = {
     kid: {
@@ -59,6 +59,15 @@ const messages = {
     },
     event: {
         errors: {
+            titleFieldRequired: 'Поле назва повинно бути заповнене',
+            titleMaximumCharacters: 'Назва не повинна містити більше ' + constants.parameters.titleMaxLenght + ' символів',
+            descriptionMaximumCharacters: 'Поле опису не повинно містити  більше ' + constants.parameters.descriptionMaxLenght + ' символів',
+            startDateFormat: 'Використовуйте правильний формат yyyy-mm-dd HH:MM для дати початку',
+            endDateFormat: 'Використовуйте правильний формат yyyy-mm-dd HH:MM для дати кінця',
+            singleEventDateEquals:  'Для одноденної події дати повинні бути рівні',
+            invalidColor: 'Невірно вибраний колір',
+            invalidDate: 'Невірно введена дата',
+            invalidTime: 'Невірно введений час',
             dateInThePast: 'Дата не може бути в минулому, поточна дата: ',
             timeInThePast: 'Час початку не може бути в минулому, поточний час: ',
             endTimeGreaterThanStartTime: 'Час закінчення повинен бути хоча б на хвилину більший за час початку',
@@ -113,4 +122,3 @@ const messages = {
         }
     }
 };
-

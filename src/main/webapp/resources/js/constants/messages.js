@@ -1,3 +1,6 @@
+/**
+ * Created by Vitalij Fedyna on 19.11.16.
+ */
 const messages = {
     kid: {
         invalidFirstName: 'Invalid First Name',
@@ -16,7 +19,6 @@ const messages = {
         editLastName: 'Please enter at least 2 characters',
         editFirstNameWithDigits: 'First name can not contain digits',
         editLastNameWithDigits: 'Last name can not contain digits'
-
     },
     date: {
         fromBiggerThanTo: ' \'To\' date should be bigger than \'From\' date ',
@@ -57,6 +59,15 @@ const messages = {
     },
     event: {
         errors: {
+            titleFieldRequired: 'Title can\'t be empty ',
+            titleMaximumCharacters: 'Title should contain no more than' + constants.parameters.titleMaxLenght + ' characters',
+            descriptionMaximumCharacters: 'Description should contain no more than ' + constants.parameters.descriptionMaxLenght + ' characters',
+            startDateFormat: 'Use Right format date yyyy-mm-dd HH:MM for start date',
+            endDateFormat: 'Use Right format date yyyy-mm-dd HH:MM for end date',
+            singleEventDateEquals:  'For one-day event dates must be the same',
+            invalidColor: 'This color is invalid',
+            invalidDate: 'Date is invalid',
+            invalidTime: 'Time is invalid',
             dateInThePast: 'Date can\'t be in the past, current date is: ',
             timeInThePast: 'Start time can\'t be in the past, current time is: ',
             endTimeGreaterThanStartTime: 'End time must be at least one minute later than the start time',
