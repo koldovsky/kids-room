@@ -522,6 +522,7 @@ function createSingleOrRecurrentEvents(idIfEdited) {
                 ev.id = parseInt(newId);
                 ev.backgroundColor = eventColor;
                 ev.borderColor = BORDER_COLOR;
+                allEvents.push(ev);
                 $('#calendar').fullCalendar('renderEvent', ev);
             },
             error: function (xhr) {
@@ -563,7 +564,8 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            deleteRecurrentEvents(recurrentEvents.recurrentId);
+            if (recurrentEvents.recurrentId)
+                deleteRecurrentEvents(recurrentEvents.recurrentId);
             popSetOfEvents(result);
         },
         errors: function (xhr) {
@@ -576,8 +578,6 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
 }
 function popSetOfEvents(set) {
     if (set.length) {
-        var recurrentEventsForRender = [];
-
         set.forEach(function (item, i) {
             var newRecurrentEvent = {
                 id: item.id,
@@ -591,13 +591,11 @@ function popSetOfEvents(set) {
                 borderColor: BORDER_COLOR,
                 recurrentId: item.recurrentId
             };
-
             allEvents.push(newRecurrentEvent);
-
-            recurrentEventsForRender.push(newRecurrentEvent);
-            $('#calendar').fullCalendar('renderEvent', recurrentEventsForRender[i], true);
         });
-
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', allEvents);
+        $('#calendar').fullCalendar('refetchEvents');
         animateCalendar(set[0].startTime, set[0].endTime, set[0].name);
     }
 }
@@ -668,7 +666,8 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             if (result.datesWhenNotCreated.length) {
                 eventsWereNotCreated(result.datesWhenNotCreated);
             }
-            deleteRecurrentEvents(recurrentEvents.recurrentId);
+            if (recurrentEvents.recurrentId)
+                deleteRecurrentEvents(recurrentEvents.recurrentId);
             popSetOfEvents(result.eventsCreated);
         },
         error: function (xhr) {
@@ -678,6 +677,16 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             $('.loading').hide();
         }
     });
+}
+
+function deleteRecurrentEvents(recurrentId) {
+    var remainingAllEvents = [];
+    allEvents.forEach(function (item) {
+        if (item.recurrentId !== recurrentId) {
+            remainingAllEvents.push(item);
+        }
+    });
+    allEvents = remainingAllEvents;
 }
 
 function updateSingleEvent() {
@@ -690,7 +699,7 @@ function updateSingleEvent() {
         description: $('#descriptionUpdate').val(),
         color: $('#color-select-single-event').val(),
     };
-    sendToServerForUpdate(eventForUpdate, info_event.roomID); //localStorage['roomId']
+    sendToServerForUpdate(eventForUpdate, info_event.roomID);
     $('#updating').dialog('close');
 }
 function sendToServerForUpdate(event, roomID) {
@@ -718,7 +727,6 @@ function sendToServerForUpdate(event, roomID) {
             callErrorDialog(xhr['responseText']);
         }
     });
-
 }
 
 function sendToServerForDelete(event) {
@@ -831,16 +839,6 @@ function editRecurrentEventRequest(eventRecurrentId) {
     });
 }
 
-function deleteRecurrentEvents(recurrentId) {
-    if (recurrentId != null) {
-        allEvents.forEach(function (item) {
-            if (item.recurrentId === recurrentId) {
-                $('#calendar').fullCalendar('removeEvents', item.id);
-            }
-        });
-    }
-}
-
 function clearEventDialogSingleMulti() {
     $('#create-button').show();
     $('#update-recurrent-button').hide();
@@ -875,7 +873,6 @@ function buildTableMonthly() { //generating table for DAYS_IN_MONTH days
     $('#monthly-days').find('td').click(function () {
         $(this).toggleClass('active');
     });
-
 }
 
 function closeDialog(divid) {

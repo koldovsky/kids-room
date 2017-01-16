@@ -154,11 +154,13 @@ public class CalendarServiceImpl implements CalendarService {
         while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
             for (int day : days) {
 
-                if ((calendar.get(Calendar.MONTH) == calendarStartDate.get(Calendar.MONTH)) &&
+                if ((calendar.get(Calendar.YEAR) == calendarStartDate.get(Calendar.YEAR)) &&
+                        (calendar.get(Calendar.MONTH) == calendarStartDate.get(Calendar.MONTH)) &&
                         (calendarStartDate.get(Calendar.DAY_OF_MONTH) > day)) {
                     continue;
                 }
-                if ((calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
+                if ((calendar.get(Calendar.YEAR) == calendarEndDate.get(Calendar.YEAR)) &&
+                        (calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
                         (calendarEndDate.get(Calendar.DAY_OF_MONTH) < day)) {
                     break;
                 }
