@@ -76,11 +76,11 @@ $(function () {
 
     $('#updatingButton').click(function () {
         cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
-        // if (isSingleUpdateFormValid()) {
+         if (isSingleUpdateFormValid()) {
             updateSingleEvent();
-        // } else {
-        //     printGeneralMessage(GENERAL_ERROR_FIELD);
-        // }
+        } else {
+            printGeneralMessage(GENERAL_ERROR_FIELD);
+        }
     });
 
     function deleteRecurrentEvents(recurrentId) {
