@@ -2,9 +2,11 @@ package ua.softserveinc.tc.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.EventDto;
@@ -25,25 +27,90 @@ public class EventValidator implements Validator {
     @Autowired
     private RoomService roomService;
 
-    private DateFormat onlyDateSimpleDateFormat = new SimpleDateFormat(ValidationConstants.DATE_FORMAT);
+    private DateFormat onlyDateSimpleDateFormat;
     private Date startDate;
     private Date endDate;
     private Date nowDate;
+    private Date onlyStartDate;
+    private Date onlyEndDate;
     private Calendar startDateCalendar;
     private Calendar endDateCalendar;
 
+    private boolean isValidColor(String colorCode) {
+        boolean validColor = false;
+        for (int i = 0; i < DateConstants.EventColors.getEventColors().size(); i++) {
+            if (Objects.equals(colorCode, DateConstants.EventColors.getEventColors().get(i))) {
+                validColor = true;
+                break;
+            }
 
+        }
+        return validColor;
+    }
     private void dateSet(EventDto eventDto) throws ParseException {
         DateFormat sdf = new SimpleDateFormat(ValidationConstants.DATE_FORMAT);
         onlyDateSimpleDateFormat = new SimpleDateFormat(ValidationConstants.ONLY_DATE_FORMAT);
         startDate = sdf.parse(eventDto.getStartTime());
         endDate = sdf.parse(eventDto.getEndTime());
+        onlyStartDate = onlyDateSimpleDateFormat.parse(eventDto.getStartTime());
+        onlyEndDate = onlyDateSimpleDateFormat.parse(eventDto.getEndTime());
         nowDate = new Date();
         startDateCalendar = Calendar.getInstance();
         endDateCalendar = Calendar.getInstance();
         startDateCalendar.setTime(startDate);
         endDateCalendar.setTime(endDate);
     }
+
+    public List<String> logicValidEvent(EventDto eventDto){
+        List<String> logicError = new ArrayList<>();
+        if (!roomService.findByIdTransactional(eventDto.getRoomId()).isActive()) {
+          logicError.add(ValidationConstants.EVENT_INACTIVE_ROOM_ERROR_MSG);
+        }
+        return  logicError;
+    }
+
+    public List<String> generalValidateEvent(EventDto eventDto) {
+        List<String> generalError = new ArrayList<>();
+        if (eventDto.getName() == null || !StringUtils.hasText(eventDto.getName())){
+            generalError.add(ValidationConstants.EVENT_EMPTY_TITLE_MSG);
+        }
+        if (eventDto.getName().length() > ValidationConstants.EVENT_DESCRIPTION_MAX_LENGHT){
+            generalError.add(ValidationConstants.EVENT_MAX_TITLE_LENGHT);
+        }
+        if (eventDto.getDescription().length() > ValidationConstants.EVENT_DESCRIPTION_MAX_LENGHT){
+            generalError.add(ValidationConstants.EVENT_DESCRIPTION_LENGTH_ERROR_MSG);
+        }
+        if (!isValidColor(eventDto.getColor())) {
+            generalError.add(ValidationConstants.EVENT_INVALID_COLOR);
+        }
+        try {
+            dateSet(eventDto);
+        } catch (ParseException e) {
+            generalError.add(ValidationConstants.EVENT_DATE_ERROR_PARSING);
+            return generalError;
+        }
+        if (startDate.before(nowDate)) {
+               generalError.add(ValidationConstants.EVENT_PAST_TIME_CREATION_MSG);
+        }
+        if (startDateCalendar.get(Calendar.HOUR_OF_DAY) >
+            endDateCalendar.get(Calendar.HOUR_OF_DAY)) {
+            generalError.add(ValidationConstants.EVENT_START_TIME_BIGGER_END_MSG);
+        } else if ((startDateCalendar.get(Calendar.HOUR_OF_DAY) ==
+            endDateCalendar.get(Calendar.HOUR_OF_DAY)) &&
+            ((startDateCalendar.get(Calendar.MINUTE) + ValidationConstants.ONE_MINUTE) >
+                endDateCalendar.get(Calendar.MINUTE))) {
+          generalError.add(ValidationConstants.EVENT_START_TIME_BIGGER_END_MSG);
+        }
+
+        if (eventDto.getRecurrentId() == null) {
+          if (!(onlyStartDate.getTime() == onlyEndDate.getTime()))
+              generalError.add(ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
+        } else if (!(onlyStartDate.before(onlyEndDate))){
+            generalError.add(ValidationConstants.EVENT_RECURRENT_START_NOT_BEFORE_END);
+        }
+        return generalError;
+    }
+
 
     @Override
     public boolean supports(Class<?> aClass) {

@@ -101,9 +101,8 @@ public final class ValidationConstants {
     public static final String EMPTY_FIELD_MSG = "registration.empty";
     public static final String EVENT_DATE_FORMAT_INVALID_MSG = "Can't convert data type";
     public static final String EVENT_CAST_EXCEPTION = "Your date is wrong";
-    public static final String EVENT_PAST_TIME_CREATION_MSG = "Must create new event in Present time";
-    public static final String EVENT_DESCRIPTION_LENGTH_ERROR_MSG = "Description  should be less than 250 characters";
-    public static final String EVENT_INACTIVE_ROOM_ERROR_MSG = "You can't create event on inactive room. Please contact to admin";
+    public static final String EVENT_PAST_TIME_CREATION_MSG = "event.pastCreation";
+    public static final String EVENT_INACTIVE_ROOM_ERROR_MSG = "event.innactiveRoom";
     public static final String EVENT_END_MUST_BIGGER_ONE_MINUTE_MSG = "End time must be bigger than start at least one minute";
     public static final String EVENT_RECCURRENT_END_MUST_BIGER_ONE_DAY_MSG = "End date must be bigger than start at least one day";
     public static final String EMAIL_NOT_VALID = "registration.manager.emailNotValid";
@@ -121,8 +120,14 @@ public final class ValidationConstants {
     public static final String IMAGE_VALIDATION_NOT_ACCEPTABLE_SIZE_FORMAT = "image.validator.badSizeFormat";
 
     public static final String EVENT_EMPTY_TITLE_MSG = "event.emptyTitle";
+    public static final String EVENT_MAX_TITLE_LENGHT = "event.maxTitleLenght";
+    public static final String EVENT_INVALID_COLOR = "event.invalidColor";
+    public static final String EVENT_DATE_ERROR_PARSING="event.dateErrorParsing";
+
+    public static final String EVENT_DESCRIPTION_LENGTH_ERROR_MSG = "event.descriptionLenght";
     public static final String EVENT_START_NOT_EQUALS_END_MSG = "event.startDateNotEqualEnd";
-    public static final String EVENT_START_TIME_BIGGER_END_MSG = "event.startTimeBiggerEnd";
+    public static final String EVENT_START_TIME_BIGGER_END_MSG = "event.startTimeBiggerEndTime";
+    public static final String EVENT_RECURRENT_START_NOT_BEFORE_END = "event.recurrentEndBeforeStart";
 
     public static final String PASSWORD_ERROR_MSG = "registration.password";
     public static final String PHONE_NUMBER_ERROR_MSG = "registration.phone";

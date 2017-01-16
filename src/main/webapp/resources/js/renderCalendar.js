@@ -75,8 +75,11 @@ $(function () {
     });
 
     $('#updatingButton').click(function () {
-        if (validateUpdateSingleDialog()) {
+        cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
+         if (isSingleUpdateFormValid()) {
             updateSingleEvent();
+        } else {
+            printGeneralMessage(GENERAL_ERROR_FIELD);
         }
     });
 
@@ -156,6 +159,17 @@ $(function () {
     });
 
     $('#create-button').click(function () {
+        cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
+        if (isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)) {
+            if (!isCreateEventFormValid(CREATE_SINGLE_EVENT)) {
+                printGeneralMessage(GENERAL_ERROR_FIELD);
+                return;
+            }
+        } else if (isRadioButtonSelected(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
+            if (!isCreateEventFormValid(CREATE_RECURRENT_EVENT)) {
+                printGeneralMessage(GENERAL_ERROR_FIELD);
+                return;
+            }
         var theDataIsValid = false;
         if (isRadioButtonSelected(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON)) {
             theDataIsValid = validateEventDialogData(CREATE_SINGLE_EVENT);
@@ -240,7 +254,16 @@ $(function () {
     });
 
     $('#update-recurrent-button').click(function () {
+        cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
         var valid = false;
+
+        if (isRadioButtonChecked(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
+            valid = isCreateEventFormValid(UPDATE_RECURRENT_EVENT);
+            if (!valid){
+                printGeneralMessage(GENERAL_ERROR_FIELD);
+            }
+        }
+        else {
         if (isRadioButtonSelected(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
             valid = validateEventDialogData(UPDATE_RECURRENT_EVENT);
         } else {
@@ -534,9 +557,52 @@ function createSingleOrRecurrentEvents(idIfEdited) {
             }
         });
     }
-    $('#start-date-picker').val('');
-    clearEventDialogSingleMulti();
-    closeDialog('dialog');
+    //======================================================================
+    $('#calendar').fullCalendar('renderEvent', ev, true);
+    $('#calendar').fullCalendar('unselect');
+
+    $.ajax({
+        type: 'post',
+        contentType: 'application/json',
+        url: 'getnewevent',
+        dataType: 'json',
+        data: JSON.stringify({
+            name: ev.title,
+            startTime: ev.start,
+            endTime: ev.end,
+            roomId: localStorage['roomId'],
+            description: ev.description,
+            color: eventColor
+        }),
+        success: function (newId) {
+            $('#calendar').fullCalendar('removeEvents', ev.id);
+            ev.id = parseInt(newId);
+            ev.backgroundColor = eventColor;
+            ev.borderColor = BORDER_COLOR;
+            $('#calendar').fullCalendar('renderEvent', ev);
+            $('#start-date-picker').val('');
+            clearEventDialogSingleMulti();
+            $('#dialog').dialog('close');
+            closeDialog('dialog');
+        },
+        error: function (xhr) {
+            if (xhr.status == 406) {
+                $('#calendar').fullCalendar('removeEvents', ev.id);
+                $('#dialog').dialog('close');
+                closeDialog('dialog');
+                callErrorDialog(xhr['responseText']);
+            } else {
+                $('#calendar').fullCalendar('removeEvents', ev.id);
+                printServerError(GENERAL_ERROR_FIELD,xhr['responseText']);
+        }
+
+        }
+    });
+
+}
+
+function printServerError(errorField,responsetext) {
+    $("."+errorField).html(responsetext);
 }
 
 function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
@@ -720,11 +786,16 @@ function sendToServerForUpdate(event, roomID) {
         }),
         success: function () {
             $('#calendar').fullCalendar('removeEvents', event.id);
+            event.borderColor = BORDER_COLOR;
             $('#calendar').fullCalendar('renderEvent', event, true);
-            redrawBlockedTimeSpans(roomID);
+            $('#updating').dialog('close');
         },
         error: function (xhr) {
-            callErrorDialog(xhr['responseText']);
+            if (xhr.status == 406) {
+                $('#updating').dialog('close');
+                callErrorDialog(xhr['responseText']);
+            } else
+                printServerError(GENERAL_ERROR_FIELD,xhr['responseText']);
         }
     });
 }

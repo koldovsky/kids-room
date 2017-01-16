@@ -2,9 +2,7 @@ package ua.softserveinc.tc.constants;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dima- on 12.05.2016.
@@ -67,6 +65,28 @@ public final class DateConstants {
             return new HashMap<String, Integer>(daysOfWeek);
         }
     }
+
+    public final static class EventColors {
+
+        private static final List<String> eventColors = new ArrayList<>();
+
+        static {
+            eventColors.add("#eb6f63");
+            eventColors.add("#ffcd5c");
+            eventColors.add("#9b3aa1");
+            eventColors.add("#044d92");
+            eventColors.add("#1ba1e2");
+            eventColors.add("#636363");
+            eventColors.add("#51d466");
+            eventColors.add("#84fff7");
+            eventColors.add("#d3af37");
+        }
+
+        public static List<String> getEventColors() {
+            return new ArrayList<>(eventColors);
+        }
+    }
+
 
     private DateConstants() {
     }

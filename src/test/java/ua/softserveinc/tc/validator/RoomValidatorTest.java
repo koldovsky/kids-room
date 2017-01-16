@@ -3,8 +3,10 @@ package ua.softserveinc.tc.validator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -12,7 +14,7 @@ import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.dto.RoomDto;
 
-import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -30,7 +32,6 @@ public class RoomValidatorTest {
   @Mock
   private RoomDto roomDto;
 
-  @Mock
   private Errors errors;
 
   @Before
@@ -86,7 +87,10 @@ public class RoomValidatorTest {
   public void testWrongDate() {
     when(roomDto.getWorkingHoursStart()).thenReturn("String");
     when(roomDto.getWorkingHoursEnd()).thenReturn("10:99");
+    when(errors.getFieldValue(ValidationConstants.TIME_FIELD)).thenReturn(
+        ValidationConstants.TIME_FIELD);
     roomValidator.validate(roomDto, errors);
+
     Assert.assertTrue(errors.hasErrors());
     Assert.assertEquals(ValidationConstants.ROOM_WRONG_TIME_FORMAT,
         errors.getFieldError(ValidationConstants.TIME_FIELD).getCode());

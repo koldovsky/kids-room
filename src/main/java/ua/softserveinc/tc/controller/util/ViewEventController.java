@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller.util;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ua.softserveinc.tc.constants.UserConstants;
-import ua.softserveinc.tc.constants.EventConstants;
-import ua.softserveinc.tc.constants.ChildConstants;
-import ua.softserveinc.tc.constants.AdminConstants;
-import ua.softserveinc.tc.constants.ValidationConstants;
+import ua.softserveinc.tc.constants.*;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
@@ -32,7 +29,11 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.EventValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class ViewEventController {
@@ -53,7 +54,14 @@ public class ViewEventController {
     private UserService userService;
 
     @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
     private EventService eventService;
+
 
     @GetMapping("/")
     public final String viewHome(Model model, Principal principal) {
@@ -95,41 +103,34 @@ public class ViewEventController {
     }
 
 
-    @PostMapping(value = "getnewevent", produces = "application/json")
-    @ResponseBody
-    public ResponseEntity<String> getAjax(@RequestBody EventDto eventDto, BindingResult bindingResult) {
-        eventValidator.validate(eventDto, bindingResult);
-        if (eventValidator.isSingleValid(eventDto)) {
-            if (bindingResult.hasErrors()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                        bindingResult.getFieldError().getCode());
-            } else {
+    @PostMapping(value = "getnewevent", produces = "application/json;charset=UTF-8")
+    public ResponseEntity<String> getAjax(@RequestBody EventDto eventDto) {
+        if (eventValidator.logicValidEvent(eventDto).isEmpty()) {
+            if (eventValidator.generalValidateEvent(eventDto).isEmpty()) {
                 calendarService.create(genericMapper.toEntity(eventDto));
-                return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
+                return ResponseEntity.status(HttpStatus.OK)
+                    .body(new Gson().toJson(eventDto));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(localizateMessage(eventValidator.generalValidateEvent(eventDto)).toString());
             }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
-        }
+        } else return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+        .body(localizateMessage(eventValidator.logicValidEvent(eventDto)).toString());
     }
 
-    @PostMapping("geteventforupdate")
-    @ResponseBody
-    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto,
-                                                    BindingResult bindingResult) {
-        eventValidator.validate(eventDto, bindingResult);
-        if (eventValidator.isSingleValid(eventDto)) {
-            if (bindingResult.hasErrors()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                        bindingResult.getFieldError().getCode());
-            } else {
+    @PostMapping(value = "geteventforupdate", produces = "application/json;charset=UTF-8")
+    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto) {
+        if (eventValidator.logicValidEvent(eventDto).isEmpty()) {
+            if (eventValidator.generalValidateEvent(eventDto).isEmpty()) {
                 calendarService.updateEvent(genericMapper.toEntity(eventDto));
-                return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
+                return ResponseEntity.status(HttpStatus.OK)
+                    .body(new Gson().toJson(eventDto));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(localizateMessage(eventValidator.generalValidateEvent(eventDto)).toString());
             }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ValidationConstants.EVENT_START_NOT_EQUALS_END_MSG);
-        }
+        } else return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+            .body(localizateMessage(eventValidator.logicValidEvent(eventDto)).toString());
     }
 
     @PostMapping("geteventfordelete")
@@ -189,6 +190,16 @@ public class ViewEventController {
     @ResponseBody
     public String getRecurrentBookingForEditing(@PathVariable Long recurrentEventId) {
         return new Gson().toJson(calendarService.getRecurrentEventForEditingById(recurrentEventId));
+    }
+
+    private List<String> localizateMessage (List<String> noLocalMessages){
+        List<String> localMessages = new ArrayList<>();
+         Locale locale = (Locale) request.getSession()
+            .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
+        locale = (locale == null) ? request.getLocale() : locale;
+        for (String messages : noLocalMessages)
+        localMessages.add( messageSource.getMessage(messages,null, locale));
+        return localMessages;
     }
 
 }
