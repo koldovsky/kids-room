@@ -41,12 +41,12 @@ public class BookingValidatorImpl implements BookingValidator {
         errors.clear();
 
         if (dto == null || dto.isEmpty() || hasNull(dto)) {
-            errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+            errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
 
             result = false;
         } else {
             if (!hasCorrectData(dto)) {
-                errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
 
                 result = false;
             } else if (!inputDateValidator.validate(dto)) {
@@ -77,7 +77,7 @@ public class BookingValidatorImpl implements BookingValidator {
             try {
                 booking = bookingService.findEntityById(singleDto.getId());
             } catch (ResourceNotFoundException e) {
-                errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
                 log.error("Not existed booking entity");
             }
             result = booking != null;

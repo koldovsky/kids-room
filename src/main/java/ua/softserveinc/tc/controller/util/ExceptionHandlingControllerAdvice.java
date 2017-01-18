@@ -30,12 +30,10 @@ public class ExceptionHandlingControllerAdvice {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
 
-    @ExceptionHandler({
-            NoHandlerFoundException.class,
-            ResourceNotFoundException.class
-    })
+    @ExceptionHandler({NoHandlerFoundException.class, ResourceNotFoundException.class})
     public String handleError404(HttpServletRequest req, Exception ex) {
         log.error("Request: " + req.getRequestURL() + " raised " + ex, ex);
+
         return ErrorConstants.NOT_FOUND_VIEW; }
 
 

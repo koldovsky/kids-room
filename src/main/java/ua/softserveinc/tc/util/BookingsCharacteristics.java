@@ -5,10 +5,12 @@ import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.entity.BookingState;
 
-import java.util.Date;
+import java.util.Objects;
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Arrays;
+
 
 /**
  * The class that represent the characteristics of the made Bookings.
@@ -220,11 +222,11 @@ public class BookingsCharacteristics {
      */
     public boolean isCorrectFotDuplicateCheck() {
 
-        return recurrentIdsOfBookings.stream().noneMatch(recurrentId -> recurrentId == null)
-                && Arrays.stream(dates).noneMatch(date -> date == null)
-                && idsOfBookings.stream().noneMatch(idBooking -> idBooking == null)
-                && children.stream().noneMatch(child -> child == null)
-                && rooms.stream().noneMatch(room -> room == null)
+        return recurrentIdsOfBookings.stream().noneMatch(Objects::isNull)
+                && Arrays.stream(dates).noneMatch(Objects::isNull)
+                && idsOfBookings.stream().noneMatch(Objects::isNull)
+                && children.stream().noneMatch(Objects::isNull)
+                && rooms.stream().noneMatch(Objects::isNull)
                 && !children.isEmpty();
 
     }

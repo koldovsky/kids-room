@@ -402,21 +402,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     /*
-     * Checks if there is a duplicated booking for the given
-     * object of BookingDto. The given object should not be null.
-     *
-     * @param dto the list of objects of BookingsDto
-     * @return true if there is a duplicate bookings, otherwise
-     * return false.
-     */
-    private boolean hasDuplicateBookings(BookingDto dto) {
-        List<BookingDto> listOfBookingsDto = new ArrayList<>();
-        listOfBookingsDto.add(dto);
-
-        return hasDuplicateBookings(listOfBookingsDto);
-    }
-
-    /*
      * The method finds out is there available space in
      * the rooms for given listDTO. The listDto must not
      * be null.
@@ -652,9 +637,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         normalizeBookingDtoObjects(bookingDtos);
 
         getDatesFromRecurrentBookingDto(bookingDtos.get(0))
-                .forEach(dates ->
-                    bookingDtos.forEach(dto ->
-                        resultBookingsDto.add(dto.getNewBookingDto(dates))));
+                .forEach(dates -> bookingDtos
+                        .forEach(dto -> resultBookingsDto
+                                .add(dto.getNewBookingDto(dates))));
 
         return resultBookingsDto;
     }

@@ -38,7 +38,7 @@ public class InputDateValidatorImpl implements InputDateTimeValidator {
 
         if(listDto == null || listDto.isEmpty() || listDto.get(0).getStartTime() == null
                 || listDto.get(0).getEndTime() == null) {
-            errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+            errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
 
             result = false;
         } else if (!hasCorrectTimeFormat(listDto)) {
