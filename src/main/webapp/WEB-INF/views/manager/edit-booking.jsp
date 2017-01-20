@@ -171,8 +171,7 @@
                         <label for="bookingStartDate"><spring:message code="booking.bookingDate"/></label>
                         <br>
                         <div>
-                            <input type="text" class="form-control" id="bookingStartDate" placeholder="booking date"
-                                   readonly/>
+                            <input type="date" class="form-control" id="bookingStartDate" placeholder="booking date"/>
                         </div>
                         <input id="kids-count" hidden/>
                         <div>
