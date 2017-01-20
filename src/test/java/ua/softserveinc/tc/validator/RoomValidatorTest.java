@@ -3,10 +3,8 @@ package ua.softserveinc.tc.validator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -19,9 +17,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 
-/**
- * Created by Vitalij Fedyna on 25.12.16.
- */
 public class RoomValidatorTest {
 
   private RoomValidator roomValidator;
@@ -116,7 +111,6 @@ public class RoomValidatorTest {
 
   @Test
   public void testFieldLenght() {
-
     when(roomDto.getName()).thenReturn("N");
     when(roomDto.getAddress()).thenReturn("MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols" +
         "MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols MoreThan255symbols" +
