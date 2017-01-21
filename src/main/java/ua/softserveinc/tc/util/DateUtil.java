@@ -12,11 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
-import ua.softserveinc.tc.constants.DateConstants;
 
-/**
- * Created by Demian on 07.06.2016.
- */
 public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat(
             DateConstants.SHORT_DATE_FORMAT);
@@ -28,7 +24,9 @@ public final class DateUtil {
             DateConstants.TIME_FORMAT);
 
 
-    private static Logger log = LoggerFactory.getLogger(DateUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DateUtil.class);
+
+    private static final Calendar WORK_CALENDAR = Calendar.getInstance();
 
     private DateUtil() {
         // Suppresses default constructor, ensuring non-instantiability.
@@ -38,7 +36,7 @@ public final class DateUtil {
         try {
             return dateFormat.parse(date);
         } catch (ParseException e) {
-            log.error("Error convert to date", e);
+            LOG.error("Error convert to date", e);
             throw new ResourceNotFoundException();
         }
     }
@@ -47,7 +45,7 @@ public final class DateUtil {
         try {
             return dateAndTimeFormat.parse(date);
         } catch (ParseException e) {
-            log.error("Error convert to date and time", e);
+            LOG.error("Error convert to date and time", e);
             throw new ResourceNotFoundException();
         }
     }
@@ -56,7 +54,7 @@ public final class DateUtil {
         try {
             return isoDateFormat.parse(dateToParse);
         } catch (ParseException e) {
-            log.error("Error convert to date ISO format", e);
+            LOG.error("Error convert to date ISO format", e);
             throw new ResourceNotFoundException();
         }
     }
@@ -135,7 +133,7 @@ public final class DateUtil {
         try {
             return dateAndTimeFormat.parse(toDay);
         } catch (ParseException e) {
-            log.error("Error. Set time", e);
+            LOG.error("Error. Set time", e);
             throw new ResourceNotFoundException();
         }
     }
@@ -185,6 +183,7 @@ public final class DateUtil {
      * @return translated int value
      */
     public static Integer getDayOfWeek(String day) {
+
         return DateConstants.DaysOfWeek.getDaysOfWeek().get(day);
     }
 
@@ -207,6 +206,30 @@ public final class DateUtil {
             result[i] = dayOfWeek;
         }
         return result;
+    }
+
+    /**
+     * Returns the day of the year from given Date object.
+     *
+     * @param date the given date object
+     * @return the day of the yehar
+     */
+    public static int getDayFromDate(Date date) {
+        WORK_CALENDAR.setTime(date);
+
+        return WORK_CALENDAR.get(Calendar.DAY_OF_YEAR);
+    }
+
+    /**
+     * Returns tha year from given Date object
+     *
+     * @param date the given date object
+     * @return the day of the year
+     */
+    public static int getYearFromDate(Date date) {
+        WORK_CALENDAR.setTime(date);
+
+        return WORK_CALENDAR.get(Calendar.YEAR);
     }
 
     /*

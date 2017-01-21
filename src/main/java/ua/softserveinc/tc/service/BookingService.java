@@ -129,6 +129,19 @@ public interface BookingService extends BaseService<Booking> {
     List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room);
 
     /**
+     * Get arrays of dates of all reserved bookings for given period of time
+     * and room. The first date of array is a start date, and other - is end
+     * date. If any of the input parameter is null, then array of length of
+     * 0 is returns.
+     *
+     * @param startDate the given start date
+     * @param endDate the given end date
+     * @param room the given room
+     * @return array of Dates
+     */
+    List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
+
+    /**
      * Checks if there is a duplicated bookings in the given list of BookingDto.
      * The given list should not be empty or null.
      *

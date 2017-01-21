@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 /**
@@ -337,14 +338,14 @@ public class BookingsCharacteristics {
          */
         public BookingsCharacteristics build() {
 
-            rooms = (rooms == null) ? new ArrayList<>() : rooms;
-            children = (children == null) ? new ArrayList<>() : children;
-            users = (users == null) ? new ArrayList<>() : users;
-            bookingsStates = (bookingsStates == null) ? new ArrayList<>() : bookingsStates;
+            rooms = (rooms == null) ? Collections.emptyList() : rooms;
+            children = (children == null) ? Collections.emptyList() : children;
+            users = (users == null) ? Collections.emptyList() : users;
+            bookingsStates = (bookingsStates == null) ? Collections.emptyList() : bookingsStates;
             dates = (dates == null) ? new Date[] {null, null} : dates;
-            idsOfBookings = (idsOfBookings == null) ? new ArrayList<>() : idsOfBookings;
-            recurrentIdsOfBookings =
-                    (recurrentIdsOfBookings == null) ? new ArrayList<>() : recurrentIdsOfBookings;
+            idsOfBookings = (idsOfBookings == null) ? Collections.emptyList() : idsOfBookings;
+            recurrentIdsOfBookings = (recurrentIdsOfBookings == null) ?
+                    Collections.emptyList() : recurrentIdsOfBookings;
 
             return new BookingsCharacteristics(this);
         }

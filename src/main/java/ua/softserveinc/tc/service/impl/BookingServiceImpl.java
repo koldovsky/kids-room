@@ -17,31 +17,34 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.ChildService;
-import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
+import ua.softserveinc.tc.util.DateTwoTuple;
+import ua.softserveinc.tc.util.TwoTuple;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
-import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.constants.UtilConstants;
-import ua.softserveinc.tc.util.TwoTuple;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.Map;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Arrays;
-import java.util.Calendar;
+import java.util.ListIterator;
+import java.util.Iterator;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getRecurrentBookingDto;
@@ -203,6 +206,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+        return bookingDao.getDatesOfReservedBookings(startDate, endDate, room);
+    }
+
+    @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
         BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
                 .setDates(new Date[]{startDate, endDate})
@@ -270,6 +278,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                                 .build()
                 ).size() > 0
         );
+    }
+
+    public List<Date[]> getNotAvailablePlacesTimePeriods(Date startDate, Date endDate,
+                                                         Room room, int numOfKids) {
+        int amountOfNeededPlaces = numOfKids;
+        List<Date[]> datesOfReservedBookings = getDatesOfReservedBookings(startDate, endDate, room);
+        Date firstDateOfReservedBookings = datesOfReservedBookings.get(0)[0];
+        int particularDay = DateUtil.getDayFromDate(firstDateOfReservedBookings);
+        int particularYear = DateUtil.getYearFromDate(firstDateOfReservedBookings);
+
+        for(Date[] date : datesOfReservedBookings) {
+            if(date[0])
+        }
     }
 
     @Override
@@ -672,5 +693,108 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             return;
         }
         bookings.forEach(booking -> booking.setBookingState(BookingState.BOOKED));
+    }
+
+    /*
+     * The main reason of existing this class is resolving problem of finding periods
+     * of times where there are no available places in the room. To create instance of this class
+     * use constructor with parameter of list of arrays of dates. If given list is null then its
+     * iterator behaves as follows: hasNext() will always returns false, and next() will always
+     * returns empty list.
+     *
+     * After creating instance of this class we can get daily dates using iterator.
+     * Each invoking next() will returns list of instances of DateTwoTuple that contains start and
+     * end dates for next day represented by Long and sorted in ascending order. The first object
+     * in DateTuple is date and second indicates when date is start (is true) or end (is false).
+     * So iterating through instance of this class we receives all dates from input parameter
+     * grouped by one day.
+     *
+     * Class implements Iterable interface, so we can use it in forEach for loops or streams in
+     * java 8.
+     */
+    private class DailyBookingsMapTransformer implements Iterable<List<DateTwoTuple>> {
+
+        private final List<Date[]> listOfDates;
+
+        /*
+         * Iterator for iterating through dates. Each invoking next will return all dates
+         * for next one day encapsulated in DateTwoTuple object. First encapsulated value
+         * is date (Date.getTime()) and second indicated if this date is start (true) or
+         * end(false). For correct work start and end date must belong to the same day.
+         */
+        private class BookingsDatesIterator implements Iterator<List<DateTwoTuple>> {
+
+            private int particularDay;
+            private int particularYear;
+            private ListIterator<Date[]> listOfDatesIterator;
+
+            private BookingsDatesIterator() {
+                if (listOfDates != null) {
+                    Date firstDateOfListOfDates = listOfDates.get(0)[0];
+                    particularDay = DateUtil.getDayFromDate(firstDateOfListOfDates);
+                    particularYear = DateUtil.getYearFromDate(firstDateOfListOfDates);
+                    listOfDatesIterator = listOfDates.listIterator();
+                } else {
+                    listOfDatesIterator = Collections.emptyListIterator();
+                }
+            }
+
+            /*
+             * Returns list of DateTwoTuple objects that consists date (Long) as
+             * first parameter and Boolean value that indicate if this date is
+             * start (true) or end (false) grouped by one day. For correct work
+             * start and end date must belong to the same day.
+             *
+             * @return appropriate list of DateTwoTuple objects.
+             */
+            @Override
+            public List<DateTwoTuple> next() {
+                List<DateTwoTuple> resultList = new ArrayList<>();
+                int nextDay;
+                int nextYear;
+
+                while (listOfDatesIterator.hasNext()) {
+                    Date[] dates = listOfDatesIterator.next();
+
+                    nextDay = DateUtil.getDayFromDate(dates[0]);
+                    nextYear = DateUtil.getYearFromDate(dates[0]);
+
+                    if (nextDay != particularDay || nextYear != particularYear) {
+                        listOfDatesIterator.previous();
+                        particularDay = nextDay;
+                        particularYear = nextYear;
+                        Collections.sort(resultList);
+                        break;
+                    }
+
+                    resultList.add(new DateTwoTuple(dates[0].getTime(), true));
+                    resultList.add(new DateTwoTuple(dates[1].getTime(), false));
+                }
+
+                return resultList;
+            }
+
+            @Override
+            public boolean hasNext() {
+
+                return listOfDatesIterator != null && listOfDatesIterator.hasNext();
+            }
+
+        }
+
+        /*
+         * Constructor for create instance of this class.
+         *
+         * @param dates the given list of arrays of dates that we want grouped by days
+         * and merged in one list.
+         */
+        private DailyBookingsMapTransformer(List<Date[]> dates) {
+            listOfDates = dates;
+        }
+
+        @Override
+        public Iterator<List<DateTwoTuple>> iterator() {
+            return new BookingsDatesIterator();
+        }
     }
 }

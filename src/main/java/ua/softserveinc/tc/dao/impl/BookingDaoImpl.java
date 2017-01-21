@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Date;
 
 /*
  * Rewritten by Sviatoslav Hryb on 05.10.2017
@@ -94,8 +95,8 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         }
 
         if (characteristics.hasSetOnlyStartDate()) {
-            restrictions.add(builder.greaterThanOrEqualTo(root.get(BookingConstants.Entity.START_TIME),
-                    characteristics.getStartDateOfBookings()));
+            restrictions.add(builder.greaterThanOrEqualTo(root.get(
+                    BookingConstants.Entity.START_TIME), characteristics.getStartDateOfBookings()));
         }
 
         if (characteristics.hasSetOnlyEndDate()) {
@@ -125,6 +126,28 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         criteria.orderBy(builder.asc(
                 root.get(BookingConstants.Entity.START_TIME)));
+
+        return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Date[]> criteria = builder.createQuery(Date[].class);
+        Root<Booking> root = criteria.from(Booking.class);
+
+        criteria.multiselect(
+                root.get(BookingConstants.Entity.START_TIME),
+                root.get(BookingConstants.Entity.END_TIME))
+                .where(builder.and(
+                        builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
+                        builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate),
+                        builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        root.get(BookingConstants.Entity.STATE).in(
+                                (Object[]) BookingConstants.States.getActiveAndBooked()
+                        )
+                ))
+                .orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }
