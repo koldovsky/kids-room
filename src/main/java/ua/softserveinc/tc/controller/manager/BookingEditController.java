@@ -156,7 +156,6 @@ public class BookingEditController {
             booking.setComment(bookingDto.getComment());
             booking.setRecurrentId(null);
             bookingService.update(booking);
-
         } else {
             isPossible = false;
         }
