@@ -18,9 +18,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
-/*
- * Created by Sviatoslav Hryb on 27-Dec-16.
- */
+
 @Component
 public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator {
 
@@ -37,6 +35,7 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
 
     @Override
     public List<String> getErrors() {
+
         return new ArrayList<>(errors);
     }
 

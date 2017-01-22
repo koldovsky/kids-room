@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by TARAS on 12.05.2016.
- */
+
 public final class AdminConstants {
     public static final String EDIT_MANAGER = "adm-edit-manager";
 

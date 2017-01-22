@@ -18,8 +18,6 @@ public interface RoomService extends BaseService<Room> {
 
     Boolean isPossibleUpdate(BookingDto bookingDto);
 
-    Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room);
-
     List<Room> getTodayActiveRooms();
 
     List<BookingDto> getAllFutureBookings(Room room);
@@ -40,15 +38,4 @@ public interface RoomService extends BaseService<Room> {
      * @return list of reserved booking
      */
     List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room);
-
-    /**
-     * The method finds the maximum people in the room for period of time
-     * from dateLo to dateHi. All of the parameters must not be a null.
-     *
-     * @param dateLo   start of period
-     * @param dateHi   end of period
-     * @param bookings all reserved bookings in the time period
-     * @return The maximum number of people that are simultaneously in the room
-     */
-    int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings);
 }

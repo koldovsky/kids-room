@@ -21,8 +21,6 @@ import ua.softserveinc.tc.validator.UserValidator;
 /**
  * Controller class for "Confirm manager registration" view,
  * which accompanies accepting registration of manager.
- * <p>
- * Created by TARAS on 18.05.2016.
  */
 @Controller
 public class ConfirmManagerController {

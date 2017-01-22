@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by IhorTovpinets on 29.12.2016.
- */
+
 public class EventsCreatingResultsDto {
 
     private final List<EventDto> eventsCreated = new ArrayList<>();

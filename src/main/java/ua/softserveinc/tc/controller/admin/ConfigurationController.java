@@ -20,7 +20,6 @@ import java.io.IOException;
 
 
 /**
- * Created by Nestor on 11.06.2016.
  * Handles changes to global environment settings made by Administrator
  */
 

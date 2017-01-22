@@ -11,7 +11,6 @@ import org.slf4j.Logger;
  * and represents a number.
  * If validation is failed then relevant message is logging to the log.
  *
- * Created by Sviatoslav Hryb on 07-Dec-16.
  */
 @Component
 public class NumberRequestValidatorImpl implements NumberRequestValidator {

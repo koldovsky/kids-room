@@ -3,6 +3,7 @@ package ua.softserveinc.tc.dao.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
+import ua.softserveinc.tc.constants.SQLConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
@@ -21,10 +22,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Date;
+import java.util.Calendar;
 
-/*
- * Rewritten by Sviatoslav Hryb on 05.10.2017
- */
+
 @Repository
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
@@ -132,6 +132,14 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
     @Override
     public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+        Calendar datesCalendar = Calendar.getInstance();
+        datesCalendar.setTime(startDate);
+        int startHour =  datesCalendar.get(Calendar.HOUR_OF_DAY);
+        int startMinute =  datesCalendar.get(Calendar.MINUTE);
+        datesCalendar.setTime(endDate);
+        int endHour =  datesCalendar.get(Calendar.HOUR_OF_DAY);
+        int endMinute =  datesCalendar.get(Calendar.MINUTE);
+
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Date[]> criteria = builder.createQuery(Date[].class);
         Root<Booking> root = criteria.from(Booking.class);
@@ -143,6 +151,44 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
                         builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
                         builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate),
                         builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        builder.or(
+                                builder.lessThan(
+                                        builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                            root.get(BookingConstants.Entity.START_TIME)),
+                                        endHour
+                                ),
+                                builder.and(builder.equal(
+                                        builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                                root.get(BookingConstants.Entity.START_TIME)),
+                                        endHour),
+                                        builder.lessThan(
+                                                builder.function(SQLConstants.MINUTE_FUNCTION,
+                                                        Integer.class,
+                                                        root.get(BookingConstants.Entity.START_TIME)
+                                                ),
+                                                endMinute
+                                        )
+                                )
+                        ),
+                        builder.or(
+                                builder.greaterThan(
+                                        builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                                root.get(BookingConstants.Entity.END_TIME)),
+                                        startHour
+                                ),
+                                builder.and(builder.equal(
+                                        builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                                root.get(BookingConstants.Entity.END_TIME)),
+                                        startHour),
+                                        builder.greaterThan(
+                                                builder.function(SQLConstants.MINUTE_FUNCTION,
+                                                        Integer.class,
+                                                        root.get(BookingConstants.Entity.END_TIME)
+                                                ),
+                                                startMinute
+                                        )
+                                )
+                        ),
                         root.get(BookingConstants.Entity.STATE).in(
                                 (Object[]) BookingConstants.States.getActiveAndBooked()
                         )

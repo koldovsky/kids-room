@@ -6,9 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Chack on 05.07.2016.
- */
+
 @Entity
 @Table(name = "persistent_logins")
 public class RememberMeToken implements Serializable {

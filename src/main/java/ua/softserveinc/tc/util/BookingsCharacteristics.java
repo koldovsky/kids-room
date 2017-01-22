@@ -23,8 +23,6 @@ import java.util.Collections;
  * To create object of this class, you should first create object of inner class
  * Builder, then set all characteristics and finally invoke build method.
  * <strong></>The class is not thread safe!</strong>
- * <p>
- * Created by Sviatoslav Hryb on 02-Jan-17.
  */
 public class BookingsCharacteristics {
 

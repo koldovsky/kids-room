@@ -32,7 +32,6 @@ import java.util.Date;
 
 
 /**
- * Created by Nestor on 10.05.2016.
  * Controller handles editing of registered children
  * as well as disabling their account
  */

@@ -15,8 +15,6 @@ import java.util.List;
 
 /**
  * Controller class for "Manager list" view. It's main controller for editing managers.
- * <p>
- * Created by TARAS on 18.05.2016.
  */
 @Controller
 public class EditManagerController {

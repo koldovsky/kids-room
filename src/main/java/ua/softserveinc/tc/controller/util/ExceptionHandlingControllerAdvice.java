@@ -18,7 +18,6 @@ import ua.softserveinc.tc.util.Log;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by Nestor on 18.05.2016.
  * Class serves for global exception handling
  */
 

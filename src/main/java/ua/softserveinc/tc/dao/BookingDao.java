@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * DAO for bookings.
  *
- * Rewritten by Sviatoslav Hryb on 05.10.2017
  */
 public interface BookingDao extends BaseDao<Booking> {
 

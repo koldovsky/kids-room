@@ -2,16 +2,24 @@ package ua.softserveinc.tc.constants;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Date;
+import java.util.Calendar;
 
-/**
- * Created by dima- on 12.05.2016.
- */
 public final class DateConstants {
 
-    public static final DateFormat DATE_FORMAT_OBJECT = new SimpleDateFormat(DateConstants.DATE_FORMAT);
+    public static final DateFormat DATE_FORMAT_OBJECT =
+            new SimpleDateFormat(DateConstants.DATE_FORMAT);
 
     public static final long ONE_MINUTE_MILLIS = 60 * 1000;
+
+    public static final long THOUSAND_YEARS_MILLIS = 1000L * 365L * 24L * 60L * 60L * 1000L;
+
+    public static final Date THOUSAND_YEARS_FROM_INIT =
+            new Date(new Date().getTime() + THOUSAND_YEARS_MILLIS);
 
     public static final int WEEK_LENGTH = 7;
 
@@ -45,7 +53,6 @@ public final class DateConstants {
      * Helps translate the short form of the day of the week to int value
      * that is appropriate for Calendar day of week.
      *
-     * created by Sviatoslav Hryb on 25.12.2016
      */
     public final static class DaysOfWeek {
 
@@ -62,7 +69,8 @@ public final class DateConstants {
         }
 
         public static Map<String, Integer> getDaysOfWeek() {
-            return new HashMap<String, Integer>(daysOfWeek);
+
+            return new HashMap<>(daysOfWeek);
         }
     }
 
@@ -83,6 +91,7 @@ public final class DateConstants {
         }
 
         public static List<String> getEventColors() {
+
             return new ArrayList<>(eventColors);
         }
     }

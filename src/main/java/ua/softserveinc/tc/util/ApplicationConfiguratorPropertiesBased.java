@@ -18,7 +18,6 @@ import java.util.Properties;
 
 
 /**
- * Created by Nestor on 10.06.2016.
  * reads global configs from .properties file
  */
 

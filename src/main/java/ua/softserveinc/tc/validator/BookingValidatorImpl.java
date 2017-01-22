@@ -6,16 +6,15 @@ import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
-/*
- * Written from scratch by Sviatoslav Hryb on 10-Jan-2017.
- */
 @Component("bookingValidator")
 public class BookingValidatorImpl implements BookingValidator {
 
@@ -55,6 +54,10 @@ public class BookingValidatorImpl implements BookingValidator {
                 result = false;
             } else if (hasDuplicateBooking(dto)) {
                 errors.add(ValidationConstants.DUPLICATE_BOOKING_MESSAGE);
+
+                result = false;
+            } else if (!hasAvailablePlacesInTheRoom(dto)) {
+                errors.add(ValidationConstants.NO_DAYS_FOR_BOOKING);
 
                 result = false;
             }
@@ -130,5 +133,22 @@ public class BookingValidatorImpl implements BookingValidator {
     private boolean hasDuplicateBooking(List<BookingDto> dtoList) {
 
         return bookingService.hasDuplicateBookings(dtoList);
+    }
+
+    /*
+     * Checks if there are available places in the room for given BookingDto.
+     * Each object from given list must represent one particular child.
+     *
+     * @param dtoList the given list
+     * @return true if there are available places in the room, otherwise - false
+     */
+    private boolean hasAvailablePlacesInTheRoom(List<BookingDto> dtoList) {
+        BookingDto singleDto = dtoList.get(0);
+        bookingService.normalizeBookingDtoObjects(dtoList);
+        Date[] dates = new Date[] {singleDto.getDateStartTime(), singleDto.getDateEndTime()};
+        Room room = singleDto.getRoom();
+        int numOfKids = dtoList.size();
+
+        return bookingService.hasAvailablePlacesInTheRoom(dates, room, numOfKids);
     }
 }

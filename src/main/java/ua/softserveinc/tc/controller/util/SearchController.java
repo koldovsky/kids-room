@@ -19,9 +19,7 @@ import ua.softserveinc.tc.search.UserSearch;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by edward on 5/14/16.
- */
+
 @RestController
 public class SearchController {
 

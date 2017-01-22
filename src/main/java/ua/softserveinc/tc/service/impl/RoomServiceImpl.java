@@ -30,8 +30,7 @@ import java.util.stream.Collectors;
 import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Service
-public class RoomServiceImpl extends BaseServiceImpl<Room>
-        implements RoomService {
+public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
 
     @Autowired
     private ApplicationConfigurator appConfigurator;
@@ -181,41 +180,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
     }
 
     @Override
-    public int maxRangeReservedBookings(Date dateLo, Date dateHi, List<Booking> bookings) {
-        int maxReservedBookings = 0;
-        for (long ti = dateLo.getTime() + 1;
-             ti < dateHi.getTime(); ti += DateConstants.ONE_MINUTE_MILLIS) {
-            int temporaryMax = 0;
-            for (Booking tab : bookings) {
-                if (tab.getBookingStartTime().getTime() < ti &&
-                        tab.getBookingEndTime().getTime() > ti) {
-                    temporaryMax++;
-                }
-            }
-            if (temporaryMax > maxReservedBookings) {
-                maxReservedBookings = temporaryMax;
-            }
-        }
-        return maxReservedBookings;
-    }
-
-    /**
-     * The method finds the available space in the room (number of people)
-     * for the given period of time from dateLo to dateHi.
-     * All of the parameters must not be a null.
-     *
-     * @param dateLo start of period
-     * @param dateHi end of period
-     * @param room   a requested room
-     * @return number of places available in the room for the period
-     */
-    public Integer getAvailableSpaceForPeriod(Date dateLo, Date dateHi, Room room) {
-        List<Booking> bookings = reservedBookings(dateLo, dateHi, room);
-        int maxReservedBookings = maxRangeReservedBookings(dateLo, dateHi, bookings);
-        return room.getCapacity() - maxReservedBookings;
-    }
-
-    @Override
     public List<BookingDto> getAllFutureBookings(Room room) {
         BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
                 .setDates(new Date[] {new Date(), null})
@@ -274,6 +238,4 @@ public class RoomServiceImpl extends BaseServiceImpl<Room>
                                 today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
-
-
 }

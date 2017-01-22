@@ -11,10 +11,6 @@ import ua.softserveinc.tc.service.EventService;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by IhorTovpinets on 15.01.2017.
- */
-
 @Service
 public class EventServiceImpl extends BaseServiceImpl<Event>
         implements EventService {

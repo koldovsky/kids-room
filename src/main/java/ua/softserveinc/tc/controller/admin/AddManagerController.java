@@ -25,8 +25,6 @@ import java.util.UUID;
 
 /**
  * Controller class for "Add manager" view, which accompanies add new manager.
- * <p>
- * Created by TARAS on 18.05.2016.
  */
 @Controller
 public class AddManagerController {

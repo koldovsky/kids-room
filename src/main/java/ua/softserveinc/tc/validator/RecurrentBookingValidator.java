@@ -12,7 +12,6 @@ import ua.softserveinc.tc.dto.BookingDto;
  * start and end time is not out of range of working hours
  * and if there are not duplicate bookings.
  *
- * Created by Sviatoslav Hryb on 27-Dec-16.
  */
 public interface RecurrentBookingValidator {
 

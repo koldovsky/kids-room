@@ -19,9 +19,7 @@ import java.util.Map;
 
 import static ua.softserveinc.tc.util.DateUtil.*;
 
-/**
- * Created by Demian on 06.06.2016.
- */
+
 @Service(QuartzConstants.SEND_PAYMENT_INFO)
 public class SendPaymentInfoJob {
 

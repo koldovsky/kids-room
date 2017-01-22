@@ -6,9 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-/**
- * Created by edward on 6/12/16.
- */
+
 @Component
 public class LogInjector implements BeanPostProcessor {
 

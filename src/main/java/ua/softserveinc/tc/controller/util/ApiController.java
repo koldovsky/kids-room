@@ -30,9 +30,7 @@ import java.util.Locale;
 
 
 
-/**
- * Created by edward on 5/17/16.
- */
+
 @RestController
 public class ApiController {
 

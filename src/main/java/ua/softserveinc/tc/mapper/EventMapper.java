@@ -17,9 +17,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by dima- on 07.05.2016.
- */
+
 @Component
 public class EventMapper implements GenericMapper<Event, EventDto> {
 

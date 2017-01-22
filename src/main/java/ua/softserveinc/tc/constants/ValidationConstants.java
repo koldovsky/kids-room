@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.constants;
 
 /**
- * Created by Nestor on 13.05.2016.
  * Interface stores all validation-related constants
  */
 public final class ValidationConstants {

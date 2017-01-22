@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 
 /**
  * Class validator for validation of input rates of room.
- * <p>
- * Created by TARAS on 12.06.2016.
  */
 @Component
 public class RateValidationImpl implements ConstraintValidator<RateValidation, String> {

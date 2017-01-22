@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Nestor on 09.06.2016.
  * Auto Jpa repository for handling User-related logic
  */
 public interface UserRepository extends JpaRepository<User, Long>{

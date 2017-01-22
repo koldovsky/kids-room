@@ -12,7 +12,6 @@ import java.util.List;
  * this class, each of the given dto object must has correct room id. Otherwise method
  * isValidToInsert will return false and produces not correct error message. Each BookingDto
  * in list must have the same user, room and dates.
- * Created by Sviatoslav Hryb on 09-Jan-17.
  */
 public interface InputDateTimeValidator {
     /**

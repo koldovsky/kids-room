@@ -23,9 +23,7 @@ import java.util.Date;
 
 import ua.softserveinc.tc.util.DateUtil;
 
-/**
- * Created by Demian on 10.05.2016.
- */
+
 @Controller
 public class ReportAllController {
     @Autowired

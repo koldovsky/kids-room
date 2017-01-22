@@ -23,9 +23,7 @@ import java.util.Map;
 import java.util.Calendar;
 import java.util.Locale;
 
-/*
- * Rewritten by Sviatoslav Hryb on 11-Jan-2017
- */
+
 @RestController
 public class CRUDBookingsController {
 

@@ -12,7 +12,6 @@ import ua.softserveinc.tc.util.ApplicationConfigurator;
 import java.util.regex.Pattern;
 
 /**
- * Created by Nestor on 12.05.2016.
  * A validator-class that handles Child objects validation
  */
 

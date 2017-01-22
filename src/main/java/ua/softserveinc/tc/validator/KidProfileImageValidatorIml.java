@@ -25,7 +25,6 @@ import java.util.Spliterator;
  * The set of validity checks is defined in interface {@link KidProfileImageValidator}
  * The maximum size and acceptable image formats are set in application properties.
  *
- * Created by Sviatoslav Hryb on 06-Dec-16.
  */
 @Component
 public class KidProfileImageValidatorIml implements KidProfileImageValidator {

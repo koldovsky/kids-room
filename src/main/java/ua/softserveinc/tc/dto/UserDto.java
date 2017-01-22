@@ -2,9 +2,7 @@ package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.entity.User;
 
-/**
- * Created by Demian on 16.05.2016.
- */
+
 public class UserDto
 {
     private Long id;

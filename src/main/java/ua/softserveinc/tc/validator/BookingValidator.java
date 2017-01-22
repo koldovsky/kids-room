@@ -12,7 +12,6 @@ import java.util.List;
  * start and end time is not out of range of working hours
  * and if there are not duplicate bookings.
  *
- * Rewritten by Sviatoslav Hryb on 10.01.2017.
  */
 public interface BookingValidator{
 

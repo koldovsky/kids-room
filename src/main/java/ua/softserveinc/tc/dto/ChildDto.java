@@ -4,9 +4,7 @@ import ua.softserveinc.tc.entity.Child;
 
 import java.util.Date;
 
-/**
- * Created by edward on 5/17/16.
- */
+
 public class ChildDto {
 
     private Long id;

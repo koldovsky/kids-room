@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 /**
  * Class validator for validation of input managers of room.
- * <p>
- * Created by TARAS on 17.06.2016.
  */
 @Component
 public class UniqueManagerValidationImpl implements ConstraintValidator<UniqueManagerValidation, String> {

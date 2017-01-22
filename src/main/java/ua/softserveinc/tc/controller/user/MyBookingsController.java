@@ -31,7 +31,6 @@ import ua.softserveinc.tc.util.DateUtil;
 import java.util.Date;
 
 /**
- * Created by Nestor on 14.05.2016.
  * Controller handles reports on User's bookings
  */
 

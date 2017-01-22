@@ -50,9 +50,6 @@ import java.util.stream.Collectors;
 import static ua.softserveinc.tc.dto.BookingDto.getRecurrentBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
-/*
- * Rewritten by Sviatoslav Hryb on 05.10.2017
- */
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
 
@@ -280,32 +277,89 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         );
     }
 
-    public List<Date[]> getNotAvailablePlacesTimePeriods(Date startDate, Date endDate,
-                                                         Room room, int numOfKids) {
-        int amountOfNeededPlaces = numOfKids;
-        List<Date[]> datesOfReservedBookings = getDatesOfReservedBookings(startDate, endDate, room);
-        Date firstDateOfReservedBookings = datesOfReservedBookings.get(0)[0];
-        int particularDay = DateUtil.getDayFromDate(firstDateOfReservedBookings);
-        int particularYear = DateUtil.getYearFromDate(firstDateOfReservedBookings);
+    @Override
+    public boolean hasAvailablePlacesInTheRoom(Date[] dates, Room room, int numOfKids) {
 
-        for(Date[] date : datesOfReservedBookings) {
-            if(date[0])
+        return getNotAvailablePlacesTimePeriods(dates, room, numOfKids, true).isEmpty();
+    }
+
+    @Override
+    public List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room) {
+
+        return getNotAvailablePlacesTimePeriods(
+                new Date[] {new Date(), DateConstants.THOUSAND_YEARS_FROM_INIT}, room, 1, false);
+    }
+
+    @Override
+    public List<Date[]> getNotAvailablePlacesTimePeriods(Date[] dates, Room room, int numOfKids,
+                                                         boolean onlyStartOfFirstPeriod) {
+
+        boolean onlyCheckForFreeSpaces = false;
+        List<Date[]> resultList = new ArrayList<>();
+        Date startDate = dates[0];
+        Date endDate = dates[1];
+        List<Date[]> datesOfReservedBookings = getDatesOfReservedBookings(startDate, endDate, room);
+        DailyBookingsMapTransformer dailyBookings =
+                new DailyBookingsMapTransformer(datesOfReservedBookings);
+
+        for (List<DateTwoTuple> tuples : dailyBookings) {
+            int maxKidsInRoom = 0;
+            boolean isFull = false;
+            Date previousStartDateOfFullRoom = null;
+            Date startDateOfFullRoom = null;
+            Date endDateOfFullRoom = null;
+
+            for (DateTwoTuple dateTuple : tuples) {
+                if (dateTuple.isStart()) {
+                    maxKidsInRoom++;
+                } else {
+                    maxKidsInRoom--;
+                }
+
+                if (maxKidsInRoom + numOfKids > room.getCapacity()) {
+                    if (onlyStartOfFirstPeriod) {
+                        startDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        resultList.add(new Date[] {startDateOfFullRoom, null});
+                        onlyCheckForFreeSpaces = true;
+                        break;
+                    }
+                    if (!isFull) {
+                        startDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        isFull = true;
+                    }
+                } else if (isFull) {
+                    if (resultList.isEmpty() || !startDateOfFullRoom.equals(endDateOfFullRoom)) {
+                        previousStartDateOfFullRoom = startDateOfFullRoom;
+                        endDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        resultList.add(new Date[]{startDateOfFullRoom, endDateOfFullRoom});
+                    } else {
+                        endDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        resultList.remove(resultList.size() - 1);
+                        resultList.add(new Date[]{previousStartDateOfFullRoom, endDateOfFullRoom});
+                    }
+                    isFull = false;
+                }
+            }
+            if (onlyCheckForFreeSpaces) {
+                break;
+            }
         }
+
+        if (datesOfReservedBookings.isEmpty() && numOfKids > room.getCapacity()) {
+            resultList.add(dates);
+        }
+
+        return resultList;
     }
 
     @Override
     public List<BookingDto> persistBookingsFromDto(List<BookingDto> listDTO) {
-        List<BookingDto> resultDto = Collections.emptyList();
+        List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
+        List<Booking> persistedBookings =
+                bookingDao.persistRecurrentBookings(bookingsForPersisting);
+        BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
 
-        if (hasAvailablePlacesInTheRoom(listDTO)) {
-            List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
-            List<Booking> persistedBookings =
-                    bookingDao.persistRecurrentBookings(bookingsForPersisting);
-            BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
-            resultDto = listDTO;
-        }
-
-        return resultDto;
+        return listDTO;
     }
 
     @Override
@@ -420,37 +474,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
 
         return result;
-    }
-
-    /*
-     * The method finds out is there available space in
-     * the rooms for given listDTO. The listDto must not
-     * be null.
-     *
-     * @param listDTO list of BookingDto
-     * @return true if there is available places in the room
-     */
-    private boolean hasAvailablePlacesInTheRoom(List<BookingDto> listDTO) {
-        int availablePlaces = 0;
-        int needPlaces = 1;
-        Date theSameDay = null;
-
-        for (BookingDto bdto : listDTO) {
-            if (bdto.getDateStartTime().equals(theSameDay)) {
-                needPlaces++;
-                continue;
-            } else if (theSameDay != null && availablePlaces < needPlaces) {
-                return false;
-            }
-            needPlaces = 1;
-            theSameDay = bdto.getDateStartTime();
-            availablePlaces = roomService.getAvailableSpaceForPeriod(
-                    bdto.getDateStartTime(),
-                    bdto.getDateEndTime(),
-                    bdto.getRoom());
-        }
-
-        return availablePlaces >= needPlaces;
     }
 
     /*
@@ -729,8 +752,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             private ListIterator<Date[]> listOfDatesIterator;
 
             private BookingsDatesIterator() {
-                if (listOfDates != null) {
-                    Date firstDateOfListOfDates = listOfDates.get(0)[0];
+                if (listOfDates != null && !listOfDates.isEmpty()) {
+                    Object[] dates = listOfDates.get(0);
+                    Date firstDateOfListOfDates = (Date)dates[0];
                     particularDay = DateUtil.getDayFromDate(firstDateOfListOfDates);
                     particularYear = DateUtil.getYearFromDate(firstDateOfListOfDates);
                     listOfDatesIterator = listOfDates.listIterator();
@@ -754,22 +778,22 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 int nextYear;
 
                 while (listOfDatesIterator.hasNext()) {
-                    Date[] dates = listOfDatesIterator.next();
+                    Object[] dates = listOfDatesIterator.next();
 
-                    nextDay = DateUtil.getDayFromDate(dates[0]);
-                    nextYear = DateUtil.getYearFromDate(dates[0]);
+                    nextDay = DateUtil.getDayFromDate((Date)dates[0]);
+                    nextYear = DateUtil.getYearFromDate((Date)dates[0]);
 
                     if (nextDay != particularDay || nextYear != particularYear) {
                         listOfDatesIterator.previous();
                         particularDay = nextDay;
                         particularYear = nextYear;
-                        Collections.sort(resultList);
                         break;
                     }
 
-                    resultList.add(new DateTwoTuple(dates[0].getTime(), true));
-                    resultList.add(new DateTwoTuple(dates[1].getTime(), false));
+                    resultList.add(new DateTwoTuple(((Date)dates[0]).getTime(), true));
+                    resultList.add(new DateTwoTuple(((Date)dates[1]).getTime(), false));
                 }
+                Collections.sort(resultList);
 
                 return resultList;
             }

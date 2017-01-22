@@ -3,9 +3,6 @@ package ua.softserveinc.tc.util;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 
-/**
- * Created by Петришак on 28.05.2016.
- */
 public class BookingUtil {
 
     public static final int BOOKING_START_HOUR = 0;

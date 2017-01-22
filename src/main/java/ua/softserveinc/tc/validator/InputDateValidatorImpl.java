@@ -15,9 +15,6 @@ import java.util.regex.Pattern;
 
 import ua.softserveinc.tc.entity.Room;
 
-/*
- * Created by Sviatoslav Hryb on 09-Jan-17.
- */
 @Component
 public class InputDateValidatorImpl implements InputDateTimeValidator {
 

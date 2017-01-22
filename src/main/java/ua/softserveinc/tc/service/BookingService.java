@@ -12,11 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Service for bookings.
- *
- * Rewritten by Sviatoslav Hryb on 05.10.2017
- */
 public interface BookingService extends BaseService<Booking> {
 
     List<BookingDto> getAllActiveBookingsInTheRoom(Room room);
@@ -149,6 +144,44 @@ public interface BookingService extends BaseService<Booking> {
      * @return true if there is a duplicate bookings, otherwise return false.
      */
     boolean hasDuplicateBookings(List<BookingDto> listDto);
+
+    /**
+     * Checks if there are available places in the given room for given number
+     * of kids and during the given period. The first index of given array contain
+     * start date and second index of given array contain end date of given period.
+     *
+     *
+     * @param dates the given arrays of start and end dates
+     * @param room the given room
+     * @param numOfKids the given number of children
+     * @return the list of figured out appropriate dates
+     */
+    boolean hasAvailablePlacesInTheRoom(Date[] dates, Room room, int numOfKids);
+
+    /**
+     * Figures out all time periods where there are no available places in the room
+     * for given room starting from current date and finishing after 1000 years
+     *
+     * @param room the given room
+     * @return the list of figured out appropriate dates
+     */
+    List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room);
+
+    /**
+     * Figures out all time periods where there are no available places in the room
+     * for given room and number of children starting from start date and finishing
+     * end date. If onlyFirstPeriod is true then only first founded date of period
+     * will be returned. The second will be null.
+     *
+     * @param dates the given arrays of start and end dates
+     * @param room the given room
+     * @param numOfKids the given number of children
+     * @param onlyStartOfFirstPeriod indicates that needed only first date of founded period,
+     * the second date will be null
+     * @return the list of figured out appropriate dates
+     */
+    List<Date[]> getNotAvailablePlacesTimePeriods(Date[] dates, Room room, int numOfKids,
+                                                  boolean onlyStartOfFirstPeriod);
 
     /**
      * Persists the list of bookings objects that are created from the
