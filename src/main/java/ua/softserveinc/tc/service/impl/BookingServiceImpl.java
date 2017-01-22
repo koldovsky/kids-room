@@ -285,9 +285,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room) {
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        Date startDate = today.getTime();
 
         return getNotAvailablePlacesTimePeriods(
-                new Date[] {new Date(), DateConstants.THOUSAND_YEARS_FROM_INIT}, room, 1, false);
+                new Date[] {startDate, DateConstants.THREE_THOUSAND_YEAR}, room, 1, false);
     }
 
     @Override

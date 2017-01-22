@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.util.TwoTuple;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Date;
 
 
 @RestController
@@ -42,28 +40,41 @@ public class CRUDBookingsController {
         return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
     }
 
-    @GetMapping("/disabled")
-    public String getDisabledTime(@RequestParam Long roomID) {
-        Room room = roomService.findByIdTransactional(roomID);
+    /**
+     * Receives the Id of room from GET http method and figures out all time periods where
+     * given room is full i.e. there are no available places in the room.
+     *
+     * If the input parameter is null or is not corresponding to existed Id of room then method
+     * returns ResponseEntity with "Bad Request" http status (400). Otherwise returns the
+     * dates objects in the body of object of ResponseEntity with http status "OK" (200).
+     *
+     * @param roomID the given room
+     * @param locale the given locale
+     * @return ResponseEntity with appropriate http status and body that consists the dates
+     * objects
+     */
+    @GetMapping(value = "/disabled",  produces = "text/plain; charset=UTF-8")
+    public ResponseEntity<String> getDisabledTime(@RequestParam Long roomID, Locale locale) {
+        ResponseEntity<String> resultResponse;
 
-        Calendar start = Calendar.getInstance();
-        start.set(Calendar.HOUR_OF_DAY, 0);
-        start.set(Calendar.MINUTE, 0);
-        start.set(Calendar.SECOND, 0);
+        List<Date[]> disabledDates = (roomID != null) ?
+                roomService.getDisabledPeriods(roomID) : Collections.emptyList();
 
-        Calendar end = Calendar.getInstance();
-        end.set(Calendar.HOUR_OF_DAY, 0);
-        end.set(Calendar.MINUTE, 0);
-        end.set(Calendar.SECOND, 0);
-        end.add(Calendar.MONTH, 1);
-        Map<String, String> blockedPeriods = roomService.getBlockedPeriods(room, start, end);
+        if(!disabledDates.isEmpty()) {
+            resultResponse =
+                    getResponseEntity(true, new Gson().toJson(disabledDates), locale);
+        } else {
+            resultResponse =
+                    getResponseEntity(false, ValidationConstants.COMMON_ERROR_MESSAGE, locale);
+        }
 
-        return JsonUtil.toJson(blockedPeriods);
+        return resultResponse;
     }
 
     /**
      * Receives the recurrent Id from GET http method and create BookingDto object that contains
      * start and end date for recurrent period of time, and weekdays arrays.
+     *
      * If the input parameter is null or is not corresponding to existed recurrent Id then method
      * returns ResponseEntity with "Bad Request" http status (400). Otherwise returns the
      * BookingsDto object in the body of object of ResponseEntity with http status "OK" (200).
@@ -94,6 +105,7 @@ public class CRUDBookingsController {
 
     /**
      * Receives the list of BookingDto objects from POST http method and send them for persisting.
+     *
      * If any of the input parameters are not correct or the system failed to persist all of the
      * bookings from the dto then method returns ResponseEntity with "Bad Request" http status
      * (400). Otherwise returns list of the persisted Bookings in the BookingsDto objects in the
@@ -112,7 +124,9 @@ public class CRUDBookingsController {
 
     /**
      * Receives the list of recurrent BookingDto objects from POST http method and send them for
-     * persisting. If any of the input parameters are not correct or the system failed to persist
+     * persisting.
+     *
+     * If any of the input parameters are not correct or the system failed to persist
      * all of the bookings from the dto then method returns ResponseEntity with "Bad Request" http
      * status (400). Otherwise returns list of the persisted Bookings in the BookingsDto objects in
      * the body of object of ResponseEntity with http status "OK" (200).
@@ -130,11 +144,12 @@ public class CRUDBookingsController {
     }
 
     /**
-     * Receives the BookingDto object from POST http method and send them for updating. If any
-     * of the input parameters are not correct or the system failed to update all of the bookings
-     * from the dto then the method returns ResponseEntity with "Bad Request" http status (400).
-     * Otherwise returns list of the updated Bookings in the BookingsDto objects in the body of
-     * object of ResponseEntity with http status "OK" (200).
+     * Receives the BookingDto object from POST http method and send them for updating.
+     *
+     * If any of the input parameters are not correct or the system failed to update all of the
+     * bookings from the dto then the method returns ResponseEntity with "Bad Request" http
+     * status (400). Otherwise returns list of the updated Bookings in the BookingsDto objects
+     * in the body of object of ResponseEntity with http status "OK" (200).
      *
      * @param dto the BookingsDto object
      * @param locale the current request locale
@@ -150,6 +165,7 @@ public class CRUDBookingsController {
 
     /**
      * Receives the recurrent id of bookings from GET http method and send them for cancelling.
+     *
      * If input parameter is null or number of cancelled bookings is 0 then the method returns
      * ResponseEntity with "Bad Request" http status (400) and this number. Otherwise returns
      * number of the cancelled Bookings in the body of object of ResponseEntity with http status
@@ -182,6 +198,7 @@ public class CRUDBookingsController {
 
     /**
      * Receives the id of booking from GET http method and send it for cancelling.
+     *
      * If input parameter is null or represent not existed booking then the method returns
      * ResponseEntity with "Bad Request" http status (400) and number 0. Otherwise returns
      * 1 in the body of object of ResponseEntity with http status "OK" (200).
@@ -211,7 +228,9 @@ public class CRUDBookingsController {
 
     /*
      * Receives a TwoTuple that can contains a list of BookingDto objects
-     * or Error string message. If a TwoTuple contains aforementioned list
+     * or Error string message.
+     *
+     * If a TwoTuple contains aforementioned list
      * then method returns a ResponseEntity with status "Ok" (200) and the
      * given list in its body. If a TwoTuple contains aforementioned error
      * message then method returns a ResponseEntity with status "Bad Request"
@@ -238,7 +257,9 @@ public class CRUDBookingsController {
 
     /*
      * Creates and returns ResponseBody object according to given httpStatus and response
-     * body. If the httpStatus is false than it is interpreted as "Bad Request" http status
+     * body.
+     *
+     * If the httpStatus is false than it is interpreted as "Bad Request" http status
      * (400), otherwise - as http status "OK" (200). If status is Ok then body of the resulting
      * ResponseEntity is set to responseBody input parameter without changes. Otherwise the
      * given parameter is interpreted as error code and is translated into language according

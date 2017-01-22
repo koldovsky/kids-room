@@ -4,17 +4,22 @@ import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public interface RoomService extends BaseService<Room> {
 
     void saveOrUpdate(Room room);
 
-    Map<String, String> getBlockedPeriods(
-            Room room, Calendar start, Calendar end);
+    /**
+     * Figures out all time periods where given room is full i.e. there are no
+     * available places in the room. If input parameter is null or is not existed
+     * room Id then method returns empty unmodifiable list.
+     *
+     * @param roomID the given room id
+     * @return the list of time periods
+     */
+    List<Date[]> getDisabledPeriods(Long roomID);
 
     Boolean isPossibleUpdate(BookingDto bookingDto);
 

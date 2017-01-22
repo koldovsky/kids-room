@@ -414,17 +414,15 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
         success: function (result) {
             result = JSON.parse(result);
             var objectsLen = objects.length;
-            var keyArr = Object.keys(result);
-            keyArr.sort();
-            keyArr.forEach(function (item, i) {
+            result.forEach(function (item, i) {
                 objects[objectsLen + i] = {
                     id: blockedTimeSpanId,
                     title: 'Room is full',
-                    start: item,
-                    end: result[item],
+                    start: item[0],
+                    end: item[1],
                     color: BLOCKED,
                     borderColor: BORDER,
-                    editable: false,
+                    editable: false
                 };
             });
             renderCalendar(objects, id, workingHoursStart, workingHoursEnd);
@@ -543,8 +541,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                         comment: item.comment
                     }, true);
                 });
-
-                $('#duplicate-booking-dialog').modal('show');
+               // $('#duplicate-booking-dialog').modal('show');
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
             error: function (xhr) {
@@ -593,7 +590,6 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
                 bookingForUpdate.borderColor = BORDER;
                 $('#user-calendar').fullCalendar('removeEvents', bookingForUpdate.id);
                 $('#user-calendar').fullCalendar('renderEvent', bookingForUpdate, true);
-                redrawBlockedTimeSpans(roomIdForHandler);
                 redrawBlockedTimeSpans(roomIdForHandler);
             }
             else {
@@ -1130,9 +1126,13 @@ function increaseTimeByHour(date) {
     return endTimeHours.concat(date.substring(2, 8));
 }
 
-function redrawBlockedTimeSpans(roomId) {
+function drawTimeSpans(activeElementsArray) {
 
-    $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);
+}
+
+function redrawBlockedTimeSpans(roomId) {
+    var userCalendar = $('#user-calendar');
+    userCalendar.fullCalendar('removeEvents', blockedTimeSpanId);
 
     var path = 'disabled?roomID=' + roomId;
     $.ajax({
@@ -1141,24 +1141,25 @@ function redrawBlockedTimeSpans(roomId) {
         contentType: 'charset=UTF-8',
         success: function (result) {
             result = JSON.parse(result);
+            var newBookingsArray = userCalendar.fullCalendar('clientEvents');
+            var newDisablePeriod;
 
-            $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);
-            var keyArr = Object.keys(result);
-            keyArr.forEach(function (item) {
-                $('#user-calendar').fullCalendar('renderEvent', {
+            result.forEach(function (item) {
+                newDisablePeriod = {
                     id: blockedTimeSpanId,
                     title: 'Room is full',
-                    start: item,
-                    end: result[item],
+                    start: item[0],
+                    end: item[1],
                     color: BLOCKED,
                     borderColor: BORDER,
                     editable: false
-
-                }, true);
+                };
+                newBookingsArray.push(newDisablePeriod);
             });
-        },
-        error: function () {
 
+            userCalendar.fullCalendar('removeEvents');
+            userCalendar.fullCalendar('addEventSource', newBookingsArray);
+            userCalendar.fullCalendar('refetchEvents');
         }
     });
 }

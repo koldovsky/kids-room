@@ -16,10 +16,11 @@ public final class DateConstants {
 
     public static final long ONE_MINUTE_MILLIS = 60 * 1000;
 
-    public static final long THOUSAND_YEARS_MILLIS = 1000L * 365L * 24L * 60L * 60L * 1000L;
+    // Wed Jan 01 23:59:59 3000 EET
+    public static final long THREE_THOUSAND_YEARS_MILLIS = 32503759199000L;
 
-    public static final Date THOUSAND_YEARS_FROM_INIT =
-            new Date(new Date().getTime() + THOUSAND_YEARS_MILLIS);
+    public static final Date THREE_THOUSAND_YEAR =
+            new Date(THREE_THOUSAND_YEARS_MILLIS);
 
     public static final int WEEK_LENGTH = 7;
 
