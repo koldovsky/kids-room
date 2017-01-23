@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.util;
 
+import java.util.Date;
+
 /**
  * Two tuple that represent two object: Long that represent date and Boolean that
  * is true if date is start, otherwise - false. The class implements Comparable interface
@@ -7,7 +9,7 @@ package ua.softserveinc.tc.util;
  * to 0 then addition sort by second object is making. In that case the lowest object is object
  * its isStart is false.
  */
-public class DateTwoTuple extends TwoTuple <Long,Boolean> implements Comparable<DateTwoTuple> {
+public class DateTwoTuple extends TwoTuple <Date,Boolean> implements Comparable<DateTwoTuple> {
 
     /**
      * To create object of this class we must use this constructor.
@@ -15,7 +17,7 @@ public class DateTwoTuple extends TwoTuple <Long,Boolean> implements Comparable<
      * @param date given date represented by Long object
      * @param isStart true is given date is start, otherwise false
      */
-    public DateTwoTuple(Long date, Boolean isStart) {
+    public DateTwoTuple(Date date, Boolean isStart) {
 
         super(date, isStart);
     }
@@ -25,7 +27,7 @@ public class DateTwoTuple extends TwoTuple <Long,Boolean> implements Comparable<
      *
      * @return the contained long date
      */
-    public Long getDateLong() {
+    public Date getDate() {
 
         return getFirst();
     }
@@ -51,7 +53,7 @@ public class DateTwoTuple extends TwoTuple <Long,Boolean> implements Comparable<
      */
     @Override
     public int compareTo (DateTwoTuple tuple) {
-        int result = getDateLong().compareTo(tuple.getDateLong());
+        int result = getDate().compareTo(tuple.getDate());
 
         if (result == 0) {
             if (!isStart() && tuple.isStart()) {

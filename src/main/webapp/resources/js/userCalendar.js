@@ -198,6 +198,7 @@ $(function () {
         var myDialog = $('#confirmation-dialog-div');
         myDialog.dialog('open');
         $('#comment-for-one-child-updating').hide();
+        $('#confirmYes').unbind('click');
         $('#confirmYes').click(function () {
             cancelRecurrentBookings(info.calEvent.recurrentId);
             myDialog.dialog('close');
@@ -232,12 +233,12 @@ $(function () {
         $('#bookingUpdatingDialog').dialog('close');
         var myDialog = $('#confirmation-dialog-div');
         myDialog.dialog('open');
+        $('#confirmYes').unbind('click');
         $('#confirmYes').click(function () {
             cancelBooking(info.id);
             myDialog.dialog('close');
         });
         $('#confirmNo').click(function () {
-
             myDialog.dialog('close');
         });
     });
@@ -641,7 +642,10 @@ function makeRecurrentBookings() {
             dataType: 'json',
             data: JSON.stringify(bookingsRecurrentArray),
             success: function (result) {
+                $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);
                 var newBookingsArray = $('#user-calendar').fullCalendar('clientEvents');
+                addDisabledPeriodsToEventSource(newBookingsArray, roomIdForHandler);
+
                 result.forEach(function (item) {
                     var newBooking = {
                         id: item.id,
@@ -659,6 +663,7 @@ function makeRecurrentBookings() {
                     allBookings.push(newBooking);
                     newBookingsArray.push(newBooking);
                 });
+
                 $('#user-calendar').fullCalendar('removeEvents');
                 $('#user-calendar').fullCalendar('addEventSource', newBookingsArray);
                 $('#user-calendar').fullCalendar('refetchEvents');
@@ -717,9 +722,12 @@ function updateRecurrentBooking() {
         dataType: 'json',
             data: JSON.stringify(newEventAfterUpdate),
             success: function (result) {
+                $('#user-calendar').fullCalendar('removeEvents', blockedTimeSpanId);
                 var newBookingsArray = $('#user-calendar').fullCalendar('clientEvents');
                 newBookingsArray = deleteCanceledRecurrentBookingsFromArray(
                     clickedEventRecurrentId, newBookingsArray);
+                addDisabledPeriodsToEventSource(newBookingsArray, roomIdForHandler);
+
                 result.forEach(function (item) {
                     var newBooking = {
                         id: item.id,
@@ -835,11 +843,14 @@ function cancelBooking(bookingId) {
         contentType: 'application/json; charset=UTF-8',
         url: 'cancelBooking/' + bookingId,
         dataType: 'json',
+        success: function () {
+            redrawBlockedTimeSpans(roomIdForHandler);
+        },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
         }
     });
-    redrawBlockedTimeSpans(roomIdForHandler);
+
 }
 
 /**
@@ -885,9 +896,11 @@ function cancelRecurrentBookings(recurrentId) {
         url: 'cancelrecurrentbookings/' + recurrentId,
         dataType: 'json',
         success: function () {
+            userCalendar.fullCalendar('removeEvents', blockedTimeSpanId);
             var newBookingsArray = userCalendar.fullCalendar('clientEvents');
             newBookingsArray = deleteCanceledRecurrentBookingsFromArray(
                 recurrentId, newBookingsArray);
+            addDisabledPeriodsToEventSource(newBookingsArray, roomIdForHandler);
 
             userCalendar.fullCalendar('removeEvents');
             userCalendar.fullCalendar('addEventSource', newBookingsArray);
@@ -898,6 +911,43 @@ function cancelRecurrentBookings(recurrentId) {
             callErrorDialog(xhr['responseText']);
         }
     });
+}
+
+/**
+ * Receives eventSource and room Id then figures out all times
+ * periods when there are no available places in the given room,
+ * add that periods to the given array source and returns it.
+ *
+ * @param eventSource the given even Source
+ * @param roomId the given room Id
+ */
+function addDisabledPeriodsToEventSource(eventSource, roomId) {
+
+    $.ajax({
+        url: 'disabled?roomID=' + roomId,
+        encoding: 'UTF-8',
+        contentType: 'charset=UTF-8',
+        async: false,
+        success: function (result) {
+            result = JSON.parse(result);
+            var newDisablePeriod;
+
+            result.forEach(function (item) {
+                newDisablePeriod = {
+                    id: blockedTimeSpanId,
+                    title: 'Room is full',
+                    start: item[0],
+                    end: item[1],
+                    color: BLOCKED,
+                    borderColor: BORDER,
+                    editable: false
+                };
+                eventSource.push(newDisablePeriod);
+            });
+        }
+    });
+
+    return eventSource;
 }
 
 function closeBookingDialog() {
@@ -1112,22 +1162,10 @@ function showRoomManagers(managers) {
     $('#showRoomManagers').append(managers);
 }
 
-$('#closeContact').click(function () {
-    $('#contactModal').modal('hide');
-});
-
-$('#closeColorDesc').click(function () {
-    $('#colorDescryptionModal').modal('hide');
-});
-
 function increaseTimeByHour(date) {
     var currentDate = new Date();
     var endTimeHours = String(currentDate.getHours() + 1);
     return endTimeHours.concat(date.substring(2, 8));
-}
-
-function drawTimeSpans(activeElementsArray) {
-
 }
 
 function redrawBlockedTimeSpans(roomId) {
@@ -1160,6 +1198,7 @@ function redrawBlockedTimeSpans(roomId) {
             userCalendar.fullCalendar('removeEvents');
             userCalendar.fullCalendar('addEventSource', newBookingsArray);
             userCalendar.fullCalendar('refetchEvents');
+
         }
     });
 }

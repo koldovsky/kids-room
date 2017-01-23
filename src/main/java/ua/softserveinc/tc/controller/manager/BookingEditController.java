@@ -148,16 +148,19 @@ public class BookingEditController {
         Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
         Date startTime = toDateISOFormat(bookingDto.getStartTime());
         Date endTime = toDateISOFormat(bookingDto.getEndTime());
-        if (!this.timeValidator.validateBooking(bookingDto)) return false;
-        if (roomService.isPossibleUpdate(bookingDto)) {
+        boolean isPossible = true;
+        if (timeValidator.validateBooking(bookingDto) &&
+                roomService.isPossibleUpdate(bookingDto)) {
             booking.setBookingEndTime(endTime);
             booking.setBookingStartTime(startTime);
             booking.setComment(bookingDto.getComment());
             booking.setRecurrentId(null);
             bookingService.update(booking);
-            return true;
+
+        } else {
+            isPossible = false;
         }
-        return false;
+        return isPossible;
     }
 
     @GetMapping(value="get-kids/{id}", produces = "text/plain;charset=UTF-8")

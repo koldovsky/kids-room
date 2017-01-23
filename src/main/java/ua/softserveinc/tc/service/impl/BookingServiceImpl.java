@@ -323,22 +323,22 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
                 if (maxKidsInRoom + numOfKids > room.getCapacity()) {
                     if (onlyStartOfFirstPeriod) {
-                        startDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        startDateOfFullRoom = dateTuple.getDate();
                         resultList.add(new Date[] {startDateOfFullRoom, null});
                         onlyCheckForFreeSpaces = true;
                         break;
                     }
                     if (!isFull) {
-                        startDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        startDateOfFullRoom = dateTuple.getDate();
                         isFull = true;
                     }
                 } else if (isFull) {
                     if (resultList.isEmpty() || !startDateOfFullRoom.equals(endDateOfFullRoom)) {
                         previousStartDateOfFullRoom = startDateOfFullRoom;
-                        endDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        endDateOfFullRoom = dateTuple.getDate();
                         resultList.add(new Date[]{startDateOfFullRoom, endDateOfFullRoom});
                     } else {
-                        endDateOfFullRoom = new Date(dateTuple.getDateLong());
+                        endDateOfFullRoom = dateTuple.getDate();
                         resultList.remove(resultList.size() - 1);
                         resultList.add(new Date[]{previousStartDateOfFullRoom, endDateOfFullRoom});
                     }
@@ -795,8 +795,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         break;
                     }
 
-                    resultList.add(new DateTwoTuple(((Date)dates[0]).getTime(), true));
-                    resultList.add(new DateTwoTuple(((Date)dates[1]).getTime(), false));
+                    resultList.add(new DateTwoTuple((Date)dates[0], true));
+                    resultList.add(new DateTwoTuple((Date)dates[1], false));
                 }
                 Collections.sort(resultList);
 

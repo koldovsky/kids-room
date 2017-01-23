@@ -77,11 +77,11 @@ $(function () {
 
     $('#updatingButton').click(function () {
         cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
-        if (isSingleUpdateFormValid()) {
+       if (isSingleUpdateFormValid()) {
             updateSingleEvent();
-        } else {
-            printGeneralMessage(GENERAL_ERROR_FIELD);
-        }
+       } else {
+           printGeneralMessage(GENERAL_ERROR_FIELD);
+      }
     });
 
     /**
@@ -723,9 +723,10 @@ function updateSingleEvent() {
         color: $('#color-select-single-event').val(),
     };
     sendToServerForUpdate(eventForUpdate, info_event.roomID);
-    $('#updating').dialog('close');
+
 }
 function sendToServerForUpdate(event, roomID) {
+    cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
     $.ajax({
         type: 'post',
         encoding: 'UTF-8',

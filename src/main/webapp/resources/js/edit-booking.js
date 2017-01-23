@@ -63,8 +63,8 @@ $(function() {
         var getData = $('#data-edit').val();
         var inputDate = {
             id: idBooking,
-            startTime: getData + ' ' + $('#bookingUpdatingStartTimepicker').val(),
-            endTime: getData + ' ' + $('#bookingUpdatingEndTimepicker').val(),
+            startTime: getData + 'T' + $('#bookingUpdatingStartTimepicker').val() + ':00',
+            endTime: getData + 'T' + $('#bookingUpdatingEndTimepicker').val() + ':00',
             roomId: localStorage['roomId'],
             comment: $('#kid-comment').val(),
         };
