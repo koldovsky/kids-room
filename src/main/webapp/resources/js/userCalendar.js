@@ -1116,14 +1116,6 @@ function showRoomManagers(managers) {
     $('#showRoomManagers').append(managers);
 }
 
-$('#closeContact').click(function () {
-    $('#contactModal').modal('hide');
-});
-
-$('#closeColorDesc').click(function () {
-    $('#colorDescryptionModal').modal('hide');
-});
-
 function increaseTimeByHour(date) {
     var currentDate = new Date();
     var endTimeHours = String(currentDate.getHours() + 1);

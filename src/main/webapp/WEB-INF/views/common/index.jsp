@@ -456,7 +456,7 @@
                                         <canvas id="blob" width="600" height="400" hidden></canvas>
                                         <br>
                                         </body>
-                                        <button id="closeColorDesc" class="btn btn-success center-block ">
+                                        <button id="closeColorDesc" class="btn btn-success center-block " data-dismiss="modal">
                                             <spring:message code="close"/></button>
                                     </div>
                                     <span id="softServeInc">SoftServe Inc</span>
@@ -476,8 +476,8 @@
                                 <br>
                                 <h4 id="showRoomManagers"><spring:message code="manager"/> : </h4>
                                 <H4 id="roomPhone"></H4>
-                                <button id="closeContact" class="btn btn-success center-block "><spring:message
-                                        code="close"/></button>
+                                <button type="button" id="closeContact" class="btn btn-success center-block " data-dismiss="modal">
+                                    <spring:message code="close"/></button>
                                 <span>SoftServe Inc</span>
                             </div>
                         </div>
@@ -1014,7 +1014,7 @@
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
 <div id="warning-dialog" type="hidden"></div>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
