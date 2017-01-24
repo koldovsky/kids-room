@@ -203,6 +203,7 @@ $(function () {
             cancelRecurrentBookings(info.calEvent.recurrentId);
             myDialog.dialog('close');
         });
+        $('#confirmNo').unbind('click');
         $('#confirmNo').click(function () {
             myDialog.dialog('close');
         });
@@ -238,6 +239,7 @@ $(function () {
             cancelBooking(info.id);
             myDialog.dialog('close');
         });
+        $('#confirmNo').unbind('click');
         $('#confirmNo').click(function () {
             myDialog.dialog('close');
         });

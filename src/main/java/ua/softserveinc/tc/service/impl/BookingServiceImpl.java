@@ -204,7 +204,14 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+
         return bookingDao.getDatesOfReservedBookings(startDate, endDate, room);
+    }
+
+    @Override
+    public List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics) {
+
+        return bookingDao.getDatesOfReservedBookings(characteristics);
     }
 
     @Override
@@ -278,9 +285,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public boolean hasAvailablePlacesInTheRoom(Date[] dates, Room room, int numOfKids) {
+    public boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic,
+                                               int numOfKids) {
 
-        return getNotAvailablePlacesTimePeriods(dates, room, numOfKids, true).isEmpty();
+        return getNotAvailablePlacesTimePeriods(characteristic, numOfKids, true).isEmpty();
     }
 
     @Override
@@ -291,19 +299,25 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         today.set(Calendar.SECOND, 0);
         Date startDate = today.getTime();
 
-        return getNotAvailablePlacesTimePeriods(
-                new Date[] {startDate, DateConstants.THREE_THOUSAND_YEAR}, room, 1, false);
+        BookingsCharacteristics characteristic =
+                new BookingsCharacteristics.Builder()
+                        .setDates(new Date[] {startDate, DateConstants.THREE_THOUSAND_YEAR})
+                        .setRooms(Collections.singletonList(room))
+                        .build();
+
+        return getNotAvailablePlacesTimePeriods(characteristic, 1, false);
     }
 
     @Override
-    public List<Date[]> getNotAvailablePlacesTimePeriods(Date[] dates, Room room, int numOfKids,
+    public List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics,
+                                                         int numOfKids,
                                                          boolean onlyStartOfFirstPeriod) {
 
         boolean onlyCheckForFreeSpaces = false;
         List<Date[]> resultList = new ArrayList<>();
-        Date startDate = dates[0];
-        Date endDate = dates[1];
-        List<Date[]> datesOfReservedBookings = getDatesOfReservedBookings(startDate, endDate, room);
+        Room room = characteristics.getRooms().get(0);
+        List<Date[]> datesOfReservedBookings =
+                getDatesOfReservedBookings(characteristics);
         DailyBookingsMapTransformer dailyBookings =
                 new DailyBookingsMapTransformer(datesOfReservedBookings);
 
@@ -351,7 +365,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
 
         if (datesOfReservedBookings.isEmpty() && numOfKids > room.getCapacity()) {
-            resultList.add(dates);
+            resultList.add(characteristics.getDates());
         }
 
         return resultList;

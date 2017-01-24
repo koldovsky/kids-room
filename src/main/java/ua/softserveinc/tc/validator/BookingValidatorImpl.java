@@ -3,15 +3,18 @@ package ua.softserveinc.tc.validator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Date;
 
@@ -147,8 +150,25 @@ public class BookingValidatorImpl implements BookingValidator {
         bookingService.normalizeBookingDtoObjects(dtoList);
         Date[] dates = new Date[] {singleDto.getDateStartTime(), singleDto.getDateEndTime()};
         Room room = singleDto.getRoom();
+        Long idRecurrent = singleDto.getRecurrentId();
+        Long idOfBooking = singleDto.getId();
         int numOfKids = dtoList.size();
 
-        return bookingService.hasAvailablePlacesInTheRoom(dates, room, numOfKids);
+        BookingsCharacteristics.Builder bookingBuilder =
+                new BookingsCharacteristics.Builder()
+                        .setDates(dates)
+                        .setRooms(Collections.singletonList(room));
+
+        if (idRecurrent != null) {
+            bookingBuilder.setRecurrentIdsOfBookings(Collections.singletonList(idRecurrent));
+        }
+
+        if (idOfBooking != null) {
+            bookingBuilder.setIdsOfBookings(Collections.singletonList(idOfBooking));
+        }
+
+        BookingsCharacteristics characteristic = bookingBuilder.build();
+
+        return bookingService.hasAvailablePlacesInTheRoom(characteristic, numOfKids);
     }
 }

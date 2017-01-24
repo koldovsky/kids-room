@@ -137,6 +137,13 @@ public interface BookingService extends BaseService<Booking> {
     List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
 
     /**
+     *
+     * @param characteristics
+     * @return
+     */
+    List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
+
+    /**
      * Checks if there is a duplicated bookings in the given list of BookingDto.
      * The given list should not be empty or null.
      *
@@ -156,7 +163,7 @@ public interface BookingService extends BaseService<Booking> {
      * @param numOfKids the given number of children
      * @return the list of figured out appropriate dates
      */
-    boolean hasAvailablePlacesInTheRoom(Date[] dates, Room room, int numOfKids);
+    boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic, int numOfKids);
 
     /**
      * Figures out all time periods where there are no available places in the room
@@ -180,7 +187,8 @@ public interface BookingService extends BaseService<Booking> {
      * the second date will be null
      * @return the list of figured out appropriate dates
      */
-    List<Date[]> getNotAvailablePlacesTimePeriods(Date[] dates, Room room, int numOfKids,
+    List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics,
+                                                  int numOfKids,
                                                   boolean onlyStartOfFirstPeriod);
 
     /**

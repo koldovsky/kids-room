@@ -3,6 +3,7 @@ package ua.softserveinc.tc.dao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
+import ua.softserveinc.tc.util.TwoTuple;
 
 import java.util.Date;
 import java.util.List;
@@ -82,6 +83,13 @@ public interface BookingDao extends BaseDao<Booking> {
      * @return array of Dates
      */
     List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
+
+    /**
+     *
+     * @param characteristics
+     * @return
+     */
+    List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
 
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 
