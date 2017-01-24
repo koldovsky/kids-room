@@ -577,7 +577,7 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
         type: 'post',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
-        url: 'change-booking',
+        url: 'updatebooking',
         dataType: 'json',
         data: JSON.stringify({
             id: bookingForUpdate.id,
@@ -598,6 +598,9 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
             else {
                 callErrorDialog('We regret to inform you that there are no available places left in the room on the time you\'ve chosen');
             }
+        },
+        error : function (xhr) {
+            callErrorDialog(xhr['responseText']);
         }
     });
 }

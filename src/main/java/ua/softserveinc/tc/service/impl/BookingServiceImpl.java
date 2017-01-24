@@ -49,6 +49,7 @@ import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getRecurrentBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
+import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
@@ -404,6 +405,48 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
+    public TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto) {
+        TwoTuple<List<BookingDto>, String> result;
+        List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
+        Date startTime;
+        Date endTime;
+        Booking booking = null;
+
+        if (bookingDto != null && bookingDto.getId() != null) {
+            booking = bookingDao.findById(bookingDto.getId());
+        }
+
+        if (booking != null) {
+            bookingDto.setFieldFromBooking(booking);
+            bookingDto.setAllAbsentIdFromBooking(booking);
+            startTime = DateUtil.toDateISOFormat(bookingDto.getStartTime());
+            endTime = DateUtil.toDateISOFormat(bookingDto.getEndTime());
+
+            bookingDto.setDateStartTime(startTime);
+            bookingDto.setDateEndTime(endTime);
+
+            if (!bookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
+
+                result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
+
+            } else {
+
+                booking.setBookingStartTime(startTime);
+                booking.setBookingEndTime(endTime);
+                booking.setComment(bookingDto.getComment());
+                booking.setRecurrentId(null);
+
+                result = new TwoTuple<>(Collections.singletonList(bookingDto), null);
+            }
+        } else {
+            result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+        }
+
+        return result;
+    }
+
+    @Override
+    @Transactional
     public TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto) {
         TwoTuple<List<BookingDto>, String> result;
         List<Booking> cancelledBookings;
@@ -418,7 +461,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             if (bookings.isEmpty()) {
                 denyCancellationWithinTransaction(cancelledBookings);
-                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
+                result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
             } else {
                 result = new TwoTuple<>(bookings, null);
             }
@@ -439,7 +482,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             List<BookingDto> bookings = saveBookings(bookingDtos);
 
             if (bookings.isEmpty()) {
-                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
+                result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
             } else {
                 result = new TwoTuple<>(bookings, null);
             }

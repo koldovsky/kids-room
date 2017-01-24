@@ -141,27 +141,6 @@ public class BookingEditController {
                 .collect(Collectors.toList()));
     }
 
-
-    @PostMapping(value = "change-booking", consumes = "application/json")
-    @ResponseBody
-    public Boolean isPossableUpdate(@RequestBody BookingDto bookingDto) {
-        Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
-        Date startTime = toDateISOFormat(bookingDto.getStartTime());
-        Date endTime = toDateISOFormat(bookingDto.getEndTime());
-        boolean isPossible = true;
-        if (timeValidator.validateBooking(bookingDto) &&
-                roomService.isPossibleUpdate(bookingDto)) {
-            booking.setBookingEndTime(endTime);
-            booking.setBookingStartTime(startTime);
-            booking.setComment(bookingDto.getComment());
-            booking.setRecurrentId(null);
-            bookingService.update(booking);
-        } else {
-            isPossible = false;
-        }
-        return isPossible;
-    }
-
     @GetMapping(value="get-kids/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String listKids(@PathVariable Long id) {

@@ -243,6 +243,19 @@ public interface BookingService extends BaseService<Booking> {
     TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto);
 
     /**
+     * Receives the BookingDto object. Then validates the input parameter for
+     * correctness and update all the objects. If any of the input parameters are not
+     * correct or the system failed to update all of the bookings from the dto then method
+     * returns TwoTuple where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
+     * BookingDto objects, and second equals to null.
+     *
+     * @param bookingDto the BookingsDto object
+     * @return appropriate TwoTuple object
+     */
+    TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto);
+
+    /**
      * Normalizes the list of BookingDto objects. Set if not exists room,
      * user, child, idChild, start date and end date. The given list should not
      * be empty or null. If given BookingDto object has any not correct corresponding

@@ -243,6 +243,43 @@ public class BookingDto implements Serializable {
         return listOfBookings;
     }
 
+    /**
+     * Set fields of this object that is present in booking.
+     * If given booking object is null, then method returns without
+     * any exception.
+     *
+     * @param booking the given booking
+     */
+    public void setFieldFromBooking(Booking booking) {
+        if(booking == null) {
+            return;
+        }
+        id = booking.getIdBook();
+        child = booking.getChild();
+        room = booking.getRoom();
+        user = booking.getUser();
+        dateStartTime = booking.getBookingStartTime();
+        dateEndTime = booking.getBookingEndTime();
+        comment = booking.getComment();
+        bookingState = booking.getBookingState();
+        durationLong =  booking.getDuration();
+        sum = booking.getSum();
+        recurrentId = booking.getRecurrentId();
+    }
+
+    /**
+     * Set all absent id from given booking for this object.
+     *
+     * @param booking the given booking
+     */
+    public void setAllAbsentIdFromBooking(Booking booking) {
+        id = booking.getIdBook();
+        idChild = booking.getChild() != null ? booking.getChild().getId() : idChild;
+        userId = booking.getUser() != null ? booking.getUser().getId() : userId;
+        roomId = booking.getRoom() != null ? booking.getRoom().getId() : roomId;
+        kidId = idChild;
+    }
+
     public Child getChild() {
         return child;
     }

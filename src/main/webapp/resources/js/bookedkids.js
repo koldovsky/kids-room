@@ -5,7 +5,7 @@ function cancelBooking(idBook) {
     });
 
     $('#cancelModal').find('#cancelButton').click(function () {
-        var str = 'cancelBook/' + idBook;
+        var str = 'cancelBooking/' + idBook;
         $.ajax({
             url: str,
             success: function (result) {
@@ -107,11 +107,12 @@ function changeBooking(id) {
         var inputDate = {
             id: id,
             startTime: getData.find('#data').val() + ' ' + getData.find('#startTime').val(),
-            endTime: getData.find('#data').val() + ' ' + getData.find('#endTime').val()
+            endTime: getData.find('#data').val() + ' ' + getData.find('#endTime').val(),
+            comment: ''
         };
 
         $.ajax({
-            url: 'change-booking',
+            url: 'updatebooking',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(inputDate),

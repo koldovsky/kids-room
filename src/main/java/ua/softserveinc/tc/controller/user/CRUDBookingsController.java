@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.TwoTuple;
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Date;
+
+import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 
 @RestController
@@ -54,7 +57,7 @@ public class CRUDBookingsController {
      * objects
      */
     @GetMapping(value = "/disabled",  produces = "text/plain; charset=UTF-8")
-    public ResponseEntity<String> getDisabledTime(@RequestParam Long roomID, Locale locale) {
+    public ResponseEntity<String> getDisabledTimes(@RequestParam Long roomID, Locale locale) {
         ResponseEntity<String> resultResponse;
 
         List<Date[]> disabledDates = (roomID != null) ?
@@ -141,6 +144,18 @@ public class CRUDBookingsController {
                                                         Locale locale) {
 
         return  getResponseEntity(bookingService.makeRecurrentBookings(dtos), locale);
+    }
+
+    /**
+     *
+     * @param bookingDto
+     * @return
+     */
+    @PostMapping(value = "updatebooking", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<String> updateBooking(@RequestBody BookingDto bookingDto, Locale locale) {
+
+        return  getResponseEntity(bookingService.updateBooking(bookingDto), locale);
+
     }
 
     /**
