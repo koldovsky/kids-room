@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.constants;
 
 /**
- * Created by Nestor on 13.05.2016.
  * Interface stores all validation-related constants
  */
 public final class ValidationConstants {
@@ -60,7 +59,7 @@ public final class ValidationConstants {
     public static final String WEEK_RECURRENT_DAYS = "daysOfWeek";
 
     public static final String RECURRENT_BOOKING = "idBook";
-    public static final String VALIDATION_NOT_CORRECT_USAGE = "image.validator.error";
+    public static final String COMMON_ERROR_MESSAGE = "image.validator.error";
     public static final String END_TIME_BEFORE_START_TIME = "timeValidation.endTimeBeforeStart";
     public static final String BAD_TIME_FORMAT = "timeValidation.badTimeFormat";
     public static final String OUT_OF_WORKING_HOURS = "timeValidation.outOfWorkingHours";

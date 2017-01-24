@@ -4,10 +4,6 @@ import ua.softserveinc.tc.dto.ConfigurationDto;
 
 import java.io.IOException;
 
-/**
- * Created by Nestor on 04.06.2016.
- */
-
 public interface ApplicationConfigurator {
     /**
      * @return minimum allowed kid's age

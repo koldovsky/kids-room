@@ -3,11 +3,13 @@ package ua.softserveinc.tc.dao.impl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
+import ua.softserveinc.tc.constants.SQLConstants;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
+import ua.softserveinc.tc.util.TwoTuple;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,10 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Date;
+import java.util.Calendar;
 
-/*
- * Rewritten by Sviatoslav Hryb on 05.10.2017
- */
+
 @Repository
 public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
@@ -41,6 +43,8 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         if (characteristics.isCorrectFotDuplicateCheck()) {
 
             List<Predicate> restrictions = new ArrayList<>();
+
+            // Excluding recurrent or booking id because they must not be counted while updating
             if (characteristics.hasSetRecurrentIdsOfBookings()) {
                 restrictions.add(builder.or(
                         root.get(BookingConstants.Entity.RECURRENT_ID)
@@ -55,6 +59,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
             }
 
+            //Include all bookings that is in given time range and have booked or active status
             restrictions.addAll(Arrays.asList(
                     root.get(BookingConstants.Entity.CHILD)
                             .in(characteristics.getChildren()),
@@ -94,8 +99,8 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         }
 
         if (characteristics.hasSetOnlyStartDate()) {
-            restrictions.add(builder.greaterThanOrEqualTo(root.get(BookingConstants.Entity.START_TIME),
-                    characteristics.getStartDateOfBookings()));
+            restrictions.add(builder.greaterThanOrEqualTo(root.get(
+                    BookingConstants.Entity.START_TIME), characteristics.getStartDateOfBookings()));
         }
 
         if (characteristics.hasSetOnlyEndDate()) {
@@ -125,6 +130,110 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         criteria.orderBy(builder.asc(
                 root.get(BookingConstants.Entity.START_TIME)));
+
+        return entityManager.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+
+        return getDatesOfReservedBookings(
+                new BookingsCharacteristics.Builder()
+                        .setDates(new Date[] {startDate, endDate})
+                        .setRooms(Collections.singletonList(room))
+                        .build()
+        );
+    }
+
+    @Override
+    public List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics) {
+        Date startDate = characteristics.getStartDateOfBookings();
+        Date endDate = characteristics.getEndDateOfBookings();
+        Room room = characteristics.getRooms().get(0);
+        Calendar datesCalendar = Calendar.getInstance();
+        datesCalendar.setTime(startDate);
+        int startHour =  datesCalendar.get(Calendar.HOUR_OF_DAY);
+        int startMinute =  datesCalendar.get(Calendar.MINUTE);
+        datesCalendar.setTime(endDate);
+        int endHour =  datesCalendar.get(Calendar.HOUR_OF_DAY);
+        int endMinute =  datesCalendar.get(Calendar.MINUTE);
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Date[]> criteria = builder.createQuery(Date[].class);
+        Root<Booking> root = criteria.from(Booking.class);
+
+        List<Predicate> restrictions = new ArrayList<>();
+
+        // Excluding recurrent or booking id because they must not be counted while updating
+        if (characteristics.hasSetRecurrentIdsOfBookings()) {
+            restrictions.add(builder.or(
+                    root.get(BookingConstants.Entity.RECURRENT_ID)
+                            .isNull(),
+                    root.get(BookingConstants.Entity.RECURRENT_ID)
+                            .in(characteristics.getRecurrentIdsOfBookings()).not()
+            ));
+
+        } else if (characteristics.hasSetIdsOfBookings()) {
+            restrictions.add(root.get(BookingConstants.Entity.ID_OF_BOOKING)
+                    .in(characteristics.getIdsOfBookings()).not());
+
+        }
+
+        //Include all bookings that is in given time range and have booked or active status
+        restrictions.addAll(Arrays.asList(
+                builder.lessThan(root.get(BookingConstants.Entity.START_TIME), endDate),
+                builder.greaterThan(root.get(BookingConstants.Entity.END_TIME), startDate),
+                builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                builder.or(
+                        builder.lessThan(
+                                builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                        root.get(BookingConstants.Entity.START_TIME)),
+                                endHour
+                        ),
+                        builder.and(builder.equal(
+                                builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                        root.get(BookingConstants.Entity.START_TIME)),
+                                endHour),
+                                builder.lessThan(
+                                        builder.function(SQLConstants.MINUTE_FUNCTION,
+                                                Integer.class,
+                                                root.get(BookingConstants.Entity.START_TIME)
+                                        ),
+                                        endMinute
+                                )
+                        )
+                ),
+                builder.or(
+                        builder.greaterThan(
+                                builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                        root.get(BookingConstants.Entity.END_TIME)),
+                                startHour
+                        ),
+                        builder.and(builder.equal(
+                                builder.function(SQLConstants.HOUR_FUNCTION, Integer.class,
+                                        root.get(BookingConstants.Entity.END_TIME)),
+                                startHour),
+                                builder.greaterThan(
+                                        builder.function(SQLConstants.MINUTE_FUNCTION,
+                                                Integer.class,
+                                                root.get(BookingConstants.Entity.END_TIME)
+                                        ),
+                                        startMinute
+                                )
+                        )
+                ),
+                root.get(BookingConstants.Entity.STATE).in(
+                        (Object[]) BookingConstants.States.getActiveAndBooked()
+                )
+        ));
+
+        criteria.multiselect(
+                root.get(BookingConstants.Entity.START_TIME),
+                root.get(BookingConstants.Entity.END_TIME))
+                .where(builder.and(
+                        restrictions.toArray(new Predicate[restrictions.size()])
+                ))
+                .orderBy(builder.asc(root.get(BookingConstants.Entity.START_TIME)));
 
         return entityManager.createQuery(criteria).getResultList();
     }

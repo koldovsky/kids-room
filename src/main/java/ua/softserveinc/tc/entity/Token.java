@@ -6,9 +6,6 @@ import ua.softserveinc.tc.constants.UserConstants;
 import javax.persistence.*;
 
 
-/**
- * Created by Chak on 17.05.2016.
- */
 @Entity
 @Table(name = TokenConstants.TABLE_NAME_TOKEN)
 public class Token {

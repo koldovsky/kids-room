@@ -17,11 +17,6 @@ import java.util.Set;
 import java.util.Date;
 
 
-/**
- * Created by Петришак on 14.05.2016.
- */
-
-
 public class BookingDto implements Serializable {
 
     private Long id;

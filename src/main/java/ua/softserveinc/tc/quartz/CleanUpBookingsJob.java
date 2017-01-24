@@ -13,9 +13,7 @@ import java.util.List;
 import static ua.softserveinc.tc.util.DateUtil.dateDayAgo;
 import static ua.softserveinc.tc.util.DateUtil.toDate;
 
-/**
- * Created by Demian on 15.06.2016.
- */
+
 @Service(QuartzConstants.CLEAN_UP_BOOKINGS)
 public class CleanUpBookingsJob {
     @Autowired

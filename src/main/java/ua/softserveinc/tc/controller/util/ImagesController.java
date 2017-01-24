@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.security.Principal;
 
 /**
- * Created by Nestor on 22.05.2016.
  * Controller handles all images-related work
  * Such as: request for images, uploads of new images
  */

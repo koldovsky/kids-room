@@ -98,7 +98,7 @@
                                    id="data-validation-information-string"></p>
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-success" id="updatingBooking">
+                            <button type="button" class="btn btn-success" id="updatingBooking">
                                 <spring:message code="booking.update"/>
                             </button>
                             <button type="button" class="btn btn-danger pull-right" id="deletingBookingCancel">

@@ -7,10 +7,6 @@ import org.springframework.validation.Validator;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.ConfigurationDto;
 
-/**
- * Created by Nestor on 11.06.2016.
- */
-
 @Component
 public class ConfigValidator implements Validator {
 

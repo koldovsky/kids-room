@@ -3,7 +3,6 @@ package ua.softserveinc.tc.dto;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 
 /**
- * Created by Nestor on 11.06.2016.
  * transfer object to pass application configs to and from Administrator
  */
 public class ConfigurationDto {

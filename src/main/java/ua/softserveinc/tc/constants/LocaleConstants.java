@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by edward on 6/7/16.
- */
+
 public final class LocaleConstants {
 
     public static final String SESSION_LOCALE_ATTRIBUTE =

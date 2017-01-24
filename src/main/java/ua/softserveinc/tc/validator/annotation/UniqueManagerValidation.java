@@ -7,7 +7,6 @@ import java.lang.annotation.*;
 /**
  * This annotation checks "is unique managers" was entered.
  *
- * Created by TARAS on 17.06.2016.
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)

@@ -20,8 +20,6 @@ import java.util.logging.Logger;
 
 /**
  * Controller class for "Room list" view. It's main controller for editing rooms.
- * <p>
- * Created by TARAS on 18.05.2016.
  */
 @Controller
 public class EditRoomController {

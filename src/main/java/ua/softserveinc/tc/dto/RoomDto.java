@@ -11,9 +11,7 @@ import ua.softserveinc.tc.validator.annotation.UniqueManagerValidation;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by TARAS on 24.05.2016.
- */
+
 public class RoomDto {
 
     private Long id;

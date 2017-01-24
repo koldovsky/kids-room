@@ -5,10 +5,13 @@ import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.entity.BookingState;
 
-import java.util.Date;
+import java.util.Objects;
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Arrays;
+import java.util.Collections;
+
 
 /**
  * The class that represent the characteristics of the made Bookings.
@@ -20,8 +23,6 @@ import java.util.ArrayList;
  * To create object of this class, you should first create object of inner class
  * Builder, then set all characteristics and finally invoke build method.
  * <strong></>The class is not thread safe!</strong>
- * <p>
- * Created by Sviatoslav Hryb on 02-Jan-17.
  */
 public class BookingsCharacteristics {
 
@@ -220,11 +221,11 @@ public class BookingsCharacteristics {
      */
     public boolean isCorrectFotDuplicateCheck() {
 
-        return recurrentIdsOfBookings.stream().noneMatch(recurrentId -> recurrentId == null)
-                && Arrays.stream(dates).noneMatch(date -> date == null)
-                && idsOfBookings.stream().noneMatch(idBooking -> idBooking == null)
-                && children.stream().noneMatch(child -> child == null)
-                && rooms.stream().noneMatch(room -> room == null)
+        return recurrentIdsOfBookings.stream().noneMatch(Objects::isNull)
+                && Arrays.stream(dates).noneMatch(Objects::isNull)
+                && idsOfBookings.stream().noneMatch(Objects::isNull)
+                && children.stream().noneMatch(Objects::isNull)
+                && rooms.stream().noneMatch(Objects::isNull)
                 && !children.isEmpty();
 
     }
@@ -335,14 +336,14 @@ public class BookingsCharacteristics {
          */
         public BookingsCharacteristics build() {
 
-            rooms = (rooms == null) ? new ArrayList<>() : rooms;
-            children = (children == null) ? new ArrayList<>() : children;
-            users = (users == null) ? new ArrayList<>() : users;
-            bookingsStates = (bookingsStates == null) ? new ArrayList<>() : bookingsStates;
+            rooms = (rooms == null) ? Collections.emptyList() : rooms;
+            children = (children == null) ? Collections.emptyList() : children;
+            users = (users == null) ? Collections.emptyList() : users;
+            bookingsStates = (bookingsStates == null) ? Collections.emptyList() : bookingsStates;
             dates = (dates == null) ? new Date[] {null, null} : dates;
-            idsOfBookings = (idsOfBookings == null) ? new ArrayList<>() : idsOfBookings;
-            recurrentIdsOfBookings =
-                    (recurrentIdsOfBookings == null) ? new ArrayList<>() : recurrentIdsOfBookings;
+            idsOfBookings = (idsOfBookings == null) ? Collections.emptyList() : idsOfBookings;
+            recurrentIdsOfBookings = (recurrentIdsOfBookings == null) ?
+                    Collections.emptyList() : recurrentIdsOfBookings;
 
             return new BookingsCharacteristics(this);
         }

@@ -1,9 +1,6 @@
 package ua.softserveinc.tc.constants;
 
 
-/**
- * Created by Sviatoslav Hryb on 06-Dec-16.
- */
 
 public final class ImageConstants {
 

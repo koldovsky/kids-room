@@ -3,13 +3,14 @@ package ua.softserveinc.tc.dao;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
+import ua.softserveinc.tc.util.TwoTuple;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * DAO for bookings.
  *
- * Rewritten by Sviatoslav Hryb on 05.10.2017
  */
 public interface BookingDao extends BaseDao<Booking> {
 
@@ -69,6 +70,26 @@ public interface BookingDao extends BaseDao<Booking> {
      * @return the number of entities deleted
      */
     int cancelBookingById(long bookingId);
+
+    /**
+     * Get arrays of dates of all reserved bookings for given period of time
+     * and room. The first date of array is a start date, and other - is end
+     * date. If any of the input parameter is null, then array of length of
+     * 0 is returns.
+     *
+     * @param startDate the given start date
+     * @param endDate the given end date
+     * @param room the given room
+     * @return array of Dates
+     */
+    List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
+
+    /**
+     *
+     * @param characteristics
+     * @return
+     */
+    List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
 
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 

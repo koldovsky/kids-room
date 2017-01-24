@@ -9,9 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-/**
- * Created by edward on 5/16/16.
- */
+
 public abstract class BaseSearch<T> {
 
     @PersistenceContext

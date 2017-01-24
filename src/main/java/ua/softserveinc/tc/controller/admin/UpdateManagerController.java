@@ -18,8 +18,6 @@ import javax.validation.Valid;
 
 /**
  * Controller class for "Update manager" view, which accompanies manager updates.
- * <p>
- * Created by TARAS on 18.05.2016.
  */
 @Controller
 public class UpdateManagerController {

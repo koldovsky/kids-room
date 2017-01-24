@@ -19,7 +19,6 @@ import ua.softserveinc.tc.validator.LogicalRequestsValidator;
 import java.security.Principal;
 
 /**
- * Created by Nestor on 21.05.2016.
  * Controller handles kids profiles
  */
 @Controller

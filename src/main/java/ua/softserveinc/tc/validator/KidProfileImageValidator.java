@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
  * acceptable file size and if it is in acceptable format.
  * The MultipartFile represent the image of kid profile page.
  *
- * Created by Sviatoslav Hryb on 06-Dec-16.
  */
 public interface KidProfileImageValidator extends Validator {
 

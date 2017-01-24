@@ -8,10 +8,6 @@ import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import ua.softserveinc.tc.constants.ImageConstants;
 
-/**
- * Rewritten by Sviatoslav Hryb on 22.12.2016.
- */
-
 public class ImagesHolderUtil {
     @Log
     private static Logger log;

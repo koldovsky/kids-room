@@ -6,9 +6,7 @@ import ua.softserveinc.tc.constants.RoomConstants;
 
 import javax.persistence.*;
 
-/**
- * Created by TARAS on 19.05.2016.
- */
+
 @Entity
 @Table(name = RateConstants.TABLE_RATES)
 public class Rate {

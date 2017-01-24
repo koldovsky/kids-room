@@ -26,8 +26,6 @@ import java.util.stream.Collectors;
 
 /**
  * Controller class for "Update room" view, which accompanies room updates.
- * <p>
- * Created by TARAS on 18.05.2016.
  */
 @Controller
 public class UpdateRoomController {

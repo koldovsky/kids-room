@@ -32,9 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 import java.util.UUID;
 
-/**
- * Created by Chak on 27.05.2016.
- */
+
 
 @Controller
 public class UserChangePasswordController {

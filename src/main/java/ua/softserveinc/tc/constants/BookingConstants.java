@@ -2,9 +2,7 @@ package ua.softserveinc.tc.constants;
 
 import ua.softserveinc.tc.entity.BookingState;
 
-/**
- * Created by Петришак on 03.06.2016.
- */
+
 public final class BookingConstants {
 
   private BookingConstants() {

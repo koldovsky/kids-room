@@ -24,9 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 
-/**
- * Created by Demian on 08.05.2016.
- */
+
 @Controller
 public class ReportParentController {
 

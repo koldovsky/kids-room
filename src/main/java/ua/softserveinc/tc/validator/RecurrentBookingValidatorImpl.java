@@ -18,9 +18,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 
-/*
- * Created by Sviatoslav Hryb on 27-Dec-16.
- */
+
 @Component
 public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator {
 
@@ -37,6 +35,7 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
 
     @Override
     public List<String> getErrors() {
+
         return new ArrayList<>(errors);
     }
 
@@ -47,7 +46,7 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
 
         if (dto == null || dto.isEmpty() || dto.get(0).getDaysOfWeek() == null
                 || !hasCorrectDaysOfWeek(dto)) {
-            errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+            errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
 
             result = false;
         } else if (!bookingValidator.isValidToInsert(dto)) {
@@ -77,7 +76,7 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
             }
             if (booking == null || !booking.getRecurrentId().equals(singleDto.getRecurrentId())
                     || booking.getBookingState() != BookingState.BOOKED) {
-                errors.add(ValidationConstants.VALIDATION_NOT_CORRECT_USAGE);
+                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
 
                 result = false;
             }

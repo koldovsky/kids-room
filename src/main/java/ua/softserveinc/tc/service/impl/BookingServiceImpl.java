@@ -17,39 +17,39 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.service.RateService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.ChildService;
-import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
+import ua.softserveinc.tc.util.DateTwoTuple;
+import ua.softserveinc.tc.util.TwoTuple;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
-import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.constants.UtilConstants;
-import ua.softserveinc.tc.util.TwoTuple;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.Map;
+import java.util.Set;
 import java.util.HashSet;
 import java.util.Collections;
 import java.util.Arrays;
-import java.util.Calendar;
+import java.util.ListIterator;
+import java.util.Iterator;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getRecurrentBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
-/*
- * Rewritten by Sviatoslav Hryb on 05.10.2017
- */
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
 
@@ -203,6 +203,18 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+
+        return bookingDao.getDatesOfReservedBookings(startDate, endDate, room);
+    }
+
+    @Override
+    public List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics) {
+
+        return bookingDao.getDatesOfReservedBookings(characteristics);
+    }
+
+    @Override
     public List<Booking> getBookings(Date startDate, Date endDate, BookingState... bookingStates) {
         BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
                 .setDates(new Date[]{startDate, endDate})
@@ -273,18 +285,100 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<BookingDto> persistBookingsFromDto(List<BookingDto> listDTO) {
-        List<BookingDto> resultDto = Collections.emptyList();
+    public boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic,
+                                               int numOfKids) {
 
-        if (hasAvailablePlacesInTheRoom(listDTO)) {
-            List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
-            List<Booking> persistedBookings =
-                    bookingDao.persistRecurrentBookings(bookingsForPersisting);
-            BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
-            resultDto = listDTO;
+        return getNotAvailablePlacesTimePeriods(characteristic, numOfKids, true).isEmpty();
+    }
+
+    @Override
+    public List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room) {
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        Date startDate = today.getTime();
+
+        BookingsCharacteristics characteristic =
+                new BookingsCharacteristics.Builder()
+                        .setDates(new Date[] {startDate, DateConstants.THREE_THOUSAND_YEAR})
+                        .setRooms(Collections.singletonList(room))
+                        .build();
+
+        return getNotAvailablePlacesTimePeriods(characteristic, 1, false);
+    }
+
+    @Override
+    public List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics,
+                                                         int numOfKids,
+                                                         boolean onlyStartOfFirstPeriod) {
+
+        boolean onlyCheckForFreeSpaces = false;
+        List<Date[]> resultList = new ArrayList<>();
+        Room room = characteristics.getRooms().get(0);
+        List<Date[]> datesOfReservedBookings =
+                getDatesOfReservedBookings(characteristics);
+        DailyBookingsMapTransformer dailyBookings =
+                new DailyBookingsMapTransformer(datesOfReservedBookings);
+
+        for (List<DateTwoTuple> tuples : dailyBookings) {
+            int maxKidsInRoom = 0;
+            boolean isFull = false;
+            Date previousStartDateOfFullRoom = null;
+            Date startDateOfFullRoom = null;
+            Date endDateOfFullRoom = null;
+
+            for (DateTwoTuple dateTuple : tuples) {
+                if (dateTuple.isStart()) {
+                    maxKidsInRoom++;
+                } else {
+                    maxKidsInRoom--;
+                }
+
+                if (maxKidsInRoom + numOfKids > room.getCapacity()) {
+                    if (onlyStartOfFirstPeriod) {
+                        startDateOfFullRoom = dateTuple.getDate();
+                        resultList.add(new Date[] {startDateOfFullRoom, null});
+                        onlyCheckForFreeSpaces = true;
+                        break;
+                    }
+                    if (!isFull) {
+                        startDateOfFullRoom = dateTuple.getDate();
+                        isFull = true;
+                    }
+                } else if (isFull) {
+                    if (resultList.isEmpty() || !startDateOfFullRoom.equals(endDateOfFullRoom)) {
+                        previousStartDateOfFullRoom = startDateOfFullRoom;
+                        endDateOfFullRoom = dateTuple.getDate();
+                        resultList.add(new Date[]{startDateOfFullRoom, endDateOfFullRoom});
+                    } else {
+                        endDateOfFullRoom = dateTuple.getDate();
+                        resultList.remove(resultList.size() - 1);
+                        resultList.add(new Date[]{previousStartDateOfFullRoom, endDateOfFullRoom});
+                    }
+                    isFull = false;
+                }
+            }
+            if (onlyCheckForFreeSpaces) {
+                break;
+            }
         }
 
-        return resultDto;
+        if (datesOfReservedBookings.isEmpty() && numOfKids > room.getCapacity()) {
+            resultList.add(characteristics.getDates());
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public List<BookingDto> persistBookingsFromDto(List<BookingDto> listDTO) {
+        List<Booking> bookingsForPersisting = BookingDto.getListOfBookingObjects(listDTO);
+        List<Booking> persistedBookings =
+                bookingDao.persistRecurrentBookings(bookingsForPersisting);
+        BookingDto.setIdToListOfBookingDto(listDTO, persistedBookings);
+
+        return listDTO;
     }
 
     @Override
@@ -399,52 +493,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
 
         return result;
-    }
-
-    /*
-     * Checks if there is a duplicated booking for the given
-     * object of BookingDto. The given object should not be null.
-     *
-     * @param dto the list of objects of BookingsDto
-     * @return true if there is a duplicate bookings, otherwise
-     * return false.
-     */
-    private boolean hasDuplicateBookings(BookingDto dto) {
-        List<BookingDto> listOfBookingsDto = new ArrayList<>();
-        listOfBookingsDto.add(dto);
-
-        return hasDuplicateBookings(listOfBookingsDto);
-    }
-
-    /*
-     * The method finds out is there available space in
-     * the rooms for given listDTO. The listDto must not
-     * be null.
-     *
-     * @param listDTO list of BookingDto
-     * @return true if there is available places in the room
-     */
-    private boolean hasAvailablePlacesInTheRoom(List<BookingDto> listDTO) {
-        int availablePlaces = 0;
-        int needPlaces = 1;
-        Date theSameDay = null;
-
-        for (BookingDto bdto : listDTO) {
-            if (bdto.getDateStartTime().equals(theSameDay)) {
-                needPlaces++;
-                continue;
-            } else if (theSameDay != null && availablePlaces < needPlaces) {
-                return false;
-            }
-            needPlaces = 1;
-            theSameDay = bdto.getDateStartTime();
-            availablePlaces = roomService.getAvailableSpaceForPeriod(
-                    bdto.getDateStartTime(),
-                    bdto.getDateEndTime(),
-                    bdto.getRoom());
-        }
-
-        return availablePlaces >= needPlaces;
     }
 
     /*
@@ -652,9 +700,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         normalizeBookingDtoObjects(bookingDtos);
 
         getDatesFromRecurrentBookingDto(bookingDtos.get(0))
-                .forEach(dates ->
-                    bookingDtos.forEach(dto ->
-                        resultBookingsDto.add(dto.getNewBookingDto(dates))));
+                .forEach(dates -> bookingDtos
+                        .forEach(dto -> resultBookingsDto
+                                .add(dto.getNewBookingDto(dates))));
 
         return resultBookingsDto;
     }
@@ -687,5 +735,109 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             return;
         }
         bookings.forEach(booking -> booking.setBookingState(BookingState.BOOKED));
+    }
+
+    /*
+     * The main reason of existing this class is resolving problem of finding periods
+     * of times where there are no available places in the room. To create instance of this class
+     * use constructor with parameter of list of arrays of dates. If given list is null then its
+     * iterator behaves as follows: hasNext() will always returns false, and next() will always
+     * returns empty list.
+     *
+     * After creating instance of this class we can get daily dates using iterator.
+     * Each invoking next() will returns list of instances of DateTwoTuple that contains start and
+     * end dates for next day represented by Long and sorted in ascending order. The first object
+     * in DateTuple is date and second indicates when date is start (is true) or end (is false).
+     * So iterating through instance of this class we receives all dates from input parameter
+     * grouped by one day.
+     *
+     * Class implements Iterable interface, so we can use it in forEach for loops or streams in
+     * java 8.
+     */
+    private class DailyBookingsMapTransformer implements Iterable<List<DateTwoTuple>> {
+
+        private final List<Date[]> listOfDates;
+
+        /*
+         * Iterator for iterating through dates. Each invoking next will return all dates
+         * for next one day encapsulated in DateTwoTuple object. First encapsulated value
+         * is date (Date.getTime()) and second indicated if this date is start (true) or
+         * end(false). For correct work start and end date must belong to the same day.
+         */
+        private class BookingsDatesIterator implements Iterator<List<DateTwoTuple>> {
+
+            private int particularDay;
+            private int particularYear;
+            private ListIterator<Date[]> listOfDatesIterator;
+
+            private BookingsDatesIterator() {
+                if (listOfDates != null && !listOfDates.isEmpty()) {
+                    Object[] dates = listOfDates.get(0);
+                    Date firstDateOfListOfDates = (Date)dates[0];
+                    particularDay = DateUtil.getDayFromDate(firstDateOfListOfDates);
+                    particularYear = DateUtil.getYearFromDate(firstDateOfListOfDates);
+                    listOfDatesIterator = listOfDates.listIterator();
+                } else {
+                    listOfDatesIterator = Collections.emptyListIterator();
+                }
+            }
+
+            /*
+             * Returns list of DateTwoTuple objects that consists date (Long) as
+             * first parameter and Boolean value that indicate if this date is
+             * start (true) or end (false) grouped by one day. For correct work
+             * start and end date must belong to the same day.
+             *
+             * @return appropriate list of DateTwoTuple objects.
+             */
+            @Override
+            public List<DateTwoTuple> next() {
+                List<DateTwoTuple> resultList = new ArrayList<>();
+                int nextDay;
+                int nextYear;
+
+                while (listOfDatesIterator.hasNext()) {
+                    Object[] dates = listOfDatesIterator.next();
+
+                    nextDay = DateUtil.getDayFromDate((Date)dates[0]);
+                    nextYear = DateUtil.getYearFromDate((Date)dates[0]);
+
+                    if (nextDay != particularDay || nextYear != particularYear) {
+                        listOfDatesIterator.previous();
+                        particularDay = nextDay;
+                        particularYear = nextYear;
+                        break;
+                    }
+
+                    resultList.add(new DateTwoTuple((Date)dates[0], true));
+                    resultList.add(new DateTwoTuple((Date)dates[1], false));
+                }
+                Collections.sort(resultList);
+
+                return resultList;
+            }
+
+            @Override
+            public boolean hasNext() {
+
+                return listOfDatesIterator != null && listOfDatesIterator.hasNext();
+            }
+
+        }
+
+        /*
+         * Constructor for create instance of this class.
+         *
+         * @param dates the given list of arrays of dates that we want grouped by days
+         * and merged in one list.
+         */
+        private DailyBookingsMapTransformer(List<Date[]> dates) {
+            listOfDates = dates;
+        }
+
+        @Override
+        public Iterator<List<DateTwoTuple>> iterator() {
+            return new BookingsDatesIterator();
+        }
     }
 }

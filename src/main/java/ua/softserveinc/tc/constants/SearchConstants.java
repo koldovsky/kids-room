@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by edward on 5/17/16.
- */
+
 public final class SearchConstants {
 
     public static final String CHILD_SEARCH_URL = "api/child/search";

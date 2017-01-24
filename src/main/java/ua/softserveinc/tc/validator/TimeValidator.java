@@ -16,9 +16,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
-/**
- * Created by TARAS on 29.06.2016.
- */
+
 @Component
 public class TimeValidator implements Validator {
 

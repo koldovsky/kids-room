@@ -10,9 +10,6 @@ import ua.softserveinc.tc.service.BookingService;
 
 import java.util.List;
 
-/**
- * Created by Demian on 03.06.2016.
- */
 @Service(QuartzConstants.CALCULATE_SUM)
 public class CalculateSumJob {
 

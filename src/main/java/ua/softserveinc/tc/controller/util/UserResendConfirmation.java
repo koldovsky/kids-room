@@ -22,9 +22,7 @@ import ua.softserveinc.tc.validator.UserValidator;
 import javax.mail.MessagingException;
 import java.util.UUID;
 
-/**
- * Created by Chack on 21.06.2016.
- */
+
 @Controller
 public class UserResendConfirmation {
 

@@ -11,7 +11,6 @@ import ua.softserveinc.tc.service.UserService;
 import java.util.regex.Pattern;
 
 /**
- * Created by Nestor on 13.05.2016.
  * A validator-class that handles User objects validation
  */
 

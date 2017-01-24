@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 /**
  * Controller class for "Add manager" view, which accompanies add new manager.
- * <p>
  */
 
 @Controller

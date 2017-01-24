@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by TARAS on 21.05.2016.
- */
+
 public final class RateConstants {
 
   public static final String TABLE_RATES = "rates";

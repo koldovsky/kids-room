@@ -1,8 +1,6 @@
 package ua.softserveinc.tc.constants;
 
-/**
- * Created by Chak on 05.05.2016.
- */
+
 public final class UserConstants {
   private UserConstants() {
   }

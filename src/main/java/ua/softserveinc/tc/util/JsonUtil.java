@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Util class for Json convert. Got generic method's.
  *
- * Created by TARAS on 18.06.2016.
  */
 public class JsonUtil {
     /**

@@ -7,9 +7,7 @@ import ua.softserveinc.tc.mapper.GenericMapper;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by IhorTovpinets on 29.11.2016.
- */
+
 public class MonthlyEventDto extends EventDto{
     @Autowired
     private GenericMapper<Event, EventDto> genericMapper;

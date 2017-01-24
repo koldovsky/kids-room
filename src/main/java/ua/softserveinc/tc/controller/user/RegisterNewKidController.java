@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Nestor on 07.05.2016.
  * Controller handles kid registration
  */
 @Controller
