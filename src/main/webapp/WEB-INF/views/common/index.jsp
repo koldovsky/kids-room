@@ -487,35 +487,35 @@
 
             <div id='user-calendar'></div>
         </div>
-
-            <%--confirmation-dialog--%>
-                <div class="modal fade">
-                    <div class="modal-dialog">
-                        <div aclass="modal-body text-center">
-                            <div id="confirmation-dialog-div" class="ui-dialog" title=
-                                <spring:message code="booking.confirmTitle"/> hidden>
-                                <form id="confirm-your-choice">
-                                    <div class="confirmDelete">
-                                        <p>
-                                            <spring:message code="booking.confirmCancelQuestion"/>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="btn btn-success btn-delete-event-booking"
-                                                id="confirmYes">
-                                            <spring:message code="booking.confirmYes"/>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-delete-event-booking pull-right"
-                                                id="confirmNo">
-                                            <spring:message code="booking.confirmNo"/>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+        <%--confirmation-dialog--%>
+            <div class="modal fade">
+                <div class="modal-dialog">
+                    <div aclass="modal-body text-center">
+                        <div id="confirmation-dialog-div" class="ui-dialog" title=
+                            <spring:message code="booking.confirmTitle"/> hidden>
+                            <form id="confirm-your-choice">
+                                <div class="confirmDelete">
+                                    <p>
+                                        <spring:message code="booking.confirmCancelQuestion"/>
+                                    </p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-success btn-delete-event-booking"
+                                            id="confirmYes">
+                                        <spring:message code="booking.confirmYes"/>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-delete-event-booking pull-right"
+                                            id="confirmNo">
+                                        <spring:message code="booking.confirmNo"/>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
     </div>
+    <script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
 </sec:authorize>
 <div class="loading" hidden>Loading&#8230;</div>
 <sec:authorize access="hasRole('MANAGER')">
@@ -1005,6 +1005,7 @@
             </div>
         </div>
     </div>
+    <script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
 </sec:authorize>
 <sec:authorize access="hasRole('ADMINISTRATOR')">
 
@@ -1014,12 +1015,11 @@
 <%--error-dialog--%>
 <div id="error-dialog" type="hidden"></div>
 <div id="warning-dialog" type="hidden"></div>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/fullcalendar.js'></script>
@@ -1030,9 +1030,6 @@
 <script src='${pageContext.request.contextPath}/resources/js/single-booking.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/eventValidator.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/header-manager.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/header-user.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/recurrent-cancel-validator.js'></script>
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
