@@ -542,7 +542,7 @@ function sendBookingToServerForCreate(bookingsArray) {
                         comment: item.comment
                     }, true);
                 });
-               // $('#duplicate-booking-dialog').modal('show');
+                $('#duplicate-booking-dialog').modal('show');
                 redrawBlockedTimeSpans(roomIdForHandler);
             },
             error: function (xhr) {
