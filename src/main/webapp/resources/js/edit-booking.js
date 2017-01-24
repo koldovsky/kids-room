@@ -371,7 +371,7 @@ function addHilighted(bookings) {
 }
 
 function cancelBooking() {
-    var str = 'cancelBook/' + idBooking;
+    var str = 'cancelBooking/' + idBooking;
     $.ajax({
         url: str,
         success: function() {
