@@ -1,6 +1,4 @@
-/**
- * Created by Vitalij Fedyna on 19.11.16.
- */
+
 const messages = {
     kid: {
         invalidFirstName: 'Invalid First Name',
@@ -108,7 +106,8 @@ const messages = {
             invalidAdress: 'Invalid field Adress',
             invalidCity: 'Invalid field City',
             invalidPhone: 'Invalid field Phone',
-            requiredWithEmptySpace: 'This field must be required'
+            requiredWithEmptySpace: 'This field must be required',
+            roomIsFull: 'Room is full'
         },
         warnings: {
             active: 'Warning! Room has active bookings',

@@ -85,9 +85,12 @@ public interface BookingDao extends BaseDao<Booking> {
     List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
 
     /**
+     * Get arrays of dates of all reserved bookings for given period of time
+     * and room. The first date of array is a start date, and other - is end
+     * date.
      *
-     * @param characteristics
-     * @return
+     * @param characteristics the given booking characteristics
+     * @return array of Dates
      */
     List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
 

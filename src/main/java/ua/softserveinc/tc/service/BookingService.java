@@ -154,12 +154,11 @@ public interface BookingService extends BaseService<Booking> {
 
     /**
      * Checks if there are available places in the given room for given number
-     * of kids and during the given period. The first index of given array contain
+     * of kids and bookings characteristics object. The first index of given array contain
      * start date and second index of given array contain end date of given period.
      *
      *
-     * @param dates the given arrays of start and end dates
-     * @param room the given room
+     * @param characteristic the given bookings characteristics object
      * @param numOfKids the given number of children
      * @return the list of figured out appropriate dates
      */
@@ -176,12 +175,10 @@ public interface BookingService extends BaseService<Booking> {
 
     /**
      * Figures out all time periods where there are no available places in the room
-     * for given room and number of children starting from start date and finishing
-     * end date. If onlyFirstPeriod is true then only first founded date of period
-     * will be returned. The second will be null.
+     * for given bookings characteristics object and number of children. If onlyFirstPeriod
+     * is true then only first founded date of period will be returned. The second will be null.
      *
-     * @param dates the given arrays of start and end dates
-     * @param room the given room
+     * @param characteristics the given bookings characteristics object
      * @param numOfKids the given number of children
      * @param onlyStartOfFirstPeriod indicates that needed only first date of founded period,
      * the second date will be null
@@ -241,6 +238,19 @@ public interface BookingService extends BaseService<Booking> {
      * @return appropriate TwoTuple object
      */
     TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto);
+
+    /**
+     * Receives the BookingDto object. Then validates the input parameter for
+     * correctness and update all the objects. If any of the input parameters are not
+     * correct or the system failed to update all of the bookings from the dto then method
+     * returns TwoTuple where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
+     * BookingDto objects, and second equals to null.
+     *
+     * @param bookingDto the BookingsDto object
+     * @return appropriate TwoTuple object
+     */
+    TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto);
 
     /**
      * Normalizes the list of BookingDto objects. Set if not exists room,

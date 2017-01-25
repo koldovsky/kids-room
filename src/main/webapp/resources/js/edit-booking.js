@@ -371,7 +371,7 @@ function addHilighted(bookings) {
 }
 
 function cancelBooking() {
-    var str = 'cancelBook/' + idBooking;
+    var str = 'cancelBooking/' + idBooking;
     $.ajax({
         url: str,
         success: function() {
@@ -384,7 +384,7 @@ function cancelBooking() {
 
 function updatingBooking(inputDate) {
     $.ajax({
-        url: 'change-booking',
+        url: 'updatebooking',
         type: 'POST',
         encoding:'UTF-8',
         contentType: 'application/json; charset=UTF-8',

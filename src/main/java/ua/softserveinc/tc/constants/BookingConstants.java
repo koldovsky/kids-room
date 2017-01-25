@@ -69,7 +69,7 @@ public final class BookingConstants {
 
     public static final String LIST_BOOKINGS = "listBooking";
 
-    public static final String CANCEL_BOOKING = "cancelBook/{idBooking}";
+    public static final String CANCEL_BOOKING = "cancelBooking/{idBooking}";
 
     public static final String SET_START_TIME = "/setTime";
 

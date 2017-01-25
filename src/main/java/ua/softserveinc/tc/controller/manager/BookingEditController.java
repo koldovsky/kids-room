@@ -70,16 +70,6 @@ public class BookingEditController {
         return modelAndView;
     }
 
-    @GetMapping(BookingConstants.Model.CANCEL_BOOKING)
-    @ResponseBody
-    public void cancelBooking(@PathVariable Long idBooking) {
-        Booking booking = bookingService.findByIdTransactional(idBooking);
-        booking.setBookingState(BookingState.CANCELLED);
-        booking.setSum(0L);
-        booking.setDuration(0L);
-        bookingService.update(booking);
-    }
-
     @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
@@ -139,27 +129,6 @@ public class BookingEditController {
         return new Gson().toJson(bookings.stream()
                 .map(BookingDto::new)
                 .collect(Collectors.toList()));
-    }
-
-
-    @PostMapping(value = "change-booking", consumes = "application/json")
-    @ResponseBody
-    public Boolean isPossableUpdate(@RequestBody BookingDto bookingDto) {
-        Booking booking = bookingService.findByIdTransactional(bookingDto.getId());
-        Date startTime = toDateISOFormat(bookingDto.getStartTime());
-        Date endTime = toDateISOFormat(bookingDto.getEndTime());
-        boolean isPossible = true;
-        if (timeValidator.validateBooking(bookingDto) &&
-                roomService.isPossibleUpdate(bookingDto)) {
-            booking.setBookingEndTime(endTime);
-            booking.setBookingStartTime(startTime);
-            booking.setComment(bookingDto.getComment());
-            booking.setRecurrentId(null);
-            bookingService.update(booking);
-        } else {
-            isPossible = false;
-        }
-        return isPossible;
     }
 
     @GetMapping(value="get-kids/{id}", produces = "text/plain;charset=UTF-8")

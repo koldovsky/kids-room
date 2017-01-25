@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +17,13 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.TwoTuple;
 
 import java.util.List;
-import java.util.Collections;
 import java.util.Locale;
-import java.util.Date;
 
 
-@RestController
+/**
+ * Controller for creating, reading, updating, cancelling, bookings.
+ */
+@Controller
 public class CRUDBookingsController {
 
     @Autowired
@@ -34,10 +35,37 @@ public class CRUDBookingsController {
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * Receives the Id of room and user from GET http method and finds out all bookings with
+     * status BOOKED for given room and user.
+     *
+     * If any of the input parameters is null then method returns ResponseEntity with "Bad Request"
+     * http status (400). Otherwise returns the bookings dto objects in the body of object of
+     * ResponseEntity with http status "OK" (200).
+     *
+     * @param idUser the given user
+     * @param idRoom the given room
+     * @param locale the given locale
+     * @return ResponseEntity with appropriate http status and body that consists the dates
+     * objects
+     */
     @GetMapping(value = "getallbookings/{idUser}/{idRoom}", produces = "text/plain; charset=UTF-8")
-    public String getAllBookings(@PathVariable Long idUser, @PathVariable Long idRoom) {
+    public ResponseEntity<String> getAllBookings(@PathVariable Long idUser,
+                                                 @PathVariable Long idRoom,
+                                                 Locale locale) {
 
-        return new Gson().toJson(bookingService.getAllBookingsByUserAndRoom(idUser, idRoom));
+        ResponseEntity<String> resultResponse;
+
+        if (idUser == null || idRoom == null) {
+            resultResponse = getResponseEntity((Object)null, locale);
+
+        } else {
+            resultResponse = getResponseEntity(
+                    bookingService.getAllBookingsByUserAndRoom(idUser, idRoom), locale);
+        }
+
+        return resultResponse;
+
     }
 
     /**
@@ -54,21 +82,18 @@ public class CRUDBookingsController {
      * objects
      */
     @GetMapping(value = "/disabled",  produces = "text/plain; charset=UTF-8")
-    public ResponseEntity<String> getDisabledTime(@RequestParam Long roomID, Locale locale) {
+    public ResponseEntity<String> getDisabledTimes(@RequestParam Long roomID, Locale locale) {
+
         ResponseEntity<String> resultResponse;
 
-        List<Date[]> disabledDates = (roomID != null) ?
-                roomService.getDisabledPeriods(roomID) : Collections.emptyList();
+        if (roomID == null) {
+            resultResponse = getResponseEntity((Object)null, locale);
 
-        if(!disabledDates.isEmpty()) {
-            resultResponse =
-                    getResponseEntity(true, new Gson().toJson(disabledDates), locale);
         } else {
-            resultResponse =
-                    getResponseEntity(false, ValidationConstants.COMMON_ERROR_MESSAGE, locale);
+            resultResponse = getResponseEntity(roomService.getDisabledPeriods(roomID), locale);
         }
 
-        return resultResponse;
+        return  resultResponse;
     }
 
     /**
@@ -88,19 +113,11 @@ public class CRUDBookingsController {
                 produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> getRecurrentBookingForEditing(@PathVariable Long recurrentId,
                                                                 Locale locale) {
-        ResponseEntity<String> resultResponse;
 
         BookingDto resultBookingDto = bookingService
                 .getRecurrentBookingForEditingById(recurrentId);
 
-        if(resultBookingDto != null) {
-            resultResponse = getResponseEntity(true, new Gson().toJson(resultBookingDto), locale);
-        } else {
-            resultResponse =
-                    getResponseEntity(false, ValidationConstants.COMMON_ERROR_MESSAGE, locale);
-        }
-
-        return resultResponse;
+        return getResponseEntity(resultBookingDto, locale);
     }
 
     /**
@@ -156,6 +173,26 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists list of
      * the BookingsDto objects that represents updated bookings
      */
+    @PostMapping(value = "updatebooking", produces = "application/json; charset=UTF-8")
+    public ResponseEntity<String> updateBooking(@RequestBody BookingDto dto, Locale locale) {
+
+        return  getResponseEntity(bookingService.updateBooking(dto), locale);
+
+    }
+
+    /**
+     * Receives the recurrent BookingDto object from POST http method and send them for updating.
+     *
+     * If any of the input parameters are not correct or the system failed to update all of the
+     * bookings from the dto then the method returns ResponseEntity with "Bad Request" http
+     * status (400). Otherwise returns list of the updated Bookings in the BookingsDto objects
+     * in the body of object of ResponseEntity with http status "OK" (200).
+     *
+     * @param dto the recurrent BookingsDto object
+     * @param locale the current request locale
+     * @return ResponseEntity with appropriate http status and body that consists list of
+     * the BookingsDto objects that represents updated bookings
+     */
     @PostMapping(value = "updaterecurrentbookings", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> updateRecurrentBookings(@RequestBody BookingDto dto,
                                                           Locale locale) {
@@ -180,20 +217,12 @@ public class CRUDBookingsController {
             produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> cancelRecurrentBookings(@PathVariable Long recurrentId,
                                                           Locale locale) {
-        ResponseEntity<String> resultResponse;
 
         int numOfCancelledEntities = (recurrentId != null) ?
                 bookingService.cancelBookingsByRecurrentId(recurrentId) : 0;
 
-        if(numOfCancelledEntities != 0) {
-            resultResponse =
-                    getResponseEntity(true, new Gson().toJson(numOfCancelledEntities), locale);
-        } else {
-            resultResponse =
-                    getResponseEntity(false, ValidationConstants.COMMON_ERROR_MESSAGE, locale);
-        }
 
-        return resultResponse;
+        return getResponseEntity(numOfCancelledEntities, locale);
     }
 
     /**
@@ -210,20 +239,11 @@ public class CRUDBookingsController {
      */
     @GetMapping(value = "cancelBooking/{idBooking}", produces = "text/plain; charset=UTF-8")
     public ResponseEntity<String> cancelBooking(@PathVariable Long idBooking, Locale locale) {
-        ResponseEntity<String> resultResponse;
 
         int numOfCancelledEntities = (idBooking != null) ?
                 bookingService.cancelBookingById(idBooking) : 0;
 
-        if(numOfCancelledEntities != 0) {
-            resultResponse =
-                    getResponseEntity(true, new Gson().toJson(numOfCancelledEntities), locale);
-        } else {
-            resultResponse =
-                    getResponseEntity(false, ValidationConstants.COMMON_ERROR_MESSAGE, locale);
-        }
-
-        return resultResponse;
+        return getResponseEntity(numOfCancelledEntities, locale);
     }
 
     /*
@@ -250,6 +270,49 @@ public class CRUDBookingsController {
         } else {
             resultResponse =
                     getResponseEntity(true, new Gson().toJson(resultTuple.getFirst()), locale);
+        }
+
+        return resultResponse;
+    }
+
+    /*
+     * Creates and returns ResponseBody object according to a given response object. The
+     * http status figure out from a given response. If response is not numeric object,
+     * is not equal to null or if the response is a numeric value and is not equal to 0
+     * then http status is "OK" (200). If object is null or is a numeric value that equal to 0,
+     * then http status is "Bad Request" (400).
+     *
+     * If status is Ok then body of the resulting ResponseEntity is set to responseBody input
+     * parameter without changes. Otherwise the common error message is set to responseBody
+     * input parameter translated into language according to the given locale.
+     *
+     * RULES:
+     *
+     * BAD REQUEST:
+     * - object is null
+     * - numeric value equals to 0
+     *
+     * OK:
+     * - in all other cases
+     *
+     * @param the given response object
+     * @param locale the given request locale
+     * @return the resulting ResponseEntity
+     */
+    private ResponseEntity<String> getResponseEntity (Object response, Locale locale) {
+
+        ResponseEntity<String> resultResponse;
+
+        //Check for null or numeric equal 0
+        boolean okStatus = response != null
+                && (!(response instanceof Number) || ((Number) response).doubleValue() > 0);
+
+        if (okStatus) {
+            resultResponse =
+                    getResponseEntity(true, new Gson().toJson(response), locale);
+        } else {
+            resultResponse =
+                    getResponseEntity(false, ValidationConstants.COMMON_ERROR_MESSAGE, locale);
         }
 
         return resultResponse;
@@ -286,4 +349,5 @@ public class CRUDBookingsController {
 
         return resultResponse;
     }
+
 }
