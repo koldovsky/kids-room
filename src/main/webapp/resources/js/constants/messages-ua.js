@@ -1,6 +1,4 @@
-/**
- * Created by Vitalij Fedyna on 19.11.16.
- */
+
 const messages = {
     kid: {
         invalidFirstName: 'Ви ввели ім\'я невірно',
@@ -101,7 +99,8 @@ const messages = {
             invalidAdress: 'Невірно заповнене поле Адрес',
             invalidCity: 'Невірно заповнене поле Місто',
             invalidPhone: 'Невірно заповнене поле Номер телефону',
-            requiredWithEmptySpace: 'Поле потрібно заповнити'
+            requiredWithEmptySpace: 'Поле потрібно заповнити',
+            roomIsFull: 'Кімната заповнена'
         },
         warnings: {
             active: 'Попередження! У кімнаті перебувають діти.',

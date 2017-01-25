@@ -70,16 +70,6 @@ public class BookingEditController {
         return modelAndView;
     }
 
-    @GetMapping(BookingConstants.Model.CANCEL_BOOKING)
-    @ResponseBody
-    public void cancelBooking(@PathVariable Long idBooking) {
-        Booking booking = bookingService.findByIdTransactional(idBooking);
-        booking.setBookingState(BookingState.CANCELLED);
-        booking.setSum(0L);
-        booking.setDuration(0L);
-        bookingService.update(booking);
-    }
-
     @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {

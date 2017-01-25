@@ -154,12 +154,11 @@ public interface BookingService extends BaseService<Booking> {
 
     /**
      * Checks if there are available places in the given room for given number
-     * of kids and during the given period. The first index of given array contain
+     * of kids and bookings characteristics object. The first index of given array contain
      * start date and second index of given array contain end date of given period.
      *
      *
-     * @param dates the given arrays of start and end dates
-     * @param room the given room
+     * @param characteristic the given bookings characteristics object
      * @param numOfKids the given number of children
      * @return the list of figured out appropriate dates
      */
@@ -176,12 +175,10 @@ public interface BookingService extends BaseService<Booking> {
 
     /**
      * Figures out all time periods where there are no available places in the room
-     * for given room and number of children starting from start date and finishing
-     * end date. If onlyFirstPeriod is true then only first founded date of period
-     * will be returned. The second will be null.
+     * for given bookings characteristics object and number of children. If onlyFirstPeriod
+     * is true then only first founded date of period will be returned. The second will be null.
      *
-     * @param dates the given arrays of start and end dates
-     * @param room the given room
+     * @param characteristics the given bookings characteristics object
      * @param numOfKids the given number of children
      * @param onlyStartOfFirstPeriod indicates that needed only first date of founded period,
      * the second date will be null

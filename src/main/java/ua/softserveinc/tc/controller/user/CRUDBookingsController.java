@@ -17,9 +17,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.TwoTuple;
 
 import java.util.List;
-import java.util.Collections;
 import java.util.Locale;
-import java.util.Date;
 
 
 /**
@@ -59,7 +57,7 @@ public class CRUDBookingsController {
         ResponseEntity<String> resultResponse;
 
         if (idUser == null || idRoom == null) {
-            resultResponse = getResponseEntity(null, locale);
+            resultResponse = getResponseEntity((Object)null, locale);
 
         } else {
             resultResponse = getResponseEntity(
@@ -89,7 +87,7 @@ public class CRUDBookingsController {
         ResponseEntity<String> resultResponse;
 
         if (roomID == null) {
-            resultResponse = getResponseEntity(null, locale);
+            resultResponse = getResponseEntity((Object)null, locale);
 
         } else {
             resultResponse = getResponseEntity(roomService.getDisabledPeriods(roomID), locale);
@@ -280,9 +278,9 @@ public class CRUDBookingsController {
     /*
      * Creates and returns ResponseBody object according to a given response object. The
      * http status figure out from a given response. If response is not numeric object,
-     * is not equal to null and is not empty list or if the response is a numeric value and is not equal to 0
+     * is not equal to null or if the response is a numeric value and is not equal to 0
      * then http status is "OK" (200). If object is null or is a numeric value that equal to 0,
-     * or is empty list object then http status is "Bad Request" (400).
+     * then http status is "Bad Request" (400).
      *
      * If status is Ok then body of the resulting ResponseEntity is set to responseBody input
      * parameter without changes. Otherwise the common error message is set to responseBody
@@ -292,7 +290,6 @@ public class CRUDBookingsController {
      *
      * BAD REQUEST:
      * - object is null
-     * - empty list
      * - numeric value equals to 0
      *
      * OK:
@@ -308,12 +305,7 @@ public class CRUDBookingsController {
 
         //Check for null or numeric equal 0
         boolean okStatus = response != null
-                && (!(response instanceof Number) || ((Number) response).doubleValue() == 0);
-
-        //Check for empty list
-        if (response instanceof List && ((List)response).isEmpty()) {
-            okStatus = false;
-        }
+                && (!(response instanceof Number) || ((Number) response).doubleValue() > 0);
 
         if (okStatus) {
             resultResponse =

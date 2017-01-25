@@ -404,6 +404,9 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
                 allBookings.push(objects[objectsLen + i]);
             });
             renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursEnd);
+        },
+        error: function (xhr){
+            callErrorDialog(xhr['responseText']);
         }
     });
 }
@@ -420,7 +423,7 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
             result.forEach(function (item, i) {
                 objects[objectsLen + i] = {
                     id: blockedTimeSpanId,
-                    title: 'Room is full',
+                    title: messages.room.errors.roomIsFull,
                     start: item[0],
                     end: item[1],
                     color: BLOCKED,
@@ -841,7 +844,6 @@ function editRecurrentBookingsOpenDialog(recurrentBookingForEditing) {
 }
 
 function cancelBooking(bookingId) {
-    $('#user-calendar').fullCalendar('removeEvents', bookingId);
     $.ajax({
         type: 'get',
         encoding: 'UTF-8',
@@ -849,6 +851,7 @@ function cancelBooking(bookingId) {
         url: 'cancelBooking/' + bookingId,
         dataType: 'json',
         success: function () {
+            $('#user-calendar').fullCalendar('removeEvents', bookingId);
             redrawBlockedTimeSpans(roomIdForHandler);
         },
         error: function (xhr) {
@@ -940,7 +943,7 @@ function addDisabledPeriodsToEventSource(eventSource, roomId) {
             result.forEach(function (item) {
                 newDisablePeriod = {
                     id: blockedTimeSpanId,
-                    title: 'Room is full',
+                    title: messages.room.errors.roomIsFull,
                     start: item[0],
                     end: item[1],
                     color: BLOCKED,
@@ -1190,7 +1193,7 @@ function redrawBlockedTimeSpans(roomId) {
             result.forEach(function (item) {
                 newDisablePeriod = {
                     id: blockedTimeSpanId,
-                    title: 'Room is full',
+                    title: messages.room.errors.roomIsFull,
                     start: item[0],
                     end: item[1],
                     color: BLOCKED,
