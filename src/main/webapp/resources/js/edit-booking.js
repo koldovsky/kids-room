@@ -397,6 +397,10 @@ function updatingBooking(inputDate) {
             } else {
                 $('#updatingInvalid').modal('show');
             }
+        },
+        error:  function(xhr) {
+            $('#errorMessage').html(xhr.responseText);
+            $('#errorWindow').modal('show');
         }
     });
 }
