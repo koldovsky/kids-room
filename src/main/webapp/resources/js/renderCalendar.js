@@ -1,4 +1,3 @@
-
 /**
  * Created by dima- on 12.05.2016.
  */
@@ -77,11 +76,11 @@ $(function () {
 
     $('#updatingButton').click(function () {
         cleanGeneralValidationInfo(GENERAL_ERROR_FIELD);
-       if (isSingleUpdateFormValid()) {
+        if (isSingleUpdateFormValid()) {
             updateSingleEvent();
-       } else {
-           printGeneralMessage(GENERAL_ERROR_FIELD);
-      }
+        } else {
+            printGeneralMessage(GENERAL_ERROR_FIELD);
+        }
     });
 
     /**
@@ -253,7 +252,7 @@ $(function () {
         var valid = false;
         if (isRadioButtonChecked(CREATE_EVENT_DIALOG_WEEKLY_EVENT_RADIOBUTTON)) {
             valid = isCreateEventFormValid(UPDATE_RECURRENT_EVENT);
-            if (!valid){
+            if (!valid) {
                 printGeneralMessage(GENERAL_ERROR_FIELD);
             }
         }
@@ -550,7 +549,7 @@ function createSingleOrRecurrentEvents(idIfEdited) {
                     callErrorDialog(xhr['responseText']);
                 } else {
                     $('#calendar').fullCalendar('removeEvents', ev.id);
-                    printServerError(GENERAL_ERROR_FIELD,xhr['responseText']);
+                    printServerError(GENERAL_ERROR_FIELD, xhr['responseText']);
                 }
             },
             complete: function () {
@@ -559,8 +558,8 @@ function createSingleOrRecurrentEvents(idIfEdited) {
         });
     }
 }
-function printServerError(errorField,responsetext) {
-    $("."+errorField).html(responsetext);
+function printServerError(errorField, responsetext) {
+    $("." + errorField).html(responsetext);
 }
 function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
     var stringWithDaysForRecurrent = '';
@@ -686,12 +685,16 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
-            if (result.datesWhenNotCreated.length) {
-                eventsWereNotCreated(result.datesWhenNotCreated);
+            if (result.eventsCreated.length) {
+                if (result.datesWhenNotCreated.length) {
+                    eventsWereNotCreated(result.datesWhenNotCreated, result.eventsCreated[0].recurrentId);
+                }
+                if (recurrentEvents.recurrentId)
+                    deleteRecurrentEvents(recurrentEvents.recurrentId);
+                popSetOfEvents(result.eventsCreated);
+            } else {
+                callErrorDialog(messages.event.errors.noEligibleEventsForPeriod);
             }
-            if (recurrentEvents.recurrentId)
-                deleteRecurrentEvents(recurrentEvents.recurrentId);
-            popSetOfEvents(result.eventsCreated);
         },
         error: function (xhr) {
             callErrorDialog(xhr['responseText']);
@@ -753,7 +756,7 @@ function sendToServerForUpdate(event, roomID) {
                 $('#updating').dialog('close');
                 callErrorDialog(xhr['responseText']);
             } else
-                printServerError(GENERAL_ERROR_FIELD,xhr['responseText']);
+                printServerError(GENERAL_ERROR_FIELD, xhr['responseText']);
         }
     });
 }

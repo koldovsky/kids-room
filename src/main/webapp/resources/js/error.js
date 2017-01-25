@@ -14,7 +14,7 @@ function callErrorDialog(errorText) {
     });
 }
 
-function eventsWereNotCreated(datesWhenNotCreated) {
+function eventsWereNotCreated(datesWhenNotCreated,recurrentId) {
 
     var contentForDialog = '<div>' + messages.event.errors.cannotCreateEventsForNonExistingDates +
         '</div><br>';
@@ -24,6 +24,10 @@ function eventsWereNotCreated(datesWhenNotCreated) {
     $('#warning-dialog').html(contentForDialog);
     $('#warning-dialog').attr('title', 'Warning').text(contentForDialog).dialog({
         buttons: {
+            'Edit': function () {
+                $(this).dialog('close');
+                editRecurrentEventRequest(recurrentId);
+            },
             'Ok': function () {
                 $(this).dialog('close');
             }
