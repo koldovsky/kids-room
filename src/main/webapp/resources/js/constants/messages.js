@@ -78,7 +78,8 @@ const messages = {
             incorrectData: 'Incorrect Data: ',
             roomDeactivate: 'Room cannot be inactive, when it has events and bookings that take place in the future. Please contact manager.',
             dateDoesntExits: 'Chosen date doesn\'t exist, please select valid date',
-            cannotCreateEventsForNonExistingDates: 'For some dates events cannot be created as soon as dates do not exist.'
+            cannotCreateEventsForNonExistingDates: 'For some dates events cannot be created as soon as dates do not exist.',
+            noEligibleEventsForPeriod: 'There are no eligible events for this period of time',
         }
     },
     notCorrect: {
