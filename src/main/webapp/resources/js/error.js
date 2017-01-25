@@ -26,6 +26,7 @@ function eventsWereNotCreated(datesWhenNotCreated,recurrentId) {
         buttons: {
             'Edit': function () {
                 $(this).dialog('close');
+                info_event.calEvent.recurrentId = recurrentId;
                 editRecurrentEventRequest(recurrentId);
             },
             'Ok': function () {
