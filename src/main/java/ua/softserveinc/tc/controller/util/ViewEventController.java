@@ -3,6 +3,7 @@ package ua.softserveinc.tc.controller.util;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,17 +63,23 @@ public class ViewEventController {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private Environment environment;
 
     @GetMapping("/")
     public final String viewHome(Model model, Principal principal) {
 
         String resultView;
+        String email;
+        User user;
 
         if (principal == null) {
-            return "entrypoint";
+            model.addAttribute(EntryConstants.LOGIN_PROP, environment.getProperty("login.without.sso"));
+            return EntryConstants.ENTRY_POINT;
         }
-        String email = principal.getName();
-        User user = userService.getUserByEmail(email);
+
+        email = principal.getName();
+        user = userService.getUserByEmail(email);
 
         switch (user.getRole()) {
             case USER:
@@ -81,8 +88,9 @@ public class ViewEventController {
                 model.addAttribute(UserConstants.Entity.USERID, user.getId());
                 if (user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
                     resultView = ChildConstants.View.MY_KIDS;
-                } else
+                } else {
                     resultView = EventConstants.View.MAIN_PAGE;
+                }
                 break;
             case MANAGER:
                 model.addAttribute(UserConstants.Entity.ROOMS, userService.getActiveRooms(user));
@@ -197,8 +205,9 @@ public class ViewEventController {
          Locale locale = (Locale) request.getSession()
             .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
         locale = (locale == null) ? request.getLocale() : locale;
-        for (String messages : noLocalMessages)
-        localMessages.add( messageSource.getMessage(messages,null, locale));
+        for (String messages : noLocalMessages) {
+            localMessages.add(messageSource.getMessage(messages, null, locale));
+        }
         return localMessages;
     }
 
