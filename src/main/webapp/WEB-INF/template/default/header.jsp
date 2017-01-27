@@ -24,14 +24,24 @@
         </div>
         <div id="top_navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <%--<li>--%>
+                <c:if test="${not empty loginProp}">
+                    <c:set var="loginProperty" value="${loginProp}" scope="application"></c:set>
+                </c:if>
                 <sec:authorize access="!isAuthenticated()">
-                    <li>
-                        <a href="<c:url value="/login" />">
-                            <span class="glyphicon glyphicon-log-in" ></span>
-                            <spring:message code="user.login" />
-                        </a>
-                    </li>
+                    <c:if test="${loginProperty}">
+                        <li>
+                            <a href="<c:url value="/login" />">
+                                <span class="glyphicon glyphicon-log-in" ></span>
+                                <spring:message code="user.login" />
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="<c:url value="/registration" />">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <spring:message code="user.registration" />
+                            </a>
+                        </li>
+                    </c:if>
 
                     <li>
                         <a href="<c:url value="/saml/login" />">
@@ -39,19 +49,12 @@
                             <spring:message code="user.SSOLogin" />
                         </a>
                     </li>
-                                
-                    <li>
-                        <a  href="<c:url value="/registration" />">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <spring:message code="user.registration" />
-                        </a>
-                    </li>
+
                 </sec:authorize>
 
                 <sec:authorize access="isAuthenticated()">
 
                     <sec:authorize access="hasRole('USER')">
-
                         <c:choose>
                             <c:when test="${pageChecker == 'notHome'}">
                                 <li style="padding-right: 300px;">
@@ -206,15 +209,26 @@
                 </li>
 
                 <li>
-                    <sec:authorize access="isAuthenticated()">
-                        <a href="saml/logout?local=true"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></a>
-                    </sec:authorize>
+                    <c:if test="${loginProperty}">
+                        <sec:authorize access="isAuthenticated()">
+                            <a href="saml/logout?local=true"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout" /></a>
+                        </sec:authorize>
+                    </c:if>
                 </li>
 
                 <li>
-                    <sec:authorize access="isAuthenticated()">
-                        <a href="saml/logout"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.globalLogout"/></a>
-                    </sec:authorize>
+                    <c:choose>
+                        <c:when test="${loginProperty}">
+                            <sec:authorize access="isAuthenticated()">
+                                <a href="saml/logout"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.globalLogout"/></a>
+                            </sec:authorize>
+                        </c:when>
+                        <c:when test="${!loginProperty}">
+                            <sec:authorize access="isAuthenticated()">
+                                <a href="saml/logout"><span class="glyphicon glyphicon-log-out"></span><spring:message code="user.logout"/></a>
+                            </sec:authorize>
+                        </c:when>
+                    </c:choose>
                 </li>
             </ul>
 

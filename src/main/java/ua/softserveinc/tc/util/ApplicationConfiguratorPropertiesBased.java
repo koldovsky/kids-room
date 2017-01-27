@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.util;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -74,6 +75,8 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${image.acceptable.format}")
     private String imageAcceptableFormats;
 
+    @Value("${login.without.sso}")
+    private Boolean loginWithoutSSO;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
@@ -141,6 +144,8 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
         properties.setProperty("img.maxSize", maxUploadImgSizeMb.toString());
 
         properties.setProperty("image.acceptable.format", imageAcceptableFormats);
+
+        properties.setProperty("login.without.sso", loginWithoutSSO.toString());
 
         File propsFile = new File("src/main/resources/properties/application.properties");
         OutputStream out = new FileOutputStream(propsFile);
@@ -227,6 +232,10 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Override
     public Integer getMinutesToSendEmailReminder() {
         return minutesToSendEmailReminder;
+    }
+
+    public Boolean getLoginWithoutSSO() {
+        return loginWithoutSSO;
     }
 
     /**
