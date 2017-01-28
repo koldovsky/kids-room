@@ -22,6 +22,8 @@ public final class ValidationConstants {
     public static final String SIMPLY_PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
     public static final String NAME_REGEX = "^[a-zA-Zа-яА-ЯЇїІіЄєҐґ`´ʼ’'\\-\\s]+$";
     public static final String LETTERS_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]*$";
+    public static final String MANAGER_ID_REGEX = "\"id\":\"(\\D+)";
+    public static final String TWENTY_FOUR_HOURS_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 
     public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\\s]*$";
 
@@ -74,6 +76,7 @@ public final class ValidationConstants {
     public static final String ROOM_CAPACITY = "capacity";
     public static final String ROOM_WORKING_HOURS_START = "workingHoursStart";
     public static final String ROOM_WORKING_HOURS_END = "workingHoursEnd";
+    public static final String ROOM_RATE_FIELD = "rate";
 
     public static final String EMAIL = "email";
     public static final String IMAGE = "file";
@@ -83,6 +86,7 @@ public final class ValidationConstants {
 
     public static final String TIME_IS_NOT_VALID = "administrator.timeStartEnd";
     public static final String TIME_FIELD = "timeStartEnd";
+    public static final String MANAGERS_FIELD = "managers";
     public static final String DATE_FIELD = "date";
 
     public static final String ROOM_EPMTY_MSG = "administrator.room.error.emptyField";
@@ -94,6 +98,9 @@ public final class ValidationConstants {
     public static final String ROOM_WRONG_CAST_MSG = "administrator.room.error.cast";
     public static final String ROOM_WRONG_TIME_FORMAT = "administrator.room.error.timeCast";
     public static final String ROOM_MIN_MAX_CAPACITY = "administrator.room.error.capacity";
+    public static final String ROOM_MANAGER_INVALID = "administrator.room.error.managerInvalid";
+    public static final String ROOM_MANAGER_DUPLICATE ="administrator.room.error.managerDuplicate";
+    public static final String ROOM_RATE_ERROR = "administrator.room.error.rate";
 
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
@@ -140,7 +147,6 @@ public final class ValidationConstants {
     public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
-    //public static final String ADD_ROOM_DIALOG_RATE_ERROR = "administrator.room.error.rate";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
     public static final String NO_DAYS_FOR_RECURRENT_EVENT = "recurrent.daysNotSellected";
 

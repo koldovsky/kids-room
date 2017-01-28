@@ -1,5 +1,10 @@
 package ua.softserveinc.tc.validator;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +16,11 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.dto.RoomDto;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -40,14 +50,27 @@ public class RoomValidatorTest {
     when(roomDto.getPhoneNumber()).thenReturn("+380672211204");
     when(roomDto.getWorkingHoursStart()).thenReturn("07:00");
     when(roomDto.getWorkingHoursEnd()).thenReturn("20:00");
+    when(roomDto.getManagers()).thenReturn("[{\"idIns\":\"manager2\",\"id\":\"3\",\"$$hashKey\":\"object:6\"}]");
     errors = new BindException(roomDto, "roomDto");
   }
-
   @Test
   public void supports() {
     assertTrue(roomValidator.supports(RoomDto.class));
     assertFalse(roomValidator.supports(Object.class));
     assertFalse(roomValidator.supports(ChildDto.class));
+  }
+
+  @Test
+  public void tratata() {
+    String myJSONString = "[{\"idIns\":\"manager1\",\"id\":\"Q\",\"$$hashKey\":\"object:3\"},{\"idIns\":\"manager2\",\"id\":\"1\",\"$$hashKey\":\"object:6\"}]";
+    if (Pattern.compile(ValidationConstants.MANAGER_ID_REGEX).matcher(myJSONString).find())
+      // Matcher matcher = Pattern.compile("\"id\":\"(\\D+)").matcher(myJSONString);
+      // while (matcher.find()) {
+      System.out.println("Bad");
+    else {
+      System.out.println("good");
+    }
+   // }
   }
 
   @Test

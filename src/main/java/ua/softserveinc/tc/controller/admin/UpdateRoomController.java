@@ -68,21 +68,21 @@ public class UpdateRoomController {
      * @return string, which redirect on other view
      */
     @PostMapping("/adm-update-room")
-    public ModelAndView submitRoomUpdate(@Valid @ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
+    public ModelAndView submitRoomUpdate(@ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto,
                                          BindingResult bindingResult) {
-        this.timeValidator.validate(roomDto, bindingResult);
+        timeValidator.validate(roomDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ModelAndView(AdminConstants.UPDATE_ROOM).addObject(AdminConstants.MANAGER_LIST,
-                    this.userService.findAllUsersByRole(Role.MANAGER));
+            return new ModelAndView(AdminConstants.ADD_ROOM).addObject(AdminConstants.MANAGER_LIST,
+                    userService.findAllUsersByRole(Role.MANAGER));
         }
 
         List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
                 .map(UserDto::getId).collect(Collectors.toList());
-        List<User> managers = this.userService.findAll(idManagers);
+        List<User> managers = userService.findAll(idManagers);
         Room room = RoomDto.getRoomObjectFromDtoValues(roomDto);
         room.setManagers(managers);
 
-        this.roomService.saveOrUpdate(room);
+        roomService.saveOrUpdate(room);
         return new ModelAndView("redirect:/" + AdminConstants.EDIT_ROOM);
     }
 }

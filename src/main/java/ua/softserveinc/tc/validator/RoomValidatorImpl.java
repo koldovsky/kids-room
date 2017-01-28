@@ -1,20 +1,22 @@
 package ua.softserveinc.tc.validator;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.dto.UserDto;
+import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.JsonUtil;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 @Component
@@ -87,14 +89,44 @@ public class RoomValidatorImpl implements RoomValidator {
             if ((roomCapacity < ValidationConstants.ROOM_CAPACITY_MINIMUM) || (roomCapacity > ValidationConstants.ROOM_CAPACITY_MAXIMUM)) {
                 errors.rejectValue(ValidationConstants.ROOM_CAPACITY, ValidationConstants.ROOM_MIN_MAX_CAPACITY);
             }
+            String jsonManagers = roomToValidate.getManagers();
+            if (Pattern.compile(ValidationConstants.MANAGER_ID_REGEX)
+                    .matcher(jsonManagers)
+                    .find()) {
+                errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INVALID);
+            } else {
+                List<UserDto> managers = Arrays.asList(new Gson().fromJson(jsonManagers, UserDto[].class));
+                List<Long> managerId = new ArrayList<>();
+                for (UserDto id : managers) {
+                    managerId.add(id.getId());
+                }
+                if (managers.stream().anyMatch(manager -> (manager.getId() == null))) {
+                    errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INVALID);
+                }
+                if (managerId.stream().distinct().count() != managerId.size()) {
+                    errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
+                }
 
-            try {
+            }
+            String jsonRate = roomToValidate.getRate();
+            List<Rate> rates = JsonUtil.fromJsonList(jsonRate, Rate[].class);
+            if (rates.stream().anyMatch(rate -> ((rate.getHourRate() == null) || (rate.getPriceRate() == null)
+                    || (rate.getHourRate() > 24) || (rate.getHourRate() < 1) || (rate.getPriceRate() < 0)))) {
+                errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD, ValidationConstants.ROOM_RATE_ERROR);
+
+            }
+
+            if ((Pattern.compile(ValidationConstants.TWENTY_FOUR_HOURS_REGEX)
+                    .matcher(roomToValidate.getWorkingHoursStart()).matches())
+                    && Pattern.compile(ValidationConstants.TWENTY_FOUR_HOURS_REGEX)
+                    .matcher(roomToValidate.getWorkingHoursEnd()).matches()) {
+
                 LocalTime startTime = LocalTime.parse(roomToValidate.getWorkingHoursStart());
                 LocalTime endTime = LocalTime.parse(roomToValidate.getWorkingHoursEnd());
                 if (startTime.isAfter(endTime)) {
                     errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.TIME_IS_NOT_VALID);
                 }
-            } catch (DateTimeParseException ex) {
+            } else {
                 errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.ROOM_WRONG_TIME_FORMAT);
             }
 
@@ -103,12 +135,12 @@ public class RoomValidatorImpl implements RoomValidator {
         }
     }
 
-    public List<String> checkRoomBookings(Room room){
+    public List<String> checkRoomBookings(Room room) {
         List<String> warnings = new ArrayList<>();
-        if(roomService.hasActiveBooking(room)) {
+        if (roomService.hasActiveBooking(room)) {
             warnings.add(ValidationConstants.ROOM_HAS_ACTIVE_BOOKINGS);
         }
-        if(roomService.hasPlanningBooking(room)) {
+        if (roomService.hasPlanningBooking(room)) {
             warnings.add(ValidationConstants.ROOM_HAS_PLANNING_BOOKING);
         }
 

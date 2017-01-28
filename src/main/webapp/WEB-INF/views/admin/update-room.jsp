@@ -139,10 +139,8 @@
                                 <spring:message code="administrator.canc"/>
                             </button>
                         </div>
-
-                        <script src="${pageContext.request.contextPath}/resources/js/room-dynamic-managers-rates.js"></script>
                     </div>
-
+                    <script src="${pageContext.request.contextPath}/resources/js/room-dynamic-managers-rates.js"></script>
                 </form:form>
             </td>
         </tr>
