@@ -49,7 +49,6 @@ import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getRecurrentBookingDto;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
-import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Service
 public class BookingServiceImpl extends BaseServiceImpl<Booking> implements BookingService {
@@ -408,8 +407,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto) {
         TwoTuple<List<BookingDto>, String> result;
         List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
-        Date startTime;
-        Date endTime;
         Booking booking = null;
 
         if (bookingDto != null && bookingDto.getId() != null) {
@@ -417,19 +414,20 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         }
 
         if (booking != null) {
-            bookingDto.setFieldFromBooking(booking);
+            bookingDto.setFieldFromBookingIfNotExists(booking);
             bookingDto.setAllAbsentIdFromBooking(booking);
-            startTime = DateUtil.toDateISOFormat(bookingDto.getStartTime());
-            endTime = DateUtil.toDateISOFormat(bookingDto.getEndTime());
-
-            bookingDto.setDateStartTime(startTime);
-            bookingDto.setDateEndTime(endTime);
 
             if (!bookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
 
                 result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
 
             } else {
+
+                Date startTime = DateUtil.toDateISOFormat(bookingDto.getStartTime());
+                Date endTime = DateUtil.toDateISOFormat(bookingDto.getEndTime());
+
+                bookingDto.setDateStartTime(startTime);
+                bookingDto.setDateEndTime(endTime);
 
                 booking.setBookingStartTime(startTime);
                 booking.setBookingEndTime(endTime);
