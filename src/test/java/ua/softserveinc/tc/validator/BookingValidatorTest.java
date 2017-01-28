@@ -40,7 +40,7 @@ public class BookingValidatorTest {
     private BookingService bookingService;
 
     @Mock
-    private InputDateValidatorImpl inputDateValidator;
+    private InputDateTimeValidatorImpl inputDateValidator;
 
     @Mock
     private Logger logger;
