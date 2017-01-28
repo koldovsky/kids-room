@@ -95,8 +95,14 @@
                                 </label>
                             </fieldset>
                             <br>
-                            <button type="button" ng-click="addNewManager()">+</button>
-                            <button type="button" ng-click="removeManager()">-</button>
+                            <button type="button" class="btn icon-btn btn-warning btn-rate-manager" ng-click="removeManager()">
+                                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+                                <spring:message code = "administrator.room.managersRatesRemove"/>
+                            </button>
+                            <button type="button" class="btn icon-btn btn-success btn-rate-manager" ng-click="addNewManager()">
+                                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
+                                <spring:message code = "administrator.room.managersRatesAdd"/>
+                            </button>
                             <br>
                             <form:errors path="managers" cssClass="error"/>
                         </div>
@@ -124,8 +130,14 @@
                                 </label>
                             </fieldset>
                             <br>
-                            <button type="button" ng-click="addNewRate()">+</button>
-                            <button type="button" ng-click="removeRate()">-</button>
+                            <button type="button" class="btn icon-btn btn-warning btn-rate-manager" ng-click="removeRate()">
+                                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
+                                <spring:message code = "administrator.room.managersRatesRemove"/>
+                            </button>
+                            <button type="button" class="btn icon-btn btn-success btn-rate-manager" ng-click="addNewRate()">
+                                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
+                                <spring:message code = "administrator.room.managersRatesAdd"/>
+                            </button>
                             <br>
                             <form:errors path="rate" cssClass="error"/>
                         </div>
