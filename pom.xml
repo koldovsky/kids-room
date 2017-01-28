@@ -63,8 +63,8 @@
         <javax.servlet-api-version>3.1.0</javax.servlet-api-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
         <org.spring.securiry-version>4.2.0.RELEASE</org.spring.securiry-version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <logback.version>1.1.7</logback.version>
+        <slf4j.version>1.7.22</slf4j.version>
+        <logback.version>1.1.8</logback.version>
 
         <com.fasterxml.jackson.core.databind-version>2.7.4</com.fasterxml.jackson.core.databind-version>
         <org.codehouse.jackson.jackson-mapper-asl-version>1.9.10</org.codehouse.jackson.jackson-mapper-asl-version>

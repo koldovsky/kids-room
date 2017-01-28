@@ -25,9 +25,7 @@ import java.util.Set;
 
 import static org.mockito.Mockito.when;
 
-/**
- * Created by IhorTovpinets on 25.12.2016.
- */
+
 public class EventValidatorTest {
 
     private EventDto eventDto;

@@ -83,8 +83,10 @@ public class BookingValidatorImpl implements BookingValidator {
             try {
                 booking = bookingService.findEntityById(singleDto.getId());
             } catch (ResourceNotFoundException e) {
-                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
                 log.error("Not existed booking entity");
+            }
+            if (booking == null) {
+                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
             }
             result = booking != null;
         }
