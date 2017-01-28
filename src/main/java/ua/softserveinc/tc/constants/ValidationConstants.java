@@ -99,6 +99,7 @@ public final class ValidationConstants {
     public static final String ROOM_WRONG_TIME_FORMAT = "administrator.room.error.timeCast";
     public static final String ROOM_MIN_MAX_CAPACITY = "administrator.room.error.capacity";
     public static final String ROOM_MANAGER_INVALID = "administrator.room.error.managerInvalid";
+    public static final String ROOM_MANAGER_EMPTY = "administrator.room.error.managerEmpty";
     public static final String ROOM_MANAGER_DUPLICATE ="administrator.room.error.managerDuplicate";
     public static final String ROOM_RATE_ERROR = "administrator.room.error.rate";
 

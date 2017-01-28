@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-@Component
+@Component("roomValidator")
 public class RoomValidatorImpl implements RoomValidator {
 
     @Autowired
@@ -101,7 +101,7 @@ public class RoomValidatorImpl implements RoomValidator {
                     managerId.add(id.getId());
                 }
                 if (managers.stream().anyMatch(manager -> (manager.getId() == null))) {
-                    errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INVALID);
+                    errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_EMPTY);
                 }
                 if (managerId.stream().distinct().count() != managerId.size()) {
                     errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
