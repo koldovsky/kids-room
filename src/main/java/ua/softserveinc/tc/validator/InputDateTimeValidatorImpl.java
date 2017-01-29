@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import ua.softserveinc.tc.entity.Room;
 
 @Component
-public class InputDateValidatorImpl implements InputDateTimeValidator {
+public class InputDateTimeValidatorImpl implements InputDateTimeValidator {
 
     @Autowired
     private RoomService roomService;
