@@ -1,4 +1,7 @@
+var currentDate;
+
 $(function () {
+    currentDate = $('#date-booking').val();
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;
     for (var i = 0; i < listRoom.length; i++) {
@@ -19,23 +22,22 @@ $(function () {
             localStorage['room'] = room;
             localStorage['roomId'] = roomId;
 
-            getAmountOfChildren();
+            getAmountOfChildrenByCurrentDate();
             $('#room').text(room);
             selectRoomForManager(roomId);
         });
     });
 
-    getAmountOfChildren();
+    getAmountOfChildrenByCurrentDate();
     $('#room').text(localStorage['room']);
     selectRoomForManager(localStorage['roomId']);
 });
 
-function getAmountOfChildren() {
+function getAmountOfChildrenByCurrentDate() {
     $.ajax({
-        url: 'getAmountOfChildren/' + localStorage['roomId'],
+        url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {
             $('#amountOfChildren').text(result);
         }
     });
 }
-

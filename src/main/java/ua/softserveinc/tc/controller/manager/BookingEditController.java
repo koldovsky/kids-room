@@ -110,6 +110,27 @@ public class BookingEditController {
     }
 
     /**
+     * Counting number of children in the selected room for appropriate date.
+     *
+     * @param date current date for counting active children
+     * @param id selected room id
+     * @return number of active children
+     * */
+
+    @GetMapping(value = "dailyBookings/{date}/{id}")
+    @ResponseBody
+    public Long getAmountOfChildrenForCurrentDay(@PathVariable String date,
+                                                 @PathVariable Long id) {
+        Room room = roomService.findByIdTransactional(id);
+        Date dateLo = toDateAndTime(date + " " + room.getWorkingHoursStart());
+        Date dateHi = toDateAndTime(date + " " + room.getWorkingHoursEnd());
+        List<Booking> bookings = bookingService.getBookings(new Date[]{dateLo, dateHi}, room, BookingState.ACTIVE);
+
+        return (bookings.size() != 0) ? bookings.size() : 0L;
+
+    }
+
+    /**
      * Receives the date and id of room from the client. Figures out list all of the bookings
      * that have booking states BookingState.BOOKED and BookingState.Active for the given
      * date.

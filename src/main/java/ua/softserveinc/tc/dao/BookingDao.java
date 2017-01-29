@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao;
 
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.TwoTuple;
