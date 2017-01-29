@@ -107,6 +107,8 @@ public interface ApplicationConfigurator {
      */
     ConfigurationDto getObjectDto();
 
+    Boolean getLoginWithoutSSO();
+
     /**
      * updates the configuration to the values contained in the parameter
      * @param cDto dto
