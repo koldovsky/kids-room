@@ -19,6 +19,7 @@ import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpMethod;
@@ -33,9 +34,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
-import org.springframework.security.saml.key.EmptyKeyManager;
 import org.springframework.security.saml.key.JKSKeyManager;
-import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
 import org.springframework.security.saml.metadata.*;
 import org.springframework.security.saml.parser.ParserPoolHolder;
@@ -57,6 +56,9 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ua.softserveinc.tc.constants.EntryConstants;
+import ua.softserveinc.tc.constants.SecurityConstants;
+import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.service.impl.SAMLUserDetailsServiceImpl;
 
@@ -78,6 +80,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SAMLUserDetailsServiceImpl samlUserDetailsServiceImpl;
+
+    @Autowired
+    private Environment environment;
 
     // Initialization of the velocity engine
     @Bean
@@ -481,6 +486,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        boolean isCustomAuthEnable = getCustomAuthEnable();
+
         http
                 .httpBasic()
                 .authenticationEntryPoint(samlEntryPoint());
@@ -490,51 +498,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
                 .addFilterAfter(samlFilter(), BasicAuthenticationFilter.class);
+
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/resetPassword").permitAll()
-                .antMatchers("/changePassword").permitAll()
-                .antMatchers("/confirm").permitAll()
-                .antMatchers("/confirm-manager").permitAll()
-                .antMatchers(HttpMethod.GET, "/mykids").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.POST, "/registerkid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/editmykid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.POST, "/editmykid").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/mybookings").hasRole(UserConstants.Role.ROLE_USER)
-                .antMatchers(HttpMethod.GET, "/manager-**").hasRole(UserConstants.Role.ROLE_MANAGER)
-                .antMatchers(HttpMethod.POST, "/manager-**").hasRole(UserConstants.Role.ROLE_MANAGER)
-                .antMatchers(HttpMethod.GET, "/adm-**").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.POST, "/adm-**").hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
-                .antMatchers(HttpMethod.GET, "/api/**").hasRole(UserConstants.Role.ROLE_MANAGER)
-                .antMatchers("/error").permitAll()
-                .antMatchers("/saml/**").permitAll()
+                .antMatchers(SecurityConstants.RESOURCES).permitAll()
+                .antMatchers(SecurityConstants.REGISTRATION).permitAll()
+                .antMatchers(SecurityConstants.ENTRY_POINT).permitAll()
+                .antMatchers(SecurityConstants.CONFIRM).permitAll()
+                .antMatchers(SecurityConstants.CONFIRM_MANAGER).permitAll()
+                .antMatchers(HttpMethod.GET, SecurityConstants.MY_KIDS).hasRole(UserConstants.Role.ROLE_USER)
+                .antMatchers(HttpMethod.GET, SecurityConstants.REGISTER_KID).hasRole(UserConstants.Role.ROLE_USER)
+                .antMatchers(HttpMethod.POST, SecurityConstants.REGISTER_KID).hasRole(UserConstants.Role.ROLE_USER)
+                .antMatchers(HttpMethod.GET, SecurityConstants.EDIT_KID).hasRole(UserConstants.Role.ROLE_USER)
+                .antMatchers(HttpMethod.POST, SecurityConstants.EDIT_KID).hasRole(UserConstants.Role.ROLE_USER)
+                .antMatchers(HttpMethod.GET, SecurityConstants.MY_BOOKINGS).hasRole(UserConstants.Role.ROLE_USER)
+                .antMatchers(HttpMethod.GET, SecurityConstants.MANAGER).hasRole(UserConstants.Role.ROLE_MANAGER)
+                .antMatchers(HttpMethod.POST, SecurityConstants.MANAGER).hasRole(UserConstants.Role.ROLE_MANAGER)
+                .antMatchers(HttpMethod.GET, SecurityConstants.ADMIN).hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.POST, SecurityConstants.ADMIN).hasRole(UserConstants.Role.ROLE_ADMINISTRATOR)
+                .antMatchers(HttpMethod.GET, SecurityConstants.API).hasRole(UserConstants.Role.ROLE_MANAGER)
+                .antMatchers(SecurityConstants.ERROR).permitAll()
+                .antMatchers(SecurityConstants.SAML).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/accessDenied")
+                .accessDeniedPage(SecurityConstants.ACCESS_DENIED)
                 .and()
-
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/j_spring_security_check")
-                .failureUrl("/login?error")
-                .usernameParameter("j_username")
-                .passwordParameter("j_password")
-                .permitAll()
-                .and()
-
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl(SecurityConstants.ENTRY_POINT);
+
+        setAuthenticationPermits(http, isCustomAuthEnable);
 
         http.rememberMe().
                 key("rem-me-key").
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
-                tokenValiditySeconds(286400);
+                tokenValiditySeconds(TokenConstants.TOKEN_VALIDITY_SECONDS);
     }
 
     /**
@@ -545,9 +544,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .authenticationProvider(samlAuthenticationProvider())
-                .userDetailsService(userDetailsService).passwordEncoder(getBCryptPasswordEncoder());
+
+        boolean isCustomAuthEnable = getCustomAuthEnable();
+
+        if(isCustomAuthEnable) {
+                auth
+                    .authenticationProvider(samlAuthenticationProvider())
+                    .userDetailsService(userDetailsService)
+                    .passwordEncoder(getBCryptPasswordEncoder());
+        } else {
+            super.configure(auth);
+        }
     }
 
     //Solve
@@ -556,8 +563,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
@@ -565,4 +570,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return tokenRepositoryImpl;
     }
 
+    /**
+     * method enable or disable custom authentication
+     * @param http It allows configuring web based security for specific http requests.
+     * @param isCustomAuthEnable enable or disable custom auththantication
+     * @throws Exception
+     */
+    private void setAuthenticationPermits(
+            HttpSecurity http, boolean isCustomAuthEnable) throws Exception {
+
+        if(isCustomAuthEnable) {
+            http
+                    .authorizeRequests()
+                    .antMatchers(SecurityConstants.Authentication.RESET_PASSWORD).permitAll()
+                    .antMatchers(SecurityConstants.Authentication.CHANGE_PASSWORD).permitAll()
+                    .and()
+                    .formLogin()
+                    .loginPage(SecurityConstants.Authentication.LOGIN)
+                    .loginProcessingUrl(SecurityConstants.Authentication.JSS_CHECK)
+                    .failureUrl(SecurityConstants.Authentication.LOGIN_ERROR)
+                    .usernameParameter(SecurityConstants.Authentication.USERNAME)
+                    .passwordParameter(SecurityConstants.Authentication.PASSWORD)
+                    .permitAll();
+        } else {
+            http
+                    .authorizeRequests()
+                    .antMatchers(SecurityConstants.REGISTRATION).denyAll()
+                    .antMatchers(SecurityConstants.Authentication.RESET_PASSWORD).denyAll()
+                    .antMatchers(SecurityConstants.Authentication.CHANGE_PASSWORD).denyAll()
+                    .and()
+                    .formLogin()
+                    .loginPage(SecurityConstants.Authentication.LOGIN)
+                    .loginProcessingUrl(SecurityConstants.Authentication.JSS_CHECK)
+                    .failureUrl(SecurityConstants.Authentication.LOGIN_ERROR)
+                    .usernameParameter(SecurityConstants.Authentication.USERNAME)
+                    .passwordParameter(SecurityConstants.Authentication.PASSWORD)
+                    .disable();
+        }
+
+    }
+
+    private boolean getCustomAuthEnable() {
+
+        return Boolean.parseBoolean(environment.getProperty(
+                EntryConstants.ALLOWED_CUSTOM_AUTHENTICATION));
+    }
 }
