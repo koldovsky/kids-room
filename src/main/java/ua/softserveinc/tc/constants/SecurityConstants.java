@@ -47,5 +47,11 @@ public final class SecurityConstants {
         public static final String USERNAME = "j_username";
 
         public static final String PASSWORD = "j_password";
+
+        private Authentication() {
+        }
+    }
+
+    private SecurityConstants() {
     }
 }
