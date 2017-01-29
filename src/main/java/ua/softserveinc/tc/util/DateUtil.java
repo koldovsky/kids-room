@@ -37,7 +37,7 @@ public final class DateUtil {
             return dateFormat.parse(date);
         } catch (ParseException e) {
             LOG.error("Error convert to date", e);
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -46,7 +46,7 @@ public final class DateUtil {
             return dateAndTimeFormat.parse(date);
         } catch (ParseException e) {
             LOG.error("Error convert to date and time", e);
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -55,7 +55,7 @@ public final class DateUtil {
             return isoDateFormat.parse(dateToParse);
         } catch (ParseException e) {
             LOG.error("Error convert to date ISO format", e);
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(e);
         }
     }
 
@@ -134,7 +134,7 @@ public final class DateUtil {
             return dateAndTimeFormat.parse(toDay);
         } catch (ParseException e) {
             LOG.error("Error. Set time", e);
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(e);
         }
     }
 
