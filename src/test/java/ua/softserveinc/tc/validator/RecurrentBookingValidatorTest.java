@@ -57,7 +57,7 @@ public class RecurrentBookingValidatorTest {
 
     @Test
     public void testIsValidToInsertHasNullListOfBookingDto() {
-        testNullOrEmptyFailInsert("list of dro is null", null);
+        testNullOrEmptyFailInsert("list of dto is null", null);
 
     }
 

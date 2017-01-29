@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.services.integration;
+package ua.softserveinc.tc.service.integration;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;

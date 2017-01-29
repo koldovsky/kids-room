@@ -1,6 +1,5 @@
-package ua.softserveinc.tc.services.unit;
+package ua.softserveinc.tc.service.unit;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -13,7 +12,6 @@ import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.impl.ChildServiceImpl;
-import ua.softserveinc.tc.util.ChildsUtils;
 
 import java.text.ParseException;
 import java.util.List;
