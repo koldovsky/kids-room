@@ -11,7 +11,6 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.repo.EventRepository;
-import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;

@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
 import ua.softserveinc.tc.constants.QuartzConstants;
-import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
+import ua.softserveinc.tc.service.UserService;
 
 import javax.mail.MessagingException;
 
@@ -25,7 +25,7 @@ public class SendDayOffReminderInfo {
     private MailService mailService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private DayOffService dayOffService;
@@ -35,7 +35,7 @@ public class SendDayOffReminderInfo {
      * about closest days off
      */
     private void task() {
-        userRepository.findByActiveTrueAndRoleNot(ADMINISTRATOR).stream()
+        userService.findByActiveTrueAndRoleNot(ADMINISTRATOR).stream()
                 .forEach(recipient -> dayOffService.getClosestDays().forEach(day -> {
                     try {
                         mailService.sendDayOffReminder(recipient, MailConstants.DAY_OFF_REMINDER, day);

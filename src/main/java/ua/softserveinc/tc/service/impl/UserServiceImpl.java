@@ -79,6 +79,6 @@ public class UserServiceImpl extends BaseServiceImpl<User>
 
     @Override
     public List<User> findByActiveTrueAndRoleNot(Role role) {
-        return userDao.findAllUsersByRole(role);
+        return userDao.findByActiveTrueAndRoleNot(role);
     }
 }
