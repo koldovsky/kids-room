@@ -7,10 +7,6 @@ import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    Room findByName(String name);
-
-    List<Room> findByCity(String city);
-
     List<Room> findByIsActiveTrue();
 
 }
