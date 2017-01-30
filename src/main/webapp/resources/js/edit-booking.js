@@ -481,17 +481,6 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
 
 });
 
-$('#arrival-btn').on('click', function() {
-    alert('start');
-    var currentDate = $('#date-booking').val();
-    $.ajax({
-        url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
-        success: function (result) {
-            $('#amountOfChildren').text(result);
-        }
-    });
-});
-
 $('#booking-table tbody').on('click', '.inp-leaveTime', function() {
     var leaveTime = $(this).val();
     var arrivalTime = $(this).parents('tr').find('.inp-ArrivalTime').val();
