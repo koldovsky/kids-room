@@ -35,7 +35,7 @@ import java.util.List;
 public class UserRepositoryTestIT {
 
     @Autowired
-    private UserService userRepository;
+    private UserService userRepository; // when changing userRepository to userService
 
     @DatabaseSetup(value = "classpath:userRepository/no-user.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:userRepository/no-user.xml", type = DatabaseOperation.DELETE_ALL)
