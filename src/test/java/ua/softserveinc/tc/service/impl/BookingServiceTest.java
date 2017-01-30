@@ -14,11 +14,15 @@ import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Date;
 import java.util.Map;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Set;
 
 import ua.softserveinc.tc.entity.Booking;
+import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
@@ -28,6 +32,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.BaseService;
+import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
@@ -46,10 +51,11 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doNothing;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(DateUtil.class)
+@PrepareForTest({DateUtil.class, BookingDto.class})
 public class BookingServiceTest {
 
     @Mock
@@ -121,6 +127,7 @@ public class BookingServiceTest {
 
         when(testBooking.getBookingStartTime()).thenReturn(testDate);
         when(testBooking.getBookingEndTime()).thenReturn(testDate);
+        when(rateService.calculateBookingCost(any())).thenReturn(1L);
 
         bookingService.calculateAndSetSum(testBooking);
 
@@ -258,6 +265,84 @@ public class BookingServiceTest {
         assertEquals("The object must be equal", expectedString,
                 dateString.getValue());
 
+    }
+
+    @Test
+    public void testGetRecurrentBookingForEditingByIdWhenNotExist() {
+        when(bookingDao.getRecurrentBookingsByRecurrentId(any()))
+                .thenReturn(Collections.emptyList());
+
+        assertEquals("The object must be null", null,
+                bookingService.getRecurrentBookingForEditingById(0L));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testGetRecurrentBookingForEditingByIdWhenExist() {
+        mockStatic(BookingDto.class);
+        Booking secondTestBooking = mock(Booking.class);
+        Calendar workCalendar = Calendar.getInstance();
+        List<Booking> bookings = Arrays.asList(testBooking, secondTestBooking);
+
+        workCalendar.set(2019, 0, 1, 12, 0, 0); //2019-01-01T12:00:00 Tuesday(3)
+        Date startDateOfRecurrentPeriod = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 4, 12, 0, 0); //2019-01-04T12:00:00 Friday(6)
+        Date endDateOfRecurrentPeriod = workCalendar.getTime();
+
+        ArgumentCaptor<Set> setWeekOfDays =
+                ArgumentCaptor.forClass(Set.class);
+
+        when(testBooking.getBookingStartTime()).thenReturn(startDateOfRecurrentPeriod);
+        when(secondTestBooking.getBookingStartTime()).thenReturn(endDateOfRecurrentPeriod);
+        when(bookingDao.getRecurrentBookingsByRecurrentId(any()))
+                .thenReturn(bookings);
+
+        when(BookingDto.getRecurrentBookingDto(eq(bookings), setWeekOfDays.capture()))
+                .thenReturn(testBookingDto);
+
+        assertEquals("The object must be testBookingDto", testBookingDto,
+                bookingService.getRecurrentBookingForEditingById(0L));
+
+        assertEquals("The object must be equals to 2", 2,
+                setWeekOfDays.getValue().size());
+
+        assertTrue("The sets must be equals",
+                setWeekOfDays.getValue().contains(Calendar.TUESDAY)
+                        && setWeekOfDays.getValue().contains(Calendar.FRIDAY));
+    }
+
+    @Test
+    public void testGetAllBookingsByUserAndRoom() throws Exception {
+        Booking secondTestBooking = mock(Booking.class);
+        List<Booking> listOfBookings = Arrays.asList(testBooking, secondTestBooking);
+
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        when(userDao.findById(any())).thenReturn(testUser);
+        when(roomDao.findById(any())).thenReturn(testRoom);
+        when(bookingDao.getBookings(characteristicsCaptor.capture())).thenReturn(listOfBookings);
+        whenNew(BookingDto.class).withNoArguments().thenReturn(testBookingDto);
+
+        List<BookingDto> listOfBookingsDto = bookingService.getAllBookingsByUserAndRoom(1L, 1L);
+
+        assertEquals("The object must be equals to 2", 2, listOfBookingsDto.size());
+        assertEquals("The objects must be equals", testBookingDto, listOfBookingsDto.get(0));
+        assertEquals("The objects must be equals", testBookingDto, listOfBookingsDto.get(1));
+
+        assertEquals("The size must be 1", 1,
+                characteristicsCaptor.getValue().getUsers().size());
+        assertEquals("The objects must be equals", testUser,
+                characteristicsCaptor.getValue().getUsers().get(0));
+        assertEquals("The size must be 1", 1,
+                characteristicsCaptor.getValue().getRooms().size());
+        assertEquals("The objects must be equals", testRoom,
+                characteristicsCaptor.getValue().getRooms().get(0));
+        assertEquals("The size must be 1", 1,
+                characteristicsCaptor.getValue().getBookingsStates().size());
+        assertEquals("The objects must be equals", BookingState.BOOKED,
+                characteristicsCaptor.getValue().getBookingsStates().get(0));
     }
 
 }
