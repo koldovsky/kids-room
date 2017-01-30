@@ -81,7 +81,7 @@ $(function() {
 
     $('#date-booking').change(function() {
         refreshTable(localStorage['bookingsState']);
-        countActiveBookingsForCurrentDay();
+        getAmountOfChildrenByCurrentDate();
     });
 
     $('.picker').timepicker({
@@ -102,7 +102,7 @@ function selectRoomForManager(roomId) {
         encoding:'UTF-8',
         contentType: 'charset=UTF-8',
         success: function(result){
-            countActiveBookingsForCurrentDay();
+            getAmountOfChildrenByCurrentDate();
             result = result.split(' ');
             $('#bookingStartTimepicker').val(result[0]);
             $('#bookingEndTimepicker').val(result[1]);
@@ -547,13 +547,3 @@ $('#booking-table > tbody').on( 'click', 'tr', handler);
 $('#closeBookingsLegend').click(function () {
     $('#bookingLegendModal').modal('hide');
 });
-
-function countActiveBookingsForCurrentDay() {
-    var currentDate = $('#date-booking').val();
-    $.ajax({
-        url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
-        success: function (result) {
-            $('#amountOfChildren').text(result);
-        }
-    });
-}

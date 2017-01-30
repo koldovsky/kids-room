@@ -1,7 +1,4 @@
-var currentDate;
-
 $(function () {
-    currentDate = $('#date-booking').val();
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;
     for (var i = 0; i < listRoom.length; i++) {
@@ -34,6 +31,7 @@ $(function () {
 });
 
 function getAmountOfChildrenByCurrentDate() {
+    var currentDate = $('#date-booking').val();
     $.ajax({
         url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {
