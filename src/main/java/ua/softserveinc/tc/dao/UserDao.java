@@ -19,4 +19,6 @@ public interface UserDao extends BaseDao<User> {
     List<User> findActiveUsers(Date startDate, Date endDate, Room room);
 
     User getUserByName(String firstName, String lastName);
+
+    List<User> findByActiveTrueAndRoleNot(Role role);
 }

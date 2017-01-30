@@ -15,6 +15,7 @@ import ua.softserveinc.tc.repo.UserRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
+import ua.softserveinc.tc.service.UserService;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -39,7 +40,7 @@ public class DayOffServiceImpl implements DayOffService {
     private CalendarService calendarService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private EventRepository eventRepository;
@@ -148,7 +149,7 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     @SneakyThrows
     public void sendDayOffInfo(DayOff day) {
-        List<User> activeUsers = userRepository
+        List<User> activeUsers = userService
                 .findByActiveTrueAndRoleNot(ADMINISTRATOR);
         for (User recipient : activeUsers) {
             mailService.sendDayOffReminderAsync(
