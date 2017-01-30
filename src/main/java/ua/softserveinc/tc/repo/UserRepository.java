@@ -16,21 +16,6 @@ import java.util.List;
  */
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    User findByEmail(String email);
-
-    List<User> findByRole(Role role);
-
     List<User> findByActiveTrueAndRoleNot(Role role);
-
-    List<User> findByActiveTrue();
-
-    @Query("SELECT DISTINCT b.user FROM Booking b " +
-            "WHERE b.room = ?1 AND b.bookingEndTime > ?2 " +
-            "AND b.bookingEndTime < ?3 AND b.bookingState = 2")
-    List<User> getActiveUsers(Room room, Date lo, Date hi);
-
-    @Query("UPDATE User u SET u.password = ?2 where u = ?1")
-    @Modifying
-    @Transactional
-    void updateManagerPassword(User manager, String password);
+    
 }
