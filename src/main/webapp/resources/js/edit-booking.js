@@ -478,7 +478,7 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
     var id = table.row(tr).data().id;
     var time = $(this).closest('td').find('input').val();
     setStartTime(id, time);
-    alert("here");
+
 });
 
 $('#arrival-btn').on('click', function() {
@@ -550,10 +550,10 @@ $('#closeBookingsLegend').click(function () {
 
 function countActiveBookingsForCurrentDay() {
     var currentDate = $('#date-booking').val();
-        $.ajax({
-            url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
-            success: function (result) {
-                $('#amountOfChildren').text(result);
-            }
-        });
+    $.ajax({
+        url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
+        success: function (result) {
+            $('#amountOfChildren').text(result);
+        }
+    });
 }
