@@ -117,7 +117,7 @@ public class BookingEditController {
      * @return number of active children
      * */
 
-    @GetMapping(value = "dailyBookings/{date}/{id}")
+    @GetMapping(value = "getAmountOfChildren/{date}/{id}")
     @ResponseBody
     public Long getAmountOfChildrenForCurrentDay(@PathVariable String date,
                                                  @PathVariable Long id) {

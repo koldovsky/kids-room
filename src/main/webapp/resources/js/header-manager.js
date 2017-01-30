@@ -33,7 +33,7 @@ $(function () {
 function getAmountOfChildrenByCurrentDate() {
     var currentDate = $('#date-booking').val();
     $.ajax({
-        url: 'dailyBookings/' + currentDate + '/' + localStorage['roomId'],
+        url: 'getAmountOfChildren/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {
             $('#amountOfChildren').text(result);
         }
