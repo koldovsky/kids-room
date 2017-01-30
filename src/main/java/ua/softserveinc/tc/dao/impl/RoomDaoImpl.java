@@ -44,4 +44,9 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
         );
         return entityManager.createQuery(query).getResultList();
     }
+
+    @Override
+    public List<Room> findByIsActiveTrue() {
+        return null;
+    }
 }

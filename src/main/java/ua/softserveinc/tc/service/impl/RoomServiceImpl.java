@@ -36,9 +36,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private RoomDao roomDao;
 
     @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
     private BookingService bookingService;
 
     @Autowired
@@ -142,7 +139,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public List<Room> getTodayActiveRooms() {
         LocalDate today = LocalDate.now();
 
-        return roomRepository.findByIsActiveTrue().stream()
+        return roomDao.findByIsActiveTrue().stream()
                 .filter(room -> room.getDaysOff().stream()
                         .noneMatch(day -> day.getStartDate().isEqual(today)))
                 .filter(room -> room.getDaysOff().stream()
