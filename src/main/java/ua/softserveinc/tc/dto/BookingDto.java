@@ -89,12 +89,9 @@ public class BookingDto implements Serializable {
     }
 
     public BookingDto(Booking booking) {
-        DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
-        date = df.format(booking.getBookingStartTime());
-        endDate = df.format(booking.getBookingEndTime());
-        df = new SimpleDateFormat(DateConstants.TIME_FORMAT);
-        startTime = df.format(booking.getBookingStartTime());
-        endTime = df.format(booking.getBookingEndTime());
+        DateFormat shortDateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
+        DateFormat timeFormat = new SimpleDateFormat(DateConstants.TIME_FORMAT);
+
         duration = booking.formatDuration();
         sum = booking.getSum();
         id = booking.getIdBook();
@@ -104,6 +101,15 @@ public class BookingDto implements Serializable {
         recurrentId = booking.getRecurrentId();
         dateStartTime = booking.getBookingStartTime();
         dateEndTime = booking.getBookingEndTime();
+
+        if(booking.getBookingStartTime() != null) {
+            date = shortDateFormat.format(booking.getBookingStartTime());
+            startTime = timeFormat.format(booking.getBookingStartTime());
+        }
+        if(booking.getBookingEndTime() != null) {
+            endDate = shortDateFormat.format(booking.getBookingEndTime());
+            endTime = timeFormat.format(booking.getBookingEndTime());
+        }
         if (booking.getBookingStartTime() != null) {
             startTimeMillis = booking.getBookingStartTime().getTime();
         }
