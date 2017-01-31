@@ -360,4 +360,57 @@ public class BookingsCharacteristics {
         users = builder.users;
         bookingsStates = builder.bookingsStates;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+
+            return true;
+        }
+        if (!(o instanceof BookingsCharacteristics)) {
+
+            return false;
+        }
+
+        BookingsCharacteristics characteristics = (BookingsCharacteristics) o;
+
+        if (!rooms.equals(characteristics.rooms)) {
+
+            return false;
+        }
+        if (!children.equals(characteristics.children)) {
+
+            return false;
+        }
+        if (!users.equals(characteristics.users)) {
+
+            return false;
+        }
+        if (!bookingsStates.equals(characteristics.bookingsStates)) {
+
+            return false;
+        }
+        if (!Arrays.equals(dates, characteristics.dates)) {
+
+            return false;
+        }
+        if (!idsOfBookings.equals(characteristics.idsOfBookings)) {
+
+            return false;
+        }
+        return recurrentIdsOfBookings.equals(characteristics.recurrentIdsOfBookings);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = rooms.hashCode();
+        result = 31 * result + children.hashCode();
+        result = 31 * result + users.hashCode();
+        result = 31 * result + bookingsStates.hashCode();
+        result = 31 * result + Arrays.hashCode(dates);
+        result = 31 * result + idsOfBookings.hashCode();
+        result = 31 * result + recurrentIdsOfBookings.hashCode();
+
+        return result;
+    }
 }

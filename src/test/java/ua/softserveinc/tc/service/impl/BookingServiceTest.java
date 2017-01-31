@@ -38,15 +38,18 @@ import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import org.mockito.internal.verification.AtLeast;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.doReturn;
@@ -116,7 +119,7 @@ public class BookingServiceTest {
 
         bookingService.calculateAndSetDuration(testBooking);
 
-        verify(testBooking, times(1)).setDuration(0L);
+        verify(testBooking).setDuration(0L);
     }
 
     @Test
@@ -129,7 +132,7 @@ public class BookingServiceTest {
 
         bookingService.calculateAndSetSum(testBooking);
 
-        verify(bookingDao, times(1)).update(testBooking);
+        verify(bookingDao).update(testBooking);
     }
 
     @Test
@@ -312,38 +315,275 @@ public class BookingServiceTest {
 
     @Test
     public void testGetAllBookingsByUserAndRoom() throws Exception {
-        BookingDto secondTestBookingDto = mock(BookingDto.class);
         Booking secondTestBooking = mock(Booking.class);
         List<Booking> listOfBookings = Arrays.asList(testBooking, secondTestBooking);
 
         ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
                 ArgumentCaptor.forClass(BookingsCharacteristics.class);
 
-        when(userDao.findById(any())).thenReturn(testUser);
-        when(roomDao.findById(any())).thenReturn(testRoom);
+        when(userDao.findById(anyLong())).thenReturn(testUser);
+        when(roomDao.findById(anyLong())).thenReturn(testRoom);
         when(bookingDao.getBookings(characteristicsCaptor.capture())).thenReturn(listOfBookings);
-        whenNew(BookingDto.class).withArguments(testBooking).thenReturn(testBookingDto);
-        whenNew(BookingDto.class).withArguments(secondTestBooking).thenReturn(testBookingDto);
-        whenNew(BookingDto.class).withParameterTypes(Booking.class).withArguments(isA(Booking.class)).thenReturn(testBookingDto);
 
         List<BookingDto> listOfBookingsDto = bookingService.getAllBookingsByUserAndRoom(1L, 1L);
 
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
         assertEquals("The object must be equals to 2", 2, listOfBookingsDto.size());
-        assertEquals("The objects must be equals", testBookingDto, listOfBookingsDto.get(0));
-        assertEquals("The objects must be equals", testBookingDto, listOfBookingsDto.get(1));
 
         assertEquals("The size must be 1", 1,
-                characteristicsCaptor.getValue().getUsers().size());
+                characteristics.getUsers().size());
         assertEquals("The objects must be equals", testUser,
-                characteristicsCaptor.getValue().getUsers().get(0));
+                characteristics.getUsers().get(0));
         assertEquals("The size must be 1", 1,
-                characteristicsCaptor.getValue().getRooms().size());
+                characteristics.getRooms().size());
         assertEquals("The objects must be equals", testRoom,
-                characteristicsCaptor.getValue().getRooms().get(0));
+                characteristics.getRooms().get(0));
         assertEquals("The size must be 1", 1,
-                characteristicsCaptor.getValue().getBookingsStates().size());
+                characteristics.getBookingsStates().size());
         assertEquals("The objects must be equals", BookingState.BOOKED,
-                characteristicsCaptor.getValue().getBookingsStates().get(0));
+                characteristics.getBookingsStates().get(0));
+        assertEquals("The Date must be null", null,
+                characteristics.getStartDateOfBookings());
+        assertEquals("The Date must be null", null,
+                characteristics.getEndDateOfBookings());
+
+        checkEmptyPartOfBookingCharacteristics(characteristics);
     }
 
+    @Test
+    public void testGetNotCompletedAndCancelledBookings() {
+        Calendar workCalendar = Calendar.getInstance();
+
+        workCalendar.set(2019, 0, 1, 12, 0, 0); //2019-01-01T12:00:00 Tuesday(3)
+        Date startTestDate = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 4, 12, 0, 0); //2019-01-04T12:00:00 Friday(6)
+        Date endTestDate = workCalendar.getTime();
+
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        when(bookingDao.getBookings(characteristicsCaptor.capture()))
+                .thenReturn(Collections.emptyList());
+
+        bookingService.getNotCompletedAndCancelledBookings(startTestDate, endTestDate, testRoom);
+
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
+        assertEquals("The size must be 1", 1,
+                characteristics.getRooms().size());
+        assertEquals("The objects must be equals", testRoom,
+                characteristics.getRooms().get(0));
+        assertEquals("The size must be 2", 2,
+                characteristics.getBookingsStates().size());
+        assertEquals("The objects must be equals", BookingState.ACTIVE,
+                characteristics.getBookingsStates().get(0));
+        assertEquals("The objects must be equals", BookingState.BOOKED,
+                characteristics.getBookingsStates().get(1));
+        assertEquals("The size must be 0", 0,
+                characteristics.getUsers().size());
+
+        checkDatesPartOfBookingCharacteristics(characteristics, startTestDate, endTestDate);
+        checkEmptyPartOfBookingCharacteristics(characteristics);
+
+    }
+
+    @Test
+    public void testGetDatesOfReservedBookingsWithDatesRoom() {
+        Calendar workCalendar = Calendar.getInstance();
+
+        workCalendar.set(2019, 0, 1, 12, 0, 0); //2019-01-01T12:00:00 Tuesday(3)
+        Date testDate = workCalendar.getTime();
+
+        bookingService.getDatesOfReservedBookings(testDate, testDate, testRoom);
+
+        verify(bookingDao).getDatesOfReservedBookings(testDate, testDate, testRoom);
+
+    }
+
+    @Test
+    public void testGetDatesOfReservedBookingsWithBookingCharacteristics() {
+        BookingsCharacteristics characteristics = new BookingsCharacteristics.Builder().build();
+
+        bookingService.getDatesOfReservedBookings(characteristics);
+
+        verify(bookingDao).getDatesOfReservedBookings(characteristics);
+
+    }
+
+    @Test
+    public void testGetBookingsWithDatesAndBookingsStates() {
+        Calendar workCalendar = Calendar.getInstance();
+
+        workCalendar.set(2019, 0, 1, 12, 0, 0); //2019-01-01T12:00:00 Tuesday(3)
+        Date startTestDate = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 4, 12, 0, 0); //2019-01-04T12:00:00 Friday(6)
+        Date endTestDate = workCalendar.getTime();
+
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        when(bookingDao.getBookings(characteristicsCaptor.capture()))
+                .thenReturn(Collections.emptyList());
+
+        bookingService.getBookings(startTestDate, endTestDate, BookingState.CANCELLED,
+                BookingState.COMPLETED);
+
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
+        assertEquals("The size must be 2", 2,
+                characteristics.getBookingsStates().size());
+        assertEquals("The objects must be equals", BookingState.CANCELLED,
+                characteristics.getBookingsStates().get(0));
+        assertEquals("The objects must be equals", BookingState.COMPLETED,
+                characteristics.getBookingsStates().get(1));
+        assertEquals("The size must be 0", 0,
+                characteristics.getUsers().size());
+        assertEquals("The size must be 0", 0,
+                characteristics.getRooms().size());
+
+        checkDatesPartOfBookingCharacteristics(characteristics, startTestDate, endTestDate);
+        checkEmptyPartOfBookingCharacteristics(characteristics);
+    }
+
+    @Test
+    public void testGetBookingsWithDatesUserAndBookingsStates() {
+        Calendar workCalendar = Calendar.getInstance();
+
+        workCalendar.set(2019, 0, 1, 12, 0, 0); //2019-01-01T12:00:00 Tuesday(3)
+        Date startTestDate = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 4, 12, 0, 0); //2019-01-04T12:00:00 Friday(6)
+        Date endTestDate = workCalendar.getTime();
+
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        when(bookingDao.getBookings(characteristicsCaptor.capture()))
+                .thenReturn(Collections.emptyList());
+
+        bookingService.getBookings(new Date[] {startTestDate, endTestDate}, testUser,
+                BookingState.ACTIVE, BookingState.CALCULATE_SUM);
+
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
+        assertEquals("The size must be 2", 2,
+                characteristics.getBookingsStates().size());
+        assertEquals("The objects must be equals", BookingState.ACTIVE,
+                characteristics.getBookingsStates().get(0));
+        assertEquals("The objects must be equals", BookingState.CALCULATE_SUM,
+                characteristics.getBookingsStates().get(1));
+        assertEquals("The size must be 0", 1,
+                characteristics.getUsers().size());
+        assertEquals("The objects must be equals", testUser,
+                characteristics.getUsers().get(0));
+        assertEquals("The size must be 0", 0,
+                characteristics.getRooms().size());
+
+        checkDatesPartOfBookingCharacteristics(characteristics, startTestDate, endTestDate);
+        checkEmptyPartOfBookingCharacteristics(characteristics);
+
+    }
+
+    @Test
+    public void testGetBookingsWithBookingsCharacteristics() {
+        BookingsCharacteristics characteristics = new BookingsCharacteristics.Builder().build();
+
+        bookingService.getBookings(characteristics);
+
+        verify(bookingDao).getBookings(characteristics);
+    }
+
+    @Test
+    public void testHasDuplicateBookingsForBookingCharacteristicsCorrectnessNull() {
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        when(testBookingDto.getStartTime()).thenReturn("");
+        when(testBookingDto.getEndTime()).thenReturn("");
+        when(roomService.findEntityById(any())).thenReturn(testRoom);
+        when(userService.findEntityById(any())).thenReturn(testUser);
+        when(childService.findEntityById(any())).thenReturn(testChild);
+        when(testBookingDto.getId()).thenReturn(null);
+        when(testBookingDto.getRecurrentId()).thenReturn(null);
+        when(bookingDao.getDuplicateBookings(characteristicsCaptor.capture()))
+                .thenReturn(Collections.emptyList());
+
+        assertFalse("Must be false",
+                bookingService.hasDuplicateBookings(Collections.singletonList(testBookingDto)));
+
+        assertEquals("Must be equals",
+                new BookingsCharacteristics.Builder().build(), characteristicsCaptor.getValue());
+
+    }
+
+    @Test
+    @SuppressWarnings({"unchecked", "varargs"})
+    public void testHasDuplicateBookingsForBookingCharacteristicsCorrectnessNotNull() {
+        BookingDto secondTestBookingDto = mock(BookingDto.class);
+        Child secondTestChild = mock(Child.class);
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        Calendar workCalendar = Calendar.getInstance();
+        workCalendar.clear();
+
+        workCalendar.set(2019, 0, 7, 12, 0, 0); //2019-01-26T12:00:00 Second day when condition
+        Date startLastDate = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 7, 13, 0, 0); //2019-01-26T12:00:00 Second day when condition
+        Date endLastDate = workCalendar.getTime();
+
+        when(testBookingDto.getStartTime()).thenReturn("2019-01-01T12:00:00");
+        when(testBookingDto.getEndTime()).thenReturn("2019-02-01T13:00:00");
+        when(testBookingDto.getDaysOfWeek()).thenReturn("Mon Tue");
+        when(secondTestBookingDto.getStartTime()).thenReturn("2019-01-01T12:00:00");
+        when(secondTestBookingDto.getEndTime()).thenReturn("2019-02-01T12:00:00");
+        when(roomService.findEntityById(any())).thenReturn(testRoom);
+        when(userService.findEntityById(any())).thenReturn(testUser);
+        when(childService.findEntityById(any())).thenReturn(testChild);
+        when(testBookingDto.getChild()).thenReturn(testChild);
+        when(testBookingDto.getId()).thenReturn(1L);
+        when(testBookingDto.getRecurrentId()).thenReturn(1L);
+        when(secondTestBookingDto.getChild()).thenReturn(secondTestChild);
+        when(secondTestBookingDto.getId()).thenReturn(2L);
+        when(secondTestBookingDto.getRecurrentId()).thenReturn(2L);
+        when(bookingDao.getDuplicateBookings(any()))
+                .thenReturn(Collections.emptyList(), Collections.singletonList(null));
+
+        assertTrue("Must be true", bookingService.hasDuplicateBookings(
+                Arrays.asList(testBookingDto, secondTestBookingDto)));
+        verify(bookingDao, times(2)).getDuplicateBookings(characteristicsCaptor.capture());
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
+        assertEquals("Must size must be 2", 2, characteristics.getChildren().size());
+        assertEquals("Must be equals", testChild, characteristics.getChildren().get(0));
+        assertEquals("Must be equals", secondTestChild, characteristics.getChildren().get(1));
+        assertEquals("Must size must be 2", 2, characteristics.getIdsOfBookings().size());
+        assertEquals("Must be equals to 2", 1L, (long)characteristics.getIdsOfBookings().get(0));
+        assertEquals("Must be equals to 2", 2L, (long)characteristics.getIdsOfBookings().get(1));
+        assertEquals("Must size must be 2", 2, characteristics.getRecurrentIdsOfBookings().size());
+        assertEquals("Must be equals to 2", 1L,
+                (long)characteristics.getRecurrentIdsOfBookings().get(0));
+        assertEquals("Must be equals to 2", 2L,
+                (long)characteristics.getRecurrentIdsOfBookings().get(1));
+        assertEquals("The dates are not correct", startLastDate,
+                characteristics.getStartDateOfBookings());
+        assertEquals("The dates are not correct", endLastDate,
+                characteristics.getEndDateOfBookings());
+    }
+
+    private void checkEmptyPartOfBookingCharacteristics(BookingsCharacteristics characteristics) {
+        assertEquals("The size must be 0", 0,
+                characteristics.getChildren().size());
+        assertEquals("The size must be 0", 0,
+                characteristics.getIdsOfBookings().size());
+        assertEquals("The size must be 0", 0,
+                characteristics.getRecurrentIdsOfBookings().size());
+    }
+
+    private void checkDatesPartOfBookingCharacteristics(BookingsCharacteristics characteristics,
+                                                        Date startTestDate, Date endTestDate) {
+        assertEquals("The dates must be equals", startTestDate,
+                characteristics.getStartDateOfBookings());
+        assertEquals("The dates must be equals", endTestDate,
+                characteristics.getEndDateOfBookings());
+    }
 }
