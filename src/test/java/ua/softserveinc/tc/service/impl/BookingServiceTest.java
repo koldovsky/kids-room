@@ -42,6 +42,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -75,9 +76,6 @@ public class BookingServiceTest {
 
     @Mock
     private BookingDao bookingDao;
-
-    @Mock
-    private UserDao baseDao;
 
     @Mock
     private UserDao userDao;
@@ -314,6 +312,7 @@ public class BookingServiceTest {
 
     @Test
     public void testGetAllBookingsByUserAndRoom() throws Exception {
+        BookingDto secondTestBookingDto = mock(BookingDto.class);
         Booking secondTestBooking = mock(Booking.class);
         List<Booking> listOfBookings = Arrays.asList(testBooking, secondTestBooking);
 
@@ -323,7 +322,9 @@ public class BookingServiceTest {
         when(userDao.findById(any())).thenReturn(testUser);
         when(roomDao.findById(any())).thenReturn(testRoom);
         when(bookingDao.getBookings(characteristicsCaptor.capture())).thenReturn(listOfBookings);
-        whenNew(BookingDto.class).withNoArguments().thenReturn(testBookingDto);
+        whenNew(BookingDto.class).withArguments(testBooking).thenReturn(testBookingDto);
+        whenNew(BookingDto.class).withArguments(secondTestBooking).thenReturn(testBookingDto);
+        whenNew(BookingDto.class).withParameterTypes(Booking.class).withArguments(isA(Booking.class)).thenReturn(testBookingDto);
 
         List<BookingDto> listOfBookingsDto = bookingService.getAllBookingsByUserAndRoom(1L, 1L);
 
