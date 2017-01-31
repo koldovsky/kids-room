@@ -32,8 +32,10 @@
         </tr>
 
         <c:forEach var="manager" items="${managerList}">
+
             <c:if test="${manager.active eq true}"><tr></c:if>
             <c:if test="${manager.active ne true}"><tr class="tr-not-active"></c:if>
+            <td class="hidden">${manager.id}</td>
             <td>${manager.email}</td>
             <td>${manager.firstName}</td>
             <td>${manager.lastName}</td>
@@ -48,19 +50,10 @@
 
             <td>
                 <c:if test="${manager.active ne true}">
-                    <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
-                        <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                    </form:form>
-                    <button id = "btn-inactive" class="btn btn-raised btn-default delete submit-manager-active"></button>
-
+                    <button class="btn btn-raised btn-default delete activate activateButton"></button>
                 </c:if>
                 <c:if test="${manager.active eq true}">
-                    <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
-                        <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                    </form:form>
-                    <button  id = "btn-active" class="btn btn-raised btn-default save submit-manager-inactive"></button>
+                    <button class="btn btn-raised btn-default save activate deactivateButton"></button>
                 </c:if>
             </td>
         </tr>
