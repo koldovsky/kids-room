@@ -45,16 +45,16 @@ public class EditManagerController {
     /**
      * Method receive manager id from view. Set setActive() for manager opposite to previous value.
      * This mean record will activate or deactivate, based on the received state.
-     * Redirect into view, which mapped by AdminConstants.EDIT_MANAGER const
      *
-     * @return String value
+     * @return Boolean value
      */
     @PostMapping(value = "/adm-edit-manager", consumes = "application/json")
     @ResponseBody
-    public String changeManagerState(@RequestBody Long id) {
+    public Boolean changeManagerState(@RequestBody Long id) {
         User manager = userService.findByIdTransactional(id);
         manager.setActive(!manager.isActive());
         userService.update(manager);
-        return new Gson().toJson(manager.isActive());
+
+        return manager.isActive();
     }
 }

@@ -11,30 +11,32 @@ var currentFormElement;
 
 $().ready(function() {
 
-    $('#confirmation-dialog-event-div').dialog ({
-        autoOpen: false,
-        modal:true,
-        width: 320
-    });
+    var managerId;
+    var btn;
 
     $('.activate').click(function() {
         managerId = $(this).parents('tr').find('td').eq(0).text();
         btn = $(this);
-        $('#inactive-manager-span').hide();
-        $('#active-manager-span').show();
-        $('#confirmation-dialog-event-div').dialog('open');
+        if($(btn).hasClass('activateButton')) {
+            $('#inactive-manager-span').hide();
+            $('#active-manager-span').show();
+        } else {
+            $('#active-manager-span').hide();
+            $('#inactive-manager-span').show();
+        }
+        $('#confirmation-activate').modal('show');
     });
 
     $('#confirmYesEvent').click(function() {
-        $('#confirmation-dialog-event-div').dialog('close');
+        $('#confirmation-activate').modal('hide');
         var src = 'adm-edit-manager';
         $.ajax({
             url: src,
             method: 'POST',
             data:  managerId,
             contentType: 'application/json; charset=utf-8',
-            success: function (result) {
-                if(result == 'true') {
+            success: function (isActive) {
+                if(isActive) {
                     setActivateClass(btn);
                 } else {
                     setDeactivateClass(btn);
@@ -44,7 +46,7 @@ $().ready(function() {
     });
 
     $('#confirmNoEvent').click(function() {
-        $('#confirmation-dialog-event-div').dialog('close');
+        $('#confirmation-activate').modal('hide');
     });
 
     function setDeactivateClass(btn) {

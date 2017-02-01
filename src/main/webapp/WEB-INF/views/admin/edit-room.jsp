@@ -33,14 +33,15 @@
         </tr>
 
         <c:forEach var="room" items="${roomList}">
-        <c:if test="${room.active eq true}"><tr class="room"></c:if>
-        <c:if test="${room.active ne true}"><tr class="tr-not-active"></c:if>
+            <c:if test="${room.active eq true}"><tr class="room"></c:if>
+            <c:if test="${room.active ne true}"><tr class="tr-not-active"></c:if>
             <td class="hidden">${room.id}</td>
             <td>${room.name}</td>
             <td>${room.address}</td>
             <td class="city">${room.city}</td>
             <td>${room.phoneNumber}</td>
             <td>${room.capacity}</td>
+            <td class="hidden">${room.active}</td>
             <td>
                 <table class="hide-border">
                     <tr>
@@ -81,19 +82,10 @@
             </a></td>
             <td>
                 <c:if test="${room.active ne true}">
-                    <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
-                        <input id="room" name="manager" type="hidden" value="${room.id}" />
-                        <button  type="button" value="lock"
-                                class="btn btn-raised btn-default delete activateButton"></button>
-                    </form:form>
+                    <button class="btn btn-raised btn-default activate delete activateButton"></button>
                 </c:if>
                 <c:if test="${room.active eq true}">
-                    <c:url var="lockUrl" value="/adm-edit-room?id=${room.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" >
-                       <input id="room" name="room" type="hidden" value="${room.id}" />
-                       <button  type="button" class="btn btn-raised btn-default save deactivateButton"></button>
-                    </form:form>
+                    <button class="btn btn-raised btn-default activate save deactivateButton"></button>
                 </c:if>
             </td>
             </tr>
@@ -119,7 +111,7 @@
                         <spring:message code="room.deactivate"/>
                     </p>
                 </div>
-                <div id ="warningMessages"></div>
+                <div id="warningMessages"></div>
                 <button id="deactivateYesButton" class="btn  btn-success admWarningBtn">
                     <spring:message code="room.yes_button"/>
                 </button>
@@ -148,6 +140,6 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminRoomSearch.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room-button.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room.js'></script>
 
 </body>
