@@ -19,23 +19,23 @@ $(function () {
             localStorage['room'] = room;
             localStorage['roomId'] = roomId;
 
-            getAmountOfChildren();
+            getAmountOfChildrenByCurrentDate();
             $('#room').text(room);
             selectRoomForManager(roomId);
         });
     });
 
-    getAmountOfChildren();
+    getAmountOfChildrenByCurrentDate();
     $('#room').text(localStorage['room']);
     selectRoomForManager(localStorage['roomId']);
 });
 
-function getAmountOfChildren() {
+function getAmountOfChildrenByCurrentDate() {
+    var currentDate = $('#date-booking').val();
     $.ajax({
-        url: 'getAmountOfChildren/' + localStorage['roomId'],
+        url: 'getAmountOfChildren/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {
             $('#amountOfChildren').text(result);
         }
     });
 }
-

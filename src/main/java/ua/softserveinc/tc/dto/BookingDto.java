@@ -6,6 +6,7 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.util.DateUtil;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -244,27 +245,33 @@ public class BookingDto implements Serializable {
     }
 
     /**
-     * Set fields of this object that is present in booking.
+     * Set fields of this object if not exists in this objects that is present
+     * in given booking.
+     * If the string start and end time is present that start and end date from
+     * booking object is not set because this will lead to inconsistent state
+     * of this object.
      * If given booking object is null, then method returns without
      * any exception.
      *
      * @param booking the given booking
      */
-    public void setFieldFromBooking(Booking booking) {
+    public void setFieldFromBookingIfNotExists(Booking booking) {
         if(booking == null) {
             return;
         }
-        id = booking.getIdBook();
-        child = booking.getChild();
-        room = booking.getRoom();
-        user = booking.getUser();
-        dateStartTime = booking.getBookingStartTime();
-        dateEndTime = booking.getBookingEndTime();
-        comment = booking.getComment();
-        bookingState = booking.getBookingState();
-        durationLong =  booking.getDuration();
-        sum = booking.getSum();
-        recurrentId = booking.getRecurrentId();
+        id = (id == null) ? booking.getIdBook() : id;
+        child = (child == null) ? booking.getChild() : child;
+        room = (room == null) ? booking.getRoom() : room;
+        user = (user == null) ? booking.getUser() : user;
+        dateStartTime = (startTime == null && dateStartTime == null) ?
+                booking.getBookingStartTime() : dateStartTime;
+        dateEndTime = (endTime == null && dateEndTime == null) ?
+                booking.getBookingEndTime() : dateEndTime;
+        comment = (comment == null) ? booking.getComment() : comment;
+        bookingState = (bookingState == null) ? booking.getBookingState() : bookingState;
+        durationLong = (durationLong == null) ?  booking.getDuration() : durationLong;
+        sum = (sum == null) ? booking.getSum() : sum;
+        recurrentId = (recurrentId == null) ? booking.getRecurrentId() : recurrentId;
     }
 
     /**
@@ -529,4 +536,5 @@ public class BookingDto implements Serializable {
         DateFormat df = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
         this.endDate = df.format(endDate);
     }
+
 }

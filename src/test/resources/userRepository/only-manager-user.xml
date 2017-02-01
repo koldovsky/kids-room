@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+    <Users id_user="1" email="user2@softserveinc.com" first_name="Andrian" last_name="Bom"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="1"
+           confirmed="true" active="true"/>
+
+    <Users id_user="2" email="parent4@softserveinc.com" first_name="Marian" last_name="Kara"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="1"
+           confirmed="true" active="true"/>
+
+    <Users id_user="3" email="user@softserveinc.com" first_name="Alan" last_name="Bom"
+           password="$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02" phone_number="+380987654321" role="1"
+           confirmed="true" active="true"/>
+
+    <Users id_user="4" email="parent1@softserveinc.com" first_name="Mario" last_name="Kara"
+           password="$2a$08$FSd5VkorwWVS7V8XQFl1y..ULY5fcUAASc/.6mH5wFj/ppopK0Cl2" phone_number="+380987654321" role="1"
+           confirmed="true" active="true"/>
+
+    <Users id_user="5" email="user1@softserveinc.com" first_name="Allen" last_name="Bom"
+           password="$2a$08$B.5vcvm4BiBF9DdPgyKH4.1Z9wOGL9Rv9Iy1sDsniHMOOGXCZ11Je" phone_number="+380987654321" role="1"
+           confirmed="true" active="true"/>
+
+</dataset>

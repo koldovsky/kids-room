@@ -30,10 +30,8 @@ public class RoomDto {
 
     private String workingHoursEnd;
 
-    @UniqueManagerValidation
     private String managers;
 
-    @RateValidation
     private String rate;
 
     private String timeStartEnd;

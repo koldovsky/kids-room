@@ -3,6 +3,7 @@ package ua.softserveinc.tc.validator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.BindException;
@@ -11,6 +12,8 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.service.RoomService;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -40,15 +43,53 @@ public class RoomValidatorTest {
     when(roomDto.getPhoneNumber()).thenReturn("+380672211204");
     when(roomDto.getWorkingHoursStart()).thenReturn("07:00");
     when(roomDto.getWorkingHoursEnd()).thenReturn("20:00");
+    when(roomDto.getManagers()).thenReturn("[{\"idIns\":\"manager2\",\"id\":\"3\",\"$$hashKey\":\"object:6\"}]");
+    when(roomDto.getRate()).thenReturn("[{\"idIns\":\"rate1\",\"$$hashKey\":\"object:6\",\"hourRate\":2,\"priceRate\":30}]");
     errors = new BindException(roomDto, "roomDto");
   }
-
   @Test
   public void supports() {
     assertTrue(roomValidator.supports(RoomDto.class));
     assertFalse(roomValidator.supports(Object.class));
     assertFalse(roomValidator.supports(ChildDto.class));
   }
+
+  @Test
+  public void testWrongJSONFormatManagers() {
+    when(roomDto.getManagers()).thenReturn("[{\"idIns\":\"manager1\",\"id\":\"Q\",\"$$hashKey\":\"object:3\"},{\"idIns\":\"manager2\",\"id\":\"1\",\"$$hashKey\":\"object:6\"}]");
+    roomValidator.validate(roomDto,errors);
+    assertTrue(errors.hasErrors());
+    Assert.assertEquals(ValidationConstants.ROOM_MANAGER_INVALID,
+           errors.getFieldError(ValidationConstants.MANAGERS_FIELD).getCode());
+  }
+
+  @Test
+  public void testNullManagerId() {
+    when(roomDto.getManagers()).thenReturn("[{\"idIns\":\"manager1\",\"$$hashKey\":\"object:3\"}]");
+    roomValidator.validate(roomDto,errors);
+    assertTrue(errors.hasErrors());
+    Assert.assertEquals(ValidationConstants.ROOM_MANAGER_EMPTY,
+            errors.getFieldError(ValidationConstants.MANAGERS_FIELD).getCode());
+  }
+
+  @Test
+  public void testDuplicateManagers() {
+    when(roomDto.getManagers()).thenReturn("[{\"idIns\":\"manager1\",\"id\":\"1\",\"$$hashKey\":\"object:3\"},{\"idIns\":\"manager2\",\"id\":\"1\",\"$$hashKey\":\"object:6\"}]");
+    roomValidator.validate(roomDto,errors);
+    assertTrue(errors.hasErrors());
+    Assert.assertEquals(ValidationConstants.ROOM_MANAGER_DUPLICATE,
+            errors.getFieldError(ValidationConstants.MANAGERS_FIELD).getCode());
+  }
+
+  @Test
+  public void testWrongRate() {
+     when(roomDto.getRate()).thenReturn("[{\"idIns\":\"rate1\",\"$$hashKey\":\"object:6\",\"hourRate\":0,\"priceRate\":null}]");
+     roomValidator.validate(roomDto,errors);
+     assertTrue(errors.hasErrors());
+     Assert.assertEquals(ValidationConstants.ROOM_RATE_ERROR,
+             errors.getFieldError(ValidationConstants.ROOM_RATE_FIELD).getCode());
+  }
+
 
   @Test
   public void testValidDto() {

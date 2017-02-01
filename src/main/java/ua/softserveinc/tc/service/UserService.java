@@ -27,4 +27,6 @@ public interface UserService extends BaseService<User> {
     List<Room> getActiveRooms(User user);
 
     List<Child> getEnabledChildren(User user);
+
+    List<User> findByActiveTrueAndRoleNot(Role role);
 }

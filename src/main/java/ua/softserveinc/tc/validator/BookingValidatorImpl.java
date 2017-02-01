@@ -3,7 +3,6 @@ package ua.softserveinc.tc.validator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
@@ -25,7 +24,7 @@ public class BookingValidatorImpl implements BookingValidator {
     private BookingService bookingService;
 
     @Autowired
-    private InputDateValidatorImpl inputDateValidator;
+    private InputDateTimeValidatorImpl inputDateValidator;
 
     @Log
     private Logger log;
@@ -83,8 +82,10 @@ public class BookingValidatorImpl implements BookingValidator {
             try {
                 booking = bookingService.findEntityById(singleDto.getId());
             } catch (ResourceNotFoundException e) {
-                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
                 log.error("Not existed booking entity");
+            }
+            if (booking == null) {
+                errors.add(ValidationConstants.COMMON_ERROR_MESSAGE);
             }
             result = booking != null;
         }

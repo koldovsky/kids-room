@@ -63,8 +63,8 @@
         <javax.servlet-api-version>3.1.0</javax.servlet-api-version>
         <org.apache.tiles-version>3.0.4</org.apache.tiles-version>
         <org.spring.securiry-version>4.2.0.RELEASE</org.spring.securiry-version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <logback.version>1.1.7</logback.version>
+        <slf4j.version>1.7.22</slf4j.version>
+        <logback.version>1.1.8</logback.version>
 
         <com.fasterxml.jackson.core.databind-version>2.7.4</com.fasterxml.jackson.core.databind-version>
         <org.codehouse.jackson.jackson-mapper-asl-version>1.9.10</org.codehouse.jackson.jackson-mapper-asl-version>
@@ -92,7 +92,8 @@
         <commons-io-version>2.5</commons-io-version>
         <commons-fileupload-version>1.3.1</commons-fileupload-version>
 
-        <org.mockito.mockito-all-version>1.9.5</org.mockito.mockito-all-version>
+        <org.mockito.mockito-all-version>1.10.19</org.mockito.mockito-all-version>
+        <powermock.version>1.6.6</powermock.version>
 
     </properties>
     <dependencies>
@@ -412,6 +413,7 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+
         </dependency>
 
         <dependency>
@@ -419,6 +421,20 @@
             <artifactId>mockito-all</artifactId>
             <version>${org.mockito.mockito-all-version}</version>
         </dependency>
+
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
+            </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
