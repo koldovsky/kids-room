@@ -81,6 +81,7 @@ $(function() {
 
     $('#date-booking').change(function() {
         refreshTable(localStorage['bookingsState']);
+        getAmountOfChildrenByCurrentDate();
     });
 
     $('.picker').timepicker({
@@ -101,6 +102,7 @@ function selectRoomForManager(roomId) {
         encoding:'UTF-8',
         contentType: 'charset=UTF-8',
         success: function(result){
+            getAmountOfChildrenByCurrentDate();
             result = result.split(' ');
             $('#bookingStartTimepicker').val(result[0]);
             $('#bookingEndTimepicker').val(result[1]);
@@ -476,8 +478,8 @@ $('#booking-table tbody').on('click', '#arrival-btn', function() {
     var id = table.row(tr).data().id;
     var time = $(this).closest('td').find('input').val();
     setStartTime(id, time);
-});
 
+});
 
 $('#booking-table tbody').on('click', '.inp-leaveTime', function() {
     var leaveTime = $(this).val();
@@ -534,5 +536,3 @@ $('#booking-table > tbody').on( 'click', 'tr', handler);
 $('#closeBookingsLegend').click(function () {
     $('#bookingLegendModal').modal('hide');
 });
-
-
