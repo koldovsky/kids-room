@@ -1,7 +1,3 @@
-/**
- * Created by dima- on 12.05.2016.
- */
-
 var info_event;
 var creatingEvent;
 var allEvents;
@@ -411,7 +407,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             info_event.roomID = roomID;
             info_event.description = $('#descriptionUpdate').val();
 
-            if (!!calEvent.recurrentId) {
+            if (calEvent.recurrentId) {
                 $('#choose-updating-type').dialog('open');
             }
             else {
