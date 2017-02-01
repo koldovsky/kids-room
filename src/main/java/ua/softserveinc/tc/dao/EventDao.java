@@ -9,4 +9,5 @@ public interface EventDao extends BaseDao<Event>{
     List<Event> getRecurrentEventByRecurrentId(Long recurrentId);
     void saveSetOfEvents(List<Event> listToSave);
     void deleteByRecurrentId(Long idRecurrent);
+    Event createOrUpdateEvent(Event event);
 }

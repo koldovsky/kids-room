@@ -50,6 +50,16 @@ public final class DateConstants {
             + "\\-((0[1-9])|([1-2][0-9])|(30)))|(02\\-((0[1-9])|(1[0-9])|(2[0-8])))))))"
             + "T((?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)))";
 
+    public static final String DATE_REGEXP = "((((\\d{2}(([02468][048])|([13579][26]))"
+            + "\\-((((0[13578])|(1[02]))\\-((0[1-9])|([1-2][0-9])|(3[01])))|(((0[469])|(11))"
+            + "\\-((0[1-9])|([1-2][0-9])|(30)))|(02\\-((0[1-9])|([1-2][0-9])))))"
+            + "|(\\d{2}(([02468][1235679])|([13579][01345789]))\\-((((0[13578])|(1[02]))"
+            + "\\-((0[1-9])|([1-2][0-9])|(3[01])))|(((0[469])|(11))"
+            + "\\-((0[1-9])|([1-2][0-9])|(30)))|(02\\-((0[1-9])|(1[0-9])|(2[0-8]))))))))";
+
+    public static final String TWENTY_FOUR_HOURS_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+
+
     /**
      * Helps translate the short form of the day of the week to int value
      * that is appropriate for Calendar day of week.
@@ -72,6 +82,26 @@ public final class DateConstants {
         public static Map<String, Integer> getDaysOfWeek() {
 
             return new HashMap<>(daysOfWeek);
+        }
+    }
+
+    public final static class ListDaysOfWeek {
+
+        private static final List<String> listDaysOfWeek = new ArrayList<>();
+
+        static {
+            listDaysOfWeek.add("Sun");
+            listDaysOfWeek.add("Mon");
+            listDaysOfWeek.add("Tue");
+            listDaysOfWeek.add("Wed");
+            listDaysOfWeek.add("Thu");
+            listDaysOfWeek.add("Fri");
+            listDaysOfWeek.add("Sat");
+        }
+
+        public static List<String> getListDaysOfWeek() {
+
+            return new ArrayList<>(listDaysOfWeek);
         }
     }
 

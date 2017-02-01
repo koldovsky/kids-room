@@ -46,6 +46,12 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
 
     @Override
     @Transactional
+    public Event createOrUpdateEvent(Event event){
+        return entityManager.merge(event);
+    }
+
+    @Override
+    @Transactional
     public void deleteByRecurrentId(Long idRecurrent) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaDelete<Event> delete = cb.createCriteriaDelete(Event.class);
