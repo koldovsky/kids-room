@@ -67,7 +67,6 @@ $().ready(function () {
     }
 
     function changeActiveRoomState(roomId, btn) {
-        roomId;
         var src = 'adm-edit-room';
         $.ajax({
             url: src,

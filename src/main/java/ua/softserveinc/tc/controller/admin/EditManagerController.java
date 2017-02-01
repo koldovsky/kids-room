@@ -13,8 +13,6 @@ import ua.softserveinc.tc.service.UserService;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 /**
  * Controller class for "Manager list" view. It's main controller for editing managers.
  */
