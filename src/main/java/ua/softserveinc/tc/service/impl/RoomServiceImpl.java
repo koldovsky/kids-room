@@ -11,7 +11,6 @@ import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.repo.RoomRepository;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
@@ -34,9 +33,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Autowired
     private RoomDao roomDao;
-
-    @Autowired
-    private RoomRepository roomRepository;
 
     @Autowired
     private BookingService bookingService;
@@ -142,7 +138,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public List<Room> getTodayActiveRooms() {
         LocalDate today = LocalDate.now();
 
-        return roomRepository.findByIsActiveTrue().stream()
+        return roomDao.findByIsActiveTrue().stream()
                 .filter(room -> room.getDaysOff().stream()
                         .noneMatch(day -> day.getStartDate().isEqual(today)))
                 .filter(room -> room.getDaysOff().stream()

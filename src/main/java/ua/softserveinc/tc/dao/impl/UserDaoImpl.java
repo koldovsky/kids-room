@@ -78,6 +78,20 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public List<User> findByActiveTrueAndRoleNot(Role role) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+
+        Root<User> root = query.from(User.class);
+        query.select(root).where(
+                builder.and( builder.equal(root.get("active"), 1),
+                        builder.notEqual(root.get("role"), role))
+        );
+
+        return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
     public List<User> findAll(List<Long> ids) {
         List<User> result = new ArrayList<>();
 

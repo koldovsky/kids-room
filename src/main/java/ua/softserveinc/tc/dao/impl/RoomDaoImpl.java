@@ -44,4 +44,15 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
         );
         return entityManager.createQuery(query).getResultList();
     }
+
+    @Override
+    public List<Room> findByIsActiveTrue() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Room> query = builder.createQuery(Room.class);
+        Root<Room> root = query.from(Room.class);
+
+        query.select(root).where(builder.equal(root.get("isActive"), true));
+
+        return entityManager.createQuery(query).getResultList();
+    }
 }

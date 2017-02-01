@@ -76,4 +76,9 @@ public class UserServiceImpl extends BaseServiceImpl<User>
                 .filter(Child::isEnabled)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<User> findByActiveTrueAndRoleNot(Role role) {
+        return userDao.findByActiveTrueAndRoleNot(role);
+    }
 }

@@ -18,6 +18,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.categories.IntegrationTest;
 import ua.softserveinc.tc.config.TestBaseConfigClass;
+import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Room;
 
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.List;
 public class RoomRepositoryTestIT {
 
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomDao roomRepository; // to test when changing one method in roomRepository to method in roomDao
 
     @DatabaseSetup(value = "classpath:roomRepository/no-rooms.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:roomRepository/no-rooms.xml", type = DatabaseOperation.DELETE_ALL)
