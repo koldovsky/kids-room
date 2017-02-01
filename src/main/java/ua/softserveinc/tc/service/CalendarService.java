@@ -16,7 +16,7 @@ public interface CalendarService {
 
     List<EventDto> findEventByRoomId(final long roomId);
 
-    void updateEvent(final Event event);
+    void createOrUpdateEvent(final Event event);
 
     List<Event> findByName(String name);
 

@@ -1,9 +1,4 @@
-/**
- * Created by Vitalij Fedyna on 30-Nov-16.
- */
-
 var generalErrorMessages = [];
-
 
 /**
  * Checks if the title field not empty and has right lenght
@@ -101,21 +96,21 @@ function validateSingleDate(startDateField, endDateField, startTimeField, endTim
     if (!isDateValid(startDateField) || !isTimeValid(startTimeField)) {
         generalErrorMessages.push(messages.event.errors.startDateFormat);
     } else if (!isDateValid(endDateField) || !isTimeValid(endTimeField)) {
-            generalErrorMessages.push(messages.event.errors.endDateFormat);
-        } else {
-            var startDate = new Date(startDateSelector.val());
-            var endDate = new Date(endDateSelector.val());
-            var startTime = new Date(startDateSelector.val() + " " + $('#' + startTimeField).val());
-            var endTime = new Date(endDateSelector.val() + " " + $('#' + endTimeField).val());
-            if (startDate.getTime() != endDate.getTime()) {
-                generalErrorMessages.push(messages.event.errors.singleEventDateEquals);
-            }
-            if ((startTime.getHours() > endTime.getHours())) {
-                generalErrorMessages.push(messages.event.errors.endTimeGreaterThanStartTime);
-            } else if ((startTime.getHours() == endTime.getHours()) && (startTime.getMinutes() >= endTime.getMinutes())) {
-                generalErrorMessages.push(messages.event.errors.endTimeGreaterThanStartTime);
-            }
+        generalErrorMessages.push(messages.event.errors.endDateFormat);
+    } else {
+        var startDate = new Date(startDateSelector.val());
+        var endDate = new Date(endDateSelector.val());
+        var startTime = new Date(startDateSelector.val() + " " + $('#' + startTimeField).val());
+        var endTime = new Date(endDateSelector.val() + " " + $('#' + endTimeField).val());
+        if (startDate.getTime() != endDate.getTime()) {
+            generalErrorMessages.push(messages.event.errors.singleEventDateEquals);
         }
+        if ((startTime.getHours() > endTime.getHours())) {
+            generalErrorMessages.push(messages.event.errors.endTimeGreaterThanStartTime);
+        } else if ((startTime.getHours() == endTime.getHours()) && (startTime.getMinutes() >= endTime.getMinutes())) {
+            generalErrorMessages.push(messages.event.errors.endTimeGreaterThanStartTime);
+        }
+    }
 }
 
 /**
@@ -180,7 +175,7 @@ function validateDateNotPast(dateField, timeField) {
     var fieldDate = new Date($('#' + dateField).val() + " " + $('#' + timeField).val());
     var currentDate = new Date();
     if (currentDate > fieldDate) {
-        generalErrorMessages.push(messages.event.errors.dateInThePast+ " " + currentDate);
+        generalErrorMessages.push(messages.event.errors.dateInThePast + " " + currentDate);
     }
 }
 function isRadioButtonChecked(radioButton) {
@@ -191,8 +186,8 @@ function isRadioButtonChecked(radioButton) {
 function validateEventType(eventType) {
     if ((eventType == UPDATE_RECURRENT_EVENT) &&
         (isRadioButtonChecked(CREATE_EVENT_DIALOG_SINGLE_EVENT_RADIOBUTTON))) {
-            generalErrorMessages.push(messages.event.errors.eventTypeMismatchWhenUpdating);
-        }
+        generalErrorMessages.push(messages.event.errors.eventTypeMismatchWhenUpdating);
+    }
 }
 
 function printGeneralMessage(fieldError) {
@@ -200,12 +195,12 @@ function printGeneralMessage(fieldError) {
     for (var i = 0; i < generalErrorMessages.length; i++) {
         errorMessage += "<br>\* " + generalErrorMessages[i] + "\.";
     }
-    $("."+fieldError).html(errorMessage);
+    $("." + fieldError).html(errorMessage);
 }
 
 function cleanGeneralValidationInfo(fieldError) {
     generalErrorMessages = [];
-    $("."+fieldError).html("");
+    $("." + fieldError).html("");
 }
 
 function isSingleUpdateFormValid() {
@@ -214,7 +209,7 @@ function isSingleUpdateFormValid() {
     validateDescription(UPDATE_SINGLE_EVENT_DIALOG_DESCRIPTION_ID);
     validateDateNotPast(UPDATE_SINGLE_EVENT_DIALOG_START_DATE_ID, UPDATE_SINGLE_EVENT_DIALOG_START_TIME_ID);
     validateSingleDate(UPDATE_SINGLE_EVENT_DIALOG_START_DATE_ID, UPDATE_SINGLE_EVENT_DIALOG_END_DATE_ID,
-    UPDATE_SINGLE_EVENT_DIALOG_START_TIME_ID,UPDATE_SINGLE_EVENT_DIALOG_END_TIME_ID);
+        UPDATE_SINGLE_EVENT_DIALOG_START_TIME_ID, UPDATE_SINGLE_EVENT_DIALOG_END_TIME_ID);
     return generalErrorMessages.length === 0;
 
 }
@@ -224,7 +219,7 @@ function isCreateEventFormValid(eventType) {
     validateTitle(CREATE_EVENT_DIALOG_INPUT_TITLE_ID);
     validateColor(CREATE_EVENT_DIALOG_INPUT_COLOR_ID);
     validateDescription(CREATE_EVENT_DIALOG_INPUT_DESCRIPTION_ID);
-    validateDateNotPast(CREATE_EVENT_DIALOG_START_DATE_ID,CREATE_EVENT_DIALOG_START_TIME_ID);
+    validateDateNotPast(CREATE_EVENT_DIALOG_START_DATE_ID, CREATE_EVENT_DIALOG_START_TIME_ID);
     if ((eventType == CREATE_RECURRENT_EVENT) || (eventType == UPDATE_RECURRENT_EVENT)) {
         validateRecurrentDate(CREATE_EVENT_DIALOG_START_DATE_ID, CREATE_EVENT_DIALOG_END_DATE_ID,
             CREATE_EVENT_DIALOG_START_TIME_ID, CREATE_EVENT_DIALOG_END_TIME_ID);

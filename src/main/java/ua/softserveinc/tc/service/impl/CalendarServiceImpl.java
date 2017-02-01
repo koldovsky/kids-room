@@ -218,8 +218,8 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public final void updateEvent(final Event event) {
-        eventDao.update(event);
+    public final void createOrUpdateEvent(final Event event) {
+        eventDao.createOrUpdateEvent(event);
     }
 
     @Override

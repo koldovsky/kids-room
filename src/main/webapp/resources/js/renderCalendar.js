@@ -478,7 +478,6 @@ function increaseTimeByHour(date) {
 }
 
 function createSingleOrRecurrentEvents(idIfEdited) {
-    $('#dialog').dialog('close');
     $('.loading').show();
     var startDateForCreatingRecurrentEvents = $('#start-date-picker').val() + 'T00:00:00';
     var endDate = $('#end-date-picker').val() + 'T00:00:00';
@@ -520,7 +519,7 @@ function createSingleOrRecurrentEvents(idIfEdited) {
         $.ajax({
             type: 'post',
             contentType: 'application/json',
-            url: 'getnewevent',
+            url: 'createsingleevent',
             dataType: 'json',
             data: JSON.stringify({
                 name: ev.title,
@@ -589,11 +588,19 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
             if (recurrentEvents.recurrentId)
                 deleteRecurrentEvents(recurrentEvents.recurrentId);
             popSetOfEvents(result);
+            $('#dialog').dialog('close');
         },
-        errors: function (xhr) {
-            callErrorDialog(xhr['responseText']);
-        },
-        complete: function () {
+        complete: function (xhr) {
+            if (xhr.status == 406) {
+                deleteRecurrentEvents(recurrentEvents.recurrentId);
+                $('#dialog').dialog('close');
+                closeDialog('dialog');
+                callErrorDialog(xhr['responseText']);
+            } else if (xhr.status == 400) {
+                serverErrorMessageConvert(xhr.responseText);
+                deleteRecurrentEvents(recurrentEvents.recurrentId);
+                printServerError(GENERAL_ERROR_FIELD, xhr['responseText']);
+            }
             $('.loading').hide();
         }
     });
@@ -685,6 +692,7 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             borderColor: BORDER_COLOR
         }),
         success: function (result) {
+            $('#dialog').dialog('close');
             if (result.eventsCreated.length) {
                 if (result.datesWhenNotCreated.length) {
                     eventsWereNotCreated(result.datesWhenNotCreated, result.eventsCreated[0].recurrentId);
@@ -697,6 +705,7 @@ function sendMonthlyEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) {
             }
         },
         error: function (xhr) {
+            $('#dialog').dialog('close');
             callErrorDialog(xhr['responseText']);
         },
         complete: function () {
