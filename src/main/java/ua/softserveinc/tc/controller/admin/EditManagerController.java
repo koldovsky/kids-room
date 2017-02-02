@@ -1,12 +1,12 @@
 package ua.softserveinc.tc.controller.admin;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
@@ -42,17 +42,17 @@ public class EditManagerController {
 
     /**
      * Method receive manager id from view. Set setActive() for manager opposite to previous value.
-     * This mean record will lock or unlock, based on the received state.
-     * Redirect into view, which mapped by AdminConstants.EDIT_MANAGER const
+     * This mean record will activate or deactivate, based on the received state.
      *
-     * @return String value
+     * @return Boolean value
      */
-    @PostMapping("/adm-edit-manager")
-    public String managerBlockUnblock(@RequestParam Long id) {
-        User manager = this.userService.findByIdTransactional(id);
+    @PostMapping(value = "/adm-edit-manager", consumes = "application/json")
+    @ResponseBody
+    public Boolean changeManagerState(@RequestBody Long id) {
+        User manager = userService.findByIdTransactional(id);
         manager.setActive(!manager.isActive());
+        userService.update(manager);
 
-        this.userService.update(manager);
-        return "redirect:/" + AdminConstants.EDIT_MANAGER;
+        return manager.isActive();
     }
 }

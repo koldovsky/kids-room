@@ -32,8 +32,10 @@
         </tr>
 
         <c:forEach var="manager" items="${managerList}">
+
             <c:if test="${manager.active eq true}"><tr></c:if>
             <c:if test="${manager.active ne true}"><tr class="tr-not-active"></c:if>
+            <td class="hidden">${manager.id}</td>
             <td>${manager.email}</td>
             <td>${manager.firstName}</td>
             <td>${manager.lastName}</td>
@@ -48,19 +50,10 @@
 
             <td>
                 <c:if test="${manager.active ne true}">
-                    <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
-                        <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                    </form:form>
-                    <button id = "btn-inactive" class="btn btn-raised btn-default delete submit-manager-active"></button>
-
+                    <button class="btn btn-raised btn-default delete activate activateButton"></button>
                 </c:if>
                 <c:if test="${manager.active eq true}">
-                    <c:url var="lockUrl" value="/adm-edit-manager?id=${manager.id}"/>
-                    <form:form id="${managerFormId}" action="${lockUrl}" method="POST" hidden="hidden">
-                        <input id="manager" name="manager" type="hidden" value="${manager.id}" />
-                    </form:form>
-                    <button  id = "btn-active" class="btn btn-raised btn-default save submit-manager-inactive"></button>
+                    <button class="btn btn-raised btn-default save activate deactivateButton"></button>
                 </c:if>
             </td>
         </tr>
@@ -77,34 +70,29 @@
     </table>
 
     <%--confirmation-dialog--%>
-    <div class="row hidden">
-            <div align="center">
-                <div id="confirmation-dialog-event-div" class="ui-dialog" title=<spring:message
-                        code="event.confirmTitle" /> >
-                    <form id="confirm-your-choice-event">
-                        <div class= "confirmManager">
-                            <p id="inactive-manager-span" hidden><span style="text-align:center; color:red;" >
-                                <spring:message code= "manager.inactive.confirm"/></span></p>
-                            <p id="active-manager-span" hidden><span style="text-align:center; color:red;" >
-                                <spring:message code= "manager.active.confirm"/></span></p>
-                        </div>
-                        <div class="col-xs-12">
-                            <div class="col-xs-6" style="text-align:center;">
-                                <button type="button" class="btn btn-success btn-block" id="confirmYesEvent">
-                                    <spring:message code="event.confirmYes"/></button>
-                            </div>
-                            <div class="col-xs-6" style="text-align:center;">
-                                <button type="button" class="btn btn-danger btn-block" id="confirmNoEvent">
-                                    <spring:message code="event.confirmNo"/></button>
-                            </div>
-                        </div>
-                    </form>
+    <div id="confirmation-activate" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="lead messageActive">
+                        <p id="inactive-manager-span" hidden>
+                            <span><spring:message code= "manager.inactive.confirm"/></span></p>
+                        <p id="active-manager-span" hidden>
+                            <span><spring:message code= "manager.active.confirm"/></span></p>
+                    </div>
+                    <button id="confirmYesEvent" class="btn  btn-success admWarningBtn">
+                        <spring:message code="yes"/>
+                    </button>
+                    <button id="confirmNoEvent" class="btn btn-danger admWarningBtn" data-dismiss="modal">
+                        <spring:message code="no"/>
+                    </button>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src='${pageContext.request.contextPath}/resources/js/edit-manager-confirmation.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/admin-edit-manager.js'></script>
 
 </body>

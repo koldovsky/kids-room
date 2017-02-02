@@ -3,10 +3,7 @@ package ua.softserveinc.tc.controller.admin;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.dto.RoomDto;
@@ -52,12 +49,12 @@ public class EditRoomController {
      * @param id room id
      * @return room with change active state
      */
-    @PostMapping("/adm-edit-room")
+    @PostMapping(value = "/adm-edit-room", consumes = "application/json")
     @ResponseBody
-    public String roomBlockUnblock(@RequestParam Long id) {
+    public Boolean roomBlockUnblock(@RequestBody Long id) {
         RoomDto roomDto = new RoomDto(roomService.changeActiveState(id));
 
-        return new Gson().toJson(roomDto);
+        return roomDto.isActive();
     }
 
     /**
