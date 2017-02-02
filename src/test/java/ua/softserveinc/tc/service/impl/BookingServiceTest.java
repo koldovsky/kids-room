@@ -42,9 +42,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -529,7 +529,7 @@ public class BookingServiceTest {
         workCalendar.set(2019, 0, 7, 12, 0, 0); //2019-01-26T12:00:00 Second day when condition
         Date startLastDate = workCalendar.getTime();
 
-        workCalendar.set(2019, 0, 7, 13, 0, 0); //2019-01-26T12:00:00 Second day when condition
+        workCalendar.set(2019, 0, 7, 13, 0, 0); //2019-01-26T13:00:00 Second day when condition
         Date endLastDate = workCalendar.getTime();
 
         when(testBookingDto.getStartTime()).thenReturn("2019-01-01T12:00:00");
@@ -568,6 +568,174 @@ public class BookingServiceTest {
                 characteristics.getStartDateOfBookings());
         assertEquals("The dates are not correct", endLastDate,
                 characteristics.getEndDateOfBookings());
+        assertEquals("The size must be 0", 0,
+                characteristics.getUsers().size());
+        assertEquals("The size must be 0", 0,
+                characteristics.getRooms().size());
+        assertEquals("The size must be 0", 0,
+                characteristics.getBookingsStates().size());
+
+    }
+
+    @Test
+    public void testHasDuplicateBookingsDatePartWithDaysOfWeekNull() {
+        Calendar workCalendar = Calendar.getInstance();
+        workCalendar.clear();
+
+        workCalendar.set(2019, 0, 7, 12, 0, 0); //2019-01-07T12:00:00 Second day when condition
+        Date startLastDate = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 7, 13, 0, 0); //2019-01-07T13:00:00 Second day when condition
+        Date endLastDate = workCalendar.getTime();
+
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        when(roomService.findEntityById(anyLong())).thenReturn(testRoom);
+        when(userService.findEntityById(anyLong())).thenReturn(testUser);
+        when(childService.findEntityById(anyLong())).thenReturn(testChild);
+        when(testBookingDto.getDateStartTime()).thenReturn(startLastDate);
+        when(testBookingDto.getDateEndTime()).thenReturn(endLastDate);
+        when(testBookingDto.getDaysOfWeek()).thenReturn(null);
+        when(bookingDao.getDuplicateBookings(any()))
+                .thenReturn(Collections.emptyList());
+
+        assertFalse("Must be false", bookingService.hasDuplicateBookings(
+                Collections.singletonList(testBookingDto)));
+        verify(bookingDao).getDuplicateBookings(characteristicsCaptor.capture());
+
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
+
+        assertEquals("The dates are not correct", startLastDate,
+                characteristics.getStartDateOfBookings());
+        assertEquals("The dates are not correct", endLastDate,
+                characteristics.getEndDateOfBookings());
+
+
+    }
+
+    @Test
+    public void testHasDuplicateBookingsDatePartBadNumberFormat() {
+        Date testDate = new Date();
+        mockStatic(DateUtil.class);
+
+        when(roomService.findEntityById(anyLong())).thenReturn(testRoom);
+        when(userService.findEntityById(anyLong())).thenReturn(testUser);
+        when(childService.findEntityById(anyLong())).thenReturn(testChild);
+        when(testBookingDto.getDateStartTime()).thenReturn(testDate);
+        when(testBookingDto.getDateEndTime()).thenReturn(testDate);
+        when(testBookingDto.getDaysOfWeek()).thenReturn("Mon Tue");
+        when(testBookingDto.getStartTime()).thenReturn("2019-01-01T12:00:00");
+        when(testBookingDto.getEndTime()).thenReturn("2019-01-01T12:0x:00");
+        when(DateUtil.toDateISOFormat(anyString())).thenReturn(testDate);
+        when(DateUtil.getIntDaysOfWeek(any())).thenReturn(new int[]{0});
+        when(bookingDao.getDuplicateBookings(any()))
+                .thenReturn(Collections.emptyList());
+
+        assertFalse("Must be false", bookingService.hasDuplicateBookings(
+                Collections.singletonList(testBookingDto)));
+
+        verify(logger).error(anyString(), any(Throwable.class));
+    }
+
+    @Test
+    public void testHasDuplicateBookingsDatePartWithContinueAndBrake() {
+        Calendar workCalendar = Calendar.getInstance();
+        workCalendar.clear();
+
+        workCalendar.set(2019, 0, 25, 12, 0, 0); //2019-01-25T12:00:00 Friday
+        Date startLastDate = workCalendar.getTime();
+
+        workCalendar.set(2019, 0, 25, 13, 0, 0); //2019-01-25T13:00:00 Friday
+        Date endLastDate = workCalendar.getTime();
+        mockStatic(DateUtil.class);
+
+        when(roomService.findEntityById(anyLong())).thenReturn(testRoom);
+        when(userService.findEntityById(anyLong())).thenReturn(testUser);
+        when(childService.findEntityById(anyLong())).thenReturn(testChild);
+        when(testBookingDto.getDateStartTime()).thenReturn(startLastDate);
+        when(testBookingDto.getDateEndTime()).thenReturn(endLastDate);
+        when(testBookingDto.getDaysOfWeek()).thenReturn("Mon Sat");
+        when(testBookingDto.getStartTime()).thenReturn("2019-01-25T12:00:00");
+        when(testBookingDto.getEndTime()).thenReturn("2019-01-25T13:00:00");
+        when(DateUtil.toDateISOFormat("2019-01-25T12:00:00")).thenReturn(startLastDate);
+        when(DateUtil.toDateISOFormat("2019-01-25T13:00:00")).thenReturn(endLastDate);
+        when(DateUtil.getIntDaysOfWeek(any())).thenReturn(new int[]{2, 7});
+
+        assertFalse("Must be false", bookingService.hasDuplicateBookings(
+                Collections.singletonList(testBookingDto)));
+
+    }
+
+    @Test
+    public void testHasAvailablePlacesInTheRoom() {
+        BookingServiceImpl spy = spy(bookingService);
+        BookingsCharacteristics characteristic = mock(BookingsCharacteristics.class);
+
+        doReturn(Collections.emptyList())
+                .when(spy).getNotAvailablePlacesTimePeriods(characteristic, 3, true);
+        assertTrue("Must be true", spy.hasAvailablePlacesInTheRoom(
+                characteristic, 3));
+
+        doReturn(Collections.singletonList(null))
+                .when(spy).getNotAvailablePlacesTimePeriods(characteristic, 3, true);
+        assertFalse("Must be false", spy.hasAvailablePlacesInTheRoom(
+                characteristic, 3));
+    }
+
+    @Test
+    public void testGetAllNotAvailablePlacesTimePeriodsRoom() {
+        BookingServiceImpl spy = spy(bookingService);
+        ArgumentCaptor<BookingsCharacteristics> characteristicsCaptor =
+                ArgumentCaptor.forClass(BookingsCharacteristics.class);
+
+        doReturn(Collections.emptyList()).when(spy)
+                .getNotAvailablePlacesTimePeriods(any(), eq(1), eq(false));
+
+        assertEquals("The size must be 0", 0,
+               spy.getAllNotAvailablePlacesTimePeriods(testRoom).size());
+
+        verify(spy).getNotAvailablePlacesTimePeriods(
+                characteristicsCaptor.capture(), eq(1), eq(false));
+
+        BookingsCharacteristics characteristics = characteristicsCaptor.getValue();
+        checkEmptyPartOfBookingCharacteristics(characteristics);
+        assertEquals("The size must be 0", 0,
+                characteristics.getUsers().size());
+        assertEquals("The size must be 1", 1,
+                characteristics.getRooms().size());
+        assertEquals("Must be equals", testRoom,
+                characteristics.getRooms().get(0));
+        assertTrue("Must be true",
+                characteristics.getStartDateOfBookings() != null);
+        assertTrue("Must be true",
+                characteristics.getEndDateOfBookings() != null);
+
+    }
+
+    @Test
+    public void testGetNotAvailablePlacesTimePeriodsOnlyFirstPass() {
+
+    }
+
+    @Test
+    public void testGetNotAvailablePlacesTimePeriodsOnlyFirstFail() {
+
+    }
+
+    @Test
+    public void testGetNotAvailablePlacesTimePeriodsPass() {
+
+    }
+
+    @Test
+    public void testGetNotAvailablePlacesTimePeriodsFail() {
+
+    }
+
+    @Test
+    public void testGetNotAvailablePlacesTimePeriodsNullReservedBookings() {
+
     }
 
     private void checkEmptyPartOfBookingCharacteristics(BookingsCharacteristics characteristics) {
