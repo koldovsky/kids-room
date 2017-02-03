@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
-import ua.softserveinc.tc.dao.DayOffDao;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
@@ -48,9 +47,6 @@ public class DayOffServiceImpl implements DayOffService {
     @Autowired
     private DayOffRepository dayOffRepository;
 
-    @Autowired
-    private DayOffDao dayOffDao;
-
     /**
      * Creates {@link DayOff} in database
      * and sends information email to users, if
@@ -91,7 +87,7 @@ public class DayOffServiceImpl implements DayOffService {
     @Override
     public List<DayOff> findByNameOrStartDate(
             String name, LocalDate startDate) {
-        return dayOffDao.findByNameOrStartDate(name, startDate);
+        return dayOffRepository.findByNameOrStartDate(name, startDate);
     }
 
     @Override

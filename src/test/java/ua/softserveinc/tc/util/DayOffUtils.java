@@ -20,4 +20,13 @@ public class DayOffUtils {
         return dayOff;
     }
 
+    public static DayOff createDayOff(long id, LocalDate startDate, LocalDate endDate, String name) {
+        DayOff dayOff = new DayOff();
+        dayOff.setId(id);
+        dayOff.setStartDate(startDate);
+        dayOff.setEndDate(endDate);
+        dayOff.setName(name);
+        return dayOff;
+    }
+
 }

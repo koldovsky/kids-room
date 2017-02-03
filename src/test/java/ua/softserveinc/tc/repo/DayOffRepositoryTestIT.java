@@ -54,14 +54,14 @@ public class DayOffRepositoryTestIT {
         endDate = LocalDate.of(2016, 10, 2);
     }
 
-    @DatabaseSetup(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:dayOffRepository/one-dayoff.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = "classpath:dayOffService/update-before-one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @ExpectedDatabase(value = "classpath:dayOffService/update-after-one-dayoff.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @DatabaseTearDown(value = "classpath:dayOffService/update-after-one-dayoff.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testCreate() {
 
-        DayOff dayOff = DayOffUtils.createDayOff(1L, startDate, endDate, "Teachers day", new HashSet<>());
-        dayOffRepository.save(dayOff);
+        DayOff dayOff = DayOffUtils.createDayOff(1L, startDate, endDate, "Mother day", new HashSet<>());
+        dayOffRepository.saveAndFlush(dayOff);
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
