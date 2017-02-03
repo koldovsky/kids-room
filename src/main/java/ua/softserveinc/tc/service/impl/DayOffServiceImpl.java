@@ -108,13 +108,6 @@ public class DayOffServiceImpl implements DayOffService {
     }
 
     @Override
-    public List<DayOff> findByStartDateBetween(
-            LocalDate startDate, LocalDate endDate) {
-        return dayOffRepository.findByStartDateBetween(
-                startDate, endDate);
-    }
-
-    @Override
     public void deleteDayOffEvent(String name) {
         for (Event event : calendarService.findByName(name)) {
             calendarService.deleteEvent(event);
@@ -164,7 +157,9 @@ public class DayOffServiceImpl implements DayOffService {
      */
     @Override
     public void createDayOffEvent(DayOff day) {
+        System.out.println("You day off: " + day);
         for (Room room : day.getRooms()) {
+            System.out.println("Your room: " + room);
             eventRepository.saveAndFlush(Event.builder()
                     .name(day.getName())
                     .startTime(asDate(day.getStartDate(),

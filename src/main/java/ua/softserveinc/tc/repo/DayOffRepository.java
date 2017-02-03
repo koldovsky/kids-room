@@ -9,6 +9,4 @@ import java.util.List;
 public interface DayOffRepository extends JpaRepository<DayOff, Long> {
 
     List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
-
-    List<DayOff> findByStartDateBetween(LocalDate startDate, LocalDate endDate);
 }

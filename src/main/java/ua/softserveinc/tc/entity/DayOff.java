@@ -52,7 +52,7 @@ public class DayOff {
             joinColumns = @JoinColumn(name = RoomConstants.DAY_OFF),
             inverseJoinColumns = @JoinColumn(name = RoomConstants.ROOM))
     @JsonSerialize(using = SimpleRoomSerializer.class)
-    Set<Room> rooms;
+    private Set<Room> rooms;
 
     /**
      * Deletes {@link DayOff} instance and avoids
