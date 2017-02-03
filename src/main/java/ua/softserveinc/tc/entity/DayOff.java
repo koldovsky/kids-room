@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = DayOffConstants.Entity.TABLENAME)
+@Table(name = DayOffConstants.DB.TABLENAME)
 @EqualsAndHashCode(of = "id")
 @ToString
 @JsonIdentityInfo(
@@ -28,20 +28,20 @@ public class DayOff {
     @Id
     @GenericGenerator(name = "generator", strategy = "increment")
     @GeneratedValue(generator = "generator")
-    @Column(name = DayOffConstants.Entity.ID_DAY_OFF)
+    @Column(name = DayOffConstants.DB.ID_DAY_OFF)
     private Long id;
 
-    @Column(name = DayOffConstants.Entity.NAME)
+    @Column(name = DayOffConstants.DB.NAME)
     @NonNull
     private String name;
 
-    @Column(name = DayOffConstants.Entity.START_DATE)
+    @Column(name = DayOffConstants.DB.START_DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @NonNull
     private LocalDate startDate;
 
-    @Column(name = DayOffConstants.Entity.END_DATE)
+    @Column(name = DayOffConstants.DB.END_DATE)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @NonNull
