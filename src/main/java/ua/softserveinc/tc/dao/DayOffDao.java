@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.dao;
 
-/**
- * Created by comp on 03.02.2017.
- */
-public interface DayOff {
+import ua.softserveinc.tc.entity.DayOff;
+
+public interface DayOffDao extends BaseDao<DayOff>  {
+
+    
+
 }
