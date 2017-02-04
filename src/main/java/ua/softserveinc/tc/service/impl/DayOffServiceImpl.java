@@ -51,15 +51,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     @Autowired
     private DayOffDao dayOffDao;
 
-    /**
-     * Creates {@link DayOff} in database
-     * and sends information email to users, if
-     * there is less than seven days till day off,
-     * creates it in calendar for appropriate rooms
-     *
-     * @param dayOff a requested day off
-     * @return current day
-     */
     @Override
     public void create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
@@ -71,12 +62,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
         }
     }
 
-    /**
-     * Updates {@link DayOff} in database
-     *
-     * @param dayOff a requested day off
-     * @return current day
-     */
     @Override
     public DayOff update(DayOff dayOff) {
         return dayOffRepository.saveAndFlush(dayOff);
@@ -112,12 +97,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
         }
     }
 
-    /**
-     * Gets all upcoming days {@link DayOff} within
-     * seven days from today
-     *
-     * @return list of days
-     */
     @Override
     public List<DayOff> getClosestDays() {
         LocalDate today = LocalDate.now();
@@ -130,12 +109,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Sends information email for parents and managers
-     * about upcoming day off
-     *
-     * @param day requested day
-     */
     @Override
     @SneakyThrows
     public void sendDayOffInfo(DayOff day) {
@@ -147,12 +120,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
         }
     }
 
-    /**
-     * Creates event on calendar based on day's off information
-     * for appropriate rooms
-     *
-     * @param day requested day
-     */
     @Override
     public void createDayOffEvent(DayOff day) {
         System.out.println("You day off: " + day);

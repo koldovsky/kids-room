@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.controller.admin;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.Log;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -28,7 +30,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/adm-days-off")
-@Slf4j
 public class DayOffController {
 
     @Autowired
@@ -36,6 +37,9 @@ public class DayOffController {
 
     @Autowired
     private RoomService roomService;
+
+    @Log
+    private static Logger log;
 
     @GetMapping("/all")
     public ResponseEntity<List<DayOff>> allDaysOff() {
