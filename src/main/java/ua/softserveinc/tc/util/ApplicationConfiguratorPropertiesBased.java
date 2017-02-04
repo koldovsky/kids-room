@@ -74,7 +74,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${image.acceptable.format}")
     private String imageAcceptableFormats;
 
-    @Value("${enable.custome.login}")
+    @Value("${multiple.choose.login}")
     private Boolean loginWithoutSSO;
 
     @Bean
@@ -144,7 +144,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
         properties.setProperty("image.acceptable.format", imageAcceptableFormats);
 
-        properties.setProperty("enable.custome.login", loginWithoutSSO.toString());
+        properties.setProperty("multiple.choose.login", loginWithoutSSO.toString());
 
         File propsFile = new File("src/main/resources/properties/application.properties");
         OutputStream out = new FileOutputStream(propsFile);
