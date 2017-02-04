@@ -26,6 +26,13 @@ public interface DayOffService extends BaseService<DayOff>{
      */
     DayOff update(DayOff dayOff);
 
+    /**
+     * Check if dayOff with name and with start and end date
+     * already exists or is between other dayoff.
+     *
+     * @param name of dayOff
+     * @param startDate of dayOff event
+     * */
     boolean dayOffExist(String name, LocalDate startDate);
 
     void delete(long id);
