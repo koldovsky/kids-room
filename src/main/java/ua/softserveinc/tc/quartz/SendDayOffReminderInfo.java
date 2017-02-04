@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.quartz;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
@@ -8,6 +9,7 @@ import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.Log;
 
 import javax.mail.MessagingException;
 
@@ -18,7 +20,6 @@ import static ua.softserveinc.tc.entity.Role.ADMINISTRATOR;
  * runs its method every day at 5:30 AM
  */
 @Service(QuartzConstants.SEND_DAY_OFF_REMINDER)
-@Slf4j
 public class SendDayOffReminderInfo {
 
     @Autowired
@@ -29,6 +30,9 @@ public class SendDayOffReminderInfo {
 
     @Autowired
     private DayOffService dayOffService;
+
+    @Log
+    private static Logger log;
 
     /**
      * Sends information email for parents and managers
