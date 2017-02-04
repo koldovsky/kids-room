@@ -9,10 +9,12 @@ import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.util.DateUtil;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -254,6 +256,126 @@ public class BookingDtoTest {
                 TEST_DATE_END_TIME, bookingDto.getDateEndTime());
         assertEquals("get start time must be appropriate", TEST_STRING_DATE_START_TIME,
                 bookingDto.getEndTime());
+    }
+
+    @Test
+    public void testSetStartTimeWithDateParameter() {
+
+    }
+
+    @Test
+    public void testSetEndTimeWithDateParameter() {
+
+    }
+
+    @Test
+    public void testSetRightStartTime() {
+
+    }
+
+    @Test
+    public void testSetRightEndTime() {
+
+    }
+
+    @Test
+    public void testSetAllAbsentIdFromBookingWithBookingNull() {
+
+    }
+
+    @Test
+    public void testSetAllAbsentIdFromBookingWithAllNull() {
+
+    }
+
+    @Test
+    public void testSetAllAbsentIdFromBookingWithoutNull() {
+
+    }
+
+    @Test
+    public void testSetFieldFromBookingIfNotExistsWithBookingNull() {
+
+    }
+
+    @Test
+    public void testSetFieldFromBookingIfNotExistsWithAllNull() {
+
+    }
+
+    @Test
+    public void testSetFieldFromBookingIfNotExistsWithoutNull() {
+
+    }
+
+    @Test
+    public void testGetListOfBookingObjectsWithInputNull() {
+
+    }
+
+    @Test
+    public void testGetListOfBookingObjectsWithoutInputNull() {
+
+    }
+
+    @Test
+    public void testSetIdToListOfBookingDtoWithNullDto() {
+
+    }
+
+    @Test
+    public void testSetIdToListOfBookingDtoWithNullBookings() {
+
+    }
+
+    @Test
+    public void testSetIdToListOfBookingDtoWithoutHasElements() {
+
+    }
+
+    @Test
+    public void testSetIdToListOfBookingDtoWithElements() {
+
+    }
+
+    @Test
+    public void testGetNewBookingDtoWithNullDates() {
+
+    }
+
+    @Test
+    public void testGetNewBookingDtoWithNulls() {
+
+    }
+
+    @Test
+    public void testGetNewBookingDtoWithoutNulls() {
+
+    }
+
+    @Test
+    public void testGetBookingObjectWithNull() {
+
+    }
+
+    @Test
+    public void testGetBookingObjectWithoutNull() {
+
+    }
+
+    @Test
+    public void testGetRecurrentBookingDtoWithBookingsNull() {
+
+    }
+
+    @Test
+    public void testGetRecurrentBookingDtoWithEmptyBookings() {
+
+    }
+
+    @Test
+    public void testGetRecurrentBookingDtoWithFullBookings() {
+
     }
 
 }

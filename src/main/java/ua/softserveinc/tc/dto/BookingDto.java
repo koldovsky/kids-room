@@ -11,11 +11,7 @@ import ua.softserveinc.tc.util.DateUtil;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Date;
+import java.util.*;
 
 
 public class BookingDto implements Serializable {
@@ -102,11 +98,11 @@ public class BookingDto implements Serializable {
         dateStartTime = booking.getBookingStartTime();
         dateEndTime = booking.getBookingEndTime();
 
-        if(booking.getBookingStartTime() != null) {
+        if (booking.getBookingStartTime() != null) {
             date = shortDateFormat.format(booking.getBookingStartTime());
             startTime = timeFormat.format(booking.getBookingStartTime());
         }
-        if(booking.getBookingEndTime() != null) {
+        if (booking.getBookingEndTime() != null) {
             endDate = shortDateFormat.format(booking.getBookingEndTime());
             endTime = timeFormat.format(booking.getBookingEndTime());
         }
@@ -141,6 +137,10 @@ public class BookingDto implements Serializable {
      * @return the bookingDto object
      */
     public static BookingDto getRecurrentBookingDto(List<Booking> bookings, Set<Integer> weekDays) {
+        if (bookings == null || bookings.isEmpty()) {
+
+            return new BookingDto();
+        }
         Booking startDayBooking = bookings.get(0);
         Booking endDayBooking = bookings.get(bookings.size() - 1);
         BookingDto resultBookingDto = startDayBooking.getDto();
@@ -183,6 +183,10 @@ public class BookingDto implements Serializable {
      * @return resulting list of BookingDto
      */
     public BookingDto getNewBookingDto(Date[] dates) {
+        if (dates == null) {
+
+            return new BookingDto();
+        }
         BookingDto bookingDto = new BookingDto();
         bookingDto.setRoom(room);
         bookingDto.setUser(user);
@@ -197,12 +201,12 @@ public class BookingDto implements Serializable {
         bookingDto.setComment(comment);
         bookingDto.setIdChild(idChild);
         bookingDto.setKidId(kidId);
-        if(dates[0] != null && dates[1] != null) {
+        if (dates[0] != null && dates[1] != null) {
             bookingDto.setDurationLong(dates[1].getTime() - dates[0].getTime());
         } else {
             bookingDto.setDurationLong(0L);
         }
-        if(child != null) {
+        if (child != null) {
             bookingDto.setKidName(child.getFullName());
         }
 
@@ -218,6 +222,10 @@ public class BookingDto implements Serializable {
      * @return list of set BookingDto
      */
     public static List<BookingDto> setIdToListOfBookingDto(List<BookingDto> dtos, List<Booking> bookings) {
+        if (dtos == null || bookings == null) {
+
+            return Collections.emptyList();
+        }
         Iterator<BookingDto> iteratorDto = dtos.iterator();
         Iterator<Booking> iteratorBook = bookings.iterator();
         while (iteratorDto.hasNext() && iteratorBook.hasNext()) {
@@ -235,7 +243,9 @@ public class BookingDto implements Serializable {
      */
     public static List<Booking> getListOfBookingObjects(List<BookingDto> dtos) {
         List<Booking> listOfBookings = new ArrayList<>();
-        dtos.forEach(singleDto -> listOfBookings.add(singleDto.getBookingObject()));
+        if (dtos != null) {
+            dtos.forEach(singleDto -> listOfBookings.add(singleDto.getBookingObject()));
+        }
 
         return listOfBookings;
     }
@@ -252,7 +262,7 @@ public class BookingDto implements Serializable {
      * @param booking the given booking
      */
     public void setFieldFromBookingIfNotExists(Booking booking) {
-        if(booking == null) {
+        if (booking == null) {
 
             return;
         }
@@ -277,6 +287,10 @@ public class BookingDto implements Serializable {
      * @param booking the given booking
      */
     public void setAllAbsentIdFromBooking(Booking booking) {
+        if (booking == null) {
+
+            return;
+        }
         id = booking.getIdBook();
         idChild = booking.getChild() != null ? booking.getChild().getId() : idChild;
         userId = booking.getUser() != null ? booking.getUser().getId() : userId;
@@ -321,7 +335,7 @@ public class BookingDto implements Serializable {
 
     public void setDateStartTime(Date dateStartTime) {
         this.dateStartTime = dateStartTime;
-        if(startTime == null) {
+        if (startTime == null) {
             DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
             startTime = df.format(dateStartTime);
         }
@@ -334,7 +348,7 @@ public class BookingDto implements Serializable {
 
     public void setDateEndTime(Date dateEndTime) {
         this.dateEndTime = dateEndTime;
-        if(endTime == null) {
+        if (endTime == null) {
             DateFormat df = new SimpleDateFormat(DateConstants.DATE_FORMAT);
             endTime = df.format(dateEndTime);
         }
