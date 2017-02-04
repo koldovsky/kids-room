@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,6 @@ import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
-import ua.softserveinc.tc.repo.EventRepository;
 import ua.softserveinc.tc.service.*;
 import ua.softserveinc.tc.util.EventBuilder;
 import ua.softserveinc.tc.util.Log;
