@@ -118,7 +118,7 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
                 mailService.sendDayOffReminderAsync(
                         recipient, MailConstants.DAY_OFF_REMINDER, day);
             } catch (MessagingException e) {
-                log.error(recipient + " don't get a messaging.");
+                log.error(e.getMessage());
             }
         }
     }
@@ -129,8 +129,8 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
             Event event = new EventBuilder.Builder()
                     .setName(day.getName())
                     .setRoom(room)
-                    .setStartTime(asDate(day.getStartDate()))
-                    .setEndTime(asDate(day.getEndDate()))
+                    .setStartTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
+                    .setEndTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
                     .setColor(EVENT_COLOR)
                     .setDescription(DAY_OFF_DESCRIPTION)
                     .build();

@@ -3,6 +3,7 @@ package ua.softserveinc.tc.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,8 +14,10 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Slf4j
 public final class LocalDateUtil {
+
+    @Log
+    private static Logger log;
 
     public static Date asDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay().atZone(ZoneId
