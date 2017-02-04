@@ -36,4 +36,24 @@ public class DayOffDaoImpl extends BaseDaoImpl<DayOff> implements DayOffDao {
 
         return entityManager.createQuery(query).getResultList();
     }
+
+    @Override
+    public boolean isBetweenStartDateAndEndDate(LocalDate startDate, LocalDate endDate) {
+        return findIfBetweenStartDateAndEndDate(startDate, endDate).isEmpty();
+    }
+
+    private List<DayOff> findIfBetweenStartDateAndEndDate(LocalDate startDate, LocalDate endDate) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<DayOff> query = builder.createQuery(DayOff.class);
+        Root<DayOff> root = query.from(DayOff.class);
+
+        query.select(root).where(
+                builder.and(
+                        builder.greaterThanOrEqualTo(root.get(DayOffConstants.Entity.START_DATE), toDate(startDate)),
+                        builder.lessThanOrEqualTo(root.get(DayOffConstants.Entity.END_DATE), toDate(endDate))
+                )
+        );
+
+        return entityManager.createQuery(query).getResultList();
+    }
 }
