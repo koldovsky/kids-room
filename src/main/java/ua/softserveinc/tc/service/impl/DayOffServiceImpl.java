@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.dao.DayOffDao;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
@@ -30,7 +31,7 @@ import static ua.softserveinc.tc.util.LocalDateUtil.asDate;
 
 @Service
 @Slf4j
-public class DayOffServiceImpl implements DayOffService {
+public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOffService {
 
     @Autowired
     private MailService mailService;
@@ -47,6 +48,9 @@ public class DayOffServiceImpl implements DayOffService {
     @Autowired
     private DayOffRepository dayOffRepository;
 
+    @Autowired
+    private DayOffDao dayOffDao;
+
     /**
      * Creates {@link DayOff} in database
      * and sends information email to users, if
@@ -57,7 +61,7 @@ public class DayOffServiceImpl implements DayOffService {
      * @return current day
      */
     @Override
-    public DayOff create(DayOff dayOff) {
+    public void create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
         dayOffRepository.saveAndFlush(dayOff);
         createDayOffEvent(dayOff);
@@ -65,7 +69,6 @@ public class DayOffServiceImpl implements DayOffService {
         if (DAYS.between(today, dayOff.getStartDate()) < WEEK_LENGTH) {
             sendDayOffInfo(dayOff);
         }
-        return dayOff;
     }
 
     /**
@@ -81,13 +84,13 @@ public class DayOffServiceImpl implements DayOffService {
 
     @Override
     public DayOff findById(long id) {
-        return dayOffRepository.findOne(id);
+        return dayOffDao.findById(id);
     }
 
     @Override
     public List<DayOff> findByNameOrStartDate(
             String name, LocalDate startDate) {
-        return dayOffRepository.findByNameOrStartDate(name, startDate);
+        return dayOffDao.findByNameOrStartDate(name, startDate);
     }
 
     @Override
@@ -100,11 +103,6 @@ public class DayOffServiceImpl implements DayOffService {
         String eventName = dayOffRepository.findOne(id).getName();
         dayOffRepository.delete(id);
         deleteDayOffEvent(eventName);
-    }
-
-    @Override
-    public List<DayOff> findAll() {
-        return dayOffRepository.findAll();
     }
 
     @Override

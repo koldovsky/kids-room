@@ -21,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.categories.IntegrationTest;
 import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.entity.DayOff;
+import ua.softserveinc.tc.service.DayOffService;
 import ua.softserveinc.tc.util.DayOffUtils;
 
 import java.time.LocalDate;
@@ -43,7 +44,7 @@ import static org.junit.Assert.assertTrue;
 public class DayOffRepositoryTestIT {
 
     @Autowired
-    private DayOffRepository dayOffRepository;
+    private DayOffService dayOffRepository;
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -61,42 +62,42 @@ public class DayOffRepositoryTestIT {
     public void testCreate() {
 
         DayOff dayOff = DayOffUtils.createDayOff(1L, startDate, endDate, "Mother day", new HashSet<>());
-        dayOffRepository.saveAndFlush(dayOff);
+        dayOffRepository.create(dayOff);
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindOneIfThereIsNoDayOffs() {
-        assertNull(dayOffRepository.findOne(1L));
+        assertNull(dayOffRepository.findById(1L));
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindOneIfThereIsOneDayOffs() {
-        assertNotNull(dayOffRepository.findOne(1L));
-        assertEquals("Teachers day", dayOffRepository.findOne(1L).getName());
+        assertNotNull(dayOffRepository.findById(1L));
+        assertEquals("Teachers day", dayOffRepository.findById(1L).getName());
         LocalDate startDate = LocalDate.of(2016, 10, 2);
-        assertEquals(startDate, dayOffRepository.findOne(1L).getStartDate());
+        assertEquals(startDate, dayOffRepository.findById(1L).getStartDate());
         LocalDate endDate = LocalDate.of(2016, 10, 2);
-        assertEquals(endDate, dayOffRepository.findOne(1L).getEndDate());
+        assertEquals(endDate, dayOffRepository.findById(1L).getEndDate());
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindOneDayOffWhichIdNotExistsIfThereIsOneDayOff() {
-        assertNull(dayOffRepository.findOne(2L));
+        assertNull(dayOffRepository.findById(2L));
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/multiple-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:dayOffRepository/multiple-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindOneIfThereAreMultipleDayOffs() {
-        assertNotNull(dayOffRepository.findOne(1L));
-        assertNotNull(dayOffRepository.findOne(2L));
-        assertNull(dayOffRepository.findOne(4L));
+        assertNotNull(dayOffRepository.findById(1L));
+        assertNotNull(dayOffRepository.findById(2L));
+        assertNull(dayOffRepository.findById(4L));
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)

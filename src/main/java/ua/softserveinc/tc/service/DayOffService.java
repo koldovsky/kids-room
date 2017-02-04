@@ -5,19 +5,13 @@ import ua.softserveinc.tc.entity.DayOff;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface DayOffService {
-
-    DayOff create(DayOff dayOff);
-
-    DayOff update(DayOff dayOff);
+public interface DayOffService extends BaseService<DayOff>{
 
     DayOff findById(long id);
 
     boolean dayOffExist(String name, LocalDate startDate);
 
     void delete(long id);
-
-    List<DayOff> findAll();
 
     List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
 
