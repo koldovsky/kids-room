@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.util;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -75,7 +74,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
     @Value("${image.acceptable.format}")
     private String imageAcceptableFormats;
 
-    @Value("${login.without.sso}")
+    @Value("${multiple.choose.login}")
     private Boolean loginWithoutSSO;
 
     @Bean
@@ -145,7 +144,7 @@ public class ApplicationConfiguratorPropertiesBased implements ApplicationConfig
 
         properties.setProperty("image.acceptable.format", imageAcceptableFormats);
 
-        properties.setProperty("login.without.sso", loginWithoutSSO.toString());
+        properties.setProperty("multiple.choose.login", loginWithoutSSO.toString());
 
         File propsFile = new File("src/main/resources/properties/application.properties");
         OutputStream out = new FileOutputStream(propsFile);

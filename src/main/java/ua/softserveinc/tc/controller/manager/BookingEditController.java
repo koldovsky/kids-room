@@ -24,7 +24,7 @@ import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.validator.TimeValidator;
+import ua.softserveinc.tc.validator.TimeValidatorImpl;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
-import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
 @Controller
 public class BookingEditController {
@@ -54,7 +53,7 @@ public class BookingEditController {
     private BookingDao bookingDao;
 
     @Autowired
-    private TimeValidator timeValidator;
+    private TimeValidatorImpl timeValidator;
 
     @GetMapping(BookingConstants.Model.MANAGER_EDIT_BOOKING_VIEW)
     public ModelAndView editBookingModel(Model model, Principal principal) {

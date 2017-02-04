@@ -21,7 +21,7 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.validator.TimeValidator;
+import ua.softserveinc.tc.validator.TimeValidatorImpl;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -47,7 +47,7 @@ public class MyBookingsController {
     private RoomService roomService;
 
     @Autowired
-    private TimeValidator timeValidator;
+    private TimeValidatorImpl timeValidator;
     /**
      * Renders a view
      * @param principal
@@ -95,7 +95,7 @@ public class MyBookingsController {
                        Principal principal)
             throws ResourceNotFoundException, ParseException {
 
-        if(!timeValidator.validateDate(startDate, endDate)) {
+        if(!timeValidator.isStartDateBefore(startDate, endDate)) {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                     ValidationConstants.DATE_IS_NOT_VALID);
