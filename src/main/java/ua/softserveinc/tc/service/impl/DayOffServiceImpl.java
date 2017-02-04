@@ -12,10 +12,8 @@ import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.repo.EventRepository;
-import ua.softserveinc.tc.service.CalendarService;
-import ua.softserveinc.tc.service.DayOffService;
-import ua.softserveinc.tc.service.MailService;
-import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.service.*;
+import ua.softserveinc.tc.util.EventBuilder;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -43,7 +41,7 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     private UserService userService;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
 
     @Autowired
     private DayOffRepository dayOffRepository;
@@ -122,19 +120,16 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
 
     @Override
     public void createDayOffEvent(DayOff day) {
-        System.out.println("You day off: " + day);
         for (Room room : day.getRooms()) {
-            System.out.println("Your room: " + room);
-            eventRepository.saveAndFlush(Event.builder()
-                    .name(day.getName())
-                    .startTime(asDate(day.getStartDate(),
-                            room.getWorkingHoursStart()))
-                    .endTime(asDate(day.getEndDate(),
-                            room.getWorkingHoursEnd()))
-                    .room(room)
-                    .color(EVENT_COLOR)
-                    .description(DAY_OFF_DESCRIPTION)
-                    .build());
+            Event event = new EventBuilder.Builder()
+                    .setName(day.getName())
+                    .setRoom(room)
+                    .setStartTime(asDate(day.getStartDate()))
+                    .setEndTime(asDate(day.getEndDate()))
+                    .setColor(EVENT_COLOR)
+                    .setDescription(DAY_OFF_DESCRIPTION)
+                    .build();
+            eventService.create(event);
         }
     }
 
