@@ -62,7 +62,7 @@ public class ViewEventController {
         User user;
 
         if (principal == null) {
-            model.addAttribute(EntryConstants.LOGIN_PROP, environment.getProperty("login.without.sso"));
+            model.addAttribute(EntryConstants.LOGIN_PROP, environment.getProperty("enable.custome.login"));
             return EntryConstants.ENTRY_POINT;
         }
 

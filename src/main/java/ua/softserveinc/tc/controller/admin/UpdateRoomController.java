@@ -18,9 +18,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.validator.RoomValidator;
-import ua.softserveinc.tc.validator.TimeValidator;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
