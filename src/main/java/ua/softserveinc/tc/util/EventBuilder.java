@@ -75,7 +75,7 @@ public class EventBuilder {
     }
 
     private EventBuilder(Builder builder) {
-        this.event = builder.event;
+        event = builder.event;
     }
 
     public Event getEvent() {

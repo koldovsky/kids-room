@@ -84,7 +84,7 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
 
     @Override
     public boolean dayOffExist(String name, LocalDate startDate) {
-        return findByNameOrStartDate(name, startDate).isEmpty();
+        return !findByNameOrStartDate(name, startDate).isEmpty();
     }
 
     @Override
