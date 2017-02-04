@@ -64,7 +64,15 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
 
     @Override
     public DayOff update(DayOff dayOff) {
-        return dayOffRepository.saveAndFlush(dayOff);
+        LocalDate today = LocalDate.now();
+        DayOff day = dayOffDao.findById(dayOff.getId());
+        deleteDayOffEvent(day.getName());
+        createDayOffEvent(dayOff);
+
+        if (DAYS.between(today, dayOff.getStartDate()) < WEEK_LENGTH) {
+            sendDayOffInfo(dayOff);
+        }
+        return dayOffDao.update(dayOff);
     }
 
     @Override
