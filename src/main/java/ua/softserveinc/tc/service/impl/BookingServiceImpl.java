@@ -581,7 +581,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         List<Booking> bookingForCancel =
                 bookingDao.getRecurrentBookingsByRecurrentId(recurrentId);
 
-        bookingForCancel.forEach(dto -> dto.setBookingState(BookingState.CANCELLED));
+        if (bookingForCancel != null) {
+            bookingForCancel.forEach(dto -> dto.setBookingState(BookingState.CANCELLED));
+        }
 
         return bookingForCancel;
     }
@@ -792,8 +794,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      * So iterating through instance of this class we receives all dates from input parameter
      * grouped by one day.
      *
-     * Class implements Iterable interface, so we can use it in forEach for loops or streams in
-     * java 8.
+     * Class implements Iterable interface, so we can use it in forEach for loops.
      */
     private class DailyBookingsMapTransformer implements Iterable<List<DateTwoTuple>> {
 
@@ -811,7 +812,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             private int particularYear;
             private ListIterator<Date[]> listOfDatesIterator;
 
-            private BookingsDatesIterator() {
+            BookingsDatesIterator() {
                 if (listOfDates != null && !listOfDates.isEmpty()) {
                     Object[] dates = listOfDates.get(0);
                     Date firstDateOfListOfDates = (Date)dates[0];
@@ -872,7 +873,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
          * @param dates the given list of arrays of dates that we want grouped by days
          * and merged in one list.
          */
-        private DailyBookingsMapTransformer(List<Date[]> dates) {
+        DailyBookingsMapTransformer(List<Date[]> dates) {
             listOfDates = dates;
         }
 

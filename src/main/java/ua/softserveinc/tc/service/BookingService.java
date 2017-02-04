@@ -56,7 +56,7 @@ public interface BookingService extends BaseService<Booking> {
 
     /**
      * Create BookingDto object that contains start and end date for recurrent period of time,
-     * and weekdays arrays. If the input parameter is null or is not corresponding to existed
+     * and weekdays arrays. If the input parameter is not corresponding to existed
      * recurrent Id then method returns null.
      *
      * @param recurrentId the given recurrent Id
