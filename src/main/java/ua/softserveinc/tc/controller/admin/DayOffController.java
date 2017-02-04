@@ -57,7 +57,7 @@ public class DayOffController {
 
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {
-            System.out.println("While getting user with id " + id + " not found");
+            log.error("While getting user with id " + id + " not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(currentDay, HttpStatus.OK);
@@ -65,9 +65,10 @@ public class DayOffController {
 
     @PostMapping("/day/")
     public ResponseEntity<Void> createDayOff(@RequestBody DayOff dayOff, UriComponentsBuilder ucBuilder) {
-        if (dayOffService.dayOffExist(dayOff.getName(), dayOff.getStartDate())) {
+        if (!dayOffService.dayOffExist(dayOff.getName(), dayOff.getStartDate())) {
             log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
                     "with the same start date: " + dayOff.getStartDate());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         dayOffService.create(dayOff);
 
