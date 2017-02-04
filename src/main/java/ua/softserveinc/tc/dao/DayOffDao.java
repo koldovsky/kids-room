@@ -10,4 +10,6 @@ public interface DayOffDao extends BaseDao<DayOff>  {
     List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
 
     boolean isBetweenStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
+
+    void delete(long id);
 }

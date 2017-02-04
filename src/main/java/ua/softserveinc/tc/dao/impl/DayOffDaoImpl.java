@@ -1,13 +1,16 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DayOffConstants;
 import ua.softserveinc.tc.dao.DayOffDao;
 import ua.softserveinc.tc.entity.DayOff;
+import ua.softserveinc.tc.entity.Event;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
@@ -40,6 +43,17 @@ public class DayOffDaoImpl extends BaseDaoImpl<DayOff> implements DayOffDao {
     @Override
     public boolean isBetweenStartDateAndEndDate(LocalDate startDate, LocalDate endDate) {
         return findIfBetweenStartDateAndEndDate(startDate, endDate).isEmpty();
+    }
+
+    @Override
+    @Transactional
+    public void delete(long id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Event> delete = builder.createCriteriaDelete(Event.class);
+        Root r = delete.from(Event.class);
+
+        delete.where(builder.equal(r.get("id"), id));
+        entityManager.createQuery(delete).executeUpdate();
     }
 
     private List<DayOff> findIfBetweenStartDateAndEndDate(LocalDate startDate, LocalDate endDate) {
