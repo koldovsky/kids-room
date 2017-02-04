@@ -9,8 +9,10 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Rate;
+import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.JsonUtil;
 
 import java.time.LocalTime;
@@ -18,12 +20,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Component("roomValidator")
 public class RoomValidatorImpl implements RoomValidator {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * This Validator validates just RoomDto instances
@@ -96,26 +102,36 @@ public class RoomValidatorImpl implements RoomValidator {
                 errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INVALID);
             } else {
                 List<UserDto> managers = Arrays.asList(new Gson().fromJson(jsonManagers, UserDto[].class));
-                List<Long> managerId = new ArrayList<>();
-                for (UserDto id : managers) {
-                    managerId.add(id.getId());
-                }
+                List<Long> managerId = JsonUtil.fromJsonList(roomToValidate.getManagers(), UserDto[].class).stream()
+                        .map(UserDto::getId).collect(Collectors.toList());
                 if (managers.stream().anyMatch(manager -> (manager.getId() == null))) {
                     errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_EMPTY);
-                }
-                if (managerId.stream().distinct().count() != managerId.size()) {
-                    errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
+                } else {
+                    if (managerId.stream().distinct().count() != managerId.size()) {
+                        errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
+                    }
+                    for(Long id: managerId) {
+                        if (userService.findByIdTransactional(id).getRole() != Role.MANAGER) {
+                            errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INCORRECT);
+                            break;
+                        }
+                    }
                 }
 
             }
             String jsonRate = roomToValidate.getRate();
-            List<Rate> rates = JsonUtil.fromJsonList(jsonRate, Rate[].class);
-            if (rates.stream().anyMatch(rate -> ((rate.getHourRate() == null) || (rate.getPriceRate() == null)
-                    || (rate.getHourRate() > 24) || (rate.getHourRate() < 1) || (rate.getPriceRate() < 0)))) {
-                errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD, ValidationConstants.ROOM_RATE_ERROR);
+            if ((Pattern.compile(ValidationConstants.ROOM_HOUR_RATE_REGEX).matcher(jsonRate).find())
+                    || (Pattern.compile(ValidationConstants.ROOM_PRICE_RATE_REGEX).matcher(jsonRate).find())) {
+                errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD,ValidationConstants.ROOM_RATE_INCORRECT);
 
+            } else {
+                List<Rate> rates = JsonUtil.fromJsonList(jsonRate, Rate[].class);
+                if (rates.stream().anyMatch(rate -> ((rate.getHourRate() == null) || (rate.getPriceRate() == null)
+                        || (rate.getHourRate() > 24) || (rate.getHourRate() < 1) || (rate.getPriceRate() < 0)))) {
+                    errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD, ValidationConstants.ROOM_RATE_ERROR);
+
+                }
             }
-
             if ((Pattern.compile(ValidationConstants.TWENTY_FOUR_HOURS_REGEX)
                     .matcher(roomToValidate.getWorkingHoursStart()).matches())
                     && Pattern.compile(ValidationConstants.TWENTY_FOUR_HOURS_REGEX)
