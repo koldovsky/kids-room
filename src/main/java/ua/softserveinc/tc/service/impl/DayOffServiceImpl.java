@@ -9,7 +9,6 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.repo.DayOffRepository;
 import ua.softserveinc.tc.service.*;
 import ua.softserveinc.tc.util.EventBuilder;
 import ua.softserveinc.tc.util.Log;
@@ -43,9 +42,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     private EventService eventService;
 
     @Autowired
-    private DayOffRepository dayOffRepository;
-
-    @Autowired
     private DayOffDao dayOffDao;
 
     @Log
@@ -54,7 +50,7 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     @Override
     public void create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
-        dayOffRepository.saveAndFlush(dayOff);
+        dayOffDao.create(dayOff);
         createDayOffEvent(dayOff);
 
         if (DAYS.between(today, dayOff.getStartDate()) < WEEK_LENGTH) {
@@ -93,8 +89,8 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
 
     @Override
     public void delete(long id) {
-        String eventName = dayOffRepository.findOne(id).getName();
-        dayOffRepository.delete(id);
+        String eventName = findById(id).getName();
+        dayOffDao.delete(id);
         deleteDayOffEvent(eventName);
     }
 
@@ -109,7 +105,7 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     public List<DayOff> getClosestDays() {
         LocalDate today = LocalDate.now();
 
-        return dayOffRepository.findAll().stream()
+        return dayOffDao.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
                 .filter(day -> DAYS.between(today,
                         day.getStartDate()) == WEEK_LENGTH)

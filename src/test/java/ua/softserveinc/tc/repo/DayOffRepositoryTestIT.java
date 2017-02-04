@@ -55,21 +55,21 @@ public class DayOffRepositoryTestIT {
         endDate = LocalDate.of(2016, 10, 2);
     }
 
-    @DatabaseSetup(value = "classpath:dayOffService/update-before-one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:dayOffService/update-after-one-dayoff.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:dayOffService/update-after-one-dayoff.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testCreate() {
-
-        DayOff dayOff = DayOffUtils.createDayOff(1L, startDate, endDate, "Mother day", new HashSet<>());
-        dayOffRepository.create(dayOff);
-    }
-
     @DatabaseSetup(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindOneIfThereIsNoDayOffs() {
         assertNull(dayOffRepository.findById(1L));
+    }
+
+    @DatabaseSetup(value = "classpath:dayOffService/update-before-multiple-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @ExpectedDatabase(value = "classpath:dayOffService/update-after-multiple-dayoffs.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @DatabaseTearDown(value = "classpath:dayOffService/update-after-multiple-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
+    @Test
+    public void testUpdateWhenThereAreMultipleDayOffs() {
+
+        DayOff dayOff = DayOffUtils.createDayOff(2L, startDate, endDate, "Day Offs", new HashSet<>());
+        dayOffRepository.update(dayOff);
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
@@ -98,22 +98,6 @@ public class DayOffRepositoryTestIT {
         assertNotNull(dayOffRepository.findById(1L));
         assertNotNull(dayOffRepository.findById(2L));
         assertNull(dayOffRepository.findById(4L));
-    }
-
-    @DatabaseSetup(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:dayOffRepository/no-dayoffs.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testDeleteWhenThereAreOneDayOff() {
-        dayOffRepository.delete(1L);
-    }
-
-    @DatabaseSetup(value = "classpath:dayOffRepository/multiple-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:dayOffRepository/two-dayoffs.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:dayOffRepository/multiple-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testDeleteWhenThereAreMultipleDayOffs() {
-        dayOffRepository.delete(2L);
     }
 
     @DatabaseSetup(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
