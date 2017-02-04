@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DayOffConstants;
 import ua.softserveinc.tc.dao.DayOffDao;
 import ua.softserveinc.tc.entity.DayOff;
-import ua.softserveinc.tc.entity.Event;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,8 +48,8 @@ public class DayOffDaoImpl extends BaseDaoImpl<DayOff> implements DayOffDao {
     @Transactional
     public void delete(long id) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaDelete<Event> delete = builder.createCriteriaDelete(Event.class);
-        Root r = delete.from(Event.class);
+        CriteriaDelete<DayOff> delete = builder.createCriteriaDelete(DayOff.class);
+        Root r = delete.from(DayOff.class);
 
         delete.where(builder.equal(r.get("id"), id));
         entityManager.createQuery(delete).executeUpdate();
