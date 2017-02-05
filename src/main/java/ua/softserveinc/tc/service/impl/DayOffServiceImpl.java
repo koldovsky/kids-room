@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.mockito.cglib.core.Local;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -77,14 +79,8 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     }
 
     @Override
-    public List<DayOff> findByNameOrStartDate(
-            String name, LocalDate startDate) {
-        return dayOffDao.findByNameOrStartDate(name, startDate);
-    }
-
-    @Override
-    public boolean dayOffExist(String name, LocalDate startDate) {
-        return !findByNameOrStartDate(name, startDate).isEmpty();
+    public boolean dayOffExist(DayOff dayOff) {
+        return false;
     }
 
     @Override
