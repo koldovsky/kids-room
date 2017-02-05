@@ -9,7 +9,4 @@ public interface DayOffDao extends BaseDao<DayOff>  {
 
     void delete(long id);
 
-    List<DayOff> findByStartDateAndEndDate(LocalDate startDate, LocalDate endDate);
-
-    List<DayOff> findByRoomsId(DayOff dayOff);
 }

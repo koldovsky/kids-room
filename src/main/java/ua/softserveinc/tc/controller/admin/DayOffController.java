@@ -65,11 +65,6 @@ public class DayOffController {
 
     @PostMapping("/day/")
     public ResponseEntity<Void> createDayOff(@RequestBody DayOff dayOff, UriComponentsBuilder ucBuilder) {
-        if (dayOffService.dayOffExist(dayOff)) {
-            log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
-                    "with the same start date: " + dayOff.getStartDate());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         dayOffService.create(dayOff);
 
         HttpHeaders headers = new HttpHeaders();

@@ -26,13 +26,6 @@ public interface DayOffService extends BaseService<DayOff>{
      */
     DayOff update(DayOff dayOff);
 
-    /**
-     * Check if dayOff with name and with start and end date
-     * already exists or is between other dayoff.
-     *
-     * * */
-    boolean dayOffExist(DayOff dayOff);
-
     void delete(long id);
 
     DayOff findById(long id);

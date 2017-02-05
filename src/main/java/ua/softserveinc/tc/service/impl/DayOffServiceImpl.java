@@ -79,11 +79,6 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
     }
 
     @Override
-    public boolean dayOffExist(DayOff dayOff) {
-        return false;
-    }
-
-    @Override
     public void delete(long id) {
         String eventName = findById(id).getName();
         dayOffDao.delete(id);
