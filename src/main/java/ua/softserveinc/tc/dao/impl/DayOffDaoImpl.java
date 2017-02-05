@@ -24,22 +24,6 @@ public class DayOffDaoImpl extends BaseDaoImpl<DayOff> implements DayOffDao {
     private EntityManager entityManager;
 
     @Override
-    public List<DayOff> findByNameOrStartDate(String name, LocalDate startDate) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<DayOff> query = builder.createQuery(DayOff.class);
-        Root<DayOff> root = query.from(DayOff.class);
-
-        query.select(root).where(
-          builder.or(
-                  builder.equal(root.get(DayOffConstants.Entity.NAME), name),
-                  builder.equal(root.get(DayOffConstants.Entity.START_DATE), toDate(startDate))
-          )
-        );
-
-        return entityManager.createQuery(query).getResultList();
-    }
-
-    @Override
     @Transactional
     public void delete(long id) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

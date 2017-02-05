@@ -65,11 +65,6 @@ public class DayOffController {
 
     @PostMapping("/day/")
     public ResponseEntity<Void> createDayOff(@RequestBody DayOff dayOff, UriComponentsBuilder ucBuilder) {
-        if (dayOffService.dayOffExist(dayOff.getName(), dayOff.getStartDate())) {
-            log.warn("There is another day off with the same name: " + dayOff.getName() + ", or" +
-                    "with the same start date: " + dayOff.getStartDate());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         dayOffService.create(dayOff);
 
         HttpHeaders headers = new HttpHeaders();
@@ -100,7 +95,7 @@ public class DayOffController {
     }
 
     @DeleteMapping("/day/{id}")
-    public ResponseEntity<DayOff> deleteUser(@PathVariable("id") long id) {
+    public ResponseEntity<DayOff> deleteDayOff(@PathVariable("id") long id) {
 
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {

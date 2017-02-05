@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface DayOffDao extends BaseDao<DayOff>  {
 
-    List<DayOff> findByNameOrStartDate(String name, LocalDate startDate);
-
     void delete(long id);
+
 }
