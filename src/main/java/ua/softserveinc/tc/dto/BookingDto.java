@@ -170,6 +170,8 @@ public class BookingDto implements Serializable {
         }
         if (sum == null) {
             booking.setSum(0L);
+        } else {
+            booking.setSum(sum);
         }
 
         return booking;

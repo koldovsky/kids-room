@@ -3,6 +3,7 @@ package ua.softserveinc.tc.dto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -595,26 +597,112 @@ public class BookingDtoTest {
 
     @Test
     public void testGetBookingObjectWithNull() {
+        setBookingDtoBaseFields();
+        bookingDto.setDurationLong(TEST_SIMPLE_LONG);
+        bookingDto.setDateEndTime(TEST_DATE_END_TIME);
+        bookingDto.setDateStartTime(null);
+        bookingDto.setSum(null);
+
+        Booking resultBooking = bookingDto.getBookingObject();
+
+        assertEquals("the object must be equals", null,
+                resultBooking.getBookingStartTime());
+        assertEquals("the object must be equals", TEST_DATE_END_TIME,
+                resultBooking.getBookingEndTime());
+        assertEquals("the object must be equals", TEST_SIMPLE_STRING,
+                resultBooking.getComment());
+        assertEquals("the object must be equals", testRoom,
+                resultBooking.getRoom());
+        assertEquals("the object must be equals", testChild,
+                resultBooking.getChild());
+        assertEquals("the object must be equals", testUser,
+                resultBooking.getUser());
+        assertEquals("the object must be equals", TEST_BOOKING_STATE,
+                resultBooking.getBookingState());
+        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+                resultBooking.getRecurrentId());
+        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+                resultBooking.getDuration());
+        assertEquals("the object must be equals", (Long)0L,
+                resultBooking.getSum());
 
     }
 
     @Test
     public void testGetBookingObjectWithoutNull() {
+        setBookingDtoBaseFields();
+        bookingDto.setDurationLong(null);
+        bookingDto.setDateEndTime(TEST_DATE_END_TIME);
+        bookingDto.setDateStartTime(TEST_DATE_START_TIME);
+        bookingDto.setSum(TEST_SIMPLE_LONG);
 
+        Booking resultBooking = bookingDto.getBookingObject();
+
+        assertEquals("the object must be equals", TEST_DATE_START_TIME,
+                resultBooking.getBookingStartTime());
+        assertEquals("the object must be equals", TEST_DATE_END_TIME,
+                resultBooking.getBookingEndTime());
+        assertEquals("the object must be equals", TEST_SIMPLE_STRING,
+                resultBooking.getComment());
+        assertEquals("the object must be equals", testRoom,
+                resultBooking.getRoom());
+        assertEquals("the object must be equals", testChild,
+                resultBooking.getChild());
+        assertEquals("the object must be equals", testUser,
+                resultBooking.getUser());
+        assertEquals("the object must be equals", TEST_BOOKING_STATE,
+                resultBooking.getBookingState());
+        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+                resultBooking.getRecurrentId());
+        assertEquals("the object must be equals", (Long)3600_000L,
+                resultBooking.getDuration());
+        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+                resultBooking.getSum());
     }
 
     @Test
     public void testGetRecurrentBookingDtoWithBookingsNull() {
+        NullPointerException failException = null;
 
+        try {
+            BookingDto.getRecurrentBookingDto(null, new HashSet<>());
+        } catch (NullPointerException e) {
+            failException = e;
+        }
+
+        assertEquals("the exception must be null", null, failException);
     }
 
     @Test
     public void testGetRecurrentBookingDtoWithEmptyBookings() {
+        NullPointerException failException = null;
 
+        try {
+            BookingDto.getRecurrentBookingDto(new ArrayList<>(), null);
+        } catch (NullPointerException e) {
+            failException = e;
+        }
+
+        assertEquals("the exception must be null", null, failException);
     }
 
     @Test
     public void testGetRecurrentBookingDtoWithFullBookings() {
+        List<Booking> testBookings = Collections.singletonList(testBooking);
+        Set<Integer> testWeekDays = new HashSet<>(Arrays.asList(1, 1, 2, 3, 5));
+        when(testBooking.getDto()).thenReturn(bookingDto);
+        when(testBooking.getBookingEndTime()).thenReturn(TEST_DATE_START_TIME);
+
+        BookingDto resultDto = BookingDto.getRecurrentBookingDto(testBookings, testWeekDays);
+
+        assertEquals("the object must be equals", TEST_DATE_START_TIME,
+                resultDto.getDateEndTime());
+        assertEquals("the object must be equals", TEST_STRING_TIME,
+                resultDto.getEndTime());
+        assertEquals("the object must be equals", TEST_STRING_DATE,
+                resultDto.getEndDate());
+        assertEquals("the object must be equals", testWeekDays,
+                resultDto.getWeekDays());
 
     }
 
