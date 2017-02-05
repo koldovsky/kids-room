@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.app.VelocityEngine;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,6 +19,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.constants.URIConstants;
+import ua.softserveinc.tc.util.Log;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -30,7 +32,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Service
-@Slf4j
 public class MailServiceImpl implements MailService {
 
     private ExecutorService executor =
@@ -51,6 +52,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private ApplicationConfigurator configurator;
+
+    @Log
+    private static Logger log;
 
     @SuppressWarnings("deprecation")
     private String getTextMessage(String template, Map<String, Object> model) {

@@ -6,7 +6,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DayOffConstants {
 
+
     public static final class Entity {
+
+        public static final String NAME = "name";
+
+        public static final String ID = "id";
+
+        public static final String START_DATE = "startDate";
+
+        public static final String END_DATE = "endDate";
+
+        public static final String ROOMS = "rooms";
+    }
+
+    public static final class DB {
 
         public static final String TABLENAME = "days_off";
 

@@ -8,6 +8,8 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +41,10 @@ public final class DateUtil {
             LOG.error("Error convert to date", e);
             throw new ResourceNotFoundException(e);
         }
+    }
+
+    public static Date toDate(LocalDate date) {
+        return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public static Date toDateAndTime(String date) {

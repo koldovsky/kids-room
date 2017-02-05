@@ -1,21 +1,19 @@
 package ua.softserveinc.tc.service.impl;
 
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.MailConstants;
+import ua.softserveinc.tc.dao.DayOffDao;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.repo.DayOffRepository;
-import ua.softserveinc.tc.repo.EventRepository;
-import ua.softserveinc.tc.service.CalendarService;
-import ua.softserveinc.tc.service.DayOffService;
-import ua.softserveinc.tc.service.MailService;
-import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.service.*;
+import ua.softserveinc.tc.util.EventBuilder;
+import ua.softserveinc.tc.util.Log;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -29,8 +27,7 @@ import static ua.softserveinc.tc.entity.Role.ADMINISTRATOR;
 import static ua.softserveinc.tc.util.LocalDateUtil.asDate;
 
 @Service
-@Slf4j
-public class DayOffServiceImpl implements DayOffService {
+public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOffService {
 
     @Autowired
     private MailService mailService;
@@ -42,76 +39,59 @@ public class DayOffServiceImpl implements DayOffService {
     private UserService userService;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
 
     @Autowired
-    private DayOffRepository dayOffRepository;
+    private DayOffDao dayOffDao;
 
-    /**
-     * Creates {@link DayOff} in database
-     * and sends information email to users, if
-     * there is less than seven days till day off,
-     * creates it in calendar for appropriate rooms
-     *
-     * @param dayOff a requested day off
-     * @return current day
-     */
+    @Log
+    private static Logger log;
+
     @Override
-    public DayOff create(DayOff dayOff) {
+    public void create(DayOff dayOff) {
         LocalDate today = LocalDate.now();
-        dayOffRepository.saveAndFlush(dayOff);
+        dayOffDao.create(dayOff);
         createDayOffEvent(dayOff);
 
         if (DAYS.between(today, dayOff.getStartDate()) < WEEK_LENGTH) {
             sendDayOffInfo(dayOff);
         }
-        return dayOff;
     }
 
-    /**
-     * Updates {@link DayOff} in database
-     *
-     * @param dayOff a requested day off
-     * @return current day
-     */
     @Override
     public DayOff update(DayOff dayOff) {
-        return dayOffRepository.saveAndFlush(dayOff);
+        LocalDate today = LocalDate.now();
+        DayOff day = dayOffDao.findById(dayOff.getId());
+        deleteDayOffEvent(day.getName());
+        createDayOffEvent(dayOff);
+
+        if (DAYS.between(today, dayOff.getStartDate()) < WEEK_LENGTH) {
+            sendDayOffInfo(dayOff);
+        }
+        return dayOffDao.update(dayOff);
     }
 
     @Override
     public DayOff findById(long id) {
-        return dayOffRepository.findOne(id);
+        return dayOffDao.findById(id);
     }
 
     @Override
     public List<DayOff> findByNameOrStartDate(
             String name, LocalDate startDate) {
-        return dayOffRepository.findByNameOrStartDate(name, startDate);
+        return dayOffDao.findByNameOrStartDate(name, startDate);
     }
 
     @Override
     public boolean dayOffExist(String name, LocalDate startDate) {
-        return findByNameOrStartDate(name, startDate).isEmpty();
+        return !findByNameOrStartDate(name, startDate).isEmpty();
     }
 
     @Override
     public void delete(long id) {
-        String eventName = dayOffRepository.findOne(id).getName();
-        dayOffRepository.delete(id);
+        String eventName = findById(id).getName();
+        dayOffDao.delete(id);
         deleteDayOffEvent(eventName);
-    }
-
-    @Override
-    public List<DayOff> findAll() {
-        return dayOffRepository.findAll();
-    }
-
-    @Override
-    public List<DayOff> findByStartDateBetween(
-            LocalDate startDate, LocalDate endDate) {
-        return dayOffRepository.findByStartDateBetween(
-                startDate, endDate);
     }
 
     @Override
@@ -121,17 +101,11 @@ public class DayOffServiceImpl implements DayOffService {
         }
     }
 
-    /**
-     * Gets all upcoming days {@link DayOff} within
-     * seven days from today
-     *
-     * @return list of days
-     */
     @Override
     public List<DayOff> getClosestDays() {
         LocalDate today = LocalDate.now();
 
-        return dayOffRepository.findAll().stream()
+        return dayOffDao.findAll().stream()
                 .filter(day -> day.getStartDate().isAfter(today))
                 .filter(day -> DAYS.between(today,
                         day.getStartDate()) == WEEK_LENGTH)
@@ -139,42 +113,32 @@ public class DayOffServiceImpl implements DayOffService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Sends information email for parents and managers
-     * about upcoming day off
-     *
-     * @param day requested day
-     */
     @Override
-    @SneakyThrows
     public void sendDayOffInfo(DayOff day) {
         List<User> activeUsers = userService
                 .findByActiveTrueAndRoleNot(ADMINISTRATOR);
         for (User recipient : activeUsers) {
-            mailService.sendDayOffReminderAsync(
-                    recipient, MailConstants.DAY_OFF_REMINDER, day);
+            try {
+                mailService.sendDayOffReminderAsync(
+                        recipient, MailConstants.DAY_OFF_REMINDER, day);
+            } catch (MessagingException e) {
+                log.error(e.getMessage());
+            }
         }
     }
 
-    /**
-     * Creates event on calendar based on day's off information
-     * for appropriate rooms
-     *
-     * @param day requested day
-     */
     @Override
     public void createDayOffEvent(DayOff day) {
         for (Room room : day.getRooms()) {
-            eventRepository.saveAndFlush(Event.builder()
-                    .name(day.getName())
-                    .startTime(asDate(day.getStartDate(),
-                            room.getWorkingHoursStart()))
-                    .endTime(asDate(day.getEndDate(),
-                            room.getWorkingHoursEnd()))
-                    .room(room)
-                    .color(EVENT_COLOR)
-                    .description(DAY_OFF_DESCRIPTION)
-                    .build());
+            Event event = new EventBuilder.Builder()
+                    .setName(day.getName())
+                    .setRoom(room)
+                    .setStartTime(asDate(day.getStartDate(), room.getWorkingHoursStart()))
+                    .setEndTime(asDate(day.getEndDate(), room.getWorkingHoursEnd()))
+                    .setColor(EVENT_COLOR)
+                    .setDescription(DAY_OFF_DESCRIPTION)
+                    .build();
+            eventService.create(event);
         }
     }
 
