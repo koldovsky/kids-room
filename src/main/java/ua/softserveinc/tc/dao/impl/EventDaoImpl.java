@@ -51,6 +51,20 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
     }
 
     @Override
+    public List<Event> findByName(String name) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Event> query = builder.createQuery(Event.class);
+        Root<Event> root = query.from(Event.class);
+
+        query.select(root).where(
+                builder.equal( root.get("name"), name)
+        );
+
+        return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
     @Transactional
     public void deleteByRecurrentId(Long idRecurrent) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
