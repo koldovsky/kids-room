@@ -24,17 +24,10 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.doThrow;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DateUtil.class, BookingDto.class})
@@ -182,7 +175,8 @@ public class BookingDtoTest {
     @Test
     public void testSetAndGetBookingState() {
         bookingDto.setBookingState(TEST_BOOKING_STATE);
-        assertEquals("get must be equal to set", TEST_BOOKING_STATE, bookingDto.getBookingState());
+        assertEquals("get must be equal to set",
+                TEST_BOOKING_STATE, bookingDto.getBookingState());
     }
 
     @Test
@@ -320,6 +314,7 @@ public class BookingDtoTest {
         } catch (NullPointerException e) {
             failException = e;
         }
+
         assertEquals("the exception must be null", null, failException);
     }
 
@@ -359,6 +354,7 @@ public class BookingDtoTest {
                 bookingDto.getUserId());
         assertEquals("the result must be null", TEST_SIMPLE_LONG,
                 bookingDto.getId());
+
     }
 
     @Test
@@ -370,6 +366,7 @@ public class BookingDtoTest {
         } catch (NullPointerException e) {
             failException = e;
         }
+
         assertEquals("the exception must be null", null, failException);
     }
 
@@ -411,6 +408,7 @@ public class BookingDtoTest {
                 bookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 bookingDto.getRecurrentId());
+
     }
 
     @Test
@@ -440,6 +438,7 @@ public class BookingDtoTest {
                 bookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 bookingDto.getRecurrentId());
+
     }
 
     @Test
@@ -501,6 +500,7 @@ public class BookingDtoTest {
         assertTrue("the objects must be equals", result.get(1) == secondBookingDto);
         assertTrue("the objects must be equals", bookingDto.getId() == 1L);
         assertTrue("the objects must be equals", secondBookingDto.getId() == 2L);
+
     }
 
     @Test
@@ -594,6 +594,7 @@ public class BookingDtoTest {
                 resultBookingDto.getRecurrentId());
         assertEquals("the object must be equals", TEST_SIMPLE_STRING,
                 resultBookingDto.getKidName());
+
     }
 
     @Test
@@ -659,6 +660,7 @@ public class BookingDtoTest {
                 resultBooking.getDuration());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBooking.getSum());
+
     }
 
     @Test
@@ -842,12 +844,114 @@ public class BookingDtoTest {
     }
 
     @Test
-    public void testBookingDtoConstructorWithBookingDtoParameterWithTimesNull() {
+    public void testBookingDtoConstructorWithBookingDtoParameterWithoutNull() {
         Set<Integer> testWeekDays = new HashSet<>(Arrays.asList(1, 1, 2, 3, 5));
         Date testDate = new Date();
         setFullBookingDto(testWeekDays, testDate);
 
         BookingDto resultBookingDto = new BookingDto(bookingDto);
+
+        commonAssertPartForTestConstructor(resultBookingDto, testWeekDays);
+        assertEquals("the object must be equals", testDate,
+                resultBookingDto.getDateStartTime());
+        assertEquals("the object must be equals", TEST_DATE_END_TIME,
+                resultBookingDto.getDateEndTime());
+        assertEquals("the object must be equals", (Long)3600_000L,
+                resultBookingDto.getDurationBooking());
+        assertEquals("the object must be equals", (Long) TEST_DATE_START_TIME.getTime(),
+                resultBookingDto.getStartTimeMillis());
+        assertEquals("the object must be equals", (Long) TEST_DATE_END_TIME.getTime(),
+                resultBookingDto.getEndTimeMillis());
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingDtoParameterWithTimesNull() {
+        Set<Integer> testWeekDays = new HashSet<>(Arrays.asList(1, 1, 2, 3, 5));
+        Date testDate = new Date();
+        setFullBookingDto(testWeekDays, testDate);
+        bookingDto.setStartTimeMillis(null);
+        bookingDto.setDateStartTime(null);
+
+        BookingDto resultBookingDto = new BookingDto(bookingDto);
+
+        commonAssertPartForTestConstructor(resultBookingDto, testWeekDays);
+        assertEquals("the object must be equals", null,
+                resultBookingDto.getDateStartTime());
+        assertEquals("the object must be equals", TEST_DATE_END_TIME,
+                resultBookingDto.getDateEndTime());
+        assertEquals("the object must be equals", (Long)0L,
+                resultBookingDto.getDurationBooking());
+        assertEquals("the object must be equals", null,
+                resultBookingDto.getStartTimeMillis());
+        assertEquals("the object must be equals", (Long) TEST_DATE_END_TIME.getTime(),
+                resultBookingDto.getEndTimeMillis());
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingDtoParameterWithTimeMillisNull() {
+        Set<Integer> testWeekDays = new HashSet<>(Arrays.asList(1, 1, 2, 3, 5));
+        Date testDate = new Date();
+        setFullBookingDto(testWeekDays, testDate);
+        bookingDto.setEndTimeMillis(null);
+
+        BookingDto resultBookingDto = new BookingDto(bookingDto);
+
+        commonAssertPartForTestConstructor(resultBookingDto, testWeekDays);
+        assertEquals("the object must be equals", testDate,
+                resultBookingDto.getDateStartTime());
+        assertEquals("the object must be equals", TEST_DATE_END_TIME,
+                resultBookingDto.getDateEndTime());
+        assertEquals("the object must be equals",
+                (Long)(TEST_DATE_END_TIME.getTime() - testDate.getTime()),
+                resultBookingDto.getDurationBooking());
+        assertEquals("the object must be equals", (Long) TEST_DATE_START_TIME.getTime(),
+                resultBookingDto.getStartTimeMillis());
+        assertEquals("the object must be equals", null,
+                resultBookingDto.getEndTimeMillis());
+
+    }
+
+    private void setFullBookingDto(Set<Integer> testWeekDays, Date testDate) {
+        setBookingDtoBaseFields();
+        bookingDto.setDateStartTime(testDate);
+        bookingDto.setDate(TEST_STRING_DATE);
+        bookingDto.setEndDate(TEST_STRING_DATE);
+        bookingDto.setStartTimeMillis(TEST_DATE_START_TIME.getTime());
+        bookingDto.setEndTimeMillis(TEST_DATE_END_TIME.getTime());
+        bookingDto.setDurationBooking(3600_000L);
+        bookingDto.setWeekDays(testWeekDays);
+        bookingDto.setDaysOfWeek(TEST_SIMPLE_STRING);
+        bookingDto.setRoomId(TEST_SIMPLE_LONG);
+        bookingDto.setUserId(TEST_SIMPLE_LONG);
+        bookingDto.setRoomName(TEST_SIMPLE_STRING);
+        bookingDto.setDuration(TEST_SIMPLE_STRING);
+
+    }
+
+    private void setBookingDtoBaseFields() {
+        bookingDto.setChild(testChild);
+        bookingDto.setUser(testUser);
+        bookingDto.setRoom(testRoom);
+        bookingDto.setId(TEST_SIMPLE_LONG);
+        bookingDto.setDateStartTime(TEST_DATE_START_TIME);
+        bookingDto.setDateEndTime(TEST_DATE_END_TIME);
+        bookingDto.setComment(TEST_SIMPLE_STRING);
+        bookingDto.setBookingState(TEST_BOOKING_STATE);
+        bookingDto.setDurationLong(TEST_SIMPLE_LONG);
+        bookingDto.setSum(TEST_SIMPLE_LONG);
+        bookingDto.setRecurrentId(TEST_SIMPLE_LONG);
+        bookingDto.setStartTime(TEST_STRING_DATE_START_TIME);
+        bookingDto.setEndTime(TEST_STRING_DATE_END_TIME);
+        bookingDto.setIdChild(TEST_SIMPLE_LONG);
+        bookingDto.setKidId(TEST_SIMPLE_LONG);
+        bookingDto.setKidName(TEST_SIMPLE_STRING);
+
+    }
+
+    private void commonAssertPartForTestConstructor(BookingDto resultBookingDto,
+                                                    Set<Integer> testWeekDays) {
 
         assertEquals("the object must be equals", testChild,
                 resultBookingDto.getChild());
@@ -857,10 +961,6 @@ public class BookingDtoTest {
                 resultBookingDto.getUser());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getId());
-        assertEquals("the object must be equals", testDate,
-                resultBookingDto.getDateStartTime());
-        assertEquals("the object must be equals", TEST_DATE_END_TIME,
-                resultBookingDto.getDateEndTime());
         assertEquals("the object must be equals", TEST_STRING_DATE_START_TIME,
                 resultBookingDto.getStartTime());
         assertEquals("the object must be equals", TEST_STRING_DATE_END_TIME,
@@ -887,68 +987,15 @@ public class BookingDtoTest {
                 resultBookingDto.getIdChild());
         assertEquals("the object must be equals", TEST_SIMPLE_STRING,
                 resultBookingDto.getRoomName());
-        assertEquals("the object must be equals", (Long)3600_000L,
-                resultBookingDto.getDurationBooking());
         assertEquals("the object must be equals", TEST_SIMPLE_STRING,
                 resultBookingDto.getDuration());
-        assertEquals("the object must be equals", (Long)TEST_DATE_START_TIME.getTime(),
-                resultBookingDto.getStartTimeMillis());
-        assertEquals("the object must be equals", (Long)TEST_DATE_END_TIME.getTime(),
-                resultBookingDto.getEndTimeMillis());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getUserId());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getRoomId());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getKidId());
-    }
 
-    @Test
-    public void testBookingDtoConstructorWithBookingDtoParameterWithDateStartNull() {
-
-    }
-
-    @Test
-    public void testBookingDtoConstructorWithBookingDtoParameterWithoutDateStartNull() {
-
-    }
-
-    private void setFullBookingDto(Set<Integer> testWeekDays, Date testDate) {
-        setBookingDtoBaseFields();
-        bookingDto.setDateStartTime(testDate);
-        bookingDto.setDate(TEST_STRING_DATE);
-        bookingDto.setEndDate(TEST_STRING_DATE);
-        bookingDto.setStartTimeMillis(TEST_DATE_START_TIME.getTime());
-        bookingDto.setEndTimeMillis(TEST_DATE_END_TIME.getTime());
-        bookingDto.setDurationBooking(3600_000L);
-        bookingDto.setWeekDays(testWeekDays);
-        bookingDto.setDaysOfWeek(TEST_SIMPLE_STRING);
-        bookingDto.setRoomId(TEST_SIMPLE_LONG);
-        bookingDto.setUserId(TEST_SIMPLE_LONG);
-        bookingDto.setRoomName(TEST_SIMPLE_STRING);
-        bookingDto.setDuration(TEST_SIMPLE_STRING);
-
-
-
-    }
-
-    private void setBookingDtoBaseFields() {
-        bookingDto.setChild(testChild);
-        bookingDto.setUser(testUser);
-        bookingDto.setRoom(testRoom);
-        bookingDto.setId(TEST_SIMPLE_LONG);
-        bookingDto.setDateStartTime(TEST_DATE_START_TIME);
-        bookingDto.setDateEndTime(TEST_DATE_END_TIME);
-        bookingDto.setComment(TEST_SIMPLE_STRING);
-        bookingDto.setBookingState(TEST_BOOKING_STATE);
-        bookingDto.setDurationLong(TEST_SIMPLE_LONG);
-        bookingDto.setSum(TEST_SIMPLE_LONG);
-        bookingDto.setRecurrentId(TEST_SIMPLE_LONG);
-        bookingDto.setStartTime(TEST_STRING_DATE_START_TIME);
-        bookingDto.setEndTime(TEST_STRING_DATE_END_TIME);
-        bookingDto.setIdChild(TEST_SIMPLE_LONG);
-        bookingDto.setKidId(TEST_SIMPLE_LONG);
-        bookingDto.setKidName(TEST_SIMPLE_STRING);
     }
 
 }
