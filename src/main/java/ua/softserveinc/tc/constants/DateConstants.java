@@ -129,6 +129,7 @@ public final class DateConstants {
             eventColors.add("#51d466");
             eventColors.add("#84fff7");
             eventColors.add("#d3af37");
+            eventColors.add("#f98e2e");
         }
 
         public static List<String> getEventColors() {

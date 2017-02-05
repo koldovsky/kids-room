@@ -24,6 +24,8 @@ public final class ValidationConstants {
     public static final String NAME_REGEX = "^[a-zA-Zа-яА-ЯЇїІіЄєҐґ`´ʼ’'\\-\\s]+$";
     public static final String LETTERS_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]*$";
     public static final String MANAGER_ID_REGEX = "\"id\":\"(\\D+)";
+    public static final String ROOM_HOUR_RATE_REGEX = "\"hourRate\":\"(\\D+)";
+    public static final String ROOM_PRICE_RATE_REGEX = "\"priceRate\":\"(\\D+)";
     public static final String TWENTY_FOUR_HOURS_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 
     public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\\s]*$";
@@ -103,6 +105,8 @@ public final class ValidationConstants {
     public static final String ROOM_MANAGER_EMPTY = "administrator.room.error.managerEmpty";
     public static final String ROOM_MANAGER_DUPLICATE = "administrator.room.error.managerDuplicate";
     public static final String ROOM_RATE_ERROR = "administrator.room.error.rate";
+    public static final String ROOM_MANAGER_INCORRECT ="administrator.room.error.managerIncorrect";
+    public static final String ROOM_RATE_INCORRECT ="administrator.room.error.rateIncorrect";
 
     public static final String EMPTY_NAME_MSG = "registration.emptyName";
     public static final String EMPTY_SURNAME_MSG = "registration.emptySurname";
