@@ -78,11 +78,11 @@ public class AddUpdateRoomController {
         return new ModelAndView("redirect:/" + AdminConstants.EDIT_ROOM);
     }
     /**
-     //     * Method mapping into view, with update room form. Method send empty model into view
-     //     * with list of managers (view mapping by AdminConstants.UPDATE_ROOM const).
-     //     *
-     //     * @return mav (model into UI)
-     //     */
+     * Method mapping into view, with update room form. Method send empty model into view
+     * with list of managers (view mapping by AdminConstants.UPDATE_ROOM const).
+     *
+     * @return mav (model into UI)
+     */
     @GetMapping("/adm-update-room")
     public ModelAndView showUpdateRoomForm(@RequestParam Long id) {
         List<User> managers = this.userService.findAllUsersByRole(Role.MANAGER);
