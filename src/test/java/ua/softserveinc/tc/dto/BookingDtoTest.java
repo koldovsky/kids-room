@@ -56,6 +56,11 @@ public class BookingDtoTest {
 
     private static final String TEST_STRING_DATE_END_TIME = "2019-01-25T13:00:00";
 
+    private static final String TEST_STRING_DATE = "2019-01-25";
+
+    private static final String TEST_STRING_TIME = "12:00";
+
+
     static {
         Calendar workCalendar = Calendar.getInstance();
 
@@ -260,22 +265,30 @@ public class BookingDtoTest {
 
     @Test
     public void testSetStartTimeWithDateParameter() {
-
+        bookingDto.setStartTime(TEST_DATE_START_TIME);
+        assertEquals("get must be equal to set", TEST_STRING_DATE,
+                bookingDto.getStartTime());
     }
 
     @Test
     public void testSetEndTimeWithDateParameter() {
-
-    }
-
-    @Test
-    public void testSetRightStartTime() {
-
+        bookingDto.setEndTime(TEST_DATE_END_TIME);
+        assertEquals("get must be equal to set", TEST_STRING_DATE,
+                bookingDto.getEndTime());
     }
 
     @Test
     public void testSetRightEndTime() {
+        bookingDto.setRightEndTime(TEST_DATE_START_TIME);
+        assertEquals("get must be equal to set", TEST_STRING_TIME,
+                bookingDto.getEndTime());
+    }
 
+    @Test
+    public void testSetRightEndDate() {
+        bookingDto.setRightEndDate(TEST_DATE_END_TIME);
+        assertEquals("get must be equal to set", TEST_STRING_DATE,
+                bookingDto.getEndDate());
     }
 
     @Test
