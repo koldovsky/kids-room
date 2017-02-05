@@ -39,9 +39,6 @@ public class CalendarServiceImpl implements CalendarService {
     private EventMapper eventMapper;
 
     @Autowired
-    private RoomDao roomDao;
-
-    @Autowired
     private EventService eventService;
 
     @Autowired
@@ -224,7 +221,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public List<Event> findByName(String name) {
-        return eventRepository.findByName(name);
+        return eventService.findByName(name);
     }
 
     @Override
