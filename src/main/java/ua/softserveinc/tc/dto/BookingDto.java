@@ -57,6 +57,8 @@ public class BookingDto implements Serializable {
         endDate = newBookingDto.endDate;
         startTime = newBookingDto.startTime;
         endTime = newBookingDto.endTime;
+        dateEndTime = newBookingDto.dateEndTime;
+        dateStartTime = newBookingDto.dateStartTime;
         startTimeMillis = newBookingDto.startTimeMillis;
         endTimeMillis = newBookingDto.endTimeMillis;
         if (endTimeMillis != null && startTimeMillis != null) {
@@ -121,8 +123,6 @@ public class BookingDto implements Serializable {
         }
         if (endTimeMillis != null && startTimeMillis != null) {
             durationBooking = endTimeMillis - startTimeMillis;
-        } else if (dateEndTime != null && dateStartTime != null) {
-            durationBooking = dateEndTime.getTime() - dateStartTime.getTime();
         } else {
             durationBooking = 0L;
         }
