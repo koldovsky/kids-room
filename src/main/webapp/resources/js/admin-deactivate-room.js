@@ -7,8 +7,8 @@ $().ready(function () {
     $('.activate').click(function () {
         btn = this;
         roomId = getRoomProp(constants.room.properties.id);   //get room id from table
-        var isActive =  getRoomProp(constants.room.properties.isActive);
-        if(isActive === 'true') {
+        var isActive = getRoomProp(constants.room.properties.isActive);
+        if (isActive === 'true') {
             dialog = $('#deactivateModal');
             verifyRoomBookingState(roomId);
         } else {
@@ -51,19 +51,10 @@ $().ready(function () {
                     $('#warningMessages').html('');
                     $.each(warningMessages, function (index, value) {
                         $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
-                    })
+                    });
                 }
             }
         });
-    }
-
-    function getRoomProp(propIndex) {
-
-        return $(btn).parents('tr').find('td').eq(propIndex).text();
-    }
-
-    function setRoomProp(propIndex, prop) {
-        $(btn).parents('tr').find('td').eq(propIndex).text(prop);
     }
 
     function changeActiveRoomState(roomId, btn) {
@@ -77,23 +68,32 @@ $().ready(function () {
 
                 setRoomProp(constants.room.properties.isActive, isActivated);
 
-                if(isActivated) {
+                if (isActivated) {
                     setActivateClass(btn);
                 } else {
-                    setDeactivateClass(btn)
+                    setDeactivateClass(btn);
                 }
             }
         });
     }
 
     function setDeactivateClass(btn) {
-        $(btn).removeClass('deactivateButton save')
-        $(btn).addClass('activateButton delete')
+        $(btn).removeClass('deactivateButton save');
+        $(btn).addClass('activateButton delete');
     }
 
     function setActivateClass(btn) {
-        $(btn).removeClass('activateButton delete')
-        $(btn).addClass('deactivateButton save')
+        $(btn).removeClass('activateButton delete');
+        $(btn).addClass('deactivateButton save');
+    }
+
+    function getRoomProp(propIndex) {
+
+        return $(btn).parents('tr').find('td').eq(propIndex).text();
+    }
+
+    function setRoomProp(propIndex, prop) {
+        $(btn).parents('tr').find('td').eq(propIndex).text(prop);
     }
 });
 
