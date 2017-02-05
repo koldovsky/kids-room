@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.validator;
 
 /**
- * Created by Valery on 16.11.2016.
  * Created unit tests for email validation.
  * <p>
  * Некоторые люди, сталкиваясь с проблемой, думают: «О, я воспользуюсь регулярными выражениями».
