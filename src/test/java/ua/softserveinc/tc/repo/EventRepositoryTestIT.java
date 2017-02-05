@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
 public class EventRepositoryTestIT {
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventRepository;
 
     @DatabaseSetup(value = "classpath:eventRepository/no-events.xml", type = DatabaseOperation.CLEAN_INSERT)
     @DatabaseTearDown(value = "classpath:eventRepository/no-events.xml", type = DatabaseOperation.DELETE_ALL)
