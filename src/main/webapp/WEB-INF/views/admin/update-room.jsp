@@ -95,13 +95,17 @@
                                 </label>
                             </fieldset>
                             <br>
-                            <button type="button" class="btn icon-btn btn-warning btn-rate-manager" ng-click="removeManager()">
-                                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
-                                <spring:message code = "administrator.room.managersRatesRemove"/>
+                            <button type="button" class="btn btn-success btn-lg btn-rate-manager"
+                                    data-toggle="tooltip" data-placement="top"
+                                    <spring:message code ="administrator.addManager" var="addManager"/>
+                                    title="${addManager}" ng-click="addNewManager()">
+                                <span class="glyphicon glyphicon-plus"></span>
                             </button>
-                            <button type="button" class="btn icon-btn btn-success btn-rate-manager" ng-click="addNewManager()">
-                                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
-                                <spring:message code = "administrator.room.managersRatesAdd"/>
+                            <button type="button" class="btn btn-warning btn-lg btn-rate-manager"
+                                    data-toggle="tooltip" data-placement="top"
+                                    <spring:message code="administrator.removeManager" var="removeManager"/>
+                                    title="${removeManager}" ng-click="removeManager()">
+                                <span class="glyphicon glyphicon-minus"></span>
                             </button>
                             <br>
                             <form:errors path="managers" cssClass="error"/>
@@ -130,13 +134,17 @@
                                 </label>
                             </fieldset>
                             <br>
-                            <button type="button" class="btn icon-btn btn-warning btn-rate-manager" ng-click="removeRate()">
-                                <span class="glyphicon btn-glyphicon glyphicon-minus img-circle text-warning"></span>
-                                <spring:message code = "administrator.room.managersRatesRemove"/>
+                            <button type="button" class="btn btn-success btn-lg btn-rate-manager"
+                                    data-toggle="tooltip" data-placement="top"
+                                    <spring:message code="administrator.addRate" var="addRate"/>
+                                    title="${addRate}" ng-click="addNewRate()">
+                                <span class="glyphicon glyphicon-plus"></span>
                             </button>
-                            <button type="button" class="btn icon-btn btn-success btn-rate-manager" ng-click="addNewRate()">
-                                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
-                                <spring:message code = "administrator.room.managersRatesAdd"/>
+                            <button type="button" class="btn btn-warning btn-lg btn-rate-manager"
+                                    data-toggle="tooltip" data-placement="top"
+                                    <spring:message code="administrator.removeRate" var="removeRate"/>
+                                    title="${removeRate}" ng-click="removeRate()">
+                                <span class="glyphicon glyphicon-minus"></span>
                             </button>
                             <br>
                             <form:errors path="rate" cssClass="error"/>
