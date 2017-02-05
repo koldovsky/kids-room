@@ -24,7 +24,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
 
         CriteriaQuery<Long> q = cb.createQuery(Long.class);
         Root<Event> r = q.from(Event.class);
-        Expression<Long> maxExpression = cb.max(r.get("recurrentId"));
+        Expression<Long> maxExpression = cb.max(r.get(EventConstants.EntityClass.ID_RECURRENT));
 
         CriteriaQuery<Long> select = q.select(maxExpression);
 
@@ -58,7 +58,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
         Root<Event> root = query.from(Event.class);
 
         query.select(root).where(
-                builder.equal( root.get("name"), name)
+                builder.equal( root.get(EventConstants.EntityClass.NAME), name)
         );
 
         return entityManager.createQuery(query).getResultList();
@@ -70,7 +70,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event> implements EventDao {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaDelete<Event> delete = cb.createCriteriaDelete(Event.class);
         Root r = delete.from(Event.class);
-        delete.where(cb.equal(r.get("recurrentId"),idRecurrent));
+        delete.where(cb.equal(r.get(EventConstants.EntityClass.ID_RECURRENT), idRecurrent));
         entityManager.createQuery(delete).executeUpdate();
     }
 

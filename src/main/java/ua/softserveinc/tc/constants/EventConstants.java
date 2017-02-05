@@ -29,6 +29,7 @@ public final class EventConstants {
 
   public static final class EntityClass {
     public static final String ID = "id";
+    public static final String NAME = "name";
     public static final String START_TIME = "startTime";
     public static final String ID_RECURRENT = "recurrentId";
 
