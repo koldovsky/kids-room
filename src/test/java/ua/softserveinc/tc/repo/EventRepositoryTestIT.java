@@ -19,8 +19,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import ua.softserveinc.tc.categories.IntegrationTest;
 import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.entity.Event;
+import ua.softserveinc.tc.service.EventService;
 
 import java.util.List;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @Category(IntegrationTest.class)
 @DirtiesContext
@@ -40,7 +44,15 @@ public class EventRepositoryTestIT {
     @Test
     public void testFindByNameIfThereIsNoEvent() {
         List<Event> eventList = eventRepository.findByName("New Year event");
-        Assert.assertTrue(eventList.isEmpty());
+        assertTrue(eventList.isEmpty());
+    }
+
+    @DatabaseSetup(value = "classpath:eventRepository/multiple-events.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = "classpath:eventRepository/multiple-events.xml", type = DatabaseOperation.DELETE_ALL)
+    @Test
+    public void testFindByNameIfThereAreMultipleEvents() {
+        List<Event> eventList = eventRepository.findByName("Serious event");
+        assertFalse(eventList.isEmpty());
     }
 
 }
