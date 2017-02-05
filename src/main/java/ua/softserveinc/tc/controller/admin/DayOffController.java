@@ -95,7 +95,7 @@ public class DayOffController {
     }
 
     @DeleteMapping("/day/{id}")
-    public ResponseEntity<DayOff> deleteUser(@PathVariable("id") long id) {
+    public ResponseEntity<DayOff> deleteDayOff(@PathVariable("id") long id) {
 
         DayOff currentDay = dayOffService.findById(id);
         if (currentDay == null) {

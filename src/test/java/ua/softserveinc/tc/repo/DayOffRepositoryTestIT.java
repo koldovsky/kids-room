@@ -125,30 +125,6 @@ public class DayOffRepositoryTestIT {
         assertEquals(3, dayOffRepository.findAll().size());
     }
 
-    @DatabaseSetup(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:dayOffRepository/no-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testFindByNameOrStartDateWhenThereIsNoDayOffs() {
-        assertTrue(dayOffRepository.findByNameOrStartDate("Teachers day", startDate).isEmpty());
-    }
-
-    @DatabaseSetup(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:dayOffRepository/one-dayoff.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testFindByNameOrStartDateWhenThereIsOneDayOff() {
-        List<DayOff> dayOffs = dayOffRepository.findByNameOrStartDate("Teachers day", startDate);
-        assertNotNull(dayOffs);
-        assertEquals(1, dayOffs.size());
-    }
-
-    @DatabaseSetup(value = "classpath:dayOffRepository/multiple-dayoffs.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:dayOffRepository/multiple-dayoffs.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testFindByNameOrStartDateWhenThereAreMultipleDayOffs() {
-        List<DayOff> dayOffs = dayOffRepository.findByNameOrStartDate("Teachers day", startDate);
-        assertNotNull(dayOffs);
-        assertEquals(2, dayOffs.size());
-    }
 
 
 }
