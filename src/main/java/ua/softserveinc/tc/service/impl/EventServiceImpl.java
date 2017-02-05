@@ -34,5 +34,10 @@ public class EventServiceImpl extends BaseServiceImpl<Event>
     public void deleteRecurrentEvent(Long idRecurrent) {
         eventDao.deleteByRecurrentId(idRecurrent);
     }
+
+    @Override
+    public List<Event> findByName(String name) {
+        return eventDao.findByName(name);
+    }
 }
 

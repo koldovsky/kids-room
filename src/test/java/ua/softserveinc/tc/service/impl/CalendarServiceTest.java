@@ -14,9 +14,6 @@ import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.repo.EventRepository;
-import ua.softserveinc.tc.service.impl.CalendarServiceImpl;
-import ua.softserveinc.tc.service.impl.RoomServiceImpl;
 
 import java.util.List;
 
@@ -35,9 +32,6 @@ public class CalendarServiceTest {
 
     @Mock
     private EventDao eventDao;
-
-    @Mock
-    private EventRepository eventRepository;
 
     @Mock
     private RoomServiceImpl roomService;
