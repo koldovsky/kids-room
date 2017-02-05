@@ -706,6 +706,36 @@ public class BookingDtoTest {
 
     }
 
+    @Test
+    public void testBookingDtoConstructorWithBookingParameterWithAllNull() {
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingParameterWithDateStartNull() {
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingParameterWithoutDateStartNull() {
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingDtoParameterWithAllNull() {
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingDtoParameterWithDateStartNull() {
+
+    }
+
+    @Test
+    public void testBookingDtoConstructorWithBookingDtoParameterWithoutDateStartNull() {
+
+    }
+
     private void setBookingDtoBaseFields() {
         bookingDto.setChild(testChild);
         bookingDto.setUser(testUser);
