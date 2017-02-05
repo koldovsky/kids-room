@@ -117,7 +117,7 @@ public class AddUpdateRoomController {
         return new ModelAndView("redirect:/" + AdminConstants.EDIT_ROOM);
     }
 
-    private Room getRoomFromDto(@ModelAttribute(AdminConstants.ATR_ROOM) RoomDto roomDto) {
+    private Room getRoomFromDto(RoomDto roomDto) {
         List<Long> idManagers = JsonUtil.fromJsonList(roomDto.getManagers(), UserDto[].class).stream()
                 .map(UserDto::getId).collect(Collectors.toList());
         List<User> managers = userService.findAll(idManagers);
