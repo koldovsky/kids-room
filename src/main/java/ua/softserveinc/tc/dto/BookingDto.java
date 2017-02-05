@@ -163,7 +163,7 @@ public class BookingDto implements Serializable {
         booking.setUser(user);
         booking.setBookingState(bookingState);
         booking.setRecurrentId(recurrentId);
-        if (durationLong == null) {
+        if (durationLong == null && dateEndTime != null && dateStartTime != null) {
             booking.setDuration(dateEndTime.getTime() - dateStartTime.getTime());
         } else {
             booking.setDuration(durationLong);
@@ -183,24 +183,28 @@ public class BookingDto implements Serializable {
      * @return resulting list of BookingDto
      */
     public BookingDto getNewBookingDto(Date[] dates) {
+        BookingDto bookingDto = new BookingDto();
         if (dates == null) {
 
-            return new BookingDto();
+            return bookingDto;
         }
-        BookingDto bookingDto = new BookingDto();
         bookingDto.setRoom(room);
         bookingDto.setUser(user);
         bookingDto.setChild(child);
         bookingDto.setRecurrentId(recurrentId);
-        bookingDto.setDateStartTime(dates[0]);
-        bookingDto.setDateEndTime(dates[1]);
-        bookingDto.setStartTime(DateConstants.DATE_FORMAT_OBJECT.format(dates[0]));
-        bookingDto.setEndTime(DateConstants.DATE_FORMAT_OBJECT.format(dates[1]));
         bookingDto.setBookingState(BookingState.BOOKED);
         bookingDto.setSum(0L);
         bookingDto.setComment(comment);
         bookingDto.setIdChild(idChild);
         bookingDto.setKidId(kidId);
+        if (dates[0] != null) {
+            bookingDto.setDateStartTime(dates[0]);
+            bookingDto.setStartTime(DateConstants.DATE_FORMAT_OBJECT.format(dates[0]));
+        }
+        if (dates[1] != null) {
+            bookingDto.setDateEndTime(dates[1]);
+            bookingDto.setEndTime(DateConstants.DATE_FORMAT_OBJECT.format(dates[1]));
+        }
         if (dates[0] != null && dates[1] != null) {
             bookingDto.setDurationLong(dates[1].getTime() - dates[0].getTime());
         } else {
