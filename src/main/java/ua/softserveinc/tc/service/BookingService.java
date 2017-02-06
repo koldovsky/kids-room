@@ -36,6 +36,12 @@ public interface BookingService extends BaseService<Booking> {
 
     Date replaceBookingTime(Booking booking, String time);
 
+    Long countByRoomAndBookingState(Room room, BookingState bookingState);
+
+    List<Booking> findByBookingState(BookingState bookingState);
+
+    List<Booking> findByBookingStateAndBookingStartTimeLessThan(BookingState bookingState, Date start);
+
     /**
      * Set state to Cancelled, sum and duration to 0 for all booking with given
      * recurrent Id

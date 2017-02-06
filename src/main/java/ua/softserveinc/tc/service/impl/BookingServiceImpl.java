@@ -155,6 +155,21 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public Long countByRoomAndBookingState(Room room, BookingState bookingState) {
+        return bookingDao.countByRoomAndBookingState(room, bookingState);
+    }
+
+    @Override
+    public List<Booking> findByBookingState(BookingState bookingState) {
+        return bookingDao.findByBookingState(bookingState);
+    }
+
+    @Override
+    public List<Booking> findByBookingStateAndBookingStartTimeLessThan(BookingState bookingState, Date start) {
+        return bookingDao.findByBookingStateAndBookingStartTimeLessThan(bookingState, start);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public BookingDto getRecurrentBookingForEditingById(long bookingId) {
         BookingDto result = null;
