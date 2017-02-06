@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.repo.BookingRepository;
-import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 
 import java.security.Principal;

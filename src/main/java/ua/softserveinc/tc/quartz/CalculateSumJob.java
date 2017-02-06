@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.BookingService;
 
 import java.util.List;
