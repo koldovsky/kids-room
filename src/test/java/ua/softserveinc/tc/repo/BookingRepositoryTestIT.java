@@ -21,9 +21,13 @@ import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.messaging.BookingMessages;
+import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 
+import java.util.Calendar;
 import java.util.List;
+
+import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 @Category(IntegrationTest.class)
 @DirtiesContext
@@ -36,7 +40,7 @@ import java.util.List;
 public class BookingRepositoryTestIT {
 
     @Autowired
-    private BookingRepository bookingRepository;
+    private BookingService bookingRepository;
 
     @Autowired
     private RoomService roomService;
@@ -79,5 +83,17 @@ public class BookingRepositoryTestIT {
         Assert.assertEquals(BookingMessages.COUNT_BY_ROOM_AND_BOOKING_STATE, 0, blocked_bookings.size());
     }
 
+    @DatabaseSetup(value = "classpath:bookingRepository/multiple-bookings.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = "classpath:bookingRepository/multiple-bookings.xml", type = DatabaseOperation.DELETE_ALL)
+    @Test
+    public void testFindByBookingStateAndBookingStartTimeLessThan() {
+
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2016, 7, 7, 15, 15, 0);
+        System.out.println(startDate.getTime());
+        List<Booking> bookings = bookingRepository.findByBookingStateAndBookingStartTimeLessThan(BookingState.ACTIVE, toDate(startDate));
+
+        Assert.assertEquals(Long.valueOf(1), bookings.get(0).getIdBook());
+    }
 
 }
