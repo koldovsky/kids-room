@@ -22,9 +22,9 @@ import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.CalendarService;
 
-import static ua.softserveinc.tc.util.EventUtils.createEvent;
+import static ua.softserveinc.tc.paths.EventDaoITPath.NO_EVENT;
+import static ua.softserveinc.tc.paths.EventDaoITPath.ONE_EVENT;
 import static ua.softserveinc.tc.util.EventUtils.getListOfEvents;
-import static ua.softserveinc.tc.util.RoomUtils.getListOfRooms;
 
 @Category(IntegrationTest.class)
 @DirtiesContext
@@ -39,18 +39,18 @@ public class CalendarServiceIT    {
     @Autowired
     private CalendarService calendarService;
 
-    @DatabaseSetup(value = "classpath:calendarService/no-event.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:calendarService/one-event.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:calendarService/one-event.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = NO_EVENT, type = DatabaseOperation.CLEAN_INSERT)
+    @ExpectedDatabase(value = ONE_EVENT, assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @DatabaseTearDown(value = ONE_EVENT, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testAddIfNoEventsExists() {
         Event event = getListOfEvents().get(0);
         calendarService.add(event);
     }
 
-    @DatabaseSetup(value = "classpath:calendarService/one-event.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:calendarService/one-event.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:calendarService/one-event.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONE_EVENT, type = DatabaseOperation.CLEAN_INSERT)
+    @ExpectedDatabase(value = ONE_EVENT, assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @DatabaseTearDown(value = ONE_EVENT, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testAddIfEventExist() {
         Event event = getListOfEvents().get(0);
