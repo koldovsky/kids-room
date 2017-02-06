@@ -21,6 +21,9 @@ import ua.softserveinc.tc.categories.IntegrationTest;
 import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.dao.EventDao;
 
+import static ua.softserveinc.tc.dao.paths.EventDaoITPath.MULTIPLE_EVENTS;
+import static ua.softserveinc.tc.dao.paths.EventDaoITPath.NO_EVENT;
+
 @Category(IntegrationTest.class)
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,15 +37,15 @@ public class EventDaoIT {
     @Autowired
     private EventDao eventDao;
 
-    @DatabaseSetup(value = "classpath:eventDao/no-event.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:eventDao/no-event.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = NO_EVENT, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = NO_EVENT, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetMaxRecurrentIdIfThereIsNoEvent() {
         Assert.assertEquals(Long.valueOf(0), eventDao.getMaxRecurrentId());
     }
 
-    @DatabaseSetup(value = "classpath:eventDao/events.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:eventDao/events.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = MULTIPLE_EVENTS, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = MULTIPLE_EVENTS, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetRecurrentEventByRecurrentIdIfThereAreMultipleEvents() {
         Assert.assertEquals(Long.valueOf(1), eventDao.getRecurrentEventByRecurrentId(1L).get(0).getId());
