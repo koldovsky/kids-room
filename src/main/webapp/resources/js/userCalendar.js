@@ -386,7 +386,6 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
         contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
         success: function (result) {
-            result = JSON.parse(result);
             var objectsLen = objects.length;
             result.forEach(function (item, i) {
                 objects[objectsLen + i] = {
@@ -420,7 +419,6 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
         contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
         success: function (result) {
-            result = JSON.parse(result);
             var objectsLen = objects.length;
             result.forEach(function (item, i) {
                 objects[objectsLen + i] = {
@@ -940,7 +938,6 @@ function addDisabledPeriodsToEventSource(eventSource, roomId) {
         dataType: 'json',
         async: false,
         success: function (result) {
-            result = JSON.parse(result);
             var newDisablePeriod;
 
             result.forEach(function (item) {
@@ -1190,7 +1187,6 @@ function redrawBlockedTimeSpans(roomId) {
         contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
         success: function (result) {
-            result = JSON.parse(result);
             var newBookingsArray = userCalendar.fullCalendar('clientEvents');
             var newDisablePeriod;
 

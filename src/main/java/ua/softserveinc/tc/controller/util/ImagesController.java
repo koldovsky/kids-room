@@ -59,7 +59,7 @@ public class ImagesController {
 
     @Inject
     private ApplicationConfigurator applicationConfigurator;
-    
+
 
     /**
      * Uploading a new profile picture for a Child. There is a restriction

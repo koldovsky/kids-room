@@ -11,9 +11,7 @@ function cancelBooking(idBook) {
             contentType: 'application/json; charset=UTF-8',
             dataType: 'json',
             success: function (result) {
-                var text = result;
-                var bookings = JSON.parse(text);
-                $('#' + bookings.id).hide();
+                $('#' + result.id).hide();
             }
         });
         $('#cancelModal').modal('hide');
