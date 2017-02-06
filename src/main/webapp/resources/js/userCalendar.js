@@ -383,7 +383,8 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
     $.ajax({
         url: pathForUploadingAllBookingsForUsers,
         encoding: 'UTF-8',
-        contentType: 'charset=UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
         success: function (result) {
             result = JSON.parse(result);
             var objectsLen = objects.length;
@@ -416,7 +417,8 @@ function renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursE
     $.ajax({
         url: path,
         encoding: 'UTF-8',
-        contentType: 'charset=UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
         success: function (result) {
             result = JSON.parse(result);
             var objectsLen = objects.length;
@@ -780,7 +782,7 @@ function editRecurrentBookingsRequest(recurrentId) {
         url: path,
         type: 'GET',
         encoding: 'UTF-8',
-        contentType: 'charset=UTF-8',
+        contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
         success: function (result) {
             recurrentBookingForEditing = {
@@ -934,7 +936,8 @@ function addDisabledPeriodsToEventSource(eventSource, roomId) {
     $.ajax({
         url: 'disabled?roomID=' + roomId,
         encoding: 'UTF-8',
-        contentType: 'charset=UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
         async: false,
         success: function (result) {
             result = JSON.parse(result);
@@ -1184,7 +1187,8 @@ function redrawBlockedTimeSpans(roomId) {
     $.ajax({
         url: path,
         encoding: 'UTF-8',
-        contentType: 'charset=UTF-8',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
         success: function (result) {
             result = JSON.parse(result);
             var newBookingsArray = userCalendar.fullCalendar('clientEvents');

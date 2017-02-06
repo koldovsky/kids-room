@@ -376,6 +376,8 @@ function cancelBooking() {
     var str = 'cancelBooking/' + idBooking;
     $.ajax({
         url: str,
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
         success: function() {
             $('#cancelModal').modal('hide');
             $('#bookingUpdatingDialog').dialog('close');
@@ -390,6 +392,7 @@ function updatingBooking(inputDate) {
         type: 'POST',
         encoding:'UTF-8',
         contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
         data: JSON.stringify(inputDate),
         success: function(data) {
             if (data) {
