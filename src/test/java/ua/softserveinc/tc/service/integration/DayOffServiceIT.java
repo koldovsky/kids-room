@@ -51,16 +51,5 @@ public class DayOffServiceIT {
         endDate = LocalDate.of(2016, 10, 2);
     }
 
-    @DatabaseSetup(value = "classpath:dayOffService/create/some.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @ExpectedDatabase(value = "classpath:dayOffService/create/after.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
-    @DatabaseTearDown(value = "classpath:dayOffService/create/after.xml", type = DatabaseOperation.DELETE_ALL)
-    @Test
-    public void testCreateDayOffEvent() {
-        Set<Room> rooms = RoomUtils.getSetOfRooms();
-        DayOff dayOff = DayOffUtils.createDayOff(1L, startDate, endDate, "Repairs works", rooms);
-        dayOffService.createDayOffEvent(dayOff);
-    }
-
-
 
 }

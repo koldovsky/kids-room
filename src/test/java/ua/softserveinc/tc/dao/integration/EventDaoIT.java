@@ -53,5 +53,7 @@ public class EventDaoIT {
         Assert.assertEquals(Long.valueOf(1), eventDao.getRecurrentEventByRecurrentId(1L).get(0).getId());
     }
 
+
+
 }
 
