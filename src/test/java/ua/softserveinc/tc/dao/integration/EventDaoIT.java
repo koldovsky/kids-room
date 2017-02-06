@@ -4,6 +4,8 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import junitparams.JUnitParamsRunner;
 import org.junit.Assert;
 import org.junit.Test;
@@ -50,7 +52,6 @@ public class EventDaoIT {
     public void testGetRecurrentEventByRecurrentIdIfThereAreMultipleEvents() {
         Assert.assertEquals(Long.valueOf(1), eventDao.getRecurrentEventByRecurrentId(1L).get(0).getId());
     }
-
 
 }
 
