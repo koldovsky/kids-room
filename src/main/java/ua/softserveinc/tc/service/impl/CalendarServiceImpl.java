@@ -11,7 +11,6 @@ import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.mapper.GenericMapper;
-import ua.softserveinc.tc.repo.EventRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
@@ -27,9 +26,6 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Autowired
     private EventDao eventDao;
-
-    @Autowired
-    private EventRepository eventRepository;
 
     @Autowired
     private RoomService roomService;
