@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.QuartzConstants;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.repo.BookingRepository;
 import ua.softserveinc.tc.service.BookingService;
 
 import java.util.List;
@@ -16,13 +15,12 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 @Service(QuartzConstants.CLEAN_UP_BOOKINGS)
 public class CleanUpBookingsJob {
+
     @Autowired
     private BookingService bookingService;
-    @Autowired
-    private BookingRepository bookingRepository;
 
     private void task() {
-        List<Booking> bookings = bookingRepository
+        List<Booking> bookings = bookingService
                 .findByBookingStateAndBookingStartTimeLessThan(BookingState.ACTIVE, toDate(dateDayAgo()));
 
         bookings.forEach(booking -> {

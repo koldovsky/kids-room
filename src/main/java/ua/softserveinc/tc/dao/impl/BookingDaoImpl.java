@@ -292,6 +292,51 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
+    public Long countByRoomAndBookingState(Room room, BookingState bookingState) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+
+        query.select(root).where(
+                builder.and(
+                        builder.equal(root.get(BookingConstants.Entity.ROOM), room),
+                        builder.equal(root.get(BookingConstants.Entity.STATE), bookingState)
+                )
+        );
+
+        int result = entityManager.createQuery(query).getResultList().size();
+
+        return (result == 0) ? 0L : result;
+    }
+
+    @Override
+    public List<Booking> findByBookingState(BookingState bookingState) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+
+        query.select(root).where(builder.equal(root.get(BookingConstants.Entity.STATE), bookingState));
+
+        return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
+    public List<Booking> findByBookingStateAndBookingStartTimeLessThan(BookingState bookingState, Date start) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
+        Root<Booking> root = query.from(Booking.class);
+
+        query.select(root).where(
+                builder.and(
+                        builder.equal(root.get(BookingConstants.Entity.STATE), bookingState),
+                        builder.lessThan(root.get(BookingConstants.Entity.START_TIME), start)
+                )
+        );
+
+        return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
     public List<Booking> persistRecurrentBookings(List<Booking> bookings) {
         bookings.forEach(entityManager::persist);
 

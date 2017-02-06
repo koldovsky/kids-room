@@ -102,4 +102,11 @@ public interface BookingDao extends BaseDao<Booking> {
      * @param room where the bookings will be cancelled
      */
     void cancellActiveAndPlannedBookingsInRoom(Room room);
+
+    Long countByRoomAndBookingState(Room room, BookingState bookingState);
+
+    List<Booking> findByBookingState(BookingState bookingState);
+
+    List<Booking> findByBookingStateAndBookingStartTimeLessThan(BookingState bookingState, Date start);
+
 }
