@@ -27,6 +27,8 @@ import ua.softserveinc.tc.util.UserUtils;
 import java.util.Arrays;
 import java.util.List;
 
+import static ua.softserveinc.tc.dao.paths.UserDaoITPath.*;
+
 @Category(IntegrationTest.class)
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,8 +42,8 @@ public class UserDaoIT {
     @Autowired
     private UserDao userDao;
 
-    @DatabaseSetup(value = "classpath:userDao/no-user.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/no-user.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = NO_USER, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = NO_USER, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindAllUsersByRoleIfThereIsNoUser() {
         Assert.assertEquals(UserMessages.FIND_All_USERS_BY_ROLE_IF_THERE_IS_NO_USER,
@@ -52,32 +54,32 @@ public class UserDaoIT {
                 0, userDao.findAllUsersByRole(Role.MANAGER).size());
     }
 
-    @DatabaseSetup(value = "classpath:userDao/only-user-roles.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/only-user-roles.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONLY_USER_ROLES, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = ONLY_USER_ROLES, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindAllUsersByUserRole() {
         Assert.assertEquals(UserMessages.FIND_All_USERS_BY_USER_ROLE,
                 3, userDao.findAllUsersByRole(Role.USER).size());
     }
 
-    @DatabaseSetup(value = "classpath:userDao/only-manager-roles.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/only-manager-roles.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONLY_MANAGER_ROLES, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = ONLY_MANAGER_ROLES, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindAllUsersByManagerRole() {
         Assert.assertEquals(UserMessages.FIND_All_USERS_BY_MANAGER_ROLE,
                 3, userDao.findAllUsersByRole(Role.MANAGER).size());
     }
 
-    @DatabaseSetup(value = "classpath:userDao/only-administrators-roles.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/only-administrators-roles.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONLY_ADMINISTRATOR_ROLES, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = ONLY_ADMINISTRATOR_ROLES, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindAllUsersByAdministratorRole() {
         Assert.assertEquals(UserMessages.FIND_All_USERS_BY_ADMINISTRATOR_ROLE,
                 3, userDao.findAllUsersByRole(Role.ADMINISTRATOR).size());
     }
 
-    @DatabaseSetup(value = "classpath:userDao/different-users-with-different-roles.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/different-users-with-different-roles.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = DIFFERENT_ROLES, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = DIFFERENT_ROLES, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindAllUsersByRole() {
         Assert.assertEquals(UserMessages.FIND_All_USERS_BY_USER_ROLE,
@@ -88,8 +90,8 @@ public class UserDaoIT {
                 2, userDao.findAllUsersByRole(Role.ADMINISTRATOR).size());
     }
 
-    @DatabaseSetup(value = "classpath:userDao/different-users-with-different-roles.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/different-users-with-different-roles.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = DIFFERENT_ROLES, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = DIFFERENT_ROLES, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindAll() {
         List<Long> ids = Arrays.asList(1L, 2L, 3L);
@@ -100,8 +102,8 @@ public class UserDaoIT {
         Assert.assertEquals(expectedUsers, users);
     }
 
-    @DatabaseSetup(value = "classpath:userDao/different-users-with-different-roles.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:userDao/different-users-with-different-roles.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = DIFFERENT_ROLES, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = DIFFERENT_ROLES, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetUserByName() {
         User user = userDao.getUserByName("Alan", "Bom");
