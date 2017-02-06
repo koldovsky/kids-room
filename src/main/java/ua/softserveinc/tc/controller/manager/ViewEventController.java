@@ -100,13 +100,13 @@ public class ViewEventController {
 
 
     @PostMapping(value = "createsingleevent", produces = "application/json;charset=UTF-8")
-    public ResponseEntity<String> createSingleEvent(@RequestBody EventDto eventDto) {
-        return getResponseEntityForSingleEvent(eventDto);
+    public ResponseEntity<String> createSingleEvent(@RequestBody EventDto eventDto, Locale locale) {
+        return getResponseEntityForSingleEvent(eventDto, locale);
     }
 
     @PostMapping(value = "geteventforupdate", produces = "application/json;charset=UTF-8")
-    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto) {
-           return getResponseEntityForSingleEvent(eventDto);
+    public ResponseEntity<String> getEventForUpdate(@RequestBody EventDto eventDto, Locale locale) {
+        return getResponseEntityForSingleEvent(eventDto, locale);
     }
 
     @PostMapping("geteventfordelete")
@@ -116,31 +116,31 @@ public class ViewEventController {
     }
 
     @PostMapping(value = "getrecurrentevents", produces = "application/json;charset=UTF-8")
-    public ResponseEntity<String> getRecurrent(@RequestBody RecurrentEventDto recurrentEventDto) {
+    public ResponseEntity<String> getRecurrent(@RequestBody RecurrentEventDto recurrentEventDto, Locale locale) {
         if (eventValidator.generalEventValidation(recurrentEventDto).isEmpty()) {
             if (eventValidator.reccurentEventValidation(recurrentEventDto).isEmpty()) {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(new Gson().toJson(calendarService.createRecurrentEvents(recurrentEventDto)));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(localizateMessage(eventValidator.reccurentEventValidation(recurrentEventDto)).toString());
+                        .body(localizateMessage(eventValidator.reccurentEventValidation(recurrentEventDto), locale).toString());
             }
         } else return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                .body(localizateMessage(eventValidator.generalEventValidation(recurrentEventDto)).toString());
+                .body(localizateMessage(eventValidator.generalEventValidation(recurrentEventDto), locale).toString());
     }
 
     @PostMapping(value = "getmonthlyevents", produces = "application/json")
-    public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto) {
+    public ResponseEntity<String> getMonthly(@RequestBody MonthlyEventDto monthlyEventDto, Locale locale) {
         if (eventValidator.generalEventValidation(monthlyEventDto).isEmpty()) {
             if (eventValidator.monthlyEventValidation(monthlyEventDto).isEmpty()) {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(new Gson().toJson(calendarService.createMonthlyEvents(monthlyEventDto)));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(localizateMessage(eventValidator.monthlyEventValidation(monthlyEventDto)).toString());
+                        .body(localizateMessage(eventValidator.monthlyEventValidation(monthlyEventDto), locale).toString());
             }
         } else return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                .body(localizateMessage(eventValidator.generalEventValidation(monthlyEventDto)).toString());
+                .body(localizateMessage(eventValidator.generalEventValidation(monthlyEventDto), locale).toString());
 
     }
 
@@ -158,7 +158,7 @@ public class ViewEventController {
     }
 
 
-    private ResponseEntity<String> getResponseEntityForSingleEvent(EventDto eventDto) {
+    private ResponseEntity<String> getResponseEntityForSingleEvent(EventDto eventDto, Locale locale) {
         List<String> generalErrorMessage = eventValidator.generalEventValidation(eventDto);
         List<String> singleErrorMessage = eventValidator.singleEventValidation(eventDto);
         if (generalErrorMessage.isEmpty()) {
@@ -167,19 +167,16 @@ public class ViewEventController {
                 return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(eventDto));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(localizateMessage(singleErrorMessage).toString());
+                        .body(localizateMessage(singleErrorMessage, locale).toString());
             }
         } else return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                .body(localizateMessage(generalErrorMessage).toString());
+                .body(localizateMessage(generalErrorMessage, locale).toString());
     }
-    private List<String> localizateMessage (List<String> noLocalMessages){
+
+    private List<String> localizateMessage(List<String> noLocalMessages, Locale locale) {
         List<String> localMessages = new ArrayList<>();
-         Locale locale = (Locale) request.getSession()
-            .getAttribute(LocaleConstants.SESSION_LOCALE_ATTRIBUTE);
-        locale = (locale == null) ? request.getLocale() : locale;
-        for (String messages : noLocalMessages) {
-            localMessages.add(messageSource.getMessage(messages, null, locale));
-        }
+        noLocalMessages.forEach((message) ->
+                localMessages.add(messageSource.getMessage(message, null, locale)));
         return localMessages;
     }
 
