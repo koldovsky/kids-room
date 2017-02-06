@@ -49,7 +49,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists the dates
      * objects
      */
-    @GetMapping(value = "getallbookings/{idUser}/{idRoom}", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/getallbookings/{idUser}/{idRoom}", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> getAllBookings(@PathVariable Long idUser,
                                                  @PathVariable Long idRoom,
                                                  Locale locale) {
@@ -109,7 +109,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists the BookingsDto
      * object
      */
-    @GetMapping(value = "getRecurrentBookingForEditing/{recurrentId}",
+    @GetMapping(value = "/getRecurrentBookingForEditing/{recurrentId}",
                 produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> getRecurrentBookingForEditing(@PathVariable Long recurrentId,
                                                                 Locale locale) {
@@ -133,7 +133,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists list of
      * the BookingsDto objects that represents persisted bookings
      */
-    @PostMapping(value = "makenewbooking", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/makenewbooking", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> makeBooking(@RequestBody List<BookingDto> dtos, Locale locale) {
 
         return  getResponseEntity(bookingService.makeBookings(dtos), locale);
@@ -153,7 +153,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists list of
      * the BookingsDto objects that represents persisted bookings
      */
-    @PostMapping(value = "makerecurrentbookings", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/makerecurrentbookings", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> makeRecurrentBookings(@RequestBody List<BookingDto> dtos,
                                                         Locale locale) {
 
@@ -173,7 +173,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists list of
      * the BookingsDto objects that represents updated bookings
      */
-    @PostMapping(value = "updatebooking", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/updatebooking", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> updateBooking(@RequestBody BookingDto dto, Locale locale) {
 
         return  getResponseEntity(bookingService.updateBooking(dto), locale);
@@ -193,7 +193,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists list of
      * the BookingsDto objects that represents updated bookings
      */
-    @PostMapping(value = "updaterecurrentbookings", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/updaterecurrentbookings", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> updateRecurrentBookings(@RequestBody BookingDto dto,
                                                           Locale locale) {
 
@@ -213,7 +213,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists number of
      * cancelled bookings
      */
-    @GetMapping(value = "cancelrecurrentbookings/{recurrentId}",
+    @GetMapping(value = "/cancelrecurrentbookings/{recurrentId}",
             produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> cancelRecurrentBookings(@PathVariable Long recurrentId,
                                                           Locale locale) {
@@ -237,7 +237,7 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists number of
      * cancelled bookings
      */
-    @GetMapping(value = "cancelBooking/{idBooking}", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/cancelBooking/{idBooking}", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> cancelBooking(@PathVariable Long idBooking, Locale locale) {
 
         int numOfCancelledEntities = (idBooking != null) ?
