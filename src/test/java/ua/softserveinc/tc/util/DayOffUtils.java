@@ -6,8 +6,6 @@ import ua.softserveinc.tc.entity.Room;
 import java.time.LocalDate;
 import java.util.Set;
 
-// todo: use builder design pattern for more complex creation of Utils (such as user) ;
-
 public class DayOffUtils {
 
     public static DayOff createDayOff(long id, LocalDate startDate, LocalDate endDate, String name, Set<Room> rooms) {
