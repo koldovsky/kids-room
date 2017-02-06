@@ -23,6 +23,8 @@ import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.messaging.TokenMessages;
 
+import static ua.softserveinc.tc.dao.paths.TokenDaoITPath.ONE_TOKEN;
+
 @Category(IntegrationTest.class)
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,16 +41,16 @@ public class TokenDaoIT {
     @Autowired
     private UserDao userDao;
 
-    @DatabaseSetup(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONE_TOKEN, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = ONE_TOKEN, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindByUser() {
         User user = userDao.getUserByEmail("user@softserveinc.com");
         Assert.assertEquals(TokenMessages.FIND_BY_USER_ERROR, "abcd", tokenDao.findByUser(user).getToken());
     }
 
-    @DatabaseSetup(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:tokenDao/one-token.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONE_TOKEN, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = ONE_TOKEN, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindByToken() {
         User user = userDao.getUserByEmail("user@softserveinc.com");
