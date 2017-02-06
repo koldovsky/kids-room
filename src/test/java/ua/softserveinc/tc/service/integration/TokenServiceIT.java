@@ -24,6 +24,8 @@ import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.UserUtils;
 
+import static ua.softserveinc.tc.paths.TokenServiceITPath.FIND_BY_EXISTING_USER;
+
 @Category(IntegrationTest.class)
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,8 +42,8 @@ public class TokenServiceIT {
     @Autowired
     private UserService userService;
 
-    @DatabaseSetup(value = "classpath:tokenService/find-by-existing-user.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:tokenService/find-by-existing-user.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = FIND_BY_EXISTING_USER, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = FIND_BY_EXISTING_USER, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testFindByUserWhichExists() {
         User user = UserUtils.getListOfUser().get(3);

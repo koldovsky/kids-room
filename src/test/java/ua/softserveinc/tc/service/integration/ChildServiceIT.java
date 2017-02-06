@@ -23,6 +23,8 @@ import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.service.RoomService;
 
+import static ua.softserveinc.tc.paths.ChildDaoITPath.*;
+
 @Category(IntegrationTest.class)
 @DirtiesContext
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -39,40 +41,40 @@ public class ChildServiceIT {
     @Autowired
     private RoomService roomService;
 
-    @DatabaseSetup(value = "classpath:childDao/one-no-active-booking.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:childDao/one-no-active-booking.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = NO_ACTIVE_BOOKINGS, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = NO_ACTIVE_BOOKINGS, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetActiveChildrenInRoomWhenRoomIsNotActive() {
         Assert.assertEquals(ChildMessages.INCORRECT_GET_ACTIVE_CHILDREN_IN_ROOM_WHEN_ROOM_IS_NOT_ACTIVE,
                 0, childService.getActiveChildrenInRoom(roomService.findEntityById(1L)).size());
     }
 
-    @DatabaseSetup(value = "classpath:childDao/one-no-active-booking.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:childDao/one-no-active-booking.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = NO_ACTIVE_BOOKINGS, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = NO_ACTIVE_BOOKINGS, type = DatabaseOperation.DELETE_ALL)
     @Test(expected = ResourceNotFoundException.class)
     public void testGetActiveChildrenInRoomWhenThereIsNoSuchRoom() {
         Assert.assertEquals(ChildMessages.INCORRECT_GET_ACTIVE_CHILDREN_IN_ROOM_WHEN_ROOM_IS_NOT_ACTIVE,
                 0, childService.getActiveChildrenInRoom(roomService.findEntityById(10L)).size());
     }
 
-    @DatabaseSetup(value = "classpath:childDao/one-active-booking.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:childDao/one-active-booking.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = ONE_ACTIVE_BOOKING, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = ONE_ACTIVE_BOOKING, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetActiveChildrenInRoomWhenRoomIsActive() {
         Assert.assertEquals(ChildMessages.INCORRECT_GET_ACTIVE_CHILDREN_IN_ROOM_WHEN_ROOM_IS_ACTIVE,
                 1, childService.getActiveChildrenInRoom(roomService.findEntityById(1L)).size());
     }
 
-    @DatabaseSetup(value = "classpath:childDao/multiple-active-booking.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:childDao/multiple-active-booking.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = MULTIPLE_ACTIVE_BOOKINGS, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = MULTIPLE_ACTIVE_BOOKINGS, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetActiveChildrenInRoomWhenRoomAreActive() {
         Assert.assertEquals(ChildMessages.INCORRECT_GET_ACTIVE_CHILDREN_IN_ROOM_WHEN_ROOM_IS_ACTIVE,
                 2, childService.getActiveChildrenInRoom(roomService.findEntityById(1L)).size());
     }
 
-    @DatabaseSetup(value = "classpath:childDao/multiple-no-active-booking.xml", type = DatabaseOperation.CLEAN_INSERT)
-    @DatabaseTearDown(value = "classpath:childDao/multiple-no-active-booking.xml", type = DatabaseOperation.DELETE_ALL)
+    @DatabaseSetup(value = MULTIPLE_NO_ACTIVE_BOOKINGS, type = DatabaseOperation.CLEAN_INSERT)
+    @DatabaseTearDown(value = MULTIPLE_NO_ACTIVE_BOOKINGS, type = DatabaseOperation.DELETE_ALL)
     @Test
     public void testGetActiveChildrenInRoomWhenRoomAreNoActive() {
         Assert.assertEquals(ChildMessages.INCORRECT_GET_ACTIVE_CHILDREN_IN_ROOM_WHEN_ROOM_IS_ACTIVE,

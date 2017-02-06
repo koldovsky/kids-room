@@ -34,32 +34,31 @@ public class UserUtils {
         user3.setRole(Role.USER);
         user3.setPhoneNumber("+380999245324");
 
-        User user4 = new User();
-        user4.setId(3L);
-        user4.setFirstName("Alan");
-        user4.setLastName("Bom");
-        user4.setEmail("user@softserveinc.com");
-        user4.setPassword("$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02");
-        user4.setRole(Role.MANAGER);
-        user4.setPhoneNumber("+380987654321");
-        user4.setConfirmed(true);
-        user4.setActive(true);
+        User user4 = createUser(3L, "Alan", "Bom", "user@softserveinc.com",
+                "$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02", Role.MANAGER,
+                "+380987654321", true, true);
 
-        User user5 = new User();
-        user5.setId(1L);
-        user5.setFirstName("Alan");
-        user5.setLastName("Bom");
-        user5.setEmail("user@softserveinc.com");
-        user5.setPassword("$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02");
-        user5.setRole(Role.USER);
-        user5.setPhoneNumber("+380987654321");
-        user5.setConfirmed(true);
-        user5.setActive(true);
+        User user5 = createUser(1L, "Alan", "Bom", "user@softserveinc.com",
+                "$2a$08$6fjMaYthaRD9XpOQ7V652.N/pRpmOqdrRMU5b1otTRveK0T3pYa02", Role.MANAGER,
+                "+380987654321", true, true);
 
         return Arrays.asList(user1, user2, user3, user4, user5);
     }
 
-    public static List<Long> getListOfIds3() {
-        return Arrays.asList(1L, 2L, 3L);
+    public static User createUser(Long id, String firstName, String lastName, String email, String password,
+                                  Role role, String phoneNumber, boolean confirmed, boolean active) {
+        User user = new User();
+        user.setId(id);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRole(role);
+        user.setPhoneNumber(phoneNumber);
+        user.setConfirmed(confirmed);
+        user.setActive(active);
+
+        return user;
     }
+
 }
