@@ -12,6 +12,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.impl.UserServiceImpl;
 import ua.softserveinc.tc.util.UserUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -41,7 +42,7 @@ public class UserServiceTest {
 
     @Test
     public void testFindAllByListOfIds() {
-        List<Long> listOfIds = UserUtils.getListOfIds3();
+        List<Long> listOfIds = Arrays.asList(1L, 2L, 3L);
         Mockito.when(userDao.findAll(listOfIds)).thenReturn(users);
         userService.findAll(listOfIds);
         verify(userDao, times(1)).findAll(listOfIds);
@@ -60,7 +61,7 @@ public class UserServiceTest {
         String email = "somevalidemail@gmail.com";
 
         Mockito.when(user.getEmail()).thenReturn(email);
-        Mockito.when(user.getFirstName()).thenReturn("Jolly");
+        Mockito.when(user.getFirstName()).thenReturn("Adam");
         Mockito.when(userDao.getUserByEmail(user.getEmail())).thenReturn(user);
 
         userService.getUserByEmail(email);
