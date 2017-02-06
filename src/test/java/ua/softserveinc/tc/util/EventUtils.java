@@ -12,7 +12,7 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 public class EventUtils {
 
     public static List<Event> getListOfEvents() {
-        Event event1 = createEvent(1L, "Teachers day", "2016-07-10 13:45:00", "2016-07-10 14:35:00",
+        Event event1 = createEvent(1L, "Teachers day", "2016-07-10 00:00:00", "2016-07-10 00:00:00",
                 3, 5, RoomUtils.getListOfRooms().get(0), "No", "red");
 
         return Arrays.asList(event1);

@@ -22,8 +22,8 @@ import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.service.CalendarService;
 
-import static ua.softserveinc.tc.paths.EventDaoITPath.NO_EVENT;
-import static ua.softserveinc.tc.paths.EventDaoITPath.ONE_EVENT;
+import static ua.softserveinc.tc.paths.CalendarServiceITPath.NO_EVENT;
+import static ua.softserveinc.tc.paths.CalendarServiceITPath.ONE_EVENT;
 import static ua.softserveinc.tc.util.EventUtils.getListOfEvents;
 
 @Category(IntegrationTest.class)
