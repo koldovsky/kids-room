@@ -4,8 +4,6 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -25,7 +23,7 @@ import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.messaging.TokenMessages;
 
-import static ua.softserveinc.tc.dao.paths.TokenDaoITPath.ONE_TOKEN;
+import static ua.softserveinc.tc.paths.TokenDaoITPath.ONE_TOKEN;
 
 @Category(IntegrationTest.class)
 @DirtiesContext

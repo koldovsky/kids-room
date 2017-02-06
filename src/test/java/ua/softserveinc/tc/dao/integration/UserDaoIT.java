@@ -27,7 +27,7 @@ import ua.softserveinc.tc.util.UserUtils;
 import java.util.Arrays;
 import java.util.List;
 
-import static ua.softserveinc.tc.dao.paths.UserDaoITPath.*;
+import static ua.softserveinc.tc.paths.UserDaoITPath.*;
 
 @Category(IntegrationTest.class)
 @DirtiesContext

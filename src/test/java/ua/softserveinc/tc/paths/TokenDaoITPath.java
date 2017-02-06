@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.dao.paths;
+package ua.softserveinc.tc.paths;
 
 public final class TokenDaoITPath {
 

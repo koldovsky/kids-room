@@ -22,7 +22,7 @@ import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.messaging.ChildMessages;
 
-import static ua.softserveinc.tc.dao.paths.ChildDaoITPath.*;
+import static ua.softserveinc.tc.paths.ChildDaoITPath.*;
 
 @Category(IntegrationTest.class)
 @DirtiesContext

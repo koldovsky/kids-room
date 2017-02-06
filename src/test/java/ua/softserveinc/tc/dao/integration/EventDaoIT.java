@@ -6,7 +6,6 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
-import junitparams.JUnitParamsRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -23,9 +22,9 @@ import ua.softserveinc.tc.categories.IntegrationTest;
 import ua.softserveinc.tc.config.TestBaseConfigClass;
 import ua.softserveinc.tc.dao.EventDao;
 
-import static ua.softserveinc.tc.dao.paths.EventDaoITPath.MULTIPLE_EVENTS;
-import static ua.softserveinc.tc.dao.paths.EventDaoITPath.NO_EVENT;
-import static ua.softserveinc.tc.dao.paths.EventDaoITPath.ONE_EVENT;
+import static ua.softserveinc.tc.paths.EventDaoITPath.MULTIPLE_EVENTS;
+import static ua.softserveinc.tc.paths.EventDaoITPath.NO_EVENT;
+import static ua.softserveinc.tc.paths.EventDaoITPath.ONE_EVENT;
 
 @Category(IntegrationTest.class)
 @DirtiesContext
