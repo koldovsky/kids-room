@@ -2,6 +2,7 @@ package ua.softserveinc.tc.validator;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -19,6 +20,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,9 @@ public class RoomValidatorImpl implements RoomValidator {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * This Validator validates just RoomDto instances
@@ -145,13 +150,13 @@ public class RoomValidatorImpl implements RoomValidator {
         }
     }
 
-    public List<String> checkRoomBookings(Room room) {
+    public List<String> checkRoomBookings(Room room, Locale locale) {
         List<String> warnings = new ArrayList<>();
         if (roomService.hasActiveBooking(room)) {
-            warnings.add(ValidationConstants.ROOM_HAS_ACTIVE_BOOKINGS);
+            warnings.add(messageSource.getMessage(ValidationConstants.ROOM_HAS_ACTIVE_BOOKINGS, null, locale));
         }
         if (roomService.hasPlanningBooking(room)) {
-            warnings.add(ValidationConstants.ROOM_HAS_PLANNING_BOOKING);
+            warnings.add(messageSource.getMessage(ValidationConstants.ROOM_HAS_PLANNING_BOOKING, null, locale));
         }
 
         return warnings;

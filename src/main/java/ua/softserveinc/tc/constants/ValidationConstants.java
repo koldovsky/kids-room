@@ -35,8 +35,8 @@ public final class ValidationConstants {
 
     public static final String DATE_REGEX = "^(\\d{4})(\\/|-)(\\d{1,2})(\\/|-)(\\d{1,2})$";
 
-    public static final String ROOM_HAS_ACTIVE_BOOKINGS = "active_bookings";
-    public static final String ROOM_HAS_PLANNING_BOOKING = "planning_bookings";
+    public static final String ROOM_HAS_ACTIVE_BOOKINGS = "administrator.room.warning.active";
+    public static final String ROOM_HAS_PLANNING_BOOKING = "administrator.room.warning.planned";
 
     public static final String DATE_IS_NOT_VALID = "Date is not valid";
 

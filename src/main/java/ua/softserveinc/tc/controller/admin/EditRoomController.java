@@ -2,6 +2,7 @@ package ua.softserveinc.tc.controller.admin;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +13,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.validator.RoomValidatorImpl;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -62,11 +64,11 @@ public class EditRoomController {
      * @param id room id
      * @return
      */
-    @GetMapping("/adm-edit-room/warnings")
+    @GetMapping(value = "/adm-edit-room/warnings", produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String roomIsActiveBooking(@RequestParam Long id) {
+    public String roomIsActiveBooking(@RequestParam Long id, Locale locale) {
         Room room = roomService.findByIdTransactional(id);
-        List<String> warnings = roomValidator.checkRoomBookings(room);
+        List<String> warnings = roomValidator.checkRoomBookings(room, locale);
 
         return new Gson().toJson(warnings);
     }
