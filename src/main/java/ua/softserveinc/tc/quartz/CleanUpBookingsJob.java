@@ -16,13 +16,12 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 @Service(QuartzConstants.CLEAN_UP_BOOKINGS)
 public class CleanUpBookingsJob {
+
     @Autowired
     private BookingService bookingService;
-    @Autowired
-    private BookingRepository bookingRepository;
 
     private void task() {
-        List<Booking> bookings = bookingRepository
+        List<Booking> bookings = bookingService
                 .findByBookingStateAndBookingStartTimeLessThan(BookingState.ACTIVE, toDate(dateDayAgo()));
 
         bookings.forEach(booking -> {
