@@ -16,11 +16,8 @@ public class CalculateSumJob {
     @Autowired
     private BookingService bookingService;
 
-    @Autowired
-    private BookingRepository bookingRepository;
-
     private void task() {
-        List<Booking> bookings = bookingRepository.findByBookingState(BookingState.CALCULATE_SUM);
+        List<Booking> bookings = bookingService.findByBookingState(BookingState.CALCULATE_SUM);
         bookings.forEach(bookingService::calculateAndSetSum);
     }
 }
