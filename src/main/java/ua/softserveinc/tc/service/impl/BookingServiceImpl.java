@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
@@ -56,31 +56,31 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Log
     private Logger log;
 
-    @Autowired
+    @Inject
     private RateService rateService;
 
-    @Autowired
+    @Inject
     private RoomService roomService;
 
-    @Autowired
+    @Inject
     private ChildService childService;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
-    @Autowired
+    @Inject
     private BookingDao bookingDao;
 
-    @Autowired
+    @Inject
     private UserDao userDao;
 
-    @Autowired
+    @Inject
     private RoomDao roomDao;
 
-    @Autowired
+    @Inject
     private RecurrentBookingValidator recurrentBookingValidator;
 
-    @Autowired
+    @Inject
     private BookingValidator bookingValidator;
 
     @Override

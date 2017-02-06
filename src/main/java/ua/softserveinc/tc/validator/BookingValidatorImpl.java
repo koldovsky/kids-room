@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.validator;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dto.BookingDto;
@@ -20,14 +20,14 @@ import java.util.Date;
 @Component("bookingValidator")
 public class BookingValidatorImpl implements BookingValidator {
 
-    @Autowired
-    private BookingService bookingService;
-
-    @Autowired
-    private InputDateTimeValidatorImpl inputDateValidator;
-
     @Log
     private Logger log;
+
+    @Inject
+    private BookingService bookingService;
+
+    @Inject
+    private InputDateTimeValidatorImpl inputDateValidator;
 
     private final List<String> errors = new ArrayList<>();
 

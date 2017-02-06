@@ -95,6 +95,8 @@
         <org.mockito.mockito-all-version>1.10.19</org.mockito.mockito-all-version>
         <powermock.version>1.6.6</powermock.version>
 
+        <java.inject>1</java.inject>
+
     </properties>
     <dependencies>
 
@@ -165,6 +167,12 @@
             <version>${org.springframework.data-version}</version>
         </dependency>
 
+        <!-- JAVA INJECT -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${java.inject}</version>
+        </dependency>
 
         <!-- HIBERNATE -->
         <dependency>

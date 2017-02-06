@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.controller.user;
 
 import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,13 +26,13 @@ import java.util.Locale;
 @Controller
 public class CRUDBookingsController {
 
-    @Autowired
+    @Inject
     private RoomService roomService;
 
-    @Autowired
+    @Inject
     private BookingService bookingService;
 
-    @Autowired
+    @Inject
     private MessageSource messageSource;
 
     /**

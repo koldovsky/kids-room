@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.controller.util;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
@@ -42,24 +42,24 @@ import java.security.Principal;
 @Controller
 public class ImagesController {
 
-    @Autowired
-    private ChildService childService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private KidProfileImageValidator imageValidator;
-
-    @Autowired
-    private NumberRequestValidator numberRequestValidator;
-
-    @Autowired
-    private ApplicationConfigurator applicationConfigurator;
-
     @Log
     private Logger log;
 
+    @Inject
+    private ChildService childService;
+
+    @Inject
+    private UserService userService;
+
+    @Inject
+    private KidProfileImageValidator imageValidator;
+
+    @Inject
+    private NumberRequestValidator numberRequestValidator;
+
+    @Inject
+    private ApplicationConfigurator applicationConfigurator;
+    
 
     /**
      * Uploading a new profile picture for a Child. There is a restriction

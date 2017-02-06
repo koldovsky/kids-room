@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.dao.BookingDao;
@@ -28,20 +28,20 @@ import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 @Service
 public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
 
-    @Autowired
-    private ApplicationConfigurator appConfigurator;
-
-    @Autowired
-    private RoomDao roomDao;
-
-    @Autowired
-    private BookingService bookingService;
-
-    @Autowired
-    private BookingDao bookingDao;
-
     @Log
     private static Logger log;
+
+    @Inject
+    private ApplicationConfigurator appConfigurator;
+
+    @Inject
+    private RoomDao roomDao;
+
+    @Inject
+    private BookingService bookingService;
+
+    @Inject
+    private BookingDao bookingDao;
 
     @Override
     public List<Room> findAll() {
