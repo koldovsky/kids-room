@@ -110,12 +110,6 @@ public class RoomValidatorImpl implements RoomValidator {
                     if (managerId.stream().distinct().count() != managerId.size()) {
                         errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
                     }
-                    for(Long id: managerId) {
-                        if (userService.findByIdTransactional(id).getRole() != Role.MANAGER) {
-                            errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INCORRECT);
-                            break;
-                        }
-                    }
                 }
 
             }

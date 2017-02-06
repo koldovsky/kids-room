@@ -78,6 +78,15 @@ public class RoomValidatorTest {
         Assert.assertEquals(ValidationConstants.ROOM_MANAGER_DUPLICATE,
                 errors.getFieldError(ValidationConstants.MANAGERS_FIELD).getCode());
     }
+    @Test
+    public void testIncorrect() {
+        when(roomDto.getRate()).thenReturn("[{\"idIns\":\"rate1\",\"$$hashKey\":\"object:6\",\"hourRate\":\"afs,\"priceRate\":\"fas}]");
+        roomValidator.validate(roomDto, errors);
+        assertTrue(errors.hasErrors());
+        Assert.assertEquals(ValidationConstants.ROOM_RATE_INCORRECT,
+                errors.getFieldError(ValidationConstants.ROOM_RATE_FIELD).getCode());
+    }
+
 
     @Test
     public void testWrongRate() {
