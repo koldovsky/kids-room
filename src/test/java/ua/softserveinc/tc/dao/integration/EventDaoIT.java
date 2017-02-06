@@ -25,6 +25,7 @@ import ua.softserveinc.tc.dao.EventDao;
 
 import static ua.softserveinc.tc.dao.paths.EventDaoITPath.MULTIPLE_EVENTS;
 import static ua.softserveinc.tc.dao.paths.EventDaoITPath.NO_EVENT;
+import static ua.softserveinc.tc.dao.paths.EventDaoITPath.ONE_EVENT;
 
 @Category(IntegrationTest.class)
 @DirtiesContext
@@ -53,7 +54,13 @@ public class EventDaoIT {
         Assert.assertEquals(Long.valueOf(1), eventDao.getRecurrentEventByRecurrentId(1L).get(0).getId());
     }
 
-
+    @DatabaseSetup(value = ONE_EVENT, type = DatabaseOperation.CLEAN_INSERT)
+    @ExpectedDatabase(value = NO_EVENT, assertionMode = DatabaseAssertionMode.NON_STRICT)
+    @DatabaseTearDown(value = NO_EVENT, type = DatabaseOperation.DELETE_ALL)
+    @Test
+    public void testDeleteByRecurrentId() {
+        eventDao.deleteByRecurrentId(1L);
+    }
 
 }
 
