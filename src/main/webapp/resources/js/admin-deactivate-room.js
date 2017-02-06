@@ -40,19 +40,10 @@ $().ready(function () {
             url: src,
             data: inputData,
             success: function (data) {
-                data = JSON.parse(data);
-                if (data != []) {
-                    if (data.includes(constants.room.warnings.active)) {
-                        warningMessages.push(messages.room.warnings.active);
-                    }
-                    if (data.includes(constants.room.warnings.planning)) {
-                        warningMessages.push(messages.room.warnings.planning);
-                    }
-                    $('#warningMessages').html('');
-                    $.each(warningMessages, function (index, value) {
-                        $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
-                    });
-                }
+                $('#warningMessages').html('');
+                $.each(data, function (index, value) {
+                    $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
+                });
             }
         });
     }
