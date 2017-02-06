@@ -91,7 +91,8 @@ public class BookingRepositoryTestIT {
         Calendar startDate = Calendar.getInstance();
         startDate.set(2016, 7, 7, 15, 15, 0);
         System.out.println(startDate.getTime());
-        List<Booking> bookings = bookingRepository.findByBookingStateAndBookingStartTimeLessThan(BookingState.ACTIVE, toDate(startDate));
+        List<Booking> bookings = bookingRepository
+                .findByBookingStateAndBookingStartTimeLessThan(BookingState.ACTIVE, toDate(startDate));
 
         Assert.assertEquals(Long.valueOf(1), bookings.get(0).getIdBook());
     }
