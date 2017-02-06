@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;
-import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.EventsCreatingResultsDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
@@ -68,7 +67,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public void add(Event event) {
-        eventRepository.saveAndFlush(event);
+        eventDao.createOrUpdateEvent(event);
     }
 
     @Override
