@@ -138,7 +138,7 @@ public class RoomValidatorImpl implements RoomValidator {
 
                 LocalTime startTime = LocalTime.parse(roomToValidate.getWorkingHoursStart());
                 LocalTime endTime = LocalTime.parse(roomToValidate.getWorkingHoursEnd());
-                if (startTime.isAfter(endTime)) {
+                if (startTime.isAfter(endTime) || (startTime.equals(endTime))) {
                     errors.rejectValue(ValidationConstants.TIME_FIELD, ValidationConstants.TIME_IS_NOT_VALID);
                 }
             } else {
