@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.dao.BookingDao;
@@ -13,7 +13,6 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
@@ -28,29 +27,28 @@ import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 @Service
 public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomService {
 
-    @Autowired
-    private ApplicationConfigurator appConfigurator;
-
-    @Autowired
-    private RoomDao roomDao;
-
-    @Autowired
-    private BookingService bookingService;
-
-    @Autowired
-    private BookingDao bookingDao;
-
     @Log
     private static Logger log;
 
+    @Inject
+    private RoomDao roomDao;
+
+    @Inject
+    private BookingService bookingService;
+
+    @Inject
+    private BookingDao bookingDao;
+
     @Override
     public List<Room> findAll() {
+
         return roomDao.findAll();
     }
 
     @Override
     @Transactional
     public void saveOrUpdate(Room room) {
+
         roomDao.saveOrUpdate(room);
     }
 
@@ -78,14 +76,17 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         List<Booking> list = reservedBookings(dateLo, dateHi, room);
         if (list.contains(booking)) {
             list.remove(booking);
+
             return room.getCapacity() > list.size();
         } else {
+
             return room.getCapacity() > list.size();
         }
     }
 
     @Override
     public List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room) {
+
         return roomDao.reservedBookings(dateLo, dateHi, room);
     }
 
@@ -113,7 +114,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public Room changeActiveState(Long id) {
         Room room = findByIdTransactional(id);
         room.setActive(!room.isActive());
-        if(!room.isActive()) {
+        if (!room.isActive()) {
             bookingService.cancelAllActiveAndPlannedRoomBookings(room);
         }
         update(room);
@@ -123,11 +124,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public boolean hasPlanningBooking(Room room) {
+
         return !bookingService.getAllPlannedBookingsInTheRoom(room).isEmpty();
     }
 
     @Override
     public boolean hasActiveBooking(Room room) {
+
         return !bookingService.getAllActiveBookingsInTheRoom(room).isEmpty();
     }
 
@@ -148,4 +151,5 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                                 today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
+
 }

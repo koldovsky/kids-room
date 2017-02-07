@@ -3,9 +3,9 @@ package ua.softserveinc.tc.util;
 import java.util.Date;
 
 /**
- * Two tuple that represent two object: Long that represent date and Boolean that
+ * Two tuple that represent two object: Date that represent date and Boolean that
  * is true if date is start, otherwise - false. The class implements Comparable interface
- * that sort all elements by Long objects in ascending order. If two Long object are compared
+ * that sort all elements by Date objects in ascending order. If two Date object are compared
  * to 0 then addition sort by second object is making. In that case the lowest object is object
  * its isStart is false.
  */
@@ -14,7 +14,7 @@ public class DateTwoTuple extends TwoTuple <Date,Boolean> implements Comparable<
     /**
      * To create object of this class we must use this constructor.
      *
-     * @param date given date represented by Long object
+     * @param date given date object
      * @param isStart true is given date is start, otherwise false
      */
     public DateTwoTuple(Date date, Boolean isStart) {
@@ -23,9 +23,9 @@ public class DateTwoTuple extends TwoTuple <Date,Boolean> implements Comparable<
     }
 
     /**
-     * Returns contained long object
+     * Returns contained date object
      *
-     * @return the contained long date
+     * @return the contained date
      */
     public Date getDate() {
 
@@ -33,9 +33,9 @@ public class DateTwoTuple extends TwoTuple <Date,Boolean> implements Comparable<
     }
 
     /**
-     * Returns contained boolean object
+     * Returns contained Boolean object
      *
-     * @return the contained boolean object
+     * @return the contained Boolean object
      */
     public Boolean isStart() {
 

@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
@@ -24,12 +24,14 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.util.DateTwoTuple;
-import ua.softserveinc.tc.util.TwoTuple;
+import ua.softserveinc.tc.util.BookingsHolder;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 import ua.softserveinc.tc.constants.UtilConstants;
+import java.time.ZoneId;
+import java.time.LocalDate;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -56,31 +58,31 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Log
     private Logger log;
 
-    @Autowired
+    @Inject
     private RateService rateService;
 
-    @Autowired
+    @Inject
     private RoomService roomService;
 
-    @Autowired
+    @Inject
     private ChildService childService;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
-    @Autowired
+    @Inject
     private BookingDao bookingDao;
 
-    @Autowired
+    @Inject
     private UserDao userDao;
 
-    @Autowired
+    @Inject
     private RoomDao roomDao;
 
-    @Autowired
+    @Inject
     private RecurrentBookingValidator recurrentBookingValidator;
 
-    @Autowired
+    @Inject
     private BookingValidator bookingValidator;
 
     @Override
@@ -308,15 +310,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room) {
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        Date startDate = today.getTime();
+        Date today = Date.from(LocalDate.now()
+                .atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         BookingsCharacteristics characteristic =
                 new BookingsCharacteristics.Builder()
-                        .setDates(new Date[] {startDate, DateConstants.THREE_THOUSAND_YEAR})
+                        .setDates(new Date[] {today, DateConstants.MAX_DATE_FOR_CHECK})
                         .setRooms(Collections.singletonList(room))
                         .build();
 
@@ -362,7 +361,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         isFull = true;
                     }
                 } else if (isFull) {
-                    if (resultList.isEmpty() || !startDateOfFullRoom.equals(endDateOfFullRoom)) {
+                    if (!startDateOfFullRoom.equals(endDateOfFullRoom)) {
                         previousStartDateOfFullRoom = startDateOfFullRoom;
                         endDateOfFullRoom = dateTuple.getDate();
                         resultList.add(new Date[]{startDateOfFullRoom, endDateOfFullRoom});
@@ -398,19 +397,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> makeRecurrentBookings(List<BookingDto> bookingDtos) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder makeRecurrentBookings(List<BookingDto> bookingDtos) {
+        BookingsHolder result;
 
         if (!recurrentBookingValidator.isValidToInsert(bookingDtos)) {
-            result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
+            result = new BookingsHolder(null, recurrentBookingValidator.getErrors().get(0));
 
         } else {
             List<BookingDto> bookings = saveRecurrentBookings(bookingDtos);
 
             if (bookings.isEmpty()) {
-                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
+                result = new BookingsHolder(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
             } else {
-                result = new TwoTuple<>(bookings, null);
+                result = new BookingsHolder(bookings, null);
             }
         }
 
@@ -419,8 +418,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder updateBooking(BookingDto bookingDto) {
+        BookingsHolder result;
         List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
         Booking booking = null;
 
@@ -434,7 +433,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             if (!bookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
 
-                result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
+                result = new BookingsHolder(null, bookingValidator.getErrors().get(0));
 
             } else {
 
@@ -449,10 +448,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 booking.setComment(bookingDto.getComment());
                 booking.setRecurrentId(null);
 
-                result = new TwoTuple<>(Collections.singletonList(bookingDto), null);
+                result = new BookingsHolder(Collections.singletonList(bookingDto), null);
             }
         } else {
-            result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+            result = new BookingsHolder(null, ValidationConstants.COMMON_ERROR_MESSAGE);
         }
 
         return result;
@@ -460,13 +459,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder updateRecurrentBookings(BookingDto bookingDto) {
+        BookingsHolder result;
         List<Booking> cancelledBookings;
         List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
 
         if (!recurrentBookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
-            result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
+            result = new BookingsHolder(null, recurrentBookingValidator.getErrors().get(0));
 
         } else {
             cancelledBookings = cancelRecurrentBookings(listOfDtoForUpdate);
@@ -474,9 +473,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             if (bookings.isEmpty()) {
                 denyCancellationWithinTransaction(cancelledBookings);
-                result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+                result = new BookingsHolder(null, ValidationConstants.COMMON_ERROR_MESSAGE);
             } else {
-                result = new TwoTuple<>(bookings, null);
+                result = new BookingsHolder(bookings, null);
             }
         }
 
@@ -485,19 +484,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder makeBookings(List<BookingDto> bookingDtos) {
+        BookingsHolder result;
 
         if (!bookingValidator.isValidToInsert(bookingDtos)) {
-            result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
+            result = new BookingsHolder(null, bookingValidator.getErrors().get(0));
 
         } else {
             List<BookingDto> bookings = saveBookings(bookingDtos);
 
             if (bookings.isEmpty()) {
-                result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+                result = new BookingsHolder(null, ValidationConstants.COMMON_ERROR_MESSAGE);
             } else {
-                result = new TwoTuple<>(bookings, null);
+                result = new BookingsHolder(bookings, null);
             }
         }
 
@@ -804,7 +803,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      *
      * After creating instance of this class we can get daily dates using iterator.
      * Each invoking next() will returns list of instances of DateTwoTuple that contains start and
-     * end dates for next day represented by Long and sorted in ascending order. The first object
+     * end dates for next day and sorted in ascending order. The first object
      * in DateTuple is date and second indicates when date is start (is true) or end (is false).
      * So iterating through instance of this class we receives all dates from input parameter
      * grouped by one day.
@@ -818,7 +817,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         /*
          * Iterator for iterating through dates. Each invoking next will return all dates
          * for next one day encapsulated in DateTwoTuple object. First encapsulated value
-         * is date (Date.getTime()) and second indicated if this date is start (true) or
+         * is date and second indicated if this date is start (true) or
          * end(false). For correct work start and end date must belong to the same day.
          */
         private class BookingsDatesIterator implements Iterator<List<DateTwoTuple>> {
@@ -840,7 +839,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             }
 
             /*
-             * Returns list of DateTwoTuple objects that consists date (Long) as
+             * Returns list of DateTwoTuple objects that consists Date as
              * first parameter and Boolean value that indicate if this date is
              * start (true) or end (false) grouped by one day. For correct work
              * start and end date must belong to the same day.
@@ -889,11 +888,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
          * and merged in one list.
          */
         DailyBookingsMapTransformer(List<Date[]> dates) {
+
             listOfDates = dates;
         }
 
         @Override
         public Iterator<List<DateTwoTuple>> iterator() {
+
             return new BookingsDatesIterator();
         }
     }

@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -18,7 +18,7 @@ import ua.softserveinc.tc.entity.Room;
 @Component
 public class InputDateTimeValidatorImpl implements InputDateTimeValidator {
 
-    @Autowired
+    @Inject
     private RoomService roomService;
 
     private final List<String> errors = new ArrayList<>();

@@ -1,6 +1,6 @@
 package ua.softserveinc.tc.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.validation.Errors;
 import org.springframework.web.multipart.MultipartFile;
 import ua.softserveinc.tc.constants.ImageConstants;
@@ -28,10 +28,11 @@ import java.util.Spliterator;
  */
 @Component
 public class KidProfileImageValidatorIml implements KidProfileImageValidator {
+
     @Log
     private Logger log;
 
-    @Autowired
+    @Inject
     private ApplicationConfigurator applicationConfigurator;
 
     @Override

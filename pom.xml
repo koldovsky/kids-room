@@ -51,9 +51,9 @@
         <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
         <org.springframework.spring-test-version>4.2.6.RELEASE</org.springframework.spring-test-version>
 
-        <org.hibernate-version>5.1.0.Final</org.hibernate-version>
-        <org.hibernate.hibernate-validator-version>5.2.4.Final</org.hibernate.hibernate-validator-version>
-        <org.hibernate.hibernate-search-orm>5.5.3.Final</org.hibernate.hibernate-search-orm>
+        <org.hibernate-version>5.2.7.Final</org.hibernate-version>
+        <org.hibernate.hibernate-validator-version>5.4.0.Final</org.hibernate.hibernate-validator-version>
+        <org.hibernate.hibernate-search-orm>5.6.0.Final</org.hibernate.hibernate-search-orm>
 
         <mysql-connector-java-version>5.0.8</mysql-connector-java-version>
 
@@ -69,7 +69,7 @@
         <com.fasterxml.jackson.core.databind-version>2.7.4</com.fasterxml.jackson.core.databind-version>
         <org.codehouse.jackson.jackson-mapper-asl-version>1.9.10</org.codehouse.jackson.jackson-mapper-asl-version>
 
-        <com.google.code.gson-version>2.6.2</com.google.code.gson-version>
+        <com.google.code.gson-version>2.8.0</com.google.code.gson-version>
         <org.quartz-scheduler.quartz-version>2.2.1</org.quartz-scheduler.quartz-version>
         <org.quarttz-scheduler.quartz-jobs-version>2.2.1</org.quarttz-scheduler.quartz-jobs-version>
 
@@ -94,6 +94,11 @@
 
         <org.mockito.mockito-all-version>1.10.19</org.mockito.mockito-all-version>
         <powermock.version>1.6.6</powermock.version>
+
+        <java.inject-version>1</java.inject-version>
+
+        <javax.el-version>3.0.0</javax.el-version>
+        <javax.el-glassfish-version>2.2.6</javax.el-glassfish-version>
 
     </properties>
     <dependencies>
@@ -165,6 +170,12 @@
             <version>${org.springframework.data-version}</version>
         </dependency>
 
+        <!-- JAVA INJECT -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>${java.inject-version}</version>
+        </dependency>
 
         <!-- HIBERNATE -->
         <dependency>
@@ -181,6 +192,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${org.hibernate.hibernate-validator-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${org.hibernate.hibernate-search-orm}</version>
         </dependency>
 
         <!-- SERVLET JSP JSTL -->
@@ -249,14 +265,6 @@
             <artifactId>tiles-template</artifactId>
             <version>${org.apache.tiles-version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>2.2.4</version>
-            <scope>test</scope>
-        </dependency>
-
 
         <dependency>
             <groupId>org.apache.tiles</groupId>
@@ -349,11 +357,6 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
             <version>${org.apache.velocity-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-orm</artifactId>
-            <version>${org.hibernate.hibernate-search-orm}</version>
         </dependency>
 
         <dependency>
@@ -448,6 +451,20 @@
             <groupId>org.springframework.security.extensions</groupId>
             <artifactId>spring-security-saml2-core</artifactId>
             <version>1.0.2.RELEASE</version>
+        </dependency>
+
+        <!-- JAVAX-EL -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax.el-glassfish-version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

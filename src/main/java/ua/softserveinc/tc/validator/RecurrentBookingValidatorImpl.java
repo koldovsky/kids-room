@@ -1,7 +1,7 @@
 package ua.softserveinc.tc.validator;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import ua.softserveinc.tc.constants.UtilConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
@@ -25,10 +25,10 @@ public class RecurrentBookingValidatorImpl implements RecurrentBookingValidator 
     @Log
     private Logger log;
 
-    @Autowired
+    @Inject
     private BookingService bookingService;
 
-    @Autowired
+    @Inject
     private BookingValidator bookingValidator;
 
     private final List<String> errors = new ArrayList<>();
