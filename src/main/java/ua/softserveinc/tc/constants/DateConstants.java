@@ -22,8 +22,8 @@ public final class DateConstants {
     public static final Date THREE_THOUSAND_YEAR =
             new Date(THREE_THOUSAND_YEARS_MILLIS);
 
-    public static final Date MAX_DATE =
-            new Date(Long.MAX_VALUE);
+    public static final Date MAX_DATE_FOR_CHECK =
+            new Date(THREE_THOUSAND_YEARS_MILLIS);
 
     public static final int WEEK_LENGTH = 7;
 
