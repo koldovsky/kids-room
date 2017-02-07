@@ -11,11 +11,9 @@ import static ua.softserveinc.tc.util.DateUtil.toDate;
 
 public class EventUtils {
 
-
-    public static List<Event> getListOfEvents() throws ParseException {
-        Event event1 = createEvent(1L, "New Year event", "2016-07-10 14:00:00",
-                "2016-07-10 14:00:00", 3, 5, RoomUtils.getListOfRooms().get(0),
-                "no description", "red");
+    public static List<Event> getListOfEvents() {
+        Event event1 = createEvent(1L, "Teachers day", "2016-07-10 00:00:00", "2016-07-10 00:00:00",
+                3, 5, RoomUtils.getListOfRooms().get(0), "No", "red");
 
         return Arrays.asList(event1);
     }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;
-import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.EventsCreatingResultsDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
@@ -12,7 +11,6 @@ import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.mapper.GenericMapper;
-import ua.softserveinc.tc.repo.EventRepository;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.EventService;
 import ua.softserveinc.tc.service.RoomService;
@@ -28,9 +26,6 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Autowired
     private EventDao eventDao;
-
-    @Autowired
-    private EventRepository eventRepository;
 
     @Autowired
     private RoomService roomService;
@@ -68,7 +63,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public void add(Event event) {
-        eventRepository.saveAndFlush(event);
+        eventDao.createOrUpdateEvent(event);
     }
 
     @Override
