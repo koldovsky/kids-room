@@ -788,7 +788,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
      *
      * After creating instance of this class we can get daily dates using iterator.
      * Each invoking next() will returns list of instances of DateTwoTuple that contains start and
-     * end dates for next day represented by Long and sorted in ascending order. The first object
+     * end dates for next day and sorted in ascending order. The first object
      * in DateTuple is date and second indicates when date is start (is true) or end (is false).
      * So iterating through instance of this class we receives all dates from input parameter
      * grouped by one day.
@@ -802,7 +802,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         /*
          * Iterator for iterating through dates. Each invoking next will return all dates
          * for next one day encapsulated in DateTwoTuple object. First encapsulated value
-         * is date (Date.getTime()) and second indicated if this date is start (true) or
+         * is date and second indicated if this date is start (true) or
          * end(false). For correct work start and end date must belong to the same day.
          */
         private class BookingsDatesIterator implements Iterator<List<DateTwoTuple>> {
@@ -824,7 +824,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             }
 
             /*
-             * Returns list of DateTwoTuple objects that consists date (Long) as
+             * Returns list of DateTwoTuple objects that consists Date as
              * first parameter and Boolean value that indicate if this date is
              * start (true) or end (false) grouped by one day. For correct work
              * start and end date must belong to the same day.
@@ -873,11 +873,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
          * and merged in one list.
          */
         DailyBookingsMapTransformer(List<Date[]> dates) {
+
             listOfDates = dates;
         }
 
         @Override
         public Iterator<List<DateTwoTuple>> iterator() {
+
             return new BookingsDatesIterator();
         }
     }
