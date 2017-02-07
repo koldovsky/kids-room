@@ -7,11 +7,10 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.softserveinc.tc.categories.UnitTest;
-import ua.softserveinc.tc.dao.impl.ChildDaoImpl;
+import ua.softserveinc.tc.dao.ChildDao;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.messaging.ChildMessages;
-import ua.softserveinc.tc.util.ChildsUtils;
 
 import java.text.ParseException;
 import java.util.List;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class ChildDaoTest {
 
     @Mock
-    private ChildDaoImpl childDao;
+    private ChildDao childDao;
 
     @Mock
     private List<Child> child;

@@ -9,9 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.softserveinc.tc.categories.UnitTest;
-import ua.softserveinc.tc.dao.impl.RateDaoImpl;
+import ua.softserveinc.tc.dao.RateDao;
 import ua.softserveinc.tc.entity.Rate;
-import ua.softserveinc.tc.util.RateUtils;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class RateDaoTest {
 
     @Mock
-    private RateDaoImpl rateDao;
+    private RateDao rateDao;
 
     @Mock
     private static List<Rate> rateList;
