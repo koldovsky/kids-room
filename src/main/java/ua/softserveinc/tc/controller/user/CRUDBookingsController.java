@@ -255,17 +255,17 @@ public class CRUDBookingsController {
     }
 
     /*
-     * Receives a TwoTuple that can contains a list of BookingDto objects
-     * or Error string message.
+     * Receives a BookingsHolder that can contains a list of BookingDto objects
+     * or Error code of string message.
      *
-     * If a TwoTuple contains aforementioned list
+     * If a BookingsHolder contains aforementioned list
      * then method returns a ResponseEntity with status "Ok" (200) and the
-     * given list in its body. If a TwoTuple contains aforementioned error
+     * given list in its body. If a BookingsHolder contains aforementioned error
      * message then method returns a ResponseEntity with status "Bad Request"
      * (400) and the given error message in its body. The given error message
      * is localized according to the user locale.
      *
-     * @param resultTuple the given TwoTuple
+     * @param resultTuple the given BookingsHolder
      * @param locale the given request locale
      * @return resulting ResponseEntity
      */

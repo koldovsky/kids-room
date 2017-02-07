@@ -32,9 +32,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     private static Logger log;
 
     @Inject
-    private ApplicationConfigurator appConfigurator;
-
-    @Inject
     private RoomDao roomDao;
 
     @Inject
@@ -45,12 +42,14 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public List<Room> findAll() {
+
         return roomDao.findAll();
     }
 
     @Override
     @Transactional
     public void saveOrUpdate(Room room) {
+
         roomDao.saveOrUpdate(room);
     }
 
@@ -78,14 +77,17 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         List<Booking> list = reservedBookings(dateLo, dateHi, room);
         if (list.contains(booking)) {
             list.remove(booking);
+
             return room.getCapacity() > list.size();
         } else {
+
             return room.getCapacity() > list.size();
         }
     }
 
     @Override
     public List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room) {
+
         return roomDao.reservedBookings(dateLo, dateHi, room);
     }
 
@@ -113,7 +115,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public Room changeActiveState(Long id) {
         Room room = findByIdTransactional(id);
         room.setActive(!room.isActive());
-        if(!room.isActive()) {
+        if (!room.isActive()) {
             bookingService.cancelAllActiveAndPlannedRoomBookings(room);
         }
         update(room);
@@ -123,11 +125,13 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public boolean hasPlanningBooking(Room room) {
+
         return !bookingService.getAllPlannedBookingsInTheRoom(room).isEmpty();
     }
 
     @Override
     public boolean hasActiveBooking(Room room) {
+
         return !bookingService.getAllActiveBookingsInTheRoom(room).isEmpty();
     }
 
@@ -148,4 +152,5 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                                 today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
+    
 }
