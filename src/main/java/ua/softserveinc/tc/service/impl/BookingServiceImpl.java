@@ -346,7 +346,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         isFull = true;
                     }
                 } else if (isFull) {
-                    if (resultList.isEmpty() || !startDateOfFullRoom.equals(endDateOfFullRoom)) {
+                    if (!startDateOfFullRoom.equals(endDateOfFullRoom)) {
                         previousStartDateOfFullRoom = startDateOfFullRoom;
                         endDateOfFullRoom = dateTuple.getDate();
                         resultList.add(new Date[]{startDateOfFullRoom, endDateOfFullRoom});
