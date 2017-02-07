@@ -30,6 +30,8 @@ import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 import ua.softserveinc.tc.constants.UtilConstants;
+import java.time.ZoneId;
+import java.time.LocalDate;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -293,15 +295,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room) {
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        Date startDate = today.getTime();
+        Date today = Date.from(LocalDate.now()
+                .atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         BookingsCharacteristics characteristic =
                 new BookingsCharacteristics.Builder()
-                        .setDates(new Date[] {startDate, DateConstants.MAX_DATE})
+                        .setDates(new Date[] {today, DateConstants.MAX_DATE})
                         .setRooms(Collections.singletonList(room))
                         .build();
 

@@ -95,7 +95,10 @@
         <org.mockito.mockito-all-version>1.10.19</org.mockito.mockito-all-version>
         <powermock.version>1.6.6</powermock.version>
 
-        <java.inject>1</java.inject>
+        <java.inject-version>1</java.inject-version>
+
+        <javax.el-version>3.0.0</javax.el-version>
+        <javax.el-glassfish-version>2.2.6</javax.el-glassfish-version>
 
     </properties>
     <dependencies>
@@ -171,7 +174,7 @@
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>${java.inject}</version>
+            <version>${java.inject-version}</version>
         </dependency>
 
         <!-- HIBERNATE -->
@@ -456,6 +459,18 @@
             <groupId>org.springframework.security.extensions</groupId>
             <artifactId>spring-security-saml2-core</artifactId>
             <version>1.0.2.RELEASE</version>
+        </dependency>
+
+        <!-- JAVAX-EL -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax.el-glassfish-version}</version>
         </dependency>
 
     </dependencies>
