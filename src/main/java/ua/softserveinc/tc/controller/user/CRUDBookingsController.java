@@ -1,8 +1,10 @@
 package ua.softserveinc.tc.controller.user;
 
+import org.slf4j.Logger;
 import com.google.gson.Gson;
 import javax.inject.Inject;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import ua.softserveinc.tc.constants.ValidationConstants;
+import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.util.TwoTuple;
 
 import java.util.List;
@@ -25,6 +29,9 @@ import java.util.Locale;
  */
 @Controller
 public class CRUDBookingsController {
+
+    @Log
+    private static Logger log;
 
     @Inject
     private RoomService roomService;
@@ -49,7 +56,8 @@ public class CRUDBookingsController {
      * @return ResponseEntity with appropriate http status and body that consists the dates
      * objects
      */
-    @GetMapping(value = "/getallbookings/{idUser}/{idRoom}", produces = "application/json; charset=UTF-8")
+    @GetMapping(value = "/getallbookings/{idUser}/{idRoom}",
+                produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> getAllBookings(@PathVariable Long idUser,
                                                  @PathVariable Long idRoom,
                                                  Locale locale) {
@@ -339,8 +347,16 @@ public class CRUDBookingsController {
 
 
         if (!httpStatus) {
+            String responseMessage;
+
+            try {
+                responseMessage = messageSource.getMessage(responseBody, null, locale);
+            } catch (NoSuchMessageException e) {
+                log.error("The message wasn't found", e);
+                responseMessage = ErrorConstants.PRIMARY_ERROR_MESSAGE;
+            }
             resultResponse = ResponseEntity.badRequest()
-                    .body(messageSource.getMessage(responseBody, null, locale));
+                    .body(responseMessage);
 
         } else {
             resultResponse = ResponseEntity.ok()
