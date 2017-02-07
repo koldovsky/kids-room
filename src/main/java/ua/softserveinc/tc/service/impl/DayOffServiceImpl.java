@@ -113,7 +113,7 @@ public class DayOffServiceImpl extends BaseServiceImpl<DayOff> implements DayOff
                 mailService.sendDayOffReminderAsync(
                         recipient, MailConstants.DAY_OFF_REMINDER, day);
             } catch (MessagingException e) {
-                log.error(e.getMessage());
+                log.error("Error sending email", e);
             }
         }
     }

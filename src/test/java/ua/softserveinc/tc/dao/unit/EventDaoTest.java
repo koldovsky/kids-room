@@ -10,9 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.softserveinc.tc.categories.UnitTest;
-import ua.softserveinc.tc.dao.impl.EventDaoImpl;
+import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.entity.Event;
-import ua.softserveinc.tc.util.EventUtils;
 
 import java.text.ParseException;
 import java.util.List;
@@ -27,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class EventDaoTest {
 
     @Mock
-    private EventDaoImpl eventDao;
+    private EventDao eventDao;
 
     @Mock
     private static List<Event> eventList;

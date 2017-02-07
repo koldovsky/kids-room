@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ua.softserveinc.tc.categories.UnitTest;
-import ua.softserveinc.tc.dao.impl.TokenDaoImpl;
+import ua.softserveinc.tc.dao.TokenDao;
 import ua.softserveinc.tc.entity.Token;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.messaging.TokenMessages;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class TokenDaoTest {
 
     @Mock
-    private TokenDaoImpl tokenDao;
+    private TokenDao tokenDao;
 
     @Before
     public void initialization() {
