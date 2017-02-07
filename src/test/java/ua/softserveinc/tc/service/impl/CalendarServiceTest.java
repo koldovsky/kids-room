@@ -14,6 +14,7 @@ import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.entity.Event;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.service.RoomService;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class CalendarServiceTest {
     private EventDao eventDao;
 
     @Mock
-    private RoomServiceImpl roomService;
+    private RoomService roomService;
 
     @Mock
     private RoomDao roomDao;
