@@ -593,7 +593,6 @@ function sendRecurrentEventsForCreate(recurrentEvents, dayWhenEventIsRecurrent) 
                 closeDialog('dialog');
                 callErrorDialog(xhr['responseText']);
             } else if (xhr.status == 400) {
-                serverErrorMessageConvert(xhr.responseText);
                 deleteRecurrentEvents(recurrentEvents.recurrentId);
                 printServerError(GENERAL_ERROR_FIELD, xhr['responseText']);
             }
