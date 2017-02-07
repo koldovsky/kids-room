@@ -51,9 +51,9 @@
         <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
         <org.springframework.spring-test-version>4.2.6.RELEASE</org.springframework.spring-test-version>
 
-        <org.hibernate-version>5.1.0.Final</org.hibernate-version>
-        <org.hibernate.hibernate-validator-version>5.2.4.Final</org.hibernate.hibernate-validator-version>
-        <org.hibernate.hibernate-search-orm>5.5.3.Final</org.hibernate.hibernate-search-orm>
+        <org.hibernate-version>5.2.7.Final</org.hibernate-version>
+        <org.hibernate.hibernate-validator-version>5.4.0.Final</org.hibernate.hibernate-validator-version>
+        <org.hibernate.hibernate-search-orm>5.6.0.Final</org.hibernate.hibernate-search-orm>
 
         <mysql-connector-java-version>5.0.8</mysql-connector-java-version>
 
@@ -189,6 +189,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${org.hibernate.hibernate-validator-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${org.hibernate.hibernate-search-orm}</version>
         </dependency>
 
         <!-- SERVLET JSP JSTL -->
@@ -357,11 +362,6 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
             <version>${org.apache.velocity-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-orm</artifactId>
-            <version>${org.hibernate.hibernate-search-orm}</version>
         </dependency>
 
         <dependency>

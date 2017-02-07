@@ -13,7 +13,6 @@ import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.util.ApplicationConfigurator;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
@@ -152,5 +151,5 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                                 today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
-    
+
 }
