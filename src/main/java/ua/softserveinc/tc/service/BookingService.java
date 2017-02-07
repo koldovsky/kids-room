@@ -6,7 +6,7 @@ import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
-import ua.softserveinc.tc.util.TwoTuple;
+import ua.softserveinc.tc.util.BookingsHolder;
 
 import java.util.Date;
 import java.util.List;
@@ -204,53 +204,53 @@ public interface BookingService extends BaseService<Booking> {
      * Receives the list of recurrent BookingDto objects. Then validates the input parameter
      * for correctness and persist all the objects. If any of the input parameters are not
      * correct or the system failed to persist all of the bookings from the dto then method
-     * returns TwoTuple where first field is equals to null, and second equals string error
-     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
-     * BookingDto objects, and second equals to null.
+     * returns BookingsHolder where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns BookingsHolder where first field is list of
+     * persisted BookingDto objects, and second equals to null.
      *
      * @param bookingDtos list of BookingsDto objects
-     * @return appropriate TwoTuple object
+     * @return appropriate BookingsHolder object
      */
-    TwoTuple<List<BookingDto>, String> makeRecurrentBookings(List<BookingDto> bookingDtos);
+    BookingsHolder makeRecurrentBookings(List<BookingDto> bookingDtos);
 
     /**
      * Receives the list of BookingDto objects. Then validates the input parameter for
      * correctness and persist all the objects. If any of the input parameters are not
      * correct or the system failed to persist all of the bookings from the dto then method
-     * returns TwoTuple where first field is equals to null, and second equals string error
-     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
-     * BookingDto objects, and second equals to null.
+     * returns BookingsHolder where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns BookingsHolder where first field is list of
+     * persisted BookingDto objects, and second equals to null.
      *
      * @param bookingDtos list of BookingsDto objects
-     * @return appropriate TwoTuple object
+     * @return appropriate BookingsHolder object
      */
-    TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos);
+    BookingsHolder makeBookings(List<BookingDto> bookingDtos);
 
     /**
      * Receives the BookingDto object. Then validates the input parameter for
      * correctness and update all the objects. If any of the input parameters are not
      * correct or the system failed to update all of the bookings from the dto then method
-     * returns TwoTuple where first field is equals to null, and second equals string error
-     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
-     * BookingDto objects, and second equals to null.
+     * returns BookingsHolder where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns BookingsHolder where first field is list of
+     * persisted BookingDto objects, and second equals to null.
      *
      * @param bookingDto the BookingsDto object
-     * @return appropriate TwoTuple object
+     * @return appropriate BookingsHolder object
      */
-    TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto);
+    BookingsHolder updateRecurrentBookings(BookingDto bookingDto);
 
     /**
      * Receives the BookingDto object. Then validates the input parameter for
      * correctness and update all the objects. If any of the input parameters are not
      * correct or the system failed to update all of the bookings from the dto then method
-     * returns TwoTuple where first field is equals to null, and second equals string error
-     * code for localization. Otherwise returns TwoTuple where first field is list of persisted
-     * BookingDto objects, and second equals to null.
+     * returns BookingsHolder where first field is equals to null, and second equals string error
+     * code for localization. Otherwise returns BookingsHolder where first field is list of
+     * persisted BookingDto objects, and second equals to null.
      *
      * @param bookingDto the BookingsDto object
-     * @return appropriate TwoTuple object
+     * @return appropriate BookingsHolder object
      */
-    TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto);
+    BookingsHolder updateBooking(BookingDto bookingDto);
 
     /**
      * Normalizes the list of BookingDto objects. Set if not exists room,

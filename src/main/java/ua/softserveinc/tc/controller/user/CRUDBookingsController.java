@@ -18,7 +18,7 @@ import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.Log;
-import ua.softserveinc.tc.util.TwoTuple;
+import ua.softserveinc.tc.util.BookingsHolder;
 
 import java.util.List;
 import java.util.Locale;
@@ -269,15 +269,14 @@ public class CRUDBookingsController {
      * @param locale the given request locale
      * @return resulting ResponseEntity
      */
-    private ResponseEntity<String> getResponseEntity(TwoTuple<List<BookingDto>,String> resultTuple,
-                                                     Locale locale) {
+    private ResponseEntity<String> getResponseEntity(BookingsHolder resultTuple, Locale locale) {
         ResponseEntity<String> resultResponse;
 
-        if (resultTuple.getFirst() == null) {
-            resultResponse = getResponseEntity(false, resultTuple.getSecond(), locale);
+        if (resultTuple.getBookings() == null) {
+            resultResponse = getResponseEntity(false, resultTuple.getErrorCode(), locale);
         } else {
             resultResponse =
-                    getResponseEntity(true, new Gson().toJson(resultTuple.getFirst()), locale);
+                    getResponseEntity(true, new Gson().toJson(resultTuple.getBookings()), locale);
         }
 
         return resultResponse;
@@ -286,9 +285,9 @@ public class CRUDBookingsController {
     /*
      * Creates and returns ResponseBody object according to a given response object. The
      * http status figure out from a given response. If response is not numeric object,
-     * is not equal to null or if the response is a numeric value and is not equal to 0
-     * then http status is "OK" (200). If object is null or is a numeric value that equal to 0,
-     * then http status is "Bad Request" (400).
+     * is not equal to null or if the response is a numeric value and is not equal or lesser 0
+     * then http status is "OK" (200). If object is null or is a numeric value that equal or
+     * lesser 0, then http status is "Bad Request" (400).
      *
      * If status is Ok then body of the resulting ResponseEntity is set to responseBody input
      * parameter without changes. Otherwise the common error message is set to responseBody
@@ -298,7 +297,7 @@ public class CRUDBookingsController {
      *
      * BAD REQUEST:
      * - object is null
-     * - numeric value equals to 0
+     * - numeric value equals or lesser then 0
      *
      * OK:
      * - in all other cases

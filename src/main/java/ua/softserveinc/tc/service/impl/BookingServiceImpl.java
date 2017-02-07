@@ -24,7 +24,7 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.service.ChildService;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.util.DateTwoTuple;
-import ua.softserveinc.tc.util.TwoTuple;
+import ua.softserveinc.tc.util.BookingsHolder;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.validator.BookingValidator;
@@ -383,19 +383,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> makeRecurrentBookings(List<BookingDto> bookingDtos) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder makeRecurrentBookings(List<BookingDto> bookingDtos) {
+        BookingsHolder result;
 
         if (!recurrentBookingValidator.isValidToInsert(bookingDtos)) {
-            result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
+            result = new BookingsHolder(null, recurrentBookingValidator.getErrors().get(0));
 
         } else {
             List<BookingDto> bookings = saveRecurrentBookings(bookingDtos);
 
             if (bookings.isEmpty()) {
-                result = new TwoTuple<>(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
+                result = new BookingsHolder(null, ValidationConstants.NO_DAYS_FOR_BOOKING);
             } else {
-                result = new TwoTuple<>(bookings, null);
+                result = new BookingsHolder(bookings, null);
             }
         }
 
@@ -404,8 +404,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> updateBooking(BookingDto bookingDto) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder updateBooking(BookingDto bookingDto) {
+        BookingsHolder result;
         List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
         Booking booking = null;
 
@@ -419,7 +419,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             if (!bookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
 
-                result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
+                result = new BookingsHolder(null, bookingValidator.getErrors().get(0));
 
             } else {
 
@@ -434,10 +434,10 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 booking.setComment(bookingDto.getComment());
                 booking.setRecurrentId(null);
 
-                result = new TwoTuple<>(Collections.singletonList(bookingDto), null);
+                result = new BookingsHolder(Collections.singletonList(bookingDto), null);
             }
         } else {
-            result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+            result = new BookingsHolder(null, ValidationConstants.COMMON_ERROR_MESSAGE);
         }
 
         return result;
@@ -445,13 +445,13 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> updateRecurrentBookings(BookingDto bookingDto) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder updateRecurrentBookings(BookingDto bookingDto) {
+        BookingsHolder result;
         List<Booking> cancelledBookings;
         List<BookingDto> listOfDtoForUpdate = Collections.singletonList(bookingDto);
 
         if (!recurrentBookingValidator.isValidToUpdate(listOfDtoForUpdate)) {
-            result = new TwoTuple<>(null, recurrentBookingValidator.getErrors().get(0));
+            result = new BookingsHolder(null, recurrentBookingValidator.getErrors().get(0));
 
         } else {
             cancelledBookings = cancelRecurrentBookings(listOfDtoForUpdate);
@@ -459,9 +459,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             if (bookings.isEmpty()) {
                 denyCancellationWithinTransaction(cancelledBookings);
-                result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+                result = new BookingsHolder(null, ValidationConstants.COMMON_ERROR_MESSAGE);
             } else {
-                result = new TwoTuple<>(bookings, null);
+                result = new BookingsHolder(bookings, null);
             }
         }
 
@@ -470,19 +470,19 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     @Transactional
-    public TwoTuple<List<BookingDto>, String> makeBookings(List<BookingDto> bookingDtos) {
-        TwoTuple<List<BookingDto>, String> result;
+    public BookingsHolder makeBookings(List<BookingDto> bookingDtos) {
+        BookingsHolder result;
 
         if (!bookingValidator.isValidToInsert(bookingDtos)) {
-            result = new TwoTuple<>(null, bookingValidator.getErrors().get(0));
+            result = new BookingsHolder(null, bookingValidator.getErrors().get(0));
 
         } else {
             List<BookingDto> bookings = saveBookings(bookingDtos);
 
             if (bookings.isEmpty()) {
-                result = new TwoTuple<>(null, ValidationConstants.COMMON_ERROR_MESSAGE);
+                result = new BookingsHolder(null, ValidationConstants.COMMON_ERROR_MESSAGE);
             } else {
-                result = new TwoTuple<>(bookings, null);
+                result = new BookingsHolder(bookings, null);
             }
         }
 
