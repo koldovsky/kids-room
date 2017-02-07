@@ -301,7 +301,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         BookingsCharacteristics characteristic =
                 new BookingsCharacteristics.Builder()
-                        .setDates(new Date[] {startDate, DateConstants.THREE_THOUSAND_YEAR})
+                        .setDates(new Date[] {startDate, DateConstants.MAX_DATE})
                         .setRooms(Collections.singletonList(room))
                         .build();
 

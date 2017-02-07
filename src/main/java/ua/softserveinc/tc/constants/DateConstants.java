@@ -22,6 +22,9 @@ public final class DateConstants {
     public static final Date THREE_THOUSAND_YEAR =
             new Date(THREE_THOUSAND_YEARS_MILLIS);
 
+    public static final Date MAX_DATE =
+            new Date(Long.MAX_VALUE);
+
     public static final int WEEK_LENGTH = 7;
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"; // Quoted "T" to indicate UTC, no timezone offset
