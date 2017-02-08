@@ -51,7 +51,7 @@
         <org.springframework.spring-tx-version>4.2.6.RELEASE</org.springframework.spring-tx-version>
         <org.springframework.spring-test-version>4.2.6.RELEASE</org.springframework.spring-test-version>
 
-        <org.hibernate-version>5.2.7.Final</org.hibernate-version>
+        <org.hibernate-version>5.1.0.Final</org.hibernate-version>
         <org.hibernate.hibernate-validator-version>5.4.0.Final</org.hibernate.hibernate-validator-version>
         <org.hibernate.hibernate-search-orm>5.6.0.Final</org.hibernate.hibernate-search-orm>
 
