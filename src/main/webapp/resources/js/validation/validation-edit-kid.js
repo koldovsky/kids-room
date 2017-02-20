@@ -25,11 +25,13 @@ $(document).ready(function() {
             messages: {
                 firstName: {
                     required: messages.kid.requiredFirstName,
+                    regexKidFirstName : messages.kid.regexKidFirstName,
                     minlength: messages.kid.toShortFirstName,
                     maxlength: messages.kid.toLongFirstName
                 },
                 lastName: {
                     required: messages.kid.requiredLastName,
+                    regexKidLastName : messages.kid.regexKidLastName,
                     minlength: messages.kid.toShortLastName,
                     maxlength: messages.kid.toLongLastName
                 }
