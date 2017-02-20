@@ -31,7 +31,8 @@ $(function () {
 });
 
 function getAmountOfChildrenByCurrentDate() {
-    var currentDate = $('#date-booking').val();
+    var currentDate = $('#date-booking').datepicker().val();
+
     $.ajax({
         url: 'getAmountOfChildren/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {
