@@ -11,6 +11,7 @@
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js"></script>
 
 <link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/edit-booking.css'>
@@ -19,9 +20,9 @@
 <div class="container">
     <div class="table-edit">
         <div id="choose-time-inp">
-            <form action="" , method="POST">
+            <form action=""  method="POST">
                 <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"/>
-                <input id="date-booking" class="form-control" type="date"/>
+                <input id="date-booking" type="text" class="form-control datepicker"/>
             </form>
         </div>
         <div id="nav-group">
@@ -120,7 +121,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <label><spring:message code="booking.createDate"/></label>
-                                <input type="date" id="data-edit" name="date" class="form-control"/>
+                                <input type="text" id="data-edit" name="date" class="form-control datepicker"/>
                             </div>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
@@ -171,7 +172,7 @@
                         <label for="bookingStartDate"><spring:message code="booking.bookingDate"/></label>
                         <br>
                         <div>
-                            <input type="date" class="form-control" id="bookingStartDate" placeholder="booking date"/>
+                            <input type="text" class="form-control datepicker" id="bookingStartDate" placeholder="booking date"/>
                         </div>
                         <input id="kids-count" hidden/>
                         <div>
@@ -362,6 +363,11 @@
     </div>
 </div>
 
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
+</c:if>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/edit-booking.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
