@@ -91,6 +91,9 @@ $(function() {
         maxTime: roomWorkingEndTime
     });
 
+
+
+
 });
 
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
@@ -110,6 +113,8 @@ function selectRoomForManager(roomId) {
             roomWorkingEndTime = result[1];
             $('.picker').timepicker('option', 'minTime', roomWorkingStartTime);
             $('.picker').timepicker('option', 'maxTime', roomWorkingEndTime);
+            $('.timepicker').timepicker('option', 'minTime', roomWorkingStartTime);
+            $('.timepicker').timepicker('option', 'maxTime', roomWorkingEndTime);
             roomCapacity = result[2];
         }
     });
@@ -245,7 +250,7 @@ function refreshTable(bookingsState) {
             'data': 'startTime',
             'className': 'arrivalTime',
             'fnCreatedCell': function(nTd) {
-                var td = '<input type="time" class="form-control inp-arrivalTime" >'
+                var td = '<input type="text" class="form-control inp-arrivalTime timepicker" >'
                     + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                     'data-toggle="tooltip" title="' + messages.booking.hint.arrivedTime + '" id="arrival-btn" ></button>';
                 $(nTd).empty();
@@ -256,7 +261,7 @@ function refreshTable(bookingsState) {
             'data': 'endTime',
             'className': 'leaveTime',
             'fnCreatedCell': function(nTd) {
-                var td = '<input type="time" class="form-control inp-leaveTime" >'
+                var td = '<input type="text" class="form-control inp-leaveTime timepicker" >'
                     + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                     'data-toggle="tooltip" title="' + messages.booking.hint.leaveTime + '" id="leave-btn" ></button>';
                 $(nTd).empty();
@@ -275,6 +280,12 @@ function refreshTable(bookingsState) {
             cell.innerHTML = i + 1;
         });
     }).draw();
+    $('.timepicker').timepicker({
+        timeFormat: 'H:i',
+        step: 1,
+        minTime: roomWorkingStartTime,
+        maxTime: roomWorkingEndTime
+    });
     addHilighted(data);
     checkTablePage();
 }
