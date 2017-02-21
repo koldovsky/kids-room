@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.controller.util;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +32,7 @@ public class SearchController {
     private BookingSearch bookingSearch;
 
     @GetMapping(SearchConstants.USER_SEARCH_URL)
-    public String searchUser(@RequestParam("field") String field) {
+    public List<UserDto> searchUser(@RequestParam("field") String field) {
         List<UserDto> result = new ArrayList<>();
 
         if (isValidRequestField(field)) {
@@ -42,13 +41,11 @@ public class SearchController {
                 result.add(new UserDto(user));
             }
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
     @GetMapping(SearchConstants.CHILD_SEARCH_URL)
-    public String searchChild(@RequestParam("field") String field) {
+    public List<ChildDto> searchChild(@RequestParam("field") String field) {
         List<ChildDto> result = new ArrayList<>();
 
         if (isValidRequestField(field)) {
@@ -57,13 +54,11 @@ public class SearchController {
                 result.add(new ChildDto(child));
             }
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
     @GetMapping(SearchConstants.BOOKING_SEARCH_URL)
-    public String searchBooking(@RequestParam("field") String field) {
+    public List<BookingDto> searchBooking(@RequestParam("field") String field) {
         List<BookingDto> result = new ArrayList<>();
 
         if (isValidRequestField(field)) {
@@ -72,9 +67,7 @@ public class SearchController {
                 result.add(new BookingDto(booking));
             }
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
     private boolean isValidRequestField(String field) {
