@@ -109,7 +109,7 @@ public final class BookingConstants {
 
   public static final class View {
 
-    public static final String MAIN_PAGE = "manager-edit-booking";
+    public static final String MAIN_PAGE = "index";
 
     private View() {
     }
