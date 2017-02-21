@@ -683,14 +683,14 @@
                                             </div>
                                         </div>
                                         <div class="row col-xs-7" id="days-for-monthly-form" hidden>
-                                            <br><spring:message code="event.checkRequiredDays"/>
+                                            <br><spring:message code="event.checkRequiredMonth"/>
                                             <table class="table center" id="monthly-days">
                                             </table>
                                         </div>
                                         <div class="row col-xs-9" id="days-for-recurrent-form" hidden>
                                             <table class="table" id="days-for-recurrent">
                                                 <br>
-                                                <thead><spring:message code="event.checkRequiredDays"/></thead>
+                                                <thead><spring:message code="event.checkRequiredWeeks"/></thead>
                                                 <tbody>
                                                 <tr>
                                                     <td><label><input type="checkbox" id="Monday" value="Mon"
