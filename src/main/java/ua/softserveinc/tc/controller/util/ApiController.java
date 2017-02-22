@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.controller.util;
 
-import com.google.gson.Gson;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -27,9 +25,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
-
-
-
 
 @RestController
 public class ApiController {
@@ -57,16 +52,14 @@ public class ApiController {
      * @return users JSON
      */
     @GetMapping(ApiConstants.USER_REST_URL)
-    public String getUser() {
+    public List<UserDto> getUser() {
         List<UserDto> result = new ArrayList<>();
         List<User> users = userService.findAll();
 
         for (User user : users) {
             result.add(new UserDto(user));
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
     /**
@@ -76,11 +69,9 @@ public class ApiController {
      * @return user JSON
      */
     @GetMapping(ApiConstants.USER_REST_BY_ID_URL)
-    public String getUserById(@PathVariable long id) {
+    public UserDto getUserById(@PathVariable long id) {
         User user = userService.findByIdTransactional(id);
-        Gson gson = new Gson();
-
-        return gson.toJson(new UserDto(user));
+        return new UserDto(user);
     }
 
     /**
@@ -89,16 +80,14 @@ public class ApiController {
      * @return children JSON
      */
     @GetMapping(ApiConstants.CHILD_REST_URL)
-    public String getChild() {
+    public List<ChildDto> getChild() {
         List<ChildDto> result = new ArrayList<>();
         List<Child> children = childService.findAll();
 
         for (Child child : children) {
             result.add(new ChildDto(child));
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
     /**
@@ -108,10 +97,9 @@ public class ApiController {
      * @return child JSON
      */
     @PostMapping(ApiConstants.CHILD_REST_URL)
-    public String addChild(@RequestBody Child child) {
+    public Child addChild(@RequestBody Child child) {
         childService.create(child);
-        Gson gson = new Gson();
-        return gson.toJson(child);
+        return child;
     }
 
     /**
@@ -121,11 +109,9 @@ public class ApiController {
      * @return child JSON
      */
     @GetMapping(ApiConstants.CHILD_BY_ID_REST_URL)
-    public String getChildById(@PathVariable long id) {
+    public ChildDto getChildById(@PathVariable long id) {
         Child child = childService.findByIdTransactional(id);
-        Gson gson = new Gson();
-
-        return gson.toJson(new ChildDto(child));
+        return new ChildDto(child);
     }
 
     /**
@@ -135,16 +121,14 @@ public class ApiController {
      * @return children JSON
      */
     @GetMapping(ApiConstants.GET_ACTIVE_CHILDREN_IN_ROOM_URL)
-    public String getChildrenInRoom(@PathVariable long roomId) {
+    public List<ChildDto> getChildrenInRoom(@PathVariable long roomId) {
         List<ChildDto> result = new ArrayList<>();
         List<Child> children = childService.getActiveChildrenInRoom(roomService.findByIdTransactional(roomId));
 
         for (Child child : children) {
             result.add(new ChildDto(child));
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return result;
     }
 
     /**
@@ -154,12 +138,10 @@ public class ApiController {
      * @return user JSON
      */
     @GetMapping(ApiConstants.GET_CHILD_PARENT_REST_URL)
-    public String getParentByChild(@PathVariable long id) {
+    public UserDto getParentByChild(@PathVariable long id) {
         Child child = childService.findByIdTransactional(id);
         User user = child.getParentId();
-        Gson gson = new Gson();
-
-        return gson.toJson(new UserDto(user));
+        return new UserDto(user);
     }
 
     /**
@@ -168,9 +150,8 @@ public class ApiController {
      * @return configuration JSON
      */
     @GetMapping(ApiConstants.GET_APP_CONFIGURATION)
-    public String getAppConfiguration() {
-        Gson gson = new Gson();
-        return gson.toJson(configurator);
+    public ApplicationConfigurator getAppConfiguration() {
+        return configurator;
     }
 
     /**
@@ -180,16 +161,14 @@ public class ApiController {
      * @return localization JSON
      */
     @GetMapping(ApiConstants.GET_APP_LOCALIZATION)
-    public String getLocale(@PathVariable("locale") String locale) {
+    public Map<String, String> getLocale(@PathVariable("locale") String locale) {
         Map<String, String> messages = new HashMap<>();
         Locale localeObj = new Locale(locale);
 
         for (String message : LocaleConstants.getMessages()) {
             messages.put(message, messageSource.getMessage(message, null, localeObj));
         }
-
-        Gson gson = new Gson();
-        return gson.toJson(messages);
+        return messages;
     }
 
 }
