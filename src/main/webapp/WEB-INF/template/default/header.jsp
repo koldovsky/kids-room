@@ -120,7 +120,7 @@
                         </li>
 
                         <li>
-                            <a href="/home">
+                            <a href="manager-calendar">
                                 <span class="glyphicon glyphicon-calendar"></span>
                                 <spring:message code="user.calendar" />
                             </a>

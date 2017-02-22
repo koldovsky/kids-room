@@ -81,8 +81,7 @@ public class ViewEventController {
                 }
                 break;
             case MANAGER:
-                model.addAttribute(UserConstants.Entity.ROOMS, userService.getActiveRooms(user));
-                resultView = EventConstants.View.MAIN_PAGE;
+                resultView = "redirect:/manager-edit-booking";
                 break;
             default:
                 model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());

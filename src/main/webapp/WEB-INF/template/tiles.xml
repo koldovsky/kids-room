@@ -145,6 +145,10 @@
         <put-attribute name="body" value="/WEB-INF/views/manager/report-parent.jsp"/>
     </definition>
 
+    <definition name="manager-calendar" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/manager/calendar-manager.jsp"/>
+    </definition>
+
     <!-- User -->
     <definition name="editmykid" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/user/edit-my-kid.jsp"/>
