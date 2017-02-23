@@ -114,9 +114,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     public Room changeActiveState(Long id) {
         Room room = findByIdTransactional(id);
         room.setActive(!room.isActive());
-        if (!room.isActive()) {
-            bookingService.cancelAllActiveAndPlannedRoomBookings(room);
-        }
         update(room);
 
         return room;
