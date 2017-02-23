@@ -72,14 +72,14 @@ public class BookingEditController {
     @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
     @ResponseBody
     public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
-        if(!timeValidator.validateRoomTime(bookingDto)){
-            return;
+        if (timeValidator.validateRoomTime(bookingDto)) {
+            Booking booking = bookingService.confirmBookingStartTime(bookingDto);
+            if (!(booking.getBookingState() == BookingState.COMPLETED)) {
+                booking.setBookingState(BookingState.ACTIVE);
+            }
+            bookingService.update(booking);
         }
-        Booking booking = bookingService.confirmBookingStartTime(bookingDto);
-        if (!(booking.getBookingState() == BookingState.COMPLETED)) {
-            booking.setBookingState(BookingState.ACTIVE);
-        }
-        bookingService.update(booking);
+
     }
 
     @PostMapping(value = BookingConstants.Model.SET_END_TIME, consumes = "application/json")
@@ -112,9 +112,9 @@ public class BookingEditController {
      * Counting number of children in the selected room for appropriate date.
      *
      * @param date current date for counting active children
-     * @param id selected room id
+     * @param id   selected room id
      * @return number of active children
-     * */
+     */
 
     @GetMapping(value = "getAmountOfChildren/{date}/{id}")
     @ResponseBody
@@ -134,12 +134,12 @@ public class BookingEditController {
      * that have booking states BookingState.BOOKED and BookingState.Active for the given
      * date.
      * Sends to the client JSON with relevant information.
-     * 
+     *
      * @param date date for which makes figuring out bookings
-     * @param id id the room for which makes figuring out bookings
+     * @param id   id the room for which makes figuring out bookings
      * @return JSON with relevant information
      */
-    @GetMapping(value = "dailyNotCompletedBookings/{date}/{id}",produces = "text/plain;charset=UTF-8")
+    @GetMapping(value = "dailyNotCompletedBookings/{date}/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String dailyNotCompletedBookings(@PathVariable String date, @PathVariable Long id) {
         Room room = roomService.findByIdTransactional(id);
@@ -151,7 +151,7 @@ public class BookingEditController {
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping(value="get-kids/{id}", produces = "text/plain;charset=UTF-8")
+    @GetMapping(value = "get-kids/{id}", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String listKids(@PathVariable Long id) {
         List<Child> kids = userService.getEnabledChildren(userService.findByIdTransactional(id));
