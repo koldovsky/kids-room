@@ -5,8 +5,8 @@ const messages = {
         invalidLastName: 'Invalid Last Name',
         requiredFirstName: 'The field first name can not be empty',
         requiredLastName: 'The field last name can not be empty',
-        regexKidFirstName: 'Use only letters for entering this field',
-        regexKidLastName: 'Use only letters for entering this field',
+        regexKidFirstName: 'Only letters are allowed here',
+        regexKidLastName: 'Only letters are allowed here',
 
         toShortFirstName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
         toShortLastName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',

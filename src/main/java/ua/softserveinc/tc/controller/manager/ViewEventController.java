@@ -81,7 +81,7 @@ public class ViewEventController {
                 }
                 break;
             case MANAGER:
-                resultView = "redirect:/manager-edit-booking";
+                resultView = "redirect:/"+ManagerConstants.MANAGER_CALENDAR;
                 break;
             default:
                 model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
