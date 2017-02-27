@@ -1137,12 +1137,6 @@ public class BookingServiceTest {
                 bookingService.getAllPlannedBookingsInTheRoom(testRoom).size());
     }
 
-    @Test
-    public void testCancelAllActiveAndPlannedRoomBookings() {
-        bookingService.cancelAllActiveAndPlannedRoomBookings(testRoom);
-        verify(bookingDao).cancellActiveAndPlannedBookingsInRoom(testRoom);
-    }
-
     private void commonNormalizeBookingDtoObjectsVerificationPart(Date first, Date second) {
         ArgumentCaptor<Room> roomCaptor = ArgumentCaptor.forClass(Room.class);
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
