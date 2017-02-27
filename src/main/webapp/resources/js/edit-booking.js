@@ -442,7 +442,7 @@ function addKids(getKidsUrl) {
             if (kidsCount > 0) {
                 $('#choose-kid').text(messages.modal.kid.choose);
             }
-        }
+        },
     });
 }
 
@@ -454,7 +454,7 @@ function Booking(startTime, endTime, comment, kidId, roomId, userId) {
     this.roomId = roomId;
     this.userId = userId;
 }
-
+//TODO-VL Here is function for sending new booking for server
 function sendBookingToServerForCreate(bookingsArray) {
     $.ajax({
         type: 'post',
@@ -473,6 +473,10 @@ function sendBookingToServerForCreate(bookingsArray) {
                     $('#createSuccess').modal('hide');
                 }, 1300);
                 refreshTable(localStorage['bookingsState']);
+                $('#kids').empty();
+                $('#selectUser').val($('#selectUser').defaultValue);
+                $('#bookingStartTimepicker').val(roomWorkingStartTime);
+                $('#bookingEndTimepicker').val(roomWorkingEndTime);
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
