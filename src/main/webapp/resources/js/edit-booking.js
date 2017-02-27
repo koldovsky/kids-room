@@ -442,7 +442,7 @@ function addKids(getKidsUrl) {
             if (kidsCount > 0) {
                 $('#choose-kid').text(messages.modal.kid.choose);
             }
-        },
+        }
     });
 }
 
