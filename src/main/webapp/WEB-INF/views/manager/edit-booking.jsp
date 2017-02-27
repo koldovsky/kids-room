@@ -115,7 +115,7 @@
 <div class="container">
     <div class="vertical-center-row">
         <div align="center">
-            <118 <div id="bookingUpdatingDialog" hidden title="<spring:message code="booking.edit"/>">
+            <div id="bookingUpdatingDialog" hidden title="<spring:message code="booking.edit"/>">
                     <form id="bookingUpdatingForm">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
