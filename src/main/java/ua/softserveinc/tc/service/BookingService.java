@@ -22,8 +22,6 @@ public interface BookingService extends BaseService<Booking> {
 
     void calculateAndSetDuration(Booking booking);
 
-    void cancelAllActiveAndPlannedRoomBookings(Room room);
-
     Long getSumTotal(List<Booking> bookings);
 
     Map<User, Long> generateAReport(List<Booking> bookings);

@@ -279,19 +279,6 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
-    @Transactional
-    public void cancellActiveAndPlannedBookingsInRoom(Room room) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaUpdate<Booking> criteriaUpdate = builder.createCriteriaUpdate(Booking.class);
-        Root<Booking> root = criteriaUpdate.from(Booking.class);
-        criteriaUpdate.set(BookingConstants.Entity.STATE, BookingState.CANCELLED)
-                .where(builder.and(builder.equal(root.get(BookingConstants.Entity.ROOM), room)),
-                       builder.or(builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.ACTIVE),
-                       builder.equal(root.get(BookingConstants.Entity.STATE), BookingState.BOOKED)));
-        entityManager.createQuery(criteriaUpdate).executeUpdate();
-    }
-
-    @Override
     public Long countByRoomAndBookingState(Room room, BookingState bookingState) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Booking> query = builder.createQuery(Booking.class);
