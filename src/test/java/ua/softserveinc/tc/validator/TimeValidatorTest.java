@@ -67,14 +67,14 @@ public class TimeValidatorTest {
 
     @Test
     public void validateRoomStartTimePassCorectParameters() {
-        Assert.assertTrue(timeValidatorImpl.validateRoomTime(bookingDto));
+        Assert.assertTrue(timeValidatorImpl.isRoomTimeValid(bookingDto));
     }
 
     @Test
     public void validateRoomStartTimePassStartTimeOutOfRange(){
         final String startTime = "21:30";
         when(bookingDto.getStartTime()).thenReturn(startTime);
-        Assert.assertFalse(timeValidatorImpl.validateRoomTime(bookingDto));
+        Assert.assertFalse(timeValidatorImpl.isRoomTimeValid(bookingDto));
     }
 
     @Test

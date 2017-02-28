@@ -67,7 +67,7 @@ public class TimeValidatorImpl implements TimeValidator {
         return isValid;
     }
 
-    public boolean validateRoomTime(BookingDto bookingDto) {
+    public boolean isRoomTimeValid(BookingDto bookingDto) {
 
         LocalTime dateStartTimeWorking = LocalTime.parse(roomService
                 .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursStart());
@@ -78,11 +78,7 @@ public class TimeValidatorImpl implements TimeValidator {
         if (validateDateTimeFormat(bookingDto.getStartTime()) ||
                 validateTimeFormat(bookingDto.getStartTime())) {
             LocalTime startTime = LocalTime.parse(bookingDto.getStartTime());
-            if (dateStartTimeWorking.equals(startTime)) {
-                isValid = true;
-            } else if (dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime)) {
-                isValid = true;
-            }
+            isValid = dateStartTimeWorking.equals(startTime) || (dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime));
         }
 
         return isValid;
