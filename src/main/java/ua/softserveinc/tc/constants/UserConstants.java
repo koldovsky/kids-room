@@ -2,6 +2,8 @@ package ua.softserveinc.tc.constants;
 
 
 public final class UserConstants {
+  public static final String USER_CALENDAR = "user-calendar";
+
   private UserConstants() {
   }
 
