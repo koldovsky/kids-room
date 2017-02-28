@@ -59,14 +59,14 @@ public class BookingEditController {
   @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
   @ResponseBody
   public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
-    if (!timeValidator.validateRoomTime(bookingDto)) {
-      return;
+    if (timeValidator.isRoomTimeValid(bookingDto)) {
+      Booking booking = bookingService.confirmBookingStartTime(bookingDto);
+      if (!booking.getBookingState().equals(BookingState.COMPLETED)) {
+        booking.setBookingState(BookingState.ACTIVE);
+      }
+      bookingService.update(booking);
     }
-    Booking booking = bookingService.confirmBookingStartTime(bookingDto);
-    if (!(booking.getBookingState() == BookingState.COMPLETED)) {
-      booking.setBookingState(BookingState.ACTIVE);
-    }
-    bookingService.update(booking);
+
   }
 
   @PostMapping(value = BookingConstants.Model.SET_END_TIME, consumes = "application/json")
@@ -89,6 +89,9 @@ public class BookingEditController {
 
     if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
       Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
+    }
+    for(Booking booking : bookings){
+        System.out.println(booking.getBookingState());
     }
     return new Gson().toJson(bookings.stream()
         .map(BookingDto::new)
