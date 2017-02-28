@@ -3,6 +3,7 @@ $(function () {
         dateFormat: 'yy-mm-dd',
         setDate: new Date()
     });
+
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;
     for (var i = 0; i < listRoom.length; i++) {

@@ -19,9 +19,9 @@
 <div class="container">
     <div class="table-edit">
         <div id="choose-time-inp">
-            <form action="" , method="POST">
+            <form action=""  method="POST">
                 <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"/>
-                <input id="date-booking" class="form-control" type="date"/>
+                <input id="date-booking" class="form-control datepickers" type="text"/>
             </form>
         </div>
         <div id="nav-group">
@@ -116,12 +116,14 @@
         <div align="center">
             <div id="bookingUpdatingDialog" hidden>
                     <form id="bookingUpdatingForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <div class="form-group">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" tabindex="1"/>
                             <div class="input-group">
                                 <label><spring:message code="booking.createDate"/></label>
-                                <input type="date" id="data-edit" name="date" class="form-control"/>
+                                <input type="text" id="data-edit" name="date" class="form-control datepickers"/>
                             </div>
+                            <br>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
                                 <input id="bookingUpdatingStartTimepicker" type="text" name="start"
@@ -169,11 +171,11 @@
                             </c:forEach>
                         </select>
                         <label for="bookingStartDate"><spring:message code="booking.bookingDate"/></label>
-                        <br>
                         <div>
-                            <input type="date" class="form-control" id="bookingStartDate" placeholder="booking date"/>
+                            <input type="text" class="form-control datepickers" id="bookingStartDate" placeholder="booking date"/>
                         </div>
                         <input id="kids-count" hidden/>
+                        <br>
                         <div>
                             <input id="bookingStartTimepicker" type="text" name="started" class="form-control picker"
                                    placeholder="start time"/>
@@ -361,7 +363,9 @@
         </div>
     </div>
 </div>
-
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
+</c:if>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/edit-booking.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
