@@ -176,6 +176,9 @@ function refreshTable(bookingsState) {
     });
     var results = $.getValues();
     var data = JSON.parse(results);
+    for(var prop in data){
+        console.log(data[prop]);
+    }
 
     if (!(table === null)) {
         table.destroy();
@@ -210,7 +213,7 @@ function refreshTable(bookingsState) {
             'targets': 0
         }],
         'order': [
-            [1, 'asc']
+            [0, 'asc']
         ],
         'data': data,
         'columns': [{
