@@ -91,7 +91,10 @@ $(function () {
         maxTime: roomWorkingEndTime
     });
 
+   
 });
+
+
 
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
 
@@ -525,7 +528,8 @@ $('#booking-table tbody').on('click', '.edit-button-btn', function () {
     $('#kid-comment').val(comment);
     $('#bookingUpdatingStartTimepicker').val(startTime);
     $('#bookingUpdatingEndTimepicker').val(endTime);
-    $('#data-edit').val(date);
+    $('#data-edit').datepicker().val(date);
+
     $('#bookingUpdatingDialog').dialog();
     $('#' + idBooking).addClass('highlight-active');
 });
