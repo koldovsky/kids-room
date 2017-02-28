@@ -25,7 +25,7 @@ function getNotCompletedBokings() {
             $('#free-spaces').html(messages.notCorrect.server);
         }
     });
-    dailyNotCompletedBookings = JSON.parse(results);
+    dailyNotCompletedBookings = results;
 }
 
 /**
