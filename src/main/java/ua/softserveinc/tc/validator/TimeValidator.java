@@ -44,7 +44,7 @@ public interface TimeValidator extends Validator {
      * @return true if start booking time is in the range of room working times
      * otherway return false
      */
-    boolean validateRoomTime(BookingDto bookingDto);
+    boolean isRoomTimeValid(BookingDto bookingDto);
 
     /**
      * verify if booking start time isn`t later than booking end time
