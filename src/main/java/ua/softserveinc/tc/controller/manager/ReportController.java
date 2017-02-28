@@ -33,23 +33,6 @@ public class ReportController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping("/manager-report")
-    public ModelAndView report(Principal principal) {
-        ModelAndView model = new ModelAndView(ReportConstants.REPORT_VIEW);
-        ModelMap modelMap = model.getModelMap();
-
-        String endDate = getStringDate(dateNow());
-        String startDate = getStringDate(dateMonthAgo());
-
-        List<Room> rooms = userService.getActiveRooms(userService.getUserByEmail(principal.getName()));
-
-        modelMap.addAttribute(ReportConstants.ROOMS, rooms);
-        modelMap.addAttribute(ReportConstants.END_DATE, endDate);
-        modelMap.addAttribute(ReportConstants.START_DATE, startDate);
-
-        return model;
-    }
-
     @GetMapping("/refreshParents/{startDate}/{endDate}/{roomId}")
     @ResponseBody
     public String refreshView(@PathVariable String startDate,
