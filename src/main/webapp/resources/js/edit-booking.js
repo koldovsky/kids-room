@@ -91,7 +91,10 @@ $(function () {
         maxTime: roomWorkingEndTime
     });
 
+   
 });
+
+
 
 $('#date-booking').val(dateNow.toISOString().substr(0, 10));
 
@@ -110,8 +113,6 @@ function selectRoomForManager(roomId) {
             roomWorkingEndTime = result[1];
             $('.picker').timepicker('option', 'minTime', roomWorkingStartTime);
             $('.picker').timepicker('option', 'maxTime', roomWorkingEndTime);
-            $('.timepicker').timepicker('option', 'minTime', roomWorkingStartTime);
-            $('.timepicker').timepicker('option', 'maxTime', roomWorkingEndTime);
             roomCapacity = result[2];
         }
     });
@@ -248,7 +249,7 @@ function refreshTable(bookingsState) {
                 'data': 'startTime',
                 'className': 'arrivalTime',
                 'fnCreatedCell': function (nTd) {
-                    var td = '<input type="text" class="form-control inp-arrivalTime timepicker">'
+                    var td = '<input type="text" class="form-control inp-arrivalTime picker">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.arrivedTime + '" id="arrival-btn" ></button>';
                     $(nTd).empty();
@@ -259,7 +260,7 @@ function refreshTable(bookingsState) {
                 'data': 'endTime',
                 'className': 'leaveTime',
                 'fnCreatedCell': function (nTd) {
-                    var td = '<input type="text" class="form-control inp-leaveTime timepicker" >'
+                    var td = '<input type="text" class="form-control inp-leaveTime picker" >'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.leaveTime + '" id="leave-btn" ></button>';
                     $(nTd).empty();
@@ -267,7 +268,15 @@ function refreshTable(bookingsState) {
                 }
             }
         ],
-        'pagingType': 'simple_numbers'
+        'pagingType': 'simple_numbers',
+        "drawCallback": function () {
+            $('.picker').timepicker({
+                timeFormat: 'H:i',
+                step: 1,
+                minTime: roomWorkingStartTime,
+                maxTime: roomWorkingEndTime
+            });
+        }
     });
 
     table.on('order.dt search.dt', function () {
@@ -278,12 +287,7 @@ function refreshTable(bookingsState) {
             cell.innerHTML = i + 1;
         });
     }).draw();
-    $('.timepicker').timepicker({
-        timeFormat: 'H:i',
-        step: 1,
-        minTime: roomWorkingStartTime,
-        maxTime: roomWorkingEndTime
-    });
+   
     addHilighted(data);
     checkTablePage();
 }
@@ -476,11 +480,18 @@ function sendBookingToServerForCreate(bookingsArray) {
                 $('#bookingStartTimepicker').val(roomWorkingStartTime);
                 $('#bookingEndTimepicker').val(roomWorkingEndTime);
             }
+            var clearModalVindow = function () {
+                $('#selectUser').val($('#selectUser').defaultValue);
+                $('#bookingStartTimepicker').val(roomWorkingStartTime);
+                $('#bookingEndTimepicker').val(roomWorkingEndTime);
+            }
         },
         error: function (xhr, ajaxOptions, thrownError) {
             $('#errorMessage').html(xhr.responseText);
             $('#errorWindow').modal('show');
         }
+
+
     });
 }
 
@@ -530,6 +541,7 @@ $('#booking-table tbody').on('click', '.edit-button-btn', function () {
     $('#bookingUpdatingStartTimepicker').val(startTime);
     $('#bookingUpdatingEndTimepicker').val(endTime);
     $('#data-edit').val(date);
+
     $('#bookingUpdatingDialog').dialog();
     $('#' + idBooking).addClass('highlight-active');
 });
@@ -551,3 +563,5 @@ $('#booking-table > tbody').on('click', 'tr', handler);
 $('#closeBookingsLegend').click(function () {
     $('#bookingLegendModal').modal('hide');
 });
+
+

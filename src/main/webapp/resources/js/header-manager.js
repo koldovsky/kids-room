@@ -1,4 +1,9 @@
 $(function () {
+    $('.datepickers').datepicker({
+        dateFormat: 'yy-mm-dd',
+        setDate: new Date()
+    });
+
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;
     for (var i = 0; i < listRoom.length; i++) {
@@ -24,10 +29,10 @@ $(function () {
             selectRoomForManager(roomId);
         });
     });
-
     getAmountOfChildrenByCurrentDate();
     $('#room').text(localStorage['room']);
     selectRoomForManager(localStorage['roomId']);
+
 });
 
 function getAmountOfChildrenByCurrentDate() {
