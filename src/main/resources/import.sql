@@ -35,7 +35,6 @@ INSERT INTO rooms (id_room, address_room, capacity_room, name_room, phone_room, 
 
 INSERT INTO managers (room, manager) VALUES (1, 2);
 INSERT INTO managers (room, manager) VALUES (1, 9);
-INSERT INTO managers (room, manager) VALUES (1, 2);
 INSERT INTO managers (room, manager) VALUES (2, 2);
 INSERT INTO managers (room, manager) VALUES (2, 9);
 INSERT INTO managers (room, manager) VALUES (3, 2);
