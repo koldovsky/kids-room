@@ -56,45 +56,6 @@ public class BookingEditController {
   @Autowired
   private TimeValidatorImpl timeValidator;
 
-  @PostMapping(value = BookingConstants.Model.SET_START_TIME, consumes = "application/json")
-  @ResponseBody
-  public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
-      if (!timeValidator.isRoomTimeValid(bookingDto)) {
-          return;
-      }
-      Booking booking = bookingService.confirmBookingStartTime(bookingDto);
-      if (!booking.getBookingState().equals(BookingState.COMPLETED)) {
-          booking.setBookingState(BookingState.ACTIVE);
-      }
-      bookingService.update(booking);
-  }
-
-  @PostMapping(value = BookingConstants.Model.SET_END_TIME, consumes = "application/json")
-  @ResponseBody
-  public void setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
-    Booking booking = bookingService.confirmBookingEndTime(bookingDto);
-    booking.setBookingState(BookingState.COMPLETED);
-    bookingService.update(booking);
-  }
-
-  @GetMapping(value = "dailyBookings/{date}/{id}/{state}", produces = "text/plain;charset=UTF-8")
-  @ResponseBody
-  public String dailyBookingsByState(@PathVariable String date,
-      @PathVariable Long id,
-      @PathVariable BookingState[] state) {
-    Room room = roomService.findByIdTransactional(id);
-    Date dateLo = toDateAndTime(date + " " + room.getWorkingHoursStart());
-    Date dateHi = toDateAndTime(date + " " + room.getWorkingHoursEnd());
-    List<Booking> bookings = bookingService.getBookings(new Date[]{dateLo, dateHi}, room, state);
-
-    if (Arrays.equals(state, BookingConstants.States.getNotCancelled())) {
-      Collections.sort(bookings, (b1, b2) -> b1.getBookingState().compareTo(b2.getBookingState()));
-    }
-    return new Gson().toJson(bookings.stream()
-        .map(BookingDto::new)
-        .collect(Collectors.toList()));
-  }
-
   /**
    * Counting number of children in the selected room for appropriate date.
    *

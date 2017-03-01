@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.*;
+import ua.softserveinc.tc.constants.ManagerConstants;
 import ua.softserveinc.tc.dto.EventDto;
 import ua.softserveinc.tc.dto.MonthlyEventDto;
 import ua.softserveinc.tc.dto.RecurrentEventDto;
@@ -81,7 +82,7 @@ public class ViewEventController {
                 }
                 break;
             case MANAGER:
-                resultView = "redirect:/"+ManagerConstants.MANAGER_EDIT_BOOKING;
+                resultView = "redirect:/"+ ManagerConstants.MANAGER_EDIT_BOOKING;
                 break;
             default:
                 model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
