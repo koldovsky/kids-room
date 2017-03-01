@@ -248,8 +248,15 @@ function refreshTable(bookingsState) {
             {
                 'data': 'startTime',
                 'className': 'arrivalTime',
-                'fnCreatedCell': function (nTd) {
-                    var td = '<input type="text" class="form-control inp-arrivalTime picker">'
+                'fnCreatedCell': function (nTd,sData,oData) {
+                    var startTime;
+                    if(oData.bookingState === 'ACTIVE'||oData.bookingsState ==='COMPLETED'){
+                        startTime = oData.startTime;
+                    }else{
+                        startTime = "";
+                    }
+                    var td = '<input type="text" class="form-control inp-arrivalTime picker" '
+                        + 'value="'+startTime+'">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.arrivedTime + '" id="arrival-btn" ></button>';
                     $(nTd).empty();
@@ -259,8 +266,15 @@ function refreshTable(bookingsState) {
             {
                 'data': 'endTime',
                 'className': 'leaveTime',
-                'fnCreatedCell': function (nTd) {
-                    var td = '<input type="text" class="form-control inp-leaveTime picker" >'
+                'fnCreatedCell': function (nTd, sData, oData) {
+                    var endTime;
+                    if(oData.bookingsState ==='COMPLETED'){
+                        endTime = oData.endTime;
+                    }else{
+                        endTime = "";
+                    }
+                    var td = '<input type="text" class="form-control inp-leaveTime picker" '
+                        + 'value="'+endTime+'">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.leaveTime + '" id="leave-btn" ></button>';
                     $(nTd).empty();
@@ -330,20 +344,20 @@ function sendStartTime(id, startTime) {
         }
     });
 }
-
+/*
 $('#setEndTime').click(function () {
     var id = $('#endTimeOutOfRange').data('id');
     var time = $('#endTimeOutOfRange').data('time');
     sendEndTime(id, time);
 });
-
-function setEndTime(id, time) {
-    if ($('#' + id).find('.inp-arrivalTime').val() < $('#' + id).find('.inp-leaveTime').val()) {
-        if (validateRoomTime(time)) {
-            sendEndTime(id, time);
+*/
+function setEndTime(id, startTime, endTime) {
+    if (startTime < endTime) {
+        if (validateRoomTime(endTime)) {
+            sendEndTime(id, endTime);
         } else {
             $('#endTimeOutOfRange').data('id', id);
-            $('#endTimeOutOfRange').data('time', time);
+            $('#endTimeOutOfRange').data('time', endTime);
             $('#endTimeOutOfRange').modal('show');
         }
     } else {
@@ -518,11 +532,13 @@ $('#booking-table tbody').on('click', '.inp-leaveTime', function () {
     }
 
 });
+//TODO-VL here is method to set leave time
 $('#booking-table tbody').on('click', '#leave-btn', function () {
     var tr = $(this).closest('tr');
     var id = table.row(tr).data().id;
-    var time = $(this).closest('td').find('input').val();
-    setEndTime(id, time);
+    var endTime = $(this).closest('td').find('input').val();
+    var startTime = table.row(tr).data().startTime;
+    setEndTime(id, startTime, endTime);
 });
 $('#booking-table tbody').on('click', '[id^=comment]', function () {
     var comment = $(this).attr('title');

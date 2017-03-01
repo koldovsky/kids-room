@@ -46,7 +46,7 @@ function maxRangeReservedBookings(startTimeMillis, endTimeMillis, bookings) {
         temporaryMax = 0;
         for (i = 0; i < bookings.length; i++) {
             bok = bookings[i];
-            if (bok.startTimeMillis < ti && bok.endTimeMillis > ti)
+            if (bok.startTimeMillis < ti && bok.endTimeMillis < ti)
                 temporaryMax++;
             if (temporaryMax > maxReservedBookings)
                 maxReservedBookings = temporaryMax;
