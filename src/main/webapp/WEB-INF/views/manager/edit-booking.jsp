@@ -155,7 +155,7 @@
 <div class="container">
     <div class="vertical-center-row">
         <div align="center">
-            <div id="bookingDialog" hidden>
+            <div id="bookingDialog" hidden title="<spring:message code="booking.addKid"/>">
                 <form id="bookings">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
@@ -239,7 +239,7 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <div class="lead"><spring:message code="booking.arrivalOutOfRange"/></div>
+                    <div class="lead"><spring:message code="booking.leavingOutOfRange"/></div>
                     <div class="lead"><spring:message code="booking.warningTime"/></div>
                     <button id="setEndTime" type="button" class="btn btn-success warningBtn" data-dismiss="modal"><spring:message
                             code="booking.ok"/></button>
