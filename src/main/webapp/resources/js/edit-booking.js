@@ -176,7 +176,7 @@ function refreshTable(bookingsState) {
         }
     });
     var results = $.getValues();
-    var data = JSON.parse(results);
+    var data = results;
 
     if (!(table === null)) {
         table.destroy();
@@ -210,9 +210,6 @@ function refreshTable(bookingsState) {
             'orderable': false,
             'targets': 0
         }],
-        'order': [
-            [1, 'asc']
-        ],
         'data': data,
         'columns': [{
             'data': null
@@ -293,10 +290,9 @@ function refreshTable(bookingsState) {
         }
     });
 
-    table.on('order.dt search.dt', function () {
+    table.on('search.dt', function () {
         table.column(0, {
             search: 'applied',
-            order: 'applied'
         }).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
@@ -337,7 +333,7 @@ function sendStartTime(id, startTime) {
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
-        type: 'POST',
+        type: 'PUT',
         success: function () {
             $('#' + id).addClass('highlight-active');
             refreshTable(localStorage['bookingsState']);
@@ -375,7 +371,7 @@ function sendEndTime(id, endTime) {
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
-        type: 'POST',
+        type: 'PUT',
         success: function () {
             $('#' + id).addClass('highlight-complet');
             refreshTable(localStorage['bookingsState']);
