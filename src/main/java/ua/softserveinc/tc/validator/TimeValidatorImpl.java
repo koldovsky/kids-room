@@ -56,7 +56,7 @@ public class TimeValidatorImpl implements TimeValidator {
 
     public boolean isStartDateBefore(String startTime, String endTime) throws ParseException {
         boolean isValid = false;
-        if(validateDateFormat(startTime) && validateDateFormat(endTime)) {
+        if (validateDateFormat(startTime) && validateDateFormat(endTime)) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateConstants.SHORT_DATE_FORMAT);
             Date startDate = simpleDateFormat.parse(startTime);
             Date endDate = simpleDateFormat.parse(endTime);
@@ -67,19 +67,18 @@ public class TimeValidatorImpl implements TimeValidator {
         return isValid;
     }
 
-    public boolean validateRoomTime(BookingDto bookingDto) {
+    public boolean isRoomTimeValid(BookingDto bookingDto) {
 
         LocalTime dateStartTimeWorking = LocalTime.parse(roomService
                 .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursStart());
-        LocalTime dateEndTimeWorking = LocalTime .parse(roomService
+        LocalTime dateEndTimeWorking = LocalTime.parse(roomService
                 .findByIdTransactional(bookingDto.getRoomId()).getWorkingHoursEnd());
         boolean isValid = false;
 
-        if(validateDateTimeFormat(bookingDto.getStartTime()) ||
+        if (validateDateTimeFormat(bookingDto.getStartTime()) ||
                 validateTimeFormat(bookingDto.getStartTime())) {
             LocalTime startTime = LocalTime.parse(bookingDto.getStartTime());
-            isValid = dateStartTimeWorking.isBefore(startTime) &&
-                    dateEndTimeWorking.isAfter(startTime);
+            isValid = dateStartTimeWorking.equals(startTime) || (dateStartTimeWorking.isBefore(startTime) && dateEndTimeWorking.isAfter(startTime));
         }
 
         return isValid;

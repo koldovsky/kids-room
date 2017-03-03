@@ -31,7 +31,7 @@ function setStartTime(idBooking) {
         url: 'setTime',
         contentType: 'application/json',
         data: JSON.stringify(inputData),
-        type: 'POST',
+        type: 'PUT',
         success: function (data) {
             var obj = JSON.parse(data);
             var bookingTime = $(idElement).find('.bookingTime');
@@ -63,7 +63,7 @@ function setEndTime(idBooking) {
                     url: 'setEndTime',
                     contentType: 'application/json',
                     data: JSON.stringify(inputData),
-                    type: 'POST',
+                    type: 'PUT',
                     success: function (data) {
                         var obj = JSON.parse(data);
                         var bookingTime = $(idElement).find('.bookingTime');

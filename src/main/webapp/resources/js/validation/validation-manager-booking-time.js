@@ -4,8 +4,10 @@ function validateEmptyTime(startTime, endTime) {
 
 function validateRoomTime(time) {
     var result = false;
-    if(time != '' && time >= roomWorkingStartTime && time <= roomWorkingEndTime) {
+    if (time && ((time == roomWorkingStartTime || time == roomWorkingEndTime)
+        || (time > roomWorkingStartTime && time < roomWorkingEndTime))) {
         result = true;
     }
+
     return result;
 }

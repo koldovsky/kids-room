@@ -11,7 +11,6 @@
 
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js"></script>
 
 <link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/edit-booking.css'>
@@ -22,7 +21,7 @@
         <div id="choose-time-inp">
             <form action=""  method="POST">
                 <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"/>
-                <input id="date-booking" type="text" class="form-control datepicker"/>
+                <input id="date-booking" class="form-control datepickers" type="text"/>
             </form>
         </div>
         <div id="nav-group">
@@ -115,14 +114,16 @@
 <div class="container">
     <div class="vertical-center-row">
         <div align="center">
-            <div id="bookingUpdatingDialog" hidden>
+            <div id="bookingUpdatingDialog" hidden title="<spring:message code="booking.edit"/>">
                     <form id="bookingUpdatingForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <div class="form-group">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" tabindex="1"/>
                             <div class="input-group">
                                 <label><spring:message code="booking.createDate"/></label>
-                                <input type="text" id="data-edit" name="date" class="form-control datepicker"/>
+                                <input type="text" id="data-edit" name="date" class="form-control datepickers"/>
                             </div>
+                            <br>
                             <div class="input-group">
                                 <label><spring:message code="booking.createStartTime"/></label>
                                 <input id="bookingUpdatingStartTimepicker" type="text" name="start"
@@ -154,7 +155,7 @@
 <div class="container">
     <div class="vertical-center-row">
         <div align="center">
-            <div id="bookingDialog" hidden>
+            <div id="bookingDialog" hidden title="<spring:message code="booking.addKid"/>">
                 <form id="bookings">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
@@ -170,11 +171,11 @@
                             </c:forEach>
                         </select>
                         <label for="bookingStartDate"><spring:message code="booking.bookingDate"/></label>
-                        <br>
                         <div>
-                            <input type="text" class="form-control datepicker" id="bookingStartDate" placeholder="booking date"/>
+                            <input type="text" class="form-control datepickers" id="bookingStartDate" placeholder="booking date"/>
                         </div>
                         <input id="kids-count" hidden/>
+                        <br>
                         <div>
                             <input id="bookingStartTimepicker" type="text" name="started" class="form-control picker"
                                    placeholder="start time"/>
@@ -238,7 +239,7 @@
             <div class="modal-body">
                 <div align="center">
                     <br>
-                    <div class="lead"><spring:message code="booking.arrivalOutOfRange"/></div>
+                    <div class="lead"><spring:message code="booking.leavingOutOfRange"/></div>
                     <div class="lead"><spring:message code="booking.warningTime"/></div>
                     <button id="setEndTime" type="button" class="btn btn-success warningBtn" data-dismiss="modal"><spring:message
                             code="booking.ok"/></button>
@@ -362,9 +363,6 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
 </c:if>
