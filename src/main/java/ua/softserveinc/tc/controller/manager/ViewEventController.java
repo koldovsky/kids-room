@@ -74,6 +74,7 @@ public class ViewEventController {
                 if (user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
                     resultView = ChildConstants.View.MY_KIDS;
                 } else {
+                    resultView = "redirect:/" + UserConstants.USER_CALENDAR;
                     resultView = EventConstants.View.MAIN_PAGE;
                 }
                 break;

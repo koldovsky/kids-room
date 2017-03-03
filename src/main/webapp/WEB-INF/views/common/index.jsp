@@ -18,8 +18,8 @@
 
 
 <sec:authorize access="hasRole('USER')">
-
 </sec:authorize>
+
 <div class="loading" hidden>Loading&#8230;</div>
 <sec:authorize access="hasRole('MANAGER')">
 
