@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="user-calendar">
+                            <a href="mybookingsgit ">
                                 <span class="glyphicon glyphicon-tasks"></span>
                                 <spring:message code="user.myBookings" />
                             </a>
