@@ -4,10 +4,9 @@
 <%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 <%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lib/intlTelInput.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
-
 
 <body>
 
@@ -172,4 +171,5 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
+<script src="${pageContext.request.contextPath}/resources/js/lib/intlTelInput.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>
