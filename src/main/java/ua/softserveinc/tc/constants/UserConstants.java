@@ -7,6 +7,10 @@ public final class UserConstants {
   private UserConstants() {
   }
 
+  public static final class UserViewNames {
+    public static final String USER_CALENDAR_VIEW = "user-calendar";
+  }
+
   public static final class Entity {
 
     public static final String TABLE_NAME_USER = "users";

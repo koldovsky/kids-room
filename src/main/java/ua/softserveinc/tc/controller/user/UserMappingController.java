@@ -37,6 +37,6 @@ public class UserMappingController {
         model.addAttribute(UserConstants.Entity.ROOMS, roomService.getTodayActiveRooms());
         model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
         model.addAttribute(UserConstants.Entity.USERID, user.getId());
-        return UserConstants.USER_CALENDAR;
+        return UserConstants.UserViewNames.USER_CALENDAR_VIEW;
     }
 }
