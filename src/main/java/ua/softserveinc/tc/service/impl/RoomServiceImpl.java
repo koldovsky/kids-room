@@ -91,6 +91,11 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     }
 
     @Override
+    public List<String> emailManagersByRoom(Long room_id) {
+        return roomDao.emailManagersByRoom(room_id);
+    }
+
+    @Override
     public List<BookingDto> getAllFutureBookings(Room room) {
         BookingsCharacteristics characteristic = new BookingsCharacteristics.Builder()
                 .setDates(new Date[] {new Date(), null})
@@ -127,7 +132,6 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public boolean hasActiveBooking(Room room) {
-
         return !bookingService.getAllActiveBookingsInTheRoom(room).isEmpty();
     }
 
@@ -148,5 +152,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
                                 today.isBefore(day.getEndDate())))
                 .collect(Collectors.toList());
     }
+
+
 
 }

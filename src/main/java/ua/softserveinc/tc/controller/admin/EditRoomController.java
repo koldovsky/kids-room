@@ -7,11 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
+import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.DeactivateRoomDto;
+import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.validator.RoomValidatorImpl;
 
+import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -28,6 +35,12 @@ public class EditRoomController {
 
     @Autowired
     private RoomValidatorImpl roomValidator;
+
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private BookingDao bookingDao;
 
     private Logger logger = Logger.getLogger("EditRoomController");
 
@@ -48,14 +61,23 @@ public class EditRoomController {
 
     /**
      * change room active state
-     * @param id room id
+     * @param deactivateRoomDto room id and reason for deactivate
      * @return room with change active state
      */
     @PostMapping(value = "/adm-edit-room", consumes = "application/json")
     @ResponseBody
-    public Boolean roomBlockUnblock(@RequestBody Long id) {
-        RoomDto roomDto = new RoomDto(roomService.changeActiveState(id));
-
+    public Boolean roomBlockUnblock(@RequestBody DeactivateRoomDto deactivateRoomDto) {
+        RoomDto roomDto = new RoomDto(roomService.changeActiveState(Long.valueOf(deactivateRoomDto.getId())));
+        List<InfoDeactivateRoomDto> infoDeactivateRoomDtoList = bookingDao.getInfoForDeactivate(roomDto.getId());
+        if (deactivateRoomDto.getReason() != null && infoDeactivateRoomDtoList.size() > 0) {
+            try {
+                List<String> listEmailManagers = roomService.emailManagersByRoom(roomDto.getId());
+                listEmailManagers.add(0, "nahod.dar@gmail.com");
+                mailService.sendReasonOfDeactivate(listEmailManagers, roomDto.getName(), deactivateRoomDto.getReason(), infoDeactivateRoomDtoList);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        }
         return roomDto.isActive();
     }
 

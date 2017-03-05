@@ -43,4 +43,13 @@ public interface RoomService extends BaseService<Room> {
      * @return list of reserved booking
      */
     List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room);
+
+    /**
+     * Returns list of manager's email
+     * for given room
+     *
+     * @param room_id given room
+     * @return list of email
+     */
+     List<String> emailManagersByRoom(Long room_id);
 }

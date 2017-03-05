@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
@@ -112,12 +112,21 @@
                     </p>
                 </div>
                 <div id="warningMessages"></div>
+                <br>
+                <br>
+                <form id="reasonDeactivate">
+                        <label for="reasonText"><spring:message code="administrator.room.deactivateReason"/></label>
+                        <input type="text" name="reason" id="reasonText"/>
+                </form>
                 <button id="deactivateYesButton" class="btn  btn-success admWarningBtn">
                     <spring:message code="room.yes_button"/>
                 </button>
+
                 <button id="deactivateNoButton" class="btn btn-danger admWarningBtn" data-dismiss="modal">
                     <spring:message code="room.no_button"/>
                 </button>
+            </div>
+
             </div>
         </div>
     </div>
@@ -141,5 +150,5 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminRoomSearch.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room.js'></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-deactivate-room.js"></script>
 </body>
