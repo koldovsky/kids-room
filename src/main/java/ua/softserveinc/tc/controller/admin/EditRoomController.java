@@ -72,7 +72,6 @@ public class EditRoomController {
         if (deactivateRoomDto.getReason() != null && infoDeactivateRoomDtoList.size() > 0) {
             try {
                 List<String> listEmailManagers = roomService.emailManagersByRoom(roomDto.getId());
-                listEmailManagers.add(0, "nahod.dar@gmail.com");
                 mailService.sendReasonOfDeactivate(listEmailManagers, roomDto.getName(), deactivateRoomDto.getReason(), infoDeactivateRoomDtoList);
             } catch (MessagingException e) {
                 e.printStackTrace();
