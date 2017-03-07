@@ -14,6 +14,7 @@ public final class AdminConstants {
     public static final String EDIT_CONFIG = "adm-config";
     ///////////////////////////////////////
 
+    public static final String DEACTIVATE_ROOM = "deactivate-room";
 
     //Used for mark a different Collections of objects
     public static final String MANAGER_LIST = "managerList";

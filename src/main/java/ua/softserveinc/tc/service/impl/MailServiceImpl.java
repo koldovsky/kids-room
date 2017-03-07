@@ -9,25 +9,20 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import ua.softserveinc.tc.constants.DayOffConstants;
-import ua.softserveinc.tc.constants.MailConstants;
-import ua.softserveinc.tc.constants.ReportConstants;
-import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.constants.*;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.util.ApplicationConfigurator;
-import ua.softserveinc.tc.constants.URIConstants;
 import ua.softserveinc.tc.util.Log;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -192,6 +187,30 @@ public class MailServiceImpl implements MailService {
                 log.error("Error sending e-mail", me);
             }
         });
+
+    }
+
+    @Override
+    public void sendReasonOfDeactivate(List<String> emailManagers, String roomName, String reason,  List<InfoDeactivateRoomDto> list) throws MessagingException {
+        Map<String, Object> model = new HashMap<>();
+        model.put(RoomConstants.UNAVAILABLE_ROOM, list);
+        model.put(RoomConstants.NAME_ROOM, roomName);
+        model.put(RoomConstants.DEACTIVATE_REASON, reason);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setTo(emailManagers.get(0));
+
+        for (int i = 1; i < emailManagers.size(); i++)
+            helper.addCc(emailManagers.get(i));
+
+        helper.setSubject(roomName.concat(MailConstants.DEACRIVATE_ROOM_NAME));
+        helper.setText(getTextMessage(MailConstants.DEACRIVATE_ROOM_INFO, model), true);
+        helper.setFrom(new InternetAddress(MailConstants.EMAIL_BOT_ADDRESS));
+
+        synchronized (message) {
+            mailSender.send(message);
+        }
 
     }
 

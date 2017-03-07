@@ -9,6 +9,7 @@ import ua.softserveinc.tc.entity.Room;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -54,5 +55,14 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
         query.select(root).where(builder.equal(root.get("isActive"), true));
 
         return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
+    public List<String> emailManagersByRoom(Long room_id) {
+        Query query = entityManager.createQuery("select manager.email from Room room " +
+                "inner join room.managers as manager " +
+                "where room.id = :room_id  ");
+        query.setParameter("room_id", room_id);
+        return query.getResultList();
     }
 }
