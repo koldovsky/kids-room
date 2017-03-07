@@ -116,6 +116,10 @@ html, body, .container {
     padding-right: 45px;
 }
 
+#booking-table tbody .sorting_1 {
+    padding-left: 30px;
+}
+
 .highlight-row{
     background-color: #bababa;
 }
