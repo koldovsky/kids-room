@@ -150,6 +150,10 @@
     </definition>
 
     <!-- User -->
+    <definition name="user-calendar" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/user/calendar-user.jsp"/>
+    </definition>
+
     <definition name="editmykid" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/user/edit-my-kid.jsp"/>
     </definition>

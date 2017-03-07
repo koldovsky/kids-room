@@ -2,7 +2,13 @@ package ua.softserveinc.tc.constants;
 
 
 public final class UserConstants {
+  public static final String USER_CALENDAR = "user-calendar";
+
   private UserConstants() {
+  }
+
+  public static final class UserViewNames {
+    public static final String USER_CALENDAR_VIEW = "user-calendar";
   }
 
   public static final class Entity {
