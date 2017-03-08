@@ -10,7 +10,7 @@ import java.util.Date;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.entity.BookingState;
 
-
+//TODO-VL Rename this class to BookingDto when all usage of previous BookingDto will be replaced
 @JsonInclude(Include.NON_NULL)
 public class ManagerBookingDTO implements Serializable {
 
@@ -39,52 +39,52 @@ public class ManagerBookingDTO implements Serializable {
       myDTO = new ManagerBookingDTO();
     }
 
-    public Builder id(Long id) {
+    public Builder withId(Long id) {
       this.myDTO.setId(id);
       return this;
     }
 
-    public Builder idChild(Long id) {
+    public Builder withIdChild(Long id) {
       this.myDTO.setIdChild(id);
       return this;
     }
 
-    public Builder kidName(String name){
+    public Builder withKidName(String name){
       this.myDTO.setKidName(name);
       return this;
     }
 
-    public Builder comment(String comment){
+    public Builder withComment(String comment){
       this.myDTO.setComment(comment);
       return this;
     }
 
-    public Builder startTime(Date startTime){
+    public Builder withStartTime(Date startTime){
       this.myDTO.setStartTime(timeFormat.format(startTime));
       return this;
     }
 
-    public Builder endTime(Date endTime){
+    public Builder withEndTime(Date endTime){
       this.myDTO.setEndTime(timeFormat.format(endTime));
       return this;
     }
 
-    public Builder startTimeMillis(Date startTimeMillis) {
+    public Builder withStartTimeMillis(Date startTimeMillis) {
       this.myDTO.setStartTimeMillis(startTimeMillis.getTime());
       return this;
     }
 
-    public Builder endTimeMillis(Date endTimeMillis) {
+    public Builder withEndTimeMillis(Date endTimeMillis) {
       this.myDTO.setEndTimeMillis(endTimeMillis.getTime());
       return this;
     }
 
-    public Builder durationBooking(Long durationBooking){
+    public Builder withDurationBooking(Long durationBooking){
       this.myDTO.setDurationBooking(durationBooking);
       return this;
     }
 
-    public Builder bookingState(BookingState bookingState){
+    public Builder withBookingState(BookingState bookingState){
       this.myDTO.setBookingState(bookingState);
       return this;
     }

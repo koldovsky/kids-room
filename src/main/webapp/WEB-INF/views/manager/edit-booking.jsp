@@ -8,7 +8,9 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js"></script>
@@ -162,14 +164,16 @@
                         <div>
                             <p><spring:message code="manager.available.rooms"/> <span id="free-spaces"></span></p>
                         </div>
-                        <label for="selectUser"><spring:message code="booking.chooseParent"/></label>
-                        <select id="selectUser" name="select" class="form-control">
+                        <label for="selectUser" id="labelForSelectUser"><spring:message code="booking.chooseParent"/></label>
+                        <div class="clear"></div>
+                        <select id="selectUser" name="select" style="width: 100%">
                             <label> Please choose kid</label>
                             <option value=" " disabled selected hidden></option>
                             <c:forEach items="${users}" var="user">
                                 <option value="${user.id}">${user.getFullName()}</option>
                             </c:forEach>
                         </select>
+                        <div class="clear"></div>
                         <label for="bookingStartDate"><spring:message code="booking.bookingDate"/></label>
                         <div>
                             <input type="text" class="form-control datepickers" id="bookingStartDate" placeholder="booking date"/>
