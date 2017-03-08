@@ -1,4 +1,9 @@
 $(function () {
+    $('.datepickers').datepicker({
+        dateFormat: 'yy-mm-dd',
+        setDate: moment().format("YYYY-MM-DD")
+    });
+
     var currentDate = moment().format("YYYY-MM-DD");
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;

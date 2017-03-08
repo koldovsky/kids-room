@@ -134,7 +134,7 @@
                             <label for="start-date-picker"><spring:message code="event.startDate"/></label>
                             <br>
                             <div class="col-xs-6">
-                                <input id="start-date-picker" type="date" class="text-center form-control"
+                                <input id="start-date-picker" type="text" class="text-center form-control datepickers"
                                        placeholder="startDate">
                             </div>
                             <div class="col-xs-6">
@@ -148,7 +148,7 @@
                             <label for="end-date-picker"><spring:message code="event.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
-                                <input id="end-date-picker" type="date" class="text-center form-control"
+                                <input id="end-date-picker" type="text" class="text-center form-control datepickers"
                                        placeholder="endDate"
                                        disabled="true">
                             </div>
