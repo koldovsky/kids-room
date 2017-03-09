@@ -121,14 +121,6 @@
 
 
     <!-- Manager -->
-    <definition name="allkidslist" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager/allkidslist.jsp"/>
-    </definition>
-
-    <definition name="manager-confirm-booking" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/manager/confirm-booking.jsp"/>
-    </definition>
-
     <definition name="manager-edit-booking" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager/edit-booking.jsp"/>
     </definition>

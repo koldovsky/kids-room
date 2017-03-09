@@ -2,10 +2,12 @@ package ua.softserveinc.tc.controller.manager;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.ChildDto;
 import ua.softserveinc.tc.dto.ManagerBookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
+import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.TimeValidatorImpl;
 
 @RestController
@@ -33,6 +38,8 @@ public class ManagerBookingController {
   @Autowired
   private TimeValidatorImpl timeValidator;
 
+  @Autowired
+  private UserService userService;
 
   /**
    * Receives the date, id of room and array of booking states from the client. Figures out list of
@@ -56,14 +63,14 @@ public class ManagerBookingController {
     List<ManagerBookingDTO> result = new ArrayList<>();
     for (Booking booking : bookings) {
       result.add(
-          new ManagerBookingDTO.Builder().id(booking.getIdBook())
-              .idChild(booking.getChild().getId())
-              .kidName(booking.getChild().getFullName())
-              .comment(booking.getComment())
-              .startTime(booking.getBookingStartTime())
-              .endTime(booking.getBookingEndTime())
-              .durationBooking(booking.getDuration())
-              .bookingState(booking.getBookingState())
+          new ManagerBookingDTO.Builder().withId(booking.getIdBook())
+              .withIdChild(booking.getChild().getId())
+              .withKidName(booking.getChild().getFullName())
+              .withComment(booking.getComment())
+              .withStartTime(booking.getBookingStartTime())
+              .withEndTime(booking.getBookingEndTime())
+              .withDurationBooking(booking.getDuration())
+              .withBookingState(booking.getBookingState())
               .build()
       );
     }
@@ -100,13 +107,46 @@ public class ManagerBookingController {
     List<ManagerBookingDTO> result = new ArrayList<>();
     for (Booking booking : bookings) {
       result.add(
-          new ManagerBookingDTO.Builder().startTimeMillis(booking.getBookingStartTime())
-              .endTimeMillis(booking.getBookingStartTime())
+          new ManagerBookingDTO.Builder().withStartTimeMillis(booking.getBookingStartTime())
+              .withEndTimeMillis(booking.getBookingStartTime())
               .build());
     }
     return result;
   }
 
+  /**
+   * Counting number of children in the selected room for appropriate date.
+   *
+   * @param date current date for counting active children
+   * @param id selected room id
+   * @return number of active children
+   */
+  @GetMapping("getAmountOfChildren/{date}/{id}")
+  public Long getAmountOfChildrenForCurrentDay(@PathVariable String date,
+      @PathVariable Long id) {
+    Room room = roomService.findByIdTransactional(id);
+    Date dateLo = toDateAndTime(date + " " + room.getWorkingHoursStart());
+    Date dateHi = toDateAndTime(date + " " + room.getWorkingHoursEnd());
+    List<Booking> bookings = bookingService
+        .getBookings(new Date[]{dateLo, dateHi}, room, BookingState.ACTIVE);
+
+    return (bookings.size() != 0) ? bookings.size() : 0L;
+  }
+
+  /**
+   * Receives GET request with id of parent and sends to client information about all kids
+   * for this parent
+   *
+   * @param id selected parent id
+   * @return List of parent kids
+   */
+  @GetMapping("get-kids/{id}")
+  public List<ChildDto> listKids(@PathVariable Long id) {
+    List<Child> kids = userService.getEnabledChildren(userService.findByIdTransactional(id));
+    return kids.stream()
+        .map(ChildDto::new)
+        .collect(Collectors.toList());
+  }
 
   /**
    * Receives PUT request from the client and PUT new start time to database for booking also
