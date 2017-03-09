@@ -1,12 +1,19 @@
 function validateDate() {
-        var startDate = $("#from").val();
-        var endDate = $("#to").val();
-        if (new Date(startDate) > new Date(endDate)) {
-            $("#errorDate").html(messages.date.fromBiggerThanTo);
-        } else {
-            $("#errorDate").html("");
-            return true;
-        }
+  var startDate = new Date($("#from").val());
+  var endDate = new Date($("#to").val());
+  var currentDate = new Date();
+  var lastPossibleDate = new Date("01.01.2017");
+  if (startDate > endDate) {
+    $("#errorDate").html(messages.date.fromBiggerThanTo);
+  }else if(endDate>currentDate){
+    $("#errorDate").html(messages.date.toBiggerThanCurrent);
+  }else if(lastPossibleDate>startDate){
+    $("#errorDate").html(messages.date.fromSmallerThanLast);
+  }
+  else {
+      $("#errorDate").html("");
+      return true;
+  }
 }
 
 $('input[type="date"]').on('change', function(){

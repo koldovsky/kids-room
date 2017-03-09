@@ -20,6 +20,8 @@ const messages = {
     },
     date: {
         fromBiggerThanTo: ' \'To\' date should be bigger than \'From\' date ',
+        toBiggerThanCurrent: '\'To\' date shouldn\'t be bigger than current date is',
+        fromSmallerThanLast: '\'From\' date can\'t be smaller than 01.01.2017',
         startEventDate: 'Start at: ',
         endEventDate: 'End at: ',
         description: 'Description: '

@@ -9,6 +9,7 @@
 <link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/user-my-report.css'>
 <script src="${pageContext.request.contextPath}/resources/js/myBookings.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/printMyBookings.js"></script>
+<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
