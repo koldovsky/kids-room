@@ -7,7 +7,12 @@ var roomCapacity; // The capacity (number of people) current room
 var roomWorkingStartTime;
 var roomWorkingEndTime;
 
+
 $(function () {
+    $('.datepickers').datepicker({
+        dateFormat: 'yy-mm-dd',
+        setDate: moment().format("YYYY-MM-DD")
+    });
     $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if (localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
@@ -81,7 +86,7 @@ $(function () {
 
     $('#date-booking').change(function () {
         refreshTable(localStorage['bookingsState']);
-        getAmountOfChildrenByCurrentDate();
+        getAmountOfChildrenByCurrentDate($('#date-booking').val());
     });
 
     $('.picker').timepicker({
@@ -94,9 +99,7 @@ $(function () {
     $("#selectUser").select2();
 });
 
-
-
-$('#date-booking').val(dateNow.toISOString().substr(0, 10));
+$('#date-booking').val(moment().format("YYYY-MM-DD"));
 
 function selectRoomForManager(roomId) {
     refreshTable(localStorage['bookingsState']);
@@ -105,7 +108,7 @@ function selectRoomForManager(roomId) {
         encoding: 'UTF-8',
         contentType: 'charset=UTF-8',
         success: function (result) {
-            getAmountOfChildrenByCurrentDate();
+            getAmountOfChildrenByCurrentDate($('#date-booking').val());
             result = result.split(' ');
             $('#bookingStartTimepicker').val(result[0]);
             $('#bookingEndTimepicker').val(result[1]);
