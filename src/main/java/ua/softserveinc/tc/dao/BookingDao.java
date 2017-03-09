@@ -1,10 +1,10 @@
 package ua.softserveinc.tc.dao;
 
+import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
-import ua.softserveinc.tc.util.TwoTuple;
 
 import java.util.Date;
 import java.util.List;
@@ -102,5 +102,7 @@ public interface BookingDao extends BaseDao<Booking> {
     List<Booking> findByBookingState(BookingState bookingState);
 
     List<Booking> findByBookingStateAndBookingStartTimeLessThan(BookingState bookingState, Date start);
+
+    List<InfoDeactivateRoomDto> getInfoForDeactivate(Long roomId);
 
 }

@@ -12,4 +12,6 @@ public interface RoomDao extends BaseDao<Room> {
     List<Booking> reservedBookings(Date dateLo, Date dateHi, Room room);
 
     List<Room> findByIsActiveTrue();
+
+    List<String> emailManagersByRoom(Long room_id);
 }

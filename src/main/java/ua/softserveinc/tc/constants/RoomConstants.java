@@ -32,6 +32,10 @@ public final class RoomConstants {
 
   public static final String DAY_OFF = "day_off";
 
+  public static final String UNAVAILABLE_ROOM = "unavailable_room";
+
+  public static final String DEACTIVATE_REASON = "deactivate_reason";
+
   private RoomConstants() {
   }
 }

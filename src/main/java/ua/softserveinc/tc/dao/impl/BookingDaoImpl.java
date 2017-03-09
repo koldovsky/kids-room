@@ -5,14 +5,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.BookingConstants;
 import ua.softserveinc.tc.constants.SQLConstants;
 import ua.softserveinc.tc.dao.BookingDao;
+import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
-import ua.softserveinc.tc.util.TwoTuple;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
@@ -321,6 +323,19 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         );
 
         return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
+    public List<InfoDeactivateRoomDto> getInfoForDeactivate(Long roomId) {
+        Query query = entityManager.createQuery("select concat(user.firstName, ' ', user.lastName) as parentName," +
+                " user.phoneNumber," +
+                "child.firstName as childName from Booking booking " +
+                " inner join booking.user as user " +
+                "inner join booking.child as child " +
+                "where booking.room.id = :room_id  and booking.bookingEndTime >= :date ");
+        query.setParameter("room_id", roomId);
+        query.setParameter("date", new Date());
+        return query.getResultList();
     }
 
     @Override

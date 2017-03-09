@@ -72,13 +72,10 @@ public class ViewEventController {
 
         switch (user.getRole()) {
             case USER:
-                model.addAttribute(UserConstants.Entity.ROOMS, roomService.getTodayActiveRooms());
-                model.addAttribute(UserConstants.Entity.KIDS, userService.getEnabledChildren(user));
-                model.addAttribute(UserConstants.Entity.USERID, user.getId());
                 if (user.getChildren().isEmpty() || userService.getEnabledChildren(user).isEmpty()) {
-                    resultView = ChildConstants.View.MY_KIDS;
+                    resultView = "redirect:/" + ChildConstants.View.MY_KIDS;
                 } else {
-                    resultView = EventConstants.View.MAIN_PAGE;
+                    resultView = "redirect:/" + UserConstants.USER_CALENDAR;
                 }
                 break;
             case MANAGER:

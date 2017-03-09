@@ -7,7 +7,12 @@ var roomCapacity; // The capacity (number of people) current room
 var roomWorkingStartTime;
 var roomWorkingEndTime;
 
+
 $(function () {
+    $('.datepickers').datepicker({
+        dateFormat: 'yy-mm-dd',
+        setDate: moment().format("YYYY-MM-DD")
+    });
     $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if (localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
@@ -30,7 +35,7 @@ $(function () {
                 encoding: 'UTF-8',
                 contentType: 'charset=UTF-8',
                 success: function (result) {
-                    var kids = JSON.parse(result);
+                    var kids = result;
                     $.each(kids, function (i, kid) {
                         var kidId = kid.id;
                         if ($('#checkboxKid' + kid.id).is(':checked')) {
@@ -81,7 +86,7 @@ $(function () {
 
     $('#date-booking').change(function () {
         refreshTable(localStorage['bookingsState']);
-        getAmountOfChildrenByCurrentDate();
+        getAmountOfChildrenByCurrentDate($('#date-booking').val());
     });
 
     $('.picker').timepicker({
@@ -91,12 +96,10 @@ $(function () {
         maxTime: roomWorkingEndTime
     });
 
-   
+    $("#selectUser").select2();
 });
 
-
-
-$('#date-booking').val(dateNow.toISOString().substr(0, 10));
+$('#date-booking').val(moment().format("YYYY-MM-DD"));
 
 function selectRoomForManager(roomId) {
     refreshTable(localStorage['bookingsState']);
@@ -105,7 +108,7 @@ function selectRoomForManager(roomId) {
         encoding: 'UTF-8',
         contentType: 'charset=UTF-8',
         success: function (result) {
-            getAmountOfChildrenByCurrentDate();
+            getAmountOfChildrenByCurrentDate($('#date-booking').val());
             result = result.split(' ');
             $('#bookingStartTimepicker').val(result[0]);
             $('#bookingEndTimepicker').val(result[1]);
@@ -438,7 +441,7 @@ function addKids(getKidsUrl) {
         encoding: 'UTF-8',
         contentType: 'charset=UTF-8',
         success: function (result) {
-            var kids = JSON.parse(result);
+            var kids = result;
             var kidsCount = kids.length;
             var tr = '';
             var label = '<div>' + '<label id="choose-kid"></label>' + '</div>';
@@ -486,15 +489,9 @@ function sendBookingToServerForCreate(bookingsArray) {
                 }, 1300);
                 refreshTable(localStorage['bookingsState']);
                 $('#kids').empty();
-                $('#selectUser').val($('#selectUser').defaultValue);
-                $('#bookingStartTimepicker').val(roomWorkingStartTime);
-                $('#bookingEndTimepicker').val(roomWorkingEndTime);
+                clearModalVindow();
             }
-            var clearModalVindow = function () {
-                $('#selectUser').val($('#selectUser').defaultValue);
-                $('#bookingStartTimepicker').val(roomWorkingStartTime);
-                $('#bookingEndTimepicker').val(roomWorkingEndTime);
-            }
+
         },
         error: function (xhr, ajaxOptions, thrownError) {
             $('#errorMessage').html(xhr.responseText);
@@ -575,5 +572,11 @@ $('#booking-table > tbody').on('click', 'tr', handler);
 $('#closeBookingsLegend').click(function () {
     $('#bookingLegendModal').modal('hide');
 });
+
+clearModalVindow = function () {
+    $('#selectUser').select2('val', ' ');
+    $('#bookingStartTimepicker').val(roomWorkingStartTime);
+    $('#bookingEndTimepicker').val(roomWorkingEndTime);
+}
 
 

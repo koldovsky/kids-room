@@ -1,9 +1,5 @@
 $(function () {
-    $('.datepickers').datepicker({
-        dateFormat: 'yy-mm-dd',
-        setDate: new Date()
-    });
-
+    var currentDate = moment().format("YYYY-MM-DD");
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;
     for (var i = 0; i < listRoom.length; i++) {
@@ -24,20 +20,18 @@ $(function () {
             localStorage['room'] = room;
             localStorage['roomId'] = roomId;
 
-            getAmountOfChildrenByCurrentDate();
+            getAmountOfChildrenByCurrentDate(currentDate);
             $('#room').text(room);
             selectRoomForManager(roomId);
         });
     });
-    getAmountOfChildrenByCurrentDate();
+    getAmountOfChildrenByCurrentDate(currentDate);
     $('#room').text(localStorage['room']);
     selectRoomForManager(localStorage['roomId']);
 
 });
 
-function getAmountOfChildrenByCurrentDate() {
-    var currentDate = $('#date-booking').datepicker().val();
-
+function getAmountOfChildrenByCurrentDate(currentDate) {
     $.ajax({
         url: 'getAmountOfChildren/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {

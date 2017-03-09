@@ -1,10 +1,12 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MailService {
@@ -33,4 +35,5 @@ public interface MailService {
     void sendDayOffReminderAsync(User recipient, String subject,
                                  DayOff dayOff) throws MessagingException;
 
+    void sendReasonOfDeactivate(List<String> emailManagers, String roomName, String reason, List<InfoDeactivateRoomDto> list) throws MessagingException;
 }

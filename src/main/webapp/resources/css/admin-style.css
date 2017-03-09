@@ -222,7 +222,10 @@ th.th-size {
     padding-top: 20px;
     font-weight: bold;
 }
-
+#reasonText{
+    width: 100%;
+    color: #000;
+}
 .admWarningBtn {
     margin: 10px !important;
     width: 100px;

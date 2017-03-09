@@ -116,6 +116,10 @@ html, body, .container {
     padding-right: 45px;
 }
 
+#booking-table tbody .sorting_1 {
+    padding-left: 30px;
+}
+
 .highlight-row{
     background-color: #bababa;
 }
@@ -137,6 +141,18 @@ html, body, .container {
     font-size: 50px;
     vertical-align: middle;
 }
+#selectUser {
+  margin : 4px 4px 4px 4px;
+}
+
+.clear {
+  clear: both;
+}
+
+#labelForSelectUser {
+  width: 90%;
+}
+
 #bookingLegendModal [class*="modal-footer"] {
     padding-top: 100px;
 }

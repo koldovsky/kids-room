@@ -31,10 +31,6 @@ public final class ChildConstants {
 
   public static final class View {
 
-    public static final String ALL_KIDS_URL = "/manager-allkidslist";
-
-    public static final String ALL_KIDS = "allkidslist";
-
     public static final String MY_KIDS = "mykids";
 
     public static final String KID_REGISTRATION = "registerkid";
