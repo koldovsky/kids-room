@@ -20,6 +20,8 @@ const messages = {
     },
     date: {
         fromBiggerThanTo: 'Початкова дата не повинна перевищувати кінцеву',
+        toBiggerThanCurrent: 'Кінцева дата не може перевищувати сьогоднішню',
+        fromSmallerThanLast: 'Початкова дата не може бути меншою ніж 01.01.2017',
         startEventDate: 'Початок: ',
         endEventDate: 'Кінець: '
     },
