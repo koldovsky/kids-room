@@ -467,5 +467,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Excel view -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.14</version>
+        </dependency>
+
     </dependencies>
 </project>

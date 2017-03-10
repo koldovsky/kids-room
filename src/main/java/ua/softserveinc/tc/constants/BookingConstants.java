@@ -4,6 +4,7 @@ import ua.softserveinc.tc.entity.BookingState;
 
 
 public final class BookingConstants {
+  public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM", "SUM" };
 
   private BookingConstants() {
   }

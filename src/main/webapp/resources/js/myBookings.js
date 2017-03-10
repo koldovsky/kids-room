@@ -19,6 +19,12 @@ $(document).ready(function () {
     $('#from').change(refresh);
     $('#to').change(refresh);
 
+    $('#export').click(function () {
+        var from = $('#from').val();
+        var to = $('#to').val();
+        var request = 'excel?startDate=' + from + '&endDate=' + to;
+        window.location.replace(request);
+    });
 });
 
 function updateTable() {
