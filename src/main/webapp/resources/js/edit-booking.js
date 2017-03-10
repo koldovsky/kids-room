@@ -10,8 +10,8 @@ var roomWorkingEndTime;
 
 $(function () {
     $('.datepickers').datepicker({
-        dateFormat: 'yy-mm-dd',
-        setDate: moment().format("YYYY-MM-DD")
+        dateFormat: constants.parameters.dateFormat,
+        setDate: moment().format(constants.parameters.dateFormatUpperCase)
     });
     $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if (localStorage['bookingsState'] == null) {
@@ -99,7 +99,7 @@ $(function () {
     $("#selectUser").select2();
 });
 
-$('#date-booking').val(moment().format("YYYY-MM-DD"));
+$('#date-booking').val(moment().format(constants.parameters.dateFormatUpperCase));
 
 function selectRoomForManager(roomId) {
     refreshTable(localStorage['bookingsState']);

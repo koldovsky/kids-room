@@ -191,7 +191,7 @@ $(function () {
         var newEventDate = $('#calendar').fullCalendar('getDate').format();
         var currentDate = new Date();
         $('#single-event-radio-button').prop("checked", true);
-        $('#start-date-picker').val(newEventDate.substring(0, 10));
+        $('#start-date-picker').val(moment().format(constants.parameters.dateFormatUpperCase));
         setEndDateForSingle();
         $('#start-time-picker').timepicker('setTime', currentDate.toLocaleTimeString());
         $('#end-time-picker').timepicker('setTime', increaseTimeByHour(currentDate.toLocaleTimeString()));
