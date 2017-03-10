@@ -1,10 +1,10 @@
 $(function () {
     $('.datepickers').datepicker({
-        dateFormat: 'yy-mm-dd',
-        setDate: moment().format("YYYY-MM-DD")
+        dateFormat: constants.parameters.dateFormat,
+        setDate: moment().format(constants.parameters.dateFormatUpperCase)
     });
 
-    var currentDate = moment().format("YYYY-MM-DD");
+    var currentDate = moment().format(constants.parameters.dateFormatUpperCase);
     var listRoom = $('#selectRoom li a');
     var inactiveRoom = true;
     for (var i = 0; i < listRoom.length; i++) {

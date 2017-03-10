@@ -26,7 +26,9 @@ const constants = {
         nameMaxLength: 35,
         commentMaxLength: 250,
         hoursInDay: 24,
-        timeZone: 2
+        timeZone: 2,
+        dateFormat: "yy-mm-dd",
+        dateFormatUpperCase: "YYYY-MM-DD"
     }
 };
 
