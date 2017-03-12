@@ -119,6 +119,13 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/days-off.jsp"/>
     </definition>
 
+    <definition name="adm-abonnements" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/adm-abonnements.jsp"/>
+    </definition>
+
+    <definition name="adm-update-abonnement" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/update-abonnement.jsp"/>
+    </definition>
 
     <!-- Manager -->
     <definition name="manager-edit-booking" extends="default">
@@ -165,5 +172,6 @@
     <definition name="registerkid" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/user/register-kid.jsp"/>
     </definition>
+
 
 </tiles-definitions>
