@@ -1,7 +1,7 @@
 $(function () {
     addListenerForDetails();
     addListenerForGenerate();
-    $("#startDate, #endDate").change(refreshView)
+    $("#startDate, #endDate").change(refreshView);
 });
 
 function addListenerForDetails() {
