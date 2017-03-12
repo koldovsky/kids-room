@@ -134,3 +134,8 @@ min-width: 120px;
   div.pager span.active {
       background: #c00;
   }
+
+  #errorDate {
+    color: red;
+    text-align: center;
+  }
