@@ -1,9 +1,7 @@
 package ua.softserveinc.tc.service;
 
-import ua.softserveinc.tc.entity.Child;
-import ua.softserveinc.tc.entity.Role;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
+import org.springframework.validation.BindingResult;
+import ua.softserveinc.tc.entity.*;
 
 import java.util.Date;
 import java.util.List;
@@ -29,4 +27,10 @@ public interface UserService extends BaseService<User> {
     List<Child> getEnabledChildren(User user);
 
     List<User> findByActiveTrueAndRoleNot(Role role);
+
+    User findUserId(Long id);
+
+    ReturnModel adminUpdateManager(User manager, BindingResult bindingResult);
+
+    ReturnModel adminAddManager(User manager, BindingResult bindingResult);
 }

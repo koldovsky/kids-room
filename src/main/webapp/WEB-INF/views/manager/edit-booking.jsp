@@ -45,11 +45,11 @@
         </div>
         <br>
 
-        <table id="booking-table" class="col-md-12" >
+        <table id="booking-table" class=" col-xs-12 col-md-12"  >
             <thead >
             <tr>
-                <th class="col-xs-1">#</th>
-                <th class="col-xs-3"><spring:message code="booking.childrens"/></th>
+                <th class="col-xs-1 col-md-1">#</th>
+                <th class="col-xs-2 col-md-2"><spring:message code="booking.childrens"/></th>
                 <th><spring:message code="booking.time"/></th>
                 <th><spring:message code="booking.arrival"/></th>
                 <th><spring:message code="booking.leave"/></th>
