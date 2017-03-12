@@ -8,6 +8,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/report.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
+<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
 <div id="scroller">
     <div class="dateSelector">
@@ -21,6 +22,8 @@
             <input type="date" value="${endDate}" id="endDate">
         </div>
     </div>
+
+    <div id="errorDate"></div>
 
     <div class="tableDiv">
         <table id="bookings">
@@ -50,3 +53,4 @@
     <input id="itemsPerPage" type="hidden" value="10" />
     <a id="dlink"  style="display:none;"></a>
 </div>
+<script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-report.js"></script>

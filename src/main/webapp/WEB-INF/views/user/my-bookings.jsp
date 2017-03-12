@@ -9,12 +9,11 @@
 <link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/user-my-report.css'>
 <script src="${pageContext.request.contextPath}/resources/js/myBookings.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/printMyBookings.js"></script>
-<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
         <div id="msg">
-        <spring:message code="report.select.period"/>:
+        <spring:message code="report.select.period"/>
         </div>
         <div id="from-div">
           <label for="from"><spring:message code="report.from" /></label>

@@ -22,6 +22,7 @@ const messages = {
         fromBiggerThanTo: 'Початкова дата не повинна перевищувати кінцеву',
         toBiggerThanCurrent: 'Кінцева дата не може перевищувати сьогоднішню',
         fromSmallerThanLast: 'Початкова дата не може бути меншою ніж 01.01.2017',
+        wrongDate: 'Ви пробуєте ввести не існуючу дату',
         startEventDate: 'Початок: ',
         endEventDate: 'Кінець: '
     },
