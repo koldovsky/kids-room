@@ -32,7 +32,7 @@ function refreshView() {
 
     $.ajax({
         url: request, success: function (result) {
-            var users = JSON.parse(result);
+            var users = result;
 
             var tr = "";
 
