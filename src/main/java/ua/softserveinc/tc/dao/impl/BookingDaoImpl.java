@@ -339,6 +339,17 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     }
 
     @Override
+    public Long countPlanningBookingOfRoom(Room room) {
+        Query query = entityManager.createQuery("select count(booking.id) from Booking booking " +
+                "where booking.room.id = :room_id  " +
+                "and booking.bookingEndTime >= :data ");
+        query.setParameter("room_id", room.getId());
+        query.setParameter("data", new Date());
+
+        return (Long) query.getSingleResult();
+    }
+
+    @Override
     public List<Booking> persistRecurrentBookings(List<Booking> bookings) {
         bookings.forEach(entityManager::persist);
 

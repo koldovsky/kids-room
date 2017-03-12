@@ -126,8 +126,7 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     public boolean hasPlanningBooking(Room room) {
-
-        return !bookingService.getAllPlannedBookingsInTheRoom(room).isEmpty();
+        return (bookingDao.countPlanningBookingOfRoom(room)) > 0 ? true : false;
     }
 
     @Override

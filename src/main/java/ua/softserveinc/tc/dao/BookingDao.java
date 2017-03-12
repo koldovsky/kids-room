@@ -105,4 +105,6 @@ public interface BookingDao extends BaseDao<Booking> {
 
     List<InfoDeactivateRoomDto> getInfoForDeactivate(Long roomId);
 
+    Long countPlanningBookingOfRoom(Room room);
+
 }
