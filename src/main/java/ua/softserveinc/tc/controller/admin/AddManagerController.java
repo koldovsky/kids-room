@@ -1,97 +1,25 @@
 package ua.softserveinc.tc.controller.admin;
 
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSendException;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
-import ua.softserveinc.tc.constants.AdminConstants;
-import ua.softserveinc.tc.constants.ValidationConstants;
-import ua.softserveinc.tc.entity.Role;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import ua.softserveinc.tc.entity.ReturnModel;
 import ua.softserveinc.tc.entity.User;
-import ua.softserveinc.tc.service.MailService;
-import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.util.Log;
-import ua.softserveinc.tc.validator.UserValidator;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
-import java.util.UUID;
 
-/**
- * Controller class for "Add manager" view, which accompanies add new manager.
- */
-@Controller
+@RestController
 public class AddManagerController {
-
-    @Log
-    private static Logger log;
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MailService mailService;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-
-    /**
-     * Method open "Add manager" view. Send empty model into view.
-     * Mapped by AdminConstants.ADD_MANAGER constant.
-     *
-     * @return model
-     */
-    @GetMapping("/adm-add-manager")
-    public ModelAndView showAddManagerForm() {
-        ModelAndView model = new ModelAndView(AdminConstants.ADD_MANAGER);
-        model.addObject(AdminConstants.ATR_MANAGER, new User());
-
-        return model;
-    }
-
-
-    /**
-     * Method saving model with values received from view. Check value validation.
-     * Redirect into view, witch mapped by AdminConstants.EDIT_MANAGER
-     *
-     * @param manager
-     * @param bindingResult
-     * @return String value
-     */
-    @PostMapping("/adm-add-manager")
-    public String saveNewManager(@Valid @ModelAttribute(AdminConstants.ATR_MANAGER) User manager,
-                                 BindingResult bindingResult) {
-        userValidator.validateManager(manager, bindingResult);
-        this.userValidator.validateManagerEmail(manager, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return AdminConstants.ADD_MANAGER;
-        }
-
-        manager.setRole(Role.MANAGER);
-        manager.setActive(true);
-        manager.setConfirmed(false);
-
-        String token = UUID.randomUUID().toString();
-        try {
-            this.mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
-        } catch (MessagingException | MailSendException ex) {
-            log.error("Error! There is problems with sending email!", ex);
-            bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
-            return AdminConstants.ADD_MANAGER;
-        }
-
-        this.userService.create(manager);
-        this.tokenService.createToken(token, manager);
-        return "redirect:/" + AdminConstants.EDIT_MANAGER;
+    @PostMapping("/admincreatenewmanager")
+    public ReturnModel createNewManagerDialogForm(@Valid @RequestBody User manager,
+                                                  BindingResult bindingResult) {
+        return  userService.adminAddManager(manager, bindingResult);
     }
 }

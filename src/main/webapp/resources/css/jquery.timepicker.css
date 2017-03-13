@@ -11,6 +11,9 @@
 	z-index: 10001;
 	margin: 0;
 }
+.ui-timepicker-input {
+	width: 7.5em;
+}
 
 .ui-timepicker-wrapper.ui-timepicker-with-duration {
 	width: 13em;

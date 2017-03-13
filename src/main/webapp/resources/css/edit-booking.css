@@ -95,6 +95,9 @@ html, body, .container {
 .row{
        margin: auto;
 }
+.ui-timepicker-input {
+    width: 7.5em;
+}
 
 #booking-table{
     margin-top: 100px;

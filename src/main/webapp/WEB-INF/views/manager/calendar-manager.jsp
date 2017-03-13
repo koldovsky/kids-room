@@ -90,6 +90,7 @@
                 <div id="dialog" class="dialog" hidden title="<spring:message code= "event.new"/>">
                     <form id="form">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <div class="form-group">
                             <label for="event-title"><spring:message code="event.title"/></label>
                             <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
@@ -280,12 +281,19 @@
 
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
-                            <label for="titleUpdate"> <spring:message
-                                    code="event.labelForTitle"></spring:message> </label>
+                            <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
                             <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
                             <input type="text" class="form-control" id="titleUpdate"
                                    placeholder="${titlePlaceHolder}">
                         </div>
+<%--
+                        <div class="form-group">
+                            <label for="event-title"><spring:message code="event.title"/></label>
+                            <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
+                            <input type="text" class="form-control" id="event-title"
+                                   placeholder="${titlePlaceHolder}">
+                        </div>--%>
+
 
                         <div class="form-group">
                             <label for="color-select"> <spring:message

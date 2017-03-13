@@ -21,4 +21,6 @@ public interface UserDao extends BaseDao<User> {
     User getUserByName(String firstName, String lastName);
 
     List<User> findByActiveTrueAndRoleNot(Role role);
+
+    User findUserById(Long id);
 }
