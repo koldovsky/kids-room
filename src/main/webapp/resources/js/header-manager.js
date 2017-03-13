@@ -4,7 +4,7 @@ $(function () {
         setDate: moment().format(constants.parameters.dateFormatUpperCase)
     });
 
-    $('.picker').keypress(function(e) {
+    /*$('.picker').keypress(function(e) {
         if (e.which != 8 && (e.which < 48 || e.which > 57)) {
             return false;
         } else {
@@ -21,7 +21,7 @@ $(function () {
 
             $('.picker').keyup(format);
         }
-    });
+    });*/
 
     var currentDate = moment().format(constants.parameters.dateFormatUpperCase);
     var listRoom = $('#selectRoom li a');
