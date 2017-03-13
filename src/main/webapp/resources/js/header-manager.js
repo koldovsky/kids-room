@@ -12,7 +12,7 @@ $(function () {
                 var r = constants.regex.twoNumberRegex,
                     str = e.target.value.replace(/[^0-9]/ig, "");
 
-                while(r.test(str)) {
+                while (r.test(str)) {
                     str = str.replace(r, '$1' + ':' + '$2');
                 }
 
