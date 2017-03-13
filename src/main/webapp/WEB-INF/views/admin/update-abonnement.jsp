@@ -19,49 +19,59 @@
 
         <tr>
             <td>
-                <form:form modelAttribute="<%=AdminConstants.ATR_ABONNEMENT%>" action="adm-update-abonnement" method="post"
+                <form:form modelAttribute="<%=AdminConstants.ATR_ABONNEMENT%>" action="adm-update-abonnement"
+                           method="put"
                            id="managerForm">
-
+                    <form:hidden path="id" value="${abonnement.id}"/>
                 <div class="form-group sizing-between">
-                    <label for="name" class="required"><spring:message code="administrator.abonnement.name"/></label>
+                    <label for="name" class="required">
+                        <spring:message code="administrator.abonnement.name"/>
+                    </label>
                     <form:input path="name" value="${abonnement.name}" class="form-control"/>
                     <form:errors path="name" cssClass="error"/>
                 </div>
 
                 <div class="form-group sizing-between">
-                    <label for="price" class="required"><spring:message
-                            code="administrator.abonnement.price"/></label>
+                    <label for="price" class="required">
+                        <spring:message code="administrator.abonnement.price"/>
+                    </label>
                     <form:input path="price" value="${abonnement.price}" class="form-control"/>
                     <form:errors path="price" cssClass="error"/>
                 </div>
 
                 <div class="form-group sizing-between">
                     <label for="hour" class="required"><spring:message
-                            code="administrator.abonnement.hour"/></label>
+                            code="administrator.abonnement.hour"/>
+                    </label>
                     <form:input path="hour" value="${abonnement.hour}" class="form-control"/>
                     <form:errors path="hour" cssClass="error"/>
                 </div>
 
                 <div class="form-group sizing-between">
                     <label for="startDate" class="required">
-                        <spring:message code="administrator.abonnement.startDate"/></label>
-                    <form:input path="startDate" value="${abonnement.startDate}" class="form-control"/>
+                        <spring:message code="administrator.abonnement.startDate"/>
+                    </label>
+                    <form:input path="startDate" type="datetime" value="${abonnement.startDate}" class="form-control"/>
                     <form:errors path="startDate" cssClass="error"/>
                 </div>
 
                 <div class="form-group sizing-between">
                     <label for="endDate" class="required">
-                        <spring:message code="administrator.abonnement.startDate"/></label>
-                    <form:input path="endDate" value="${abonnement.endDate}" class="form-control"/>
+                        <spring:message code="administrator.abonnement.startDate"/>
+                    </label>
+                    <form:input path="endDate" type="datetime" value="${abonnement.endDate}" class="form-control"/>
                     <form:errors path="endDate" cssClass="error"/>
                 </div>
 
                 <div class="form-group sizing-between">
-                    <button type="submit" class="btn btn-raised btn-success"><a href="adm-abonnements"><spring:message
-                            code="administrator.save"/></a></button>
+                    <button type="submit" class="btn btn-raised btn-success"
+                            onclick="window.location.href='adm-abonnements'">
+                        <spring:message code="administrator.save"/>
+                    </button>
                     <button type="reset" class="btn btn-raised btn-danger"
-                            onclick="window.location.href='adm-abonnements'"><spring:message
-                            code="administrator.canc"/></button>
+                            onclick="window.location.href='adm-abonnements'">
+                        <spring:message code="administrator.canc"/>
+                    </button>
                 </div>
                 </form:form>
             </th></tr>

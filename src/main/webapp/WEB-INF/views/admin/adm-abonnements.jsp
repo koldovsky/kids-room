@@ -51,6 +51,15 @@
             </td>
             </tr>
         </c:forEach>
+        <tr>
+            <th colspan="10" class="hide-border set-standard-color">
+                <a href="adm-add-abonnement" tabindex="-1">
+                    <button type="button" class="btn btn-raised btn-primary btn-add-room">
+                        <spring:message code="administrator.add"/>
+                    </button>
+                </a>
+            </th>
+        </tr>
     </table>
 </div>
 

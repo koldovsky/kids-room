@@ -36,8 +36,6 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
 
     @Override
     public void updateAbonnement(AbonnementDto abonnementDto) {
-
         abonnementDao.update(abonnementDto.toEntity());
-        System.out.println(abonnementDao);
     }
 }

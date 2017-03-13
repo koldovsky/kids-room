@@ -20,8 +20,8 @@ public class AbonnementsController {
     @PostMapping(AbonnementConstants.RestQueries.UPDATE_ABONNEMENT)
     public void updateAbonnement(@ModelAttribute(AdminConstants.ATR_ABONNEMENT) AbonnementDto abonnementDto,
                                     BindingResult bindingResult) {
+        System.out.println(abonnementDto);
         abonnementsService.updateAbonnement(abonnementDto);
     }
 
-    @PostMapping()
 }

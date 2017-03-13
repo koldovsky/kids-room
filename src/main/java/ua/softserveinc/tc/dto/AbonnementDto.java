@@ -147,4 +147,16 @@ public class AbonnementDto implements Serializable {
         this.endDate = endDate;
     }
 
+    @Override
+    public String toString() {
+        return "AbonnementDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", hour=" + hour +
+                ", price=" + price +
+                ", isActive=" + isActive +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

@@ -14,6 +14,7 @@ public final class AdminConstants {
     public static final String EDIT_CONFIG = "adm-config";
     public static final String ABONNEMENTS = "adm-abonnements";
     public static final String UPDATE_ABONNEMENT = "adm-update-abonnement";
+    public static final String CREATE_ABONNEMENT = "adm-add-abonnement";
     ///////////////////////////////////////
 
     public static final String DEACTIVATE_ROOM = "deactivate-room";
@@ -37,6 +38,7 @@ public final class AdminConstants {
     public static class ViewNames {
         public static final String ABONNEMENTS_VIEW = "adm-abonnements";
         public static final String UPDATE_ABONNEMENT_VIEW = "adm-update-abonnement";
+        public static final String CREATE_ABONNEMENT_VIEW = "adm-add-abonnement";
     }
 
     ///////////////////////////////////////
