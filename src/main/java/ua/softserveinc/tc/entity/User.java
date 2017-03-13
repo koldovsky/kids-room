@@ -86,6 +86,9 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "managers")
     private List<Room> rooms = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "abonementUsers")
+    private List<Abonnement> abonnements;
+
     public Long getId() {
         return id;
     }
@@ -136,6 +139,14 @@ public class User implements Serializable {
 
     public boolean isConfirmed() {
         return confirmed;
+    }
+
+    public List<Abonnement> getAbonnements() {
+        return abonnements;
+    }
+
+    public void setAbonnements(List<Abonnement> abonnements) {
+        this.abonnements = abonnements;
     }
 
     public void setConfirmed(boolean confirmed) {

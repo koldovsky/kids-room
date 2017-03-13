@@ -66,3 +66,7 @@ INSERT INTO rooms_off (day_off, room) VALUES (2, 5);
 INSERT INTO rooms_off (day_off, room) VALUES (2, 4);
 INSERT INTO rooms_off (day_off, room) VALUES (2, 3);
 INSERT INTO rooms_off (day_off, room) VALUES (3, 11);
+
+INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (1, 'econom', 20, '2016-10-02', '2016-10-05', 1, 300)
+INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (2, 'standart', 30, '2016-10-02', '2016-10-05', 1, 500)
+INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (3, 'premium', 40, '2016-10-02', '2016-10-05', 1, 1000)
