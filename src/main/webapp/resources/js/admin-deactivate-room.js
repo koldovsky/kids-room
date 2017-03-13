@@ -49,7 +49,7 @@ $().ready(function () {
                 $('#warningMessages').html('');
                 $.each(data, function (index, value) {
                     $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
-                    $('#reasonText').empty();
+                    $('#reasonText').val("");
                     $('#reasonDeactivate').css('display', 'block');
                 });
             }
