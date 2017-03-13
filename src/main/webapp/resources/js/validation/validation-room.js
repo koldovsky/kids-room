@@ -36,10 +36,10 @@ $(document).ready(function () {
                 regexCity: constants.regex.nameRegex
             },
             phoneNumber: {
-                minlength: 1,
-                maxlength: 255,
+                minlength: 9,
+                maxlength: 14,
                 requiredWithEmptySpace: true,
-                regexPhone: constants.regex.phoneRegex
+                regexPhone: constants.regex.phoneNumbersAndPlus
             },
             capacity: {
                 min: 1,
@@ -53,5 +53,8 @@ $(document).ready(function () {
                 required: true
             }
         }
+    });
+    $("#phoneNumber").intlTelInput({
+        initialCountry: "ua"
     });
 });

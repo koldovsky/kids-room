@@ -78,7 +78,7 @@ public class RoomValidatorImpl implements RoomValidator {
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_CITY, ValidationConstants.ROOM_INVALID_CITY_MSG);
             }
-            if (!Pattern.compile(ValidationConstants.SIMPLY_PHONE_REGEX)
+            if (!Pattern.compile(ValidationConstants.PHONE_NUMBER_REGEX)
                     .matcher(roomToValidate.getPhoneNumber())
                     .matches()) {
                 errors.rejectValue(ValidationConstants.ROOM_PHONE_NUMBER, ValidationConstants.ROOM_INVALID_PHONE_MSG);

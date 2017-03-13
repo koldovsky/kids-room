@@ -61,5 +61,10 @@ app.controller('MainCtrl', function ($scope) {
     $scope.submit = function () {
         $("#rates-json").val(JSON.stringify($scope.rates));
         $("#managers-json").val(JSON.stringify($scope.managers));
+
+        var prefixNumber = $(".selected-flag").attr("title").match(constants.regex.phonePrefixRegex);
+        var phoneNumber = $("#phoneNumber");
+        phoneNumber.val(prefixNumber[0] + phoneNumber.val());
+        console.log
     };
 });

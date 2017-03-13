@@ -230,3 +230,11 @@ th.th-size {
     margin: 10px !important;
     width: 100px;
 }
+
+.flag-container {
+    height: 28px;
+}
+
+.intl-tel-input {
+    width: 300px;
+}
