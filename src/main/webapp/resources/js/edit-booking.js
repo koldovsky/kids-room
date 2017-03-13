@@ -251,7 +251,7 @@ function refreshTable(bookingsState) {
                 'className': 'arrivalTime',
                 'fnCreatedCell': function (nTd,sData,oData) {
                     var startTime;
-                    if(oData.bookingState === 'ACTIVE'||oData.bookingsState ==='COMPLETED'){
+                    if(oData.bookingState === 'ACTIVE'||oData.bookingState ==='COMPLETED'){
                         startTime = oData.startTime;
                     }else{
                         startTime = "";
@@ -269,7 +269,7 @@ function refreshTable(bookingsState) {
                 'className': 'leaveTime',
                 'fnCreatedCell': function (nTd, sData, oData) {
                     var endTime;
-                    if(oData.bookingsState ==='COMPLETED'){
+                    if(oData.bookingState ==='COMPLETED'){
                         endTime = oData.endTime;
                     }else{
                         endTime = "";
