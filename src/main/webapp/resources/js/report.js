@@ -29,30 +29,32 @@ function addListenerForGenerate() {
 function refreshView() {
     var request = "refreshParents/" + $("#startDate").val() + "/";
     request += $("#endDate").val() + "/" + localStorage["roomId"];
+    if(validateDate()) {
+        $.ajax({
+            url: request, success: function (result) {
+                var users = result;
 
-    $.ajax({
-        url: request, success: function (result) {
-            var users = result;
+                var tr = "";
 
-            var tr = "";
+                $.each(users, function (i, user) {
+                    tr += '<tr><td>' + user.firstName + '</td>'
+                        + '<td>' + user.lastName + '</td>'
+                        + '<td>' + user.email + '</td>'
+                        + '<td>' + user.phoneNumber + '</td>'
+                        + '<td class="parent" id="'
+                        + user.email + '"><a>' + $("#localizedDetails").val()
+                        + '</a></td></tr>';
+                });
 
-            $.each(users, function (i, user) {
-                tr += '<tr><td>' + user.firstName + '</td>'
-                    + '<td>' + user.lastName + '</td>'
-                    + '<td>' + user.email + '</td>'
-                    + '<td>' + user.phoneNumber + '</td>'
-                    + '<td class="parent" id="'
-                    + user.email + '"><a>' + $("#localizedDetails").val() + '</a></td></tr>';
-            });
+                $("tr:not(#header)").remove();
 
-            $("tr:not(#header)").remove();
+                $("#bookings").append(tr);
 
-            $("#bookings").append(tr);
-
-            addListenerForDetails();
-            paginate();
-        }
-    });
+                addListenerForDetails();
+                paginate();
+            }
+        });
+    }
 }
 
 function selectRoomForManager(room) {
