@@ -80,6 +80,7 @@ $(function () {
     $('#selectUser').on('change', function () {
         $('#kids').empty();
         var idUser = $(this).val();
+        if(idUser===null) return;
         var getKidsUrl = 'get-kids/' + idUser;
         addKids(getKidsUrl);
     });
