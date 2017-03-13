@@ -49,12 +49,12 @@
 
         <table id="booking-table" class="col-md-12" >
             <thead >
-            <tr>
+            <tr style="box-sizing: content-box">
                 <th class="col-xs-1">#</th>
                 <th class="col-xs-3"><spring:message code="booking.childrens"/></th>
                 <th><spring:message code="booking.time"/></th>
-                <th><spring:message code="booking.arrival"/></th>
-                <th><spring:message code="booking.leave"/></th>
+                <th class="thwidth"> <spring:message code="booking.arrival"/></th>
+                <th class="thwidth"> <spring:message code="booking.leave"/></th>
             </tr>
             </thead>
             <tbody>
