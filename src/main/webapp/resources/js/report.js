@@ -28,7 +28,8 @@ function addListenerForGenerate() {
 
 function refreshView() {
     var request = "refreshParents/" + $("#startDate").val() + "/";
-    request += $("#endDate").val() + "/" + localStorage["roomId"];
+    var endDate = moment($("#endDate").val()).add(1, 'day').format("YYYY-MM-DD");
+    request += endDate + "/" + localStorage["roomId"];
     if(validateDate()) {
         $.ajax({
             url: request, success: function (result) {
