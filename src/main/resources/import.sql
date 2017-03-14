@@ -67,6 +67,18 @@ INSERT INTO rooms_off (day_off, room) VALUES (2, 4);
 INSERT INTO rooms_off (day_off, room) VALUES (2, 3);
 INSERT INTO rooms_off (day_off, room) VALUES (3, 11);
 
-INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (1, 'econom', 20, '2016-10-02', '2016-10-05', 1, 300)
-INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (2, 'standart', 30, '2016-10-02', '2016-10-05', 1, 500)
-INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (3, 'premium', 40, '2016-10-02', '2016-10-05', 1, 1000)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (1, 'econom', 20, 1, 300)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (2, 'standart', 30, 1, 500)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (3, 'premium', 40, 1, 1000)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (4, 'test1', 20, 1, 300)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (5, 'test2', 30, 1, 500)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (6, 'test3', 40, 1, 1000)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (7, 'test4', 20, 1, 300)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (8, 'test5', 30, 1, 500)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (9, 'test6', 40, 1, 1000)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (10,'test7', 20, 1, 300)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (11,'test8', 30, 1, 500)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (12,'test9', 40, 1, 1000)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (13,'test10', 20, 1, 300)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (14,'test11', 30, 1, 500)
+INSERT INTO abonements (id_abonement, name_abonement, hour, active, price) VALUES (15,'test12', 40, 1, 1000)

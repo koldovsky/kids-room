@@ -23,22 +23,9 @@ public class AdminMappingController {
     AbonnementsService abonnementsService;
 
     @GetMapping(AdminConstants.ABONNEMENTS)
-    public String getAdminAbonnements(Model model) {
-        List<AbonnementDto> abonnements = abonnementsService.findAllAbonements();
-        model.addAttribute(AdminConstants.AdminModel.ABONNEMENTS_MODEL, abonnements);
+    public String getAdminAbonnements() {
+//        List<AbonnementDto> abonnements = abonnementsService.findAllAbonements();
+//        model.addAttribute(AdminConstants.AdminModel.ABONNEMENTS_MODEL, abonnements);
         return AdminConstants.ViewNames.ABONNEMENTS_VIEW;
     }
-
-    @GetMapping(AdminConstants.UPDATE_ABONNEMENT)
-    public String getAdminUpdateAbonnement(@RequestParam Long id, Model model) {
-        model.addAttribute(AdminConstants.AdminModel.ABONNEMENT, abonnementsService.findAbonnement(id));
-        return AdminConstants.ViewNames.UPDATE_ABONNEMENT_VIEW;
-    }
-
-    @GetMapping(AdminConstants.CREATE_ABONNEMENT)
-    public String getAdminCreateAbonnement(Model model) {
-        model.addAttribute(AdminConstants.AdminModel.ABONNEMENT, new AbonnementDto());
-        return AdminConstants.ViewNames.CREATE_ABONNEMENT_VIEW;
-    }
-
 }

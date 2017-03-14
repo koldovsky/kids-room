@@ -13,6 +13,11 @@ public final class ValidationConstants {
     public static final int ROOM_FIELDS_MAXIMUM_CHARACTER = 255;
     public static final int ROOM_CAPACITY_MINIMUM = 1;
     public static final int ROOM_CAPACITY_MAXIMUM = 200;
+    public static final int ABONNEMENT_NAME_MIN_CHARACTERS = 2;
+    public static final int ABONNEMENT_NAME_MAX_CHARACTERS = 32;
+    public static final int ABONNEMENT_PRICE_MIN_VALUE = 0;
+    public static final int ABONNEMENT_HOUR_MIN_VALUE = 0;
+    public static final int ABONNEMENT_HOUR_MAX_VALUE = 10000;
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
     public static final String ONLY_DATE_FORMAT = "yyyy-MM-dd";
@@ -27,6 +32,7 @@ public final class ValidationConstants {
     public static final String ROOM_HOUR_RATE_REGEX = "\"hourRate\":\"(\\D+)";
     public static final String ROOM_PRICE_RATE_REGEX = "\"priceRate\":\"(\\D+)";
     public static final String TWENTY_FOUR_HOURS_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+    public static final String NUMBERS_REGEX = "\\d+/g";
 
     public static final String LETTERS_NUMBERS_SPACES_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\\s]*$";
 
@@ -91,6 +97,11 @@ public final class ValidationConstants {
     public static final String TIME_FIELD = "timeStartEnd";
     public static final String MANAGERS_FIELD = "managers";
     public static final String DATE_FIELD = "date";
+
+    public static final String ABONNEMENT_NAME = "name";
+    public static final String ABONNEMENT_HOUR = "hour";
+    public static final String ABONNEMENT_PRICE = "price";
+    public static final String ABONNEMENT_ACTIVE = "isActive";
 
     public static final String ROOM_EPMTY_MSG = "administrator.room.error.emptyField";
     public static final String ROOM_INVALID_NAME_MSG = "administrator.room.error.invalidName";
@@ -159,6 +170,12 @@ public final class ValidationConstants {
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
     public static final String NO_DAYS_FOR_RECURRENT_EVENT = "recurrent.daysNotSellected";
 
+    public static final String ABONNEMENT_EMPTY_FIELD = "This field can't be empty";
+    public static final String ABONNEMENT_INVALID_NAME_MSG = "administrator.abonnement.error.name";
+    public static final String ABONNEMENT_INVALID_PRICE_MSG = "administrator.abonnement.error.price";
+    public static final String ABONNEMENT_NAME_LENGHT = "administrator.abonnement.error.nameLength";
+    public static final String ABONNEMENT_PRICE_SIZE = "administrator.abonnement.error.priceSize";
+    public static final String ABONNEMENT_HOUR_LENGTH = "administrator.abonnement.error.hourLength";
 
     public static final String ADMINISTRATOR_INCORRECT_FIRST_NAME = "administrator.addManager.name";
     public static final String ADMINISTRATOR_INCORRECT_SECOND_NAME = "administrator.addManager.lastName";

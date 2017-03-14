@@ -123,14 +123,6 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/adm-abonnements.jsp"/>
     </definition>
 
-    <definition name="adm-add-abonnement" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/add-abonnement.jsp"/>
-    </definition>
-
-    <definition name="adm-update-abonnement" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/update-abonnement.jsp"/>
-    </definition>
-
     <!-- Manager -->
     <definition name="manager-edit-booking" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager/edit-booking.jsp"/>

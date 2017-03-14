@@ -238,3 +238,17 @@ th.th-size {
 .intl-tel-input {
     width: 300px;
 }
+
+.table-wrapper {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.create-object {
+    display: block;
+    text-align: center;
+}
+
+/*.datatable-head {*/
+    /*width: 500px;*/
+/*}*/

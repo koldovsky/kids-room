@@ -172,4 +172,4 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
 <script src="${pageContext.request.contextPath}/resources/js/lib/intlTelInput.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>
+<%--<script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>--%>
