@@ -63,8 +63,8 @@ const messages = {
             titleFieldRequired: 'Поле назва повинно бути заповнене',
             titleMaximumCharacters: 'Назва не повинна містити більше ' + constants.parameters.titleMaxLenght + ' символів',
             descriptionMaximumCharacters: 'Поле опису не повинно містити  більше ' + constants.parameters.descriptionMaxLenght + ' символів',
-            startDateFormat: 'Використовуйте правильний формат yyyy-mm-dd HH:MM для дати початку',
-            endDateFormat: 'Використовуйте правильний формат yyyy-mm-dd HH:MM для дати кінця',
+            startDateFormat: 'Початкова дата введена помилково або не існує ,використовуйте формат рррр-мм-дд ГГ:ММ',
+            endDateFormat: 'Кінцева дата введена помилково або не існує ,використовуйте формат рррр-мм-дд ГГ:ММ',
             singleEventDateEquals:  'Для одноденної події дати повинні бути рівні',
             invalidColor: 'Невірно вибраний колір',
             invalidDate: 'Невірно введена дата',
@@ -122,6 +122,11 @@ const messages = {
         hint: {
             leaveTime: 'Натисніть, щоб встановити час прибуття',
             arrivedTime: 'Натисніть, щоб встановити час виходу'
+        }
+    },
+    preloader: {
+        buttons: {
+            add : 'Додати'
         }
     }
 };

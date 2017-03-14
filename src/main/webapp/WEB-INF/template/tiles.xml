@@ -123,6 +123,10 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/update-abonnement.jsp"/>
     </definition>
 
+    <definition name="discount" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/discount.jsp"/>
+    </definition>
+
     <!-- Manager -->
     <definition name="manager-edit-booking" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/manager/edit-booking.jsp"/>
