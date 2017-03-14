@@ -132,5 +132,10 @@ const messages = {
     },
     report: {
         currencySymbol: 'UAH'
+    },
+    preloader: {
+        buttons: {
+            add : 'Add'
+        }
     }
 };

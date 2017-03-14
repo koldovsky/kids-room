@@ -170,6 +170,20 @@
             <version>${org.springframework.data-version}</version>
         </dependency>
 
+        <!-- Spring MODEL Mapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>0.7.4</version>
+        </dependency>
+
+        <!-- Google cache -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <!-- JAVA INJECT -->
         <dependency>
             <groupId>javax.inject</groupId>

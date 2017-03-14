@@ -119,7 +119,12 @@ th.th-size {
 
 .sizing-between {
     margin: 0;
-    margin-bottom: 35px;
+    margin-top:15px;
+    margin-bottom: 20px;
+}
+
+.sizing-between input {
+    text-align: center;
 }
 
 .days-off {
@@ -237,4 +242,10 @@ th.th-size {
 
 .intl-tel-input {
     width: 300px;
+}
+
+.picker-style {
+    float: left;
+    width: 45%;
+    margin: 0 2% 20px 2%;
 }

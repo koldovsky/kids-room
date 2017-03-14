@@ -131,5 +131,10 @@ const messages = {
     },
     report: {
         currencySymbol: 'ГРН'
+    },
+    preloader: {
+        buttons: {
+            add : 'Додати'
+        }
     }
 };

@@ -58,6 +58,13 @@ INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (1, 'Teach
 INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (2, 'Day Off','2016-10-03', '2016-10-06');
 INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (3, 'Repair works','2016-10-10', '2016-10-12');
 
+INSERT INTO day_discounts (id,reason,value,start_date,end_date,isActive) VALUES (1,'8 marta',10, (STR_TO_DATE('03-16-2017 15:10:10','%m-%d-%Y %H:%i:%s')),
+                                                                        (STR_TO_DATE('03-18-2017 15:10:10','%m-%d-%Y %H:%i:%s')),TRUE);
+INSERT INTO day_discounts (id,reason,value,start_date,end_date,isActive) VALUES (2,'9 marta',10, (STR_TO_DATE('03-16-2017 15:10:10','%m-%d-%Y %H:%i:%s')),
+                                                                        (STR_TO_DATE('03-18-2017 15:10:10','%m-%d-%Y %H:%i:%s')),TRUE);
+INSERT INTO day_discounts (id,reason,value,start_date,end_date,isActive) VALUES (3,'10 marta',10, (STR_TO_DATE('03-16-2017 15:10:10','%m-%d-%Y %H:%i:%s')),
+                                                                        (STR_TO_DATE('03-18-2017 15:10:10','%m-%d-%Y %H:%i:%s')),TRUE);
+
 INSERT INTO rooms_off (day_off, room) VALUES (1, 1);
 INSERT INTO rooms_off (day_off, room) VALUES (1, 2);
 INSERT INTO rooms_off (day_off, room) VALUES (1, 3);
@@ -67,6 +74,7 @@ INSERT INTO rooms_off (day_off, room) VALUES (2, 4);
 INSERT INTO rooms_off (day_off, room) VALUES (2, 3);
 INSERT INTO rooms_off (day_off, room) VALUES (3, 11);
 
-INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (1, 'econom', 20, '2016-10-02', '2016-10-05', 1, 300)
-INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (2, 'standart', 30, '2016-10-02', '2016-10-05', 1, 500)
-INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (3, 'premium', 40, '2016-10-02', '2016-10-05', 1, 1000)
+INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (1, 'econom', 20, '2016-10-02', '2016-10-05', 1, 300);
+INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (2, 'standart', 30, '2016-10-02', '2016-10-05', 1, 500);
+INSERT INTO abonements (id_abonement, name_abonement, hour, start_date, end_date, active, price) VALUES (3, 'premium', 40, '2016-10-02', '2016-10-05', 1, 1000);
+

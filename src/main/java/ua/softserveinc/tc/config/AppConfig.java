@@ -2,6 +2,7 @@ package ua.softserveinc.tc.config;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -47,6 +48,11 @@ public class AppConfig {
     @Bean
     public TilesViewResolver viewResolver() {
         return new TilesViewResolver();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Bean
