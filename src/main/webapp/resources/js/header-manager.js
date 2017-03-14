@@ -57,7 +57,7 @@ $(function () {
 
 function getAmountOfChildrenByCurrentDate(currentDate) {
     $.ajax({
-        url: 'getAmountOfChildren/' + currentDate + '/' + localStorage['roomId'],
+        url: 'restful/manager-booking/amountOfKids/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {
             $('#amountOfChildren').text(result);
         }

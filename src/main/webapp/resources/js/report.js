@@ -7,32 +7,34 @@ $(function () {
 function addListenerForDetails() {
     $(".parent").each(function () {
         $(this).click(function () {
-            window.location.replace("manager-report-parent"
+            window.location.href ="manager-report-parent"
                 + "?startDate=" + $("#startDate").val()
                 + "&endDate=" + $("#endDate").val()
                 + "&roomId=" + localStorage["roomId"]
-                + "&email=" + $(this).attr("id"));
+                + "&email=" + $(this).attr("id");
         });
     });
 }
 
 function addListenerForGenerate() {
     $("#generate").click(function () {
-        window.location.replace("manager-report-all"
+        window.location.href = "manager-report-all"
             + "?startDate=" + $("#startDate").val()
             + "&endDate=" + $("#endDate").val()
-            + "&roomId=" + localStorage["roomId"]);
+            + "&roomId=" + localStorage["roomId"];
     });
 }
 
 
 function refreshView() {
-    var request = "refreshParents/" + $("#startDate").val() + "/";
+    var request = "restful/manager-report/" + $("#startDate").val() + "/";
     var endDate = moment($("#endDate").val()).add(1, 'day').format("YYYY-MM-DD");
     request += endDate + "/" + localStorage["roomId"];
     if(validateDate()) {
         $.ajax({
-            url: request, success: function (result) {
+            url: request,
+            type: 'GET',
+            success: function (result) {
                 var users = result;
 
                 var tr = "";
