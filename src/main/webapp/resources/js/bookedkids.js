@@ -28,7 +28,7 @@ function setStartTime(idBooking) {
         roomId : localStorage['roomId']
     };
     $.ajax({
-        url: 'setTime',
+        url: '/restful/manager-booking/startTime',
         contentType: 'application/json',
         data: JSON.stringify(inputData),
         type: 'PUT',
@@ -60,7 +60,7 @@ function setEndTime(idBooking) {
             var bookingObj = JSON.parse(data);
             if (bookingObj.durationLong > 0) {
                 $.ajax({
-                    url: 'setEndTime',
+                    url: 'restful/manager-booking/endTime',
                     contentType: 'application/json',
                     data: JSON.stringify(inputData),
                     type: 'PUT',

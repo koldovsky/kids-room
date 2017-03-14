@@ -29,7 +29,7 @@ $(function () {
         var endISOtime = date + 'T' + endTime + ':00';
 
         if (validateEmptyTime(startTime, endTime)) {
-            var urlForKids = 'get-kids/' + idUser;
+            var urlForKids = 'restful/manager-booking/' + idUser;
             $.ajax({
                 url: urlForKids,
                 encoding: 'UTF-8',
@@ -81,7 +81,7 @@ $(function () {
         $('#kids').empty();
         var idUser = $(this).val();
         if(idUser===null) return;
-        var getKidsUrl = 'get-kids/' + idUser;
+        var getKidsUrl = 'restful/manager-booking/' + idUser;
         addKids(getKidsUrl);
     });
 
@@ -163,7 +163,7 @@ function refreshTable(bookingsState) {
     chekBookingState();
     var time = $('#date-booking').val();
     var idRoom = localStorage['roomId'];
-    src = 'dailyBookings/' + time + '/' + idRoom + '/' + bookingsState;
+    src = 'restful/manager-booking/' + time + '/' + idRoom + '/' + bookingsState;
     jQuery.extend({
         getValues: function () {
             var result = null;
@@ -333,7 +333,7 @@ function sendStartTime(id, startTime) {
         roomId: localStorage['roomId']
     };
     $.ajax({
-        url: 'setTime',
+        url: 'restful/manager-booking/startTime',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
@@ -371,7 +371,7 @@ function sendEndTime(id, endTime) {
         id: id
     };
     $.ajax({
-        url: 'setEndTime',
+        url: 'restful/manager-booking/endTime',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
