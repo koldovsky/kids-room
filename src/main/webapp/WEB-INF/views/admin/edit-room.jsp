@@ -82,11 +82,24 @@
             </a></td>
             <td>
                 <c:if test="${room.active ne true}">
-                    <button class="btn btn-raised btn-default activate delete activateButton"></button>
+                    <label class="switch">
+                        <input type="checkbox" class="activate">
+                        <div class="slider round"></div>
+                    </label>
                 </c:if>
                 <c:if test="${room.active eq true}">
-                    <button class="btn btn-raised btn-default activate save deactivateButton"></button>
+                    <label class="switch">
+                        <input type="checkbox" checked class="activate">
+                        <div class="slider round"></div>
+                    </label>
                 </c:if>
+
+                <%--<c:if test="${room.active ne true}">--%>
+                    <%--<button class="btn btn-raised btn-default activate delete activateButton"></button>--%>
+                <%--</c:if>--%>
+                <%--<c:if test="${room.active eq true}">--%>
+                    <%--<button class="btn btn-raised btn-default activate save deactivateButton"></button>--%>
+                <%--</c:if>--%>
             </td>
             </tr>
         </c:forEach>
