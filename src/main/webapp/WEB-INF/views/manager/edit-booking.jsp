@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" tabindex="1"/>
                             <div class="input-group">
-                                <label><spring:message code="booking.createDate"/></label>
+                                <label><spring:message code="booking.bookingDate"/></label>
                                 <input type="text" id="data-edit" name="date" class="form-control datepickers"/>
                             </div>
                             <br>
