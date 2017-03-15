@@ -83,6 +83,9 @@ const messages = {
             dateDoesntExits: 'Вказаної дати не має у календарі, будь ласка, оберіть інакшу',
             cannotCreateEventsForNonExistingDates: 'Не вдалось створити події на певні дати, так як їх не має у календарі',
             noEligibleEventsForPeriod: 'Жодна подія не може бути створена у цей період часу',
+        },
+        info:{
+            changeEvent: 'Змінити подію'
         }
     },
     notCorrect: {
