@@ -482,7 +482,7 @@ function sendBookingToServerForCreate(bookingsArray) {
         success: function (result) {
             if (result == '') {
                 $('#updatingInvalid').modal('show');
-                $('#bookingDialog').dialog({modal: true});
+                $('#bookingDialog').dialog({modal: true, resizable: false});
             } else {
                 $('#createSuccess').modal('show');
                 setTimeout(function () {
@@ -552,7 +552,7 @@ $('#booking-table tbody').on('click', '.edit-button-btn', function () {
     $('#bookingUpdatingEndTimepicker').val(endTime);
     $('#data-edit').val(date);
 
-    $('#bookingUpdatingDialog').dialog({modal: true});
+    $('#bookingUpdatingDialog').dialog({modal: true, resizable: false});
     $('#' + idBooking).addClass('highlight-active');
 });
 
