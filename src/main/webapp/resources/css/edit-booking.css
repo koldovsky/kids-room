@@ -134,7 +134,7 @@ html, body, .container {
     padding-right: 15px;
 }
 #bookingUpdatingDialog .datepickers{
-    z-index: 100;
+    z-index: 10000;
 }
 #bookingUpdatingDialog textarea {
     resize : none;
