@@ -10,6 +10,7 @@ $().ready(function () {
         roomId = getRoomProp(constants.room.properties.id);
         if(this.checked){
             dialog = $('#activateModal');
+            changeActiveRoomState(roomId, btn);
         }
         else{
             dialog = $('#deactivateModal');
@@ -31,11 +32,6 @@ $().ready(function () {
 
     $('#deactivateNoButton').click(function () {
         $(btn).prop('checked', true);
-        dialog.modal('hide');
-    });
-
-    $('#activateYesButton').click(function () {
-        changeActiveRoomState(roomId, btn);
         dialog.modal('hide');
     });
 

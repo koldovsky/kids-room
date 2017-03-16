@@ -144,9 +144,6 @@
                 <div class="lead messageActive">
                     <spring:message code="room.activate"/>
                 </div>
-                <button id="activateYesButton" class="btn  btn-success ">
-                    <spring:message code="room.ok_button"/>
-                </button>
             </div>
         </div>
     </div>
