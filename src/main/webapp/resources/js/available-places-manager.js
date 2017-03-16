@@ -75,7 +75,7 @@ function getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis) {
 function openCreateBookingDialog() {
     var date = $('#date-booking').val();
     $('#bookingStartDate').val(date);
-    $('#bookingDialog').dialog();
+    $('#bookingDialog').dialog({modal: true});
 }
 
 /**

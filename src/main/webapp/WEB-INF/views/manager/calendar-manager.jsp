@@ -95,7 +95,7 @@
                             <label for="event-title"><spring:message code="event.title"/></label>
                             <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
                             <input type="text" class="form-control" id="event-title"
-                                   placeholder="${titlePlaceHolder}">
+                                   max="255" placeholder="${titlePlaceHolder}">
                         </div>
                         <div class="form-group">
                             <label for="color-select"><spring:message code="event.chooseColor"/></label>
