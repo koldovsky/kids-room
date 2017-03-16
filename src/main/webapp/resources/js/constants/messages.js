@@ -83,6 +83,9 @@ const messages = {
             dateDoesntExits: 'Chosen date doesn\'t exist, please select valid date',
             cannotCreateEventsForNonExistingDates: 'For some dates events cannot be created as soon as dates do not exist.',
             noEligibleEventsForPeriod: 'There are no eligible events for this period of time',
+        },
+        info:{
+            changeEvent: 'Change event'
         }
     },
     notCorrect: {
