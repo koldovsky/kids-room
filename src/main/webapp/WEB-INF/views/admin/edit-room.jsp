@@ -93,13 +93,6 @@
                         <div class="slider round"></div>
                     </label>
                 </c:if>
-
-                <%--<c:if test="${room.active ne true}">--%>
-                    <%--<button class="btn btn-raised btn-default activate delete activateButton"></button>--%>
-                <%--</c:if>--%>
-                <%--<c:if test="${room.active eq true}">--%>
-                    <%--<button class="btn btn-raised btn-default activate save deactivateButton"></button>--%>
-                <%--</c:if>--%>
             </td>
             </tr>
         </c:forEach>

@@ -30,7 +30,7 @@ $().ready(function () {
     });
 
     $('#deactivateNoButton').click(function () {
-        $(btn).prop("checked", true);
+        $(btn).prop('checked', true);
         dialog.modal('hide');
     });
 
@@ -50,7 +50,7 @@ $().ready(function () {
                 $('#warningMessages').html('');
                 $.each(data, function (index, value) {
                     $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
-                    $('#reasonText').val("");
+                    $('#reasonText').val('');
                     $('#reasonDeactivate').css('display', 'block');
                 });
             }
