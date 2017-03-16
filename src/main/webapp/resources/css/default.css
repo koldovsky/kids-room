@@ -467,4 +467,13 @@ div .successconfirmation {
     height: 50px;
     background-color: #4285F4;
 }
+.ui-datepicker-calendar, .ui-timepicker-wrapper{
+    font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: 0.01rem;
+    color: #212121;
+}
 
