@@ -104,7 +104,7 @@ min-width: 120px;
       background-color: 70AAFF;
       color: white;
   }
-  caption {
+  caption, .captionBottom {
     text-align: center;
     background-color: #4285F4;
     color: white;
