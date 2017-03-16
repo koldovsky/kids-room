@@ -27,6 +27,6 @@
     text-align: center;
 }
 
-#monthly-days td {
-    cursor: hand;
+#monthly-days {
+    cursor: pointer;
 }
