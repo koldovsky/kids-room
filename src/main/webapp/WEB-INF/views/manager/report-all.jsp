@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="utf8" contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:url value="/j_spring_security_check" var="allURL" />
 
 <link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/report.css'>
@@ -37,11 +38,11 @@
             </tr>
 
             <c:forEach var="user" items="${report.keySet()}">
-            <tr>
-                <td>${user}</td>
-                <td>${user.getEmail()}</td>
-                <td>${report.get(user)}</td>
-            </tr>
+                <tr>
+                    <td>${user}</td>
+                    <td>${user.getEmail()}</td>
+                    <td><fmt:formatNumber var="sum" value="${report.get(user) / 100}" maxFractionDigits="2" minFractionDigits="2"/> ${sum} </td>
+                </tr>
             </c:forEach>
 
         </table>
