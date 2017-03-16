@@ -4,7 +4,7 @@
 
 .tableDiv{
     padding: 20px;
-    margin-top: 20 px;
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -59,7 +59,7 @@ table{
     margin: 20px;
 }
 
-td{
+.tableDiv td{
 min-width: 120px;
 }
 
@@ -87,9 +87,8 @@ min-width: 120px;
      text-align: center;
       border: 2px solid #4285F4;
       border-collapse: collapse;
-      width: 40%;
       padding: 10px;
-      margin-left: 50 px;
+      margin-left: 50px;
 
   }
   tr{
