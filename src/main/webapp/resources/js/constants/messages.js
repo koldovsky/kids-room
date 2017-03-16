@@ -126,5 +126,8 @@ const messages = {
             leaveTime: 'Press to set leave time',
             arrivedTime: 'Press to set arrival time'
         }
+    },
+    report: {
+        currencySymbol: 'UAH'
     }
 };
