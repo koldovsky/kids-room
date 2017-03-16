@@ -120,10 +120,10 @@
                     <form id="bookingUpdatingForm">
 
                         <div class="form-group">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" tabindex="1"/>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" autofocus/>
                             <div class="input-group">
                                 <label><spring:message code="booking.createDate"/></label>
-                                <input type="text" id="data-edit" name="date" class="form-control datepickers"/>
+                                <input type="text" id="data-edit" name="date" class="form-control datepickers" tabindex="-1"/>
                             </div>
                             <br>
                             <div class="input-group">
