@@ -11,6 +11,7 @@ $(function () {
         if(this.checked){
             dialog = $('#activateModal');
             changeActiveRoomState(roomId, btn);
+            $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
         }
         else{
             $('#reasonDeactivate').css('display', 'none');
@@ -75,6 +76,12 @@ $(function () {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(inputData),
             success: function (isActivated) {
+                if(isActivated){
+                    $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
+                }
+                else{
+                    $(btn).parents('tr').removeClass('room').addClass('tr-not-active');
+                }
                 setRoomProp(constants.room.properties.isActive, isActivated);
             }
         });

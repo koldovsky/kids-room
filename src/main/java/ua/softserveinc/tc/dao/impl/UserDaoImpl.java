@@ -43,9 +43,7 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
     public User findUserById(Long id) {
         User user=  entityManager.createQuery("from User where id = " +id,User.class).getSingleResult();
         return user;
-
      }
-
 
     @Override
     public User getUserByEmail(String email) {
@@ -97,8 +95,6 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 
         return entityManager.createQuery(query).getResultList();
     }
-
-
 
     @Override
     public List<User> findAll(List<Long> ids) {
