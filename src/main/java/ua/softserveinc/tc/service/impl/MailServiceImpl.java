@@ -204,8 +204,7 @@ public class MailServiceImpl implements MailService {
             try {
                 helper.addTo(email);
             } catch (MessagingException e) {
-                e.printStackTrace();
-                log.error("Wrong manager email when send notify about deactivate room.");
+                log.error("Wrong manager email when send notify about deactivate room.", e);
             }
         });
 
