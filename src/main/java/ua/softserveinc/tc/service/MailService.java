@@ -35,5 +35,5 @@ public interface MailService {
     void sendDayOffReminderAsync(User recipient, String subject,
                                  DayOff dayOff) throws MessagingException;
 
-    void sendReasonOfDeactivate(List<String> emailManagers, String roomName, String reason, List<InfoDeactivateRoomDto> list) throws MessagingException;
+    void sendNotifyDeactivateRoom(List<String> emailManagers, String roomName, String reason, List<InfoDeactivateRoomDto> list) throws MessagingException;
 }

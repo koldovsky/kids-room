@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * Controller class for "Room list" view. It's main controller for editing rooms.
@@ -72,9 +72,10 @@ public class EditRoomController {
         if (deactivateRoomDto.getReason() != null && infoDeactivateRoomDtoList.size() > 0) {
             try {
                 List<String> listEmailManagers = roomService.emailManagersByRoom(roomDto.getId());
-                mailService.sendReasonOfDeactivate(listEmailManagers, roomDto.getName(), deactivateRoomDto.getReason(), infoDeactivateRoomDtoList);
+                mailService.sendNotifyDeactivateRoom(listEmailManagers, roomDto.getName(), deactivateRoomDto.getReason(), infoDeactivateRoomDtoList);
             } catch (MessagingException e) {
                 e.printStackTrace();
+                logger.log(Level.WARNING, "Notify email about deactivate room didn't send. With error " + e.getMessage());
             }
         }
         return roomDto.isActive();

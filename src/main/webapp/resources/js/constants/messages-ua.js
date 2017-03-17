@@ -83,6 +83,9 @@ const messages = {
             dateDoesntExits: 'Вказаної дати не має у календарі, будь ласка, оберіть інакшу',
             cannotCreateEventsForNonExistingDates: 'Не вдалось створити події на певні дати, так як їх не має у календарі',
             noEligibleEventsForPeriod: 'Жодна подія не може бути створена у цей період часу',
+        },
+        info:{
+            changeEvent: 'Змінити подію'
         }
     },
     notCorrect: {
@@ -116,7 +119,9 @@ const messages = {
         firstName: 'Ім\'я введено невірно',
         lastName: 'Призвище введено невірно',
         phone: 'Номер телефону є невірним. Приклад: +380991234567',
-        required: 'Поле є пустим. Будьласка заповніть поле.'
+        required: 'Поле є пустим. Будьласка заповніть поле.',
+        toShortFirstName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + 'символів.',
+        toShortLastName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + ' символів.',
     },
     booking: {
         hint: {
@@ -128,5 +133,8 @@ const messages = {
         buttons: {
             add : 'Додати'
         }
+    },
+    report: {
+        currencySymbol: 'ГРН'
     }
 };

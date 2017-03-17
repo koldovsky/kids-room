@@ -5,16 +5,17 @@ $().ready(function () {
     var dialog;
 
 
-    $('.activate').click(function () {
+    $('.activate').change(function () {
         btn = this;
-        roomId = getRoomProp(constants.room.properties.id);   //get room id from table
-        var isActive = getRoomProp(constants.room.properties.isActive);
-        if (isActive === 'true') {
+        roomId = getRoomProp(constants.room.properties.id);
+        if(this.checked){
+            dialog = $('#activateModal');
+            $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
+        }
+        else{
             dialog = $('#deactivateModal');
             $('#reasonDeactivate').css('display', 'none');
             verifyRoomBookingState(roomId);
-        } else {
-            dialog = $('#activateModal');
         }
 
         dialog.modal('show');
@@ -30,6 +31,7 @@ $().ready(function () {
     });
 
     $('#deactivateNoButton').click(function () {
+        $(btn).prop('checked', true);
         dialog.modal('hide');
     });
 
@@ -49,7 +51,7 @@ $().ready(function () {
                 $('#warningMessages').html('');
                 $.each(data, function (index, value) {
                     $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
-                    $('#reasonText').val("");
+                    $('#reasonText').val('');
                     $('#reasonDeactivate').css('display', 'block');
                 });
             }
@@ -64,29 +66,20 @@ $().ready(function () {
         };
         $.ajax({
             url: src,
+            dataType: 'json',
+            type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(inputData),
-            async: false,
-            type: 'POST',
             success: function (isActivated) {
-                setRoomProp(constants.room.properties.isActive, isActivated);
-                if (isActivated) {
-                    setActivateClass(btn);
-                } else {
-                    setDeactivateClass(btn);
+                if(isActivated){
+                    $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
                 }
+                else{
+                    $(btn).parents('tr').removeClass('room').addClass('tr-not-active');
+                }
+                setRoomProp(constants.room.properties.isActive, isActivated);
             }
         });
-    }
-
-    function setDeactivateClass(btn) {
-        $(btn).removeClass('deactivateButton save');
-        $(btn).addClass('activateButton delete');
-    }
-
-    function setActivateClass(btn) {
-        $(btn).removeClass('activateButton delete');
-        $(btn).addClass('deactivateButton save');
     }
 
     function getRoomProp(propIndex) {

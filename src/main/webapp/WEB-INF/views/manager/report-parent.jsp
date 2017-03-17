@@ -31,6 +31,7 @@
                 </h2>
             </caption>
 
+            <thead>
             <tr>
                 <th><spring:message code="report.date" /></th>
                 <th><spring:message code="report.kid" /></th>
@@ -39,25 +40,32 @@
                 <th><spring:message code="report.duration" /></th>
                 <th><spring:message code="report.sum" /></th>
             </tr>
-
+            </thead>
+            <tbody>
             <c:forEach var="booking" items="${bookings}">
-            <tr>
-                <td><fmt:formatDate pattern="dd.MM.yyyy" value="${booking.bookingStartTime}" /></td>
-                <td>${booking.child}</td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
-                <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
-                <td>${booking.formatDuration()}</td>
-                <td><fmt:formatNumber var="bookingCost" value="${ booking.getSum() / 100}" maxFractionDigits="2" minFractionDigits="2" />${bookingCost}</td>
-            </tr>
+                <tr>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy" value="${booking.bookingStartTime}" /></td>
+                    <td>${booking.child}</td>
+                    <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
+                    <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
+                    <td>${booking.formatDuration()}</td>
+                    <td><fmt:formatNumber var="bookingCost" value="${ booking.getSum() / 100}" maxFractionDigits="2" minFractionDigits="2" />${bookingCost}</td>
+                </tr>
             </c:forEach>
-            <caption class="captionBottom">
-                <h3>
-                    <spring:message code="report.sumTotal" />
-                    <fmt:formatNumber var="totalSum" value="${ sumTotal / 100}" maxFractionDigits="2" minFractionDigits="2" />
-                    ${totalSum}
-                    <spring:message code="report.currencySymbol" />
-                </h3>
-            </caption>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" class="captionBottom">
+                    <h2>
+                        <spring:message code="report.sumTotal" />
+                        <fmt:formatNumber var="totalSum" value="${sumTotal / 100}" maxFractionDigits="2" minFractionDigits="2" />
+                        ${totalSum}
+                        <spring:message code="report.currencySymbol" />
+                    </h2>
+                </td>
+            </tr>
+
+            </tfoot>
 
         </table>
     </div>

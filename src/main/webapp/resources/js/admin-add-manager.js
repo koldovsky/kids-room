@@ -1,11 +1,11 @@
 var BORDER_COLOR = '#000000';
 var NOT_ACTIVE_EVENT = '#33cc33';
 
-function myFunction(id) {
+function showDialogToUpdateManager(id) {
     console.log('sfgdkgf');
     $('#updating-dialog').dialog('open');
     adminManagerUpdate(id);
-
+    $('#resultVindUpdate').show();
 }
 
 function adminManagerUpdate(userid) {
@@ -77,7 +77,7 @@ function clickedUpdate() {
 $(function () {
     $('#update-recurrent-button').hide();
 
-    $('#manager-dialog').dialog({
+    $('#manager-dialog, #updating-dialog').dialog({
         modal: true,
         width: 550,
         autoOpen: false,
@@ -91,16 +91,6 @@ $(function () {
         }
     });
 
-    $('#updating-dialog').dialog({
-        autoOpen: false,
-        modal: true,
-        width: 400
-    });
-
-    $('#cancel-update').click(function () {
-        $('#updating-dialog').dialog('close');
-    });
-
     $('#create-button').click(function () {
         createSingleManager();
     });
@@ -108,17 +98,18 @@ $(function () {
     $('#cancel').click(function () {
         clearNewManagerDialog();
         $('#manager-dialog').dialog('close');
+        var validator = $("#managerForm").validate();
+        validator.resetForm();
+        $('#resultVind').hide();
     });
     $('#cancel-update').click(function () {
         $('#updating-dialog').dialog('close');
-    });
-
-    $('#go').click(function () {
-        $('#manager-dialog').dialog('open');
+        $('#resultVindUpdate').hide();
     });
 });
 function showDialogToAddManager(){
     $('#manager-dialog').dialog('open');
+    $('#resultVind').show();
 }
 function clearNewManagerDialog() {
     $('#go').show();
@@ -129,6 +120,7 @@ function clearNewManagerDialog() {
 }
 
 function createSingleManager(idIfEdited) {
+    $('.loading').show();
     var mn = {
         id: -1,
         recurrentId: idIfEdited,

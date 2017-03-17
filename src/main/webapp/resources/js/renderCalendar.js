@@ -783,6 +783,7 @@ function sendToServerForDelete(event) {
 }
 
 function editRecurrentEvent(recurrentEventForEditing) {
+    $('#dialog').dialog('option', 'title', messages.event.info.changeEvent);
     $('#dialog').dialog('open');
     $('#update-recurrent-button').show();
     $('#create-button').hide();
