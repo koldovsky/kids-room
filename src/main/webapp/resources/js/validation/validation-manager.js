@@ -12,7 +12,7 @@ $(document).ready(function() {
        $.validator.addMethod('regexPhone', function(value, element, regexpr) {
           return regexpr.test(value);
        }, messages.adminValidation.phone);
-    $('#managerForm').validate({
+    $('#managerForm, #managerUpdateForm').validate({
             rules:{
                 email: {
                    required: true,
@@ -20,11 +20,15 @@ $(document).ready(function() {
                 },
                 firstName: {
                    required: true,
-                   regexFirstName: constants.regex.nameRegex
+                   regexFirstName: constants.regex.nameRegex,
+                   minlength: constants.parameters.nameMinLength,
+                   maxlength: constants.parameters.nameMaxLength
                 },
                 lastName: {
                    required: true,
-                   regexLastName: constants.regex.nameRegex
+                   regexLastName: constants.regex.nameRegex,
+                   minlength: constants.parameters.nameMinLength,
+                   maxlength: constants.parameters.nameMaxLength
                 },
                 phoneNumber:{
                    required: true,
@@ -36,5 +40,8 @@ $(document).ready(function() {
 });
 
 jQuery.extend(jQuery.validator.messages, {
-    required: messages.adminValidation.required
+    required: messages.adminValidation.required,
+    minlength: messages.adminValidation.toShortFirstName,
+    maxlength: messages.adminValidation.toLongFirstName
+
 });
