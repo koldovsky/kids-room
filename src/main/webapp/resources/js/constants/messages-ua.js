@@ -113,7 +113,9 @@ const messages = {
         firstName: 'Ім\'я введено невірно',
         lastName: 'Призвище введено невірно',
         phone: 'Номер телефону є невірним. Приклад: +380991234567',
-        required: 'Поле є пустим. Будьласка заповніть поле.'
+        required: 'Поле є пустим. Будьласка заповніть поле.',
+        toShortFirstName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + 'символів.',
+        toShortLastName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + ' символів.',
     },
     booking: {
         hint: {
