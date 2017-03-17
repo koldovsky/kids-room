@@ -35,4 +35,8 @@ public class AddManagerController {
     private void consoleLog(){
         System.out.println("Hello world");
     }
+    private void consoleLog2(){
+        System.out.println("Hello world2");
+    }
+
 }
