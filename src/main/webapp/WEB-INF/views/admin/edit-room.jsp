@@ -137,13 +137,23 @@
         </div>
     </div>
 </div>
-<div id="activateModal" class="modal fade">
+<div id="activateModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center">
                 <div class="lead messageActive">
-                    <spring:message code="room.activate"/>
+                    <p class="cancelName ">
+                        <spring:message code="room.activate"/>
+                    </p>
                 </div>
+                <button id="activateYesButton" class="btn  btn-success admWarningBtn">
+                    <spring:message code="room.yes_button"/>
+                </button>
+
+                <button id="activateNoButton" class="btn btn-danger admWarningBtn" data-dismiss="modal">
+                    <spring:message code="room.no_button"/>
+                </button>
+
             </div>
         </div>
     </div>
