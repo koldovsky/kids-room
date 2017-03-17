@@ -139,7 +139,7 @@
                                        placeholder="startDate">
                             </div>
                             <div class="col-xs-6">
-                                <input id="start-time-picker" type="text"
+                                <input id="start-time-picker" type="text" maxlength="5"
                                        class=" text-center time form-control timepicker picker" size="6"/>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                        disabled="true">
                             </div>
                             <div class="col-xs-6">
-                                <input id="end-time-picker" type="text"
+                                <input id="end-time-picker" type="text" maxlength="5"
                                        class="text-center time form-control timepicker picker" size="6"/>
                             </div>
                         </div>
