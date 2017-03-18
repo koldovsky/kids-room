@@ -119,7 +119,7 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         }
 
             if ((!findUserId(manager.getId()).getEmail().equalsIgnoreCase(manager.getEmail())) && getUserByEmail(manager.getEmail()) != null) {
-                returnModel.setMessage("This Email already exist");
+                returnModel.setMessage("This email already exist");
                 return returnModel;
             }
 
@@ -135,7 +135,7 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         userValidator.validateManager(manager, bindingResult);
         if (getUserByEmail(manager.getEmail()) != null) {
             bindingResult.addError(new ObjectError("Email", "Exist"));
-            returnModel.setMessage("email Exist");
+            returnModel.setMessage("email exist");
         }
         if (bindingResult.hasErrors()) {
             if (bindingResult.getFieldError() != null) {
@@ -156,7 +156,7 @@ public class UserServiceImpl extends BaseServiceImpl<User>
             return returnModel;
         }
         create(manager);
-        this.tokenService.createToken(token, manager);
+        tokenService.createToken(token, manager);
         returnModel.setEmail(manager.getEmail());
         return returnModel;
     }

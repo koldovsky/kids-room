@@ -5,7 +5,6 @@
 <%--<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>--%>
 <%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
-
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 <link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css'>
 
@@ -57,7 +56,7 @@
             <td>
                 <a href="#" tabindex="-1">
                     <button id="adminManagerUpdateButton" type="button" class="btn btn-raised btn-info"
-                            onclick="myFunction('${manager.id}')">
+                            onclick="showDialogToUpdateManager('${manager.id}')">
                         <i class="glyphicon glyphicon-pencil"></i></button>
                 </a>
             </td>
@@ -115,47 +114,49 @@
             <div id="manager-dialog" class="dialog" hidden title="<spring:message code= "administrator.addManager"/>">
                 <form action="adm-add-manager" method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>"
                       id="managerForm">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
                     <input path="role" type="hidden" value="MANAGER"/>
                     <input path="password" type="hidden" name="password"/>
 
-                    <div class="form-group">
+                     <div class="form-group  sizing-between">
                         <label for="new-manager-email" class="required"><spring:message
                                 code="administrator.manager.email"/></label>
                         <spring:message code="administrator.manager.emailPlaceHolder" var="emailPlaceHolder"/>
-                        <input id="new-manager-email" path="email" type="email" class="form-control"
+                        <input id="new-manager-email" name="email" path="email" type="email" class="form-control"
                                style="text-transform: lowercase" placeholder="${emailPlaceHolder}">
                         <errors path="email" cssClass="error"/>
                     </div>
-                    <div class="form-group">
+
+                     <div class="form-group  sizing-between">
                         <label for="new-manager-firstName" class="required"><spring:message
                                 code="administrator.manager.firstName"/></label>
                         <spring:message code="administrator.manager.firstNamePlaceHolder" var="firstNamePlaceHolder"/>
-                        <input id="new-manager-firstName" path="firstName" class="form-control"
+                        <input id="new-manager-firstName" name="firstName" path="firstName" class="form-control"
                                style="text-transform: capitalize" placeholder="${firstNamePlaceHolder}">
                         <errors path="firstName" cssClass="error"/>
                     </div>
 
-                    <div class="form-group">
+
+                    <div class="form-group  sizing-between">
                         <label for="new-manager-lastName" class="required"><spring:message
                                 code="administrator.manager.lastName"/></label>
                         <spring:message code="administrator.manager.lastNamePlaceHolder" var="lastNamePlaceHolder"/>
-                        <input id="new-manager-lastName" path="lastName" class="form-control"
+                        <input id="new-manager-lastName" name="lastName" path="lastName" class="form-control"
                                style="text-transform: capitalize" placeholder="${lastNamePlaceHolder}">
                         <errors path="lastName" cssClass="error"/>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group  sizing-between">
                         <label for="new-manager-phoneNumber" class="required"><spring:message
                                 code="administrator.phoneNumber"/></label>
                         <spring:message code="administrator.phoneNumberPlaceHolder" var="phoneNumberPlaceHolder"/>
-                        <input id="new-manager-phoneNumber" path="phoneNumber" type="text" class="form-control"
+                        <input id="new-manager-phoneNumber" name="phoneNumber" path="phoneNumber" type="text" class="form-control"
                                placeholder="${phoneNumberPlaceHolder}">
                         <errors path="phoneNumber" cssClass="error"/>
                     </div>
-                </form>
 
+                </form>
                 <br>
                 <div class="clearfix"></div>
                 <div class="col-xs-3">
@@ -167,7 +168,7 @@
                         <spring:message code="administrator.submit"/></button>
                 </div>
                 <div align="right" class="col-xs-9">
-                    <button type="button" class="btn btn-danger pull-right" id="cancel">
+                    <button type="reset" class="btn btn-danger pull-right"  id="cancel">
                         <spring:message code="administrator.canc"/></button>
 
                 </div>
@@ -186,7 +187,7 @@
         <div align="center">
             <div id="updating-dialog" class="dialog" hidden
                  title="<spring:message code= "administrator.updateManager"/>">
-                <form id="updatingForm" modelAttribute="<%=AdminConstants.ATR_MANAGER%>">
+                <form id="managerUpdateForm" modelAttribute="<%=AdminConstants.ATR_MANAGER%>">
 
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
@@ -195,36 +196,36 @@
                     <input path="id" id="manager-id" type="hidden" name="password"/>
 
                     <div class="form-group">
-                        <label for="new-manager-emailUpdate" class="required"><spring:message
+                        <label for="new-manager-emailUpdate"><spring:message
                                 code="administrator.manager.email"/></label>
                         <spring:message code="administrator.manager.emailPlaceHolder" var="emailPlaceHolder"/>
-                        <input id="new-manager-emailUpdate" path="email" type="email" class="form-control"
-                               style="text-transform: lowercase" placeholder="${emailPlaceHolder}">
+                        <input id="new-manager-emailUpdate" name="email" path="email" type="email" class="form-control"
+                               style="text-transform: lowercase" placeholder="${emailPlaceHolder}" readonly="true">
                         <errors path="email" cssClass="error"/>
                     </div>
                     <div class="form-group">
-                        <label for="new-manager-firstNameUpdate" class="required"><spring:message
+                        <label for="new-manager-firstNameUpdate"><spring:message
                                 code="administrator.manager.firstName"/></label>
                         <spring:message code="administrator.manager.firstNamePlaceHolder" var="firstNamePlaceHolder"/>
-                        <input id="new-manager-firstNameUpdate" path="firstName" class="form-control"
+                        <input id="new-manager-firstNameUpdate" name="firstName" path="firstName" class="form-control"
                                style="text-transform: capitalize" placeholder="${firstNamePlaceHolder}">
                         <errors path="firstName" cssClass="error"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="new-manager-lastNameUpdate" class="required"><spring:message
+                        <label for="new-manager-lastNameUpdate"><spring:message
                                 code="administrator.manager.lastName"/></label>
                         <spring:message code="administrator.manager.lastNamePlaceHolder" var="lastNamePlaceHolder"/>
-                        <input id="new-manager-lastNameUpdate" path="lastName" class="form-control"
+                        <input id="new-manager-lastNameUpdate" name="lastName" path="lastName" class="form-control"
                                style="text-transform: capitalize" placeholder="${lastNamePlaceHolder}">
                         <errors path="lastName" cssClass="error"/>
                     </div>
 
                     <div class="form-group">
-                        <label for="new-manager-phoneNumberUpdate" class="required"><spring:message
+                        <label for="new-manager-phoneNumberUpdate"><spring:message
                                 code="administrator.phoneNumber"/></label>
                         <spring:message code="administrator.phoneNumberPlaceHolder" var="phoneNumberPlaceHolder"/>
-                        <input id="new-manager-phoneNumberUpdate" path="phoneNumber" type="text" class="form-control"
+                        <input id="new-manager-phoneNumberUpdate" name="phoneNumber" path="phoneNumber" type="text" class="form-control"
                                placeholder="${phoneNumberPlaceHolder}">
                         <errors path="phoneNumber" cssClass="error"/>
                     </div>
@@ -233,9 +234,9 @@
                     <br>
                     <div class="clearfix"></div>
                     <div class="col-xs-3">
-                        <button type="button" class="btn btn-success" id="updatingButton"
+                        <button type="button"  class="btn btn-success live" id="updatingButton"
                                 hidden="true">
-                            <spring:message code="administrator.edit"/>
+                            <spring:message code="administrator.submit"/>
                         </button>
                     </div>
                     <div align="right" class="col-xs-9">
@@ -258,8 +259,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager.js"></script>
-<script src='${pageContext.request.contextPath}/resources/js/validation/eventValidator.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/constants/manager-create-events-constants.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-edit-manager.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-add-manager.js'></script>
 

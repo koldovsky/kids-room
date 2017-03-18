@@ -102,10 +102,13 @@ const messages = {
     },
     adminValidation: {
         email: 'Email is invalid.',
-        firstName: 'Last Name is invalid.',
+        firstName: 'First Name is invalid.',
         lastName: 'Last Name is invalid.',
         phone: 'Phone number is invalid. Example +380991234567',
-        required: 'The field is empty. Fill in the field please.'
+        required: 'The field is empty. Fill in the field please.',
+        toShortFirstName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+        toShortLastName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+
     },
     room: {
         errors: {
