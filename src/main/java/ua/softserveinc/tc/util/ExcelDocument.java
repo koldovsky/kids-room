@@ -30,7 +30,6 @@ public class ExcelDocument extends AbstractXlsView {
         ExcelData dataForExcel = (ExcelData) model.get("data");
         String[] headers = dataForExcel.getHeaders();
         int tableHeights = dataForExcel.getSize();
-        ;
         if (dataForExcel.hasAdditionalFields()) {
             rowIndex = writeAdditionalFields(excelSheet, style, dataForExcel.getAdditionalFields(),
                     rowIndex, headers.length);
