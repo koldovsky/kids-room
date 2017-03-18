@@ -28,7 +28,7 @@ public class BookingDto implements Serializable {
     private String roomName;
     private String duration;
     private Long idChild;
-    private Long sum;
+    private Double sum;
     private Long durationLong;
     private BookingState bookingState;
     private String comment;
@@ -168,8 +168,8 @@ public class BookingDto implements Serializable {
         } else {
             booking.setDuration(durationLong);
         }
-        if (sum == null) {
-            booking.setSum(0L);
+        if (sum == 0) {
+            booking.setSum(0.0);
         } else {
             booking.setSum(sum);
         }
@@ -195,7 +195,7 @@ public class BookingDto implements Serializable {
         bookingDto.setChild(child);
         bookingDto.setRecurrentId(recurrentId);
         bookingDto.setBookingState(BookingState.BOOKED);
-        bookingDto.setSum(0L);
+        bookingDto.setSum(0.0);
         bookingDto.setComment(comment);
         bookingDto.setIdChild(idChild);
         bookingDto.setKidId(kidId);
@@ -283,7 +283,7 @@ public class BookingDto implements Serializable {
         comment = (comment == null) ? booking.getComment() : comment;
         bookingState = (bookingState == null) ? booking.getBookingState() : bookingState;
         durationLong = (durationLong == null) ?  booking.getDuration() : durationLong;
-        sum = (sum == null) ? booking.getSum() : sum;
+        sum = (sum == 0) ? booking.getSum() : sum;
         recurrentId = (recurrentId == null) ? booking.getRecurrentId() : recurrentId;
     }
 
@@ -514,12 +514,12 @@ public class BookingDto implements Serializable {
         this.weekDays = weekDays;
     }
 
-    public Long getSum() {
+    public Double getSum() {
 
         return sum;
     }
 
-    public void setSum(Long sum) {
+    public void setSum(Double sum) {
 
         this.sum = sum;
     }

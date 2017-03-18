@@ -49,7 +49,7 @@
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
                     <td>${booking.formatDuration()}</td>
-                    <td><fmt:formatNumber var="bookingCost" value="${ booking.getSum() / 100}" maxFractionDigits="2" minFractionDigits="2" />${bookingCost}</td>
+                    <td><fmt:formatNumber var="bookingCost" value="${ booking.getSum()}" maxFractionDigits="2" minFractionDigits="2" />${bookingCost}</td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -58,7 +58,7 @@
                 <td colspan="6" class="captionBottom">
                     <h2>
                         <spring:message code="report.sumTotal" />
-                        <fmt:formatNumber var="totalSum" value="${sumTotal / 100}" maxFractionDigits="2" minFractionDigits="2" />
+                        <fmt:formatNumber var="totalSum" value="${sumTotal}" maxFractionDigits="2" minFractionDigits="2" />
                         ${totalSum}
                         <spring:message code="report.currencySymbol" />
                     </h2>

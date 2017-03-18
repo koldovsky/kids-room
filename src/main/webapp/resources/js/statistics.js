@@ -24,7 +24,7 @@ function refreshView()
             + '<td>' + room.city + '</td>'
             + '<td>' + room.address + '</td>'
             + '<td>' + managers + '</td>'
-            + '<td>' + room.sum / 100 + messages.report.currencySymbol + '</td></tr>'
+            + '<td>' + room.sum + messages.report.currencySymbol + '</td></tr>'
         });
 
         $("tr:not(#header)").remove();

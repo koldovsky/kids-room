@@ -51,6 +51,8 @@ public class BookingDtoTest {
 
     private static final Long TEST_SIMPLE_LONG = 1L;
 
+    private static final Double TEST_SIMPLE_SUM = 1.0;
+
     private static final String TEST_SIMPLE_STRING = "Test string";
 
     private static final Date TEST_DATE_START_TIME;
@@ -162,8 +164,8 @@ public class BookingDtoTest {
 
     @Test
     public void testSetAndGetSum() {
-        bookingDto.setSum(TEST_SIMPLE_LONG);
-        assertEquals("get must be equal to set", TEST_SIMPLE_LONG, bookingDto.getSum());
+        bookingDto.setSum(TEST_SIMPLE_SUM);
+        assertEquals("get must be equal to set", TEST_SIMPLE_SUM, bookingDto.getSum());
     }
 
     @Test
@@ -381,7 +383,7 @@ public class BookingDtoTest {
         when(testBooking.getComment()).thenReturn(TEST_SIMPLE_STRING);
         when(testBooking.getBookingState()).thenReturn(TEST_BOOKING_STATE);
         when(testBooking.getDuration()).thenReturn(TEST_SIMPLE_LONG);
-        when(testBooking.getSum()).thenReturn(TEST_SIMPLE_LONG);
+        when(testBooking.getSum()).thenReturn(TEST_SIMPLE_SUM);
         when(testBooking.getRecurrentId()).thenReturn(TEST_SIMPLE_LONG);
 
         bookingDto.setFieldFromBookingIfNotExists(testBooking);
@@ -404,7 +406,7 @@ public class BookingDtoTest {
                 bookingDto.getBookingState());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 bookingDto.getDurationLong());
-        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+        assertEquals("the object must be equals", TEST_SIMPLE_SUM,
                 bookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 bookingDto.getRecurrentId());
@@ -434,7 +436,7 @@ public class BookingDtoTest {
                 bookingDto.getBookingState());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 bookingDto.getDurationLong());
-        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+        assertEquals("the object must be equals", TEST_SIMPLE_SUM,
                 bookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 bookingDto.getRecurrentId());
@@ -549,7 +551,7 @@ public class BookingDtoTest {
                 resultBookingDto.getBookingState());
         assertEquals("the object must be equals", (Long)0L,
                 resultBookingDto.getDurationLong());
-        assertEquals("the object must be equals", (Long)0L,
+        assertEquals("the object must be equals", TEST_SIMPLE_SUM,
                 resultBookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getRecurrentId());
@@ -588,7 +590,7 @@ public class BookingDtoTest {
                 resultBookingDto.getBookingState());
         assertEquals("the object must be equals", (Long)3600_000L,
                 resultBookingDto.getDurationLong());
-        assertEquals("the object must be equals", (Long)0L,
+        assertEquals("the object must be equals", TEST_SIMPLE_SUM,
                 resultBookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getRecurrentId());
@@ -603,7 +605,7 @@ public class BookingDtoTest {
         bookingDto.setDurationLong(TEST_SIMPLE_LONG);
         bookingDto.setDateEndTime(TEST_DATE_END_TIME);
         bookingDto.setDateStartTime(null);
-        bookingDto.setSum(null);
+        bookingDto.setSum(TEST_SIMPLE_SUM);
 
         Booking resultBooking = bookingDto.getBookingObject();
 
@@ -625,7 +627,7 @@ public class BookingDtoTest {
                 resultBooking.getRecurrentId());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBooking.getDuration());
-        assertEquals("the object must be equals", (Long)0L,
+        assertEquals("the object must be equals", TEST_SIMPLE_SUM,
                 resultBooking.getSum());
 
     }
@@ -636,7 +638,7 @@ public class BookingDtoTest {
         bookingDto.setDurationLong(null);
         bookingDto.setDateEndTime(TEST_DATE_END_TIME);
         bookingDto.setDateStartTime(TEST_DATE_START_TIME);
-        bookingDto.setSum(TEST_SIMPLE_LONG);
+        bookingDto.setSum(TEST_SIMPLE_SUM);
 
         Booking resultBooking = bookingDto.getBookingObject();
 
@@ -787,7 +789,7 @@ public class BookingDtoTest {
         when(testBooking.getComment()).thenReturn(TEST_SIMPLE_STRING);
         when(testBooking.getBookingState()).thenReturn(TEST_BOOKING_STATE);
         when(testBooking.getDuration()).thenReturn(TEST_SIMPLE_LONG);
-        when(testBooking.getSum()).thenReturn(TEST_SIMPLE_LONG);
+        when(testBooking.getSum()).thenReturn(TEST_SIMPLE_SUM);
         when(testBooking.getRecurrentId()).thenReturn(TEST_SIMPLE_LONG);
         when(testBooking.formatDuration()).thenReturn(TEST_SIMPLE_STRING);
         when(testChild.getFullName()).thenReturn(TEST_SIMPLE_STRING);
@@ -818,7 +820,7 @@ public class BookingDtoTest {
                 resultBookingDto.getBookingState());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getDurationLong());
-        assertEquals("the object must be equals", TEST_SIMPLE_LONG,
+        assertEquals("the object must be equals", TEST_SIMPLE_SUM,
                 resultBookingDto.getSum());
         assertEquals("the object must be equals", TEST_SIMPLE_LONG,
                 resultBookingDto.getRecurrentId());
@@ -940,7 +942,7 @@ public class BookingDtoTest {
         bookingDto.setComment(TEST_SIMPLE_STRING);
         bookingDto.setBookingState(TEST_BOOKING_STATE);
         bookingDto.setDurationLong(TEST_SIMPLE_LONG);
-        bookingDto.setSum(TEST_SIMPLE_LONG);
+        bookingDto.setSum(TEST_SIMPLE_SUM);
         bookingDto.setRecurrentId(TEST_SIMPLE_LONG);
         bookingDto.setStartTime(TEST_STRING_DATE_START_TIME);
         bookingDto.setEndTime(TEST_STRING_DATE_END_TIME);

@@ -38,14 +38,12 @@ public class RateServiceImpl extends BaseServiceImpl<Rate>
         }
     }
 
-    public Long calculateBookingCost(Booking booking) {
+    public double calculateBookingCost(Booking booking) {
         List<Rate> rates = booking.getRoom().getRates();
         Rate closestRate = this.calculateAppropriateRate(
                 booking.getDuration(), rates);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(booking.getDuration());
-        double minuteCostInCoins = (double) (closestRate.getPriceRate() * 100
-                / (closestRate.getHourRate() * 60));
-        Long sum = (long) (minutes * minuteCostInCoins);
-        return sum;
+        double minuteCostInCoins = (double) closestRate.getPriceRate() / 60;
+        return minutes * minuteCostInCoins;
     }
 }

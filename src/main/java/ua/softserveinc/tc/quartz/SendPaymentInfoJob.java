@@ -37,7 +37,7 @@ public class SendPaymentInfoJob {
         Date endDate = toDate(dateNow());
 
         List<Booking> bookings = bookingService.getBookings(startDate, endDate, BookingState.COMPLETED);
-        Map<User, Long> report = bookingService.generateAReport(bookings);
+        Map<User, Double> report = bookingService.generateAReport(bookings);
 
         report.forEach((user, sum) -> {
             try {

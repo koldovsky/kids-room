@@ -57,8 +57,9 @@ public class Booking {
     private Long duration = 0L;
 
     @NotNull
-    @Column(name = BookingConstants.DB.SUM, columnDefinition = "bigint default 0")
-    private Long sum = 0L;
+
+    @Column(name = BookingConstants.DB.SUM, columnDefinition = "double default 0", precision = 10, scale = 2)
+    private Double sum = 0.0;
 
     @Column(name = BookingConstants.DB.ID_RECURRENT, columnDefinition = "bigint default NULL")
     private Long recurrentId;
@@ -127,11 +128,11 @@ public class Booking {
         this.duration = duration;
     }
 
-    public Long getSum() {
+    public Double getSum() {
         return sum;
     }
 
-    public void setSum(Long sum) {
+    public void setSum(Double sum) {
         this.sum = sum;
     }
 

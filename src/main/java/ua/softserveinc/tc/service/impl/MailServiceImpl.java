@@ -142,7 +142,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendPaymentInfo(User user, String subject, Long sumTotal)
+    public void sendPaymentInfo(User user, String subject, double sumTotal)
             throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(UserConstants.Entity.USER, user);

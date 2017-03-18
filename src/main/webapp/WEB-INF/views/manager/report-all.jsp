@@ -41,7 +41,7 @@
                 <tr>
                     <td>${user}</td>
                     <td>${user.getEmail()}</td>
-                    <td><fmt:formatNumber var="sum" value="${report.get(user) / 100}" maxFractionDigits="2" minFractionDigits="2"/> ${sum} </td>
+                    <td><fmt:formatNumber var="sum" value="${report.get(user)}" maxFractionDigits="2" minFractionDigits="2"/> ${sum} </td>
                 </tr>
             </c:forEach>
 

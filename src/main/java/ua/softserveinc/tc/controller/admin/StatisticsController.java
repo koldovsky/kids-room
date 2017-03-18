@@ -51,7 +51,7 @@ public class StatisticsController {
                               @PathVariable String endDate) {
         List<Booking> bookings = bookingService.getBookings(DateUtil.toBeginOfDayDate(startDate),
                 DateUtil.toEndOfDayDate(endDate), BookingState.COMPLETED);
-        Map<Room, Long> statistics = bookingService.generateStatistics(bookings);
+        Map<Room, Double> statistics = bookingService.generateStatistics(bookings);
         Gson gson = new Gson();
 
         return gson.toJson(statistics.keySet().stream()

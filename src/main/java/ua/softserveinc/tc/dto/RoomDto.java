@@ -40,7 +40,7 @@ public class RoomDto {
 
     private boolean active;
 
-    private Long sum;
+    private double sum;
 
     public RoomDto() {
         //empty constructor for instantiating in controller
@@ -66,7 +66,7 @@ public class RoomDto {
                 .collect(Collectors.toList()));
     }
 
-    public RoomDto(Room room, Long sum) {
+    public RoomDto(Room room, double sum) {
         this.name = room.getName();
         this.city = room.getCity();
         this.address = room.getAddress();
@@ -196,11 +196,11 @@ public class RoomDto {
         this.active = active;
     }
 
-    public Long getSum() {
+    public double getSum() {
         return sum;
     }
 
-    public void setSum(Long sum) {
+    public void setSum(double sum) {
         this.sum = sum;
     }
 
