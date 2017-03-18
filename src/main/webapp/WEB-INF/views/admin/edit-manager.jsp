@@ -7,9 +7,9 @@
 
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css'>
 
-<link rel='stylesheet' href='resources/css/flow-form.css'>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/flow-form.css'>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-add-manager.css">
@@ -253,13 +253,10 @@
     </div>
 </div>
 
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
 
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<c:if test="${pageContext.response.locale=='ua'}">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-</c:if>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/eventValidator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/constants/manager-create-events-constants.js'></script>

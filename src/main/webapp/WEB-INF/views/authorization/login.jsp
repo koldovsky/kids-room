@@ -14,12 +14,12 @@
             <div class="form-group">
                 <span class="glyphicon glyphicon-envelope"></span>
                 <label for="email" ><spring:message code="user.email" /></label>
-                <input type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com"  />
+                <input id="email" type="email" name="j_username"  class="form-control"  value="manager@softserveinc.com"  />
             </div>
             <div class="form-group">
                 <span class="glyphicon glyphicon-lock"></span>
                 <label for="password" ><spring:message code="user.password"/></label>
-                <input type="password" name="j_password" class="form-control"  value="manager"/>
+                <input id="password" type="password" name="j_password" class="form-control"  value="manager"/>
 
             </div>
             <div class="clearfix">
@@ -43,9 +43,6 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<c:if test="${pageContext.response.locale=='ua'}">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-</c:if>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-login.js"></script>

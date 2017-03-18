@@ -152,8 +152,8 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminRoomSearch.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-deactivate-room.js"></script>
