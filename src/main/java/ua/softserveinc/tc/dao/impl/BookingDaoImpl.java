@@ -372,7 +372,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
 
         update
                 .set(root.get(BookingConstants.Entity.STATE), BookingState.CANCELLED)
-                .set(root.get(BookingConstants.Entity.SUM), 0L)
+                .set(root.get(BookingConstants.Entity.SUM), 0)
                 .set(root.get(BookingConstants.Entity.DURATION), 0L)
                 .where(builder.equal(
                         root.get(path), value));

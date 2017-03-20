@@ -15,7 +15,7 @@ public interface MailService {
                      String text) throws MessagingException;
 
     void sendPaymentInfo(User user, String subject,
-                         Long sumTotal) throws MessagingException;
+                         double sumTotal) throws MessagingException;
 
     void sendRegisterMessage(String subject, User user,
                              String token) throws MessagingException;

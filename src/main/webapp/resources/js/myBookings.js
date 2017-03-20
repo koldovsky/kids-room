@@ -49,14 +49,14 @@ function updateTable() {
                         + '<td>' + booking.startTime + '</td>'
                         + '<td>' + booking.endTime + '</td>'
                         + '<td>' + booking.duration + '</td>'
-                        + '<td>' + (booking.sum / 100).toFixed(2) + '</td> + </tr>';
+                        + '<td>' + (booking.sum).toFixed(2) + '</td> + </tr>';
                     sumTotal += booking.sum;
                 });
 
                 tableContent += '</tbody>';
                 $('tr:not(#header)').remove();
                 $('#myBookings').append(tableContent);
-                sumTotal = (sumTotal / 100).toFixed(2);
+                sumTotal = (sumTotal).toFixed(2);
                 $('#sum').html(sumTotal);
                 paginate();
             },

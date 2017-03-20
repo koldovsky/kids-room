@@ -133,7 +133,7 @@ public class MyBookingsController {
 
         String[] additionalFields = {
                 BookingConstants.ADDITIONAL_EXCEL_FIELDS[0],
-                String.valueOf(bookingService.getSumTotal(myBookings)/100.0),
+                String.valueOf(bookingService.getSumTotal(myBookings)),
                 BookingConstants.ADDITIONAL_EXCEL_FIELDS[1]
         };
         ModelAndView modelAndView = new ModelAndView();

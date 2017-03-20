@@ -29,7 +29,7 @@ public class ExcelServiceBookingImpl implements ExcelService<BookingDto> {
         stringListMap.put("Duration",
                 bookingDtos.stream().map(BookingDto::getDuration).collect(Collectors.toList()));
         stringListMap.put("Sum",
-                bookingDtos.stream().map(BookingDto::getSum).map(p -> p / 100.0).map(String::valueOf)
+                bookingDtos.stream().map(BookingDto::getSum).map(String::valueOf)
                         .collect(Collectors.toList()));
 
         return stringListMap;

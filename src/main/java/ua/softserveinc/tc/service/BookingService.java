@@ -22,11 +22,11 @@ public interface BookingService extends BaseService<Booking> {
 
     void calculateAndSetDuration(Booking booking);
 
-    Long getSumTotal(List<Booking> bookings);
+    double getSumTotal(List<Booking> bookings);
 
-    Map<User, Long> generateAReport(List<Booking> bookings);
+    Map<User, Double> generateAReport(List<Booking> bookings);
 
-    Map<Room, Long> generateStatistics(List<Booking> bookings);
+    Map<Room, Double> generateStatistics(List<Booking> bookings);
 
     Booking confirmBookingEndTime(BookingDto bookingDto);
 

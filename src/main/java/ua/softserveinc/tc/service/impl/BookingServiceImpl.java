@@ -95,31 +95,31 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Override
     public void calculateAndSetSum(Booking booking) {
         calculateAndSetDuration(booking);
-        Long sum = rateService.calculateBookingCost(booking);
+        double sum = rateService.calculateBookingCost(booking);
         booking.setSum(sum);
         booking.setBookingState(BookingState.COMPLETED);
         bookingDao.update(booking);
     }
 
     @Override
-    public Long getSumTotal(List<Booking> bookings) {
+    public double getSumTotal(List<Booking> bookings) {
         return bookings.stream()
-                .mapToLong(Booking::getSum)
+                .mapToDouble(Booking::getSum)
                 .sum();
     }
 
     @Override
-    public Map<User, Long> generateAReport(List<Booking> bookings) {
+    public Map<User, Double> generateAReport(List<Booking> bookings) {
         return bookings.stream()
                 .collect(Collectors.groupingBy(Booking::getUser,
-                        Collectors.summingLong(Booking::getSum)));
+                        Collectors.summingDouble(Booking::getSum)));
     }
 
     @Override
-    public Map<Room, Long> generateStatistics(List<Booking> bookings) {
+    public Map<Room, Double> generateStatistics(List<Booking> bookings) {
         return bookings.stream()
                 .collect(Collectors.groupingBy(Booking::getRoom,
-                        Collectors.summingLong(Booking::getSum)));
+                        Collectors.summingDouble(Booking::getSum)));
     }
 
     @Override
@@ -143,7 +143,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);
-        booking.setSum(0L);
+        booking.setSum(0.0);
         booking.setBookingState(BookingState.CALCULATE_SUM);
     }
 
@@ -575,7 +575,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         normalizeBookingDtoObjects(bookingDtos);
         bookingDtos.forEach(dto -> {
             dto.setBookingState(BookingState.BOOKED);
-            dto.setSum(0L);
+            dto.setSum(0.0);
             dto.setDurationLong(dto.getDateEndTime().getTime() - dto.getDateStartTime().getTime());
             dto.setKidName(dto.getChild().getFullName());
         });

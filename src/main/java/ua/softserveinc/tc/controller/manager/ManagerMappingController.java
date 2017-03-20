@@ -86,7 +86,7 @@ public class ManagerMappingController {
     List<Booking> bookings = bookingService.getBookings(
         new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
         room, BookingState.COMPLETED);
-    Map<User, Long> report = bookingService.generateAReport(bookings);
+    Map<User, Double> report = bookingService.generateAReport(bookings);
 
     ModelAndView modelAndView = new ModelAndView(ManagerViewNames.MANAGER_REPORT_ALL_VIEW);
     ModelMap modelMap = modelAndView.getModelMap();
@@ -123,7 +123,7 @@ public class ManagerMappingController {
         .build();
 
     List<Booking> bookings = bookingService.getBookings(characteristic);
-    Long sumTotal = bookingService.getSumTotal(bookings);
+    double sumTotal = bookingService.getSumTotal(bookings);
     ModelAndView modelAndView = new ModelAndView(ManagerViewNames.MANAGER_REPORT_PARENT_VIEW);
     ModelMap modelMap = modelAndView.getModelMap();
 
