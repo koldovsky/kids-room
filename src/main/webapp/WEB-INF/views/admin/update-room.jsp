@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
+<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
 
 <div class="for-table">
@@ -65,16 +67,16 @@
                         <label class="for-field1">
                             <label for="workingHoursStart" class="required">
                                 <spring:message code="administrator.room.workingHoursStart"/></label>
-                            <form:input type="time" path="workingHoursStart" value="${room.workingHoursStart}"
-                                        class="form-control" required="required"/>
+                            <form:input type="text" path="workingHoursStart" value="${room.workingHoursStart}"
+                                        class="text-center time form-control picker" required="required"/>
                             <form:errors path="workingHoursStart" cssClass="error"/>
                         </label>
 
                         <label class="for-field2">
                             <label for="workingHoursEnd" class="required">
                                 <spring:message code="administrator.room.workingHoursEnd"/></label>
-                            <form:input type="time" path="workingHoursEnd" value="${room.workingHoursEnd}"
-                                        class="form-control" required="required"/>
+                            <form:input type="text" path="workingHoursEnd" value="${room.workingHoursEnd}"
+                                        class="text-center time form-control picker" required="required"/>
                             <form:errors path="workingHoursEnd" cssClass="error"/>
                         </label>
 
@@ -174,3 +176,5 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-admin.js"></script>

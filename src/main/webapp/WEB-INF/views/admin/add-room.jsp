@@ -7,6 +7,8 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lib/intlTelInput.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
+<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
 <body>
 
@@ -66,14 +68,14 @@
                         <label class="for-field1">
                             <label for="workingHoursStart" class="required">
                                 <spring:message code="administrator.room.workingHoursStart"/></label>
-                            <form:input type="time" path="workingHoursStart" class="form-control"/>
+                            <form:input type="text" path="workingHoursStart" class="text-center time form-control picker"/>
                             <form:errors path="workingHoursStart" cssClass="error"/>
                         </label>
 
                         <label class="for-field2">
                             <label for="workingHoursEnd" class="required">
                                 <spring:message code="administrator.room.workingHoursEnd"/></label>
-                            <form:input type="time" path="workingHoursEnd" class="form-control"/>
+                            <form:input type="text" path="workingHoursEnd" class="text-center time form-control picker"/>
                             <form:errors path="workingHoursEnd" cssClass="error"/>
                         </label>
 
@@ -171,5 +173,7 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
 </c:if>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/intlTelInput.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-admin.js"></script>
