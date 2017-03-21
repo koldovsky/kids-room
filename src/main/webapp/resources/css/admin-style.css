@@ -54,6 +54,7 @@ th.for-button {
     width: auto;
     padding-top: 10px;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 .for-table-fields {
@@ -248,4 +249,8 @@ th.th-size {
     float: left;
     width: 45%;
     margin: 0 2% 20px 2%;
+}
+
+.button-style {
+    width: 40%;
 }

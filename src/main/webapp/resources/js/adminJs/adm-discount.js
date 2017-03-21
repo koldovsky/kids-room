@@ -2,8 +2,10 @@ $(function () {
   refreshDaysDiscounts();
 });
 
+var request, today, time, onButtonAdd,editId;
+
 function refreshDaysDiscounts() {
-  var request = "restful/admin/discounts/";
+  request = "restful/admin/discounts/";
     $.ajax({
       url: request,
       type: 'GET',
@@ -16,32 +18,112 @@ function refreshDaysDiscounts() {
         $.each(users, function (i, discount) {
           tr += '<tr class="discountData"><td>' + discount.reason + '</td>'
               + '<td>' + discount.value + '</td>'
-              + '<td>' + moment(discount.startDate).format("YYYY-MM-DD")+' - '+ moment(discount.endDate).format("YYYY-MM-DD")+ '</td>'
+              + '<td>' + moment(discount.startDate).format("DD-MM-YYYY")+' - '+ moment(discount.endDate).format("DD-MM-YYYY")+ '</td>'
               + '<td>' + moment(discount.startDate).format("HH-MM")+' - '+ moment(discount.endDate).format("HH-MM") + '</td>'
-              + '<td><a href="#" tabindex="-1"><button id="btn-edit"'
-              +'class="btn btn-raised btn-info"><i class="glyphicon glyphicon-pencil"></i></button></a>'
+              + '<td><button id="btn-edit"'
+              +'class="btn btn-raised btn-info editDayDiscount" data-toggle="modal" data-target="#addDiscountDiv" '
+              + 'discountid="'+discount.id+'">'
+              + '<i class="glyphicon glyphicon-pencil"></i></button>'
               +'</td>'
               + '<td>'+discount.active+'</td><tr>';
         });
-
+        //Hide loader and append new data to the table
         $("#firstLoader").hide();
         $("#dayDiscounts").append(tr).append(addButtonForDayDiscount());
+        
+        //Add event's to the elements
+        $("#addDiscount").click(onAddDiscountClick);
+        $(".editDayDiscount").click(onEditDiscountClick);
 
       }
     });
 }
 
 function dayDiscountsLoading(){
-  $("#firstLoader").show();
   $(".discountData").remove();
+  $("#addDiscountTR").remove();
+  $("#firstLoader").show();
 }
 
 function addButtonForDayDiscount() {
-  return '<tr><th colspan="6" class="hide-border set-standard-color">'
+  return '<tr id="addDiscountTR"><th colspan="6" class="hide-border set-standard-color">'
       + '<button type="button" class="btn btn-raised btn-primary btn-add-room" '
-      + 'id="addDiscount" data-toggle="modal" data-target="#updateAbonnement">'
+      + 'id="addDiscount" data-toggle="modal" data-target="#addDiscountDiv">'
       + messages.preloader.buttons.add
       + '</button>'
       + '</th>'
       + '</tr>';
 }
+
+$("#discountForm").on('submit', function(e){
+    //Change behavior of save button
+    if(onButtonAdd){
+      addNewDiscount('POST',false);
+    }else{
+      addNewDiscount('PUT',true);
+    }
+    $('#addDiscountDiv').modal('toggle');
+    e.preventDefault();
+})
+
+//Create new discount
+function addNewDiscount(method,bool){
+  //Get start date and time
+  var startDate = new Date($("#DStartDate").val()+":"+$("#DStartTime").val()+":00");
+  //Get start date and time
+  var endDate = new Date($("#DEndDate").val()+":"+$("#DEndTime").val()+":00");
+
+  request = "restful/admin/discounts/";
+  var inputData = {
+    reason: $("#DReason").val(),
+    value : $("#DValue").val(),
+    startDate :startDate,
+    endDate : endDate,
+    active : true,
+  };
+  if(bool)inputData.id = editId;
+  $.ajax({
+    url: request,
+    contentType: 'application/json; charset=UTF-8',
+    data: JSON.stringify(inputData),
+    type: method,
+    success: function (result) {
+      refreshDaysDiscounts();
+    }
+  });
+}
+
+
+function onAddDiscountClick(){
+  //Default date and time sets to current
+  today = moment().format("YYYY-MM-DD");
+  time = moment().format("HH:mm");
+  $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
+  $("#DStartDate").val(today);
+  $("#DEndDate").val(today);
+  $("#DStartTime").val(time);
+  $("#DEndTime").val(time);
+  onButtonAdd = true;
+}
+
+function onEditDiscountClick() {
+  $("#dayDiscountModalTitle").text(messages.modal.discount.editDiscount);
+  editId = $(this).attr("discountid");
+  request = "restful/admin/discounts/"+editId;
+  onButtonAdd = false;
+  $.ajax({
+    url: request,
+    type: 'GET',
+    success: function (result) {
+      $("#DReason").val(result.reason);
+      $("#DValue").val(result.value);
+      //Date and time formation
+      $("#DStartDate").val(moment(result.startDate).format("YYYY-MM-DD"));
+      $("#DEndDate").val(moment(result.endDate).format("YYYY-MM-DD"));
+      $("#DStartTime").val(moment(result.startDate).format("HH:mm"));
+      $("#DEndTime").val(moment(result.endDate).format("HH:mm"));
+    }
+  });
+
+}
+

@@ -73,59 +73,67 @@
 </div>
 
 <!-- Modal window -->
-<div id="updateAbonnement" class="modal fade" role="dialog">
+<div id="addDiscountDiv" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <table class="col-sm-offset-4 col-sm-3 reg-form">
             <tr>
                 <th>
-                    <strong class="title-font">
-                        Add discount
-                    </strong>
+                    <strong class="title-font" id="dayDiscountModalTitle"></strong>
                 </th>
             </tr>
             <tr>
                 <td>
-                    <form id="discountForm" method="POST" action="/adm-update-abonnement">
+                    <form id="discountForm">
                         <div class="form-group sizing-between">
-                            <label for="reason" class="required">
-                                Reason of discount
+                            <label for="DReason" class="required">
+                                <spring:message code="administrator.dayDiscount.reason"/>
                             </label>
-                            <input id="reason" type="text" name="name" class="name form-control">
+                            <input id="DReason" type="text" name="reason" class="name form-control">
                         </div>
                         <div class="form-group sizing-between">
-                            <label for="value" class="required">
-                                Value of discount
+                            <label for="DValue" class="required">
+                                <spring:message code="administrator.dayDiscount.value"/>
                             </label>
-                            <input id="value" type="text" name="name" class="name form-control">
+                            <input id="DValue" type="text" name="value" class="name form-control">
                         </div>
 
                         <!-- Date pickers -->
                         <div class="form-group sizing-between">
                                 <label class="required">
-                                    Period of discount
+                                    <spring:message code="administrator.dayDiscount.startDate"/>
                                 </label>
                             <br/>
                             <div class="picker-style">
-                                <input id="startDate" type="date" name="name" class="form-control">
+                                <input id="DStartDate" type="date" name="startDate" class="form-control">
                             </div>
                             <div class="picker-style">
-                                <input id="endDate" type="date" name="name" class="form-control">
+                                <input id="DEndDate" type="date" name="endDate" class="form-control">
                             </div>
                         </div>
 
                         <!-- Time pickers -->
                         <div class="form-group sizing-between">
-                            <label for="startDate" class="required">
-                                Time of discount
+                            <label class="required">
+                                <spring:message code="administrator.dayDiscount.endDate"/>
                             </label>
                             <br/>
                             <div class="picker-style">
-                                <input id="startTime" type="time" name="name" class="form-control">
+                                <input id="DStartTime" type="time" name="startTime" class="form-control">
                             </div>
                             <div class="picker-style">
-                                <input id="endTime" type="time" name="name" class="form-control">
+                                <input id="DEndTime" type="time" name="endTime" class="form-control">
                             </div>
+                        </div>
+                        <!-- -->
+                        <div class="form-group sizing-between">
+                         <button class="btn btn-raised btn-success submitter button-style">
+                             <spring:message code="administrator.save"/>
+                         </button>
+                        <button type="reset" class="btn btn-raised btn-danger button-style" data-toggle="modal"
+                                data-target="#addDiscountDiv">
+                            <spring:message code="administrator.canc"/>
+                        </button>
                         </div>
                     </form>
                 </td>

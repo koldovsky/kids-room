@@ -170,13 +170,6 @@
             <version>${org.springframework.data-version}</version>
         </dependency>
 
-        <!-- Spring MODEL Mapper -->
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>0.7.4</version>
-        </dependency>
-
         <!-- Google cache -->
         <dependency>
             <groupId>com.google.guava</groupId>
