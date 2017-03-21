@@ -27,19 +27,19 @@ public class ExcelDocument extends AbstractXlsView {
         style.setFont(font);
         style.setAlignment(CellStyle.ALIGN_CENTER);
 
-        Map<String, List<String>> dataForExcel = (Map<String, List<String>>) model.get("data");
-        String[] headers = dataForExcel.keySet().toArray(new String[]{""});
-        int tableHeights = dataForExcel.get(headers[0]).size();
-        if (model.containsKey("additionalFields")) {
-            List<String> additionalFields = (List<String>) model.get("additionalFields");
-            rowIndex = writeAdditionalFields(excelSheet, style, additionalFields,
+        ExcelData dataForExcel = (ExcelData) model.get("data");
+        String[] headers = dataForExcel.getHeaders();
+        int tableHeights = dataForExcel.getSize();
+
+        if (dataForExcel.hasAdditionalFields()) {
+            rowIndex = writeAdditionalFields(excelSheet, style, (List<String>) dataForExcel.getAdditionalFields(),
                     rowIndex, headers.length);
         }
 
         createRows(rowIndex, tableHeights, excelSheet);
         setExcelHeader(excelSheet, style, headers, rowIndex++);
         for (int i = 0; i < headers.length; i++) {
-            writeColumnToExcel(excelSheet, dataForExcel.get(headers[i]), i, rowIndex);
+            writeColumnToExcel(excelSheet, (List<String>) dataForExcel.getTableData().get(headers[i]), i, rowIndex);
         }
     }
 
@@ -59,7 +59,7 @@ public class ExcelDocument extends AbstractXlsView {
 
     private void writeColumnToExcel(Sheet excelSheet, List<String> columnData, int columnIndex,
                                     int startRow) {
-        excelSheet.setColumnWidth(columnIndex, 5000);
+        excelSheet.setColumnWidth(columnIndex, ExcelData.COLUMN_WIDTH);
         for (int i = 0; i < columnData.size(); i++) {
             Cell cell = excelSheet.getRow(startRow + i).createCell(columnIndex);
             cell.setCellValue(columnData.get(i));
@@ -72,14 +72,15 @@ public class ExcelDocument extends AbstractXlsView {
         }
     }
 
-    public void setExcelHeader(Sheet excelSheet, CellStyle styleHeader, String[] headersList, int rowIndex) {
+    private void setExcelHeader(Sheet excelSheet, CellStyle styleHeader, String[] headersList,
+                                int rowIndex) {
 
         int cellCount = 0;
-        for (String s : headersList) {
+        for (String item: headersList) {
             Cell cell = excelSheet.getRow(rowIndex).createCell(cellCount);
-            cell.setCellValue(s);
+            cell.setCellValue(item);
             cell.setCellStyle(styleHeader);
             cellCount++;
-        };
+        }
     }
 }
