@@ -1,23 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css" />
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" href="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/lib/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js' type="text/javascript"></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
+<link href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css" rel="stylesheet"/>
+<link href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css' rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/resources/css/lib/select2.min.css" rel="stylesheet"/>
 
-<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/edit-booking.css'>
+<script src="${pageContext.request.contextPath}/resources/js/lib/select2.min.js"></script>
+
+
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js" type="text/javascript"></script>
+
+<link href='${pageContext.request.contextPath}/resources/css/edit-booking.css' rel='stylesheet'/>
 <link href='${pageContext.request.contextPath}/resources/css/flow-form.css' rel='stylesheet'/>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
 <div class="container">
     <div class="table-edit">
         <div id="choose-time-inp">

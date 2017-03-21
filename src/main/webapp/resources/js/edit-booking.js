@@ -9,10 +9,6 @@ var roomWorkingEndTime;
 
 
 $(function () {
-    $('.datepickers').datepicker({
-        dateFormat: constants.parameters.dateFormat,
-        setDate: moment().format(constants.parameters.dateFormatUpperCase)
-    });
     $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if (localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];

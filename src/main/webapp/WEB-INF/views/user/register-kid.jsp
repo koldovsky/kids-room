@@ -104,11 +104,6 @@
         </footer>
     </div>
 </form:form>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-kids.js"></script>
-<c:choose>
-<c:when test="${pageContext.response.locale=='ua'}">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/localization/messages_uk.js"></script>
-</c:when>
-</c:choose>
