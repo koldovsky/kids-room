@@ -129,6 +129,11 @@ const messages = {
             arrivedTime: 'Натисніть, щоб встановити час виходу'
         }
     },
+    preloader: {
+        buttons: {
+            add : 'Додати'
+        }
+    },
     report: {
         currencySymbol: 'ГРН'
     }

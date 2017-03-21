@@ -130,6 +130,11 @@ const messages = {
             arrivedTime: 'Press to set arrival time'
         }
     },
+    preloader: {
+        buttons: {
+            add : 'Add'
+        }
+    },
     report: {
         currencySymbol: 'UAH'
     }
