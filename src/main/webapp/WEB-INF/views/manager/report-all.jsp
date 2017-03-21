@@ -29,20 +29,23 @@
                     <spring:message code="report.allBookings" /> ${room}
                 </h2>
             </caption>
+            <thead>
+                <tr>
+                    <th><spring:message code="report.parent" /></th>
+                    <th><spring:message code="report.email" /></th>
+                    <th><spring:message code="report.sum" /></th>
+                </tr>
+            </thead>
 
-            <tr>
-                <th><spring:message code="report.parent" /></th>
-                <th><spring:message code="report.email" /></th>
-                <th><spring:message code="report.sum" /></th>
-            </tr>
-
-            <c:forEach var="user" items="${report.keySet()}">
-            <tr>
-                <td>${user}</td>
-                <td>${user.getEmail()}</td>
-                <td>${report.get(user)}</td>
-            </tr>
-            </c:forEach>
+            <tbody>
+                <c:forEach var="user" items="${report.keySet()}">
+                <tr>
+                    <td>${user}</td>
+                    <td>${user.getEmail()}</td>
+                    <td>${report.get(user)}</td>
+                </tr>
+                </c:forEach>
+            </tbody>
 
         </table>
     </div>
