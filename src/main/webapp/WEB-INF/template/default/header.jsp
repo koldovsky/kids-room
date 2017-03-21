@@ -180,9 +180,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="adm-days-off">
-                                <span class="glyphicon glyphicon-flag"></span>
-                                <spring:message code="administrator.daysOff"/>
+                            <a href="adm-discount">
+                                <span class="glyphicon glyphicon-usd"></span>
+                                <spring:message code="administrator.discounts"/>
                             </a>
                         </li>
                         <li>

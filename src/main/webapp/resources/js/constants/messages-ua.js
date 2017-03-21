@@ -55,7 +55,11 @@ const messages = {
     modal: {
         kid: {
             comment: 'Коментарій',
-            choose: 'Будь ласка виберіть дитину'
+            choose: 'Будь ласка виберіть дитину',
+        },
+        discount:{
+            addDiscount: 'Добавити знижку',
+            editDiscount: 'Редагувати знижку'
         }
     },
     event: {
@@ -131,5 +135,10 @@ const messages = {
     },
     report: {
         currencySymbol: 'ГРН'
+    },
+    preloader: {
+        buttons: {
+            add : 'Додати'
+        }
     }
 };

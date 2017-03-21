@@ -170,6 +170,13 @@
             <version>${org.springframework.data-version}</version>
         </dependency>
 
+        <!-- Google cache -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <!-- JAVA INJECT -->
         <dependency>
             <groupId>javax.inject</groupId>
