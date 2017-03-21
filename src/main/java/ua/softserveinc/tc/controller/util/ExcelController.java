@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.controller.util;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +32,7 @@ public class ExcelController {
     private BookingService bookingService;
 
     @Autowired
-    private ExcelData<BookingDto> excel;
+    private ExcelBookingData excel;
 
     @Autowired
     private RoomService roomService;
@@ -65,16 +64,16 @@ public class ExcelController {
                             .setRooms(Collections.singletonList(room))
                             .setBookingsStates(Collections.singletonList(BookingState.COMPLETED))
                             .build()).stream().map(BookingDto::new).collect(Collectors.toList()));
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2]
-                    + currentUser.getFullName());
+            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[3] +
+                    currentUser.getFullName());
         } else {
             Room room = roomService.findByIdTransactional(roomId);
             bookings = bookingService.getBookings(
                     new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
                     room, BookingState.COMPLETED);
             excel.setTableData(bookingService.generateAReport(bookings));
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2]
-                    + room.getName());
+            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2] +
+                    room.getName());
         }
 
         modelAndView.setView(new ExcelDocument());

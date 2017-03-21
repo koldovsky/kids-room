@@ -1,7 +1,5 @@
 package ua.softserveinc.tc.util;
 
-import ua.softserveinc.tc.entity.User;
-
 import java.util.List;
 import java.util.Map;
 
@@ -10,13 +8,11 @@ public interface ExcelData<T> {
 
     void setTableData(List<T> list);
 
-    void setTableData(Map<User, Long> report);
-
     Map<String, List<String>> getTableData();
 
     List<String> getAdditionalFields();
 
-    void addAdditionalFields(String field);
+    void addAdditionalFields(String fields);
 
     String[] getHeaders();
 

@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ExcelUserRoomBooking implements ExcelData<BookingDto> {
+public class ExcelUserRoomBooking implements ExcelBookingData {
 
     public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM: ", " UAH", "ROOM: ", "PARENT: " };
 
@@ -30,7 +30,7 @@ public class ExcelUserRoomBooking implements ExcelData<BookingDto> {
             tableData.put("Place",
                     bookingDtos.stream().map(BookingDto::getRoomName).collect(Collectors.toList()));
         } else if (uniqueRoomNameCount != 0) {
-            this.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2] +
+            addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2] +
                     bookingDtos.get(0).getRoomName());
         }
         tableData.put("Start time",
@@ -44,6 +44,7 @@ public class ExcelUserRoomBooking implements ExcelData<BookingDto> {
                         .collect(Collectors.toList()));
     }
 
+    @Override
     public void setTableData(Map<User, Long> listOfParents) {
         tableData = new LinkedHashMap<>();
         additionalFields = new ArrayList<>();
@@ -54,9 +55,11 @@ public class ExcelUserRoomBooking implements ExcelData<BookingDto> {
                 .map(User::getEmail).collect(Collectors.toList()));
         tableData.put("Sum", listOfParents.values().stream().map(p -> p / 100.0)
                 .map(String::valueOf).collect(Collectors.toList()));
+
+        addAdditionalFields(listOfParents.values().stream().mapToLong(Long::longValue).sum());
     }
 
-    void addAdditionalFields(long TotalSum) {
+    private void addAdditionalFields(long TotalSum) {
         additionalFields.add(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
                 String.valueOf(TotalSum/100.0) + ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[1]);
     }
@@ -64,7 +67,6 @@ public class ExcelUserRoomBooking implements ExcelData<BookingDto> {
     @Override
     public void addAdditionalFields(String field) {
         additionalFields.add(field);
-
     }
 
     @Override

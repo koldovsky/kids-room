@@ -30,8 +30,9 @@ public class ExcelDocument extends AbstractXlsView {
         ExcelData dataForExcel = (ExcelData) model.get("data");
         String[] headers = dataForExcel.getHeaders();
         int tableHeights = dataForExcel.getSize();
+
         if (dataForExcel.hasAdditionalFields()) {
-            rowIndex = writeAdditionalFields(excelSheet, style, dataForExcel.getAdditionalFields(),
+            rowIndex = writeAdditionalFields(excelSheet, style, (List<String>) dataForExcel.getAdditionalFields(),
                     rowIndex, headers.length);
         }
 
@@ -71,8 +72,8 @@ public class ExcelDocument extends AbstractXlsView {
         }
     }
 
-    public void setExcelHeader(Sheet excelSheet, CellStyle styleHeader, String[] headersList,
-                               int rowIndex) {
+    private void setExcelHeader(Sheet excelSheet, CellStyle styleHeader, String[] headersList,
+                                int rowIndex) {
 
         int cellCount = 0;
         for (String item: headersList) {
@@ -80,6 +81,6 @@ public class ExcelDocument extends AbstractXlsView {
             cell.setCellValue(item);
             cell.setCellStyle(styleHeader);
             cellCount++;
-        };
+        }
     }
 }
