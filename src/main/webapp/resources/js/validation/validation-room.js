@@ -19,19 +19,19 @@ $(document).ready(function () {
         rules: {
             name: {
                 minlength: 1,
-                maxlength: 255,
+                maxlength: 50,
                 requiredWithEmptySpace: true,
                 regexName: constants.regex.nameRegex
             },
             address: {
                 minlength: 1,
-                maxlength: 255,
+                maxlength: 50,
                 requiredWithEmptySpace: true,
                 regexAddress: constants.regex.addresssRegex
             },
             city: {
                 minlength: 1,
-                maxlength: 255,
+                maxlength: 50,
                 requiredWithEmptySpace: true,
                 regexCity: constants.regex.nameRegex
             },
