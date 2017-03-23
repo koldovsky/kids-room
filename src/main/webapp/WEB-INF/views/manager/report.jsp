@@ -8,7 +8,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/report.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
-<script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js' type="text/javascript"></script>
 
 <div id="scroller">
     <div class="dateSelector">

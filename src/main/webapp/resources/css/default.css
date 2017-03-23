@@ -1,8 +1,12 @@
-body {
-    font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+@font-face {
+    font-family: RobotoDraft;
+    src: url('lib/Roboto-Regular.ttf');
     font-style: normal;
     font-weight: 300;
     font-size: 1.4rem;
+}
+body {
+    font-family: RobotoDraft, 'Arial', sans-serif;
     line-height: 2rem;
     letter-spacing: 0.01rem;
     color: #212121;
@@ -456,5 +460,19 @@ div .successconfirmation {
         transform: rotate(360deg);
     }
 }
-
+.datepickers table{
+    width: 100%;
+    font-size: .9em;
+    border-collapse: collapse;
+    margin: 0 0 .4em;
+}
+.datepickers th{
+    text-align: center;
+    height: 50px;
+    background-color: #4285F4;
+}
+.ui-datepicker-calendar, .ui-timepicker-wrapper{
+    font-family: RobotoDraft, 'Arial', sans-serif;
+    color: #212121;
+}
 

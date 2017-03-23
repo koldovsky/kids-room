@@ -1,12 +1,12 @@
 package ua.softserveinc.tc.validator;
 
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.dto.AbonnementDto;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import ua.softserveinc.tc.constants.ValidationConstants;
-import ua.softserveinc.tc.dto.AbonnementDto;
-
 import java.util.regex.Pattern;
+
 
 @Component
 public class AbonnementsValidatorImpl implements AbonnementsValidator {

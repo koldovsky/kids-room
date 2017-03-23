@@ -1,7 +1,6 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dao.AbonnementDao;
 import ua.softserveinc.tc.entity.Abonnement;

@@ -55,7 +55,11 @@ const messages = {
     modal: {
         kid: {
             comment: 'Коментарій',
-            choose: 'Будь ласка виберіть дитину'
+            choose: 'Будь ласка виберіть дитину',
+        },
+        discount:{
+            addDiscount: 'Добавити знижку',
+            editDiscount: 'Редагувати знижку'
         }
     },
     event: {
@@ -63,8 +67,8 @@ const messages = {
             titleFieldRequired: 'Поле назва повинно бути заповнене',
             titleMaximumCharacters: 'Назва не повинна містити більше ' + constants.parameters.titleMaxLenght + ' символів',
             descriptionMaximumCharacters: 'Поле опису не повинно містити  більше ' + constants.parameters.descriptionMaxLenght + ' символів',
-            startDateFormat: 'Використовуйте правильний формат yyyy-mm-dd HH:MM для дати початку',
-            endDateFormat: 'Використовуйте правильний формат yyyy-mm-dd HH:MM для дати кінця',
+            startDateFormat: 'Початкова дата введена помилково або не існує ,використовуйте формат рррр-мм-дд ГГ:ММ',
+            endDateFormat: 'Кінцева дата введена помилково або не існує ,використовуйте формат рррр-мм-дд ГГ:ММ',
             singleEventDateEquals:  'Для одноденної події дати повинні бути рівні',
             invalidColor: 'Невірно вибраний колір',
             invalidDate: 'Невірно введена дата',
@@ -83,6 +87,9 @@ const messages = {
             dateDoesntExits: 'Вказаної дати не має у календарі, будь ласка, оберіть інакшу',
             cannotCreateEventsForNonExistingDates: 'Не вдалось створити події на певні дати, так як їх не має у календарі',
             noEligibleEventsForPeriod: 'Жодна подія не може бути створена у цей період часу',
+        },
+        info:{
+            changeEvent: 'Змінити подію'
         }
     },
     notCorrect: {
@@ -116,12 +123,22 @@ const messages = {
         firstName: 'Ім\'я введено невірно',
         lastName: 'Призвище введено невірно',
         phone: 'Номер телефону є невірним. Приклад: +380991234567',
-        required: 'Поле є пустим. Будьласка заповніть поле.'
+        required: 'Поле є пустим. Будьласка заповніть поле.',
+        toShortFirstName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + 'символів.',
+        toShortLastName: 'Будь ласка, введіть не менше ' + constants.parameters.nameMinLength + ' символів.',
     },
     booking: {
         hint: {
             leaveTime: 'Натисніть, щоб встановити час прибуття',
             arrivedTime: 'Натисніть, щоб встановити час виходу'
+        }
+    },
+    report: {
+        currencySymbol: 'ГРН'
+    },
+    preloader: {
+        buttons: {
+            add : 'Додати'
         }
     }
 };

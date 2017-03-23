@@ -29,27 +29,30 @@
                     <spring:message code="report.allBookings" /> ${room}
                 </h2>
             </caption>
+            <thead>
+                <tr>
+                    <th><spring:message code="report.parent" /></th>
+                    <th><spring:message code="report.email" /></th>
+                    <th><spring:message code="report.sum" /></th>
+                </tr>
+            </thead>
 
-            <tr>
-                <th><spring:message code="report.parent" /></th>
-                <th><spring:message code="report.email" /></th>
-                <th><spring:message code="report.sum" /></th>
-            </tr>
-
-            <c:forEach var="user" items="${report.keySet()}">
-            <tr>
-                <td>${user}</td>
-                <td>${user.getEmail()}</td>
-                <td>${report.get(user)}</td>
-            </tr>
-            </c:forEach>
+            <tbody>
+                <c:forEach var="user" items="${report.keySet()}">
+                <tr>
+                    <td>${user}</td>
+                    <td>${user.getEmail()}</td>
+                    <td>${report.get(user)}</td>
+                </tr>
+                </c:forEach>
+            </tbody>
 
         </table>
     </div>
 
     <input id="itemsPerPage" type="hidden" value="10"></input>
     <a id="dlink"  style="display:none;"></a>
-    <button id="export" onclick= "tableToExcel('bookings', 'name')" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
+    <button id="export" class="btn btn-raised btn-success waves-effectwaves-light exportButton glyphicon glyphicon-download-alt">
         &nbsp; <spring:message code="report.download" /> Excel
     </button>
 </div>

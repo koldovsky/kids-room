@@ -75,10 +75,6 @@
     </definition>
 
     <!-- Admin -->
-    <definition name="adm-add-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/add-manager.jsp"/>
-    </definition>
-
     <definition name="adm-add-room" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/add-room.jsp"/>
     </definition>
@@ -103,10 +99,6 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/statistics.jsp"/>
     </definition>
 
-    <definition name="adm-update-manager" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/update-manager.jsp"/>
-    </definition>
-
     <definition name="adm-update-room" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/update-room.jsp"/>
     </definition>
@@ -121,6 +113,18 @@
 
     <definition name="adm-abonnements" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/adm-abonnements.jsp"/>
+    </definition>
+
+    <definition name="adm-add-abonnement" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/add-abonnement.jsp"/>
+    </definition>
+
+    <definition name="adm-update-abonnement" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/update-abonnement.jsp"/>
+    </definition>
+
+    <definition name="discount" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/discount.jsp"/>
     </definition>
 
     <!-- Manager -->

@@ -19,16 +19,14 @@ import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
-import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.TimeValidatorImpl;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import ua.softserveinc.tc.util.DateUtil;
-import java.util.Date;
 
 /**
  * Controller handles reports on User's bookings
@@ -42,9 +40,6 @@ public class MyBookingsController {
 
     @Autowired
     private BookingService bookingService;
-
-    @Autowired
-    private RoomService roomService;
 
     @Autowired
     private TimeValidatorImpl timeValidator;

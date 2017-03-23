@@ -191,7 +191,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendReasonOfDeactivate(List<String> emailManagers, String roomName, String reason,  List<InfoDeactivateRoomDto> list) throws MessagingException {
+    public void sendNotifyDeactivateRoom(List<String> emailManagers, String roomName, String reason,  List<InfoDeactivateRoomDto> list) throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(RoomConstants.UNAVAILABLE_ROOM, list);
         model.put(RoomConstants.NAME_ROOM, roomName);
@@ -199,19 +199,20 @@ public class MailServiceImpl implements MailService {
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setTo(emailManagers.get(0));
 
-        for (int i = 1; i < emailManagers.size(); i++)
-            helper.addCc(emailManagers.get(i));
+        emailManagers.forEach(email -> {
+            try {
+                helper.addTo(email);
+            } catch (MessagingException e) {
+                log.error("Wrong manager email when send notify about deactivate room.", e);
+            }
+        });
 
         helper.setSubject(roomName.concat(MailConstants.DEACRIVATE_ROOM_NAME));
         helper.setText(getTextMessage(MailConstants.DEACRIVATE_ROOM_INFO, model), true);
         helper.setFrom(new InternetAddress(MailConstants.EMAIL_BOT_ADDRESS));
 
-        synchronized (message) {
-            mailSender.send(message);
-        }
-
+        mailSender.send(message);
     }
 
 }

@@ -14,7 +14,7 @@ function getNotCompletedBokings() {
     var time = $('#date-booking').val();
     var idRoom = localStorage['roomId'];
     var results;
-    var src = 'dailyNotCompletedBookings/' + time + '/' + idRoom;
+    var src = 'restful/manager-booking/' + time + '/' + idRoom;
     $.ajax({
         url: src,
         async: false,
@@ -75,7 +75,7 @@ function getAvailableSpaceForPeriod(startTimeMillis, endTimeMillis) {
 function openCreateBookingDialog() {
     var date = $('#date-booking').val();
     $('#bookingStartDate').val(date);
-    $('#bookingDialog').dialog();
+    $('#bookingDialog').dialog({modal: true});
 }
 
 /**

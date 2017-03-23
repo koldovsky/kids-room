@@ -1,23 +1,25 @@
-$().ready(function () {
+$(function () {
 
     var roomId;
     var btn;
     var dialog;
 
 
-    $('.activate').click(function () {
+    $('.activate').change(function () {
         btn = this;
-        roomId = getRoomProp(constants.room.properties.id);   //get room id from table
-        var isActive = getRoomProp(constants.room.properties.isActive);
-        if (isActive === 'true') {
-            dialog = $('#deactivateModal');
+        roomId = getRoomProp(constants.room.properties.id);
+        if(this.checked){
+            dialog = $('#activateModal');
+            changeActiveRoomState(roomId, btn);
+            $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
+        }
+        else{
             $('#reasonDeactivate').css('display', 'none');
             verifyRoomBookingState(roomId);
-        } else {
-            dialog = $('#activateModal');
+            dialog = $('#deactivateModal');
         }
 
-        dialog.modal('show');
+        dialog.modal({backdrop: 'static'});
     });
 
     $('#deactivateYesButton').click(function () {
@@ -30,14 +32,19 @@ $().ready(function () {
     });
 
     $('#deactivateNoButton').click(function () {
+        $(btn).prop('checked', true);
         dialog.modal('hide');
     });
 
     $('#activateYesButton').click(function () {
-        changeActiveRoomState(roomId, btn);
-        dialog.modal('hide');
+            changeActiveRoomState(roomId, btn);
+            dialog.modal('hide');
     });
 
+    $('#activateNoButton').click(function () {
+        $(btn).prop('checked', false);
+        dialog.modal('hide');
+    });
     function verifyRoomBookingState(roomId) {
         var src = 'adm-edit-room\\warnings';
         var inputData = {id: roomId};
@@ -49,7 +56,7 @@ $().ready(function () {
                 $('#warningMessages').html('');
                 $.each(data, function (index, value) {
                     $('#warningMessages').append('<div class = warningMessage>' + value + '</div>');
-                    $('#reasonText').empty();
+                    $('#reasonText').val('');
                     $('#reasonDeactivate').css('display', 'block');
                 });
             }
@@ -64,29 +71,20 @@ $().ready(function () {
         };
         $.ajax({
             url: src,
+            dataType: 'json',
+            type: 'POST',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(inputData),
-            async: false,
-            type: 'POST',
             success: function (isActivated) {
-                setRoomProp(constants.room.properties.isActive, isActivated);
-                if (isActivated) {
-                    setActivateClass(btn);
-                } else {
-                    setDeactivateClass(btn);
+                if(isActivated){
+                    $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
                 }
+                else{
+                    $(btn).parents('tr').removeClass('room').addClass('tr-not-active');
+                }
+                setRoomProp(constants.room.properties.isActive, isActivated);
             }
         });
-    }
-
-    function setDeactivateClass(btn) {
-        $(btn).removeClass('deactivateButton save');
-        $(btn).addClass('activateButton delete');
-    }
-
-    function setActivateClass(btn) {
-        $(btn).removeClass('activateButton delete');
-        $(btn).addClass('deactivateButton save');
     }
 
     function getRoomProp(propIndex) {

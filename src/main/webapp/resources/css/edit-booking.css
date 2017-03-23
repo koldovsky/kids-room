@@ -95,6 +95,17 @@ html, body, .container {
 .row{
        margin: auto;
 }
+.ui-timepicker-input {
+    width: 7.5em;
+}
+.picker {
+    width: 7.5em;
+    background-image: linear-gradient(#009688,#009688),linear-gradient(#d2d2d2,#d2d2d2);
+    background-size: 0 2px,100% 1px;
+    background-repeat: no-repeat;
+    background-position: center bottom,center calc(100% - 1px);
+    background-color: transparent;
+}
 
 #booking-table{
     margin-top: 100px;
@@ -131,7 +142,7 @@ html, body, .container {
     padding-right: 15px;
 }
 #bookingUpdatingDialog .datepickers{
-    z-index: 100;
+    z-index: 10000;
 }
 #bookingUpdatingDialog textarea {
     resize : none;

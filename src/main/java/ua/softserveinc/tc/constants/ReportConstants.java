@@ -13,9 +13,6 @@ public final class ReportConstants {
     public static final String SUM_TOTAL = "sumTotal";
     public static final String START_DATE = "startDate";
 
-    public static final String REPORT_VIEW = "report";
-    public static final String ALL_VIEW = "report-all";
-    public static final String PARENT_VIEW = "report-parent";
     public static final String STATISTICS_VIEW = "statistics";
   
     public static final String CONFIRM_ATTRIBUTE = "confirmMessage";

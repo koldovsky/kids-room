@@ -185,4 +185,3 @@
 <c:if test="${pageContext.response.locale=='ua'}">
     <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
 </c:if>
-

@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.controller.manager;
+package ua.softserveinc.tc.controller.manager.restful;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
@@ -27,6 +28,7 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.TimeValidatorImpl;
 
 @RestController
+@RequestMapping("/restful/manager-booking/")
 public class ManagerBookingController {
 
   @Autowired
@@ -51,7 +53,7 @@ public class ManagerBookingController {
    * @param state array of states that must be displayed
    * @return JSON with relevant information
    */
-  @GetMapping(value = "dailyBookings/{date}/{id}/{state}")
+  @GetMapping(value = "{date}/{id}/{state}")
   public List<ManagerBookingDTO> dailyBookingsByState(@PathVariable String date,
       @PathVariable Long id,
       @PathVariable BookingState[] state) {
@@ -96,7 +98,7 @@ public class ManagerBookingController {
    * @param id id the room for which makes figuring out bookings
    * @return JSON with relevant information
    */
-  @GetMapping("dailyNotCompletedBookings/{date}/{id}")
+  @GetMapping("/{date}/{id}")
   public List<ManagerBookingDTO> dailyNotCompletedBookings(@PathVariable String date,
       @PathVariable Long id) {
     Room room = roomService.findByIdTransactional(id);
@@ -121,7 +123,7 @@ public class ManagerBookingController {
    * @param id selected room id
    * @return number of active children
    */
-  @GetMapping("getAmountOfChildren/{date}/{id}")
+  @GetMapping("amountOfKids/{date}/{id}")
   public Long getAmountOfChildrenForCurrentDay(@PathVariable String date,
       @PathVariable Long id) {
     Room room = roomService.findByIdTransactional(id);
@@ -140,7 +142,7 @@ public class ManagerBookingController {
    * @param id selected parent id
    * @return List of parent kids
    */
-  @GetMapping("get-kids/{id}")
+  @GetMapping("/{id}")
   public List<ChildDto> listKids(@PathVariable Long id) {
     List<Child> kids = userService.getEnabledChildren(userService.findByIdTransactional(id));
     return kids.stream()
@@ -154,7 +156,7 @@ public class ManagerBookingController {
    *
    * @return void
    */
-  @PutMapping("/setTime")
+  @PutMapping("/startTime")
   public void setingBookingsStartTime(@RequestBody BookingDto bookingDto) {
     if (!timeValidator.isRoomTimeValid(bookingDto)) {
       return;
@@ -174,7 +176,7 @@ public class ManagerBookingController {
    *
    * @return void
    */
-  @PutMapping("/setEndTime")
+  @PutMapping("/endTime")
   public void setingBookingsEndTime(@RequestBody BookingDto bookingDto) {
     //TODO-VL The same as setTime method
     Booking booking = bookingService.confirmBookingEndTime(bookingDto);

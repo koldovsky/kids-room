@@ -5,17 +5,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css'>
 <link href='${pageContext.request.contextPath}/resources/css/fullcalendar.css' rel='stylesheet'/>
 <link href='${pageContext.request.contextPath}/resources/css/fullcalendar.print.css' rel='stylesheet' media='print'/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/animate.min.css">
 
 <link href='${pageContext.request.contextPath}/resources/css/formForCalendar.css' rel='stylesheet'/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
 <link href='${pageContext.request.contextPath}/resources/css/flow-form.css' rel='stylesheet'/>
 <link href='${pageContext.request.contextPath}/resources/css/manager-no-rooms.css' rel='stylesheet'/>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/dataTables.bootstrap4.min.css"/>
 
 <div class="loading" hidden>Loading&#8230;</div>
 <c:forEach items="${managersRoom}" var="r">
@@ -90,11 +90,12 @@
                 <div id="dialog" class="dialog" hidden title="<spring:message code= "event.new"/>">
                     <form id="form">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
                         <div class="form-group">
                             <label for="event-title"><spring:message code="event.title"/></label>
                             <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
                             <input type="text" class="form-control" id="event-title"
-                                   placeholder="${titlePlaceHolder}">
+                                   max="255" placeholder="${titlePlaceHolder}">
                         </div>
                         <div class="form-group">
                             <label for="color-select"><spring:message code="event.chooseColor"/></label>
@@ -139,7 +140,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <input id="start-time-picker" type="text"
-                                       class=" text-center time form-control timepicker" size="6"/>
+                                       class=" text-center time form-control timepicker picker" size="6"/>
                             </div>
                         </div>
                         <br>
@@ -154,7 +155,7 @@
                             </div>
                             <div class="col-xs-6">
                                 <input id="end-time-picker" type="text"
-                                       class="text-center time form-control timepicker" size="6"/>
+                                       class="text-center time form-control timepicker picker" size="6"/>
                             </div>
                         </div>
 
@@ -280,13 +281,11 @@
 
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="form-group">
-                            <label for="titleUpdate"> <spring:message
-                                    code="event.labelForTitle"></spring:message> </label>
+                            <label for="titleUpdate"> <spring:message code="event.labelForTitle"></spring:message> </label>
                             <spring:message code="event.titlePlaceHolder" var="titlePlaceHolder"/>
                             <input type="text" class="form-control" id="titleUpdate"
                                    placeholder="${titlePlaceHolder}">
                         </div>
-
                         <div class="form-group">
                             <label for="color-select"> <spring:message
                                     code="event.chooseColor"></spring:message> </label>
@@ -508,10 +507,10 @@
 
 <div id="error-dialog" type="hidden"></div>
 <div id="warning-dialog" type="hidden"></div>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/jquery.timepicker.js'></script>

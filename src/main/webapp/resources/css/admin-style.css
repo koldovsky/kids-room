@@ -54,6 +54,7 @@ th.for-button {
     width: auto;
     padding-top: 10px;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 .for-table-fields {
@@ -119,7 +120,12 @@ th.th-size {
 
 .sizing-between {
     margin: 0;
-    margin-bottom: 35px;
+    margin-top:15px;
+    margin-bottom: 20px;
+}
+
+.sizing-between input {
+    text-align: center;
 }
 
 .days-off {
@@ -252,3 +258,13 @@ th.th-size {
 /*.datatable-head {*/
     /*width: 500px;*/
 /*}*/
+
+.picker-style {
+    float: left;
+    width: 45%;
+    margin: 0 2% 20px 2%;
+}
+
+.button-style {
+    width: 40%;
+}

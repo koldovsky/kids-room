@@ -40,8 +40,7 @@ public class AbonnementsController {
     }
 
     @PutMapping(AbonnementConstants.RestQueries.UPDATE_ABONNEMENT)
-    public AbonnementDto updateAbonnement(@RequestBody AbonnementDto abonnementDto,
-                                          BindingResult bindingResult) {
+    public AbonnementDto updateAbonnement(@RequestBody AbonnementDto abonnementDto) {
         return abonnementsService.updateAbonnement(abonnementDto);
     }
 

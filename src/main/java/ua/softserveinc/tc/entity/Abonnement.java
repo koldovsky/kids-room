@@ -3,8 +3,8 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.AbonnementConstants;
 
+
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +16,6 @@ public class Abonnement {
     @GeneratedValue(generator = "generator")
     @Column(name = AbonnementConstants.Entity.ID_ABONEMENT, nullable = false)
     private long id;
-
 
     @Column(name = AbonnementConstants.Entity.NAME_ABONEMENT,
             unique = true)

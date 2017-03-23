@@ -56,6 +56,10 @@ const messages = {
         kid: {
             comment: 'Comment',
             choose: 'Please choose kid'
+        },
+        discount:{
+            addDiscount: 'Add discount',
+            editDiscount: 'Edit discount'
         }
     },
     event: {
@@ -63,8 +67,8 @@ const messages = {
             titleFieldRequired: 'Title can\'t be empty ',
             titleMaximumCharacters: 'Title should contain no more than' + constants.parameters.titleMaxLenght + ' characters',
             descriptionMaximumCharacters: 'Description should contain no more than ' + constants.parameters.descriptionMaxLenght + ' characters',
-            startDateFormat: 'Use Right format date yyyy-mm-dd HH:MM for start date',
-            endDateFormat: 'Use Right format date yyyy-mm-dd HH:MM for end date',
+            startDateFormat: 'Start date is invalid or dosen\'t exist , use right format yyyy-mm-dd HH:MM',
+            endDateFormat: 'End date is invalid or dosen\'t exist, use right format yyyy-mm-dd HH:MM',
             singleEventDateEquals:  'For one-day event dates must be the same',
             invalidColor: 'This color is invalid',
             invalidDate: 'Date is invalid',
@@ -83,6 +87,9 @@ const messages = {
             dateDoesntExits: 'Chosen date doesn\'t exist, please select valid date',
             cannotCreateEventsForNonExistingDates: 'For some dates events cannot be created as soon as dates do not exist.',
             noEligibleEventsForPeriod: 'There are no eligible events for this period of time',
+        },
+        info:{
+            changeEvent: 'Change event'
         }
     },
     notCorrect: {
@@ -99,10 +106,13 @@ const messages = {
     },
     adminValidation: {
         email: 'Email is invalid.',
-        firstName: 'Last Name is invalid.',
+        firstName: 'First Name is invalid.',
         lastName: 'Last Name is invalid.',
         phone: 'Phone number is invalid. Example +380991234567',
-        required: 'The field is empty. Fill in the field please.'
+        required: 'The field is empty. Fill in the field please.',
+        toShortFirstName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+        toShortLastName: 'Please enter at least ' + constants.parameters.nameMinLength + ' characters',
+
     },
     room: {
         errors: {
@@ -122,6 +132,14 @@ const messages = {
         hint: {
             leaveTime: 'Press to set leave time',
             arrivedTime: 'Press to set arrival time'
+        }
+    },
+    report: {
+        currencySymbol: 'UAH'
+    },
+    preloader: {
+        buttons: {
+            add : 'Add'
         }
     }
 };

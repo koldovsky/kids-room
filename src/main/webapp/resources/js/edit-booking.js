@@ -9,10 +9,6 @@ var roomWorkingEndTime;
 
 
 $(function () {
-    $('.datepickers').datepicker({
-        dateFormat: constants.parameters.dateFormat,
-        setDate: moment().format(constants.parameters.dateFormatUpperCase)
-    });
     $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if (localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
@@ -29,7 +25,7 @@ $(function () {
         var endISOtime = date + 'T' + endTime + ':00';
 
         if (validateEmptyTime(startTime, endTime)) {
-            var urlForKids = 'get-kids/' + idUser;
+            var urlForKids = 'restful/manager-booking/' + idUser;
             $.ajax({
                 url: urlForKids,
                 encoding: 'UTF-8',
@@ -80,7 +76,8 @@ $(function () {
     $('#selectUser').on('change', function () {
         $('#kids').empty();
         var idUser = $(this).val();
-        var getKidsUrl = 'get-kids/' + idUser;
+        if(idUser===null) return;
+        var getKidsUrl = 'restful/manager-booking/' + idUser;
         addKids(getKidsUrl);
     });
 
@@ -162,7 +159,7 @@ function refreshTable(bookingsState) {
     chekBookingState();
     var time = $('#date-booking').val();
     var idRoom = localStorage['roomId'];
-    src = 'dailyBookings/' + time + '/' + idRoom + '/' + bookingsState;
+    src = 'restful/manager-booking/' + time + '/' + idRoom + '/' + bookingsState;
     jQuery.extend({
         getValues: function () {
             var result = null;
@@ -250,12 +247,12 @@ function refreshTable(bookingsState) {
                 'className': 'arrivalTime',
                 'fnCreatedCell': function (nTd,sData,oData) {
                     var startTime;
-                    if(oData.bookingState === 'ACTIVE'||oData.bookingsState ==='COMPLETED'){
+                    if(oData.bookingState === 'ACTIVE'||oData.bookingState ==='COMPLETED'){
                         startTime = oData.startTime;
                     }else{
                         startTime = "";
                     }
-                    var td = '<input type="text" class="form-control inp-arrivalTime picker" '
+                    var td = '<input type="text" class="inp-arrivalTime picker" '
                         + 'value="'+startTime+'">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.arrivedTime + '" id="arrival-btn" ></button>';
@@ -268,12 +265,12 @@ function refreshTable(bookingsState) {
                 'className': 'leaveTime',
                 'fnCreatedCell': function (nTd, sData, oData) {
                     var endTime;
-                    if(oData.bookingsState ==='COMPLETED'){
+                    if(oData.bookingState ==='COMPLETED'){
                         endTime = oData.endTime;
                     }else{
                         endTime = "";
                     }
-                    var td = '<input type="text" class="form-control inp-leaveTime picker" '
+                    var td = '<input type="text" class="inp-leaveTime picker" '
                         + 'value="'+endTime+'">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.leaveTime + '" id="leave-btn" ></button>';
@@ -332,7 +329,7 @@ function sendStartTime(id, startTime) {
         roomId: localStorage['roomId']
     };
     $.ajax({
-        url: 'setTime',
+        url: 'restful/manager-booking/startTime',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
@@ -370,7 +367,7 @@ function sendEndTime(id, endTime) {
         id: id
     };
     $.ajax({
-        url: 'setEndTime',
+        url: 'restful/manager-booking/endTime',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
         data: JSON.stringify(inputData),
@@ -481,7 +478,7 @@ function sendBookingToServerForCreate(bookingsArray) {
         success: function (result) {
             if (result == '') {
                 $('#updatingInvalid').modal('show');
-                $('#bookingDialog').dialog();
+                $('#bookingDialog').dialog({modal: true, resizable: false});
             } else {
                 $('#createSuccess').modal('show');
                 setTimeout(function () {
@@ -551,7 +548,7 @@ $('#booking-table tbody').on('click', '.edit-button-btn', function () {
     $('#bookingUpdatingEndTimepicker').val(endTime);
     $('#data-edit').val(date);
 
-    $('#bookingUpdatingDialog').dialog();
+    $('#bookingUpdatingDialog').dialog({modal: true, resizable: false});
     $('#' + idBooking).addClass('highlight-active');
 });
 

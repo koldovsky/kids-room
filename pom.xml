@@ -170,6 +170,13 @@
             <version>${org.springframework.data-version}</version>
         </dependency>
 
+        <!-- Google cache -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <!-- JAVA INJECT -->
         <dependency>
             <groupId>javax.inject</groupId>
@@ -472,6 +479,12 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>0.7.7</version>
+        </dependency>
+        <!-- Excel view -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.14</version>
         </dependency>
 
     </dependencies>

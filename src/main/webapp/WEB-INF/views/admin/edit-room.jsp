@@ -82,10 +82,16 @@
             </a></td>
             <td>
                 <c:if test="${room.active ne true}">
-                    <button class="btn btn-raised btn-default activate delete activateButton"></button>
+                    <label class="switch">
+                        <input type="checkbox" class="activate">
+                        <div class="slider round"></div>
+                    </label>
                 </c:if>
                 <c:if test="${room.active eq true}">
-                    <button class="btn btn-raised btn-default activate save deactivateButton"></button>
+                    <label class="switch">
+                        <input type="checkbox" checked class="activate">
+                        <div class="slider round"></div>
+                    </label>
                 </c:if>
             </td>
             </tr>
@@ -131,23 +137,30 @@
         </div>
     </div>
 </div>
-<div id="activateModal" class="modal fade">
+<div id="activateModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center">
                 <div class="lead messageActive">
-                    <spring:message code="room.activate"/>
+                    <p class="cancelName ">
+                        <spring:message code="room.activate"/>
+                    </p>
                 </div>
-                <button id="activateYesButton" class="btn  btn-success ">
-                    <spring:message code="room.ok_button"/>
+                <button id="activateYesButton" class="btn  btn-success admWarningBtn">
+                    <spring:message code="room.yes_button"/>
                 </button>
+
+                <button id="activateNoButton" class="btn btn-danger admWarningBtn" data-dismiss="modal">
+                    <spring:message code="room.no_button"/>
+                </button>
+
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminRoomSearch.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-deactivate-room.js"></script>
