@@ -112,7 +112,7 @@
     <div class="vertical-center-row">
         <div align="center">
             <div id="manager-dialog" class="dialog" hidden title="<spring:message code= "administrator.addManager"/>">
-                <form action="adm-add-manager" method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>"
+                <form method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>"
                       id="managerForm">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
