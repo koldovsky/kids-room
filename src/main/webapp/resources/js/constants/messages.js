@@ -56,6 +56,10 @@ const messages = {
         kid: {
             comment: 'Comment',
             choose: 'Please choose kid'
+        },
+        discount:{
+            addDiscount: 'Add discount',
+            editDiscount: 'Edit discount'
         }
     },
     event: {
@@ -132,5 +136,10 @@ const messages = {
     },
     report: {
         currencySymbol: 'UAH'
+    },
+    preloader: {
+        buttons: {
+            add : 'Add'
+        }
     }
 };

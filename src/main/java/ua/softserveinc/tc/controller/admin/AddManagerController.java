@@ -32,4 +32,11 @@ public class AddManagerController {
                                            BindingResult bindingResult) {
         return userService.adminUpdateManager(manager, bindingResult);
     }
+    private void consoleLog(){
+        System.out.println("Hello world");
+    }
+    private void consoleLog2(){
+        System.out.println("Hello world2");
+    }
+
 }

@@ -9,10 +9,6 @@ var roomWorkingEndTime;
 
 
 $(function () {
-    $('.datepickers').datepicker({
-        dateFormat: constants.parameters.dateFormat,
-        setDate: moment().format(constants.parameters.dateFormatUpperCase)
-    });
     $('#bookingDialog').attr('accept-charset', 'UTF-8');
     if (localStorage['bookingsState'] == null) {
         localStorage['bookingsState'] = ['ACTIVE', 'BOOKED', 'CALCULATE_SUM', 'COMPLETED'];
@@ -256,7 +252,7 @@ function refreshTable(bookingsState) {
                     }else{
                         startTime = "";
                     }
-                    var td = '<input type="text" class="form-control inp-arrivalTime picker" '
+                    var td = '<input type="text" class="inp-arrivalTime picker" '
                         + 'value="'+startTime+'">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.arrivedTime + '" id="arrival-btn" ></button>';
@@ -274,7 +270,7 @@ function refreshTable(bookingsState) {
                     }else{
                         endTime = "";
                     }
-                    var td = '<input type="text" class="form-control inp-leaveTime picker" '
+                    var td = '<input type="text" class="inp-leaveTime picker" '
                         + 'value="'+endTime+'">'
                         + '<button class="btn btn-sm btn-success glyphicon glyphicon-arrow-right" ' +
                         'data-toggle="tooltip" title="' + messages.booking.hint.leaveTime + '" id="leave-btn" ></button>';

@@ -1,4 +1,4 @@
-$().ready(function () {
+$(function () {
 
     var roomId;
     var btn;
@@ -10,15 +10,16 @@ $().ready(function () {
         roomId = getRoomProp(constants.room.properties.id);
         if(this.checked){
             dialog = $('#activateModal');
+            changeActiveRoomState(roomId, btn);
             $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
         }
         else{
-            dialog = $('#deactivateModal');
             $('#reasonDeactivate').css('display', 'none');
             verifyRoomBookingState(roomId);
+            dialog = $('#deactivateModal');
         }
 
-        dialog.modal('show');
+        dialog.modal({backdrop: 'static'});
     });
 
     $('#deactivateYesButton').click(function () {
@@ -36,10 +37,14 @@ $().ready(function () {
     });
 
     $('#activateYesButton').click(function () {
-        changeActiveRoomState(roomId, btn);
-        dialog.modal('hide');
+            changeActiveRoomState(roomId, btn);
+            dialog.modal('hide');
     });
 
+    $('#activateNoButton').click(function () {
+        $(btn).prop('checked', false);
+        dialog.modal('hide');
+    });
     function verifyRoomBookingState(roomId) {
         var src = 'adm-edit-room\\warnings';
         var inputData = {id: roomId};

@@ -33,12 +33,14 @@ public final class AdminConstants {
     public static class AdminModel {
         public static final String ABONNEMENTS_MODEL = "abonnementsList";
         public static final String ABONNEMENT = "abonnement";
+        public static final String DISCOUNTS = "adm-discount";
     }
 
     public static class ViewNames {
         public static final String ABONNEMENTS_VIEW = "adm-abonnements";
         public static final String UPDATE_ABONNEMENT_VIEW = "adm-update-abonnement";
         public static final String CREATE_ABONNEMENT_VIEW = "adm-add-abonnement";
+        public static final String DISCOUNT_VIEW = "discount";
     }
 
     ///////////////////////////////////////
