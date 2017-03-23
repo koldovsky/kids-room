@@ -192,12 +192,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="adm-abonnements">
-                                <span class="glyphicon glyphicon-gift"></span>
-                                <spring:message code="administrator.abonnements"/>
-                            </a>
-                        </li>
-                        <li>
                             <a href="adm-config">
                                 <span class="glyphicon glyphicon-cog"></span>
                                 <spring:message code="administrator.configuration" />
