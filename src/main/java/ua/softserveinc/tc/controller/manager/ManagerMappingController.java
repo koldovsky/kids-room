@@ -87,6 +87,7 @@ public class ManagerMappingController {
         new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
         room, BookingState.COMPLETED);
     Map<User, Long> report = bookingService.generateAReport(bookings);
+    Long sumTotal = bookingService.getSumTotal(bookings);
 
     ModelAndView modelAndView = new ModelAndView(ManagerViewNames.MANAGER_REPORT_ALL_VIEW);
     ModelMap modelMap = modelAndView.getModelMap();
@@ -94,6 +95,7 @@ public class ManagerMappingController {
     modelMap.addAttribute(ReportConstants.ROOM, room);
     modelMap.addAttribute(ReportConstants.REPORT, report);
     modelMap.addAttribute(ReportConstants.END_DATE, endDate);
+    modelMap.addAttribute(ReportConstants.SUM_TOTAL, sumTotal);
     modelMap.addAttribute(ReportConstants.START_DATE, startDate);
 
     return modelAndView;
