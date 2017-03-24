@@ -12,12 +12,12 @@
     <div class="dateSelector">
         <div id="from-div">
             <h3><spring:message code="report.from" /></h3>
-            <input disabled type="date" value="${startDate}" id="startDate">
+            <input disabled type="text" value="${startDate}" id="startDate">
         </div>
 
         <div id="to-div">
             <h3><spring:message code="report.to" /></h3>
-            <input disabled type="date" value="${endDate}" id="endDate">
+            <input disabled type="text" value="${endDate}" id="endDate">
         </div>
     </div>
 
@@ -42,7 +42,7 @@
                 <tr>
                     <td>${user}</td>
                     <td>${user.getEmail()}</td>
-                    <td>${report.get(user)}</td>
+                    <td>${report.get(user)}<spring:message code="report.currencySymbol" /></td>
                 </tr>
                 </c:forEach>
             </tbody>

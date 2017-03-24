@@ -13,12 +13,12 @@
     <div class="dateSelector">
         <div id="from-div">
             <h3><spring:message code="report.from" /></h3>
-            <input disabled type="date" value="${startDate}" id="startDate">
+            <input disabled type="text" value="${startDate}" id="startDate">
         </div>
 
         <div id="to-div">
             <h3><spring:message code="report.to" /></h3>
-            <input disabled type="date" value="${endDate}" id="endDate">
+            <input disabled type="text" value="${endDate}" id="endDate">
         </div>
     </div>
 
@@ -44,12 +44,13 @@
             <tbody>
             <c:forEach var="booking" items="${bookings}">
                 <tr>
-                    <td><fmt:formatDate pattern="dd.MM.yyyy" value="${booking.bookingStartTime}" /></td>
-                    <td>${booking.child}</td>
-                    <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingStartTime}" /></td>
-                    <td><fmt:formatDate pattern="HH:mm" value="${booking.bookingEndTime}" /></td>
+                    <fmt:parseDate value="${booking.date}" pattern="yyyy-MM-dd" var="myDate"/>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy" value="${myDate}" /></td>
+                    <td>${booking.kidName}</td>
+                    <td><fmt:formatDate pattern="HH:mm" value="${booking.dateStartTime}" /></td>
+                    <td><fmt:formatDate pattern="HH:mm" value="${booking.dateEndTime}" /></td>
                     <td>${booking.formatDuration()}</td>
-                    <td><fmt:formatNumber var="bookingCost" value="${ booking.getSum() / 100}" maxFractionDigits="2" minFractionDigits="2" />${bookingCost}</td>
+                    <td>${booking.getCurrencySum()}</td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -58,8 +59,7 @@
                 <td colspan="6" class="captionBottom">
                     <h2>
                         <spring:message code="report.sumTotal" />
-                        <fmt:formatNumber var="totalSum" value="${sumTotal / 100}" maxFractionDigits="2" minFractionDigits="2" />
-                        ${totalSum}
+                       ${sumTotal}
                         <spring:message code="report.currencySymbol" />
                     </h2>
                 </td>
