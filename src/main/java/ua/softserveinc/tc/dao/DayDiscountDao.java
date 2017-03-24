@@ -11,6 +11,8 @@ public interface DayDiscountDao extends BaseDao<DayDiscount> {
 
   void updateDayDiscountById(DayDiscount newDayDiscount);
 
-  List<DayDiscount> findDayDiscountsForCurrentPeriod(Date startDate,Date endDate);
+  void updateDayDiscountState(DayDiscount newDayDiscount);
+
+  List<DayDiscount> getDayDiscountForCurrentDays(Date startDate, Date endDate);
 
 }

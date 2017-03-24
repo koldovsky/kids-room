@@ -65,6 +65,9 @@ INSERT INTO day_discounts (id,reason,value,start_date,end_date,isActive) VALUES 
 INSERT INTO day_discounts (id,reason,value,start_date,end_date,isActive) VALUES (3,'10 marta',10, (STR_TO_DATE('03-16-2017 15:10:10','%m-%d-%Y %H:%i:%s')),
                                                                         (STR_TO_DATE('03-18-2017 15:10:10','%m-%d-%Y %H:%i:%s')),TRUE);
 
+INSERT INTO personal_discounts(id,isActive,end_time,start_time,reason,value,id_user) VALUES (1,TRUE ,'11:27','11:30','Still Discount?',10,1);
+INSERT INTO personal_discounts(id,isActive,end_time,start_time,reason,value,id_user) VALUES (2,TRUE ,'11:27','11:30','Why not?',5,2);
+
 INSERT INTO rooms_off (day_off, room) VALUES (1, 1);
 INSERT INTO rooms_off (day_off, room) VALUES (1, 2);
 INSERT INTO rooms_off (day_off, room) VALUES (1, 3);

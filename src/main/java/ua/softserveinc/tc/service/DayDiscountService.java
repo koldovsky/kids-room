@@ -16,5 +16,7 @@ public interface DayDiscountService extends BaseService<DayDiscount> {
 
   void updateDayDiscountById(DayDiscountDTO dto);
 
+  void changeDayDiscountState(DayDiscountDTO dto);
+
   List<DayDiscountDTO> getDayDiscountsForPeriod(Date startDate,Date endDate);
 }
