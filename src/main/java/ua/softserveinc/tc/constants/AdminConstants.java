@@ -5,8 +5,6 @@ public final class AdminConstants {
     public static final String EDIT_MANAGER = "adm-edit-manager";
 
     //Name of *.jsp files of ADMINISTRATOR
-    public static final String ADD_MANAGER = "adm-add-manager";
-    public static final String UPDATE_MANAGER = "adm-update-manager";
     public static final String EDIT_ROOM = "adm-edit-room";
     public static final String ADD_ROOM = "adm-add-room";
     public static final String UPDATE_ROOM = "adm-update-room";
