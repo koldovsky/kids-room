@@ -59,4 +59,10 @@ public class AdminDiscountController {
     dayDiscountService.updateDayDiscountById(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }
+
+  @PutMapping("changeState")
+  public ResponseEntity<String>  changeDayDiscountState(@RequestBody DayDiscountDTO dto){
+    dayDiscountService.changeDayDiscountState(dto);
+    return new ResponseEntity<String>("ok", HttpStatus.OK);
+  }
 }

@@ -31,16 +31,31 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
     return qResult.stream().map(this::convertToDto).collect(Collectors.toList());
   }
 
+
+  /**
+   * This method returns daily discount by current id
+   *
+   * @param id DayDiscounts id from the client
+   * @return DayDiscount with actual id
+   */
   @Override
   public DayDiscountDTO findDayDiscountById(long id) {
     return convertToDto(dayDiscountDao.getDayDiscountById(id));
   }
 
+  /**
+   * This method returns list of daily discount for specific period
+   *
+   * @param startDate start date of search
+   * @param endDate end date of search
+   * @return List of DayDiscounts for specific period
+   */
   @Override
   public List<DayDiscountDTO> getDayDiscountsForPeriod(Date startDate, Date endDate) {
-    List<DayDiscount> qResult = dayDiscountDao.findDayDiscountsForCurrentPeriod(startDate,endDate);
+    List<DayDiscount> qResult = dayDiscountDao.getDayDiscountForCurrentDays(startDate,endDate);
     return qResult.stream().map(this::convertToDto).collect(Collectors.toList());
   }
+
 
   /**
    * This method adds new discount and evicts cache with current discounts
@@ -62,6 +77,17 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void updateDayDiscountById(DayDiscountDTO dto) {
     dayDiscountDao.updateDayDiscountById(convertToEntity(dto));
+  }
+
+  /**
+   * This method update state of discount by id and evicts cache with current discounts
+   *
+   * @param dto DayDiscount from the client DayDiscount id must not be null
+   */
+  @Override
+  @CacheEvict(value = "fullDayDiscountList", allEntries = true)
+  public void changeDayDiscountState(DayDiscountDTO dto) {
+    dayDiscountDao.updateDayDiscountState(convertToEntity(dto));
   }
 
   /**
