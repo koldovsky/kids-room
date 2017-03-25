@@ -42,10 +42,21 @@
                 <tr>
                     <td>${user}</td>
                     <td>${user.getEmail()}</td>
-                    <td>${report.get(user)}<spring:message code="report.currencySymbol" /></td>
+                    <td>${report.get(user)} <spring:message code="report.currencySymbol" /></td>
                 </tr>
                 </c:forEach>
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" class="captionBottom">
+                    <h2>
+                        <spring:message code="report.sumTotal" />
+                        ${sumTotal}
+                        <spring:message code="report.currencySymbol" />
+                    </h2>
+                </td>
+            </tr>
+            </tfoot>
 
         </table>
     </div>

@@ -1,36 +1,42 @@
 package ua.softserveinc.tc.util;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class CurrencyConverter<T> {
-    public Map<T, BigDecimal> convertCurrency(Map<T, Long> inputMap) {
-        Map<T, BigDecimal> resultMap = new HashMap<T, BigDecimal>();
-        for (T key : inputMap.keySet()) {
-            resultMap.put((T) key, new BigDecimal(inputMap.get(key) / 100.0).setScale(2, RoundingMode.HALF_UP));
-        }
-        return resultMap;
+public class CurrencyConverter {
 
+    private static final CurrencyConverter inctance = new CurrencyConverter();
+
+    private CurrencyConverter() {
     }
 
-    public BigDecimal convertSingle(Long sum) {
-        return new BigDecimal(sum / 100.0).setScale(2, RoundingMode.HALF_UP);
+    public static CurrencyConverter getInctance() {
+        return inctance;
     }
 
-    public List<BookingDto> convertBookingSum(List<Booking> inputList) {
-        List<BookingDto> resultList = new ArrayList<BookingDto>();
-        for (Booking booking : inputList) {
-            BookingDto sto = booking.getDto();
-            sto.setCurrencySum(new BigDecimal(booking.getSum() / 100.0).setScale(2, BigDecimal.ROUND_HALF_UP));
-            resultList.add(sto);
-        }
-        return resultList;
+    public static Map<?, String> convertCurrency(Map<?, Long> inputMap) {
+        return inputMap.entrySet().stream().collect(Collectors.
+                toMap(Map.Entry::getKey, e -> NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(e.getValue() / 100.0)));
+    }
+
+    public static String convertSingle(Long sum) {
+        return NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(sum / 100.0);
+    }
+
+    public static List<BookingDto> convertBookingSum(List<Booking> inputList) {
+        return inputList.stream()
+                .map(booking -> {
+                    BookingDto dto = booking.getDto();
+                    dto.setCurrencySum(NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(booking.getSum() / 100.0));
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 }
+

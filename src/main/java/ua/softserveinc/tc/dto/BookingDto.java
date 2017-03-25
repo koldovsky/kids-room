@@ -38,7 +38,7 @@ public class BookingDto implements Serializable {
     private String comment;
     private Long recurrentId;
 
-    private BigDecimal currencySum;
+    private String currencySum;
 
     private Long userId;
     private Long kidId;
@@ -615,11 +615,11 @@ public class BookingDto implements Serializable {
         this.endDate = df.format(endDate);
     }
 
-    public BigDecimal getCurrencySum() {
+    public String getCurrencySum() {
         return currencySum;
     }
 
-    public void setCurrencySum(BigDecimal sum) {
+    public void setCurrencySum(String sum) {
         this.currencySum = sum;
     }
 
