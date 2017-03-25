@@ -50,7 +50,7 @@
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.dateStartTime}" /></td>
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.dateEndTime}" /></td>
                     <td>${booking.formatDuration()}</td>
-                    <td>${booking.getCurrencySum()}</td>
+                    <td>${booking.getCurrencySum()} <spring:message code="report.currencySymbol" /></td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -90,8 +90,8 @@ public class ManagerMappingController {
     ModelMap modelMap = modelAndView.getModelMap();
 
     modelMap.addAttribute(ReportConstants.ROOM, room);
-    modelMap.addAttribute(ReportConstants.REPORT, CurrencyConverter.convertCurrency(report));
-    modelMap.addAttribute(ReportConstants.SUM_TOTAL, CurrencyConverter.convertSingle(bookingService.getSumTotal(bookings)));
+    modelMap.addAttribute(ReportConstants.REPORT, CurrencyConverter.getInstance().convertCurrency(report));
+    modelMap.addAttribute(ReportConstants.SUM_TOTAL, CurrencyConverter.getInstance().convertSingle(bookingService.getSumTotal(bookings)));
     modelMap.addAttribute(ReportConstants.END_DATE, endDate);
     modelMap.addAttribute(ReportConstants.START_DATE, startDate);
 
@@ -130,8 +130,8 @@ public class ManagerMappingController {
     modelMap.addAttribute(ReportConstants.ROOM, room);
     modelMap.addAttribute(ReportConstants.PARENT, parent);
     modelMap.addAttribute(ReportConstants.END_DATE, endDate);
-    modelMap.addAttribute(ReportConstants.BOOKINGS, CurrencyConverter.convertBookingSum(bookings));
-    modelMap.addAttribute(ReportConstants.SUM_TOTAL, CurrencyConverter.convertSingle(bookingService.getSumTotal(bookings)));
+    modelMap.addAttribute(ReportConstants.BOOKINGS, CurrencyConverter.getInstance().convertBookingSum(bookings));
+    modelMap.addAttribute(ReportConstants.SUM_TOTAL, CurrencyConverter.getInstance().convertSingle(bookingService.getSumTotal(bookings)));
     modelMap.addAttribute(ReportConstants.START_DATE, startDate);
     modelMap
         .addAttribute("pageChecker", "reportParent"); //value for checking the page in header.jsp

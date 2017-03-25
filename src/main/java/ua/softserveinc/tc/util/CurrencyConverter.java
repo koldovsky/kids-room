@@ -11,25 +11,32 @@ import java.util.stream.Collectors;
 
 public class CurrencyConverter {
 
-    private static final CurrencyConverter inctance = new CurrencyConverter();
+    private static CurrencyConverter instance = null;
 
-    private CurrencyConverter() {
+    protected CurrencyConverter() {
     }
 
-    public static CurrencyConverter getInctance() {
-        return inctance;
+    public static CurrencyConverter getInstance() {
+        if (instance == null) {
+            synchronized (CurrencyConverter.class) {
+                if (instance == null) {
+                    instance = new CurrencyConverter();
+                }
+            }
+        }
+        return instance;
     }
 
-    public static Map<?, String> convertCurrency(Map<?, Long> inputMap) {
+    public Map<?, String> convertCurrency(Map<?, Long> inputMap) {
         return inputMap.entrySet().stream().collect(Collectors.
                 toMap(Map.Entry::getKey, e -> NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(e.getValue() / 100.0)));
     }
 
-    public static String convertSingle(Long sum) {
+    public String convertSingle(Long sum) {
         return NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(sum / 100.0);
     }
 
-    public static List<BookingDto> convertBookingSum(List<Booking> inputList) {
+    public List<BookingDto> convertBookingSum(List<Booking> inputList) {
         return inputList.stream()
                 .map(booking -> {
                     BookingDto dto = booking.getDto();
