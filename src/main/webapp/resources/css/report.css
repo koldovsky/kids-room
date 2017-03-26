@@ -16,6 +16,10 @@
     background-color: #D8BFD8
 }
 
+#bookings {
+    margin: auto;
+}
+
 .parent:hover {
     cursor: pointer;
 }
