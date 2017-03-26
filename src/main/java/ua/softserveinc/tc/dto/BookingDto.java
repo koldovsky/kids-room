@@ -9,9 +9,13 @@ import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.util.DateUtil;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
 
 
 public class BookingDto implements Serializable {
@@ -33,6 +37,8 @@ public class BookingDto implements Serializable {
     private BookingState bookingState;
     private String comment;
     private Long recurrentId;
+
+    private String currencySum;
 
     private Long userId;
     private Long kidId;
@@ -609,4 +615,15 @@ public class BookingDto implements Serializable {
         this.endDate = df.format(endDate);
     }
 
+    public String getCurrencySum() {
+        return currencySum;
+    }
+
+    public void setCurrencySum(String sum) {
+        this.currencySum = sum;
+    }
+
+    public String formatDuration() {
+        return toHoursAndMinutes(durationBooking);
+    }
 }

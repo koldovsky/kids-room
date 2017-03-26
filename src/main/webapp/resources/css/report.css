@@ -83,24 +83,26 @@ min-width: 120px;
      margin-left: 10px;
  }
 
+ #bookings{
+     width: 100%;
+ }
+
   table, th, td {
      text-align: center;
       border: 2px solid #4285F4;
       border-collapse: collapse;
       padding: 10px;
-      margin-left: 50px;
-
   }
+
   tr{
     border-collapse: collapse;
     border: 2px solid #ddd;
   }
 
-
   th {
      border: 2px solid #4285F4;
       height: 50px;
-      background-color: 70AAFF;
+      background-color: #70AAFF;
       color: white;
   }
   caption, .captionBottom {
