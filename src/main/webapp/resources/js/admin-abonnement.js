@@ -4,6 +4,7 @@ var table = null;
 
 $(function () {
     refreshDataTable();
+    console.log(hello());
     // function queryAbonnements() {
     //     var abonnements = null;
     //     var path = "adm-all-abonnements";

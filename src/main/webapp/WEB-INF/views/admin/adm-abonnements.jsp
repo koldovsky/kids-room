@@ -13,6 +13,7 @@
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+<%--<script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>--%>
 <script src='${pageContext.request.contextPath}/resources/js/admin-abonnement.js'></script>
 
 
