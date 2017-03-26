@@ -169,4 +169,4 @@
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/intlTelInput.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>
+<%--<script src="${pageContext.request.contextPath}/resources/js/validation/validation-room.js"></script>--%>

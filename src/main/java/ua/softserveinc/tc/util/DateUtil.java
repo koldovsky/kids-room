@@ -12,12 +12,13 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat(
-            DateConstants.SHORT_DATE_FORMAT);
+            DateConstants.SHORT_DATE_FORMAT, Locale.ENGLISH);
     private static DateFormat dateAndTimeFormat = new SimpleDateFormat(
             DateConstants.DATE_AND_TIME_FORMAT);
     private static DateFormat isoDateFormat = new SimpleDateFormat(

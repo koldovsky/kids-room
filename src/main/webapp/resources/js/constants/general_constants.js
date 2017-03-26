@@ -29,7 +29,9 @@ const constants = {
         hoursInDay: 24,
         timeZone: 2,
         dateFormat: "yy-mm-dd",
-        dateFormatUpperCase: "YYYY-MM-DD"
+        dateFormatUpperCase: "YYYY-MM-DD",
+        abonnementsMaxHour: 10000,
+        abonnementsMinHour: 0
     }
 };
 
