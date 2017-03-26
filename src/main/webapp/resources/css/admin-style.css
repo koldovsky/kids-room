@@ -255,10 +255,6 @@ th.th-size {
     text-align: center;
 }
 
-/*.datatable-head {*/
-    /*width: 500px;*/
-/*}*/
-
 .picker-style {
     float: left;
     width: 45%;
@@ -267,4 +263,10 @@ th.th-size {
 
 .button-style {
     width: 40%;
+}
+
+.datatable {
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 80% !important;
 }

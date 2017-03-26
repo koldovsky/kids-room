@@ -13,7 +13,7 @@
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
-<%--<script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>--%>
+<script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-abonnement.js'></script>
 
 
@@ -27,8 +27,8 @@
             </legend>
         </th>
     </div>
-    <table class="reg-form list-objects">
-        <thead class="datatable-head">
+    <table class="reg-form datatable">
+        <thead>
             <tr>
                 <th style="display: none;"><strong>#</strong></th>
                 <th><strong><spring:message code="administrator.abonnement.name"/></strong></th>
