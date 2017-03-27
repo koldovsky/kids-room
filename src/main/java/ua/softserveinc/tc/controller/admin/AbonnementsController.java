@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dto.AbonnementDto;
-import ua.softserveinc.tc.dto.pagination.DataTableInput;
-import ua.softserveinc.tc.dto.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.service.AbonnementsService;
 import ua.softserveinc.tc.validator.AbonnementsValidator;
 
@@ -30,12 +30,11 @@ public class AbonnementsController {
 
     @GetMapping(AbonnementConstants.RestQueries.SELECT_ABONNEMENTS)
     public List<AbonnementDto> selectAbonnements() {
-        List<AbonnementDto> abonnementDtos = abonnementsService.findAllAbonements();
         return abonnementsService.findAllAbonements();
     }
 
     @PostMapping(AbonnementConstants.RestQueries.SELECT_ABONNEMENTS)
-    public DataTableOutput<AbonnementDto> postSelectAbonnements(@RequestBody DataTableInput dataTable) {
+    public DataTableOutput<AbonnementDto> postSelectAbonnements(@RequestBody SortingPagination dataTable) {
         return abonnementsService.paginationAbonnements(dataTable);
     }
 

@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.AbonnementDao;
 import ua.softserveinc.tc.dto.AbonnementDto;
-import ua.softserveinc.tc.dto.pagination.DataTableInput;
-import ua.softserveinc.tc.dto.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.Abonnement;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.mapper.AbonnementMapper;
 import ua.softserveinc.tc.service.AbonnementsService;
-import ua.softserveinc.tc.util.AbonnementCharacteristics;
+import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
 import java.util.List;
@@ -33,18 +33,20 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     private ModelMapper modelMapper;
 
     @Override
-    public DataTableOutput<AbonnementDto> paginationAbonnements(DataTableInput input) {
-        List<AbonnementDto> abonnementDtos = abonnementDao.getAbonnementsFromToLength(input.getStart(), input.getLength())
+    public DataTableOutput<AbonnementDto> paginationAbonnements(SortingPagination sortPaginate) {
+        List<AbonnementDto> abonnementList = abonnementDao.findAll(sortPaginate)
                 .stream()
                 .map(AbonnementDto::new)
                 .collect(Collectors.toList());
-        long abonnementsCount = abonnementDao.getRowsCount();
-        AbonnementCharacteristics characteristics = new AbonnementCharacteristics();
-        int page = characteristics.defineAbonnementsPage(input.getStart(), input.getLength(), abonnementsCount);
-        DataTableOutput<AbonnementDto> tableOutput = new DataTableOutput<>(page, abonnementsCount,
-                abonnementsCount, abonnementDtos);
+        long rowCount = abonnementDao.getRowsCount();
+        long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
+                sortPaginate.getPagination().getItemsPerPage(), rowCount);
 
-        return tableOutput;
+        if (PaginationCharacteristics.isSearched(sortPaginate.getSearches())) {
+            return new DataTableOutput<>(currentPage, rowCount, abonnementList.size(), abonnementList);
+        } else {
+            return new DataTableOutput<>(currentPage, rowCount, rowCount, abonnementList);
+        }
     }
 
     @Override

@@ -39,6 +39,17 @@
                 <th><strong><spring:message code="administrator.abonnement.active"/></strong></th>
             </tr>
         </thead>
+        <%--<tfoot>--%>
+            <%--<tr>--%>
+                <%--<th style="display: none;"><strong></strong></th>--%>
+                <%--<th><strong></strong></th>--%>
+                <%--<th><strong></strong></th>--%>
+                <%--<th><strong></strong></th>--%>
+                <%--<th><strong></strong></th>--%>
+                <%--<th><strong></strong></th>--%>
+                <%--<th><strong></strong></th>--%>
+            <%--</tr>--%>
+        <%--</tfoot>--%>
     </table>
     <!-- abonnements list bounds here -->
     <a tabindex="-1" class="create-object">

@@ -1,11 +1,15 @@
 package ua.softserveinc.tc.dao;
 
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
+
 import java.util.List;
 
 public interface BaseDao<T> {
     T findById(Object id);
 
     List<T> findAll();
+
+    List<T> findAll(SortingPagination pagination);
 
     void create(T entity);
 
@@ -14,4 +18,6 @@ public interface BaseDao<T> {
     void deleteAll();
 
     T update(T entity);
+
+    long getRowsCount();
 }

@@ -87,25 +87,7 @@ $(function () {
         }
     });
 
-    $("#createAbonnementForm").submit(function (event) {
-        event.preventDefault();
-        var path = "adm-create-abonnement";
-        var dataSender = getObjectFromForm($('#createAbonnementForm'));
-        $.ajax({
-            url: path,
-            type: 'POST',
-            contentType: 'application/json',
-            datatype: 'json',
-            data: JSON.stringify(dataSender),
-            success: function (data) {
-                data.id = parseInt($(".listId").last().text()) + 1;
-                appendAbonnementsList(data);
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    });
+    createObject('#createAbonnementForm', 'adm-create-abonnement');
 
     updateObject('.update-object', '#updateAbonnementForm', 'adm-update-abonnement');
 

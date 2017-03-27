@@ -12,23 +12,23 @@ function buildDataTable(selector, uri, columnsArrObj) {
     datatable = $(selector).DataTable({
         'processing': true,
         'bServerSide': true,
+        // 'orderable': true,
+        // 'searching': false,
+        'columnDefs': [{
+            'searchable': false,
+            'orderable': false,
+            'targets': 0
+        }],
         'ajax': {
             'url': uri,
             'data': function (d) {
-                console.log(d);
                 var sendObj = {
                     pagination: {
-                        currentPage: d.draw,
+                        start: d.start,
                         itemsPerPage: d.length
-                    }
-                    // sortings: {
-                    //
-                    // },
-                    // searches: {
-                    //     {
-                    //
-                    //     }
-                    // }
+                    },
+                    sortings: [],
+                    searches: []
                 };
                 return JSON.stringify(sendObj);
             },
@@ -39,7 +39,7 @@ function buildDataTable(selector, uri, columnsArrObj) {
     });
 }
 
-function createObject(selector, formSelector, uri) {
+function createObject(formSelector, uri) {
     $(formSelector).submit(function (event) {
         event.preventDefault();
         var dataSender = getObjectFromForm($(formSelector));
@@ -63,7 +63,6 @@ function updateObject(selector, formSelector, uri) {
     $(selector).click(function (event) {
         event.preventDefault();
         var dataSender = getObjectFromForm(formSelector);
-        /*dataSender.id = 1;*/
         $.ajax({
             url: uri,
             type: 'PUT',
