@@ -28,24 +28,24 @@ public class PersonalDiscount {
   @Column(name = DiscountConstants.Entity.DAY_DISCOUNT_ID, nullable = false)
   private Long id;
 
-  @Column(name = DiscountConstants.Entity.DISCOUNT_REASON,nullable = false)
+  @Column(name = DiscountConstants.Entity.DISCOUNT_REASON, nullable = false)
   @NotNull
-  @Size(min =3 ,max = 255)
+  @Size(min = 3, max = 255)
   private String reason;
 
-  @Column(name = DiscountConstants.Entity.DISCOUNT_VALUE,nullable = false)
+  @Column(name = DiscountConstants.Entity.DISCOUNT_VALUE, nullable = false)
   @NotNull
   @Max(value = 100)
   @Min(value = 1)
   private int value;
 
-  @Column(name = DiscountConstants.Entity.DISCOUNT_START_TIME,nullable = false)
+  @Column(name = DiscountConstants.Entity.DISCOUNT_START_TIME, nullable = false)
   private Time startTime;
 
   @Column(name = DiscountConstants.Entity.DISCOUNT_END_TIME, nullable = false)
   private Time endTime;
 
-  @Column(name = DiscountConstants.Entity.DISCOUNT_ACTIVE,nullable = false)
+  @Column(name = DiscountConstants.Entity.DISCOUNT_ACTIVE, nullable = false)
   @NotNull
   private Boolean active;
 

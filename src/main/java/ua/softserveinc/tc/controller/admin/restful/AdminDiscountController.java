@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.controller.admin.restful;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,15 +38,14 @@ public class AdminDiscountController {
     return dayDiscountService.findDayDiscountById(id);
   }
 
-  @GetMapping("/{startDate}/{endDate}")
-  public ResponseEntity<String> checkUniqueOfDayDiscount(@PathVariable long startDate,
-      @PathVariable long endDate) {
-    if (dayDiscountService.getDayDiscountsForPeriod(new Date(startDate), new Date(endDate)).size()
-        > 0) {
-      return new ResponseEntity<String>("No ok", HttpStatus.OK);
-    } else {
-      return new ResponseEntity<String>("ok", HttpStatus.OK);
-    }
+  @GetMapping("/{startDate}/{endDate}/{startTime}/{endTime}")
+  public ResponseEntity<String> checkUniqueOfDayDiscount(@PathVariable String startDate,
+      @PathVariable String endDate,@PathVariable String startTime ,@PathVariable String endTime) {
+    System.out.println(
+    dayDiscountService.getDayDiscountsForPeriod(LocalDate.parse(startDate),LocalDate.parse(endDate),
+        LocalTime.parse(startTime),LocalTime.parse(endTime)).size()
+    );
+    return new ResponseEntity<String>("lol",HttpStatus.OK);
   }
 
   @PostMapping()
@@ -60,9 +60,4 @@ public class AdminDiscountController {
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }
 
-  @PutMapping("changeState")
-  public ResponseEntity<String>  changeDayDiscountState(@RequestBody DayDiscountDTO dto){
-    dayDiscountService.changeDayDiscountState(dto);
-    return new ResponseEntity<String>("ok", HttpStatus.OK);
-  }
 }

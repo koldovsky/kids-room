@@ -1,6 +1,8 @@
 package ua.softserveinc.tc.service;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
@@ -16,7 +18,6 @@ public interface DayDiscountService extends BaseService<DayDiscount> {
 
   void updateDayDiscountById(DayDiscountDTO dto);
 
-  void changeDayDiscountState(DayDiscountDTO dto);
-
-  List<DayDiscountDTO> getDayDiscountsForPeriod(Date startDate,Date endDate);
+  List<DayDiscountDTO> getDayDiscountsForPeriod(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime);
 }
