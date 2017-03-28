@@ -1,4 +1,4 @@
-package ua.softserveinc.tc.dto.pagination;
+package ua.softserveinc.tc.entity.pagination;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -8,7 +8,7 @@ import java.util.List;
 public class DataTableOutput<T> {
 
     @JsonView(View.class)
-    private int draw;
+    private long draw;
 
     @JsonView(View.class)
     private long recordsTotal = 0L;
@@ -28,18 +28,18 @@ public class DataTableOutput<T> {
     public DataTableOutput() {
     }
 
-    public DataTableOutput(int draw, long recordsTotal, long recordsFiltered, List<T> data) {
+    public DataTableOutput(long draw, long recordsTotal, long recordsFiltered, List<T> data) {
         this.draw = draw;
         this.recordsTotal = recordsTotal;
         this.recordsFiltered = recordsFiltered;
         this.data = data;
     }
 
-    public int getDraw() {
+    public long getDraw() {
         return draw;
     }
 
-    public void setDraw(int draw) {
+    public void setDraw(long draw) {
         this.draw = draw;
     }
 
