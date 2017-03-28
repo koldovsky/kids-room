@@ -1,7 +1,7 @@
 const constants = {
     regex: {
         nameRegex: /^[a-zA-Zа-яА-ЯЇїІіЄєҐґ`´ʼ’'\-\s]+$/,
-        phoneRegex: /^(\+38|8|)\W*\d{10}\W*$/,
+        phoneRegex: /^(\+38|7|)\W*\d{7,13}\W*$/,
         phonePrefixRegex: /\+\d+/g,
         phoneNumbersAndPlus: /^\+?\d+$/,
         numbersOnly: /\d+/g,
