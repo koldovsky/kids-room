@@ -5,7 +5,7 @@ const constants = {
         phonePrefixRegex: /\+\d+/g,
         phoneNumbersAndPlus: /^\+?\d+$/,
         numbersOnly: /\d+/g,
-        emailRegex: /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@(([0-9]{1,3})|([a-zA-Z]{2,11})|(aero|coop|info|museum|name))+(\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name)))*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))*$/,
+        emailRegex: /^[_a-zA-Z0-9-]+@softserveinc.com$/,
         timeRegex: /\d{2}:\d{2}/,
         addresssRegex: /^[a-zA-ZАа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\s]+$/,
         twoNumberRegex: /([0-9]{2})([0-9]{2})/i
