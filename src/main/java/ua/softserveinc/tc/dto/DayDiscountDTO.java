@@ -30,14 +30,14 @@ public class DayDiscountDTO implements Serializable {
   }
 
   public DayDiscountDTO(DayDiscount dayDiscount) {
-    this.setId(dayDiscount.getId());
-    this.setReason(dayDiscount.getReason());
-    this.setValue(dayDiscount.getValue());
-    this.setStartTime(dayDiscount.getStartTime());
-    this.setEndTime(dayDiscount.getEndTime());
-    this.setStartDate(dayDiscount.getStartDate());
-    this.setEndDate(dayDiscount.getEndDate());
-    this.setActive(dayDiscount.getActive());
+    this.id = dayDiscount.getId();
+    this.reason = dayDiscount.getReason();
+    this.value = dayDiscount.getValue();
+    this.startTime = dayDiscount.getStartTime();
+    this.endTime = dayDiscount.getEndTime();
+    this.startDate = dayDiscount.getStartDate();
+    this.endDate = dayDiscount.getEndDate();
+    this.active = dayDiscount.getActive();
   }
 
   public Long getId() {

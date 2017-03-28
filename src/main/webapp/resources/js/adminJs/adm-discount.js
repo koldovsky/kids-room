@@ -5,7 +5,7 @@ $(function () {
 var request, today, time, onButtonAdd,editId;
 
 function refreshDaysDiscounts() {
-  request = "restful/admin/discounts/";
+  request = "restful/admin/discounts/day";
     $.ajax({
       url: request,
       type: 'GET',
@@ -73,7 +73,7 @@ function addNewDiscount(method,bool){
   //Get start date and time
   var endDate = new Date($("#DEndDate").val()+":"+$("#DEndTime").val()+":00");
 
-  request = "restful/admin/discounts/";
+  request = "restful/admin/discounts/day";
   var inputData = {
     reason: $("#DReason").val(),
     value : $("#DValue").val(),
@@ -111,7 +111,7 @@ function onAddDiscountClick(){
 function onEditDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.editDiscount);
   editId = $(this).attr("discountid");
-  request = "restful/admin/discounts/"+editId;
+  request = "restful/admin/discounts/day/"+editId;
   onButtonAdd = false;
   $.ajax({
     url: request,
