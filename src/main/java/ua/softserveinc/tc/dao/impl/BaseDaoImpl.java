@@ -72,46 +72,46 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public List<T> findAll(SortingPagination sortPaginate) {
-        List<T> resultList;
-        Pagination pagination = sortPaginate.getPagination();
-
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(getEntityClass());
-        Root<T> root = criteria.from(getEntityClass());
-
-        List<Predicate> restrictions = new ArrayList<>();
-        List<Order> restrictionsOrder = new ArrayList<>();
-
-        List<Search> searches = sortPaginate.getSearches();
-        if (PaginationCharacteristics.isSearched(searches)) {
-            searches.forEach(item -> restrictions.add(builder.like(
-                    root.get(item.getColumn()), "%" + item.getValue() + "%")));
-        } else {
-            restrictions.addAll(Arrays.asList(
-                    builder.greaterThan(root.get(GenericConstants.GENERIC_ID),
-                            pagination.getStart()),
-                    builder.lessThanOrEqualTo(root.get(GenericConstants.GENERIC_ID),
-                            pagination.getStart() + pagination.getItemsPerPage())
-            ));
-        }
-
-        criteria.select(root).where(builder.and(
-                restrictions.toArray(new Predicate[restrictions.size()])));
-
-        List<Sorting> sorting = sortPaginate.getSortings();
-        sorting.forEach(item -> {
-            if (item.getDirection() == 1) {
-                restrictionsOrder.add(builder.asc(root.get(item.getColumn())));
-            } else {
-                restrictionsOrder.add(builder.desc(root.get(item.getColumn())));
-            }
-        });
-
-        if (!restrictionsOrder.isEmpty()) {
-            criteria.orderBy(restrictionsOrder);
-        }
-
-        resultList = entityManager.createQuery(criteria).getResultList();
+        List<T> resultList = new ArrayList<T>();
+//        Pagination pagination = sortPaginate.getPagination();
+//
+//        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<T> criteria = builder.createQuery(getEntityClass());
+//        Root<T> root = criteria.from(getEntityClass());
+//
+//        List<Predicate> restrictions = new ArrayList<>();
+//        List<Order> restrictionsOrder = new ArrayList<>();
+//
+//        List<Search> searches = sortPaginate.getSearches();
+//        if (PaginationCharacteristics.isSearched(searches)) {
+//            searches.forEach(item -> restrictions.add(builder.like(
+//                    root.get(item.getColumn()), "%" + item.getValue() + "%")));
+//        } else {
+//            restrictions.addAll(Arrays.asList(
+//                    builder.greaterThan(root.get(GenericConstants.GENERIC_ID),
+//                            pagination.getStart()),
+//                    builder.lessThanOrEqualTo(root.get(GenericConstants.GENERIC_ID),
+//                            pagination.getStart() + pagination.getItemsPerPage())
+//            ));
+//        }
+//
+//        criteria.select(root).where(builder.and(
+//                restrictions.toArray(new Predicate[restrictions.size()])));
+//
+//        List<Sorting> sorting = sortPaginate.getSortings();
+//        sorting.forEach(item -> {
+//            if (item.getDirection() == 1) {
+//                restrictionsOrder.add(builder.asc(root.get(item.getColumn())));
+//            } else {
+//                restrictionsOrder.add(builder.desc(root.get(item.getColumn())));
+//            }
+//        });
+//
+//        if (!restrictionsOrder.isEmpty()) {
+//            criteria.orderBy(restrictionsOrder);
+//        }
+//
+//        resultList = entityManager.createQuery(criteria).getResultList();
         return resultList;
     }
 

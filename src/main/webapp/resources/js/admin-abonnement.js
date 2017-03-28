@@ -36,7 +36,8 @@ $(function () {
                     "data-toggle='modal' data-target='#updateAbonnement'>" +
                     "<i class='glyphicon glyphicon-pencil'></i></button></a></span>"
                 );
-            }
+            },
+            'orderable': false
         },
         {
             'data': null,
@@ -46,7 +47,8 @@ $(function () {
                     "<span class='glyphicon glyphicon-user'>" +
                     "</button></span>"
                 );
-            }
+            },
+            'orderable': false
         },
         {
             'data': null,
@@ -57,7 +59,8 @@ $(function () {
                     "<div class='slider round'></div>" +
                     "</label></span>"
                 );
-            }
+            },
+            'orderable': false
         }
     ];
 

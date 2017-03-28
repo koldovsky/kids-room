@@ -9,10 +9,12 @@ public class SortingPagination {
     private List<Search> searches;
     private Pagination pagination;
 
-
     public class Sorting {
         private int direction;
         private String column;
+
+        public Sorting() {
+        }
 
         public int getDirection() {
             return direction;
@@ -35,12 +37,7 @@ public class SortingPagination {
         private String value;
         private String column;
 
-        public String getColumn() {
-            return column;
-        }
-
-        public void setColumn(String column) {
-            this.column = column;
+        public Search() {
         }
 
         public String getValue() {
@@ -50,11 +47,22 @@ public class SortingPagination {
         public void setValue(String value) {
             this.value = value;
         }
+
+        public String getColumn() {
+            return column;
+        }
+
+        public void setColumn(String column) {
+            this.column = column;
+        }
     }
 
     public class Pagination {
         private long start;
         private long itemsPerPage;
+
+        public Pagination() {
+        }
 
         public long getStart() {
             return start;

@@ -270,3 +270,8 @@ th.th-size {
     padding: 0 !important;
     width: 80% !important;
 }
+
+.column-names {
+    visibility: hidden;
+    /*display: none;*/
+}

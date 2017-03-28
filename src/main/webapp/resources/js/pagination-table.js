@@ -12,8 +12,8 @@ function buildDataTable(selector, uri, columnsArrObj) {
     datatable = $(selector).DataTable({
         'processing': true,
         'bServerSide': true,
-        // 'orderable': true,
-        // 'searching': false,
+        'searching': false,
+        'sort': true,
         'columnDefs': [{
             'searchable': false,
             'orderable': false,
@@ -22,7 +22,7 @@ function buildDataTable(selector, uri, columnsArrObj) {
         'ajax': {
             'url': uri,
             'data': function (d) {
-                var sendObj = {
+                let sendObj = {
                     pagination: {
                         start: d.start,
                         itemsPerPage: d.length
@@ -30,6 +30,18 @@ function buildDataTable(selector, uri, columnsArrObj) {
                     sortings: [],
                     searches: []
                 };
+
+                d.order.forEach(function (item) {
+                    let column = $(selector + "-wrapper").find(".column-names").children()[item.column];
+                    item.dir == 'asc' ? item.dir = 1 : item.dir = 0;
+                    sendObj.sortings.push(
+                        {
+                            direction: item.dir,
+                            column: $(column).text()
+                        }
+                    );
+                });
+                console.log(sendObj);
                 return JSON.stringify(sendObj);
             },
             'contentType': 'application/json',
@@ -39,10 +51,11 @@ function buildDataTable(selector, uri, columnsArrObj) {
     });
 }
 
+
 function createObject(formSelector, uri) {
     $(formSelector).submit(function (event) {
         event.preventDefault();
-        var dataSender = getObjectFromForm($(formSelector));
+        let dataSender = getObjectFromForm($(formSelector));
         $.ajax({
             url: uri,
             type: 'POST',
@@ -62,7 +75,7 @@ function createObject(formSelector, uri) {
 function updateObject(selector, formSelector, uri) {
     $(selector).click(function (event) {
         event.preventDefault();
-        var dataSender = getObjectFromForm(formSelector);
+        let dataSender = getObjectFromForm(formSelector);
         $.ajax({
             url: uri,
             type: 'PUT',

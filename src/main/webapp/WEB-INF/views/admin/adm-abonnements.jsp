@@ -27,8 +27,15 @@
             </legend>
         </th>
     </div>
-    <table class="reg-form datatable">
-        <thead>
+
+    <div class="datatable-wrapper">
+        <div class="column-names">
+            <span>name</span>
+            <span>price</span>
+            <span>hour</span>
+        </div>
+        <table class="reg-form datatable">
+            <thead>
             <tr>
                 <th style="display: none;"><strong>#</strong></th>
                 <th><strong><spring:message code="administrator.abonnement.name"/></strong></th>
@@ -38,19 +45,21 @@
                 <th><strong><spring:message code="administrator.assign"/></strong></th>
                 <th><strong><spring:message code="administrator.abonnement.active"/></strong></th>
             </tr>
-        </thead>
-        <%--<tfoot>--%>
+            </thead>
+            <%--<tfoot>--%>
             <%--<tr>--%>
-                <%--<th style="display: none;"><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
+            <%--<th style="display: none;"><strong></strong></th>--%>
+            <%--<th><strong></strong></th>--%>
+            <%--<th><strong></strong></th>--%>
+            <%--<th><strong></strong></th>--%>
+            <%--<th><strong></strong></th>--%>
+            <%--<th><strong></strong></th>--%>
+            <%--<th><strong></strong></th>--%>
             <%--</tr>--%>
-        <%--</tfoot>--%>
-    </table>
+            <%--</tfoot>--%>
+        </table>
+    </div>
+
     <!-- abonnements list bounds here -->
     <a tabindex="-1" class="create-object">
         <button type="button" class="btn btn-raised btn-primary btn-add-room"
