@@ -181,4 +181,39 @@ html, body, .container {
     padding-top: 20px;
 }
 
+#discounts-list {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding-left: 45px;
+    padding-right: 60px;
+    text-align: center;
+    align-content: center;
+}
 
+#discounts-list thead {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    background-color: #4285F4;
+}
+
+#discount-table {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    color: black;
+}
+
+#discount-table tr {
+    height: 40px;
+}
+
+#discount-table tbody {
+    background-color: #f2f2f2;
+    font-size: 14px;
+}
+
+#discount-header {
+
+}
