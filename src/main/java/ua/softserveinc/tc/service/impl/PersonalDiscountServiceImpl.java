@@ -1,57 +1,46 @@
 package ua.softserveinc.tc.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.dao.PersonalDiscountDao;
 import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import ua.softserveinc.tc.entity.PersonalDiscount;
 import ua.softserveinc.tc.service.PersonalDiscountService;
 
-
+@Service
 public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscount> implements
     PersonalDiscountService {
 
+  @Autowired
+  private PersonalDiscountDao personalDiscount;
+
   @Override
   public List<PersonalDiscountDTO> findAllPersonalDiscounts() {
-    return null;
+    List<PersonalDiscount> qResult = personalDiscount.findAll();
+    return qResult.stream().map(PersonalDiscountDTO::new).collect(Collectors.toList());
+  }
+
+  @Override
+  public PersonalDiscountDTO findPersonalDiscountById(Long id) {
+    return new PersonalDiscountDTO(personalDiscount.findById(id));
+  }
+
+  @Override
+  public List<PersonalDiscountDTO> findPersonalDiscountByUserId(Long id) {
+    List<PersonalDiscount> qResult = personalDiscount.getPersonalDiscountByUser(id);
+    return qResult.stream().map(PersonalDiscountDTO::new).collect(Collectors.toList());
   }
 
   @Override
   public void addNewPersonalDiscount(PersonalDiscountDTO personalDiscountDTO) {
-
+    personalDiscount.create(new PersonalDiscount(personalDiscountDTO));
   }
 
   @Override
   public void updatePersonalDiscountById(PersonalDiscountDTO personalDiscountDTO) {
-
+    personalDiscount.update(new PersonalDiscount(personalDiscountDTO));
   }
 
-  @Override
-  public PersonalDiscountDTO findPersonalDiscountById(long id) {
-    return null;
-  }
-
-  @Override
-  public void changePersonalDiscountState(PersonalDiscountDTO personalDiscountDTO) {
-
-  }
-
-  @Override
-  public PersonalDiscountDTO getPersonalDiscountByUserId(long id) {
-    return null;
-  }
-
-  private PersonalDiscount convertToEntity(PersonalDiscountDTO dto){
-    PersonalDiscount entity = new PersonalDiscount();
-    return entity;
-  }
-
-  private PersonalDiscountDTO convertToDTO(PersonalDiscount entity){
-    PersonalDiscountDTO dto = new PersonalDiscountDTO();
-    dto.setId(entity.getId());
-    dto.setReason(entity.getReason());
-    dto.setValue(entity.getValue());
-    dto.setStartTime(entity.getStartTime());
-    dto.setEndTime(entity.getEndTime());
-    dto.setActive(entity.getActive());
-    return dto;
-  }
 }
