@@ -26,7 +26,9 @@
             <table id="discount-table" class=" col-xs-12 col-md-12">
                 <thead>
                 <tr>
-                    <td id="discount-header" colspan="4"></td>
+                    <td id="discount-header" colspan="4">
+                        <spring:message code="manager.dailyDiscount"/>
+                    </td>
                 </tr>
                 </thead>
                 <tbody>

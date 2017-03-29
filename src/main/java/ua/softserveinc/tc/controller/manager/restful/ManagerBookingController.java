@@ -48,9 +48,6 @@ public class ManagerBookingController {
   @Autowired
   private UserService userService;
 
-  @Autowired
-  private DayDiscountService dayDiscountService;
-
   /**
    * Receives the date, id of room and array of booking states from the client. Figures out list of
    * all booking that are in received states for the given date Send to the client information about
@@ -190,16 +187,6 @@ public class ManagerBookingController {
     Booking booking = bookingService.confirmBookingEndTime(bookingDto);
     booking.setBookingState(BookingState.COMPLETED);
     bookingService.update(booking);
-  }
-
-  @GetMapping("/discount/{startDate}/{endDate}/{startTime}/{endTime}")
-  public List<DayDiscountDTO> getDiscountsForCurrentPeriod(@PathVariable String startDate,
-                                                           @PathVariable String endDate,
-                                                           @PathVariable String startTime,
-                                                           @PathVariable String endTime) {
-
-    return dayDiscountService.getDayDiscountsForPeriod(LocalDate.parse(startDate), LocalDate.parse(endDate),
-            LocalTime.parse(startTime), LocalTime.parse(endTime));
   }
 
 }

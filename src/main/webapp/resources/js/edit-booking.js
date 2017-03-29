@@ -581,8 +581,8 @@ clearModalVindow = function () {
 
 function getDayDiscount(date) {
     let array = date.split('-');
-    let startDate = array[0] + "-" + array[1] + "-" + array[2];
-    let request = "restful/manager-booking/discount/" + startDate + "/" + startDate + "/00:00:00/23:59:59";
+    let startDate = `${array[0]}-${array[1]}-${array[2]}`;
+    let request = `restful/discount/${startDate}/${startDate}/00:00:00/23:59:59`;
 
     $.ajax({
         url: request,
@@ -592,7 +592,6 @@ function getDayDiscount(date) {
             let tr = "";
 
             if (users.length > 0) {
-                $('#discount-header').html('List of active discounts for ' + date);
                 $('#discounts-list tbody').html('');
 
                 $.each(users, function (i, discount) {

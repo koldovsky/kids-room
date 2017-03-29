@@ -409,17 +409,22 @@
                         <div class="modal-body">
                             <div align="center">
                                 <br>
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                     <h1><span style="vertical-align:middle ;color: #4CAF50;"
                                               class="glyphicon glyphicon-stop"></span></h1> <spring:message
                                         code="yourBooking"/>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
+                                    <h1><span style="vertical-align:middle ;color: #FFFF00;"
+                                              class="glyphicon glyphicon-stop"></span></h1> <spring:message
+                                        code="dayDiscount"/>
+                                </div>
+                                <div class="col-xs-3">
                                     <h1><span style="vertical-align:middle ;color: #EEEEEE;"
                                               class="glyphicon glyphicon-stop"></span></h1> <spring:message
                                         code="room"/>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                     <h1><span style="vertical-align:middle ;color: #ff0000;"
                                               class="glyphicon glyphicon-stop"></span></h1> <spring:message
                                         code="bookedRoom"/>
