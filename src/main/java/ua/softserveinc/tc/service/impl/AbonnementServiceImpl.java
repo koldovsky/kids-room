@@ -1,12 +1,17 @@
 package ua.softserveinc.tc.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.AbonnementDao;
 import ua.softserveinc.tc.dto.AbonnementDto;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.Abonnement;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
+import ua.softserveinc.tc.mapper.AbonnementMapper;
 import ua.softserveinc.tc.service.AbonnementsService;
+import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
 import java.util.List;
@@ -21,7 +26,30 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     @Autowired
     AbonnementDao abonnementDao;
 
+    @Autowired
+    AbonnementMapper abonnementMapper;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public DataTableOutput<AbonnementDto> paginationAbonnements(SortingPagination sortPaginate) {
+        List<AbonnementDto> abonnementList = abonnementDao.findAll(sortPaginate)
+                .stream()
+                .map(AbonnementDto::new)
+                .collect(Collectors.toList());
+        long rowCount = abonnementDao.getRowsCount();
+        long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
+                sortPaginate.getPagination().getItemsPerPage(), rowCount);
+
+        if (PaginationCharacteristics.isSearched(sortPaginate.getSearches())) {
+            return new DataTableOutput<>(currentPage, rowCount, abonnementList.size(), abonnementList);
+        } else {
+            return new DataTableOutput<>(currentPage, rowCount, rowCount, abonnementList);
+        }
+    }
+
+    @Override
     public List<AbonnementDto> findAllAbonements() {
         return abonnementDao.findAll()
                 .stream()
@@ -31,11 +59,25 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
 
     @Override
     public AbonnementDto findAbonnement(long id) {
-        return new AbonnementDto(abonnementDao.findById(id));
+        return modelMapper.map(abonnementDao.findById(id), AbonnementDto.class);
     }
 
     @Override
-    public void updateAbonnement(AbonnementDto abonnementDto) {
-        abonnementDao.update(abonnementDto.toEntity());
+    public AbonnementDto updateAbonnement(AbonnementDto abonnementDto) {
+        Abonnement abonnement = abonnementDao.findById(abonnementDto.getId());
+        abonnement = abonnementMapper.setEntityFromDto(abonnement, abonnementDto);
+        return new AbonnementDto(abonnementDao.update(abonnement));
+    }
+
+    @Override
+    public AbonnementDto createAbonnement(AbonnementDto abonnementDto) {
+        Abonnement abonnement = modelMapper.map(abonnementDto, Abonnement.class);
+        abonnementDao.create(abonnement);
+        return abonnementDto;
+    }
+
+    @Override
+    public void updateActiveState(long id, boolean active) {
+        abonnementDao.updateByActiveState(id, active);
     }
 }

@@ -12,27 +12,51 @@ $(document).ready(function() {
        $.validator.addMethod('regexPhone', function(value, element, regexpr) {
           return regexpr.test(value);
        }, messages.adminValidation.phone);
-    $('#managerForm, #managerUpdateForm').validate({
+    $('#managerForm').validate({
             rules:{
                 email: {
-                   required: true,
-                   regEmail: constants.regex.emailRegex
+                    required: true,
+                    regEmail: constants.regex.emailRegex
                 },
                 firstName: {
-                   required: true,
-                   regexFirstName: constants.regex.nameRegex,
-                   minlength: constants.parameters.nameMinLength,
-                   maxlength: constants.parameters.nameMaxLength
+                    required: true,
+                    regexFirstName: constants.regex.nameRegex,
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
                 },
                 lastName: {
-                   required: true,
-                   regexLastName: constants.regex.nameRegex,
-                   minlength: constants.parameters.nameMinLength,
-                   maxlength: constants.parameters.nameMaxLength
+                    required: true,
+                    regexLastName: constants.regex.nameRegex,
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
                 },
                 phoneNumber:{
-                   required: true,
-                   regexPhone: constants.regex.phoneRegex
+                    required: true,
+                    regexPhone: constants.regex.phoneRegex
+                }
+            }
+        });
+        $('#managerUpdateForm').validate({
+            rules:{
+                email: {
+                    required: true,
+                    regEmail: constants.regex.emailRegex
+                },
+                firstName: {
+                    required: true,
+                    regexFirstName: constants.regex.nameRegex,
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
+                },
+                lastName: {
+                    required: true,
+                    regexLastName: constants.regex.nameRegex,
+                    minlength: constants.parameters.nameMinLength,
+                    maxlength: constants.parameters.nameMaxLength
+                },
+                phoneNumber:{
+                    required: true,
+                    regexPhone: constants.regex.phoneRegex
                 }
             }
         });

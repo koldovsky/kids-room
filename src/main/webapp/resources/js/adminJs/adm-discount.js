@@ -18,8 +18,8 @@ function refreshDaysDiscounts() {
         $.each(users, function (i, discount) {
           tr += '<tr class="discountData"><td>' + discount.reason + '</td>'
               + '<td>' + discount.value + '</td>'
-              + '<td>' + moment(discount.startDate).format("DD-MM-YYYY")+' - '+ moment(discount.endDate).format("DD-MM-YYYY")+ '</td>'
-              + '<td>' + moment(discount.startDate).format("HH-MM")+' - '+ moment(discount.endDate).format("HH-MM") + '</td>'
+              + '<td>' + discount.startDate+' - '+ discount.endDate + '</td>'
+              + '<td>' + discount.startTime+' - '+discount.endTime + '</td>'
               + '<td><button id="btn-edit"'
               +'class="btn btn-raised btn-info editDayDiscount" data-toggle="modal" data-target="#addDiscountDiv" '
               + 'discountid="'+discount.id+'">'
@@ -77,8 +77,10 @@ function addNewDiscount(method,bool){
   var inputData = {
     reason: $("#DReason").val(),
     value : $("#DValue").val(),
-    startDate :startDate,
-    endDate : endDate,
+    startDate : "23-03-2017",
+    endDate : "23-03-2017",
+    startTime: "11:00",
+    endTime: "23:00",
     active : true,
   };
   if(bool)inputData.id = editId;

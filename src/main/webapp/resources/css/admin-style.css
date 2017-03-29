@@ -125,7 +125,7 @@ th.th-size {
 }
 
 .sizing-between input {
-    text-align: center;
+    text-align: left;
 }
 
 .days-off {
@@ -245,6 +245,16 @@ th.th-size {
     width: 300px;
 }
 
+.table-wrapper {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.create-object {
+    display: block;
+    text-align: center;
+}
+
 .picker-style {
     float: left;
     width: 45%;
@@ -253,4 +263,10 @@ th.th-size {
 
 .button-style {
     width: 40%;
+}
+
+.datatable {
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 80% !important;
 }
