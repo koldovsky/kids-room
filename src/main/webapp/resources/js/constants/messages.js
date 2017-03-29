@@ -126,7 +126,12 @@ const messages = {
         warnings: {
             active: 'Warning! Room has active bookings',
             planning: 'Warning! Room has planned bookings'
+        },
+        info: {
+            newRoom: 'Add new room',
+            updateRoom: 'Edit information about room'
         }
+       
     },
     booking: {
         hint: {

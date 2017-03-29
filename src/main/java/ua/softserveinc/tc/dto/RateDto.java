@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.entity.Rate;
+import ua.softserveinc.tc.util.CurrencyConverter;
 
 
 public class RateDto {
@@ -15,7 +16,7 @@ public class RateDto {
 
     public RateDto(Rate rate) {
         this.hourRate = rate.getHourRate().toString();
-        this.priceRate = rate.getPriceRate().toString();
+        this.priceRate = CurrencyConverter.getInstance().convertSingle(rate.getPriceRate());
     }
 
     public String getHourRate() {
@@ -33,4 +34,13 @@ public class RateDto {
     public void setPriceRate(String priceRate) {
         this.priceRate = priceRate;
     }
+
+    public Long getLongPrice(){
+        return CurrencyConverter.getInstance().convertToLong(priceRate);
+    }
+
+     public Integer getIntegerHour(){
+        return Integer.valueOf(hourRate);
+    }
+
 }

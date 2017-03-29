@@ -125,7 +125,7 @@ th.th-size {
 }
 
 .sizing-between input {
-    text-align: left;
+    text-align: center;
 }
 
 .days-off {
@@ -177,7 +177,7 @@ th.th-size {
     padding-left: 10px;
 }
 
-.uib-datepicker-popup.dropdown-menu th {
+.uib-datepicker-popup.dropdown-menu th{
     background-color: white;
     color: #4d94ff;
     height: 25px;
@@ -255,16 +255,54 @@ th.th-size {
     text-align: center;
 }
 
-.picker-style {
+
+#addRoom form{
+    font-family: RobotoDraft, 'Arial', sans-serif;
+    line-height: 2rem;
+    letter-spacing: 0.01rem;
+    color: #212121;
+    background-color: #eee;
+    padding: 5px 20px;
+
+}
+#addRoom .modal-content .modal-body{
+    padding-top: 20px;
+}
+.list-managers{
+    width: 100%;
+}
+.rates .form-controll{
+   width: 50px;
     float: left;
     width: 45%;
     margin: 0 2% 20px 2%;
 }
+.tableRates{
+    border: none;
 
-.button-style {
-    width: 40%;
+    margin: auto;
+}
+.tableRates th{
+    background-color: #eee;
+    color: black;
+    height: 30px;
 }
 
+.hours{
+    text-align: center;
+    margin: auto;
+    width: 70%;
+    padding-bottom: 20px;
+}
+
+.buttonsDialog{
+    float: right;
+}
+.danger-info{
+    border: 3px solid #790711;
+    background-color: #ee9c41;
+    color: white;
+}
 .datatable {
     margin: 0 auto !important;
     padding: 0 !important;

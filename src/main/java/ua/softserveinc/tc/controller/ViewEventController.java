@@ -83,7 +83,7 @@ public class ViewEventController {
                 break;
             default:
                 model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
-                resultView = AdminConstants.EDIT_ROOM;
+                resultView = AdminConstants.ROOM;
         }
         return resultView;
     }

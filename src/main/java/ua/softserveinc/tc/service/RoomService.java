@@ -1,15 +1,18 @@
 package ua.softserveinc.tc.service;
 
+import org.springframework.validation.BindingResult;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.Room;
 
+import java.net.BindException;
 import java.util.Date;
 import java.util.List;
 
 public interface RoomService extends BaseService<Room> {
 
-    void saveOrUpdate(Room room);
+    String saveOrUpdate(RoomDto room, BindingResult bindingResult);
 
     /**
      * Figures out all time periods where given room is full i.e. there are no
