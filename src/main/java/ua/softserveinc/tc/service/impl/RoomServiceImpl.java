@@ -70,12 +70,12 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
         List<String> listError = new ArrayList<String>();
         if (bindingResult.hasErrors()) {
             for (Object object : bindingResult.getAllErrors()) {
-                FieldError er = (FieldError)object;
+                FieldError er = (FieldError) object;
                 listError.add(messageSource.getMessage(er.getCode(), null, LocaleContextHolder.getLocale()));
             }
-        }else{
+        } else {
             Room room = RoomDto.getRoomObjectFromDtoValues(dto);
-            if(dto.getManagers().length() > 0) {
+            if (dto.getManagers().length() > 0) {
                 List<User> managers = new ArrayList<>();
                 if (dto.getManagers().length() == 1) {
                     User manager = userService.findUserId(Long.valueOf(dto.getManagers()));

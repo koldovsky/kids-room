@@ -78,7 +78,6 @@ public class AdminRoomController {
                 List<String> listEmailManagers = roomService.emailManagersByRoom(roomDto.getId());
                 mailService.sendNotifyDeactivateRoom(listEmailManagers, roomDto.getName(), deactivateRoomDto.getReason(), infoDeactivateRoomDtoList);
             } catch (MessagingException e) {
-                e.printStackTrace();
                 logger.log(Level.WARNING, "Notify email about deactivate room didn't send. With error " + e.getMessage());
             }
         }
