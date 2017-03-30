@@ -1,5 +1,5 @@
 $(function () {
-  refreshDaysDiscounts();
+  //refreshDaysDiscounts();
 });
 
 var request, today, time, onButtonAdd,editId;

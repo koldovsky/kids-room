@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.DayDiscountDao;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.entity.DayDiscount;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.service.DayDiscountService;
+import ua.softserveinc.tc.util.PaginationCharacteristics;
 
 
 @Service
@@ -34,6 +37,15 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
     return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 
+  @Override
+  public DataTableOutput<DayDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate) {
+    List<DayDiscountDTO> listDto = dayDiscountDao.findAll(sortPaginate).stream()
+        .map(DayDiscountDTO::new).collect(Collectors.toList());
+    long rowCount = dayDiscountDao.getRowsCount();
+    long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
+        sortPaginate.getPagination().getItemsPerPage(), rowCount);
+    return  new DataTableOutput<>(currentPage, rowCount, rowCount, listDto);
+  }
 
   /**
    * This method returns daily discount by current id
@@ -56,7 +68,8 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Override
   public List<DayDiscountDTO> getDayDiscountsForPeriod(LocalDate startDate, LocalDate endDate,
       LocalTime startTime, LocalTime endTime) {
-    List<DayDiscount> qResult = dayDiscountDao.getDayDiscountForCurrentDays(startDate, endDate, startTime,endTime);
+    List<DayDiscount> qResult = dayDiscountDao
+        .getDayDiscountForCurrentDays(startDate, endDate, startTime, endTime);
     return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 

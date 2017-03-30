@@ -8,7 +8,7 @@
 
 var datatable = null;
 
-function buildDataTable(selector, uri, columnsArrObj) {
+function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
     datatable = $(selector).DataTable({
         'processing': true,
         'bServerSide': true,
@@ -37,6 +37,8 @@ function buildDataTable(selector, uri, columnsArrObj) {
         },
         'columns': columnsArrObj
     });
+
+    addFunctions();
 }
 
 function createObject(formSelector, uri) {
