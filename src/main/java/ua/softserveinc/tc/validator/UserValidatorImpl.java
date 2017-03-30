@@ -37,7 +37,6 @@ public class UserValidatorImpl implements UserValidator {
         ValidationUtils.rejectIfEmpty(errors, ValidationConstants.FIRST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
         ValidationUtils.rejectIfEmpty(errors, ValidationConstants.LAST_NAME, ValidationConstants.EMPTY_FIELD_MSG);
 
-
         if (!Pattern.compile(ValidationConstants.PASSWORD_REGEX)
                 .matcher(user.getPassword())
                 .matches()) {

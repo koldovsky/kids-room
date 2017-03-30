@@ -8,18 +8,20 @@
 <script src="${pageContext.request.contextPath}/resources/js/report.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/pagination.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
-<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js' type="text/javascript"></script>
 
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js' type="text/javascript"></script>
+<link href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css' rel="stylesheet"/>
 <div id="scroller">
     <div class="dateSelector">
         <div id="from-div">
             <h3><spring:message code="report.from" /></h3>
-            <input type="date" value="${startDate}" id="startDate">
+            <input type="text" value="${startDate}" id="startDate" class="datepickers">
         </div>
 
         <div id="to-div">
             <h3><spring:message code="report.to" /></h3>
-            <input type="date" value="${endDate}" id="endDate">
+            <input type="text" value="${endDate}" id="endDate" class="datepickers">
         </div>
     </div>
 
@@ -53,4 +55,8 @@
     <input id="itemsPerPage" type="hidden" value="10" />
     <a id="dlink"  style="display:none;"></a>
 </div>
+<script src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
+</c:if>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-report.js"></script>

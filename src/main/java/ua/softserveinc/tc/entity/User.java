@@ -89,6 +89,9 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "abonementUsers")
     private List<Abonnement> abonnements;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "user")
+    private List<PersonalDiscount> personalDiscounts;
+
     public Long getId() {
         return id;
     }
@@ -192,12 +195,22 @@ public class User implements Serializable {
     public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
-    
+
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-    @Override
+    public List<PersonalDiscount> getPersonalDiscounts() {
+      return personalDiscounts;
+    }
+
+    public void setPersonalDiscounts(
+        List<PersonalDiscount> personalDiscounts) {
+      this.personalDiscounts = personalDiscounts;
+    }
+
+
+  @Override
     public String toString() {
         return firstName + " " + lastName;
     }
@@ -219,7 +232,12 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = id.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + phoneNumber.hashCode();
+        result = 31 * result + role.hashCode();
+        return result;
     }
-
 }

@@ -1,11 +1,11 @@
 const constants = {
     regex: {
         nameRegex: /^[a-zA-Zа-яА-ЯЇїІіЄєҐґ`´ʼ’'\-\s]+$/,
-        phoneRegex: /^(\+38|8|)\W*\d{10}\W*$/,
+        phoneRegex: /^(\+38|7|)\W*\d{7,13}\W*$/,
         phonePrefixRegex: /\+\d+/g,
         phoneNumbersAndPlus: /^\+?\d+$/,
         numbersOnly: /\d+/g,
-        emailRegex: /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@(([0-9]{1,3})|([a-zA-Z]{2,11})|(aero|coop|info|museum|name))+(\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name)))*\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))*$/,
+        emailRegex: /^[_a-zA-Z0-9-]+@softserveinc.com$/,
         timeRegex: /\d{2}:\d{2}/,
         addresssRegex: /^[a-zA-ZАа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\s]+$/,
         twoNumberRegex: /([0-9]{2})([0-9]{2})/i,
@@ -31,7 +31,9 @@ const constants = {
         hoursInDay: 24,
         timeZone: 2,
         dateFormat: "yy-mm-dd",
-        dateFormatUpperCase: "YYYY-MM-DD"
+        dateFormatUpperCase: "YYYY-MM-DD",
+        abonnementsMaxHour: 10000,
+        abonnementsMinHour: 0
     },
     keyCodes: {
         backspace: 8,

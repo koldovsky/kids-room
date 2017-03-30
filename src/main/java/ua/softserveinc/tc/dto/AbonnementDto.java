@@ -6,6 +6,7 @@ import ua.softserveinc.tc.entity.Abonnement;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @JsonInclude(Include.NON_NULL)
 public class AbonnementDto implements Serializable {
@@ -14,9 +15,7 @@ public class AbonnementDto implements Serializable {
     private String name;
     private int hour;
     private long price;
-    private boolean isActive;
-    private Date startDate;
-    private Date endDate;
+    private boolean isActive = true;
 
     public AbonnementDto() {
     }
@@ -27,8 +26,6 @@ public class AbonnementDto implements Serializable {
         this.hour = abonnement.getHour();
         this.price = abonnement.getPrice();
         this.isActive = abonnement.getIsActive();
-        this.startDate = abonnement.getStartDate();
-        this.endDate = abonnement.getEndDate();
     }
 
     public Abonnement toEntity() {
@@ -36,8 +33,6 @@ public class AbonnementDto implements Serializable {
         abonnement.setId(this.id);
         abonnement.setName(this.name);
         abonnement.setHour(this.hour);
-        abonnement.setStartDate(this.startDate);
-        abonnement.setEndDate(this.endDate);
         abonnement.setPrice(this.price);
         abonnement.setActive(this.isActive);
         return abonnement;
@@ -76,15 +71,6 @@ public class AbonnementDto implements Serializable {
             return this;
         }
 
-        public Builder withStartDate(Date startDate) {
-            this.abonnementDto.setStartDate(startDate);
-            return this;
-        }
-
-        public Builder withEndDate(Date endDate) {
-            this.abonnementDto.setEndDate(endDate);
-            return this;
-        }
 
         public AbonnementDto build() {
             return this.abonnementDto;
@@ -131,22 +117,6 @@ public class AbonnementDto implements Serializable {
         isActive = active;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
     @Override
     public String toString() {
         return "AbonnementDto{" +
@@ -155,8 +125,23 @@ public class AbonnementDto implements Serializable {
                 ", hour=" + hour +
                 ", price=" + price +
                 ", isActive=" + isActive +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbonnementDto that = (AbonnementDto) o;
+        return id == that.id &&
+                hour == that.hour &&
+                price == that.price &&
+                isActive == that.isActive &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, hour, price, isActive);
     }
 }

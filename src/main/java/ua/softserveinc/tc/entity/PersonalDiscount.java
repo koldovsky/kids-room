@@ -1,27 +1,29 @@
 package ua.softserveinc.tc.entity;
 
-import java.time.LocalDate;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
+import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.DiscountConstants;
-import ua.softserveinc.tc.dto.DayDiscountDTO;
-import ua.softserveinc.tc.entity.converter.LocalDateAttributeConverter;
+import ua.softserveinc.tc.dto.PersonalDiscountDTO;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.converter.LocalTimeAttributeConverter;
 
 @Entity
-@Table(name = DiscountConstants.Entity.TABLE_NAME_DAYSDISCOUNTS)
-public class DayDiscount {
+@Table(name = DiscountConstants.Entity.TABLE_NAME_PERSONALDISCOUNTS)
+public class PersonalDiscount {
 
   @Id
   @GenericGenerator(name = "generator", strategy = "increment")
@@ -38,14 +40,6 @@ public class DayDiscount {
   @Min(value = 1)
   private int value;
 
-  @Column(name = DiscountConstants.Entity.DISCOUNT_START_DATE, nullable = false)
-  @Convert(converter = LocalDateAttributeConverter.class)
-  private LocalDate startDate;
-
-  @Column(name = DiscountConstants.Entity.DISCOUNT_END_DATE, nullable = false)
-  @Convert(converter = LocalDateAttributeConverter.class)
-  private LocalDate endDate;
-
   @Column(name = DiscountConstants.Entity.DISCOUNT_START_TIME, nullable = false)
   @Convert(converter = LocalTimeAttributeConverter.class)
   private LocalTime startTime;
@@ -57,28 +51,30 @@ public class DayDiscount {
   @Column(name = DiscountConstants.Entity.DISCOUNT_ACTIVE, nullable = false)
   private Boolean active;
 
-  public DayDiscount() {
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = ChildConstants.ID_PARENT)
+  private User user;
 
+  public PersonalDiscount() {
   }
 
-  public DayDiscount(DayDiscountDTO dto) {
-    if (dto.getId() != null) {
+  public PersonalDiscount(PersonalDiscountDTO dto) {
+    if(dto.getId() != null){
       this.id = dto.getId();
     }
     this.reason = dto.getReason();
     this.value = dto.getValue();
     this.startTime = dto.getStartTime();
     this.endTime = dto.getEndTime();
-    this.startDate = dto.getStartDate();
-    this.endDate = dto.getEndDate();
     this.active = dto.getActive();
+    this.setUser(dto.getUser());
   }
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -98,30 +94,6 @@ public class DayDiscount {
     this.value = value;
   }
 
-  public LocalDate getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(LocalDate startDate) {
-    this.startDate = startDate;
-  }
-
-  public LocalDate getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(LocalDate endDate) {
-    this.endDate = endDate;
-  }
-
-  public Boolean getActive() {
-    return active;
-  }
-
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
-
   public LocalTime getStartTime() {
     return startTime;
   }
@@ -138,6 +110,31 @@ public class DayDiscount {
     this.endTime = endTime;
   }
 
+  public Boolean getActive() {
+    return active;
+  }
+
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public void setUser(UserDto userDto) {
+    User user = this.getUser();
+    user.setId(userDto.getId());
+    user.setFirstName(userDto.getFirstName());
+    user.setLastName(userDto.getLastName());
+    user.setEmail(userDto.getEmail());
+    user.setPhoneNumber(userDto.getPhoneNumber());
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -146,19 +143,18 @@ public class DayDiscount {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DayDiscount discount = (DayDiscount) o;
-    return value == discount.value &&
-        Objects.equals(id, discount.id) &&
-        Objects.equals(reason, discount.reason) &&
-        Objects.equals(startDate, discount.startDate) &&
-        Objects.equals(endDate, discount.endDate) &&
-        Objects.equals(startTime, discount.startTime) &&
-        Objects.equals(endTime, discount.endTime) &&
-        Objects.equals(active, discount.active);
+    PersonalDiscount that = (PersonalDiscount) o;
+    return value == that.value &&
+        Objects.equals(id, that.id) &&
+        Objects.equals(reason, that.reason) &&
+        Objects.equals(startTime, that.startTime) &&
+        Objects.equals(endTime, that.endTime) &&
+        Objects.equals(active, that.active) &&
+        Objects.equals(user, that.user);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, reason, value, startDate, endDate, startTime, endTime, active);
+    return Objects.hash(id, reason, value, startTime, endTime, active, user);
   }
 }

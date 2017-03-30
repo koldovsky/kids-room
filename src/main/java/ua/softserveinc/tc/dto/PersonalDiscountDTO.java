@@ -1,43 +1,38 @@
 package ua.softserveinc.tc.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
-import ua.softserveinc.tc.entity.DayDiscount;
+import ua.softserveinc.tc.entity.PersonalDiscount;
 
 @JsonInclude(Include.NON_NULL)
-public class DayDiscountDTO implements Serializable {
+public class PersonalDiscountDTO implements Serializable {
 
   private Long id;
   private String reason;
   private Integer value;
-  @JsonFormat(pattern = "dd-MM-yyyy")
-  private LocalDate startDate;
-  @JsonFormat(pattern = "dd-MM-yyyy")
-  private LocalDate endDate;
   @JsonFormat(pattern = "HH:mm")
   private LocalTime startTime;
   @JsonFormat(pattern = "HH:mm")
   private LocalTime endTime;
   private Boolean active;
+  private UserDto user;
 
-  public DayDiscountDTO() {
+  public PersonalDiscountDTO() {
   }
 
-  public DayDiscountDTO(DayDiscount dayDiscount) {
-    this.id = dayDiscount.getId();
-    this.reason = dayDiscount.getReason();
-    this.value = dayDiscount.getValue();
-    this.startTime = dayDiscount.getStartTime();
-    this.endTime = dayDiscount.getEndTime();
-    this.startDate = dayDiscount.getStartDate();
-    this.endDate = dayDiscount.getEndDate();
-    this.active = dayDiscount.getActive();
+  public PersonalDiscountDTO(PersonalDiscount discount) {
+    this.id = discount.getId();
+    this.reason = discount.getReason();
+    this.value = discount.getValue();
+    this.startTime = discount.getStartTime();
+    this.endTime = discount.getEndTime();
+    this.active = discount.getActive();
+    this.user = new UserDto(discount.getUser());
   }
 
   public Long getId() {
@@ -64,30 +59,6 @@ public class DayDiscountDTO implements Serializable {
     this.value = value;
   }
 
-  public LocalDate getStartDate() {
-    return startDate;
-  }
-
-  public void setStartDate(LocalDate startDate) {
-    this.startDate = startDate;
-  }
-
-  public LocalDate getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(LocalDate endDate) {
-    this.endDate = endDate;
-  }
-
-  public Boolean getActive() {
-    return active;
-  }
-
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
-
   public LocalTime getStartTime() {
     return startTime;
   }
@@ -104,6 +75,22 @@ public class DayDiscountDTO implements Serializable {
     this.endTime = endTime;
   }
 
+  public Boolean getActive() {
+    return active;
+  }
+
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
+
+  public UserDto getUser() {
+    return user;
+  }
+
+  public void setUser(UserDto user) {
+    this.user = user;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -112,19 +99,18 @@ public class DayDiscountDTO implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DayDiscountDTO that = (DayDiscountDTO) o;
+    PersonalDiscountDTO that = (PersonalDiscountDTO) o;
     return Objects.equals(id, that.id) &&
         Objects.equals(reason, that.reason) &&
         Objects.equals(value, that.value) &&
-        Objects.equals(startDate, that.startDate) &&
-        Objects.equals(endDate, that.endDate) &&
         Objects.equals(startTime, that.startTime) &&
         Objects.equals(endTime, that.endTime) &&
-        Objects.equals(active, that.active);
+        Objects.equals(active, that.active) &&
+        Objects.equals(user, that.user);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, reason, value, startDate, endDate, startTime, endTime, active);
+    return Objects.hash(id, reason, value, startTime, endTime, active, user);
   }
 }
