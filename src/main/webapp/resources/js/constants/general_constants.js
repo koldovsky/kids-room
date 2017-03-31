@@ -33,7 +33,9 @@ const constants = {
         dateFormat: "yy-mm-dd",
         dateFormatUpperCase: "YYYY-MM-DD",
         abonnementsMaxHour: 10000,
-        abonnementsMinHour: 0
+        abonnementsMinHour: 0,
+        dateLength: 10,
+        timeLength: 5
     },
     keyCodes: {
         backspace: 8,
