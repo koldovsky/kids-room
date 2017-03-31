@@ -16,6 +16,12 @@ $('.datepickers').keyup(function () {
     $('.datepickers').keyup(format);
     $('.datepickers').change(format);
 });
+$('.datepickers').blur(function () {
+    if(!moment(this.value, constants.parameters.dateFormatUpperCase, true).isValid()){
+        $(this).val(moment().format(constants.parameters.dateFormatUpperCase));
+        $(this).removeClass("error");
+    }
+});
 $('.picker').timepicker({
     timeFormat: 'H:i',
     step: 1
