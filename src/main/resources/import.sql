@@ -58,8 +58,8 @@ INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (1, 'Teach
 INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (2, 'Day Off','2016-10-03', '2016-10-06');
 INSERT INTO days_off (id_days_off, name, start_date, end_date) VALUES (3, 'Repair works','2016-10-10', '2016-10-12');
 
-INSERT INTO personal_discounts(id,isActive,end_time,start_time,reason,value,id_user) VALUES (1,TRUE ,'11:27','11:30','Still Discount?',10,1);
-INSERT INTO personal_discounts(id,isActive,end_time,start_time,reason,value,id_user) VALUES (2,TRUE ,'11:27','11:30','Why not?',5,2);
+INSERT INTO personal_discounts(id,isActive,end_time,start_time,value,id_user) VALUES (1,TRUE ,'11:27','11:30',10,1);
+INSERT INTO personal_discounts(id,isActive,end_time,start_time,value,id_user) VALUES (2,TRUE ,'11:27','11:30',5,2);
 
 INSERT INTO day_discounts (id,reason,value,start_date,end_date,start_time,end_time,isActive)
 VALUES (1,'Some Discount',10,'2007-12-03','2007-12-03','11:27','11:30',true);

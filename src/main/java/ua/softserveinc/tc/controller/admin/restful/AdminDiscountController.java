@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.dto.PersonalDiscountDTO;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.service.DayDiscountService;
 import ua.softserveinc.tc.service.PersonalDiscountService;
 
@@ -31,12 +33,13 @@ public class AdminDiscountController {
   private PersonalDiscountService personalDiscountService;
 
   private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-  private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");;
+  private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
   //Day discounts methods are below
-  @GetMapping("day")
-  private List<DayDiscountDTO> getAllDailyDiscount() {
-    return dayDiscountService.findAllDailyDiscounts();
+
+  @PostMapping("getdays")
+  public DataTableOutput<DayDiscountDTO> getSomeData(@RequestBody SortingPagination dataTable){
+    return dayDiscountService.paginateDayDiscount(dataTable);
   }
 
   @GetMapping("day/{id}")
@@ -70,6 +73,11 @@ public class AdminDiscountController {
   @GetMapping("personal")
   public List<PersonalDiscountDTO> getAllPersonalDiscounts(){
     return personalDiscountService.findAllPersonalDiscounts();
+  }
+
+  @PostMapping("getpersonal")
+  public DataTableOutput<PersonalDiscountDTO> getPersonalPaginateData(@RequestBody SortingPagination dataTable){
+    return personalDiscountService.paginateDayDiscount(dataTable);
   }
 
   @GetMapping("personal/{id}")

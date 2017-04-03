@@ -31,10 +31,6 @@ public class PersonalDiscount {
   @Column(name = DiscountConstants.Entity.DAY_DISCOUNT_ID, nullable = false)
   private Long id;
 
-  @Column(name = DiscountConstants.Entity.DISCOUNT_REASON, nullable = false)
-  @Size(min = 3, max = 255)
-  private String reason;
-
   @Column(name = DiscountConstants.Entity.DISCOUNT_VALUE, nullable = false)
   @Max(value = 100)
   @Min(value = 1)
@@ -62,7 +58,6 @@ public class PersonalDiscount {
     if(dto.getId() != null){
       this.id = dto.getId();
     }
-    this.reason = dto.getReason();
     this.value = dto.getValue();
     this.startTime = dto.getStartTime();
     this.endTime = dto.getEndTime();
@@ -76,14 +71,6 @@ public class PersonalDiscount {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getReason() {
-    return reason;
-  }
-
-  public void setReason(String reason) {
-    this.reason = reason;
   }
 
   public int getValue() {
@@ -146,7 +133,6 @@ public class PersonalDiscount {
     PersonalDiscount that = (PersonalDiscount) o;
     return value == that.value &&
         Objects.equals(id, that.id) &&
-        Objects.equals(reason, that.reason) &&
         Objects.equals(startTime, that.startTime) &&
         Objects.equals(endTime, that.endTime) &&
         Objects.equals(active, that.active) &&
@@ -155,6 +141,6 @@ public class PersonalDiscount {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, reason, value, startTime, endTime, active, user);
+    return Objects.hash(id, value, startTime, endTime, active, user);
   }
 }

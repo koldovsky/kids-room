@@ -13,7 +13,6 @@ import ua.softserveinc.tc.entity.PersonalDiscount;
 public class PersonalDiscountDTO implements Serializable {
 
   private Long id;
-  private String reason;
   private Integer value;
   @JsonFormat(pattern = "HH:mm")
   private LocalTime startTime;
@@ -27,7 +26,6 @@ public class PersonalDiscountDTO implements Serializable {
 
   public PersonalDiscountDTO(PersonalDiscount discount) {
     this.id = discount.getId();
-    this.reason = discount.getReason();
     this.value = discount.getValue();
     this.startTime = discount.getStartTime();
     this.endTime = discount.getEndTime();
@@ -41,14 +39,6 @@ public class PersonalDiscountDTO implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getReason() {
-    return reason;
-  }
-
-  public void setReason(String reason) {
-    this.reason = reason;
   }
 
   public Integer getValue() {
@@ -101,7 +91,6 @@ public class PersonalDiscountDTO implements Serializable {
     }
     PersonalDiscountDTO that = (PersonalDiscountDTO) o;
     return Objects.equals(id, that.id) &&
-        Objects.equals(reason, that.reason) &&
         Objects.equals(value, that.value) &&
         Objects.equals(startTime, that.startTime) &&
         Objects.equals(endTime, that.endTime) &&
@@ -111,6 +100,6 @@ public class PersonalDiscountDTO implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, reason, value, startTime, endTime, active, user);
+    return Objects.hash(id, value, startTime, endTime, active, user);
   }
 }
