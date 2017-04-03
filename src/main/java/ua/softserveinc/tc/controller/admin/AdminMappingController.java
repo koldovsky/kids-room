@@ -32,4 +32,9 @@ public class AdminMappingController {
         //model.addAttribute(AdminConstants.AdminModel.ABONNEMENTS_MODEL, abonnements);
         return ViewNames.DISCOUNT_VIEW;
     }
+
+    @GetMapping(AdminConstants.ROOM)
+    public String getAdminRoom(Principal principal, Model model){
+        return AdminConstants.ROOM;
+    }
 }
