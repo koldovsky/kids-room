@@ -6,7 +6,7 @@
 
 // table.ajax.reload(); in case ajax requests
 
-function buildDataTable(selector, uri, columnsArrObj) {
+function buildDataTable(selector, uri, columnsArrObj,addFunctions) {
     let datatable =  $(selector).DataTable({
         'processing': true,
         'bServerSide': true,
@@ -48,7 +48,8 @@ function buildDataTable(selector, uri, columnsArrObj) {
         },
         'columns': columnsArrObj
     });
-    return datatable;
+
+    addFunctions();
 }
 
 function defineOrder(str) {
