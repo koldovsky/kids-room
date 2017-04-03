@@ -32,6 +32,8 @@ $(function () {
 });
 
 function getAmountOfChildrenByCurrentDate(currentDate) {
+    if(currentDate == "" || currentDate == null || currentDate === undefined)
+        currentDate = moment().format(constants.parameters.dateFormatUpperCase);
     $.ajax({
         url: 'restful/manager-booking/amountOfKids/' + currentDate + '/' + localStorage['roomId'],
         success: function (result) {

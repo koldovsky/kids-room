@@ -61,17 +61,17 @@ public class DayDiscount {
 
   }
 
-  public DayDiscount(DayDiscountDTO dto){
-    if(dto.getId() != null){
-      this.setId(dto.getId());
+  public DayDiscount(DayDiscountDTO dto) {
+    if (dto.getId() != null) {
+      this.id = dto.getId();
     }
-    this.setReason(dto.getReason());
-    this.setValue(dto.getValue());
-    this.setStartTime(dto.getStartTime());
-    this.setEndTime(dto.getEndTime());
-    this.setStartDate(dto.getStartDate());
-    this.setEndDate(dto.getEndDate());
-    this.setActive(dto.getActive());
+    this.reason = dto.getReason();
+    this.value = dto.getValue();
+    this.startTime = dto.getStartTime();
+    this.endTime = dto.getEndTime();
+    this.startDate = dto.getStartDate();
+    this.endDate = dto.getEndDate();
+    this.active = dto.getActive();
   }
 
   public long getId() {

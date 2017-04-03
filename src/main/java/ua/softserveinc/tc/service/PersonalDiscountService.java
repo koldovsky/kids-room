@@ -12,10 +12,8 @@ public interface PersonalDiscountService extends BaseService<PersonalDiscount> {
 
   void updatePersonalDiscountById(PersonalDiscountDTO personalDiscountDTO);
 
-  PersonalDiscountDTO findPersonalDiscountById(long id);
+  PersonalDiscountDTO findPersonalDiscountById(Long id);
 
-  void changePersonalDiscountState(PersonalDiscountDTO personalDiscountDTO);
-
-  PersonalDiscountDTO getPersonalDiscountByUserId(long id);
+  List<PersonalDiscountDTO> findPersonalDiscountByUserId(Long id);
 
 }
