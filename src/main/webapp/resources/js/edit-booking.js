@@ -160,6 +160,9 @@ function chekBookingState() {
 function refreshTable(bookingsState) {
     chekBookingState();
     var time = $('#date-booking').val();
+    if(time == "" || time == null || time === undefined)
+        time = moment().format(constants.parameters.dateFormatUpperCase);
+
     var idRoom = localStorage['roomId'];
     src = 'restful/manager-booking/' + time + '/' + idRoom + '/' + bookingsState;
     jQuery.extend({
@@ -342,13 +345,6 @@ function sendStartTime(id, startTime) {
         }
     });
 }
-/*
-$('#setEndTime').click(function () {
-    var id = $('#endTimeOutOfRange').data('id');
-    var time = $('#endTimeOutOfRange').data('time');
-    sendEndTime(id, time);
-});
-*/
 function setEndTime(id, startTime, endTime) {
     if (startTime < endTime) {
         if (validateRoomTime(endTime)) {
@@ -580,6 +576,9 @@ clearModalVindow = function () {
 
 
 function getDayDiscount(date) {
+    if(date == "" || date == null || date === undefined)
+        date = moment().format(constants.parameters.dateFormatUpperCase);
+
     let array = date.split('-');
     let startDate = array[0] + "-" + array[1] + "-" + array[2];
     let request = "restful/manager-booking/discount/" + startDate + "/" + startDate + "/00:00:00/23:59:59";

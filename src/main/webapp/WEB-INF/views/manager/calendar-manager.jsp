@@ -523,6 +523,7 @@
 <script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/eventValidator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/recurrent-cancel-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/pickers.js'></script>
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
         <script src="${pageContext.request.contextPath}/resources/js/lib/callendar-ua.min.js"></script>

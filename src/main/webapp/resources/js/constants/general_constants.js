@@ -8,7 +8,9 @@ const constants = {
         emailRegex: /^[_a-zA-Z0-9-]+@softserveinc.com$/,
         timeRegex: /\d{2}:\d{2}/,
         addresssRegex: /^[a-zA-ZАа-щА-ЩЬьЮюЯяЇїІіЄєҐґ0-9\s]+$/,
-        twoNumberRegex: /([0-9]{2})([0-9]{2})/i
+        twoNumberRegex: /([0-9]{2})([0-9]{2})/i,
+        twentyFourHoursRegex: /^([01]?[0-9]|2[0-3]):[0-5][0-9]/
+
     },
     room: {
         warnings: {
@@ -31,7 +33,14 @@ const constants = {
         dateFormat: "yy-mm-dd",
         dateFormatUpperCase: "YYYY-MM-DD",
         abonnementsMaxHour: 10000,
-        abonnementsMinHour: 0
+        abonnementsMinHour: 0,
+        dateLength: 10,
+        timeLength: 5
+    },
+    keyCodes: {
+        backspace: 8,
+        zero: 48,
+        colon: 58
     }
 };
 

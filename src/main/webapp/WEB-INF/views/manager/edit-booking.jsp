@@ -389,3 +389,4 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-booking-time.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
