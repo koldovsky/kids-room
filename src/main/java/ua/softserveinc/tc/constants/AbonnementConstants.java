@@ -19,13 +19,6 @@ public final class AbonnementConstants {
         public static final String USERS_ABONEMENTS = "users_abonements";
     }
 
-    public static final class RestQueries {
-        public static final String UPDATE_ABONNEMENT = "adm-update-abonnement";
-        public static final String SELECT_ABONNEMENTS = "adm-all-abonnements";
-        public static final String CREATE_ABONNEMENT = "adm-create-abonnement";
-        public static final String UPDATE_ACTIVE_STATE = "adm-active-abonnement";
-    }
-
     public static final class Hibernate {
         public static final String ABONNEMENT_ID = "id";
         public static final String ABONNEMENT_NAME = "name";

@@ -27,8 +27,21 @@
             </legend>
         </th>
     </div>
-    <table class="reg-form datatable">
-        <thead>
+
+    <div class="datatable-wrapper">
+        <div class="column-names">
+            <span>name</span>
+            <span>price</span>
+            <span>hour</span>
+        </div>
+        <div class="search-fields">
+            <div><b>Search:</b></div>
+            <input type="text" class="form-control search-input" placeholder="name"/>
+            <input type="text" class="form-control search-input" placeholder="price"/>
+            <input type="text" class="form-control search-input" placeholder="hour"/>
+        </div>
+        <table class="reg-form dt datatable">
+            <thead>
             <tr>
                 <th style="display: none;"><strong>#</strong></th>
                 <th><strong><spring:message code="administrator.abonnement.name"/></strong></th>
@@ -38,19 +51,10 @@
                 <th><strong><spring:message code="administrator.assign"/></strong></th>
                 <th><strong><spring:message code="administrator.abonnement.active"/></strong></th>
             </tr>
-        </thead>
-        <%--<tfoot>--%>
-            <%--<tr>--%>
-                <%--<th style="display: none;"><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-                <%--<th><strong></strong></th>--%>
-            <%--</tr>--%>
-        <%--</tfoot>--%>
-    </table>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
     <!-- abonnements list bounds here -->
     <a tabindex="-1" class="create-object">
         <button type="button" class="btn btn-raised btn-primary btn-add-room"
@@ -152,7 +156,7 @@
 
                         <div class="form-group sizing-between">
                             <input type="submit" value="<spring:message code="administrator.save"/>"
-                                   class="btn btn-raised btn-success update-object"
+                                   class="btn btn-raised btn-success"
                                    data-toggle="modal" data-target="#updateAbonnement">
                             </input>
                             <button type="reset" class="btn btn-raised btn-danger" data-toggle="modal"
