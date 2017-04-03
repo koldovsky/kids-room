@@ -6,14 +6,12 @@
 
 // table.ajax.reload(); in case ajax requests
 
-var datatable = null;
-
 function buildDataTable(selector, uri, columnsArrObj) {
-    datatable = $(selector).DataTable({
+    let datatable =  $(selector).DataTable({
         'processing': true,
         'bServerSide': true,
+        'ordering': true,
         'searching': false,
-        'sort': true,
         'columnDefs': [{
             'searchable': false,
             'orderable': false,
@@ -21,74 +19,40 @@ function buildDataTable(selector, uri, columnsArrObj) {
         }],
         'ajax': {
             'url': uri,
-            'data': function (d) {
+            'data': function (datatableObject) {
                 let sendObj = {
                     pagination: {
-                        start: d.start,
-                        itemsPerPage: d.length
-                    },
-                    sortings: [],
-                    searches: []
+                        start: datatableObject.start,
+                        itemsPerPage: datatableObject.length
+                    }
                 };
-
-                d.order.forEach(function (item) {
-                    let column = $(selector + "-wrapper").find(".column-names").children()[item.column];
-                    item.dir == 'asc' ? item.dir = 1 : item.dir = 0;
-                    sendObj.sortings.push(
-                        {
-                            direction: item.dir,
+                sendObj.sortings = [];
+                sendObj.searches = [];
+                datatableObject.order.forEach(function (dtOrder) {
+                    let column = $(selector + "-wrapper").find(".column-names").children()[dtOrder.column];
+                    dtOrder.dir = defineOrder(dtOrder.dir);
+                    sendObj.sortings.push({
+                            direction: dtOrder.dir,
                             column: $(column).text()
                         }
                     );
                 });
-                console.log(sendObj);
-                return JSON.stringify(sendObj);
+                // sendObj.searches[0] = {
+                //     value: "t",
+                //     column: "name"
+                // };
+                return "parameters=" + encodeURIComponent(JSON.stringify(sendObj));
             },
             'contentType': 'application/json',
-            'type': 'POST'
+            'type': 'GET'
         },
         'columns': columnsArrObj
     });
+    return datatable;
 }
 
-
-function createObject(formSelector, uri) {
-    $(formSelector).submit(function (event) {
-        event.preventDefault();
-        let dataSender = getObjectFromForm($(formSelector));
-        $.ajax({
-            url: uri,
-            type: 'POST',
-            contentType: 'application/json',
-            datatype: 'json',
-            data: JSON.stringify(dataSender),
-            success: function () {
-                datatable.ajax.reload();
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    });
-}
-
-function updateObject(selector, formSelector, uri) {
-    $(selector).click(function (event) {
-        event.preventDefault();
-        let dataSender = getObjectFromForm(formSelector);
-        $.ajax({
-            url: uri,
-            type: 'PUT',
-            contentType: 'application/json',
-            datatype: 'json',
-            data: JSON.stringify(dataSender),
-            success: function () {
-                datatable.ajax.reload();
-            },
-            error: function () {
-            }
-        });
-    });
+function defineOrder(str) {
+    return str == 'asc' ? 1 : 0;
 }
 
 function getObjectFromForm(tag) {

@@ -23,6 +23,19 @@ public class JsonUtil {
         return Arrays.asList(new Gson().fromJson(json, clazz));
     }
 
+    /**
+     * Generic type method, to convert JSON into needed object type.
+     *
+     * @param json
+     * @param clazz
+     * @param <T>
+     * @return T
+     */
+    public static <T> T fromJson(final String json,
+                                 final Class<T> clazz) {
+        return new Gson().fromJson(json, clazz);
+    }
+
 
     /**
      * Generic Type method, to convert list of any type, into JSON format.

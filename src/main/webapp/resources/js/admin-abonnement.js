@@ -1,8 +1,7 @@
 'use strict';
 
 $(function () {
-    // refreshDataTable();
-    var columns = [
+    let columns = [
         {
             'data': 'name',
             'fnCreatedCell': function (nTd, sData) {
@@ -64,42 +63,70 @@ $(function () {
         }
     ];
 
-    // $(".datepickers").datepicker({
-    //     dateFormat: constants.parameters.dateFormat,
-    //     setDate: moment().format(constants.parameters.dateFormatUpperCase)
-    // });
-
-    buildDataTable('.datatable', 'adm-all-abonnements', columns);
+    let datatable = buildDataTable('.datatable', 'adm-pag-abonnements', columns);
 
     // initing update Modal
     $(document.body).on('click', '.btn-edit', function (event) {
-        var node = null;
+        let node = null;
         if (event.target.nodeName == 'I') {
             node = $(event.target).parent().parent().parent().parent().parent();
         } else {
             node = $(event.target).parent().parent().parent().parent();
         }
-        var objInit = {
+        let objInit = {
             name: $(node).children().find('.name').text(),
             price: $(node).children().find('.price').text(),
             hour: $(node).children().find('.hour').text()
         };
-        var abonnFormId = "#updateAbonnementForm ";
-        for (var prop in objInit) {
+        let abonnFormId = "#updateAbonnementForm ";
+        for (let prop in objInit) {
             $(abonnFormId + "." + prop).val(objInit[prop]);
         }
     });
 
-    createObject('#createAbonnementForm', 'adm-create-abonnement');
+    $('#createAbonnementForm').submit(function (event) {
+        let path = 'adm-create-abonnement';
+        event.preventDefault();
+        let dataSender = getObjectFromForm($('#createAbonnementForm'));
+        $.ajax({
+            url: path,
+            type: 'GET',
+            contentType: 'application/json',
+            datatype: 'json',
+            data: JSON.stringify(dataSender),
+            success: function () {
+                datatable.ajax.reload();
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    });
 
-    updateObject('.update-object', '#updateAbonnementForm', 'adm-update-abonnement');
+    $('#updateAbonnementForm').submit(function (event) {
+        let path = 'adm-update-abonnement';
+        event.preventDefault();
+        let dataSender = getObjectFromForm('#updateAbonnementForm');
+        $.ajax({
+            url: path,
+            type: 'PUT',
+            contentType: 'application/json',
+            datatype: 'json',
+            data: JSON.stringify(dataSender),
+            success: function () {
+                datatable.ajax.reload();
+            },
+            error: function () {
+            }
+        });
+    });
 
     function changeActiveState(id, checked) {
-        var path = "adm-active-abonnement";
+        let path = 'adm-active-abonnement';
         if (!checked) {
             checked = false;
         }
-        var dataSender = {
+        let dataSender = {
             id: id,
             active: checked
         };

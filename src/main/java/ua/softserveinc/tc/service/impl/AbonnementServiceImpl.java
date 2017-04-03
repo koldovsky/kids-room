@@ -38,14 +38,16 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
                 .stream()
                 .map(AbonnementDto::new)
                 .collect(Collectors.toList());
-        long rowCount = abonnementDao.getRowsCount();
-        long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
-                sortPaginate.getPagination().getItemsPerPage(), rowCount);
 
-        if (PaginationCharacteristics.isSearched(sortPaginate.getSearches())) {
-            return new DataTableOutput<>(currentPage, rowCount, abonnementList.size(), abonnementList);
-        } else {
+        long rowCount = abonnementDao.getRowsCount(),
+                start = sortPaginate.getPagination().getStart(),
+                itemsPerPage = sortPaginate.getPagination().getItemsPerPage();
+        long currentPage = PaginationCharacteristics.definePage(start, itemsPerPage, rowCount);
+
+        if(PaginationCharacteristics.searchCount == 0) {
             return new DataTableOutput<>(currentPage, rowCount, rowCount, abonnementList);
+        } else {
+            return new DataTableOutput<>(currentPage, rowCount, PaginationCharacteristics.searchCount, abonnementList);
         }
     }
 

@@ -31,6 +31,14 @@ public class SortingPagination {
         public void setColumn(String column) {
             this.column = column;
         }
+
+        @Override
+        public String toString() {
+            return "Sorting{" +
+                    "direction=" + direction +
+                    ", column='" + column + '\'' +
+                    '}';
+        }
     }
 
     public class Search {
@@ -54,6 +62,14 @@ public class SortingPagination {
 
         public void setColumn(String column) {
             this.column = column;
+        }
+
+        @Override
+        public String toString() {
+            return "Search{" +
+                    "value='" + value + '\'' +
+                    ", column='" + column + '\'' +
+                    '}';
         }
     }
 
@@ -79,6 +95,14 @@ public class SortingPagination {
         public void setItemsPerPage(long itemsPerPage) {
             this.itemsPerPage = itemsPerPage;
         }
+
+        @Override
+        public String toString() {
+            return "Pagination{" +
+                    "start=" + start +
+                    ", itemsPerPage=" + itemsPerPage +
+                    '}';
+        }
     }
 
     public List<Sorting> getSortings() {
@@ -103,5 +127,14 @@ public class SortingPagination {
 
     public void setPagination(Pagination pagination) {
         this.pagination = pagination;
+    }
+
+    @Override
+    public String toString() {
+        return "SortingPagination{" +
+                "sortings=" + sortings +
+                ", searches=" + searches +
+                ", pagination=" + pagination +
+                '}';
     }
 }

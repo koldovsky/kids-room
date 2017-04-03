@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.controller.admin;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,9 @@ import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dto.AbonnementDto;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
+import ua.softserveinc.tc.mapper.PaginationMapper;
 import ua.softserveinc.tc.service.AbonnementsService;
+import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.validator.AbonnementsValidator;
 
 import java.util.List;
@@ -28,28 +31,33 @@ public class AbonnementsController {
     @Autowired
     AbonnementsValidator abonnementsValidator;
 
-    @GetMapping(AbonnementConstants.RestQueries.SELECT_ABONNEMENTS)
+    @Autowired
+    PaginationMapper paginationMapper;
+
+    @GetMapping("adm-all-abonnements")
     public List<AbonnementDto> selectAbonnements() {
         return abonnementsService.findAllAbonements();
     }
 
-    @PostMapping(AbonnementConstants.RestQueries.SELECT_ABONNEMENTS)
-    public DataTableOutput<AbonnementDto> postSelectAbonnements(@RequestBody SortingPagination dataTable) {
-        return abonnementsService.paginationAbonnements(dataTable);
+    @GetMapping("adm-pag-abonnements")
+    public DataTableOutput<AbonnementDto> paginateAbonnements(@RequestParam String parameters) {
+        SortingPagination sortingPagination = paginationMapper.mapSortingPaginationFromJson(parameters);
+        return abonnementsService.paginationAbonnements(sortingPagination);
     }
 
-    @PutMapping(AbonnementConstants.RestQueries.UPDATE_ABONNEMENT)
-    public AbonnementDto updateAbonnement(@RequestBody AbonnementDto abonnementDto) {
+    @PutMapping("adm-update-abonnement")
+    public AbonnementDto updateAbonnement(@RequestBody AbonnementDto abonnementDto,
+                                          BindingResult bindingResult) {
         return abonnementsService.updateAbonnement(abonnementDto);
     }
 
-    @PutMapping(AbonnementConstants.RestQueries.UPDATE_ACTIVE_STATE)
+    @PutMapping("adm-active-abonnement")
     public ResponseEntity<Boolean> updateActiveState(@RequestBody AbonnementDto abonnementDto) {
         abonnementsService.updateActiveState(abonnementDto.getId(), abonnementDto.isActive());
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PostMapping(AbonnementConstants.RestQueries.CREATE_ABONNEMENT)
+    @PostMapping("adm-create-abonnement")
     public ResponseEntity<?> createAbonnement(@RequestBody AbonnementDto abonnementDto,
                                               BindingResult bindingResult) {
         abonnementsValidator.validate(abonnementDto, bindingResult);

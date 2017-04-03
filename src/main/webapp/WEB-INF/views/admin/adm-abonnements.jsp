@@ -34,7 +34,13 @@
             <span>price</span>
             <span>hour</span>
         </div>
-        <table class="reg-form datatable">
+        <div class="search-fields">
+            <div><b>Search:</b></div>
+            <input type="text" class="form-control search-input" placeholder="name" />
+            <input type="text" class="form-control search-input" placeholder="price"/>
+            <input type="text" class="form-control search-input" placeholder="hour"/>
+        </div>
+        <table class="reg-form dt datatable">
             <thead>
             <tr>
                 <th style="display: none;"><strong>#</strong></th>
@@ -46,17 +52,7 @@
                 <th><strong><spring:message code="administrator.abonnement.active"/></strong></th>
             </tr>
             </thead>
-            <%--<tfoot>--%>
-            <%--<tr>--%>
-            <%--<th style="display: none;"><strong></strong></th>--%>
-            <%--<th><strong></strong></th>--%>
-            <%--<th><strong></strong></th>--%>
-            <%--<th><strong></strong></th>--%>
-            <%--<th><strong></strong></th>--%>
-            <%--<th><strong></strong></th>--%>
-            <%--<th><strong></strong></th>--%>
-            <%--</tr>--%>
-            <%--</tfoot>--%>
+            <tbody></tbody>
         </table>
     </div>
 
@@ -161,7 +157,7 @@
 
                         <div class="form-group sizing-between">
                             <input type="submit" value="<spring:message code="administrator.save"/>"
-                                   class="btn btn-raised btn-success update-object"
+                                   class="btn btn-raised btn-success"
                                    data-toggle="modal" data-target="#updateAbonnement">
                             </input>
                             <button type="reset" class="btn btn-raised btn-danger" data-toggle="modal"

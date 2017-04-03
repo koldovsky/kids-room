@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.dao.impl;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.GenericConstants;
@@ -72,51 +71,68 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public List<T> findAll(SortingPagination sortPaginate) {
-        List<T> resultList = new ArrayList<T>();
-//        Pagination pagination = sortPaginate.getPagination();
-//
-//        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-//        CriteriaQuery<T> criteria = builder.createQuery(getEntityClass());
-//        Root<T> root = criteria.from(getEntityClass());
-//
-//        List<Predicate> restrictions = new ArrayList<>();
-//        List<Order> restrictionsOrder = new ArrayList<>();
-//
-//        List<Search> searches = sortPaginate.getSearches();
-//        if (PaginationCharacteristics.isSearched(searches)) {
-//            searches.forEach(item -> restrictions.add(builder.like(
-//                    root.get(item.getColumn()), "%" + item.getValue() + "%")));
-//        } else {
-//            restrictions.addAll(Arrays.asList(
-//                    builder.greaterThan(root.get(GenericConstants.GENERIC_ID),
-//                            pagination.getStart()),
-//                    builder.lessThanOrEqualTo(root.get(GenericConstants.GENERIC_ID),
-//                            pagination.getStart() + pagination.getItemsPerPage())
-//            ));
-//        }
-//
-//        criteria.select(root).where(builder.and(
-//                restrictions.toArray(new Predicate[restrictions.size()])));
-//
-//        List<Sorting> sorting = sortPaginate.getSortings();
-//        sorting.forEach(item -> {
-//            if (item.getDirection() == 1) {
-//                restrictionsOrder.add(builder.asc(root.get(item.getColumn())));
-//            } else {
-//                restrictionsOrder.add(builder.desc(root.get(item.getColumn())));
-//            }
-//        });
-//
-//        if (!restrictionsOrder.isEmpty()) {
-//            criteria.orderBy(restrictionsOrder);
-//        }
-//
-//        resultList = entityManager.createQuery(criteria).getResultList();
+        List<T> resultList;
+        Pagination pagination = sortPaginate.getPagination();
+        List<Sorting> sortingList = sortPaginate.getSortings();
+        List<Search> searchList = sortPaginate.getSearches();
+        PaginationCharacteristics.searchCount = 0;
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(getEntityClass());
+        Root<T> root = criteria.from(getEntityClass());
+
+        List<Predicate> restrictions = new ArrayList<>();
+        List<Order> restrictionsOrder = new ArrayList<>();
+
+        if (!searchList.isEmpty()) {
+            addSearchToRestrictions(searchList, builder, root, restrictions);
+            PaginationCharacteristics.searchCount = getSearchedItemsCount(builder, criteria, root, restrictions);
+        }
+        addSortingsToOrderRestrictions(sortingList, builder, root, restrictionsOrder);
+        if (!restrictionsOrder.isEmpty()) {
+            criteria.orderBy(restrictionsOrder);
+        }
+        addPaginationToRestrictions(pagination, builder, root, restrictions);
+
+        criteria.select(root).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        resultList = entityManager.createQuery(criteria).getResultList();
         return resultList;
     }
 
+    private long getSearchedItemsCount(CriteriaBuilder builder, CriteriaQuery<T> criteria,
+                                       Root<T> root, List<Predicate> restrictions) {
+        criteria.select(root).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        List<T> searchResultList = entityManager.createQuery(criteria).getResultList();
+        return searchResultList.size();
+    }
 
+    private void addSortingsToOrderRestrictions(List<Sorting> sortingsList, CriteriaBuilder builder,
+                                                Root<T> root, List<Order> restrictionsOrder) {
+        sortingsList.forEach(sorting -> {
+            if (sorting.getDirection() == 1) {
+                restrictionsOrder.add(builder.asc(root.get(sorting.getColumn())));
+            } else {
+                restrictionsOrder.add(builder.desc(root.get(sorting.getColumn())));
+            }
+        });
+    }
 
+    private void addPaginationToRestrictions(Pagination pagination, CriteriaBuilder builder,
+                                             Root<T> root, List<Predicate> restrictions) {
+        restrictions.addAll(Arrays.asList(
+                builder.greaterThan(root.get(GenericConstants.GENERIC_ID),
+                        pagination.getStart()),
+                builder.lessThanOrEqualTo(root.get(GenericConstants.GENERIC_ID),
+                        pagination.getStart() + pagination.getItemsPerPage())
+        ));
+    }
+
+    private void addSearchToRestrictions(List<Search> searches, CriteriaBuilder builder,
+                                         Root<T> root, List<Predicate> restrictions) {
+        searches.forEach(item -> restrictions.add(builder.like(
+                root.get(item.getColumn()), "%" + item.getValue() + "%")
+        ));
+    }
     @Override
     public long getRowsCount() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
