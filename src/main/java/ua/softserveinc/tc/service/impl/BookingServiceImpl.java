@@ -11,42 +11,24 @@ import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.entity.Room;
-import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.dto.DayDiscountDTO;
+import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
-import ua.softserveinc.tc.service.BookingService;
-import ua.softserveinc.tc.util.DateUtil;
-import ua.softserveinc.tc.service.RateService;
-import ua.softserveinc.tc.service.RoomService;
-import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.service.ChildService;
-import ua.softserveinc.tc.util.Log;
-import ua.softserveinc.tc.util.DateTwoTuple;
-import ua.softserveinc.tc.util.BookingsHolder;
-import ua.softserveinc.tc.util.BookingsCharacteristics;
-import ua.softserveinc.tc.entity.Child;
+import ua.softserveinc.tc.service.*;
+import ua.softserveinc.tc.util.*;
 import ua.softserveinc.tc.validator.BookingValidator;
 import ua.softserveinc.tc.validator.RecurrentBookingValidator;
 import ua.softserveinc.tc.constants.UtilConstants;
-import java.time.ZoneId;
-import java.time.LocalDate;
+
+import java.time.*;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Collections;
-import java.util.Arrays;
-import java.util.ListIterator;
-import java.util.Iterator;
-import java.util.Date;
-import java.util.Calendar;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.dto.BookingDto.getRecurrentBookingDto;
@@ -85,6 +67,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Inject
     private BookingValidator bookingValidator;
 
+    @Inject
+    private DayDiscountService dayDiscountService;
+
     @Override
     public void calculateAndSetDuration(Booking booking) {
         long difference = booking.getBookingEndTime().getTime()
@@ -94,7 +79,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Override
     public void calculateAndSetSum(Booking booking) {
-        calculateAndSetDuration(booking);
         Long sum = rateService.calculateBookingCost(booking);
         booking.setSum(sum);
         booking.setBookingState(BookingState.COMPLETED);
@@ -136,10 +120,84 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Booking booking = findByIdTransactional(bookingDto.getId());
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
-        calculateAndSetSum(booking);
+        calculateAndSetDuration(booking);
+        calculateSumIncludingDiscounts(booking);
+
         return booking;
     }
 
+    private void calculateSumIncludingDiscounts(Booking booking) {
+        List<DayDiscountDTO> dayDiscountDTOS = dayDiscountService
+                .getDayDiscountsForPeriod(dateToLocalDateTime(booking.getBookingStartTime()).toLocalDate(),
+                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalDate(),
+                        dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime(),
+                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime());
+
+        if (dayDiscountDTOS.size() == 0) {
+            calculateAndSetSum(booking);
+            booking.setDiscounts("not provided");
+        } else {
+            List<Discount> outputDiscounts = new ArrayList<>();
+            List<Discount> discounts = dayDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList());
+
+            LocalTime startPeriodTime = dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime();
+            LocalTime endPeriodTime = dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime();
+            Rate roomRate = booking.getRoom().getRates().get(0);
+            booking.setSum(0L);
+            while (startPeriodTime.isBefore(endPeriodTime)) {
+                startPeriodTime = calculateSumForNextPeriod(booking, startPeriodTime, endPeriodTime,
+                        discounts, roomRate, outputDiscounts);
+            }
+
+            booking.setDiscounts(outputDiscounts.stream().map(Discount::toString).collect(Collectors.joining("\n")));
+        }
+    }
+
+    private LocalDateTime dateToLocalDateTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+    }
+
+    private LocalTime calculateSumForNextPeriod(Booking booking, LocalTime startPeriodTime, LocalTime endBookingTime,
+                                                List<Discount> list, Rate rate, List<Discount> outputDiscounts) {
+
+        LocalTime minStartDiscount = getMinTime(list, Discount::getStartTime, startPeriodTime, endBookingTime);
+        LocalTime minEndDiscount = getMinTime(list, Discount::getEndTime, startPeriodTime, endBookingTime);
+        LocalTime endPeriodTime = minStartDiscount.isBefore(minEndDiscount)
+                ? minStartDiscount : minEndDiscount;
+
+        Discount discountWithMaxValue = list.stream()
+                .filter(p -> p.containPeriod(startPeriodTime, endPeriodTime))
+                .max(Comparator.comparingInt(Discount::getValue))
+                .orElse(new Discount("not provided", 0, minStartDiscount, minEndDiscount));
+        if (outputDiscounts.size() > 0 &&
+                outputDiscounts.get(outputDiscounts.size() - 1).equals(discountWithMaxValue)) {
+            outputDiscounts.get(outputDiscounts.size() - 1).setEndTime(discountWithMaxValue.getEndTime());
+        } else {
+            outputDiscounts.add(new Discount(discountWithMaxValue.getReason(), discountWithMaxValue.getValue(),
+                    startPeriodTime, endPeriodTime));
+        }
+
+        booking.setSum(booking.getSum() + calculateAndGetSum(startPeriodTime, endPeriodTime,
+                discountWithMaxValue.getValue(), rate));
+
+        return endPeriodTime;
+    }
+
+    private LocalTime getMinTime(List<Discount> list, Function<Discount, LocalTime> function,
+                            LocalTime startPeriodTime, LocalTime endPeriodTime) {
+        return list.stream().map(function)
+                .filter(p -> p.isAfter(startPeriodTime) && !p.isAfter(endPeriodTime))
+                .sorted(LocalTime::compareTo)
+                .findFirst().orElse(endPeriodTime);
+    }
+
+    private long calculateAndGetSum(LocalTime startTime, LocalTime endTime, int discountValue, Rate rate) {
+        long minutes = MINUTES.between(startTime, endTime);
+        double minuteCostInCoins = rate.getPriceRate() * 100.0 * (100 - discountValue)
+                / (rate.getHourRate() * 60 * 100.0);
+
+        return (long) (minutes * minuteCostInCoins);
+    }
 
     private void resetSumAndDuration(Booking booking) {
         booking.setDuration(0L);
