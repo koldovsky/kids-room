@@ -100,9 +100,6 @@
                         <div class="form-group">
                             <label for="color-select"><spring:message code="event.chooseColor"/></label>
                             <select id="color-select">
-                                <option value="#eb6f63" style="background:red">
-                                    <spring:message code="color.red"/>
-                                </option>
                                 <option value="#ffcd5c" style="background:yellow">
                                     <spring:message code="color.yellow"/>
                                 </option>
@@ -290,9 +287,6 @@
                             <label for="color-select"> <spring:message
                                     code="event.chooseColor"></spring:message> </label>
                             <select id="color-select-single-event">
-                                <option value="#eb6f63" style="background:red">
-                                    <spring:message code="color.red"/>
-                                </option>
                                 <option value="#ffcd5c" style="background:yellow">
                                     <spring:message code="color.yellow"/>
                                 </option>
@@ -523,6 +517,7 @@
 <script src='${pageContext.request.contextPath}/resources/js/renderCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/eventValidator.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/recurrent-cancel-validator.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/pickers.js'></script>
 <c:choose>
     <c:when test="${pageContext.response.locale=='ua'}">
         <script src="${pageContext.request.contextPath}/resources/js/lib/callendar-ua.min.js"></script>

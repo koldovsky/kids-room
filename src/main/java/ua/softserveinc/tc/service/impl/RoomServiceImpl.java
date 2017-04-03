@@ -2,25 +2,34 @@ package ua.softserveinc.tc.service.impl;
 
 import org.slf4j.Logger;
 import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.entity.Booking;
-import ua.softserveinc.tc.entity.BookingState;
-import ua.softserveinc.tc.entity.DayOff;
-import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.dto.RoomDto;
+import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
+import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
+import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.util.Log;
+import ua.softserveinc.tc.validator.RoomValidator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static ua.softserveinc.tc.util.DateUtil.toDateISOFormat;
 
@@ -39,6 +48,15 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
     @Inject
     private BookingDao bookingDao;
 
+    @Autowired
+    private RoomValidator roomValidator;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<Room> findAll() {
 
@@ -47,9 +65,29 @@ public class RoomServiceImpl extends BaseServiceImpl<Room> implements RoomServic
 
     @Override
     @Transactional
-    public void saveOrUpdate(Room room) {
+    public String saveOrUpdate(RoomDto dto, BindingResult bindingResult) {
+        roomValidator.validate(dto, bindingResult);
+        List<String> listError = new ArrayList<String>();
+        if (bindingResult.hasErrors()) {
+            for (Object object : bindingResult.getAllErrors()) {
+                FieldError er = (FieldError) object;
+                listError.add(messageSource.getMessage(er.getCode(), null, LocaleContextHolder.getLocale()));
+            }
+        } else {
+            Room room = RoomDto.getRoomObjectFromDtoValues(dto);
+            if (dto.getManagers().length() > 0) {
+                List<User> managers = new ArrayList<>();
+                if (dto.getManagers().length() == 1) {
+                    User manager = userService.findUserId(Long.valueOf(dto.getManagers()));
+                    managers.add(manager);
+                } else
+                    managers = userService.findAll(Stream.of(dto.getManagers().split(",")).map(Long::valueOf).collect(Collectors.toList()));
+                room.setManagers(managers);
+            }
 
-        roomDao.saveOrUpdate(room);
+            roomDao.saveOrUpdate(room);
+        }
+        return JsonUtil.toJson(listError);
     }
 
     @Override

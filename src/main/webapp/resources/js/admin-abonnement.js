@@ -48,6 +48,7 @@ $(function () {
                 );
             },
             'orderable': false
+
         },
         {
             'data': null,
@@ -107,6 +108,7 @@ $(function () {
         let path = 'adm-update-abonnement';
         event.preventDefault();
         let dataSender = getObjectFromForm('#updateAbonnementForm');
+
         $.ajax({
             url: path,
             type: 'PUT',

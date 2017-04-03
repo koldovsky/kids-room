@@ -3,6 +3,9 @@ package ua.softserveinc.tc.controller.manager.restful;
 import static ua.softserveinc.tc.util.DateUtil.toDateAndTime;
 
 import com.google.gson.Gson;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -17,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.ChildDto;
+import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.dto.ManagerBookingDTO;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Child;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.service.BookingService;
+import ua.softserveinc.tc.service.DayDiscountService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.validator.TimeValidatorImpl;

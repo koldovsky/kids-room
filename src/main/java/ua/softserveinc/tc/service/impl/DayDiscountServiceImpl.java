@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +13,11 @@ import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.DayDiscountDao;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.entity.DayDiscount;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.service.DayDiscountService;
+import ua.softserveinc.tc.util.PaginationCharacteristics;
+
 
 @Service
 public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> implements
@@ -28,9 +34,18 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Cacheable("fullDayDiscountList")
   public List<DayDiscountDTO> findAllDailyDiscounts() {
     List<DayDiscount> qResult = dayDiscountDao.findAll();
-    return qResult.stream().map(this::convertToDto).collect(Collectors.toList());
+    return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 
+  @Override
+  public DataTableOutput<DayDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate) {
+    List<DayDiscountDTO> listDto = dayDiscountDao.findAll(sortPaginate).stream()
+        .map(DayDiscountDTO::new).collect(Collectors.toList());
+    long rowCount = dayDiscountDao.getRowsCount();
+    long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
+        sortPaginate.getPagination().getItemsPerPage(), rowCount);
+    return  new DataTableOutput<>(currentPage, rowCount, rowCount, listDto);
+  }
 
   /**
    * This method returns daily discount by current id
@@ -40,7 +55,7 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    */
   @Override
   public DayDiscountDTO findDayDiscountById(long id) {
-    return convertToDto(dayDiscountDao.getDayDiscountById(id));
+    return new DayDiscountDTO(dayDiscountDao.findById(id));
   }
 
   /**
@@ -51,9 +66,11 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    * @return List of DayDiscounts for specific period
    */
   @Override
-  public List<DayDiscountDTO> getDayDiscountsForPeriod(Date startDate, Date endDate) {
-    List<DayDiscount> qResult = dayDiscountDao.getDayDiscountForCurrentDays(startDate,endDate);
-    return qResult.stream().map(this::convertToDto).collect(Collectors.toList());
+  public List<DayDiscountDTO> getDayDiscountsForPeriod(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime) {
+    List<DayDiscount> qResult = dayDiscountDao
+        .getDayDiscountForCurrentDays(startDate, endDate, startTime, endTime);
+    return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 
 
@@ -65,7 +82,7 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void addNewDayDiscount(DayDiscountDTO dto) {
-    dayDiscountDao.create(convertToEntity(dto));
+    dayDiscountDao.create(new DayDiscount(dto));
   }
 
   /**
@@ -76,54 +93,7 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void updateDayDiscountById(DayDiscountDTO dto) {
-    dayDiscountDao.updateDayDiscountById(convertToEntity(dto));
-  }
-
-  /**
-   * This method update state of discount by id and evicts cache with current discounts
-   *
-   * @param dto DayDiscount from the client DayDiscount id must not be null
-   */
-  @Override
-  @CacheEvict(value = "fullDayDiscountList", allEntries = true)
-  public void changeDayDiscountState(DayDiscountDTO dto) {
-    dayDiscountDao.updateDayDiscountState(convertToEntity(dto));
-  }
-
-  /**
-   * This method converts Entity to the DTO
-   *
-   * @param dayDiscount Entity DayDiscount
-   * @return DayDiscountDTO
-   */
-  private DayDiscountDTO convertToDto(DayDiscount dayDiscount) {
-    DayDiscountDTO dto = new DayDiscountDTO();
-    dto.setId(dayDiscount.getId());
-    dto.setReason(dayDiscount.getReason());
-    dto.setValue(dayDiscount.getValue());
-    dto.setStartDate(dayDiscount.getStartDate());
-    dto.setEndDate(dayDiscount.getEndDate());
-    dto.setActive(dayDiscount.getActive());
-    return dto;
-  }
-
-  /**
-   * This method converts DTO to the Entity
-   *
-   * @param discountDTO DTO DayDiscountDTO
-   * @return DayDiscount
-   */
-  private DayDiscount convertToEntity(DayDiscountDTO discountDTO) {
-    DayDiscount dayDiscount = new DayDiscount();
-    if (discountDTO.getId() != null) {
-      dayDiscount.setId(discountDTO.getId());
-    }
-    dayDiscount.setReason(discountDTO.getReason());
-    dayDiscount.setValue(discountDTO.getValue());
-    dayDiscount.setStartDate(discountDTO.getStartDate());
-    dayDiscount.setEndDate(discountDTO.getEndDate());
-    dayDiscount.setActive(discountDTO.getActive());
-    return dayDiscount;
+    dayDiscountDao.update(new DayDiscount(dto));
   }
 
 }

@@ -38,7 +38,6 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
                 .stream()
                 .map(AbonnementDto::new)
                 .collect(Collectors.toList());
-
         long rowCount = abonnementDao.getRowsCount(),
                 start = sortPaginate.getPagination().getStart(),
                 itemsPerPage = sortPaginate.getPagination().getItemsPerPage();

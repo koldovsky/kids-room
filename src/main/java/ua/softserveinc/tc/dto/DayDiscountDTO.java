@@ -1,10 +1,14 @@
 package ua.softserveinc.tc.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
+import ua.softserveinc.tc.entity.DayDiscount;
 
 @JsonInclude(Include.NON_NULL)
 public class DayDiscountDTO implements Serializable {
@@ -12,11 +16,28 @@ public class DayDiscountDTO implements Serializable {
   private Long id;
   private String reason;
   private Integer value;
-  private Date startDate;
-  private Date endDate;
+  @JsonFormat(pattern = "dd-MM-yyyy")
+  private LocalDate startDate;
+  @JsonFormat(pattern = "dd-MM-yyyy")
+  private LocalDate endDate;
+  @JsonFormat(pattern = "HH:mm")
+  private LocalTime startTime;
+  @JsonFormat(pattern = "HH:mm")
+  private LocalTime endTime;
   private Boolean active;
 
   public DayDiscountDTO() {
+  }
+
+  public DayDiscountDTO(DayDiscount dayDiscount) {
+    this.id = dayDiscount.getId();
+    this.reason = dayDiscount.getReason();
+    this.value = dayDiscount.getValue();
+    this.startTime = dayDiscount.getStartTime();
+    this.endTime = dayDiscount.getEndTime();
+    this.startDate = dayDiscount.getStartDate();
+    this.endDate = dayDiscount.getEndDate();
+    this.active = dayDiscount.getActive();
   }
 
   public Long getId() {
@@ -43,19 +64,19 @@ public class DayDiscountDTO implements Serializable {
     this.value = value;
   }
 
-  public Date getStartDate() {
+  public LocalDate getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(Date startDate) {
+  public void setStartDate(LocalDate startDate) {
     this.startDate = startDate;
   }
 
-  public Date getEndDate() {
+  public LocalDate getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(Date endDate) {
+  public void setEndDate(LocalDate endDate) {
     this.endDate = endDate;
   }
 
@@ -65,6 +86,22 @@ public class DayDiscountDTO implements Serializable {
 
   public void setActive(Boolean active) {
     this.active = active;
+  }
+
+  public LocalTime getStartTime() {
+    return startTime;
+  }
+
+  public void setStartTime(LocalTime startTime) {
+    this.startTime = startTime;
+  }
+
+  public LocalTime getEndTime() {
+    return endTime;
+  }
+
+  public void setEndTime(LocalTime endTime) {
+    this.endTime = endTime;
   }
 
   @Override
@@ -81,11 +118,13 @@ public class DayDiscountDTO implements Serializable {
         Objects.equals(value, that.value) &&
         Objects.equals(startDate, that.startDate) &&
         Objects.equals(endDate, that.endDate) &&
+        Objects.equals(startTime, that.startTime) &&
+        Objects.equals(endTime, that.endTime) &&
         Objects.equals(active, that.active);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, reason, value, startDate, endDate, active);
+    return Objects.hash(id, reason, value, startDate, endDate, startTime, endTime, active);
   }
 }

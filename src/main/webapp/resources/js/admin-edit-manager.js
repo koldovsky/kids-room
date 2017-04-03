@@ -50,12 +50,14 @@ $().ready(function() {
     });
 
     function setDeactivateClass(btn) {
-        $(btn).removeClass('deactivateButton save')
-        $(btn).addClass('activateButton delete')
+        $(btn).removeClass('deactivateButton save');
+        $(btn).addClass('activateButton delete');
+        $(btn).parents('tr').addClass('tr-not-active');
     }
 
     function setActivateClass(btn) {
-        $(btn).removeClass('activateButton delete')
-        $(btn).addClass('deactivateButton save')
+        $(btn).removeClass('activateButton delete');
+        $(btn).addClass('deactivateButton save');
+        $(btn).parents('tr').removeClass('tr-not-active');
     }
 });

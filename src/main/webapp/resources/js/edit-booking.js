@@ -84,6 +84,7 @@ $(function () {
     $('#date-booking').change(function () {
         refreshTable(localStorage['bookingsState']);
         getAmountOfChildrenByCurrentDate($('#date-booking').val());
+        getDayDiscount($('#date-booking').val());
     });
 
     $('.picker').timepicker({
@@ -94,6 +95,7 @@ $(function () {
     });
 
     $("#selectUser").select2();
+    getDayDiscount($('#date-booking').val());
 });
 
 $('#date-booking').val(moment().format(constants.parameters.dateFormatUpperCase));
@@ -158,6 +160,9 @@ function chekBookingState() {
 function refreshTable(bookingsState) {
     chekBookingState();
     var time = $('#date-booking').val();
+    if(time == "" || time == null || time === undefined)
+        time = moment().format(constants.parameters.dateFormatUpperCase);
+
     var idRoom = localStorage['roomId'];
     src = 'restful/manager-booking/' + time + '/' + idRoom + '/' + bookingsState;
     jQuery.extend({
@@ -340,13 +345,6 @@ function sendStartTime(id, startTime) {
         }
     });
 }
-/*
-$('#setEndTime').click(function () {
-    var id = $('#endTimeOutOfRange').data('id');
-    var time = $('#endTimeOutOfRange').data('time');
-    sendEndTime(id, time);
-});
-*/
 function setEndTime(id, startTime, endTime) {
     if (startTime < endTime) {
         if (validateRoomTime(endTime)) {
@@ -577,3 +575,38 @@ clearModalVindow = function () {
 }
 
 
+function getDayDiscount(date) {
+    if(date == "" || date == null || date === undefined)
+        date = moment().format(constants.parameters.dateFormatUpperCase);
+
+    let array = date.split('-');
+    let startDate = `${array[0]}-${array[1]}-${array[2]}`;
+    let request = `restful/discount/${startDate}/${startDate}/00:00:00/23:59:59`;
+
+    $.ajax({
+        url: request,
+        type: 'GET',
+        success: function (result) {
+            let users = result;
+            let tr = "";
+
+            if (users.length > 0) {
+                $('#discounts-list tbody').html('');
+
+                $.each(users, function (i, discount) {
+                    tr += '<tr>' +
+                        '<td>' + discount.startTime + '</td>' +
+                        '<td>' + discount.endTime + '</td>' +
+                        '<td>' + discount.value + '%</td>' +
+                        '<td>' + discount.reason + '</td></tr>';
+
+                });
+
+                $("#discount-table").append(tr);
+                $("#discounts-list").show();
+            } else {
+                $("#discounts-list").hide();
+            }
+        }
+    })
+}

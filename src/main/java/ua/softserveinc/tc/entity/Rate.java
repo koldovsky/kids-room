@@ -3,6 +3,7 @@ package ua.softserveinc.tc.entity;
 import org.hibernate.annotations.GenericGenerator;
 import ua.softserveinc.tc.constants.RateConstants;
 import ua.softserveinc.tc.constants.RoomConstants;
+import ua.softserveinc.tc.dto.RateDto;
 
 import javax.persistence.*;
 
@@ -98,4 +99,5 @@ public class Rate {
                 ", hourRate=" + hourRate +
                 '}';
     }
+
 }

@@ -3,7 +3,7 @@
 App.factory('DayOffService', ['$http', '$q', function ($http, $q) {
 
     var REST_URI_ALL = '/home/adm-days-off/all';
-    var REST_URI_ROOMS = '/home/adm-edit-room/all';
+    var REST_URI_ROOMS = '/home/adm-room/all';
     var REST_URI_DAY = '/home/adm-days-off/day/';
 
     return {

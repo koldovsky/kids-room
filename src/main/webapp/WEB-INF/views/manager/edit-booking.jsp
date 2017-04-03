@@ -22,6 +22,21 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
 <div class="container">
     <div class="table-edit">
+        <div id="discounts-list" hidden>
+            <table id="discount-table" class=" col-xs-12 col-md-12">
+                <thead>
+                <tr>
+                    <td id="discount-header" colspan="4">
+                        <spring:message code="manager.dailyDiscount"/>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+            </table>
+        </div>
+
         <div id="choose-time-inp">
             <form action=""  method="POST">
                 <input type="hidden" name="${csrf.parameterName}" value="${_csrf.token}"/>
@@ -376,3 +391,4 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/header-manager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/available-places-manager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/validation/validation-manager-booking-time.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>

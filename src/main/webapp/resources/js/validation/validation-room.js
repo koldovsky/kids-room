@@ -51,6 +51,15 @@ $(document).ready(function () {
             },
             workingHoursEnd: {
                 required: true
+            },
+            hour:{
+                minlength: 1,
+                maxlength: 24,
+                required: true
+            },
+            rate:{
+                minlength: 1,
+                required: true
             }
         }
     });

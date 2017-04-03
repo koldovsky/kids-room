@@ -47,6 +47,7 @@
             <td>${manager.firstName}</td>
             <td>${manager.lastName}</td>
             <td>${manager.phoneNumber}</td>
+            <td class="hidden">${manager.active}</td>
             <td>
                 <c:if test="${manager.confirmed eq true}"><i
                         class="admin-icon-confirm glyphicon glyphicon-ok-circle"></i></c:if>
@@ -63,10 +64,16 @@
 
             <td>
                 <c:if test="${manager.active ne true}">
-                    <button class="btn btn-raised btn-default delete activate activateButton"></button>
-                </c:if>
+                    <label class="switch">
+                        <input type="checkbox" class="activate">
+                        <div class="slider round"></div>
+                    </label>
+                   </c:if>
                 <c:if test="${manager.active eq true}">
-                    <button class="btn btn-raised btn-default save activate deactivateButton"></button>
+                    <label class="switch">
+                        <input type="checkbox" checked class="activate">
+                        <div class="slider round"></div>
+                    </label>
                 </c:if>
             </td>
             </tr>
@@ -112,7 +119,7 @@
     <div class="vertical-center-row">
         <div align="center">
             <div id="manager-dialog" class="dialog" hidden title="<spring:message code= "administrator.addManager"/>">
-                <form action="adm-add-manager" method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>"
+                <form method="post" modelAttribute="<%=AdminConstants.ATR_MANAGER%>"
                       id="managerForm">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 

@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.dao.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.GenericConstants;
@@ -133,6 +134,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                 root.get(item.getColumn()), "%" + item.getValue() + "%")
         ));
     }
+
     @Override
     public long getRowsCount() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

@@ -43,8 +43,7 @@ public class RateServiceImpl extends BaseServiceImpl<Rate>
         Rate closestRate = this.calculateAppropriateRate(
                 booking.getDuration(), rates);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(booking.getDuration());
-        double minuteCostInCoins = (double) (closestRate.getPriceRate() * 100
-                / (closestRate.getHourRate() * 60));
+        double minuteCostInCoins = (double) (closestRate.getPriceRate() / (closestRate.getHourRate() * 60));
         Long sum = (long) (minutes * minuteCostInCoins);
         return sum;
     }

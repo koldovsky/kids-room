@@ -75,8 +75,8 @@
     </definition>
 
     <!-- Admin -->
-    <definition name="adm-add-room" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/add-room.jsp"/>
+    <definition name="adm-room" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/admin/room.jsp"/>
     </definition>
 
     <definition name="adm-confirm-manager" extends="default">
@@ -89,10 +89,6 @@
 
     <definition name="adm-edit-manager" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/edit-manager.jsp"/>
-    </definition>
-
-    <definition name="adm-edit-room" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/edit-room.jsp"/>
     </definition>
 
     <definition name="statistics" extends="default">

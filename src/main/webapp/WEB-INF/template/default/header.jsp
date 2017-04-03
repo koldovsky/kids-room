@@ -168,9 +168,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="adm-edit-room">
+                            <a href="adm-room">
                                 <span class="glyphicon glyphicon-home"></span>
-                                <spring:message code="administrator.editRooms" />
+                                <spring:message code="administrator.rooms" />
                             </a>
                         </li>
                         <li>

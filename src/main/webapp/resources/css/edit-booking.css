@@ -95,11 +95,9 @@ html, body, .container {
 .row{
        margin: auto;
 }
-.ui-timepicker-input {
-    width: 7.5em;
-}
+
 .picker {
-    width: 7.5em;
+    width: 6.5em;
     background-image: linear-gradient(#009688,#009688),linear-gradient(#d2d2d2,#d2d2d2);
     background-size: 0 2px,100% 1px;
     background-repeat: no-repeat;
@@ -127,9 +125,9 @@ html, body, .container {
     padding-right: 45px;
 }
 
-#booking-table tbody .sorting_1 {
+/*#booking-table tbody .sorting_1 {
     padding-left: 30px;
-}
+}*/
 
 .highlight-row{
     background-color: #bababa;
@@ -183,4 +181,39 @@ html, body, .container {
     padding-top: 20px;
 }
 
+#discounts-list {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding-left: 45px;
+    padding-right: 60px;
+    text-align: center;
+    align-content: center;
+}
 
+#discounts-list thead {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    background-color: #4285F4;
+}
+
+#discount-table {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    color: black;
+}
+
+#discount-table tr {
+    height: 40px;
+}
+
+#discount-table tbody {
+    background-color: #f2f2f2;
+    font-size: 14px;
+}
+
+#discount-header {
+
+}

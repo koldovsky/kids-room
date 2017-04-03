@@ -36,7 +36,7 @@
         </div>
         <div class="search-fields">
             <div><b>Search:</b></div>
-            <input type="text" class="form-control search-input" placeholder="name" />
+            <input type="text" class="form-control search-input" placeholder="name"/>
             <input type="text" class="form-control search-input" placeholder="price"/>
             <input type="text" class="form-control search-input" placeholder="hour"/>
         </div>
@@ -55,7 +55,6 @@
             <tbody></tbody>
         </table>
     </div>
-
     <!-- abonnements list bounds here -->
     <a tabindex="-1" class="create-object">
         <button type="button" class="btn btn-raised btn-primary btn-add-room"

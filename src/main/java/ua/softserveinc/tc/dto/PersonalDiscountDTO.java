@@ -1,26 +1,36 @@
 package ua.softserveinc.tc.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Objects;
-import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.entity.PersonalDiscount;
 
 @JsonInclude(Include.NON_NULL)
 public class PersonalDiscountDTO implements Serializable {
 
   private Long id;
-  private String reason;
   private Integer value;
-  private Time startTime;
-  private Time endTime;
+  @JsonFormat(pattern = "HH:mm")
+  private LocalTime startTime;
+  @JsonFormat(pattern = "HH:mm")
+  private LocalTime endTime;
   private Boolean active;
-  private User user;
+  private UserDto user;
 
-  public PersonalDiscountDTO(){
+  public PersonalDiscountDTO() {
+  }
 
+  public PersonalDiscountDTO(PersonalDiscount discount) {
+    this.id = discount.getId();
+    this.value = discount.getValue();
+    this.startTime = discount.getStartTime();
+    this.endTime = discount.getEndTime();
+    this.active = discount.getActive();
+    this.user = new UserDto(discount.getUser());
   }
 
   public Long getId() {
@@ -31,14 +41,6 @@ public class PersonalDiscountDTO implements Serializable {
     this.id = id;
   }
 
-  public String getReason() {
-    return reason;
-  }
-
-  public void setReason(String reason) {
-    this.reason = reason;
-  }
-
   public Integer getValue() {
     return value;
   }
@@ -47,19 +49,19 @@ public class PersonalDiscountDTO implements Serializable {
     this.value = value;
   }
 
-  public Time getStartTime() {
+  public LocalTime getStartTime() {
     return startTime;
   }
 
-  public void setStartTime(Time startTime) {
+  public void setStartTime(LocalTime startTime) {
     this.startTime = startTime;
   }
 
-  public Time getEndTime() {
+  public LocalTime getEndTime() {
     return endTime;
   }
 
-  public void setEndTime(Time endTime) {
+  public void setEndTime(LocalTime endTime) {
     this.endTime = endTime;
   }
 
@@ -71,11 +73,11 @@ public class PersonalDiscountDTO implements Serializable {
     this.active = active;
   }
 
-  public User getUser() {
+  public UserDto getUser() {
     return user;
   }
 
-  public void setUser(User user) {
+  public void setUser(UserDto user) {
     this.user = user;
   }
 
@@ -89,7 +91,6 @@ public class PersonalDiscountDTO implements Serializable {
     }
     PersonalDiscountDTO that = (PersonalDiscountDTO) o;
     return Objects.equals(id, that.id) &&
-        Objects.equals(reason, that.reason) &&
         Objects.equals(value, that.value) &&
         Objects.equals(startTime, that.startTime) &&
         Objects.equals(endTime, that.endTime) &&
@@ -99,6 +100,6 @@ public class PersonalDiscountDTO implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, reason, value, startTime, endTime, active, user);
+    return Objects.hash(id, value, startTime, endTime, active, user);
   }
 }
