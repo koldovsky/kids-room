@@ -3,6 +3,8 @@ package ua.softserveinc.tc.service;
 import java.util.List;
 import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import ua.softserveinc.tc.entity.PersonalDiscount;
+import ua.softserveinc.tc.entity.pagination.DataTableOutput;
+import ua.softserveinc.tc.entity.pagination.SortingPagination;
 
 public interface PersonalDiscountService extends BaseService<PersonalDiscount> {
 
@@ -15,5 +17,7 @@ public interface PersonalDiscountService extends BaseService<PersonalDiscount> {
   PersonalDiscountDTO findPersonalDiscountById(Long id);
 
   List<PersonalDiscountDTO> findPersonalDiscountByUserId(Long id);
+
+  DataTableOutput<PersonalDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate);
 
 }

@@ -75,6 +75,11 @@ public class AdminDiscountController {
     return personalDiscountService.findAllPersonalDiscounts();
   }
 
+  @PostMapping("getpersonal")
+  public DataTableOutput<PersonalDiscountDTO> getPersonalPaginateData(@RequestBody SortingPagination dataTable){
+    return personalDiscountService.paginateDayDiscount(dataTable);
+  }
+
   @GetMapping("personal/{id}")
   public PersonalDiscountDTO getPersonalDiscountById(@PathVariable Long id){
     return personalDiscountService.findPersonalDiscountById(id);
