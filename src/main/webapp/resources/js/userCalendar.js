@@ -9,6 +9,7 @@ var BORDER = '#4caf50';
 var BOOKING = '#4caf50';
 var NOT_SYNCHRONIZED = '#068000';
 var BLOCKED = '#ff0000';
+const DISCOUNT_COLOR_IN_USER_CALENDAR = '#FFFF00';
 var allBookings = [];
 var temporaryBookingId = -1;
 var blockedTimeSpanId = -2;
@@ -403,10 +404,41 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
                 };
                 allBookings.push(objects[objectsLen + i]);
             });
-            renderingBlockedTimeSpans(objects, id, workingHoursStart, workingHoursEnd);
+            renderDiscountsInCalendarForUser(objects, id, workingHoursStart, workingHoursEnd);
         },
         error: function (xhr){
             callErrorDialog(xhr['responseText']);
+        }
+    });
+}
+
+function formatDate(date) {
+    let day = date.split('-');
+    return day[2] + '-' + day[1] + '-' + day[0];
+}
+
+function renderDiscountsInCalendarForUser(objects, roomID, workingHoursStart, workingHoursEnd) {
+    const eventLength = objects.length;
+
+    $.ajax({
+        url: "restful/discount/all",
+        encoding: 'UTF-8',
+        contentType: 'charset=UTF-8',
+        success: function (result) {
+            for (let i = 0; i < result.length; i++) {
+                objects[eventLength + i] = {
+                    title: result[i].value + "% - " + result[i].reason,
+                    start: formatDate(result[i].startDate) + "T" + result[i].startTime,
+                    end: formatDate(result[i].endDate) + "T" + result[i].endTime,
+                    editable: false,
+                    borderColor: BORDER_COLOR,
+                    color: DISCOUNT_COLOR_IN_USER_CALENDAR
+                };
+            }
+
+            renderingBlockedTimeSpans(objects, roomID, workingHoursStart, workingHoursEnd);
+        }, error: function () {
+            renderingBlockedTimeSpans(objects, roomID, workingHoursStart, workingHoursEnd);
         }
     });
 }
@@ -1066,7 +1098,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
                 return;
             }
 
-            if (calEvent.color === BLOCKED) {
+            if (calEvent.color === BLOCKED || calEvent.color === DISCOUNT_COLOR_IN_USER_CALENDAR) {
                 return;
             }
 

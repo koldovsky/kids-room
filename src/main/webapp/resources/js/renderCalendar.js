@@ -1,10 +1,11 @@
 var info_event;
 var creatingEvent;
 var allEvents;
-var NOT_ACTIVE_EVENT = '#33cc33';
-var BORDER_COLOR = '#000000';
-var DAYS_IN_MONTH = 31;
-var DAYS_IN_WEEK = 7;
+const NOT_ACTIVE_EVENT = '#33cc33';
+const BORDER_COLOR = '#000000';
+const DISCOUNT_COLOR = '#F00000';
+const DAYS_IN_MONTH = 31;
+const DAYS_IN_WEEK = 7;
 
 $(function () {
     $('#update-recurrent-button').hide();
@@ -286,48 +287,72 @@ function selectRoomForManager(id) {
             result[0] += ':00';
             result[1] += ':00';
 
-            var startTime = result[0];
-            var endTime = result[1];
+            const startTime = result[0];
+            const endTime = result[1];
 
             $.ajax({
                 url: 'getevents/' + id,
                 encoding: 'UTF-8',
                 contentType: 'charset=UTF-8',
                 success: function (result) {
-                    var objects;
-                    if (result.length) {
-                        objects = [];
-                        result = JSON.parse(result);
-                        for (var i = 0; i < result.length; i++) {
-                            objects[i] = {
-                                id: result[i].id,
-                                title: result[i].name,
-                                start: result[i].startTime,
-                                end: result[i].endTime,
-                                editable: false,
-                                type: 'event',
-                                description: result[i].description,
-                                color: result[i].color,
-                                borderColor: BORDER_COLOR,
-                                recurrentId: result[i].recurrentId
-                            };
-                        }
-                        renderCalendarForManager(objects, id, startTime, endTime);
-                    } else {
-                        $('#calendar').fullCalendar('destroy');
-                        /**
-                         * This object is required for create-button empty calendar
-                         * Without this object calendar will not be rendered
-                         */
-                        objects = [{
-                            title: '1',
-                            start: '1',
-                            end: '1'
-                        }];
-                        renderCalendarForManager(objects, id, startTime, endTime);
+                    let objects = [];
+                    result = JSON.parse(result);
+                    for (let i = 0; i < result.length; i++) {
+                        objects[i] = {
+                            id: result[i].id,
+                            title: result[i].name,
+                            start: result[i].startTime,
+                            end: result[i].endTime,
+                            editable: false,
+                            type: 'event',
+                            description: result[i].description,
+                            color: result[i].color,
+                            borderColor: BORDER_COLOR,
+                            recurrentId: result[i].recurrentId
+                        };
                     }
+
+                    renderDiscountsInCalendarForManager(objects, id, startTime, endTime);
                 }
             });
+        }
+    });
+}
+
+function renderDiscountsInCalendarForManager(objects, roomID, workingHoursStart, workingHoursEnd) {
+    const eventLength = objects.length;
+
+    $.ajax({
+        url: "restful/discount/all",
+        encoding: 'UTF-8',
+        contentType: 'charset=UTF-8',
+        success: function (result) {
+            if (result.length) {
+                for (let i = 0; i < result.length; i++) {
+                    objects[eventLength + i] = {
+                        title: result[i].value + "% - " + result[i].reason,
+                        start: formatDate(result[i].startDate) + "T" + result[i].startTime,
+                        end: formatDate(result[i].endDate) + "T" + result[i].endTime,
+                        editable: false,
+                        borderColor: BORDER_COLOR,
+                        color: DISCOUNT_COLOR
+                    };
+                }
+
+                renderCalendarForManager(objects, roomID, workingHoursStart, workingHoursEnd);
+            } else {
+                $('#calendar').fullCalendar('destroy');
+                /**
+                 * This object is required for create-button empty calendar
+                 * Without this object calendar will not be rendered
+                 */
+                 objects = [{
+                    title: '1',
+                    start: '1',
+                    end: '1'
+                 }];
+                 renderCalendarForManager(objects, id, startTime, endTime);
+            }
         }
     });
 }
@@ -381,7 +406,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         },
 
         eventClick: function (calEvent) {
-            if (calEvent.color === NOT_ACTIVE_EVENT) {
+            if (calEvent.color === NOT_ACTIVE_EVENT || calEvent.color === DISCOUNT_COLOR) {
                 return;
             }
 
