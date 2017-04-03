@@ -4,10 +4,13 @@ package ua.softserveinc.tc.dto;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Room;
 import ua.softserveinc.tc.entity.User;
+import ua.softserveinc.tc.util.CurrencyConverter;
 import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.validator.annotation.RateValidation;
 import ua.softserveinc.tc.validator.annotation.UniqueManagerValidation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,8 +90,19 @@ public class RoomDto {
         resultRoom.setWorkingHoursStart(roomDto.workingHoursStart);
         resultRoom.setWorkingHoursEnd(roomDto.workingHoursEnd);
         resultRoom.setActive(roomDto.active);
-        resultRoom.setRates(JsonUtil.fromJsonList(roomDto.getRate(), Rate[].class));
+
+        List<RateDto> rateDtoList = JsonUtil.fromJsonList(roomDto.getRate(), RateDto[].class);
+        resultRoom.setRates(
+                rateDtoList
+                .stream()
+                .map(rate -> {
+                    return new Rate(rate.getIntegerHour(), rate.getLongPrice());
+                })
+                 .collect(Collectors.toList()));
+
+
         resultRoom.getRates().stream().forEach(r -> r.setRoom(resultRoom));
+
         return resultRoom;
     }
 

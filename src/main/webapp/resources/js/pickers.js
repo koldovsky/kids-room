@@ -22,11 +22,13 @@ $('.datepickers').blur(function () {
         $(this).removeClass("error");
     }
 });
+
 $('.picker').timepicker({
     timeFormat: 'H:i',
     step: 1
 });
 $('.picker').attr("maxlength", constants.parameters.timeLength);
+
 $('.picker').keypress(function(e) {
     if (e.which != constants.keyCodes.backspace && (e.which < constants.keyCodes.zero ||
             e.which > constants.keyCodes.colon)) {

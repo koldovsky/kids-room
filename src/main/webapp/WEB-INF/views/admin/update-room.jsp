@@ -155,7 +155,7 @@
                                 <spring:message code="administrator.save"/>
                             </button>
                             <button type="reset" class="btn btn-raised btn-danger"
-                                    onclick="window.location.href='adm-edit-room'">
+                                    onclick="window.location.href='adm-room'">
                                 <spring:message code="administrator.canc"/>
                             </button>
                         </div>

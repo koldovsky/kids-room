@@ -4,6 +4,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.Booking;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Map;
@@ -45,5 +46,11 @@ public class CurrencyConverter {
                 })
                 .collect(Collectors.toList());
     }
+
+    public Long convertToLong(String summ){
+        BigDecimal big = new BigDecimal(summ);
+        return big.multiply(BigDecimal.valueOf(100)).longValue();
+    }
+
 }
 

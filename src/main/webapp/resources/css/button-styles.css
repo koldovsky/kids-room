@@ -1,3 +1,11 @@
+#miniRate{
+    border: 1px solid #a1a1a1;
+}
+
+#miniRate td{
+  padding: 5px;
+    border: 1px solid #a1a1a1;
+}
 .buttons {
     display: inline-block;
     background: #eeeeee; /* Old browsers */

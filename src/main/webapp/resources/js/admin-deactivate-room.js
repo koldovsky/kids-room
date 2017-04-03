@@ -4,49 +4,54 @@ $(function () {
     var btn;
     var dialog;
 
-
-    $('.activate').change(function () {
+    $('#activateModal, #deactivateModal').dialog({
+        modal: true,
+        resizable: false,
+        autoOpen: false,
+        width: 300
+    });
+    $('#rooms-table').on('change', '.activate', function(){
         btn = this;
         roomId = getRoomProp(constants.room.properties.id);
         if(this.checked){
-            dialog = $('#activateModal');
-            changeActiveRoomState(roomId, btn);
-            $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
+            dialog = $('#activateModal').dialog();
         }
         else{
             $('#reasonDeactivate').css('display', 'none');
             verifyRoomBookingState(roomId);
-            dialog = $('#deactivateModal');
+            dialog = $('#deactivateModal').dialog();
         }
 
-        dialog.modal({backdrop: 'static'});
+        dialog.dialog('open');
+
     });
 
     $('#deactivateYesButton').click(function () {
         if($('#reasonDeactivate').valid()){
             var reasonText = $('#reasonText').val();
             changeActiveRoomState(roomId, btn, reasonText);
-            dialog.modal('hide');
+            dialog.dialog('close');
         }
         
     });
 
     $('#deactivateNoButton').click(function () {
         $(btn).prop('checked', true);
-        dialog.modal('hide');
+        dialog.dialog('close');
     });
 
     $('#activateYesButton').click(function () {
-            changeActiveRoomState(roomId, btn);
-            dialog.modal('hide');
+        changeActiveRoomState(roomId, btn);
+        $(btn).parents('tr').removeClass('tr-not-active').addClass('room');
+        dialog.dialog('close');
     });
 
     $('#activateNoButton').click(function () {
         $(btn).prop('checked', false);
-        dialog.modal('hide');
+        dialog.dialog('close');
     });
     function verifyRoomBookingState(roomId) {
-        var src = 'adm-edit-room\\warnings';
+        var src = 'restful/admin/rooms/deactivate-check';
         var inputData = {id: roomId};
         var warningMessages = [];
         $.ajax({
@@ -64,7 +69,7 @@ $(function () {
     }
 
     function changeActiveRoomState(roomId, btn, reason) {
-        var src = 'adm-edit-room';
+        var src = 'restful/admin/rooms/deactivate';
         var inputData = {
             id: roomId,
             reason: reason
@@ -82,18 +87,12 @@ $(function () {
                 else{
                     $(btn).parents('tr').removeClass('room').addClass('tr-not-active');
                 }
-                setRoomProp(constants.room.properties.isActive, isActivated);
             }
         });
     }
 
     function getRoomProp(propIndex) {
-
-        return $(btn).parents('tr').find('td').eq(propIndex).text();
-    }
-
-    function setRoomProp(propIndex, prop) {
-        $(btn).parents('tr').find('td').eq(propIndex).text(prop);
+        return $(btn).closest('tr').attr('id');
     }
 });
 

@@ -7,22 +7,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import ua.softserveinc.tc.constants.ValidationConstants;
+import ua.softserveinc.tc.dto.RateDto;
 import ua.softserveinc.tc.dto.RoomDto;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.Rate;
 import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.Room;
+import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.JsonUtil;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component("roomValidator")
 public class RoomValidatorImpl implements RoomValidator {
@@ -55,7 +55,7 @@ public class RoomValidatorImpl implements RoomValidator {
         if (o instanceof RoomDto) {
             RoomDto roomToValidate = (RoomDto) o;
 
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_NAME, ValidationConstants.ROOM_EPMTY_MSG);
+            ValidationUtils.rejectIfEmpty(errors, ValidationConstants.ROOM_NAME, ValidationConstants.ROOM_EPMTY_MSG);
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_ADDRESS, ValidationConstants.ROOM_EPMTY_MSG);
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_CITY, ValidationConstants.ROOM_EPMTY_MSG);
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, ValidationConstants.ROOM_PHONE_NUMBER, ValidationConstants.ROOM_EPMTY_MSG);
@@ -106,16 +106,20 @@ public class RoomValidatorImpl implements RoomValidator {
                     .find()) {
                 errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_INVALID);
             } else {
-                List<UserDto> managers = Arrays.asList(new Gson().fromJson(jsonManagers, UserDto[].class));
-                List<Long> managerId = JsonUtil.fromJsonList(roomToValidate.getManagers(), UserDto[].class).stream()
-                        .map(UserDto::getId).collect(Collectors.toList());
-                if (managers.stream().anyMatch(manager -> (manager.getId() == null))) {
-                    errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_EMPTY);
-                } else {
-                    if (managerId.stream().distinct().count() != managerId.size()) {
-                        errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
+                if(jsonManagers.length() > 2){
+                    List<User> managers = userService.findAll(Stream.of(roomToValidate.getManagers().split(",")).map(Long::valueOf).collect(Collectors.toList()));
+
+                    List<Long> managerId = Stream.of(roomToValidate.getManagers().split(",")).map(Long::valueOf).collect(Collectors.toList());
+                    if (managers.stream().anyMatch(manager -> (manager.getId() == null))) {
+                        errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_EMPTY);
+                    } else {
+                        if (managerId.stream().distinct().count() != managerId.size()) {
+                            errors.rejectValue(ValidationConstants.MANAGERS_FIELD, ValidationConstants.ROOM_MANAGER_DUPLICATE);
+                        }
                     }
                 }
+
+
 
             }
             String jsonRate = roomToValidate.getRate();
@@ -124,11 +128,21 @@ public class RoomValidatorImpl implements RoomValidator {
                 errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD,ValidationConstants.ROOM_RATE_INCORRECT);
 
             } else {
-                List<Rate> rates = JsonUtil.fromJsonList(jsonRate, Rate[].class);
+                List<Rate> rates =   JsonUtil.fromJsonList(roomToValidate.getRate(), RateDto[].class).stream()
+                        .map(rate -> {
+                            return new Rate(rate.getIntegerHour(), rate.getLongPrice());
+                        })
+                        .collect(Collectors.toList());
+
+
                 if (rates.stream().anyMatch(rate -> ((rate.getHourRate() == null) || (rate.getPriceRate() == null)
                         || (rate.getHourRate() > 24) || (rate.getHourRate() < 1) || (rate.getPriceRate() < 0)))) {
                     errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD, ValidationConstants.ROOM_RATE_ERROR);
 
+                }
+                List<Integer> hours = rates.stream().map(item -> item.getHourRate()).collect(Collectors.toList());
+                if (hours.stream().distinct().count() != hours.size()) {
+                    errors.rejectValue(ValidationConstants.ROOM_RATE_FIELD, ValidationConstants.ROOM_RATE_DUPLICATE);
                 }
             }
             if ((Pattern.compile(ValidationConstants.TWENTY_FOUR_HOURS_REGEX)
@@ -160,5 +174,20 @@ public class RoomValidatorImpl implements RoomValidator {
         }
 
         return warnings;
+    }
+
+    @Override
+    public boolean haveDuplicateRates(Room room) {
+
+        boolean haveDuplicate = false;
+        final Set<Integer> hour = new HashSet<Integer>();
+
+        for (Rate item: room.getRates()) {
+            if (!hour.add(item.getHourRate())) {
+                haveDuplicate = true;
+                break;
+            }
+        }
+        return haveDuplicate;
     }
 }

@@ -12,7 +12,7 @@ import ua.softserveinc.tc.service.RoomService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/adm-edit-room")
+
 public class RoomController {
 
     @Autowired
