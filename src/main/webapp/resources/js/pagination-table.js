@@ -8,6 +8,27 @@
 
 function buildDataTable(selector, uri, columnsArrObj,addFunctions) {
     let datatable =  $(selector).DataTable({
+        language: {
+            processing: messages.dateTable.processing,
+            search: messages.dateTable.search,
+            lengthMenu: messages.dateTable.lengthMenu,
+            info: messages.dateTable.info,
+            infoEmpty: messages.dateTable.infoEmpty,
+            infoFiltered: messages.dateTable.infoFiltered,
+            loadingRecords: messages.dateTable.loadingRecords,
+            zeroRecords: messages.dateTable.zeroRecords,
+            emptyTable: messages.dateTable.emptyTable,
+            paginate: {
+                first: messages.dateTable.paginate.first,
+                previous: messages.dateTable.paginate.previous,
+                next: messages.dateTable.paginate.next,
+                last: messages.dateTable.paginate.last
+            },
+            aria: {
+                sortAscending: messages.dateTable.aria.sortAscending,
+                sortDescending: messages.dateTable.aria.sortDescending
+            }
+        },
         'processing': true,
         'bServerSide': true,
         'ordering': true,
@@ -17,6 +38,7 @@ function buildDataTable(selector, uri, columnsArrObj,addFunctions) {
             'orderable': false,
             'targets': 0
         }],
+        rowId: 'id',
         'ajax': {
             'url': uri,
             'data': function (datatableObject) {

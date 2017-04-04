@@ -245,11 +245,6 @@ th.th-size {
     width: 300px;
 }
 
-.table-wrapper {
-    width: 85%;
-    margin: 0 auto;
-}
-
 .create-object {
     display: block;
     text-align: center;
@@ -265,21 +260,10 @@ th.th-size {
     width: 40%;
 }
 
-.datatable {
-    margin: 0 auto !important;
-    padding: 0 !important;
-    width: 80% !important;
-}
-
 .column-names {
     visibility: hidden;
 }
 
-.search-input {
-    display: inline-block;
-    width: 100px;
-    margin-left: 30px;
-}
 strong.title-font {
     font-size: 22px;
     color: black;
@@ -584,29 +568,34 @@ th.th-size {
     color: white;
 }
 
-.datatable {
-    margin: 20px auto !important;
-    padding: 0 !important;
-    width: 80% !important;
+.column-names {
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+    height: 0;
 }
 
-.column-names {
-    visibility: hidden;
+.search-fields {
+    margin-bottom: 10px;
 }
 
 .search-input {
     display: inline-block;
-    width: 100px;
-    margin-left: 30px;
+    width: 130px;
+    margin-left: 10px;
 }
 
-.search-fields {
-    float: right;
+.search-input-first {
+    margin-left: 0;
 }
 
-.search-fields {
-    margin: 0 auto;
-    padding: 0;
-    width: 80%;
+.datatable {
+    margin: 8px auto 20px auto !important;
+    padding: 0 !important;
+    width: 100% !important;
 }
 
+.switch {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

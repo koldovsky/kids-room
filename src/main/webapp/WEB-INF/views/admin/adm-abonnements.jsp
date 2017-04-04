@@ -5,7 +5,6 @@
 <%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link rel='stylesheet' href='resources/css/flow-form.css'>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
 
@@ -36,11 +35,11 @@
         </div>
         <div class="search-fields">
             <div><b>Search:</b></div>
-            <input type="text" class="form-control search-input" placeholder="name"/>
+            <input type="text" class="form-control search-input search-input-first" placeholder="name"/>
             <input type="text" class="form-control search-input" placeholder="price"/>
             <input type="text" class="form-control search-input" placeholder="hour"/>
         </div>
-        <table class="reg-form dt datatable">
+        <table class="reg-form dt datatable ">
             <thead>
             <tr>
                 <th style="display: none;"><strong>#</strong></th>
