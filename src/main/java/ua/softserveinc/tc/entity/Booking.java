@@ -10,6 +10,7 @@ import ua.softserveinc.tc.dto.BookingDto;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 import static ua.softserveinc.tc.util.DateUtil.toHoursAndMinutes;
 
@@ -62,6 +63,12 @@ public class Booking {
 
     @Column(name = BookingConstants.DB.ID_RECURRENT, columnDefinition = "bigint default NULL")
     private Long recurrentId;
+
+    @Column(name = "discounts")
+    private String discounts;
+
+    public Booking() {
+    }
 
     public Long getIdBook() {
         return idBook;
@@ -159,44 +166,35 @@ public class Booking {
         this.recurrentId = recurrentId;
     }
 
+    public String getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(String discounts) {
+        this.discounts = discounts;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-
-        if (!child.equals(booking.child)) {
-            return false;
-        }
-        if (!room.equals(booking.room)) {
-            return false;
-        }
-        if (!user.equals(booking.user)) {
-            return false;
-        }
-        if (!bookingStartTime.equals(booking.bookingStartTime)) {
-            return false;
-        }
-        if (!bookingEndTime.equals(booking.bookingEndTime)) {
-            return false;
-        }
-        return bookingState == booking.bookingState;
-
+        return Objects.equals(idBook, booking.idBook) &&
+                Objects.equals(child, booking.child) &&
+                Objects.equals(room, booking.room) &&
+                Objects.equals(user, booking.user) &&
+                Objects.equals(bookingStartTime, booking.bookingStartTime) &&
+                Objects.equals(bookingEndTime, booking.bookingEndTime) &&
+                Objects.equals(comment, booking.comment) &&
+                bookingState == booking.bookingState &&
+                Objects.equals(duration, booking.duration) &&
+                Objects.equals(sum, booking.sum) &&
+                Objects.equals(recurrentId, booking.recurrentId) &&
+                Objects.equals(discounts, booking.discounts);
     }
 
     @Override
     public int hashCode() {
-        int result = getIdBook() != null ? getIdBook().hashCode() : 0;
-        result = 31 * result + (getChild() != null ? getChild().hashCode() : 0);
-        result = 31 * result + (getRoom() != null ? getRoom().hashCode() : 0);
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getBookingStartTime() != null ? getBookingStartTime().hashCode() : 0);
-        result = 31 * result + (getBookingEndTime() != null ? getBookingEndTime().hashCode() : 0);
-        return result;
+        return Objects.hash(idBook, child, room, user, bookingStartTime, bookingEndTime, comment, bookingState, duration, sum, recurrentId, discounts);
     }
 }

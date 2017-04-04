@@ -351,7 +351,7 @@ function renderDiscountsInCalendarForManager(objects, roomID, workingHoursStart,
                     start: '1',
                     end: '1'
                  }];
-                 renderCalendarForManager(objects, id, startTime, endTime);
+                 renderCalendarForManager(objects, roomID, startTime, endTime);
             }
         }
     });

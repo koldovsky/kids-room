@@ -47,6 +47,8 @@ public class BookingDto implements Serializable {
     private String daysOfWeek;
     private Set<Integer> weekDays;
 
+    private String discount;
+
     private transient Child child;
     private transient User user;
     private transient Room room;
@@ -90,6 +92,7 @@ public class BookingDto implements Serializable {
         child = newBookingDto.child;
         user = newBookingDto.user;
         room = newBookingDto.room;
+        discount = newBookingDto.discount;
     }
 
     public BookingDto(Booking booking) {
@@ -105,6 +108,7 @@ public class BookingDto implements Serializable {
         recurrentId = booking.getRecurrentId();
         dateStartTime = booking.getBookingStartTime();
         dateEndTime = booking.getBookingEndTime();
+        discount = booking.getDiscounts();
 
         if (booking.getBookingStartTime() != null) {
             date = shortDateFormat.format(booking.getBookingStartTime());
@@ -625,6 +629,14 @@ public class BookingDto implements Serializable {
 
     public String formatDuration() {
         return toHoursAndMinutes(durationBooking);
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 
     @Override
