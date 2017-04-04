@@ -106,10 +106,10 @@
                                 <option value="#9b3aa1" style="background:purple">
                                     <spring:message code="color.purple"/>
                                 </option>
-                                <option value="#044d92" style="background:blue">
+                                <option value="#044d92" style="background:blue" selected="selected">
                                     <spring:message code="color.blue"/>
                                 </option>
-                                <option value="#1ba1e2" style="background:#6AA4C1" selected="selected">
+                                <option value="#1ba1e2" style="background:#6AA4C1">
                                     <spring:message code="color.lightBlue"/>
                                 </option>
                                 <option value="#636363" style="background:grey">
@@ -293,10 +293,10 @@
                                 <option value="#9b3aa1" style="background:purple">
                                     <spring:message code="color.purple"/>
                                 </option>
-                                <option value="#044d92" style="background:blue">
+                                <option value="#044d92" style="background:blue" selected="selected">
                                     <spring:message code="color.blue"/>
                                 </option>
-                                <option value="#1ba1e2" style="background:#6AA4C1" selected="selected">
+                                <option value="#1ba1e2" style="background:#6AA4C1">
                                     <spring:message code="color.lightBlue"/>
                                 </option>
                                 <option value="#636363" style="background:grey">
