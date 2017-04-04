@@ -98,7 +98,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         }).collect(Collectors.toList());
 
         criteria.select(root).orderBy(orders);
-//                .where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
 
         resultList = entityManager.createQuery(criteria)
                 .setFirstResult(pagination.getStart())
@@ -113,17 +112,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         List<T> searchResultList = entityManager.createQuery(criteria).getResultList();
         return searchResultList.size();
     }
-
-//    private void addSortingsToOrderRestrictions(List<Sorting> sortingsList, CriteriaBuilder builder,
-//                                                Root<T> root, List<Order> restrictionsOrder) {
-//        sortingsList.forEach(sorting -> {
-//            if (sorting.getDirection() == 1) {
-//                restrictionsOrder.add(builder.asc(root.get(sorting.getColumn())));
-//            } else {
-//                restrictionsOrder.add(builder.desc(root.get(sorting.getColumn())));
-//            }
-//        });
-//    }
 
     private void addSearchToRestrictions(List<Search> searches, CriteriaBuilder builder,
                                          Root<T> root, List<Predicate> restrictions) {
