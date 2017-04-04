@@ -3,6 +3,7 @@ package ua.softserveinc.tc.dao.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.transaction.annotation.Transactional;
+import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.constants.GenericConstants;
 import ua.softserveinc.tc.dao.BaseDao;
 import ua.softserveinc.tc.entity.pagination.*;
@@ -15,6 +16,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
@@ -71,6 +73,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<T> findAll(SortingPagination sortPaginate) {
         List<T> resultList;
         Pagination pagination = sortPaginate.getPagination();
@@ -83,20 +86,24 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         Root<T> root = criteria.from(getEntityClass());
 
         List<Predicate> restrictions = new ArrayList<>();
-        List<Order> restrictionsOrder = new ArrayList<>();
 
         if (!searchList.isEmpty()) {
             addSearchToRestrictions(searchList, builder, root, restrictions);
             PaginationCharacteristics.searchCount = getSearchedItemsCount(builder, criteria, root, restrictions);
         }
-        addSortingsToOrderRestrictions(sortingList, builder, root, restrictionsOrder);
-        if (!restrictionsOrder.isEmpty()) {
-            criteria.orderBy(restrictionsOrder);
-        }
-        addPaginationToRestrictions(pagination, builder, root, restrictions);
 
-        criteria.select(root).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        resultList = entityManager.createQuery(criteria).getResultList();
+        List<Order> orders = sortingList.stream().map(item -> {
+            return item.getDirection() == 1 ? builder.asc(root.get(item.getColumn())) :
+                    builder.desc(root.get(item.getColumn()));
+        }).collect(Collectors.toList());
+
+        criteria.select(root).orderBy(orders);
+//                .where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+
+        resultList = entityManager.createQuery(criteria)
+                .setFirstResult(pagination.getStart())
+                .setMaxResults(pagination.getItemsPerPage())
+                .getResultList();
         return resultList;
     }
 
@@ -107,32 +114,29 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return searchResultList.size();
     }
 
-    private void addSortingsToOrderRestrictions(List<Sorting> sortingsList, CriteriaBuilder builder,
-                                                Root<T> root, List<Order> restrictionsOrder) {
-        sortingsList.forEach(sorting -> {
-            if (sorting.getDirection() == 1) {
-                restrictionsOrder.add(builder.asc(root.get(sorting.getColumn())));
-            } else {
-                restrictionsOrder.add(builder.desc(root.get(sorting.getColumn())));
-            }
-        });
-    }
-
-    private void addPaginationToRestrictions(Pagination pagination, CriteriaBuilder builder,
-                                             Root<T> root, List<Predicate> restrictions) {
-        restrictions.addAll(Arrays.asList(
-                builder.greaterThan(root.get(GenericConstants.GENERIC_ID),
-                        pagination.getStart()),
-                builder.lessThanOrEqualTo(root.get(GenericConstants.GENERIC_ID),
-                        pagination.getStart() + pagination.getItemsPerPage())
-        ));
-    }
+//    private void addSortingsToOrderRestrictions(List<Sorting> sortingsList, CriteriaBuilder builder,
+//                                                Root<T> root, List<Order> restrictionsOrder) {
+//        sortingsList.forEach(sorting -> {
+//            if (sorting.getDirection() == 1) {
+//                restrictionsOrder.add(builder.asc(root.get(sorting.getColumn())));
+//            } else {
+//                restrictionsOrder.add(builder.desc(root.get(sorting.getColumn())));
+//            }
+//        });
+//    }
 
     private void addSearchToRestrictions(List<Search> searches, CriteriaBuilder builder,
                                          Root<T> root, List<Predicate> restrictions) {
-        searches.forEach(item -> restrictions.add(builder.like(
-                root.get(item.getColumn()), "%" + item.getValue() + "%")
-        ));
+        searches.forEach(item -> {
+            try {
+                int value = Integer.parseInt(item.getValue());
+                restrictions.add(builder.equal(root.get(item.getColumn()), value));
+            } catch (NumberFormatException ne) {
+                restrictions.add(builder.like(
+                        root.get(item.getColumn()), "%" + item.getValue() + "%")
+                );
+            }
+        });
     }
 
     @Override

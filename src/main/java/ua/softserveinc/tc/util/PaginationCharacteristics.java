@@ -10,8 +10,11 @@ public final class PaginationCharacteristics {
     public static long searchCount = 0;
 
     public static long definePage(long start, long paginationLength, long itemsLength) {
-        long totalPages = itemsLength / paginationLength;
-        return totalPages * start / itemsLength;
+//        long pagesCount = (long) Math.ceil((double) itemsLength / paginationLength);
+        long ret = start == 0 ? 0 : (long) Math.ceil((double)(start + 1)/paginationLength);
+        System.out.println(ret);
+        return ret;
+//        return (long) Math.ceil((double)(start + 1)/paginationLength);
     }
 
 //    public static boolean isSearched(List<Search> searches) {
@@ -19,5 +22,4 @@ public final class PaginationCharacteristics {
 //                .map(Search::getColumn)
 //                .allMatch(StringUtils::isEmpty);
 //    }
-
 }

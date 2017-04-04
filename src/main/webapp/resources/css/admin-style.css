@@ -333,3 +333,8 @@ th.th-size {
     margin-top: 2px;
     margin-bottom: 2px;
 }
+
+.dataTables_paginate {
+    display: block;
+    margin: 8px auto !important;
+}
