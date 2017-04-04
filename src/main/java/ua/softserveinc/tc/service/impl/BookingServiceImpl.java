@@ -193,7 +193,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     private long calculateAndGetSum(LocalTime startTime, LocalTime endTime, int discountValue, Rate rate) {
         long minutes = MINUTES.between(startTime, endTime);
-        double minuteCostInCoins = rate.getPriceRate() * 100.0 * (100 - discountValue)
+        double minuteCostInCoins = rate.getPriceRate() * (100 - discountValue)
                 / (rate.getHourRate() * 60 * 100.0);
 
         return (long) (minutes * minuteCostInCoins);
