@@ -1,5 +1,7 @@
 package ua.softserveinc.tc.controller.user;
 
+import java.util.ArrayList;
+import java.util.Map;
 import org.slf4j.Logger;
 import com.google.gson.Gson;
 import javax.inject.Inject;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.constants.ErrorConstants;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.Log;
@@ -143,7 +147,18 @@ public class CRUDBookingsController {
      */
     @PostMapping(value = "/makenewbooking", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> makeBooking(@RequestBody List<BookingDto> dtos, Locale locale) {
-
+        /*System.out.println(dtos);
+        Map<String,String> test = dtos.get(0);
+        BookingDto dto = new BookingDto();
+        dto.setUserId(Long.parseLong(test.get("userId")));
+        dto.setRoomId(Long.parseLong(test.get("roomId")));
+        dto.setKidId(Long.parseLong(test.get("kidId")));
+        dto.setComment(test.get("comment"));
+        dto.setStartTime(test.get("startTime"));
+        dto.setEndTime(test.get("endTime"));
+        List<BookingDto> list = new ArrayList<>();
+        list.add(dto);
+        //return null;*/
         return  getResponseEntity(bookingService.makeBookings(dtos), locale);
     }
 

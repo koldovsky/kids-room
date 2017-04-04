@@ -136,7 +136,8 @@ const messages = {
         hint: {
             leaveTime: 'Натисніть, щоб встановити час прибуття',
             arrivedTime: 'Натисніть, щоб встановити час виходу'
-        }
+        },
+        allDayDiscount: 'Весь день'
     },
     report: {
         currencySymbol: 'ГРН'

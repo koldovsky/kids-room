@@ -31,6 +31,16 @@
             </legend>
         </th>
     </div>
+    <div class="dayDiscountDataTable-wrapper">
+    <div class="column-names">
+        <span>reason</span>
+        <span>value</span>
+    </div>
+    <div class="search-fields">
+        <div><b>Search:</b></div>
+        <input type="text" class="form-control search-input" placeholder="reason"/>
+        <input type="text" class="form-control search-input" placeholder="value"/>
+    </div>
     <table class="reg-form datatable dayDiscountDataTable">
         <thead>
         <tr>
@@ -46,6 +56,7 @@
 
         </tbody>
     </table>
+    </div>
     <a tabindex="-1" class="create-object">
         <button type="button" class="btn btn-raised btn-primary btn-add-room"
                 id="addDiscount" data-toggle="modal" data-target="#addDiscountDiv">
@@ -64,6 +75,15 @@
                 <spring:message code="administrator.personalDiscount"/></strong>
             </legend>
         </th>
+    </div>
+    <div class="personalDiscountDataTable-wrapper">
+        <div class="column-names">
+            <span>value</span>
+        </div>
+        <div class="search-fields">
+            <div><b>Search:</b></div>
+            <input type="text" class="form-control search-input" placeholder="value"/>
+        </div>
     </div>
     <table class="reg-form datatable personalDiscountDataTable">
         <thead>
@@ -126,9 +146,18 @@
                                 <input id="DEndDate" type="text" name="endDate" class="form-control datepickers" placeholder="<spring:message code="administrator.discountModal.endDate"/>">
                             </div>
                         </div>
-
-                        <!-- Time pickers -->
                         <div class="form-group sizing-between">
+                            <label>
+                                <spring:message code="administrator.discountModal.fullDay"/>
+                            </label>
+                            <br/>
+                            <label class="switch">
+                                <input type="checkbox" checked class='activate' id="changeDayPeriod">
+                                <div class='slider round'></div>
+                            </label>
+                        </div>
+                        <!-- Time pickers -->
+                        <div class="form-group sizing-between" id="dayDiscountTime">
                             <label class="required">
                                 <spring:message code="administrator.dayDiscount.endDate"/>
                             </label>
@@ -192,14 +221,13 @@
                         <!-- Full or specific period -->
                         <div class="form-group sizing-between">
                             <label>
-                                <spring:message code="administrator.dayDiscount.value"/>
+                                <spring:message code="administrator.discountModal.fullDay"/>
                             </label>
                             <br/>
                             <label class="switch">
                                 <input type="checkbox" checked class='activate'>
                                 <div class='slider round'></div>
                             </label>
-
                         </div>
                         <!-- Time pickers -->
                         <div class="form-group sizing-between">

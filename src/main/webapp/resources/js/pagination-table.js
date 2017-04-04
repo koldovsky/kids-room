@@ -50,6 +50,7 @@ function buildDataTable(selector, uri, columnsArrObj,addFunctions) {
     });
 
     addFunctions();
+    return datatable;
 }
 
 function defineOrder(str) {

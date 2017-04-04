@@ -137,7 +137,8 @@ const messages = {
         hint: {
             leaveTime: 'Press to set leave time',
             arrivedTime: 'Press to set arrival time'
-        }
+        },
+        allDayDiscount: 'All day'
     },
     report: {
         currencySymbol: 'UAH'
