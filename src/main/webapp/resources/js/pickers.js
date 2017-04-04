@@ -22,11 +22,11 @@ $('.datepickers').blur(function () {
         $(this).removeClass("error");
     }
 });
-/*
+
 $('.picker').timepicker({
     timeFormat: 'H:i',
     step: 1
-});*/
+});
 $('.picker').attr("maxlength", constants.parameters.timeLength);
 
 $('.picker').keypress(function(e) {

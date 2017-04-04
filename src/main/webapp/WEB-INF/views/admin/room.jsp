@@ -13,17 +13,19 @@
 <script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
 
 
-<link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css'>
-<link href="${pageContext.request.contextPath}/resources/css/lib/dataTables.bootstrap4.min.css" rel="stylesheet"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lib/intlTelInput.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
-<link href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css" rel="stylesheet"/>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/flow-form.css">
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/lib/intlTelInput.css">
+<link rel="stylesheet" href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css'>
+<link href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css" rel="stylesheet"/>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/flow-form.css'>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-add-manager.css">
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 
 <div class="container">
-            <table class="table table-responsive reg-form" id="rooms-table">
+            <table class="for-table table table-hover reg-form" id="rooms-table">
                 <caption>
                     <i class="glyphicon glyphicon-home glyphicon-room"></i>
                     <strong class="title-font"><spring:message code="administrator.listRooms"/></strong>
@@ -147,7 +149,7 @@
                                 </div>
                                 <br><br>
 
-                                <div class="form-group sizing-between">
+                                <div class="form-group sizing-between" id="manager-between">
                                     <label class="required"><spring:message code="administrator.room.manager"/></label>
                                          <span id="addManager" class="btn btn-success btn-lg btn-rate-manager"
                                                title=<spring:message code="administrator.addManager"/>>
@@ -216,6 +218,7 @@
             </div>
 
 </div>
+
 <script src='${pageContext.request.contextPath}/resources/js/admin-room.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-deactivate-room.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/validation/validation-room.js'></script>
