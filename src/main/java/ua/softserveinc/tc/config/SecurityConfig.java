@@ -384,8 +384,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SAMLLogoutFilter samlLogoutFilter() {
         return new SAMLLogoutFilter(successLogoutHandler(),
-                new LogoutHandler[] { logoutHandler() },
-                new LogoutHandler[] { logoutHandler() });
+                new LogoutHandler[]{logoutHandler()},
+                new LogoutHandler[]{logoutHandler()});
     }
 
     // Bindings
@@ -470,7 +470,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * It represents a bean definition with the aim allow wiring from
      * other classes performing the Inversion of Control (IoC).
      *
-     * @throws  Exception
+     * @throws Exception
      */
     @Bean
     @Override
@@ -481,8 +481,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Defines the web based security configuration.
      *
-     * @param   http It allows configuring web based security for specific http requests.
-     * @throws  Exception
+     * @param http It allows configuring web based security for specific http requests.
+     * @throws Exception
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -520,6 +520,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SecurityConstants.ERROR).permitAll()
                 .antMatchers(SecurityConstants.SAML).permitAll()
                 .anyRequest().authenticated()
+                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(TokenConstants.TOKEN_VALIDITY_SECONDS)
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage(SecurityConstants.ACCESS_DENIED)
@@ -539,16 +540,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Sets a custom authentication provider.
      *
-     * @param   auth SecurityBuilder used to create an AuthenticationManager.
-     * @throws  Exception
+     * @param auth SecurityBuilder used to create an AuthenticationManager.
+     * @throws Exception
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         boolean isCustomAuthEnable = getCustomAuthEnable();
 
-        if(isCustomAuthEnable) {
-                auth
+        if (isCustomAuthEnable) {
+            auth
                     .authenticationProvider(samlAuthenticationProvider())
                     .userDetailsService(userDetailsService)
                     .passwordEncoder(getBCryptPasswordEncoder());
@@ -572,14 +573,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * method enable or disable custom authentication
-     * @param http It allows configuring web based security for specific http requests.
+     *
+     * @param http               It allows configuring web based security for specific http requests.
      * @param isCustomAuthEnable enable or disable custom auththantication
      * @throws Exception
      */
     private void setAuthenticationPermits(
             HttpSecurity http, boolean isCustomAuthEnable) throws Exception {
 
-        if(isCustomAuthEnable) {
+        if (isCustomAuthEnable) {
             http
                     .authorizeRequests()
                     .antMatchers(SecurityConstants.Authentication.RESET_PASSWORD).permitAll()

@@ -1,8 +1,4 @@
-var BORDER_COLOR = '#000000';
-var NOT_ACTIVE_EVENT = '#33cc33';
-
 function showDialogToUpdateManager(id) {
-    console.log('sfgdkgf');
     $('#updating-dialog').dialog('open');
     adminManagerUpdate(id);
     $('#resultVindUpdate').show();
@@ -61,7 +57,7 @@ function clickedUpdate() {
             var bl = document.getElementById("resultVindUpdate");
             if (mav.message == null) {
 
-               bl.innerHTML = mav.email + " updated successfully";
+                bl.innerHTML = mav.email + " updated successfully";
                 location.reload();
             }
             else {
@@ -107,7 +103,7 @@ $(function () {
         $('#resultVindUpdate').hide();
     });
 });
-function showDialogToAddManager(){
+function showDialogToAddManager() {
     $('#manager-dialog').dialog('open');
     $('#resultVind').show();
 }

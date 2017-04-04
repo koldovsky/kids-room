@@ -9,7 +9,7 @@ public final class TokenConstants {
 
   public static final String TOKEN = "token";
 
-  public static final int TOKEN_VALIDITY_SECONDS = 286400;
+  public static final int TOKEN_VALIDITY_SECONDS = 43200;
 
   private TokenConstants() {
   }
