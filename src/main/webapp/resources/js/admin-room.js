@@ -1,12 +1,11 @@
 'use strict';
-var table = null;
-var count = 0;
-var managers = {};
+let table = null;
+let managers = {};
 $(function () {
 
     $("#roomForm").focusout(function () {
-       if($("#roomForm").valid())
-           $('#btnSubmitNewRoom').prop('disabled', false);
+        if ($("#roomForm").valid())
+            $('#btnSubmitNewRoom').prop('disabled', false);
     });
 
     $('#room-dialog').dialog({
@@ -31,32 +30,27 @@ $(function () {
         encoding: 'UTF-8',
         url: 'restful/admin/rooms/list-manager',
         success: function (result) {
-            var obj = jQuery.parseJSON(JSON.stringify(result));
-            var i = 0;
+            let obj = jQuery.parseJSON(JSON.stringify(result));
             $.each(obj, function (key, value) {
                 managers[value.id] = value.firstName + ' ' + value.lastName;
-                $('#man').append("<option value='"+value.id+"'>"+value.firstName + ' ' + value.lastName+"</option>");
-                i++;
+                $('#man').append("<option value='" + value.id + "'>" + value.firstName + ' ' + value.lastName + "</option>");
             });
         }
     });
 
 
-
     $('#addManager').click(function () {
-        count++;
         var listManager = "<li><select name='manager[]' form='roomForm' class='form-control manager'>";
-        $.each(managers, function( i, value){
-            listManager = listManager + "<option value='"+i+"'>"+value+"</option>";
+        $.each(managers, function (i, value) {
+            listManager = listManager + "<option value='" + i + "'>" + value + "</option>";
         });
         listManager = listManager + "</select></li";
-
         $('#listManager').append(listManager);
 
     });
 
     $('#removeRate').click(function () {
-        if( $('#tableRates tr').length > 1)
+        if ($('#tableRates tr').length > 1)
             $('#tableRates tr:last').remove();
     });
 
@@ -65,29 +59,27 @@ $(function () {
     });
 
     $('#showAddRoom').click(function () {
-        $("#roomForm").trigger("reset");
-        $("#listManager").empty();
-        $('#tableRates tr').remove();
-        $('#tableRates').append('<tr><td><input type="number" name="hour" id="hour" class="form-control"></td><td><input type="number" name="rate" id="rate" class="form-control"></td></tr>');
-
-
+        clearForm();
         $('#btnSubmitUpdateRoom').hide();
         $('#btnSubmitNewRoom').show();
         $('#room-dialog').dialog('option', 'title', messages.room.info.newRoom);
-        $('#room-dialog').dialog('open');        
+        $('#room-dialog').dialog('open');
     });
-    $('#close-add-dialod').click(function () {
-        $('#room-dialog').dialog('close');
 
+    $('#close-add-dialod').click(function () {
+        clearForm();
+        $('#room-dialog').dialog('close');
     });
+
     $('#addRate').click(function () {
         $('#tableRates').append('<tr><td><input type="number" name="hour" id="hour" class="form-control"></td><td><input type="number" name="rate" id="rate" class="form-control"></td></tr>');
     });
+
     $('#btnSubmitNewRoom').click(function () {
-        var isvalidate = $("#roomForm").valid();
+        let isValidate = $("#roomForm").valid();
         $(".danger-info").remove();
-        if (isvalidate) {
-            var dataSender = getObjectFromForm($('#roomForm'));
+        if (isValidate) {
+            let dataSender = getObjectFromForm($('#roomForm'));
 
             $.ajax({
                 type: 'POST',
@@ -97,7 +89,7 @@ $(function () {
                 data: JSON.stringify(dataSender),
                 success: function (result) {
                     result = JSON.parse(result);
-                    if (result.length == 0){
+                    if (result.length == 0) {
                         $('#room-dialog').dialog('close');
                         getAllRooms();
                     }
@@ -110,10 +102,9 @@ $(function () {
     });
 
     $('#btnSubmitUpdateRoom').click(function () {
-        var isvalidate=$("#roomForm").valid();
+        let isValidate = $("#roomForm").valid();
         $(".danger-info").remove();
-        if(isvalidate)
-        {
+        if (isValidate) {
             var dataSender = getObjectFromForm($('#roomForm'));
             $.ajax({
                 type: 'PUT',
@@ -123,29 +114,29 @@ $(function () {
                 data: JSON.stringify(dataSender),
                 success: function (result) {
                     result = JSON.parse(result);
-                    if (result.length == 0){
+                    if (result.length == 0) {
                         $('#room-dialog').dialog('close');
                         getAllRooms();
                     }
-                    else result.forEach(function(item, i, arr) {
-                        $('#roomForm').append("<div class='danger-info'>"+item+ "</div>");
+                    else result.forEach(function (item, i, arr) {
+                        $('#roomForm').append("<div class='danger-info'>" + item + "</div>");
                     });
                 }
             });
         }
     });
     function getObjectFromForm(tag) {
-        var managers = "";
-        var rates = [];
-         $('#listManager').find(':input').each(function (index, element) {
+        let managers = "";
+        let rates = [];
+        $('#listManager').find(':input').each(function (index, element) {
             managers = $(this).val() + "," + managers;
         });
 
         $('#tableRates').find('tr').each(function (index, element) {
             var hour = $(this).find("td:eq(0) :input").val();
-            var rate =  $(this).find("td:eq(1) :input").val();
+            var rate = $(this).find("td:eq(1) :input").val();
 
-            if(hour !== undefined && rate !== undefined){
+            if (hour !== undefined && rate !== undefined) {
                 var info = {};
                 info['hourRate'] = hour;
                 info['priceRate'] = rate;
@@ -155,30 +146,26 @@ $(function () {
         });
 
         var ret = $(tag).serializeArray().reduce(function (obj, item) {
-            if(item.name != "manager[]" && item.name != "rate"  && item.name != "hour")
-              obj[item.name] = item.value;
+            if (item.name != "manager[]" && item.name != "rate" && item.name != "hour")
+                obj[item.name] = item.value;
             return obj;
         }, {});
-        ret['managers'] = managers.substring(0, managers.length-1);
-         ret['rate'] = JSON.stringify(rates);
+        ret['managers'] = managers.substring(0, managers.length - 1);
+        ret['rate'] = JSON.stringify(rates);
         return ret;
-
     }
-    
-
 });
-function showDialogToUpdateRoom(id){
+function showDialogToUpdateRoom(id) {
     $('#btnSubmitUpdateRoom').show();
     $('#btnSubmitNewRoom').hide();
     $.ajax({
         type: 'GET',
         encoding: 'UTF-8',
         contentType: 'application/json; charset=UTF-8',
-        url: 'restful/admin/rooms/'+id,
+        url: 'restful/admin/rooms/' + id,
         success: function (result) {
-             $('#tableRates tr').remove();
+            $('#tableRates tr').remove();
 
-            var i = 0;
             $('#listManager').empty();
             $('#btnSubmitNewRoom').removeClass('insert').addClass('update');
 
@@ -192,25 +179,31 @@ function showDialogToUpdateRoom(id){
             $('#room-dialog #workingHoursStart').val(result.workingHoursStart);
             $('#room-dialog #workingHoursEnd').val(result.workingHoursEnd);
 
-            var inputManagers = jQuery.parseJSON(result.managers);
+            let inputManagers = jQuery.parseJSON(result.managers);
             $.each(inputManagers, function (i, element) {
-                   var listManager = "<li><select name='manager[]' form='roomForm' class='form-control manager'>";
-                   $.each(managers, function(j, value){
-                       if(element.id == j)
-                        listManager = listManager + "<option selected value='"+j+"'>"+value+"</option>";
-                       else listManager = listManager + "<option  value='"+j+"'>"+value+"</option>";
-                   });
-                   listManager = listManager + "</select></li";
-                   $('#listManager').append(listManager);
+                let listManager = "<li><select name='manager[]' form='roomForm' class='form-control manager'>";
+                $.each(managers, function (j, value) {
+                    if (element.id == j)
+                        listManager = listManager + "<option selected value='" + j + "'>" + value + "</option>";
+                    else listManager = listManager + "<option  value='" + j + "'>" + value + "</option>";
+                });
+                listManager = listManager + "</select></li";
+                $('#listManager').append(listManager);
 
-           });
-
-            var inputRates = jQuery.parseJSON(result.rate);
-
-            $.each(inputRates, function (i, element) {
-                $('#tableRates').append('<tr><td><input type="number" name="hour" id="hour" class="form-control" value="'+element.hourRate+'"></td>' +
-                    '<td><input type="number" name="rate" id="rate" class="form-control" value="'+element.priceRate+'"></td></tr>');
             });
+
+            let inputRates = jQuery.parseJSON(result.rate);
+
+            if (inputRates.length > 0) {
+                $.each(inputRates, function (i, element) {
+                    $('#tableRates').append('<tr><td><input type="number" name="hour" id="hour" class="form-control" value="' + element.hourRate + '"></td>' +
+                        '<td><input type="number" name="rate" id="rate" class="form-control" value="' + element.priceRate + '"></td></tr>');
+                });
+
+            } else {
+                $('#tableRates').append('<tr><td><input type="number" name="hour" id="hour" class="form-control"></td><td><input type="number" name="rate" id="rate" class="form-control"></td></tr>');
+            }
+
 
             $('#room-dialog').dialog('option', 'title', messages.room.info.updateRoom);
             $('#room-dialog').dialog('open');
@@ -220,7 +213,14 @@ function showDialogToUpdateRoom(id){
 function deleteManager(btn) {
     $(btn).closest('tr').remove();
 }
-
+function clearForm() {
+    $("#roomForm").validate().resetForm();
+    $('.danger-info').remove();
+    $("#roomForm").trigger("reset");
+    $("#listManager").empty();
+    $("#tableRates tr").remove();
+    $('#tableRates').append('<tr><td><input type="number" name="hour" id="hour" class="form-control"></td><td><input type="number" name="rate" id="rate" class="form-control"></td></tr>');
+}
 function getAllRooms() {
     $.ajax({
         url: 'restful/admin/rooms/',
@@ -235,7 +235,7 @@ function getAllRooms() {
 }
 
 function refreshTable(data) {
-    if(table != null)
+    if (table != null)
         table.destroy();
 
     table = $('#rooms-table').DataTable({
@@ -318,7 +318,7 @@ function refreshTable(data) {
             },
             {
                 'data': 'id',
-                render: function (data, type, row)  {
+                render: function (data, type, row) {
                     var td = '<a href="#" tabindex="-1"> <button id="admRoomEdit" type="button" class="btn btn-raised btn-info"';
                     td = td + 'onclick="showDialogToUpdateRoom(' + data + ')"><i class="glyphicon glyphicon-pencil"></i></button></a>';
                     return td;
@@ -326,7 +326,7 @@ function refreshTable(data) {
             },
             {
                 'data': 'active',
-                render: function (data, type, row)  {
+                render: function (data, type, row) {
                     var td;
 
                     if (data)
@@ -338,16 +338,17 @@ function refreshTable(data) {
             }
         ],
         'pagingType': 'simple_numbers',
-        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             var sDirectionClass;
-            if ( aData.active)
+            if (aData.active)
                 sDirectionClass = "room";
             else
                 sDirectionClass = "tr-not-active";
 
-            $(nRow).addClass( sDirectionClass );
+            $(nRow).addClass(sDirectionClass);
             return nRow;
         }
     });
+
 
 }
