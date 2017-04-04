@@ -18,6 +18,6 @@ public interface PersonalDiscountService extends BaseService<PersonalDiscount> {
 
   List<PersonalDiscountDTO> findPersonalDiscountByUserId(Long id);
 
-  DataTableOutput<PersonalDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate);
+  DataTableOutput<PersonalDiscountDTO> paginatePersonalDiscount(SortingPagination sortPaginate);
 
 }

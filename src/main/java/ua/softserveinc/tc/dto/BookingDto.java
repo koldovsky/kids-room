@@ -626,4 +626,54 @@ public class BookingDto implements Serializable {
     public String formatDuration() {
         return toHoursAndMinutes(durationBooking);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BookingDto dto = (BookingDto) o;
+        return Objects.equals(id, dto.id) &&
+            Objects.equals(date, dto.date) &&
+            Objects.equals(endDate, dto.endDate) &&
+            Objects.equals(startTime, dto.startTime) &&
+            Objects.equals(endTime, dto.endTime) &&
+            Objects.equals(startTimeMillis, dto.startTimeMillis) &&
+            Objects.equals(endTimeMillis, dto.endTimeMillis) &&
+            Objects.equals(durationBooking, dto.durationBooking) &&
+            Objects.equals(kidName, dto.kidName) &&
+            Objects.equals(roomName, dto.roomName) &&
+            Objects.equals(duration, dto.duration) &&
+            Objects.equals(idChild, dto.idChild) &&
+            Objects.equals(sum, dto.sum) &&
+            Objects.equals(durationLong, dto.durationLong) &&
+            bookingState == dto.bookingState &&
+            Objects.equals(comment, dto.comment) &&
+            Objects.equals(recurrentId, dto.recurrentId) &&
+            Objects.equals(currencySum, dto.currencySum) &&
+            Objects.equals(userId, dto.userId) &&
+            Objects.equals(kidId, dto.kidId) &&
+            Objects.equals(roomId, dto.roomId) &&
+            Objects.equals(daysOfWeek, dto.daysOfWeek) &&
+            Objects.equals(weekDays, dto.weekDays) &&
+            Objects.equals(child, dto.child) &&
+            Objects.equals(user, dto.user) &&
+            Objects.equals(room, dto.room) &&
+            Objects.equals(dateStartTime, dto.dateStartTime) &&
+            Objects.equals(dateEndTime, dto.dateEndTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects
+            .hash(id, date, endDate, startTime, endTime, startTimeMillis, endTimeMillis,
+                durationBooking,
+                kidName, roomName, duration, idChild, sum, durationLong, bookingState, comment,
+                recurrentId, currencySum, userId, kidId, roomId, daysOfWeek, weekDays, child, user,
+                room,
+                dateStartTime, dateEndTime);
+    }
 }

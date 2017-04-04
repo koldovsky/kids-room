@@ -27,13 +27,20 @@ public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscoun
   }
 
   @Override
-  public DataTableOutput<PersonalDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate) {
+  public DataTableOutput<PersonalDiscountDTO> paginatePersonalDiscount(SortingPagination sortPaginate) {
     List<PersonalDiscountDTO> listDto = personalDiscount.findAll(sortPaginate).stream()
         .map(PersonalDiscountDTO::new).collect(Collectors.toList());
-    long rowCount = personalDiscount.getRowsCount();
-    long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
-        sortPaginate.getPagination().getItemsPerPage(), rowCount);
-    return  new DataTableOutput<>(currentPage, rowCount, rowCount, listDto);
+    long rowCount = personalDiscount.getRowsCount(),
+        start = sortPaginate.getPagination().getStart(),
+        itemsPerPage = sortPaginate.getPagination().getItemsPerPage();
+    long currentPage = PaginationCharacteristics.definePage(start, itemsPerPage, rowCount);
+
+    if (PaginationCharacteristics.searchCount == 0) {
+      return new DataTableOutput<>(currentPage, rowCount, rowCount, listDto);
+    } else {
+      return new DataTableOutput<>(currentPage, rowCount, PaginationCharacteristics.searchCount,
+          listDto);
+    }
   }
 
   @Override

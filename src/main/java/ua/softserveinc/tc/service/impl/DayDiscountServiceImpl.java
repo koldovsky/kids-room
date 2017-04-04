@@ -41,10 +41,17 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   public DataTableOutput<DayDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate) {
     List<DayDiscountDTO> listDto = dayDiscountDao.findAll(sortPaginate).stream()
         .map(DayDiscountDTO::new).collect(Collectors.toList());
-    long rowCount = dayDiscountDao.getRowsCount();
-    long currentPage = PaginationCharacteristics.definePage(sortPaginate.getPagination().getStart(),
-        sortPaginate.getPagination().getItemsPerPage(), rowCount);
-    return  new DataTableOutput<>(currentPage, rowCount, rowCount, listDto);
+    long rowCount = dayDiscountDao.getRowsCount(),
+        start = sortPaginate.getPagination().getStart(),
+        itemsPerPage = sortPaginate.getPagination().getItemsPerPage();
+    long currentPage = PaginationCharacteristics.definePage(start, itemsPerPage, rowCount);
+
+    if (PaginationCharacteristics.searchCount == 0) {
+      return new DataTableOutput<>(currentPage, rowCount, rowCount, listDto);
+    } else {
+      return new DataTableOutput<>(currentPage, rowCount, PaginationCharacteristics.searchCount,
+          listDto);
+    }
   }
 
   /**

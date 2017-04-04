@@ -62,7 +62,7 @@ public class PersonalDiscount {
     this.startTime = dto.getStartTime();
     this.endTime = dto.getEndTime();
     this.active = dto.getActive();
-    this.setUser(dto.getUser());
+    this.setUserFromDto(dto.getUser());
   }
 
   public Long getId() {
@@ -113,7 +113,7 @@ public class PersonalDiscount {
     this.user = user;
   }
 
-  public void setUser(UserDto userDto) {
+  public void setUserFromDto (UserDto userDto) {
     User user = this.getUser();
     user.setId(userDto.getId());
     user.setFirstName(userDto.getFirstName());
