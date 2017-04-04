@@ -323,6 +323,21 @@ th.th-size {
     margin-left: 0;
 }
 
+.hours{
+    text-align: center;
+    margin: auto;
+    width: 70%;
+    padding-bottom: 20px;
+}
+
+.buttonsDialog{
+    float: right;
+}
+.danger-info{
+    border: 3px solid #790711;
+    background-color: #ee9c41;
+    color: white;
+}
 .datatable {
     margin: 8px auto 20px auto !important;
     padding: 0 !important;
@@ -332,4 +347,12 @@ th.th-size {
 .switch {
     margin-top: 2px;
     margin-bottom: 2px;
+}
+
+#rooms-table caption{
+    text-align: center;
+}
+
+#manager-between{
+    margin-top: 40px;
 }
