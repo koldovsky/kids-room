@@ -6,8 +6,8 @@
 
 // table.ajax.reload(); in case ajax requests
 
-function buildDataTable(selector, uri, columnsArrObj,addFunctions) {
-    let datatable =  $(selector).DataTable({
+function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
+    let datatable = $(selector).DataTable({
         language: {
             processing: messages.dateTable.processing,
             search: messages.dateTable.search,
@@ -75,13 +75,10 @@ function buildDataTable(selector, uri, columnsArrObj,addFunctions) {
     return datatable;
 }
 
-function defineOrder(str) {
-    return str == 'asc' ? 1 : 0;
+function getId(object) {
+    return $(object).closest('tr').attr("id");
 }
 
-function getObjectFromForm(tag) {
-    return $(tag).serializeArray().reduce(function (obj, item) {
-        obj[item.name] = item.value;
-        return obj;
-    }, {});
+function defineOrder(str) {
+    return str == 'asc' ? 1 : 0;
 }

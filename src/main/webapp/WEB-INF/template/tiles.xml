@@ -111,14 +111,6 @@
         <put-attribute name="body" value="/WEB-INF/views/admin/adm-abonnements.jsp"/>
     </definition>
 
-    <definition name="adm-add-abonnement" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/add-abonnement.jsp"/>
-    </definition>
-
-    <definition name="adm-update-abonnement" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/admin/update-abonnement.jsp"/>
-    </definition>
-
     <definition name="discount" extends="default">
         <put-attribute name="body" value="/WEB-INF/views/admin/discount.jsp"/>
     </definition>

@@ -36,25 +36,22 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     public DataTableOutput<AbonnementDto> paginationAbonnements(SortingPagination sortPaginate) {
         List<AbonnementDto> abonnementList = abonnementDao.findAll(sortPaginate)
                 .stream()
-                .map(AbonnementDto::new)
+                .map(abonnement -> modelMapper.map(abonnement, AbonnementDto.class))
                 .collect(Collectors.toList());
         long rowCount = abonnementDao.getRowsCount(),
                 start = sortPaginate.getPagination().getStart(),
                 itemsPerPage = sortPaginate.getPagination().getItemsPerPage();
         long currentPage = PaginationCharacteristics.definePage(start, itemsPerPage, rowCount);
+        long filterCount = (PaginationCharacteristics.searchCount == 0) ? rowCount : PaginationCharacteristics.searchCount;
 
-        if(PaginationCharacteristics.searchCount == 0) {
-            return new DataTableOutput<>(currentPage, rowCount, rowCount, abonnementList);
-        } else {
-            return new DataTableOutput<>(currentPage, rowCount, PaginationCharacteristics.searchCount, abonnementList);
-        }
+        return new DataTableOutput<>(currentPage, rowCount, filterCount, abonnementList);
     }
 
     @Override
     public List<AbonnementDto> findAllAbonements() {
         return abonnementDao.findAll()
                 .stream()
-                .map(AbonnementDto::new)
+                .map(abonnement -> modelMapper.map(abonnement, AbonnementDto.class))
                 .collect(Collectors.toList());
     }
 
@@ -66,8 +63,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     @Override
     public AbonnementDto updateAbonnement(AbonnementDto abonnementDto) {
         Abonnement abonnement = abonnementDao.findById(abonnementDto.getId());
-        abonnement = abonnementMapper.setEntityFromDto(abonnement, abonnementDto);
-        return new AbonnementDto(abonnementDao.update(abonnement));
+        abonnement = abonnementMapper.setEntityFields(abonnement, abonnementDto);
+        return modelMapper.map(abonnementDao.update(abonnement), AbonnementDto.class);
     }
 
     @Override
@@ -78,7 +75,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     }
 
     @Override
-    public void updateActiveState(long id, boolean active) {
-        abonnementDao.updateByActiveState(id, active);
+    public void updateActiveState(AbonnementDto abonnementDto) {
+        Abonnement abonnement = modelMapper.map(abonnementDto, Abonnement.class);
+        abonnementDao.updateByActiveState(abonnement.getId(), abonnement.getIsActive());
     }
 }

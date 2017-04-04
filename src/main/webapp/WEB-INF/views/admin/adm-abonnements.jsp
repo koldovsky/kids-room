@@ -27,7 +27,7 @@
         </th>
     </div>
 
-    <div class="datatable-wrapper">
+    <div class="abonnement-datatable-wrapper">
         <div class="column-names">
             <span>name</span>
             <span>price</span>
@@ -39,7 +39,7 @@
             <input type="text" class="form-control search-input" placeholder="price"/>
             <input type="text" class="form-control search-input" placeholder="hour"/>
         </div>
-        <table class="reg-form dt datatable ">
+        <table class="reg-form dt datatable abonnement-datatable">
             <thead>
             <tr>
                 <th style="display: none;"><strong>#</strong></th>
@@ -77,26 +77,26 @@
 
             <tr>
                 <td>
-                    <form id="createAbonnementForm" method="POST" action="/adm-create-abonnement">
-                        <input type="text" name="id" class="id form-control"/>
+                    <form id="createAbonnementForm" method="POST" action="/adm-abonnement">
+                        <input type="text" name="id" class="createId id form-control"/>
                         <div class="form-group sizing-between">
                             <label for="name" class="required">
                                 <spring:message code="administrator.abonnement.name"/>
                             </label>
-                            <input type="text" name="name" class="name form-control">
+                            <input type="text" name="name" class="createName name form-control">
                         </div>
                         <div class="form-group sizing-between">
                             <label for="price" class="required">
                                 <spring:message code="administrator.abonnement.price"/>
                             </label>
-                            <input type="text" name="price" class="price form-control">
+                            <input type="text" name="price" class="createPrice price form-control">
                         </div>
 
                         <div class="form-group sizing-between">
                             <label for="hour" class="required">
                                 <spring:message code="administrator.abonnement.hour"/>
                             </label>
-                            <input type="text" name="hour" class="hour form-control">
+                            <input type="text" name="hour" class="createHour hour form-control">
                         </div>
 
                         <div class="form-group sizing-between">
@@ -131,26 +131,26 @@
             <tr>
                 <td>
                     <form id="updateAbonnementForm" method="POST" action="/adm-update-abonnement">
-                        <input type="text" name="id" class="id form-control"/>
+                        <input type="text" name="id" class="id form-control updateId"/>
                         <div class="form-group sizing-between">
                             <label for="name" class="required">
                                 <spring:message code="administrator.abonnement.name"/>
                             </label>
-                            <input id="name" type="text" name="name" class="name form-control">
+                            <input id="name" type="text" name="name" class="updateName name form-control">
                         </div>
 
                         <div class="form-group sizing-between">
                             <label for="price" class="required">
                                 <spring:message code="administrator.abonnement.price"/>
                             </label>
-                            <input id="price" type="text" name="price" class="price form-control">
+                            <input id="price" type="text" name="price" class="updatePrice price form-control">
                         </div>
 
                         <div class="form-group sizing-between">
                             <label for="hour" class="required">
                                 <spring:message code="administrator.abonnement.hour"/>
                             </label>
-                            <input id="hour" type="text" name="hour" class="hour form-control">
+                            <input id="hour" type="text" name="hour" class="updateHour hour form-control">
                         </div>
 
                         <div class="form-group sizing-between">

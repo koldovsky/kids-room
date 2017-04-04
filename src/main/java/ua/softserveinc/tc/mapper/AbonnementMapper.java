@@ -23,7 +23,7 @@ public class AbonnementMapper implements GenericMapper<Abonnement, AbonnementDto
         return null;
     }
 
-    public Abonnement setEntityFromDto(Abonnement entity, AbonnementDto dto) {
+    public Abonnement setEntityFields(Abonnement entity, AbonnementDto dto) {
         entity.setId(dto.getId());
         entity.setName(dto.getName());
         entity.setHour(dto.getHour());

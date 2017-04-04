@@ -214,4 +214,7 @@ input:checked + .slider:before {
 
 .id {
     visibility: hidden;
+    height: 0 !important;
+    margin: 0;
+    padding: 0;
 }
