@@ -23,7 +23,7 @@
 
 
 <div class="container">
-            <table class="table table-responsive" id="rooms-table">
+            <table class="table table-responsive reg-form" id="rooms-table">
                 <caption>
                     <i class="glyphicon glyphicon-home glyphicon-room"></i>
                     <strong class="title-font"><spring:message code="administrator.listRooms"/></strong>
