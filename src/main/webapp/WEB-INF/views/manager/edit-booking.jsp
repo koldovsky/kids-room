@@ -139,17 +139,17 @@
                         <div class="form-group">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" autofocus/>
                             <div class="input-group">
-                                <label><spring:message code="booking.bookingDate"/></label>
+                                <label class="required"><spring:message code="booking.bookingDate"/></label>
                                 <input type="text" id="data-edit" name="date" class="form-control datepickers"/>
                             </div>
                             <br>
                             <div class="input-group">
-                                <label><spring:message code="booking.createStartTime"/></label>
+                                <label class="required"><spring:message code="booking.createStartTime"/></label>
                                 <input id="bookingUpdatingStartTimepicker" type="text" name="start"
-                                       class="time form-control picker"/>
+                                       class="time form-control picker" />
                                 <br>
                                 <div>
-                                    <label><spring:message code="booking.createEndTime"/></label>
+                                    <label class="required"><spring:message code="booking.createEndTime"/></label>
                                     <input id="bookingUpdatingEndTimepicker" type="text" name="end"
                                            class="time form-control picker"/>
                                 </div>

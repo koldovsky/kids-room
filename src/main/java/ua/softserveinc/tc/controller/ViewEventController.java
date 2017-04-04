@@ -79,11 +79,10 @@ public class ViewEventController {
                 }
                 break;
             case MANAGER:
-                resultView = "redirect:/"+ ManagerConstants.MANAGER_EDIT_BOOKING;
+                resultView = "redirect:/" + ManagerConstants.MANAGER_EDIT_BOOKING;
                 break;
             default:
-                model.addAttribute(AdminConstants.ROOM_LIST, roomService.findAll());
-                resultView = AdminConstants.ROOM;
+                resultView = "redirect:/" + AdminConstants.EDIT_MANAGER;
         }
         return resultView;
     }
