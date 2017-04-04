@@ -349,6 +349,11 @@ th.th-size {
     margin-bottom: 2px;
 }
 
+.picker-style {
+        float: left;
+         width: 45%;
+        margin: 0 2% 20px 2%;
+}
 #rooms-table caption{
     text-align: center;
 }

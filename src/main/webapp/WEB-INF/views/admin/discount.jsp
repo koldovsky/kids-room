@@ -206,9 +206,6 @@
                         <br/>
                         <select id="selectUser" name="select" style="width: 100%">
                             <option value=" " disabled selected hidden></option>
-                            <option value="1">lol1</option>
-                            <option value="2">lol2</option>
-                            <option value="3">lol3</option>
                         </select>
                         </div>
                         <!-- Value of discount -->
@@ -225,12 +222,12 @@
                             </label>
                             <br/>
                             <label class="switch">
-                                <input type="checkbox" checked class='activate'>
+                                <input type="checkbox" checked class='activate' id="changePersonalPeriod">
                                 <div class='slider round'></div>
                             </label>
                         </div>
                         <!-- Time pickers -->
-                        <div class="form-group sizing-between">
+                        <div class="form-group sizing-between" id="personalDiscountTime">
                             <label class="required">
                                 <spring:message code="administrator.dayDiscount.endDate"/>
                             </label>

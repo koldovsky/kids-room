@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.dto.PersonalDiscountDTO;
+import ua.softserveinc.tc.dto.UserDto;
+import ua.softserveinc.tc.entity.Role;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.mapper.PaginationMapper;
 import ua.softserveinc.tc.service.DayDiscountService;
 import ua.softserveinc.tc.service.PersonalDiscountService;
+import ua.softserveinc.tc.service.UserService;
 
 @RestController
 @RequestMapping("/restful/admin/discounts/")
@@ -33,6 +36,9 @@ public class AdminDiscountController {
 
   @Autowired
   private PersonalDiscountService personalDiscountService;
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   PaginationMapper paginationMapper;
@@ -92,14 +98,25 @@ public class AdminDiscountController {
     return personalDiscountService.findPersonalDiscountByUserId(id);
   }
 
-  @PostMapping("personal")
-  public ResponseEntity<String> addPersonalDiscount(@RequestBody PersonalDiscountDTO dto) {
+  @GetMapping("personal/users")
+  public List<UserDto> getUsers(){
+    return userService.findUsersByRoleDto(Role.USER);
+  }
+
+  @GetMapping("personal/users/{id}")
+  public UserDto getUserById(@PathVariable Long id){
+    return userService.findUserByIdDto(id);
+  }
+
+  @PostMapping("personal/{id}")
+  public ResponseEntity<String> addPersonalDiscount(@RequestBody PersonalDiscountDTO dto ,@PathVariable Long id) {
+    dto.setUser(userService.findUserByIdDto(id));
     personalDiscountService.addNewPersonalDiscount(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }
 
   @PutMapping("personal")
-  public ResponseEntity<String> updatePersonalDiscount(@RequestBody PersonalDiscountDTO dto) {
+  public ResponseEntity<String> updatePersonalDiscount(@RequestBody PersonalDiscountDTO dto,@PathVariable Long id) {
     personalDiscountService.updatePersonalDiscountById(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }

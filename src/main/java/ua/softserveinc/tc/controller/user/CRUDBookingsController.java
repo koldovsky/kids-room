@@ -147,18 +147,6 @@ public class CRUDBookingsController {
      */
     @PostMapping(value = "/makenewbooking", produces = "application/json; charset=UTF-8")
     public ResponseEntity<String> makeBooking(@RequestBody List<BookingDto> dtos, Locale locale) {
-        /*System.out.println(dtos);
-        Map<String,String> test = dtos.get(0);
-        BookingDto dto = new BookingDto();
-        dto.setUserId(Long.parseLong(test.get("userId")));
-        dto.setRoomId(Long.parseLong(test.get("roomId")));
-        dto.setKidId(Long.parseLong(test.get("kidId")));
-        dto.setComment(test.get("comment"));
-        dto.setStartTime(test.get("startTime"));
-        dto.setEndTime(test.get("endTime"));
-        List<BookingDto> list = new ArrayList<>();
-        list.add(dto);
-        //return null;*/
         return  getResponseEntity(bookingService.makeBookings(dtos), locale);
     }
 

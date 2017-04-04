@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import org.springframework.validation.BindingResult;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.*;
 
 import java.util.Date;
@@ -20,6 +21,8 @@ public interface UserService extends BaseService<User> {
 
     List<User> findAllUsersByRole(Role role);
 
+    List<UserDto> findUsersByRoleDto(Role role);
+
     List<User> getActiveUsers(Date startDate, Date endDate, Room room);
 
     List<Room> getActiveRooms(User user);
@@ -29,6 +32,8 @@ public interface UserService extends BaseService<User> {
     List<User> findByActiveTrueAndRoleNot(Role role);
 
     User findUserId(Long id);
+
+    UserDto findUserByIdDto(Long id);
 
     ReturnModel adminUpdateManager(User manager, BindingResult bindingResult);
 
