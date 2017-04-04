@@ -45,7 +45,12 @@ public class AbonnementsController {
         return abonnementsService.paginationAbonnements(sortingPagination);
     }
 
-    @PutMapping("adm-update-abonnement")
+    @GetMapping("adm-abonnement/{id}")
+    public AbonnementDto selectAbonnement(@PathVariable long id) {
+        return abonnementsService.findAbonnement(id);
+    }
+
+    @PutMapping("adm-abonnement")
     public AbonnementDto updateAbonnement(@RequestBody AbonnementDto abonnementDto,
                                           BindingResult bindingResult) {
         return abonnementsService.updateAbonnement(abonnementDto);
@@ -53,11 +58,11 @@ public class AbonnementsController {
 
     @PutMapping("adm-active-abonnement")
     public ResponseEntity<Boolean> updateActiveState(@RequestBody AbonnementDto abonnementDto) {
-        abonnementsService.updateActiveState(abonnementDto.getId(), abonnementDto.isActive());
+        abonnementsService.updateActiveState(abonnementDto);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PostMapping("adm-create-abonnement")
+    @PostMapping("adm-abonnement")
     public ResponseEntity<?> createAbonnement(@RequestBody AbonnementDto abonnementDto,
                                               BindingResult bindingResult) {
         abonnementsValidator.validate(abonnementDto, bindingResult);

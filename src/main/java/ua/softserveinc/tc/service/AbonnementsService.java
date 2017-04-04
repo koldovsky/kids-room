@@ -17,7 +17,7 @@ public interface AbonnementsService extends BaseService<Abonnement> {
 
     AbonnementDto updateAbonnement(AbonnementDto abonnementDto);
 
-    void updateActiveState(long id, boolean active);
+    void updateActiveState(AbonnementDto abonnementDto);
 
     AbonnementDto createAbonnement(AbonnementDto abonnementDto);
 }

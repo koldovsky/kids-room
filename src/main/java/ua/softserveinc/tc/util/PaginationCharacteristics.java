@@ -9,9 +9,9 @@ import java.util.List;
 public final class PaginationCharacteristics {
     public static long searchCount = 0;
 
-    public static long definePage(long start, long paginationLength, long allAbonnementsLength) {
-        long totalPages = allAbonnementsLength / paginationLength;
-        return totalPages * start / allAbonnementsLength;
+    public static long definePage(long start, long paginationLength, long itemsLength) {
+        long totalPages = itemsLength / paginationLength;
+        return totalPages * start / itemsLength;
     }
 
 //    public static boolean isSearched(List<Search> searches) {

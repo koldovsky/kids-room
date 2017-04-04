@@ -20,63 +20,6 @@ public class AbonnementDto implements Serializable {
     public AbonnementDto() {
     }
 
-    public AbonnementDto(Abonnement abonnement) {
-        this.id = abonnement.getId();
-        this.name = abonnement.getName();
-        this.hour = abonnement.getHour();
-        this.price = abonnement.getPrice();
-        this.isActive = abonnement.getIsActive();
-    }
-
-    public Abonnement toEntity() {
-        Abonnement abonnement = new Abonnement();
-        abonnement.setId(this.id);
-        abonnement.setName(this.name);
-        abonnement.setHour(this.hour);
-        abonnement.setPrice(this.price);
-        abonnement.setActive(this.isActive);
-        return abonnement;
-    }
-
-    public static class Builder {
-
-        private AbonnementDto abonnementDto;
-
-        public Builder() {
-            abonnementDto = new AbonnementDto();
-        }
-
-        public Builder withId(Long id) {
-            this.abonnementDto.setId(id);
-            return this;
-        }
-
-        public Builder withName(String name) {
-            this.abonnementDto.setName(name);
-            return this;
-        }
-
-        public Builder withHour(int hour) {
-            this.abonnementDto.setHour(hour);
-            return this;
-        }
-
-        public Builder withPrice(long price) {
-            this.abonnementDto.setPrice(price);
-            return this;
-        }
-
-        public Builder withActive(boolean isActive) {
-            this.abonnementDto.setActive(isActive);
-            return this;
-        }
-
-
-        public AbonnementDto build() {
-            return this.abonnementDto;
-        }
-    }
-
     public long getId() {
         return id;
     }

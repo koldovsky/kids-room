@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dao.AbonnementDao;
 import ua.softserveinc.tc.entity.Abonnement;
@@ -19,12 +20,13 @@ public class AbonnementDaoImpl extends BaseDaoImpl<Abonnement> implements Abonne
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public void updateByActiveState(long id, boolean active) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaUpdate<Abonnement> update = builder.createCriteriaUpdate(Abonnement.class);
-        Root root = update.from(Abonnement.class);
-        update.set("isActive", active);
-        update.where(builder.equal(root.get("id"), id));
-        entityManager.createQuery(update).executeUpdate();
+        CriteriaUpdate<Abonnement> criteria = builder.createCriteriaUpdate(Abonnement.class);
+        Root root = criteria.from(Abonnement.class);
+        criteria.set(AbonnementConstants.Hibernate.ABONNEMENT_IS_ACTIVE, active);
+        criteria.where(builder.equal(root.get(AbonnementConstants.Hibernate.ABONNEMENT_ID), id));
+        entityManager.createQuery(criteria).executeUpdate();
     }
 }
