@@ -5,8 +5,10 @@
 <%@ page import="ua.softserveinc.tc.constants.AdminConstants" %>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
+<link href="${pageContext.request.contextPath}/resources/css/lib/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
+
 
 <script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
@@ -56,7 +58,7 @@
     </div>
     <!-- abonnements list bounds here -->
     <a tabindex="-1" class="create-object">
-        <button type="button" class="btn btn-raised btn-primary btn-add-room"
+        <button type="button" class="btn btn-raised btn-primary btn-add-room btn-add"
                 data-toggle="modal" data-target="#createAbonnement">
             <spring:message code="administrator.add"/>
         </button>

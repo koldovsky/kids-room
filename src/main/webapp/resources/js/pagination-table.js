@@ -5,7 +5,11 @@
  */
 
 // table.ajax.reload(); in case ajax requests
+let iterator;
 
+function getIndex() {
+    console.log($(".input-sm"));
+}
 function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
     let datatable = $(selector).DataTable({
         language: {
@@ -33,36 +37,46 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
         'bServerSide': true,
         'ordering': true,
         'searching': false,
-        'columnDefs': [{
-            'searchable': false,
-            'orderable': false,
-            'targets': 0
-        }],
         rowId: 'id',
         'ajax': {
             'url': uri,
             'data': function (datatableObject) {
-                let sendObj = {
-                    pagination: {
-                        start: datatableObject.start,
-                        itemsPerPage: datatableObject.length
-                    }
+                let sendObj = {};
+                sendObj.pagination = {
+                    start: datatableObject.start,
+                    itemsPerPage: datatableObject.length
                 };
                 sendObj.sortings = [];
-                sendObj.searches = [];
-                datatableObject.order.forEach(function (dtOrder) {
-                    let column = $(selector + "-wrapper").find(".column-names").children()[dtOrder.column];
-                    dtOrder.dir = defineOrder(dtOrder.dir);
-                    sendObj.sortings.push({
-                            direction: dtOrder.dir,
-                            column: $(column).text()
+                let wrapper = $(selector + "-wrapper");
+                if (wrapper) {
+                    datatableObject.order.forEach(function (dtOrder) {
+                        let indOder = 0;
+                        if (dtOrder.column != 0) {
+                            indOder = dtOrder.column - 1;
                         }
-                    );
-                });
-                // sendObj.searches[0] = {
-                //     value: "t",
-                //     column: "name"
-                // };
+                        let column = $(wrapper).find(".column-names").children()[indOder];
+                        dtOrder.dir = defineOrder(dtOrder.dir);
+                        sendObj.sortings.push({
+                                direction: dtOrder.dir,
+                                column: $(column).text()
+                            }
+                        );
+                    });
+                }
+                sendObj.searches = [];
+                let datatableSearches = $(wrapper).find(".search-fields");
+                if (datatableSearches) {
+                    let datatableChildren = datatableSearches.children();
+                    for (var i = 1; i < datatableChildren.length; i++) {
+                        let searchVal = $(datatableChildren[i]).val();
+                        if (searchVal.length) {
+                            sendObj.searches.push({
+                                value: searchVal,
+                                column: $(datatableChildren[i]).attr('placeholder')
+                            });
+                        }
+                    }
+                }
                 return "parameters=" + encodeURIComponent(JSON.stringify(sendObj));
             },
             'contentType': 'application/json',
@@ -72,6 +86,7 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
     });
 
     addFunctions();
+
     return datatable;
 }
 
