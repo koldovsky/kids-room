@@ -5,6 +5,7 @@
     font-weight: 300;
     font-size: 1.4rem;
 }
+
 body {
     font-family: RobotoDraft, 'Arial', sans-serif;
     line-height: 2rem;
@@ -13,7 +14,7 @@ body {
     background-color: #eee;
 }
 
-.logo{
+.logo {
     background-color: white;
     padding-left: 50px;
     padding-bottom: 20px;
@@ -21,11 +22,11 @@ body {
     width: 400px;
 }
 
-.navbar{
+.navbar {
     margin-bottom: 0;
 }
 
-.tophead{
+.tophead {
     background-color: white;
 }
 
@@ -38,70 +39,74 @@ img {
     background-color: #eee;
 }
 
-#right{
-     text-align: right;
-     font-size:13px;
+#right {
+    text-align: right;
+    font-size: 13px;
 }
 
-#main-footer{
+#main-footer {
     padding-top: 13px;
     padding-bottom: 13px;
 }
 
-.langitem{
+.langitem {
     cursor: pointer;
 }
 
 .wrapper {
-  display: table;
-  height: 100%;
-  width:100%
+    display: table;
+    height: 100%;
+    width: 100%
 }
+
 .content {
-  display: table-row;
-  height: 100%;
+    display: table-row;
+    height: 100%;
 }
-.footer{
-  display: table-row;
+
+.footer {
+    display: table-row;
 }
-.error{
-    color:red;
+
+.error {
+    color: red;
 }
 
 .required:after {
-	content:" *";
-	color: red;
+    content: " *";
+    color: red;
 }
 
-.bottom-msg{
+.bottom-msg {
     margin-top: 20px;
 }
 
-.navbar-brand{
-  font-size: 30px;
+.navbar-brand {
+    font-size: 30px;
 }
 
-#topnavbar{
+#topnavbar {
     background-color: #4285F4;
     margin: 0;
 }
-
 
 .right-align {
     text-align: right;
 }
 
 .grey-text {
-    color: #D3D3D3;
+    color: grey;
+    font-weight: normal;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 select {
-    background: rgba(0,0,0,0.3);
-    color:#fff;
-    text-shadow:0 1px 0 rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-#login-form{
+#login-form {
     margin-top: 30px;
     min-width: 400px;
     padding: 30px;
@@ -109,43 +114,46 @@ select {
     box-shadow: 3px 3px 10px grey;
 }
 
-#login-form a{
+#login-form a {
     color: grey;
+    padding-top: 2px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-#login-form a:hover{
+#login-form a:hover {
     color: #4285F4;
 }
 
 .block-center {
-    text-align:center;
-    margin:auto;
+    text-align: center;
+    margin: auto;
 }
 
-#reg-form{
+#reg-form {
     min-width: 400px;
     padding: 30px;
     background-color: white;
     box-shadow: 3px 3px 10px grey;
-    margin-top:15px;
+    margin-top: 15px;
     margin-bottom: 20px;
 }
 
-#reg-button{
+#reg-button {
     text-align: center;
 }
 
-#reg-form a{
+#reg-form a {
     color: grey;
 }
 
-#reg-form a:hover{
+#reg-form a:hover {
     color: #4285F4;
 }
-.message{
+
+.message {
     margin-top: auto;
     text-align: center;
-    font-size:18px;
+    font-size: 18px;
     padding-top: 40px;
 }
 
@@ -179,21 +187,21 @@ div.container4 p {
     border-radius: 5px;
 }
 
-#login-form .glyphicon{
-    color: rgb(160,160,160);
+#login-form .glyphicon {
+    color: rgb(160, 160, 160);
 }
 
-#logout{
-     background:none!important;
-     border:none;
-     cursor: pointer;
+#logout {
+    background: none !important;
+    border: none;
+    cursor: pointer;
 }
 
-#command{
-     max-height: 0;
+#command {
+    max-height: 0;
 }
 
-.not-found{
+.not-found {
     position: relative;
     width: 300px;
     height: 230px;
@@ -211,7 +219,7 @@ div.container4 p {
     text-align: center;
 }
 
-.big-access-denied{
+.big-access-denied {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 65px;
     font-style: normal;
@@ -219,18 +227,18 @@ div.container4 p {
 
 }
 
-.access-denied{
-     position: relative;
-     width: 300px;
-     height: 230px;
-     overflow: hidden;
-     margin-bottom: 20px;
-     text-align: center;
+.access-denied {
+    position: relative;
+    width: 300px;
+    height: 230px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 div .error {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    color : #ff1200;
+    color: #ff1200;
 }
 
 div .successconfirmation {
@@ -238,49 +246,60 @@ div .successconfirmation {
     font-size: 1.3em;
     margin-bottom: 20px;
 }
-.error .ui-dialog-title{
+
+.error .ui-dialog-title {
     color: #ff1200;
 }
-.modal  {
+
+.modal {
     border-radius: 4px;
     padding-right: 0px;
     background-color: rgba(4, 4, 4, 0.8);
 }
 
-
 .modal-content {
-
 
     border: none;
     top: 60%;
 }
+
 .modal-body {
-    margin-top:11%;
+    margin-top: 11%;
     background-color: #2196f3;
     color: white;
 
 }
+
 .modal-body-err {
     border: 3px solid red;
-    margin-top:11%;
+    margin-top: 11%;
     background-color: white;
     color: #f3212d;
 
 }
+
 #glyph {
     position: relative;
     -webkit-animation: arrow 0.5s linear 0.5s infinite alternate; /* Chrome, Safari, Opera */
     animation: arrow 0.5s linear 0.5s infinite alternate;
 }
+
 @-webkit-keyframes arrow {
-    0%   {  left:0px; top:0px;}
-    100%  {  left:21px; top:0px;}
+    0% {
+        left: 0px;
+        top: 0px;
+    }
+    100% {
+        left: 21px;
+        top: 0px;
+    }
 
 }
 
-#error-dialog{
+#error-dialog {
     color: #ff1200;
 }
+
 .checkmark {
     width: 200px;
     margin: 0 auto;
@@ -295,9 +314,6 @@ div .successconfirmation {
     -webkit-animation: dash 2.4s ease-in-out;
 }
 
-
-
-
 @keyframes dash {
     0% {
         stroke-dashoffset: 1000;
@@ -306,27 +322,30 @@ div .successconfirmation {
         stroke-dashoffset: 0;
     }
 }
+
 @media (max-width: 768px) {
     .btn-responsive {
-        padding:2px 4px;
-        font-size:65%;
+        padding: 2px 4px;
+        font-size: 65%;
         line-height: 1;
-        border-radius:3px;
+        border-radius: 3px;
     }
 }
 
 @media (min-width: 769px) and (max-width: 992px) {
     .btn-responsive {
-        padding:4px 9px;
-        font-size:65%;
+        padding: 4px 9px;
+        font-size: 65%;
         line-height: 1.2;
     }
 }
+
 @media (min-width: 770px) {
     .btn-responsive {
         height: 34px;
     }
 }
+
 /* Absolute Center Spinner */
 .loading {
     position: fixed;
@@ -384,14 +403,14 @@ div .successconfirmation {
     rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0,
     rgba(0, 0, 0, 0.75) 0 -1.5em 0 0,
     rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-    box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0,
-    rgba(33,150,243, 0.75) 1.1em 1.1em 0 0,
-    rgba(33,150,243, 0.75) 0 1.5em 0 0,
-    rgba(33,150,243, 0.75) -1.1em 1.1em 0 0,
-    rgba(33,150,243, 0.75) -1.5em 0 0 0,
-    rgba(33,150,243, 0.75) -1.1em -1.1em 0 0,
-    rgba(33,150,243, 0.75) 0 -1.5em 0 0,
-    rgba(33,150,243, 0.75) 1.1em -1.1em 0 0;
+    box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0,
+    rgba(33, 150, 243, 0.75) 1.1em 1.1em 0 0,
+    rgba(33, 150, 243, 0.75) 0 1.5em 0 0,
+    rgba(33, 150, 243, 0.75) -1.1em 1.1em 0 0,
+    rgba(33, 150, 243, 0.75) -1.5em 0 0 0,
+    rgba(33, 150, 243, 0.75) -1.1em -1.1em 0 0,
+    rgba(33, 150, 243, 0.75) 0 -1.5em 0 0,
+    rgba(33, 150, 243, 0.75) 1.1em -1.1em 0 0;
 }
 
 /* Animation */
@@ -412,6 +431,7 @@ div .successconfirmation {
         transform: rotate(360deg);
     }
 }
+
 @-moz-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -428,6 +448,7 @@ div .successconfirmation {
         transform: rotate(360deg);
     }
 }
+
 @-o-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -444,6 +465,7 @@ div .successconfirmation {
         transform: rotate(360deg);
     }
 }
+
 @keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -460,19 +482,21 @@ div .successconfirmation {
         transform: rotate(360deg);
     }
 }
-.datepickers table{
+
+.datepickers table {
     width: 100%;
     font-size: .9em;
     border-collapse: collapse;
     margin: 0 0 .4em;
 }
-.datepickers th{
+
+.datepickers th {
     text-align: center;
     height: 50px;
     background-color: #4285F4;
 }
-.ui-datepicker-calendar, .ui-timepicker-wrapper{
+
+.ui-datepicker-calendar, .ui-timepicker-wrapper {
     font-family: RobotoDraft, 'Arial', sans-serif;
     color: #212121;
 }
-
