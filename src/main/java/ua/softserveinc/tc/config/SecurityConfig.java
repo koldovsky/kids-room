@@ -520,7 +520,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SecurityConstants.ERROR).permitAll()
                 .antMatchers(SecurityConstants.SAML).permitAll()
                 .anyRequest().authenticated()
-                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(TokenConstants.TOKEN_VALIDITY_SECONDS)
+                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(18000)
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage(SecurityConstants.ACCESS_DENIED)
@@ -534,7 +534,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 key("rem-me-key").
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
-                tokenValiditySeconds(TokenConstants.TOKEN_VALIDITY_SECONDS);
+                tokenValiditySeconds(18000);
     }
 
     /**
