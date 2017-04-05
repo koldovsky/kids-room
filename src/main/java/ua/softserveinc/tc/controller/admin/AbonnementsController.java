@@ -9,10 +9,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dto.AbonnementDto;
+import ua.softserveinc.tc.dto.UserAbonnementDto;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.mapper.PaginationMapper;
 import ua.softserveinc.tc.service.AbonnementsService;
+import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.validator.AbonnementsValidator;
 
@@ -29,6 +32,9 @@ public class AbonnementsController {
     AbonnementsService abonnementsService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     AbonnementsValidator abonnementsValidator;
 
     @Autowired
@@ -38,6 +44,9 @@ public class AbonnementsController {
     public List<AbonnementDto> selectAbonnements() {
         return abonnementsService.findAllAbonements();
     }
+
+    @GetMapping("adm-all-users")
+    public List<UserDto> selectUsers() { return userService.findAllUsers(); }
 
     @GetMapping("adm-pag-abonnements")
     public DataTableOutput<AbonnementDto> paginateAbonnements(@RequestParam String parameters) {
@@ -59,6 +68,12 @@ public class AbonnementsController {
     @PutMapping("adm-active-abonnement")
     public ResponseEntity<Boolean> updateActiveState(@RequestBody AbonnementDto abonnementDto) {
         abonnementsService.updateActiveState(abonnementDto);
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
+    @PostMapping("adm-assign-user")
+    public ResponseEntity<?> assignUser(@RequestBody UserAbonnementDto userAbonnementDto) {
+        abonnementsService.assignUserToAbonnement(userAbonnementDto);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 

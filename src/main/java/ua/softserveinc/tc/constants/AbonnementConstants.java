@@ -17,6 +17,9 @@ public final class AbonnementConstants {
         public static final String USER = "user";
         public static final String ABONNEMENT = "abonnement";
         public static final String USERS_ABONEMENTS = "users_abonements";
+        public static final String TABLE_SUBSCRIPTION_ASSIGNMENT = "subscription_assignments";
+        public static final String VALID = "valid";
+        public static final String SUBSCRIPTION_ID = "subscription_id";
     }
 
     public static final class Hibernate {

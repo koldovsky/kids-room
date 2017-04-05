@@ -86,8 +86,8 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "managers")
     private List<Room> rooms = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "abonementUsers")
-    private List<Abonnement> abonnements;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<SubscriptionAssignment> subscriptionAssignments;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "user")
     private List<PersonalDiscount> personalDiscounts;
@@ -142,14 +142,6 @@ public class User implements Serializable {
 
     public boolean isConfirmed() {
         return confirmed;
-    }
-
-    public List<Abonnement> getAbonnements() {
-        return abonnements;
-    }
-
-    public void setAbonnements(List<Abonnement> abonnements) {
-        this.abonnements = abonnements;
     }
 
     public void setConfirmed(boolean confirmed) {
