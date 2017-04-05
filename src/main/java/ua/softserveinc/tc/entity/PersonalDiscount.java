@@ -114,7 +114,7 @@ public class PersonalDiscount {
   }
 
   public void setUserFromDto (UserDto userDto) {
-    User user = this.getUser();
+    user = new User();
     user.setId(userDto.getId());
     user.setFirstName(userDto.getFirstName());
     user.setLastName(userDto.getLastName());

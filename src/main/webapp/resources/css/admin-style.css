@@ -361,6 +361,13 @@ th.th-size {
     margin-bottom: 2px;
 }
 
+
+.picker-style {
+        float: left;
+         width: 45%;
+        margin: 0 2% 20px 2%;
+}
+
 .dataTables_paginate {
     display: block;
     margin: 8px auto !important;

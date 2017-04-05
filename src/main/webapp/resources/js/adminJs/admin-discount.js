@@ -2,64 +2,90 @@
 
 $(function () {
 
-  dayDiscountDataTable = buildDataTable('.dayDiscountDataTable', 'restful/admin/discounts/day', DayColumns, dayDiscountButtonFunctions);
+  dayDiscountDataTable = buildDataTable('.dayDiscountDataTable',
+      'restful/admin/discounts/day', DayColumns, dayDiscountButtonFunctions);
 
-  buildDataTable('.personalDiscountDataTable', 'restful/admin/discounts/personal', PersonalColumns, personalDiscountButtonFunctions);
+  personalDiscountDataTable = buildDataTable('.personalDiscountDataTable',
+      'restful/admin/discounts/personal', PersonalColumns,
+      personalDiscountButtonFunctions);
 
+  //Add button functions
   $("#addDiscount").click(onAddDiscountClick);
 
   $("#addPersonalDiscount").click(onAddPersonalDiscount);
 
+  //Selector for personal discounts
   $("#selectUser").select2();
 
-  $("#discountForm").on('submit', function(e){
+  $('#selectUser').on('change',selectUserFunction);
+
+  //Form submissions
+  $("#discountForm").on('submit', function (e) {
     e.preventDefault();
     //Change behavior of save button
-    if(onButtonAdd){
-      addNewDiscount('POST',false);
-    }else{
-      addNewDiscount('PUT',true);
+    if (onButtonAdd) {
+      addNewDiscount('POST', false);
+    } else {
+      addNewDiscount('PUT', true);
     }
     $('#addDiscountDiv').modal('toggle');
   });
 
+  $("#discountPersonalForm").on('submit', function (e) {
+    e.preventDefault();
+    if (onButtonAdd) {
+      addNewPersonalDiscount('POST', false);
+    } else {
+      //addNewPersonalDiscount('PUT', true);
+    }
+    $('#addPersonalDiscountDiv').modal('toggle');
+  })
+
+  //Full time period setter
   $("#changeDayPeriod").click(function () {
     fullDay = !fullDay;
     $("#dayDiscountTime").toggle();
   });
 
+  $("#changePersonalPeriod").click(function () {
+    fullDay = !fullDay;
+    $("#personalDiscountTime").toggle();
+  });
+
 });
 
-let request,onButtonAdd,editId,dayDiscountDataTable;
+let request, onButtonAdd, editId, dayDiscountDataTable, personalDiscountDataTable;
 let fullDay = true;
 
 //Add functions for day discount datatable buttons
-const dayDiscountButtonFunctions = function (){
+const dayDiscountButtonFunctions = function () {
   //Edit button
-  $('.datatable tbody').on( 'click', '.editDayDiscount', function () {
+  $('.datatable tbody').on('click', '.editDayDiscount', function () {
     onEditDiscountClick($(this).attr("daydiscountid"));
-  } );
+  });
 
 };
 
-const personalDiscountButtonFunctions = function (){
+const personalDiscountButtonFunctions = function () {
 
 };
 
-//Create new discount
-function addNewDiscount(method,bool){
+// Day discount
+function addNewDiscount(method, bool) {
   request = "restful/admin/discounts/day";
   var inputData = {
     reason: $("#DReason").val(),
-    value : $("#DValue").val(),
-    startDate : $("#DStartDate").val(),
-    endDate : $("#DEndDate").val(),
+    value: $("#DValue").val(),
+    startDate: $("#DStartDate").val(),
+    endDate: $("#DEndDate").val(),
     startTime: $("#DStartTime").val(),
     endTime: $("#DEndTime").val(),
-    active : true,
+    active: true,
   };
-  if(bool)inputData.id = editId;
-  if(fullDay){
+  if (bool) {
+    inputData.id = editId;
+  }
+  if (fullDay) {
     inputData.startTime = "00:00";
     inputData.endTime = "23:59";
   }
@@ -69,7 +95,7 @@ function addNewDiscount(method,bool){
     data: JSON.stringify(inputData),
     type: method,
     success: function (result) {
-      dayDiscountDataTable.ajax.reload(null,false);
+      dayDiscountDataTable.ajax.reload(null, false);
     }
   });
 }
@@ -89,10 +115,10 @@ function onEditDiscountClick(id) {
       //Date and time formation
       $("#DStartDate").val(result.startDate);
       $("#DEndDate").val(result.endDate);
-      if(result.startTime == "00:00"&&result.endTime == "23:59"){
+      if (result.startTime == "00:00" && result.endTime == "23:59") {
         fullDay = true;
         $("#dayDiscountTime").hide();
-      }else{
+      } else {
         $("#dayDiscountTime").show();
         fullDay = false;
         $("#changeDayPeriod").prop('checked', false);
@@ -102,19 +128,77 @@ function onEditDiscountClick(id) {
     }
   });
 }
+//Personal discounts
+function addNewPersonalDiscount(method, bool){
+  request = "restful/admin/discounts/personal/"+user;
+  var inputData = {
+    value: $("#PValue").val(),
+    startTime: $("#DStartTime").val(),
+    endTime: $("#DEndTime").val(),
+    active: true,
+  };
+  if (bool) {
+    inputData.id = editId;
+  }
+  if (fullDay) {
+    inputData.startTime = "00:00";
+    inputData.endTime = "23:59";
+  }
+  console.log(inputData);
+  $.ajax({
+    url: request,
+    contentType: 'application/json; charset=UTF-8',
+    data: JSON.stringify(inputData),
+    type: method,
+    success: function (result) {
+      personalDiscountDataTable.ajax.reload(null, false);
+    }
+  });
+}
 
-//Add day discount button
-function onAddDiscountClick(){
+//Add discount buttons
+function onAddDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
-  fullDay = true;
   $("#dayDiscountTime").hide();
+  $("#changeDayPeriod").prop('checked', true);
   onButtonAdd = true;
+  fullDay = true;
 }
 
-function onAddPersonalDiscount(){
+let list = 0;
+let userList;
+function onAddPersonalDiscount() {
+
   $("#personalDiscountModalTitle").text(messages.modal.discount.addDiscount);
+  $.ajax({
+    url: "restful/admin/discounts/personal/users",
+    type: 'GET',
+    success: function (result) {
+      if (list != result.length) {
+        list = result.length;
+        userList = result;
+        $.each(userList, function (i, user) {
+          $('#selectUser').append($('<option>', {
+            value: user.id,
+            text: user.firstName + ' ' + user.lastName
+          }));
+        })
+      } else {
+        $('#selectUser').select2('val', ' ');
+      }
+    }
+  });
+  $("#personalDiscountTime").hide();
+  $("#changePersonalPeriod").prop('checked', true);
+
   onButtonAdd = true;
+
 }
+
+let user;
+const selectUserFunction = function(){
+  user = $("#selectUser").val();
+};
 
 //Day discount columns creation
 const DayColumns = [
@@ -143,9 +227,9 @@ const DayColumns = [
   {
     'data': 'time',
     'render': function (data, type, full, meta) {
-      if(full.startTime == "00:00"&&full.endTime == "23:59"){
+      if (full.startTime == "00:00" && full.endTime == "23:59") {
         return messages.booking.allDayDiscount;
-      }else{
+      } else {
         return full.startTime + " - " + full.endTime;
       }
     }
@@ -194,9 +278,9 @@ const PersonalColumns = [
   {
     'data': 'time',
     'render': function (data, type, full, meta) {
-      if(full.startTime == "00:00"&&full.endTime == "23:59"){
+      if (full.startTime == "00:00" && full.endTime == "23:59") {
         return messages.booking.allDayDiscount;
-      }else{
+      } else {
         return full.startTime + " - " + full.endTime;
       }
     }

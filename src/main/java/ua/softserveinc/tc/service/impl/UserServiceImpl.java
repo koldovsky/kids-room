@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
@@ -52,6 +53,10 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     @Override
     public List<User> findAllUsersByRole(Role role) {
         return userDao.findAllUsersByRole(role);
+    }
+
+    public List<UserDto> findUsersByRoleDto(Role role){
+        return userDao.findAllUsersByRole(role).stream().map(UserDto::new).collect(Collectors.toList());
     }
 
     @Override
@@ -107,6 +112,11 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     @Override
     public User findUserId(Long id) {
         return userDao.findUserById(id);
+    }
+
+    @Override
+    public UserDto findUserByIdDto(Long id){
+        return new UserDto(userDao.findUserById(id));
     }
 
     @Override
