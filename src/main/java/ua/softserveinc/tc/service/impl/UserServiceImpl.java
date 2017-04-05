@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
@@ -57,6 +58,14 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     @Override
     public List<User> findAll(List<Long> ids) {
         return userDao.findAll(ids);
+    }
+
+    @Override
+    public List<UserDto> findAllUsers() {
+        return userDao.findAll()
+                .stream()
+                .map(UserDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -20,7 +20,8 @@ public class AbonnementMapper implements GenericMapper<Abonnement, AbonnementDto
 
     @Override
     public Abonnement toEntity(AbonnementDto dto) {
-        return null;
+        Abonnement entity = new Abonnement();
+        return setEntityFields(entity, dto);
     }
 
     public Abonnement setEntityFields(Abonnement entity, AbonnementDto dto) {

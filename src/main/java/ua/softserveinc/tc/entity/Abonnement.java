@@ -32,11 +32,8 @@ public class Abonnement {
             columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean isActive = true;
 
-    @ManyToMany
-    @JoinTable(name = AbonnementConstants.Entity.USERS_ABONEMENTS,
-            joinColumns = @JoinColumn(name = AbonnementConstants.Entity.ABONNEMENT),
-            inverseJoinColumns = @JoinColumn(name = AbonnementConstants.Entity.USER))
-    private List<User> abonementUsers;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "abonnement")
+    private List<SubscriptionAssignment> subscriptionAssignments;
 
     public long getId() {
         return id;
@@ -78,14 +75,6 @@ public class Abonnement {
         isActive = active;
     }
 
-    public List<User> getAbonementUsers() {
-        return abonementUsers;
-    }
-
-    public void setAbonementUsers(List<User> abonementUsers) {
-        this.abonementUsers = abonementUsers;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,12 +84,11 @@ public class Abonnement {
                 hour == that.hour &&
                 price == that.price &&
                 isActive == that.isActive &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(abonementUsers, that.abonementUsers);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, hour, price, isActive, abonementUsers);
+        return Objects.hash(id, name, hour, price, isActive);
     }
 }

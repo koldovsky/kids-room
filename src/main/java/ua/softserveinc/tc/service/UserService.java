@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import org.springframework.validation.BindingResult;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.*;
 
 import java.util.Date;
@@ -9,6 +10,8 @@ import java.util.List;
 public interface UserService extends BaseService<User> {
 
     List<User> findAll(List<Long> ids);
+
+    List<UserDto> findAllUsers();
 
     void deleteUserById(Long id);
 

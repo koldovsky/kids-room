@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.AbonnementDto;
+import ua.softserveinc.tc.dto.UserAbonnementDto;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.Abonnement;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
@@ -20,4 +21,6 @@ public interface AbonnementsService extends BaseService<Abonnement> {
     void updateActiveState(AbonnementDto abonnementDto);
 
     AbonnementDto createAbonnement(AbonnementDto abonnementDto);
+
+    void assignUserToAbonnement(UserAbonnementDto userAbonnementDto);
 }

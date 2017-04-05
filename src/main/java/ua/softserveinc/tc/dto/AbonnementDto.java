@@ -20,6 +20,14 @@ public class AbonnementDto implements Serializable {
     public AbonnementDto() {
     }
 
+    public AbonnementDto(Abonnement abonnement) {
+        this.id = abonnement.getId();
+        this.name = abonnement.getName();
+        this.hour = abonnement.getHour();
+        this.price = abonnement.getPrice();
+        this.isActive = abonnement.getIsActive();
+    }
+
     public long getId() {
         return id;
     }
