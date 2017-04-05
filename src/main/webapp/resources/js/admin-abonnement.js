@@ -3,7 +3,6 @@ let abonnementTable;
 $(function () {
     abonnementTable = buildDataTable('.abonnement-datatable', 'adm-pag-abonnements', columns, abonnementsFunctions);
 });
-
 let columns = [
     {
         'data': 'name',
@@ -31,7 +30,6 @@ let columns = [
                 "data-toggle='modal' data-target='#updateAbonnement'>" +
                 "<i class='glyphicon glyphicon-pencil'></i></button></a></span>";
         },
-        'orderable': false
     },
     {
         'data': null,
@@ -75,7 +73,6 @@ const abonnementsFunctions = function () {
                 abonnementTable.ajax.reload(null, false);
             },
             error: function (data) {
-                console.log(data);
             }
         });
     });
@@ -138,4 +135,10 @@ const abonnementsFunctions = function () {
             }
         });
     });
+
+    // bind filter
+    $(document.body).on('keyup', '.search-fields', function() {
+        abonnementTable.ajax.reload(null, false);
+    });
+
 };

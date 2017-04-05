@@ -41,10 +41,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
         long rowCount = abonnementDao.getRowsCount(),
                 start = sortPaginate.getPagination().getStart(),
                 itemsPerPage = sortPaginate.getPagination().getItemsPerPage();
-        long currentPage = PaginationCharacteristics.definePage(start, itemsPerPage, rowCount);
         long filterCount = (PaginationCharacteristics.searchCount == 0) ? rowCount : PaginationCharacteristics.searchCount;
-
-        return new DataTableOutput<>(currentPage, rowCount, filterCount, abonnementList);
+        return new DataTableOutput<>(rowCount, abonnementList, filterCount);
     }
 
     @Override

@@ -119,7 +119,7 @@ th.th-size {
 
 .sizing-between {
     margin: 0;
-    margin-top:15px;
+    margin-top: 15px;
     margin-bottom: 20px;
 }
 
@@ -218,19 +218,23 @@ th.th-size {
 .header-rate {
     margin-bottom: 50px;
 }
+
 .warningMessage {
     font-size: 20px;
     font-weight: bold;
     color: #383838;
 }
+
 .messageActive {
     padding-top: 20px;
     font-weight: bold;
 }
-#reasonText{
+
+#reasonText {
     width: 100%;
     color: #000;
 }
+
 .admWarningBtn {
     margin: 10px !important;
     width: 100px;
@@ -254,7 +258,7 @@ th.th-size {
     text-align: center;
 }
 
-#addRoom form{
+#addRoom form {
     font-family: RobotoDraft, 'Arial', sans-serif;
     line-height: 2rem;
     letter-spacing: 0.01rem;
@@ -263,40 +267,46 @@ th.th-size {
     padding: 5px 20px;
 
 }
-#addRoom .modal-content .modal-body{
+
+#addRoom .modal-content .modal-body {
     padding-top: 20px;
 }
-.list-managers{
+
+.list-managers {
     width: 100%;
 }
-.rates .form-controll{
-   width: 50px;
+
+.rates .form-controll {
+    width: 50px;
     float: left;
     width: 45%;
     margin: 0 2% 20px 2%;
 }
-.tableRates{
+
+.tableRates {
     border: none;
 
     margin: auto;
 }
-.tableRates th{
+
+.tableRates th {
     background-color: #eee;
     color: black;
     height: 30px;
 }
 
-.hours{
+.hours {
     text-align: center;
     margin: auto;
     width: 70%;
     padding-bottom: 20px;
 }
 
-.buttonsDialog{
+.buttonsDialog {
     float: right;
 }
-.danger-info{
+
+.danger-info {
     border: 3px solid #790711;
     background-color: #ee9c41;
     color: white;
@@ -323,21 +333,23 @@ th.th-size {
     margin-left: 0;
 }
 
-.hours{
+.hours {
     text-align: center;
     margin: auto;
     width: 70%;
     padding-bottom: 20px;
 }
 
-.buttonsDialog{
+.buttonsDialog {
     float: right;
 }
-.danger-info{
+
+.danger-info {
     border: 3px solid #790711;
     background-color: #ee9c41;
     color: white;
 }
+
 .datatable {
     margin: 8px auto 20px auto !important;
     padding: 0 !important;
@@ -349,10 +361,15 @@ th.th-size {
     margin-bottom: 2px;
 }
 
-#rooms-table caption{
+.dataTables_paginate {
+    display: block;
+    margin: 8px auto !important;
+}
+
+#rooms-table caption {
     text-align: center;
 }
 
-#manager-between{
+#manager-between {
     margin-top: 40px;
 }

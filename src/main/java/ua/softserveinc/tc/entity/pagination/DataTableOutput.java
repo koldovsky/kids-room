@@ -1,31 +1,34 @@
 package ua.softserveinc.tc.entity.pagination;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import javax.xml.crypto.Data;
 import java.util.Collections;
 import java.util.List;
 
 public class DataTableOutput<T> {
 
-    @JsonView(View.class)
     private long draw;
 
-    @JsonView(View.class)
     private long recordsTotal = 0L;
 
-    @JsonView(View.class)
     private long recordsFiltered = 0L;
 
-    @JsonView(View.class)
     private List<T> data = Collections.emptyList();
 
-    @JsonView(View.class)
     private String error;
 
     public interface View {
     }
 
     public DataTableOutput() {
+    }
+
+    public DataTableOutput(long recordsTotal, List<T> data, long recordsFiltered) {
+        this.data = data;
+        this.recordsTotal = recordsTotal;
+        this.recordsFiltered = recordsFiltered;
     }
 
     public DataTableOutput(long draw, long recordsTotal, long recordsFiltered, List<T> data) {

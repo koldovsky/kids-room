@@ -74,25 +74,25 @@ public class SortingPagination {
     }
 
     public class Pagination {
-        private long start;
-        private long itemsPerPage;
+        private int start;
+        private int itemsPerPage;
 
         public Pagination() {
         }
 
-        public long getStart() {
+        public int getStart() {
             return start;
         }
 
-        public void setStart(long start) {
+        public void setStart(int start) {
             this.start = start;
         }
 
-        public long getItemsPerPage() {
+        public int getItemsPerPage() {
             return itemsPerPage;
         }
 
-        public void setItemsPerPage(long itemsPerPage) {
+        public void setItemsPerPage(int itemsPerPage) {
             this.itemsPerPage = itemsPerPage;
         }
 
