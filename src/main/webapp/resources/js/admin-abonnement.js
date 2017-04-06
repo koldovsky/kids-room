@@ -42,9 +42,11 @@ let columns = [
     },
     {
         'data': null,
-        'render': function () {
+        'render': function (data, type, full) {
+            let addChecked;
+            full.active ? addChecked = "checked" : addChecked = "";
             return "<span><label class='switch'>" +
-                "<input type='checkbox' checked class='activate'>" +
+                "<input type='checkbox' " + addChecked + " class='activate'>" +
                 "<div class='slider round'></div>" +
                 "</label></span>";
         },
@@ -118,7 +120,7 @@ const abonnementsFunctions = function () {
     });
 
     // update Abonnement active state
-    $(document.body).on('change', '.activate', function() {
+    $(document.body).on('change', '.activate', function () {
         let idAbonnement = getId(this);
         let path = 'adm-active-abonnement';
         let dataSender = {
@@ -137,7 +139,7 @@ const abonnementsFunctions = function () {
     });
 
     // bind filter
-    $(document.body).on('keyup', '.search-fields', function() {
+    $(document.body).on('keyup', '.search-fields', function () {
         abonnementTable.ajax.reload(null, false);
     });
 
