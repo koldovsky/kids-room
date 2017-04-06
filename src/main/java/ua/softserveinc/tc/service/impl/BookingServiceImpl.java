@@ -135,7 +135,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         if (dayDiscountDTOS.size() == 0) {
             calculateAndSetSum(booking);
-            booking.setDiscounts("not provided");
         } else {
             List<Discount> outputDiscounts = new ArrayList<>();
             List<Discount> discounts = dayDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList());
@@ -168,7 +167,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Discount discountWithMaxValue = list.stream()
                 .filter(p -> p.containPeriod(startPeriodTime, endPeriodTime))
                 .max(Comparator.comparingInt(Discount::getValue))
-                .orElse(new Discount("not provided", 0, minStartDiscount, minEndDiscount));
+                .orElse(new Discount(0));
+
         if (outputDiscounts.size() > 0 &&
                 outputDiscounts.get(outputDiscounts.size() - 1).equals(discountWithMaxValue)) {
             outputDiscounts.get(outputDiscounts.size() - 1).setEndTime(discountWithMaxValue.getEndTime());

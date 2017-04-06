@@ -11,6 +11,10 @@ public class Discount {
     private LocalTime startTime;
     private LocalTime endTime;
 
+    public Discount(int value) {
+        this.value = value;
+    }
+
     public Discount(String input) {
         String[] array = input.split("\\+");
 

@@ -231,6 +231,10 @@ html, body, .container {
     font-size: 14px;
 }
 
-#discount-header {
+#personal-discount {
+    margin-bottom: 20px;
+}
 
+#personal-discount p {
+    font-weight: bold;
 }
