@@ -14,28 +14,33 @@ $(function () {
     $('#confirmation-dialog-event-div').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         width: 350
     });
 
     $('#cancel-event-dialog').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         width: 320,
     });
 
     $('.modal-dialog-recurrently').dialog({
         modal: true,
+        resizable: false,
         autoOpen: false
     });
 
     $('#dialog-recurrently').dialog({
         title: 'Recurrent events',
         modal: true,
+        resizable: false,
         width: 500
     });
 
     $('#dialog').dialog({
         modal: true,
+        resizable: false,
         width: 550,
         autoOpen: false,
         beforeClose: function () {
@@ -62,12 +67,14 @@ $(function () {
 
     $('#updating').dialog({
         autoOpen: false,
+        resizable: false,
         modal: true,
         width: 400
     });
 
     $('#choose-updating-type').dialog({
         autoOpen: false,
+        resizable: false,
         modal: true
     });
 

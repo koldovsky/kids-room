@@ -75,6 +75,7 @@ $(function () {
 
     $('#manager-dialog, #updating-dialog').dialog({
         modal: true,
+        resizable: false,
         width: 550,
         autoOpen: false,
         show: {

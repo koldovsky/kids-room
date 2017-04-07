@@ -33,6 +33,7 @@ $(function () {
     $('#recurrent-change').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         show: {
             effect: 'drop',
             duration: 500
@@ -46,6 +47,7 @@ $(function () {
     $('#bookingForm').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         show: {
             effect: 'drop',
             duration: 500
@@ -59,6 +61,7 @@ $(function () {
     $('#bookingUpdatingDialog').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         width: 400,
         show: {
             effect: 'drop',
@@ -76,6 +79,7 @@ $(function () {
     $('#userDescriptionDialog').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         width: 400,
         height: 260,
         show: {
@@ -91,7 +95,8 @@ $(function () {
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
         width: 350,
-        modal: true
+        modal: true,
+        resizable: false
     });
 
     $('#bookingStartTimepicker').timepicker({
@@ -127,6 +132,7 @@ $(function () {
     $('#make-recurrent-booking').dialog({
         autoOpen: false,
         modal: true,
+        resizable: false,
         // title: 'New booking',
         width: 550,
         show: {
