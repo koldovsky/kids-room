@@ -327,7 +327,7 @@ function renderDiscountsInCalendarForManager(objects, roomID, workingHoursStart,
         encoding: 'UTF-8',
         contentType: 'charset=UTF-8',
         success: function (result) {
-            if (result.length) {
+            if (result.length || objects.length) {
                 for (let i = 0; i < result.length; i++) {
                     objects[eventLength + i] = {
                         title: result[i].value + "% - " + result[i].reason,
@@ -351,7 +351,7 @@ function renderDiscountsInCalendarForManager(objects, roomID, workingHoursStart,
                     start: '1',
                     end: '1'
                  }];
-                 renderCalendarForManager(objects, roomID, startTime, endTime);
+                 renderCalendarForManager(objects, roomID, workingHoursStart, workingHoursEnd);
             }
         }
     });

@@ -207,6 +207,9 @@
                                    placeholder="end time"/>
                             <br>
                         </div>
+                        <div id="personal-discount" hidden>
+                            <p><spring:message code="booking.availablePersonalDiscounts"/></p>
+                        </div>
                         <div id="kids">
                         </div>
                         <br>

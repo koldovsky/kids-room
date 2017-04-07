@@ -79,6 +79,8 @@ $(function () {
         if(idUser===null) return;
         var getKidsUrl = 'restful/manager-booking/' + idUser;
         addKids(getKidsUrl);
+        var getPersonalDiscountUrl = `restful/discount/personal-discount/${idUser}`;
+        addPersonalDiscount(getPersonalDiscountUrl);
     });
 
     $('#date-booking').change(function () {
@@ -587,18 +589,19 @@ function getDayDiscount(date) {
         url: request,
         type: 'GET',
         success: function (result) {
-            let users = result;
-            let tr = "";
+            let discounts = result;
+            let tr = "<tr>";
 
-            if (users.length > 0) {
+            if (discounts.length > 0) {
                 $('#discounts-list tbody').html('');
 
-                $.each(users, function (i, discount) {
-                    tr += '<tr>' +
-                        '<td>' + discount.startTime + '</td>' +
-                        '<td>' + discount.endTime + '</td>' +
-                        '<td>' + discount.value + '%</td>' +
-                        '<td>' + discount.reason + '</td></tr>';
+                $.each(discounts, function (i, discount) {
+                    if (discount.startTime == '00:00' && discount.endTime == '23:59') {
+                        tr += `<td colspan="2">${messages.booking.allDayDiscount}</td>`;
+                    } else {
+                        tr += `<td>${discount.startTime}</td><td>${discount.endTime}</td>`;
+                    }
+                    tr += `<td>${discount.value}%</td><td>${discount.reason}</td></tr>`;
 
                 });
 
@@ -606,6 +609,33 @@ function getDayDiscount(date) {
                 $("#discounts-list").show();
             } else {
                 $("#discounts-list").hide();
+            }
+        }
+    })
+}
+
+function addPersonalDiscount(url) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (result) {
+            let discounts = result;
+            let rows = '';
+
+            if (discounts.length > 0) {
+                $('.personal-discount-item').remove();
+
+                $.each(discounts, function (i, discount) {
+                    let timeDiscount;
+                    if (discount.startTime == '00:00' && discount.endTime == '23:59') {
+                        timeDiscount = messages.booking.allDayDiscount;
+                    } else timeDiscount = `${discount.startTime}:${discount.endTime}`;
+                    rows += `<div class="personal-discount-item">${discount.value}% - ${timeDiscount}</div>`;
+                });
+
+                $('#personal-discount').append(rows).show();
+            } else {
+                $('#personal-discount').hide();
             }
         }
     })

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.service.DayDiscountService;
+import ua.softserveinc.tc.service.PersonalDiscountService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +19,9 @@ public class DiscountController {
 
     @Autowired
     private DayDiscountService dayDiscountService;
+
+    @Autowired
+    private PersonalDiscountService personalDiscountService;
 
     @GetMapping("/{startDate}/{endDate}/{startTime}/{endTime}")
     public List<DayDiscountDTO> getDiscountsForCurrentPeriod(@PathVariable String startDate,
@@ -33,5 +37,11 @@ public class DiscountController {
     public List<DayDiscountDTO> getAllDailyDiscounts() {
 
         return dayDiscountService.findAllDailyDiscounts();
+    }
+
+    @GetMapping("/personal-discount/{userId}")
+    public List getPersonalDiscounts(@PathVariable Long userId) {
+
+        return personalDiscountService.findPersonalDiscountByUserId(userId);
     }
 }
