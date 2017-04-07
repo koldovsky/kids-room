@@ -74,9 +74,9 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    */
   @Override
   public List<DayDiscountDTO> getDayDiscountsForPeriod(LocalDate startDate, LocalDate endDate,
-      LocalTime startTime, LocalTime endTime) {
+      LocalTime startTime, LocalTime endTime, Boolean state) {
     List<DayDiscount> qResult = dayDiscountDao
-        .getDayDiscountForCurrentDays(startDate, endDate, startTime, endTime);
+        .getDayDiscountForCurrentDays(startDate, endDate, startTime, endTime,state);
     return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 
@@ -103,4 +103,8 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
     dayDiscountDao.update(new DayDiscount(dto));
   }
 
+  @Override
+  public void changeDayDiscountState(DayDiscountDTO dto) {
+    dayDiscountDao.changeDayDiscountState(dto.getId(),dto.getActive());
+  }
 }

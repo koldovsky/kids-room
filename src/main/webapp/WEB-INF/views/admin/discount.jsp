@@ -199,7 +199,7 @@
             <tr>
                 <td>
                     <form id="discountPersonalForm">
-                        <div class="form-group sizing-between">
+                        <div class="form-group sizing-between" id="selectUserDiv">
                         <label class="required">
                             <spring:message code="administrator.personalDiscount.username"/>
                         </label>
@@ -207,6 +207,14 @@
                         <select id="selectUser" name="select" style="width: 100%">
                             <option value=" " disabled selected hidden></option>
                         </select>
+                        </div>
+                        <div class="form-group sizing-between" id="selectUserStaticDiv">
+                            <label>
+                                <spring:message code="administrator.personalDiscount.username"/>
+                            </label>
+                            <p id="selectUserStatic">
+
+                            </p>
                         </div>
                         <!-- Value of discount -->
                         <div class="form-group sizing-between">

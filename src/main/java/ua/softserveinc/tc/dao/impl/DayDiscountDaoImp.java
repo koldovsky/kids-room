@@ -34,16 +34,29 @@ public class DayDiscountDaoImp extends BaseDaoImpl<DayDiscount> implements DayDi
   private CriteriaBuilder builder;
 
   @Override
-  public List<DayDiscount> getDayDiscountForCurrentDays(LocalDate startDate,LocalDate endDate, LocalTime startTime,LocalTime endTime) {
+  public List<DayDiscount> getDayDiscountForCurrentDays(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime, Boolean state) {
     CriteriaQuery<DayDiscount> query = builder.createQuery(DayDiscount.class);
     Root<DayDiscount> root = query.from(DayDiscount.class);
     query.select(root).where(
-        builder.not(builder.lessThan(root.get("endDate"),startDate)),
-        builder.not(builder.greaterThan(root.get("startDate"),endDate)),
-        builder.not(builder.lessThan(root.get("endTime"),startTime)),
-        builder.not(builder.greaterThan(root.get("startTime"),endTime))
+        builder.not(builder.lessThan(root.get("endDate"), startDate)),
+        builder.not(builder.greaterThan(root.get("startDate"), endDate)),
+        builder.not(builder.lessThan(root.get("endTime"), startTime)),
+        builder.not(builder.greaterThan(root.get("startTime"), endTime))
     );
+    if (state) {
+      query.select(root).where(builder.equal(root.get("active"), state));
+    }
     return entityManager.createQuery(query).getResultList();
+  }
+
+  @Override
+  public void changeDayDiscountState(Long id, Boolean state) {
+    CriteriaUpdate<DayDiscount> query = builder.createCriteriaUpdate(DayDiscount.class);
+    Root<DayDiscount> root = query.from(DayDiscount.class);
+    query.set("active", state);
+    query.where(builder.equal(root.get("id"), id));
+    entityManager.createQuery(query).executeUpdate();
   }
 
   @PostConstruct
