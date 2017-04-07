@@ -35,7 +35,8 @@ const constants = {
         abonnementsMaxHour: 10000,
         abonnementsMinHour: 0,
         dateLength: 10,
-        timeLength: 5
+        timeLength: 5,
+        minDate: '2017-01-01'
     },
     keyCodes: {
         backspace: 8,

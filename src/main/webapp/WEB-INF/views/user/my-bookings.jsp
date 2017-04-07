@@ -9,7 +9,10 @@
 <link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/user-my-report.css'>
 <script src="${pageContext.request.contextPath}/resources/js/myBookings.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/printMyBookings.js"></script>
-
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js' type="text/javascript"></script>
+<link href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css' rel="stylesheet"/>
+<link rel='stylesheet' href='${pageContext.request.contextPath}/resources/css/flow-form.css'>
 <div id="scroller">
     <div class="dateSelector form-group-material-blue-400">
         <div id="msg">
@@ -17,12 +20,12 @@
         </div>
         <div id="from-div">
           <label for="from"><spring:message code="report.from" /></label>
-          <input name="from" id="from" type="date" class="form-control" >
+          <input id="from" type="text" class="form-control datepickers" >
 
         </div>
         <div id="to-div">
-            <label for="from"><spring:message code="report.to" /></label>
-            <input id="to" type="date" class="form-control">
+            <label for="to"><spring:message code="report.to" /></label>
+            <input id="to" type="text" class="form-control datepickers">
         </div>
     </div>
     <div id="errorDate"></div>
@@ -67,3 +70,7 @@
     </div>
 </div>
  <script src="${pageContext.request.contextPath}/resources/js/validation/validation-my-booking.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
+</c:if>

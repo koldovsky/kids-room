@@ -113,7 +113,9 @@ html, body, .container {
     box-shadow: none;
     border-radius: 0;
 }
-
+#booking-table caption{
+    text-align: center;
+}
 #booking-table {
     margin-top: 100px;
     display: inline-block;
