@@ -64,8 +64,7 @@ public class AdminDiscountController {
       @PathVariable String endDate, @PathVariable String startTime, @PathVariable String endTime) {
     List<DayDiscountDTO> list = dayDiscountService
         .getDayDiscountsForPeriod(LocalDate.parse(startDate,dateFormatter), LocalDate.parse(endDate,dateFormatter),
-            LocalTime.parse(startTime,timeFormatter), LocalTime.parse(endTime,timeFormatter));
-    System.out.println(list.size());
+            LocalTime.parse(startTime,timeFormatter), LocalTime.parse(endTime,timeFormatter),false);
     return new ResponseEntity<String>("lol", HttpStatus.OK);
   }
 
@@ -73,6 +72,12 @@ public class AdminDiscountController {
   public ResponseEntity<String> addDayDiscount(@RequestBody DayDiscountDTO dto) {
     dayDiscountService.addNewDayDiscount(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
+  }
+
+  @PutMapping("day/state")
+  public ResponseEntity<String> changeDayDiscountState(@RequestBody DayDiscountDTO dto){
+    dayDiscountService.changeDayDiscountState(dto);
+    return new ResponseEntity<String>("ok",HttpStatus.OK);
   }
 
   @PutMapping("day")
@@ -115,8 +120,9 @@ public class AdminDiscountController {
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }
 
-  @PutMapping("personal")
+  @PutMapping("personal/{id}")
   public ResponseEntity<String> updatePersonalDiscount(@RequestBody PersonalDiscountDTO dto,@PathVariable Long id) {
+    dto.setUser(userService.findUserByIdDto(id));
     personalDiscountService.updatePersonalDiscountById(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }

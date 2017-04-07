@@ -36,7 +36,7 @@ $(function () {
     if (onButtonAdd) {
       addNewPersonalDiscount('POST', false);
     } else {
-      //addNewPersonalDiscount('PUT', true);
+      addNewPersonalDiscount('PUT', true);
     }
     $('#addPersonalDiscountDiv').modal('toggle');
   })
@@ -65,9 +65,11 @@ const dayDiscountButtonFunctions = function () {
   });
 
 };
-
+//Add functions for personal discount datatable buttons
 const personalDiscountButtonFunctions = function () {
-
+  $('.datatable tbody').on('click', '.editPersonalDiscount', function () {
+    onEditPersonalDiscountClick($(this).attr("personalDiscountId"));
+  });
 };
 
 // Day discount
@@ -128,13 +130,13 @@ function onEditDiscountClick(id) {
     }
   });
 }
-//Personal discounts
+//Add personal discounts
 function addNewPersonalDiscount(method, bool){
   request = "restful/admin/discounts/personal/"+user;
   var inputData = {
     value: $("#PValue").val(),
-    startTime: $("#DStartTime").val(),
-    endTime: $("#DEndTime").val(),
+    startTime: $("#PStartTime").val(),
+    endTime: $("#PEndTime").val(),
     active: true,
   };
   if (bool) {
@@ -144,7 +146,6 @@ function addNewPersonalDiscount(method, bool){
     inputData.startTime = "00:00";
     inputData.endTime = "23:59";
   }
-  console.log(inputData);
   $.ajax({
     url: request,
     contentType: 'application/json; charset=UTF-8',
@@ -156,7 +157,39 @@ function addNewPersonalDiscount(method, bool){
   });
 }
 
-//Add discount buttons
+//Edit personal discount
+function onEditPersonalDiscountClick(id){
+  $("#personalDiscountModalTitle").text(messages.modal.discount.editDiscount);
+  editId = id;
+  request = "restful/admin/discounts/personal/" + editId;
+  onButtonAdd = false;
+  $("#selectUserDiv").hide();
+  $("#selectUserStaticDiv").show();
+  //Add data to the modal window
+  $.ajax({
+    url: request,
+    type: 'GET',
+    success: function (result) {
+      $("#PValue").val(result.value);
+      $("#selectUserStatic").text(result.user.firstName +" "+result.user.lastName);
+      user = result.user.id;
+      //Manipulation with time
+      if(result.startTime == "00:00" && result.endTime == "23:59"){
+        $("#personalDiscountTime").hide();
+        $("#changePersonalPeriod").prop('checked', true);
+      }else{
+        fullDay = false;
+        $("#changePersonalPeriod").prop('checked', false);
+        $("#personalDiscountTime").show();
+        $("#PStartTime").val(result.startTime);
+        $("#PEndTime").val(result.endTime);
+      }
+    }
+  });
+}
+
+
+//Add discount functions
 function onAddDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
   $("#dayDiscountTime").hide();
@@ -165,16 +198,17 @@ function onAddDiscountClick() {
   fullDay = true;
 }
 
+//Add personal discount functions
 let list = 0;
 let userList;
 function onAddPersonalDiscount() {
 
-  $("#personalDiscountModalTitle").text(messages.modal.discount.addDiscount);
   $.ajax({
     url: "restful/admin/discounts/personal/users",
     type: 'GET',
     success: function (result) {
       if (list != result.length) {
+        $('#selectUser').empty();
         list = result.length;
         userList = result;
         $.each(userList, function (i, user) {
@@ -183,12 +217,17 @@ function onAddPersonalDiscount() {
             text: user.firstName + ' ' + user.lastName
           }));
         })
+        $('#selectUser').select2('val', ' ');
       } else {
         $('#selectUser').select2('val', ' ');
       }
     }
   });
+
+  $("#personalDiscountModalTitle").text(messages.modal.discount.addDiscount);
   $("#personalDiscountTime").hide();
+  $("#selectUserDiv").show();
+  $("#selectUserStaticDiv").hide();
   $("#changePersonalPeriod").prop('checked', true);
 
   onButtonAdd = true;
@@ -290,7 +329,7 @@ const PersonalColumns = [
     'fnCreatedCell': function (nTd, sData) {
       $(nTd).html(
           "<span>" +
-          "<button class='btn btn-raised btn-info editDayDiscount' " +
+          "<button class='btn btn-raised btn-info editPersonalDiscount' " +
           "data-toggle='modal' data-target='#addPersonalDiscountDiv' personalDiscountId = "
           + sData +
           "><i class='glyphicon glyphicon-pencil'></i></button></span>"

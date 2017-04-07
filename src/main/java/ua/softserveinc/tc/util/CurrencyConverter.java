@@ -30,18 +30,23 @@ public class CurrencyConverter {
 
     public Map<?, String> convertCurrency(Map<?, Long> inputMap) {
         return inputMap.entrySet().stream().collect(Collectors.
-                toMap(Map.Entry::getKey, e -> NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(e.getValue() / 100.0)));
+                toMap(Map.Entry::getKey, e -> NumberFormat
+                    .getNumberInstance(LocaleContextHolder.getLocale())
+                    .format(e.getValue() / 100.0)));
     }
 
     public String convertSingle(Long sum) {
-        return NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(sum / 100.0);
+        return NumberFormat.getNumberInstance(LocaleContextHolder.getLocale())
+            .format(sum / 100.0);
     }
 
     public List<BookingDto> convertBookingSum(List<Booking> inputList) {
         return inputList.stream()
                 .map(booking -> {
                     BookingDto dto = booking.getDto();
-                    dto.setCurrencySum(NumberFormat.getNumberInstance(LocaleContextHolder.getLocale()).format(booking.getSum() / 100.0));
+                    dto.setCurrencySum(NumberFormat.
+                        getNumberInstance(LocaleContextHolder.getLocale())
+                        .format(booking.getSum() / 100.0));
                     return dto;
                 })
                 .collect(Collectors.toList());
