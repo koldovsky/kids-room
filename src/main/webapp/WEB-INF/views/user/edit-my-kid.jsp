@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="ua.softserveinc.tc.constants.ChildConstants" %>
 <%@ page import="ua.softserveinc.tc.constants.ValidationConstants" %>
 
@@ -9,9 +9,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/comment-box.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/edit-my-kid.js"></script>
 <script scr="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-
+<script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js' type="text/javascript"></script>
+<script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
+<link href='${pageContext.request.contextPath}/resources/css/lib/jquery-ui.css' rel="stylesheet"/>
+<link href='${pageContext.request.contextPath}/resources/css/flow-form.css' rel='stylesheet'/>
 
 <form:form class = "registerkid"  enctype="application/x-www-form-urlencoded" id = "editkidform"
 modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" method="post">
@@ -34,9 +35,10 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
       </div>
 
       <div class="form-group">
+          <fmt:formatDate pattern="yyyy-MM-dd" value="${kid.getDateOfBirth()}" var="myDate"/>
                     <label for="date" class="required"><spring:message code="kid.date" /></label>
-                    <form:input type="date" path="dateOfBirth" id="date" name="date"
-                    value="${kid.getDateOfBirth()}" class="form-control" required="required" />
+                    <form:input type="text" path="dateOfBirth" id="date" name="date"
+                    value="${myDate}" class="form-control datepickers" required="required" />
                      <div class="err-msg">
                               <form:errors path="dateOfBirth" cssClass="error">
                                     <spring:message code="registration.kid.date"
@@ -114,7 +116,10 @@ modelAttribute="<%=ChildConstants.View.KID_ATTRIBUTE %>" action="editmykid" meth
             </div>
         </div>
     </div>
-
+<c:if test="${pageContext.response.locale=='ua'}">
+    <script src="${pageContext.request.contextPath}/resources/js/lib/datepicker-uk.js"></script>
+</c:if>
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/validation/validation-edit-kid.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
