@@ -2,6 +2,9 @@ $(function () {
     addListenerForDetails();
     addListenerForGenerate();
     $("#startDate, #endDate").change(refreshView);
+
+    $("#startDate, #endDate").datepicker('option', {minDate: constants.parameters.minDate,
+        maxDate:moment().format(constants.parameters.dateFormatUpperCase)});
 });
 
 function addListenerForDetails() {

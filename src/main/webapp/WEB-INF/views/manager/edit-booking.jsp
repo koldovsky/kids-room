@@ -65,7 +65,11 @@
         <br>
 
         <table id="booking-table" class=" col-xs-12 col-md-12"  >
-            <thead >
+            <caption>
+               <i class="glyphicon glyphicon-home glyphicon-tasks"></i>
+                <strong class="title-font"><spring:message code="manager.listbooking"/></strong>
+            </caption>
+            <thead>
             <tr>
                 <th class="col-xs-1 col-md-1">#</th>
                 <th class="col-xs-2 col-md-2"><spring:message code="booking.childrens"/></th>

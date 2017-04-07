@@ -25,6 +25,9 @@ $(document).ready(function () {
         var request = 'excel?startDate=' + from + '&endDate=' + to;
         window.location.replace(request);
     });
+
+    $("#from, #to").datepicker('option', {minDate: constants.parameters.minDate,
+        maxDate:moment().format(constants.parameters.dateFormatUpperCase)});
 });
 
 function updateTable() {
@@ -49,15 +52,14 @@ function updateTable() {
                         + '<td>' + booking.startTime + '</td>'
                         + '<td>' + booking.endTime + '</td>'
                         + '<td>' + booking.duration + '</td>'
-                        + '<td>' + (booking.sum / 100).toFixed(2) + '</td> + </tr>';
-                    sumTotal += booking.sum;
+                        + '<td>' + booking.currencySum + '</td> + </tr>';
+                    sumTotal += parseFloat(booking.currencySum);
                 });
 
                 tableContent += '</tbody>';
                 $('tr:not(#header)').remove();
                 $('#myBookings').append(tableContent);
-                sumTotal = (sumTotal / 100).toFixed(2);
-                $('#sum').html(sumTotal);
+                $('#sum').html(sumTotal.toFixed(2));
                 paginate();
             },
             error: function (dateError, textStatus, xhr) {

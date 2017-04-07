@@ -37,7 +37,7 @@ caption h2  {
 }
 
 
-table{
+.tableDiv table{
     margin-left:auto;
     margin-right:auto;
     text-align:center;
@@ -68,12 +68,11 @@ table{
     font-size: 20;
 }
 
-td{
+.tableDiv td{
 min-width: 120px;
 }
 
 #scroller{
-    padding-left: 50px;
     padding-right: 50px;
     margin: 0px auto;
     width: 50%;
@@ -91,16 +90,19 @@ min-width: 120px;
      display:inline-block;margin-right:10px;
      margin-left: 10px;
  }
-
-  table, th, td {
+.tableDiv table{
+    margin: auto;
+    width: 70%;
+}
+.tableDiv table, .tableDiv th,.tableDiv td {
      text-align: center;
       border-collapse: collapse;
       width: 40%;
       padding: 10px;
-      margin-left: 50 px;
+      margin-left: 10px;
 
   }
-  tr{
+.tableDiv tr{
     border-collapse: collapse;
     border: 2px solid #ddd;
   }

@@ -20,6 +20,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.UserService;
+import ua.softserveinc.tc.util.CurrencyConverter;
 import ua.softserveinc.tc.validator.TimeValidatorImpl;
 
 import java.security.Principal;
@@ -103,11 +104,7 @@ public class MyBookingsController {
         List<Booking> myBookings = bookingService.getBookings(
                 new Date[] {DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
                 currentUser, BookingState.COMPLETED);
-        List<BookingDto> dtos = myBookings
-                .stream()
-                .map(BookingDto::new)
-                .collect(Collectors.toList());
 
-        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(dtos));
+        return ResponseEntity.status(HttpStatus.OK).body(new Gson().toJson(CurrencyConverter.getInstance().convertBookingSum(myBookings)));
     }
 }
