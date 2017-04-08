@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -125,6 +126,12 @@ public class AdminDiscountController {
     dto.setUser(userService.findUserByIdDto(id));
     personalDiscountService.updatePersonalDiscountById(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
+  }
+
+  @PutMapping("personal/state")
+  public ResponseEntity<String> changePersonalDiscountState(@RequestBody Map<String,String> dto){
+    personalDiscountService.changePersonalDiscountState(dto);
+    return new ResponseEntity<String>("ok",HttpStatus.OK);
   }
 
 }

@@ -82,7 +82,14 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
             'contentType': 'application/json',
             'type': 'GET'
         },
-        'columns': columnsArrObj
+        'columns': columnsArrObj,
+        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            var sDirectionClass;
+            if (aData.active != true)
+                sDirectionClass = "tr-not-active";
+            $(nRow).addClass(sDirectionClass);
+            return nRow;
+        }
     });
 
     addFunctions();

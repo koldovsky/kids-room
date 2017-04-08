@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import java.util.List;
+import java.util.Map;
 import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import ua.softserveinc.tc.entity.PersonalDiscount;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
@@ -13,6 +14,8 @@ public interface PersonalDiscountService extends BaseService<PersonalDiscount> {
   void addNewPersonalDiscount(PersonalDiscountDTO personalDiscountDTO);
 
   void updatePersonalDiscountById(PersonalDiscountDTO personalDiscountDTO);
+
+  void changePersonalDiscountState(Map<String,String> dto);
 
   PersonalDiscountDTO findPersonalDiscountById(Long id);
 

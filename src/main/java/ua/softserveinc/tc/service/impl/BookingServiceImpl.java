@@ -131,7 +131,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .getDayDiscountsForPeriod(dateToLocalDateTime(booking.getBookingStartTime()).toLocalDate(),
                         dateToLocalDateTime(booking.getBookingEndTime()).toLocalDate(),
                         dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime(),
-                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime());
+                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime(),true);
 
         if (dayDiscountDTOS.size() == 0) {
             calculateAndSetSum(booking);
