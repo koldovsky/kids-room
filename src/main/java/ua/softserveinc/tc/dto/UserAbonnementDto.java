@@ -1,26 +1,26 @@
 package ua.softserveinc.tc.dto;
 
 public class UserAbonnementDto {
-    Long user_id;
-    Long abonnement_id;
+    Long userId;
+    Long abonnementId;
 
     public UserAbonnementDto() {
 
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getAbonnement_id() {
-        return abonnement_id;
+    public Long getAbonnementId() {
+        return abonnementId;
     }
 
-    public void setAbonnement_id(Long abonnement_id) {
-        this.abonnement_id = abonnement_id;
+    public void setAbonnementId(Long abonnementId) {
+        this.abonnementId = abonnementId;
     }
 }

@@ -32,9 +32,6 @@ public class AbonnementsController {
     AbonnementsService abonnementsService;
 
     @Autowired
-    UserService userService;
-
-    @Autowired
     AbonnementsValidator abonnementsValidator;
 
     @Autowired
@@ -44,9 +41,6 @@ public class AbonnementsController {
     public List<AbonnementDto> selectAbonnements() {
         return abonnementsService.findAllAbonements();
     }
-
-    @GetMapping("adm-all-users")
-    public List<UserDto> selectUsers() { return userService.findAllUsers(); }
 
     @GetMapping("adm-pag-abonnements")
     public DataTableOutput<AbonnementDto> paginateAbonnements(@RequestParam String parameters) {
@@ -71,7 +65,7 @@ public class AbonnementsController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PostMapping("adm-assign-user")
+    @PostMapping("adm-assign-abonnement")
     public ResponseEntity<?> assignUser(@RequestBody UserAbonnementDto userAbonnementDto) {
         abonnementsService.assignUserToAbonnement(userAbonnementDto);
         return new ResponseEntity<>(true, HttpStatus.OK);

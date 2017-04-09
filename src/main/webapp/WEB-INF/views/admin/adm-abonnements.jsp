@@ -8,12 +8,14 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/button-styles.css">
 <link href="${pageContext.request.contextPath}/resources/css/lib/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-style.css">
+<link href="${pageContext.request.contextPath}/resources/css/lib/select2.min.css" rel="stylesheet"/>
 
 
 <script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/select2.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-abonnement.js'></script>
 
@@ -193,6 +195,51 @@
         </div>
     </div>
 </div>
+
+<%-- asisgn user to abonnement --%>
+<div id="assignAbonnement" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <table class="col-sm-offset-4 col-sm-3 reg-form">
+            <tr>
+                <th>
+                    <strong class="title-font">
+                        <spring:message code="administrator.assign"/>
+                    </strong>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <form id="assignAbonnementForm">
+                        <input type="text" name="id" class="id form-control abonnementId"/>
+                        <div class="form-group sizing-between">
+                            <select id="selectUser" name="select" style="width: 100%">
+                                <option value=" " disabled selected hidden></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group sizing-between">
+                            <input type="submit" value="<spring:message code="administrator.assign"/>"
+                                   class="btn btn-raised btn-success"
+                                   data-toggle="modal" data-target="#assignAbonnement">
+                            </input>
+
+                            <button type="reset" class="btn btn-raised btn-danger" data-toggle="modal"
+                                    data-target="#assignAbonnement">
+                                <spring:message code="administrator.canc"/>
+                            </button>
+
+
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
 
