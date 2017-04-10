@@ -141,7 +141,8 @@ const messages = {
         allDayDiscount: 'All day'
     },
     report: {
-        currencySymbol: 'UAH'
+        currencySymbol: 'UAH',
+        absentDiscount: 'not provided'
     },
     preloader: {
         buttons: {

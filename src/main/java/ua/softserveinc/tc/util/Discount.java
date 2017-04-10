@@ -1,11 +1,14 @@
 package ua.softserveinc.tc.util;
 
 import ua.softserveinc.tc.dto.DayDiscountDTO;
+import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 
 import java.time.LocalTime;
 import java.util.Objects;
 
 public class Discount {
+    public static String PERSONAL_DISCOUNT_REASON = "Personal discount";
+
     private String reason;
     private int value;
     private LocalTime startTime;
@@ -33,6 +36,13 @@ public class Discount {
 
     public Discount(DayDiscountDTO dto) {
         this.reason = dto.getReason();
+        this.value = dto.getValue();
+        this.startTime = dto.getStartTime();
+        this.endTime = dto.getEndTime();
+    }
+
+    public Discount(PersonalDiscountDTO dto) {
+        this.reason = Discount.PERSONAL_DISCOUNT_REASON;
         this.value = dto.getValue();
         this.startTime = dto.getStartTime();
         this.endTime = dto.getEndTime();

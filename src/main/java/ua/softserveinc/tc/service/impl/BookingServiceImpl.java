@@ -12,6 +12,7 @@ import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
+import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.*;
@@ -69,6 +70,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     @Inject
     private DayDiscountService dayDiscountService;
+
+    @Inject
+    private PersonalDiscountService personalDiscountService;
 
     @Override
     public void calculateAndSetDuration(Booking booking) {
@@ -131,13 +135,16 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .getDayDiscountsForPeriod(dateToLocalDateTime(booking.getBookingStartTime()).toLocalDate(),
                         dateToLocalDateTime(booking.getBookingEndTime()).toLocalDate(),
                         dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime(),
-                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime(),true);
+                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime(), true);
+        List<PersonalDiscountDTO> personalDiscountDTOS = personalDiscountService
+                .findPersonalDiscountByUserId(booking.getUser().getId());
 
-        if (dayDiscountDTOS.size() == 0) {
+        if (dayDiscountDTOS.size() + personalDiscountDTOS.size() == 0) {
             calculateAndSetSum(booking);
         } else {
             List<Discount> outputDiscounts = new ArrayList<>();
             List<Discount> discounts = dayDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList());
+            discounts.addAll(personalDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList()));
 
             LocalTime startPeriodTime = dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime();
             LocalTime endPeriodTime = dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime();
@@ -148,7 +155,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         discounts, roomRate, outputDiscounts);
             }
 
-            booking.setDiscounts(outputDiscounts.stream().map(Discount::toString).collect(Collectors.joining("\n")));
+            booking.setDiscounts(outputDiscounts.stream().map(Discount::toString).collect(Collectors.joining("<br>")));
         }
     }
 

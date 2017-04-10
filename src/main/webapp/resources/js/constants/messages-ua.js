@@ -140,7 +140,8 @@ const messages = {
         allDayDiscount: 'Весь день'
     },
     report: {
-        currencySymbol: 'ГРН'
+        currencySymbol: 'ГРН',
+        absentDiscount: 'не передбачено'
     },
     preloader: {
         buttons: {

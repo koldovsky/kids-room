@@ -39,6 +39,7 @@
                 <th><spring:message code="report.endTime" /></th>
                 <th><spring:message code="report.duration" /></th>
                 <th><spring:message code="report.sum" /></th>
+                <th><spring:message code="report.discount" /></th>
             </tr>
             </thead>
             <tbody>
@@ -51,12 +52,13 @@
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.dateEndTime}" /></td>
                     <td>${booking.formatDuration()}</td>
                     <td>${booking.getCurrencySum()} <spring:message code="report.currencySymbol" /></td>
+                    <td>${booking.discount}</td>
                 </tr>
             </c:forEach>
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="6" class="captionBottom">
+                <td colspan="7" class="captionBottom">
                     <h2>
                         <spring:message code="report.sumTotal" />
                        ${sumTotal}
