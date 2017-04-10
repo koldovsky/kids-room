@@ -17,7 +17,7 @@ $(function () {
   //Selector for personal discounts
   $("#selectUser").select2();
 
-  $('#selectUser').on('change',selectUserFunction);
+  $('#selectUser').on('change', selectUserFunction);
 
   //Form submissions
   $("#discountForm").on('submit', function (e) {
@@ -63,13 +63,23 @@ const dayDiscountButtonFunctions = function () {
   $('.datatable tbody').on('click', '.editDayDiscount', function () {
     onEditDiscountClick($(this).attr("daydiscountid"));
   });
+  //Change state button
+  $('.datatable tbody').on('click', '.dayDiscountState', function () {
+    changeDayDiscountState($(this),"restful/admin/discounts/day/state");
+  });
 
 };
 //Add functions for personal discount datatable buttons
 const personalDiscountButtonFunctions = function () {
+  //Edit button
   $('.datatable tbody').on('click', '.editPersonalDiscount', function () {
     onEditPersonalDiscountClick($(this).attr("personalDiscountId"));
   });
+  //Change state button
+  $('.datatable tbody').on('click', '.personalDiscountState', function () {
+    changeDayDiscountState($(this),"restful/admin/discounts/personal/state");
+  });
+
 };
 
 // Day discount
@@ -131,8 +141,8 @@ function onEditDiscountClick(id) {
   });
 }
 //Add personal discounts
-function addNewPersonalDiscount(method, bool){
-  request = "restful/admin/discounts/personal/"+user;
+function addNewPersonalDiscount(method, bool) {
+  request = "restful/admin/discounts/personal/" + user;
   var inputData = {
     value: $("#PValue").val(),
     startTime: $("#PStartTime").val(),
@@ -158,7 +168,7 @@ function addNewPersonalDiscount(method, bool){
 }
 
 //Edit personal discount
-function onEditPersonalDiscountClick(id){
+function onEditPersonalDiscountClick(id) {
   $("#personalDiscountModalTitle").text(messages.modal.discount.editDiscount);
   editId = id;
   request = "restful/admin/discounts/personal/" + editId;
@@ -171,13 +181,14 @@ function onEditPersonalDiscountClick(id){
     type: 'GET',
     success: function (result) {
       $("#PValue").val(result.value);
-      $("#selectUserStatic").text(result.user.firstName +" "+result.user.lastName);
+      $("#selectUserStatic").text(
+          result.user.firstName + " " + result.user.lastName);
       user = result.user.id;
       //Manipulation with time
-      if(result.startTime == "00:00" && result.endTime == "23:59"){
+      if (result.startTime == "00:00" && result.endTime == "23:59") {
         $("#personalDiscountTime").hide();
         $("#changePersonalPeriod").prop('checked', true);
-      }else{
+      } else {
         fullDay = false;
         $("#changePersonalPeriod").prop('checked', false);
         $("#personalDiscountTime").show();
@@ -187,7 +198,6 @@ function onEditPersonalDiscountClick(id){
     }
   });
 }
-
 
 //Add discount functions
 function onAddDiscountClick() {
@@ -235,7 +245,7 @@ function onAddPersonalDiscount() {
 }
 
 let user;
-const selectUserFunction = function(){
+const selectUserFunction = function () {
   user = $("#selectUser").val();
 };
 
@@ -287,14 +297,19 @@ const DayColumns = [
   },
   {
     'data': 'id',
-    'fnCreatedCell': function (nTd, sData) {
-      $(nTd).html(
-          "<span><label class='switch'>" +
-          "<input type='checkbox' checked class='activate' dayDiscountId = "
-          + sData +
-          "><div class='slider round'></div>" +
-          "</label></span>"
-      );
+    'render': function (data, type, full,row) {
+      let stateBut = `<span><label class='switch'>
+          <input type='checkbox' `;
+
+      if (full.active) {
+        stateBut += `checked `;
+      }
+
+      stateBut += `class='activate dayDiscountState' discountId = ` + full.id
+          +
+          ` dayDiscountState = ` + full.active +
+          ` ><div class='slider round'></div></label></span>`
+      return stateBut;
     }
   }
 ];
@@ -338,14 +353,19 @@ const PersonalColumns = [
   },
   {
     'data': 'id',
-    'fnCreatedCell': function (nTd, sData) {
-      $(nTd).html(
-          "<span><label class='switch'>" +
-          "<input type='checkbox' checked class='activate' personalDiscountId = "
-          + sData +
-          "><div class='slider round'></div>" +
-          "</label></span>"
-      );
+    'render' : function(data, type, full,row){
+      let stateBut = `<span><label class='switch'>
+          <input type='checkbox' `;
+
+      if (full.active) {
+        stateBut += `checked `;
+      }
+
+      stateBut += `class='activate personalDiscountState' discountId = ` + full.id
+          +
+          ` dayDiscountState = ` + full.active +
+          ` ><div class='slider round'></div></label></span>`
+      return stateBut;
     }
   }
 ];

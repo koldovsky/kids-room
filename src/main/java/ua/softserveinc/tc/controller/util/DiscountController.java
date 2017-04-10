@@ -30,7 +30,7 @@ public class DiscountController {
                                                              @PathVariable String endTime) {
 
         return dayDiscountService.getDayDiscountsForPeriod(LocalDate.parse(startDate), LocalDate.parse(endDate),
-                LocalTime.parse(startTime), LocalTime.parse(endTime));
+                LocalTime.parse(startTime), LocalTime.parse(endTime),true);
     }
 
     @GetMapping("/all")

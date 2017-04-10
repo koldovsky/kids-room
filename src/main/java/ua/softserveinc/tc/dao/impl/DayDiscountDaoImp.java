@@ -51,6 +51,7 @@ public class DayDiscountDaoImp extends BaseDaoImpl<DayDiscount> implements DayDi
   }
 
   @Override
+  @Transactional
   public void changeDayDiscountState(Long id, Boolean state) {
     CriteriaUpdate<DayDiscount> query = builder.createCriteriaUpdate(DayDiscount.class);
     Root<DayDiscount> root = query.from(DayDiscount.class);

@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,4 +65,8 @@ public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscoun
     personalDiscount.update(new PersonalDiscount(personalDiscountDTO));
   }
 
+  @Override
+  public void changePersonalDiscountState(Map<String, String> dto) {
+    personalDiscount.changePersonalDiscountState(Long.parseLong(dto.get("id")),Boolean.parseBoolean(dto.get("active")));
+  }
 }

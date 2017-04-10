@@ -17,6 +17,7 @@
 <script type="text/javascript" src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/select2.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount-state.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/pickers.js"></script>
 
