@@ -65,7 +65,7 @@ const messages = {
     event: {
         errors: {
             titleFieldRequired: 'Title can\'t be empty ',
-            titleMaximumCharacters: 'Title should contain no more than' + constants.parameters.titleMaxLenght + ' characters',
+            titleMaximumCharacters: 'Title should contain no more than ' + constants.parameters.titleMaxLenght + ' characters',
             descriptionMaximumCharacters: 'Description should contain no more than ' + constants.parameters.descriptionMaxLenght + ' characters',
             startDateFormat: 'Start date is invalid or dosen\'t exist , use right format yyyy-mm-dd HH:MM',
             endDateFormat: 'End date is invalid or dosen\'t exist, use right format yyyy-mm-dd HH:MM',
