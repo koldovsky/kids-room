@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.springframework.validation.BindingResult;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.entity.DayDiscount;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
@@ -15,7 +16,7 @@ public interface DayDiscountService extends BaseService<DayDiscount> {
 
   List<DayDiscountDTO> findAllDailyDiscounts();
 
-  void addNewDayDiscount(DayDiscountDTO dto);
+  void addNewDayDiscount(DayDiscountDTO dto,BindingResult bindingResult);
 
   DayDiscountDTO findDayDiscountById(long id);
 

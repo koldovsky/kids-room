@@ -28,7 +28,6 @@ $(function () {
     } else {
       addNewDiscount('PUT', true);
     }
-    $('#addDiscountDiv').modal('toggle');
   });
 
   $("#discountPersonalForm").on('submit', function (e) {
@@ -107,7 +106,15 @@ function addNewDiscount(method, bool) {
     data: JSON.stringify(inputData),
     type: method,
     success: function (result) {
+      $('#addDiscountDiv').modal('toggle');
       dayDiscountDataTable.ajax.reload(null, false);
+    },
+    error: function (data, textStatus, xhr) {
+      $(".danger-info").remove();
+      let errors = data.responseJSON.userInputErrors;
+      errors.forEach(function(item){
+        $('#discountForm').append("<div class='danger-info'>" + item + "</div>");
+      })
     }
   });
 }
@@ -118,6 +125,7 @@ function onEditDiscountClick(id) {
   editId = id;
   request = "restful/admin/discounts/day/" + editId;
   onButtonAdd = false;
+  $(".danger-info").remove();
   $.ajax({
     url: request,
     type: 'GET',
@@ -203,6 +211,7 @@ function onEditPersonalDiscountClick(id) {
 function onAddDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
   $("#dayDiscountTime").hide();
+  $(".danger-info").remove();
   $("#changeDayPeriod").prop('checked', true);
   onButtonAdd = true;
   fullDay = true;
