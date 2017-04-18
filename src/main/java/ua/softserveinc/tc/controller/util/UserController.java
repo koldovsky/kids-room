@@ -1,10 +1,13 @@
 package ua.softserveinc.tc.controller.util;
 
 import java.security.Principal;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.AdminConstants;
 import ua.softserveinc.tc.constants.ChildConstants;
 import ua.softserveinc.tc.constants.ErrorConstants;
@@ -13,9 +16,14 @@ import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.UserService;
 
+import javax.inject.Inject;
+
 
 @Controller
 public class UserController {
+
+    @Inject
+    private MessageSource messageSource;
 
     @Autowired
     private UserService userService;
@@ -27,7 +35,7 @@ public class UserController {
             resultView = UserConstants.Model.LOGIN_VIEW;
             return resultView;
         }else{
-           return abort_login_page(principal);
+            return abort_login_page(principal);
         }
     }
 
@@ -37,8 +45,14 @@ public class UserController {
     }
 
     @GetMapping("/accessDenied")
-    public String handleError403() {
-        return ErrorConstants.ACCESS_DENIED_VIEW;
+    public ModelAndView handleError403(Locale locale) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName(ErrorConstants.ERROR_VIEW);
+        modelAndView.addObject(ErrorConstants.ERROR_MESSAGE,
+                messageSource.getMessage(ErrorConstants.MESSAGE_ACCESS_DENIED, null, locale));
+        modelAndView.addObject(ErrorConstants.ERROR_FILE, ErrorConstants.DEFAULT_ERROR_FILE_NAME);
+
+        return modelAndView;
     }
 
     private String abort_login_page(Principal principal){
