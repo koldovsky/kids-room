@@ -20,7 +20,7 @@ public interface DayDiscountService extends BaseService<DayDiscount> {
 
   DayDiscountDTO findDayDiscountById(long id);
 
-  void updateDayDiscountById(DayDiscountDTO dto);
+  void updateDayDiscountById(DayDiscountDTO dto,BindingResult bindingResult);
 
   void changeDayDiscountState(DayDiscountDTO dto);
 

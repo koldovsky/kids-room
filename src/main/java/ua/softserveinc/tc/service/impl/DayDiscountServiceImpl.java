@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
 import org.slf4j.Logger;
@@ -82,7 +83,7 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Override
   public DayDiscountDTO findDayDiscountById(long id) {
     DayDiscount dayDiscount = dayDiscountDao.findById(id);
-    if (dayDiscount == null) {
+    if (Objects.isNull(dayDiscount)) {
       log.error("While getting day discount with id " + id + " - No such row exception");
       throw new NoSuchRowException("There is no day discounts with this id");
     }
@@ -104,7 +105,6 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
     return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 
-
   /**
    * This method adds new discount and evicts cache with current discounts
    *
@@ -112,18 +112,8 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    */
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
-  public void addNewDayDiscount(DayDiscountDTO dto, BindingResult bindingResult) {
-    dayDiscountValidate.validate(dto, bindingResult);
-    List<String> listError = new ArrayList<String>();
-    if (bindingResult.hasErrors()) {
-      for (Object object : bindingResult.getAllErrors()) {
-        FieldError er = (FieldError) object;
-        listError
-            .add(messageSource.getMessage(er.getCode(), null, LocaleContextHolder.getLocale()));
-      }
-      throw new UserInputException(listError);
-    }
-    //If user have entered correct data
+  public void addNewDayDiscount(DayDiscountDTO dto, BindingResult bindingResult) throws UserInputException{
+    validateDayDiscount(dto,bindingResult);
     dayDiscountDao.create(new DayDiscount(dto));
   }
 
@@ -134,12 +124,27 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    */
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
-  public void updateDayDiscountById(DayDiscountDTO dto) {
+  public void updateDayDiscountById(DayDiscountDTO dto,BindingResult bindingResult) throws UserInputException {
+    validateDayDiscount(dto,bindingResult);
     dayDiscountDao.update(new DayDiscount(dto));
   }
 
   @Override
+  @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void changeDayDiscountState(DayDiscountDTO dto) {
     dayDiscountDao.changeDayDiscountState(dto.getId(), dto.getActive());
+  }
+
+  private void validateDayDiscount(DayDiscountDTO dto,BindingResult bindingResult) throws UserInputException{
+    dayDiscountValidate.validate(dto, bindingResult);
+    List<String> listError = new ArrayList<String>();
+    if (bindingResult.hasErrors()) {
+      for (Object object : bindingResult.getAllErrors()) {
+        FieldError er = (FieldError) object;
+        listError
+            .add(messageSource.getMessage(er.getCode(), null, LocaleContextHolder.getLocale()));
+      }
+      throw new UserInputException(listError);
+    }
   }
 }

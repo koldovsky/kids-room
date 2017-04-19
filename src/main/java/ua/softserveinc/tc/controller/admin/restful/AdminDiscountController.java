@@ -51,14 +51,7 @@ public class AdminDiscountController {
   @Autowired
   PaginationMapper paginationMapper;
 
-  @Log
-  private static Logger log;
-
-  private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-  private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
   //Day discounts methods are below
-
   @GetMapping("day")
   public DataTableOutput<DayDiscountDTO> getAllDayDiscounts(@RequestParam String parameters) {
     SortingPagination sortingPagination = paginationMapper.mapSortingPaginationFromJson(parameters);
@@ -76,31 +69,6 @@ public class AdminDiscountController {
     }
   }
 
-  @GetMapping("day/{startDate}/{endDate}/{startTime}/{endTime}")
-  public ResponseEntity<?> checkUniqueOfDayDiscount(@PathVariable String startDate,
-      @PathVariable String endDate, @PathVariable String startTime, @PathVariable String endTime) {
-    LocalDate startLocalDate, endLocalDate;
-    LocalTime startLocalTime, endLocalTime;
-    try {
-      startLocalDate = LocalDate.parse(startDate, dateFormatter);
-      endLocalDate = LocalDate.parse(endDate, dateFormatter);
-      startLocalTime = LocalTime.parse(startTime, timeFormatter);
-      endLocalTime = LocalTime.parse(endTime, timeFormatter);
-    } catch (DateTimeParseException ex) {
-      log.error("While getting day discounts for " + startDate
-          + "/"+endDate
-          + "/"+startTime
-          + "/"+endTime
-          + " - Parse Exception");
-      return new ResponseEntity<ResponseException>(new ResponseException(ex.getMessage()),
-          HttpStatus.BAD_REQUEST);
-    }
-    List<DayDiscountDTO> list = dayDiscountService
-        .getDayDiscountsForPeriod(startLocalDate, endLocalDate, startLocalTime, endLocalTime,
-            false);
-    return new ResponseEntity<String>("lol", HttpStatus.OK);
-  }
-
   @PostMapping("day")
   public ResponseEntity<?> addDayDiscount(@RequestBody DayDiscountDTO dto,BindingResult bindingResult) {
     try{
@@ -111,15 +79,19 @@ public class AdminDiscountController {
     }
   }
 
+  @PutMapping("day")
+  public ResponseEntity<?> updateDayDiscount(@RequestBody DayDiscountDTO dto, BindingResult bindingResult) {
+    try {
+      dayDiscountService.updateDayDiscountById(dto, bindingResult);
+      return new ResponseEntity<String>("ok", HttpStatus.OK);
+    }catch (UserInputException ex){
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()), HttpStatus.NOT_ACCEPTABLE);
+    }
+  }
+
   @PutMapping("day/state")
   public ResponseEntity<String> changeDayDiscountState(@RequestBody DayDiscountDTO dto) {
     dayDiscountService.changeDayDiscountState(dto);
-    return new ResponseEntity<String>("ok", HttpStatus.OK);
-  }
-
-  @PutMapping("day")
-  public ResponseEntity<String> updateDayDiscount(@RequestBody DayDiscountDTO dto) {
-    dayDiscountService.updateDayDiscountById(dto);
     return new ResponseEntity<String>("ok", HttpStatus.OK);
   }
 

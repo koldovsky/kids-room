@@ -3,8 +3,10 @@ package ua.softserveinc.tc.validator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -53,7 +55,7 @@ public class DayDiscountValidateImpl implements DayDiscountValidate {
         }
       }
 
-      if(Objects.nonNull(dayDiscountDTO.getValue())){
+      if (Objects.nonNull(dayDiscountDTO.getValue())) {
         if (!Pattern.compile(ValidationConstants.DISCOUNT_VALUE_REGEX)
             .matcher(dayDiscountDTO.getValue().toString())
             .matches()) {
@@ -61,7 +63,6 @@ public class DayDiscountValidateImpl implements DayDiscountValidate {
               ValidationConstants.DAY_DISCOUNT_WRONG_VALUE);
         }
       }
-
 
       //Check all date-time validations
       LocalDate startDate = dayDiscountDTO.getStartDate();
@@ -81,9 +82,10 @@ public class DayDiscountValidateImpl implements DayDiscountValidate {
           errors.rejectValue(ValidationConstants.DAY_DISCOUNT_END_TIME,
               ValidationConstants.END_TIME_IS_BEFORE);
         }
-
         if (dayDiscountService
-            .getDayDiscountsForPeriod(startDate, endDate, startTime, endTime, false).size() > 0) {
+            .getDayDiscountsForPeriod(startDate, endDate, startTime, endTime, false).stream()
+            .filter(obj -> obj.getId() != dayDiscountDTO.getId()).collect(Collectors.toList())
+            .size() > 0) {
           errors.rejectValue(ValidationConstants.DAY_DISCOUNT_END_TIME,
               ValidationConstants.DAY_DISCOUNT_ALREADY_HAVE);
         }
