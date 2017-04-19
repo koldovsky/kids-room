@@ -52,28 +52,44 @@ public class ExcelController {
             bookings = bookingService.getBookings(
                     new Date[] {DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
                     currentUser, BookingState.COMPLETED);
-            excel.setTableData(bookings.stream().map(BookingDto::new).collect(Collectors.toList()));
+
+            excel.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
+            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[3] +
+                    currentUser.getFullName());
+            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+                    CurrencyConverter.getInstance()
+                            .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
         } else if (email != null) {
             currentUser = userService.getUserByEmail(email);
             Room room = roomService.findByIdTransactional(roomId);
-            excel.setTableData(bookingService.getBookings(
+            bookings = bookingService.getBookings(
                     new BookingsCharacteristics.Builder()
                             .setDates(new Date[]{DateUtil.toBeginOfDayDate(startDate),
                                     DateUtil.toEndOfDayDate(endDate)})
                             .setUsers(Collections.singletonList(currentUser))
                             .setRooms(Collections.singletonList(room))
                             .setBookingsStates(Collections.singletonList(BookingState.COMPLETED))
-                            .build()).stream().map(BookingDto::new).collect(Collectors.toList()));
+                            .build());
+
+            excel.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
             excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[3] +
                     currentUser.getFullName());
+            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+                    CurrencyConverter.getInstance()
+                            .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
         } else {
             Room room = roomService.findByIdTransactional(roomId);
             bookings = bookingService.getBookings(
                     new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
                     room, BookingState.COMPLETED);
-            excel.setTableData(bookingService.generateAReport(bookings));
+
+            excel.setTableData(CurrencyConverter.getInstance()
+                    .convertCurrency(bookingService.generateAReport(bookings)));
             excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2] +
                     room.getName());
+            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+                    CurrencyConverter.getInstance()
+                            .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
         }
 
         modelAndView.setView(new ExcelDocument());

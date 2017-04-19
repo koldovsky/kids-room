@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class ExcelUserRoomBooking implements ExcelBookingData {
+public class ExcelUserRoomBooking implements ExcelBookingData<User> {
 
     public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM: ", " UAH", "ROOM: ", "PARENT: " };
 
@@ -20,7 +20,6 @@ public class ExcelUserRoomBooking implements ExcelBookingData {
         tableData = new LinkedHashMap<>();
         additionalFields = new ArrayList<>();
 
-        this.addAdditionalFields(bookingDtos.stream().mapToLong(BookingDto::getSum).sum());
         tableData.put("Date",
                 bookingDtos.stream().map(BookingDto::getDate).collect(Collectors.toList()));
         tableData.put("Kid",
@@ -39,13 +38,15 @@ public class ExcelUserRoomBooking implements ExcelBookingData {
                 bookingDtos.stream().map(BookingDto::getEndTime).collect(Collectors.toList()));
         tableData.put("Duration",
                 bookingDtos.stream().map(BookingDto::getDuration).collect(Collectors.toList()));
+        tableData.put("Discount", bookingDtos.stream()
+                .map(BookingDto::getDiscount)
+                .map(s -> s != null ? s : "not provided").collect(Collectors.toList()));
         tableData.put("Sum",
-                bookingDtos.stream().map(BookingDto::getSum).map(p -> p / 100.0).map(String::valueOf)
-                        .collect(Collectors.toList()));
+                bookingDtos.stream().map(BookingDto::getCurrencySum).collect(Collectors.toList()));
     }
 
     @Override
-    public void setTableData(Map<User, Long> listOfParents) {
+    public void setTableData(Map<User, String> listOfParents) {
         tableData = new LinkedHashMap<>();
         additionalFields = new ArrayList<>();
 
@@ -53,15 +54,7 @@ public class ExcelUserRoomBooking implements ExcelBookingData {
                 .map(User::getFullName).collect(Collectors.toList()));
         tableData.put("Email", listOfParents.keySet().stream()
                 .map(User::getEmail).collect(Collectors.toList()));
-        tableData.put("Sum", listOfParents.values().stream().map(p -> p / 100.0)
-                .map(String::valueOf).collect(Collectors.toList()));
-
-        addAdditionalFields(listOfParents.values().stream().mapToLong(Long::longValue).sum());
-    }
-
-    private void addAdditionalFields(long TotalSum) {
-        additionalFields.add(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
-                String.valueOf(TotalSum/100.0) + ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[1]);
+        tableData.put("Sum", listOfParents.values().stream().map(String::valueOf).collect(Collectors.toList()));
     }
 
     @Override

@@ -52,7 +52,8 @@ function updateTable() {
                         + '<td>' + booking.startTime + '</td>'
                         + '<td>' + booking.endTime + '</td>'
                         + '<td>' + booking.duration + '</td>'
-                        + '<td>' + booking.currencySum + '</td> + </tr>';
+                        + '<td>' + booking.currencySum + '</td>'
+                        + '<td>' + (booking.discount ? booking.discount : messages.report.absentDiscount) + '</td> + </tr>';
                     sumTotal += parseFloat(booking.currencySum);
                 });
 

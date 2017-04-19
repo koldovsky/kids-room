@@ -5,7 +5,7 @@ import ua.softserveinc.tc.entity.User;
 
 import java.util.Map;
 
-public interface ExcelBookingData extends ExcelData<BookingDto> {
+public interface ExcelBookingData<T> extends ExcelData<BookingDto> {
 
-    void setTableData(Map<User, Long> report);
+    void setTableData(Map<T, String> report);
 }
