@@ -336,12 +336,35 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="personal-discounts-dialog" class="dialog" hidden
+                     title="<spring:message code="administrator.personalDiscount"/>">
+                    <br>
+                    <div align="center">
+                    <table id="discount-table">
+                        <thead>
+                        <tr>
+                            <td><spring:message code="administrator.dayDiscount.startDate"/></td>
+                            <td><spring:message code="administrator.personalDiscount.value"/></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <%--recurrent-change--%>
     <div class="row">
         <div class="vertical-center-row">
             <div align="center">
-                <div id="recurrent-change" title="<spring:message code= "booking.edit"/>" class="dialog" hidden>
+                <div id="recurrent-change" title="<spring:message code="booking.edit"/>" class="dialog" hidden>
                     <form id="choose-updating-booking-form">
                         <div class="lableBoard">
                             <label class="small">
@@ -399,6 +422,10 @@
         <button type="button" class="btn btn-success btn-responsive pull-right" data-toggle="modal"
                 data-target=".bs-modal-lg-contact">
             <spring:message code="booking.contact"/>
+        </button>
+        <button type="button" class="btn btn-success btn-responsive pull-right"
+                id="personal-discount">
+            <spring:message code="administrator.personalDiscount"/>
         </button>
 
         <div id="colorDescryptionModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog"
