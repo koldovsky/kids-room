@@ -89,12 +89,8 @@ html, body, .container {
     display: none;
 }
 
-#discount-table {
-    border: 1px solid black;
-}
-
 #discount-table thead {
-    background-color: #4285F4;
+    font-weight: bold;
 }
 
 #discount-table td {

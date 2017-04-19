@@ -341,7 +341,6 @@
             <div align="center">
                 <div id="personal-discounts-dialog" class="dialog" hidden
                      title="<spring:message code="administrator.personalDiscount"/>">
-                    <br>
                     <div align="center">
                     <table id="discount-table">
                         <thead>
