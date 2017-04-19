@@ -27,5 +27,8 @@ public interface DayDiscountService extends BaseService<DayDiscount> {
   List<DayDiscountDTO> getDayDiscountsForPeriod(LocalDate startDate, LocalDate endDate,
       LocalTime startTime, LocalTime endTime, Boolean state);
 
+  List<DayDiscountDTO> getDayDiscountsForValidate(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime, Long id);
+
   DataTableOutput<DayDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate);
 }

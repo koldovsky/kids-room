@@ -59,7 +59,8 @@ const messages = {
         },
         discount:{
             addDiscount: 'Добавити знижку',
-            editDiscount: 'Редагувати знижку'
+            editDiscount: 'Редагувати знижку',
+            noUser: 'Поле користувача не може бути пустим'
         }
     },
     event: {

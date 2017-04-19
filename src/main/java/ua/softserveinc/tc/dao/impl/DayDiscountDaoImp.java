@@ -2,6 +2,7 @@ package ua.softserveinc.tc.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -47,6 +48,24 @@ public class DayDiscountDaoImp extends BaseDaoImpl<DayDiscount> implements DayDi
     if (state) {
       query.select(root).where(builder.equal(root.get("active"), state));
     }
+    return entityManager.createQuery(query).getResultList();
+  }
+
+  @Override
+  public List<DayDiscount> getDayDiscountForValidate(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime, Long id) {
+    CriteriaQuery<DayDiscount> query = builder.createQuery(DayDiscount.class);
+    Root<DayDiscount> root = query.from(DayDiscount.class);
+    List<Predicate> restrictions = new ArrayList<>();
+    restrictions.add(builder.not(builder.lessThan(root.get("endDate"), startDate)));
+    restrictions.add(builder.not(builder.greaterThan(root.get("startDate"), endDate)));
+    restrictions.add(builder.not(builder.lessThan(root.get("endTime"), startTime)));
+    restrictions.add(builder.not(builder.greaterThan(root.get("startTime"), endTime)));
+    if (id != null) {
+      restrictions.add(builder.not(builder.equal(root.get("id"), id)));
+    }
+    query.select(root).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+
     return entityManager.createQuery(query).getResultList();
   }
 

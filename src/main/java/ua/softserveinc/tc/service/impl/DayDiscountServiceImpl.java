@@ -3,11 +3,9 @@ package ua.softserveinc.tc.service.impl;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import javax.persistence.criteria.CriteriaBuilder;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -28,6 +26,8 @@ import ua.softserveinc.tc.service.DayDiscountService;
 import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.validator.DayDiscountValidate;
+
+import static ua.softserveinc.tc.validator.util.ShowUserInputErrors.validateDTO;
 
 
 @Service
@@ -95,6 +95,8 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    *
    * @param startDate start date of search
    * @param endDate end date of search
+   * @param startTime start time of the discount
+   * @param endTime end time of the discount
    * @return List of DayDiscounts for specific period
    */
   @Override
@@ -106,6 +108,24 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   }
 
   /**
+   * This method used to validate user input.
+   *
+   * @param startDate start date of search
+   * @param endDate end date of search
+   * @param startTime start time of the discount
+   * @param endTime end time of the discount
+   * @return List of DayDiscounts for specific period but if id is exist we removed
+   * row with this id from the list
+   */
+  @Override
+  public List<DayDiscountDTO> getDayDiscountsForValidate(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime, Long id){
+    List<DayDiscount> qResult = dayDiscountDao
+        .getDayDiscountForValidate(startDate, endDate, startTime, endTime, id);
+    return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
+  }
+
+  /**
    * This method adds new discount and evicts cache with current discounts
    *
    * @param dto DayDiscount from the client DayDiscount id must be null
@@ -113,7 +133,7 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void addNewDayDiscount(DayDiscountDTO dto, BindingResult bindingResult) throws UserInputException{
-    validateDayDiscount(dto,bindingResult);
+    validateDTO(dto,bindingResult,messageSource,dayDiscountValidate);
     dayDiscountDao.create(new DayDiscount(dto));
   }
 
@@ -125,26 +145,17 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void updateDayDiscountById(DayDiscountDTO dto,BindingResult bindingResult) throws UserInputException {
-    validateDayDiscount(dto,bindingResult);
+    validateDTO(dto,bindingResult,messageSource,dayDiscountValidate);
     dayDiscountDao.update(new DayDiscount(dto));
   }
 
   @Override
   @CacheEvict(value = "fullDayDiscountList", allEntries = true)
   public void changeDayDiscountState(DayDiscountDTO dto) {
-    dayDiscountDao.changeDayDiscountState(dto.getId(), dto.getActive());
-  }
-
-  private void validateDayDiscount(DayDiscountDTO dto,BindingResult bindingResult) throws UserInputException{
-    dayDiscountValidate.validate(dto, bindingResult);
-    List<String> listError = new ArrayList<String>();
-    if (bindingResult.hasErrors()) {
-      for (Object object : bindingResult.getAllErrors()) {
-        FieldError er = (FieldError) object;
-        listError
-            .add(messageSource.getMessage(er.getCode(), null, LocaleContextHolder.getLocale()));
-      }
-      throw new UserInputException(listError);
+    if(dto.getId()==null||dto.getActive()==null){
+      log.error("Something wrong with DTO -  id or state is null");
+      throw new NoSuchRowException("Wrong data format");
     }
+    dayDiscountDao.changeDayDiscountState(dto.getId(), dto.getActive());
   }
 }

@@ -70,30 +70,40 @@ public class AdminDiscountController {
   }
 
   @PostMapping("day")
-  public ResponseEntity<?> addDayDiscount(@RequestBody DayDiscountDTO dto,BindingResult bindingResult) {
-    try{
+  public ResponseEntity<?> addDayDiscount(@RequestBody DayDiscountDTO dto,
+      BindingResult bindingResult) {
+    try {
       dayDiscountService.addNewDayDiscount(dto, bindingResult);
       return new ResponseEntity<String>("ok", HttpStatus.OK);
-    }catch (UserInputException ex){
-      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()), HttpStatus.NOT_ACCEPTABLE);
+    } catch (UserInputException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()),
+          HttpStatus.NOT_ACCEPTABLE);
     }
   }
 
   @PutMapping("day")
-  public ResponseEntity<?> updateDayDiscount(@RequestBody DayDiscountDTO dto, BindingResult bindingResult) {
+  public ResponseEntity<?> updateDayDiscount(@RequestBody DayDiscountDTO dto,
+      BindingResult bindingResult) {
     try {
       dayDiscountService.updateDayDiscountById(dto, bindingResult);
       return new ResponseEntity<String>("ok", HttpStatus.OK);
-    }catch (UserInputException ex){
-      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()), HttpStatus.NOT_ACCEPTABLE);
+    } catch (UserInputException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()),
+          HttpStatus.NOT_ACCEPTABLE);
     }
   }
 
   @PutMapping("day/state")
-  public ResponseEntity<String> changeDayDiscountState(@RequestBody DayDiscountDTO dto) {
-    dayDiscountService.changeDayDiscountState(dto);
-    return new ResponseEntity<String>("ok", HttpStatus.OK);
+  public ResponseEntity<?> changeDayDiscountState(@RequestBody DayDiscountDTO dto) {
+    try {
+      dayDiscountService.changeDayDiscountState(dto);
+      return new ResponseEntity<String>("ok", HttpStatus.OK);
+    } catch (NoSuchRowException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getReason()),
+          HttpStatus.BAD_REQUEST);
+    }
   }
+
 
   //Personal discounts methods are below
   @GetMapping("personal")
@@ -104,15 +114,63 @@ public class AdminDiscountController {
   }
 
   @GetMapping("personal/{id}")
-  public PersonalDiscountDTO getPersonalDiscountById(@PathVariable Long id) {
-    return personalDiscountService.findPersonalDiscountById(id);
+  public ResponseEntity<?> getPersonalDiscountById(@PathVariable Long id) {
+    try {
+      PersonalDiscountDTO discountDTO = personalDiscountService.findPersonalDiscountById(id);
+      return new ResponseEntity<PersonalDiscountDTO>(discountDTO, HttpStatus.OK);
+    } catch (NoSuchRowException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getReason()),
+          HttpStatus.NOT_FOUND);
+    }
   }
 
-  @GetMapping("personal/user/{id}")
-  public List<PersonalDiscountDTO> getPersonalDiscountsByUserId(@PathVariable Long id) {
-    return personalDiscountService.findPersonalDiscountByUserId(id);
+  @PostMapping("personal/{id}")
+  public ResponseEntity<?> addPersonalDiscount(@RequestBody PersonalDiscountDTO dto,
+      @PathVariable Long id, BindingResult bindingResult) {
+    try {
+      UserDto user = userService.findUserByIdDto(id);
+      dto.setUser(user);
+      personalDiscountService.addNewPersonalDiscount(dto, bindingResult);
+      return new ResponseEntity<String>("ok", HttpStatus.OK);
+    } catch (NoSuchRowException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getReason()),
+          HttpStatus.NOT_FOUND);
+    } catch (UserInputException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()),
+          HttpStatus.NOT_ACCEPTABLE);
+    }
   }
 
+  @PutMapping("personal/{id}")
+  public ResponseEntity<?> updatePersonalDiscount(@RequestBody PersonalDiscountDTO dto,
+      @PathVariable Long id, BindingResult bindingResult) {
+    try{
+      UserDto user = userService.findUserByIdDto(id);
+      dto.setUser(user);
+      personalDiscountService.updatePersonalDiscountById(dto,bindingResult);
+      return new ResponseEntity<String>("ok", HttpStatus.OK);
+    }catch (NoSuchRowException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getReason()),
+          HttpStatus.NOT_FOUND);
+    } catch (UserInputException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getErrorList()),
+          HttpStatus.NOT_ACCEPTABLE);
+    }
+  }
+
+  @PutMapping("personal/state")
+  public ResponseEntity<?> changePersonalDiscountState(@RequestBody PersonalDiscountDTO dto) {
+    try {
+      personalDiscountService.changePersonalDiscountState(dto);
+      return new ResponseEntity<String>("ok", HttpStatus.OK);
+    }
+    catch (NoSuchRowException ex) {
+      return new ResponseEntity<ResponseException>(new ResponseException(ex.getReason()),
+          HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  //Methods for get userDto data
   @GetMapping("personal/users")
   public List<UserDto> getUsers() {
     return userService.findUsersByRoleDto(Role.USER);
@@ -121,28 +179,6 @@ public class AdminDiscountController {
   @GetMapping("personal/users/{id}")
   public UserDto getUserById(@PathVariable Long id) {
     return userService.findUserByIdDto(id);
-  }
-
-  @PostMapping("personal/{id}")
-  public ResponseEntity<String> addPersonalDiscount(@RequestBody PersonalDiscountDTO dto,
-      @PathVariable Long id) {
-    dto.setUser(userService.findUserByIdDto(id));
-    personalDiscountService.addNewPersonalDiscount(dto);
-    return new ResponseEntity<String>("ok", HttpStatus.OK);
-  }
-
-  @PutMapping("personal/{id}")
-  public ResponseEntity<String> updatePersonalDiscount(@RequestBody PersonalDiscountDTO dto,
-      @PathVariable Long id) {
-    dto.setUser(userService.findUserByIdDto(id));
-    personalDiscountService.updatePersonalDiscountById(dto);
-    return new ResponseEntity<String>("ok", HttpStatus.OK);
-  }
-
-  @PutMapping("personal/state")
-  public ResponseEntity<String> changePersonalDiscountState(@RequestBody Map<String, String> dto) {
-    personalDiscountService.changePersonalDiscountState(dto);
-    return new ResponseEntity<String>("ok", HttpStatus.OK);
   }
 
 }

@@ -83,9 +83,8 @@ public class DayDiscountValidateImpl implements DayDiscountValidate {
               ValidationConstants.END_TIME_IS_BEFORE);
         }
         if (dayDiscountService
-            .getDayDiscountsForPeriod(startDate, endDate, startTime, endTime, false).stream()
-            .filter(obj -> obj.getId() != dayDiscountDTO.getId()).collect(Collectors.toList())
-            .size() > 0) {
+            .getDayDiscountsForValidate(startDate, endDate, startTime, endTime,
+                dayDiscountDTO.getId()).size() > 0) {
           errors.rejectValue(ValidationConstants.DAY_DISCOUNT_END_TIME,
               ValidationConstants.DAY_DISCOUNT_ALREADY_HAVE);
         }

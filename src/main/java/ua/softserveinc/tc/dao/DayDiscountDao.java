@@ -11,6 +11,9 @@ public interface DayDiscountDao extends BaseDao<DayDiscount> {
   List<DayDiscount> getDayDiscountForCurrentDays(LocalDate startDate, LocalDate endDate,
       LocalTime startTime, LocalTime endTime, Boolean state);
 
+  List<DayDiscount> getDayDiscountForValidate(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime, Long id);
+
   void changeDayDiscountState(Long id, Boolean state);
 
 }

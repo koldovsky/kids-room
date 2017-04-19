@@ -111,6 +111,7 @@ public final class ValidationConstants {
     public static final String DAY_DISCOUNT_END_DATE = "endDate";
     public static final String DAY_DISCOUNT_START_TIME = "startTime";
     public static final String DAY_DISCOUNT_END_TIME = "endTime";
+    public static final String PER_DISCOUNT_USER = "user";
 
     public static final String EMPTY_DAY_DISCOUNT_REASON = "administrator.discount.error.emptyReason";
     public static final String EMPTY_DAY_DISCOUNT_VALUE = "administrator.discount.error.emptyValue";
@@ -118,6 +119,7 @@ public final class ValidationConstants {
     public static final String EMPTY_DAY_DISCOUNT_END_DATE = "administrator.discount.error.emptyEndDate";
     public static final String EMPTY_DAY_DISCOUNT_START_TIME = "administrator.discount.error.emptyStartTime";
     public static final String EMPTY_DAY_DISCOUNT_END_TIME = "administrator.discount.error.emptyEndTime";
+    public static final String EMPTY_PER_DISCOUNT_USER = "administrator.discount.error.noUser";
     public static final String END_DATE_IS_BEFORE = "administrator.discount.error.endDateBefore";
     public static final String END_TIME_IS_BEFORE = "administrator.discount.error.endTimeBefore";
     public static final String DAY_DISCOUNT_WRONG_REASON = "administrator.discount.error.wrongReason";

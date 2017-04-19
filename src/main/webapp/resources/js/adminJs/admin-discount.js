@@ -37,7 +37,6 @@ $(function () {
     } else {
       addNewPersonalDiscount('PUT', true);
     }
-    $('#addPersonalDiscountDiv').modal('toggle');
   })
 
   //Full time period setter
@@ -170,7 +169,18 @@ function addNewPersonalDiscount(method, bool) {
     data: JSON.stringify(inputData),
     type: method,
     success: function (result) {
+      $('#addPersonalDiscountDiv').modal('toggle');
       personalDiscountDataTable.ajax.reload(null, false);
+    },error: function (data, textStatus, xhr) {
+      $(".danger-info").remove();
+      if(xhr=='Bad Request'){
+        $('#discountPersonalForm').append("<div class='danger-info'>" + messages.modal.discount.n + "</div>");
+      }else{
+        let errors = data.responseJSON.userInputErrors;
+        errors.forEach(function(item){
+          $('#discountPersonalForm').append("<div class='danger-info'>" + item + "</div>");
+        })
+      }
     }
   });
 }
@@ -181,6 +191,7 @@ function onEditPersonalDiscountClick(id) {
   editId = id;
   request = "restful/admin/discounts/personal/" + editId;
   onButtonAdd = false;
+  $(".danger-info").remove();
   $("#selectUserDiv").hide();
   $("#selectUserStaticDiv").show();
   //Add data to the modal window

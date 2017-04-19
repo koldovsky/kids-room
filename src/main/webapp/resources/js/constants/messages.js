@@ -59,7 +59,8 @@ const messages = {
         },
         discount:{
             addDiscount: 'Add discount',
-            editDiscount: 'Edit discount'
+            editDiscount: 'Edit discount',
+            noUser: 'User can\'t be empty'
         }
     },
     event: {
