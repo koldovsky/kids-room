@@ -18,6 +18,8 @@ $(document).ready(function () {
     if ($(window).width() < 1000) {
         $('#mobile').attr('class', '');
     }
+
+    getPersonalDiscounts();
 });
 
 $(function () {
@@ -122,6 +124,20 @@ $(function () {
     $('#recurrent-booking-end-time').timepicker({
         timeFormat: 'H:i',
         step: 1
+    });
+
+    $('#personal-discounts-dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 400,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
     });
 
     $('#make-recurrent-booking').dialog({
@@ -294,6 +310,10 @@ $(function () {
     $('#cancel-changes').click(function () {
         closeBookingDialog();
     });
+
+    $('#personal-discount').click(function () {
+        $('#personal-discounts-dialog').dialog('open');
+    })
 });
 
 function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
@@ -1239,6 +1259,35 @@ function redrawBlockedTimeSpans(roomId) {
             userCalendar.fullCalendar('addEventSource', newBookingsArray);
             userCalendar.fullCalendar('refetchEvents');
 
+        }
+    });
+}
+
+function getPersonalDiscounts() {
+    let url = `restful/discount/personal-discount`;
+    let rows = '';
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (result) {
+            let discounts = result;
+            if (discounts.length > 0) {
+                $('#personal-discount').show();
+
+                $.each(discounts, function (i, discount) {
+                    let timeDiscount;
+                    rows += '<tr>';
+                    if (discount.startTime == '00:00' && discount.endTime == '23:59') {
+                        timeDiscount = messages.booking.allDayDiscount;
+                    } else timeDiscount = `${discount.startTime}-${discount.endTime}`;
+                    rows += `<td>${timeDiscount}</td>`;
+                    rows += `<td>${discount.value}%</td>`;
+                    rows += '</tr>';
+                });
+
+                $('#personal-discounts-dialog').find('tbody').append(rows);
+            }
         }
     });
 }

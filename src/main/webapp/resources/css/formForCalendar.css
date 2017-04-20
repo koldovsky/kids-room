@@ -84,3 +84,17 @@ html, body, .container {
     height: 60%;
     resize: none;
 }
+
+#personal-discount {
+    display: none;
+}
+
+#discount-table thead {
+    font-weight: bold;
+}
+
+#discount-table td {
+    text-align: center;
+    height: 30px;
+    width: 170px;
+}
