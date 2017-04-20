@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.springframework.validation.BindingResult;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.entity.DayDiscount;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
@@ -15,16 +16,19 @@ public interface DayDiscountService extends BaseService<DayDiscount> {
 
   List<DayDiscountDTO> findAllDailyDiscounts();
 
-  void addNewDayDiscount(DayDiscountDTO dto);
+  void addNewDayDiscount(DayDiscountDTO dto,BindingResult bindingResult);
 
   DayDiscountDTO findDayDiscountById(long id);
 
-  void updateDayDiscountById(DayDiscountDTO dto);
+  void updateDayDiscountById(DayDiscountDTO dto,BindingResult bindingResult);
 
   void changeDayDiscountState(DayDiscountDTO dto);
 
   List<DayDiscountDTO> getDayDiscountsForPeriod(LocalDate startDate, LocalDate endDate,
       LocalTime startTime, LocalTime endTime, Boolean state);
+
+  List<DayDiscountDTO> getDayDiscountsForValidate(LocalDate startDate, LocalDate endDate,
+      LocalTime startTime, LocalTime endTime, Long id);
 
   DataTableOutput<DayDiscountDTO> paginateDayDiscount(SortingPagination sortPaginate);
 }

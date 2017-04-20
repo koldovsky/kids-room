@@ -25,6 +25,8 @@ public final class ValidationConstants {
     public static final String PASSWORD_REGEX = "^(\\S){8,24}$";
     public static final String PHONE_NUMBER_REGEX = "^(\\+38|8|)\\W*\\d{10}\\W*$";
     public static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
+    public static final String DISCOUNT_VALUE_REGEX = "^[1-9][0-9]?$|^100$";
+    public static final String DISCOUNT_REASON_REGEX = "^.{3,255}$";
     public static final String SIMPLY_PHONE_REGEX = "^\\+(?:[0-9] ?){6,14}[0-9]$";
     public static final String NAME_REGEX = "^[a-zA-Zа-яА-ЯЇїІіЄєҐґ`´ʼ’'\\-\\s]+$";
     public static final String LETTERS_REGEX = "^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]*$";
@@ -102,6 +104,27 @@ public final class ValidationConstants {
     public static final String ABONNEMENT_HOUR = "hour";
     public static final String ABONNEMENT_PRICE = "price";
     public static final String ABONNEMENT_ACTIVE = "isActive";
+
+    public static final String DAY_DISCOUNT_REASON = "reason";
+    public static final String DAY_DISCOUNT_VALUE = "value";
+    public static final String DAY_DISCOUNT_START_DATE = "startDate";
+    public static final String DAY_DISCOUNT_END_DATE = "endDate";
+    public static final String DAY_DISCOUNT_START_TIME = "startTime";
+    public static final String DAY_DISCOUNT_END_TIME = "endTime";
+    public static final String PER_DISCOUNT_USER = "user";
+
+    public static final String EMPTY_DAY_DISCOUNT_REASON = "administrator.discount.error.emptyReason";
+    public static final String EMPTY_DAY_DISCOUNT_VALUE = "administrator.discount.error.emptyValue";
+    public static final String EMPTY_DAY_DISCOUNT_START_DATE = "administrator.discount.error.emptyStartDate";
+    public static final String EMPTY_DAY_DISCOUNT_END_DATE = "administrator.discount.error.emptyEndDate";
+    public static final String EMPTY_DAY_DISCOUNT_START_TIME = "administrator.discount.error.emptyStartTime";
+    public static final String EMPTY_DAY_DISCOUNT_END_TIME = "administrator.discount.error.emptyEndTime";
+    public static final String EMPTY_PER_DISCOUNT_USER = "administrator.discount.error.noUser";
+    public static final String END_DATE_IS_BEFORE = "administrator.discount.error.endDateBefore";
+    public static final String END_TIME_IS_BEFORE = "administrator.discount.error.endTimeBefore";
+    public static final String DAY_DISCOUNT_WRONG_REASON = "administrator.discount.error.wrongReason";
+    public static final String DAY_DISCOUNT_WRONG_VALUE = "administrator.discount.error.wrongValue";
+    public static final String DAY_DISCOUNT_ALREADY_HAVE = "administrator.discount.error.alreadyHave";
 
     public static final String ROOM_EPMTY_MSG = "administrator.room.error.emptyField";
     public static final String ROOM_INVALID_NAME_MSG = "administrator.room.error.invalidName";

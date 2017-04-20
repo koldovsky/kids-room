@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.dao.impl;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -40,15 +42,21 @@ public class PersonalDiscountDaoImp extends BaseDaoImpl<PersonalDiscount> implem
   }
 
   @Override
-  public List<PersonalDiscount> getPersonalDiscountByPeriod(LocalTime startTime,
-      LocalTime endTime, Long id) {
+  public List<PersonalDiscount> getPersonalDiscountForValidate(LocalTime startTime,
+      LocalTime endTime, Long userId, Long discountId) {
     CriteriaQuery<PersonalDiscount> query = builder.createQuery(PersonalDiscount.class);
-    Root<PersonalDiscount> root = query.from(PersonalDiscount.class);
-    query.select(root).where(
-        builder.not(builder.lessThan(root.get("endTime"), startTime)),
-        builder.not(builder.greaterThan(root.get("startTime"), endTime)),
-        builder.equal(root.get("id"), id)
-    );
+    Root<User> rootUser = query.from(User.class);
+    Join<User, PersonalDiscount> discounts = rootUser.join("personalDiscounts");
+
+    List<Predicate> restrictions = new ArrayList<>();
+    restrictions.add(builder.equal(discounts.getParent().get("id"), userId));
+    restrictions.add(builder.not(builder.lessThan(discounts.get("endTime"), startTime)));
+    restrictions.add(builder.not(builder.greaterThan(discounts.get("startTime"), endTime)));
+    if (discountId != null) {
+      restrictions.add(builder.not(builder.equal(discounts.get("id"), discountId)));
+    }
+    query.select(discounts).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+
     return entityManager.createQuery(query).getResultList();
   }
 

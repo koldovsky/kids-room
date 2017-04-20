@@ -1,5 +1,6 @@
 package ua.softserveinc.tc.service.impl;
 
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
@@ -11,6 +12,7 @@ import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.dao.UserDao;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.*;
+import ua.softserveinc.tc.server.exception.NoSuchRowException;
 import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.TokenService;
 import ua.softserveinc.tc.service.UserService;
@@ -124,7 +126,12 @@ public class UserServiceImpl extends BaseServiceImpl<User>
 
     @Override
     public UserDto findUserByIdDto(Long id){
-        return new UserDto(userDao.findUserById(id));
+        User user = userDao.findUserById(id);
+        if(Objects.isNull(user)){
+            log.error("While getting user with id " + id + " - No such row exception");
+            throw new NoSuchRowException("No user this this id");
+        }
+        return new UserDto(user);
     }
 
     @Override

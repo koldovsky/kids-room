@@ -9,8 +9,8 @@ public interface PersonalDiscountDao extends BaseDao<PersonalDiscount> {
 
   List<PersonalDiscount> getPersonalDiscountByUser(long id);
 
-  List<PersonalDiscount> getPersonalDiscountByPeriod(LocalTime startTime, LocalTime endTime,
-      Long id);
+  List<PersonalDiscount> getPersonalDiscountForValidate(LocalTime startTime, LocalTime endTime,
+      Long userId, Long discountId);
 
   void changePersonalDiscountState(Long id, Boolean state);
 

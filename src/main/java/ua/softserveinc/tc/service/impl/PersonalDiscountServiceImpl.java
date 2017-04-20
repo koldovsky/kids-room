@@ -1,18 +1,27 @@
 package ua.softserveinc.tc.service.impl;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import ua.softserveinc.tc.dao.PersonalDiscountDao;
-import ua.softserveinc.tc.dto.DayDiscountDTO;
 import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import ua.softserveinc.tc.entity.PersonalDiscount;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
+import ua.softserveinc.tc.server.exception.NoSuchRowException;
 import ua.softserveinc.tc.service.PersonalDiscountService;
+import ua.softserveinc.tc.util.Log;
 import ua.softserveinc.tc.util.PaginationCharacteristics;
+import ua.softserveinc.tc.validator.PersonalDiscountValidate;
+
+import static ua.softserveinc.tc.validator.util.ShowUserInputErrors.validateDTO;
 
 @Service
 public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscount> implements
@@ -21,6 +30,15 @@ public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscoun
   @Autowired
   private PersonalDiscountDao personalDiscount;
 
+  @Autowired
+  private PersonalDiscountValidate personalDiscountValidate;
+
+  @Autowired
+  private MessageSource messageSource;
+
+  @Log
+  private static Logger log;
+
   @Override
   public List<PersonalDiscountDTO> findAllPersonalDiscounts() {
     List<PersonalDiscount> qResult = personalDiscount.findAll();
@@ -28,7 +46,8 @@ public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscoun
   }
 
   @Override
-  public DataTableOutput<PersonalDiscountDTO> paginatePersonalDiscount(SortingPagination sortPaginate) {
+  public DataTableOutput<PersonalDiscountDTO> paginatePersonalDiscount(
+      SortingPagination sortPaginate) {
     List<PersonalDiscountDTO> listDto = personalDiscount.findAll(sortPaginate).stream()
         .map(PersonalDiscountDTO::new).collect(Collectors.toList());
     long rowCount = personalDiscount.getRowsCount(),
@@ -46,7 +65,12 @@ public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscoun
 
   @Override
   public PersonalDiscountDTO findPersonalDiscountById(Long id) {
-    return new PersonalDiscountDTO(personalDiscount.findById(id));
+    PersonalDiscount dto = personalDiscount.findById(id);
+    if (Objects.isNull(dto)) {
+      log.error("While getting personal discount with id " + id + " - No such row exception");
+      throw new NoSuchRowException("There is no personal discounts with this id");
+    }
+    return new PersonalDiscountDTO(dto);
   }
 
   @Override
@@ -56,17 +80,34 @@ public class PersonalDiscountServiceImpl extends BaseServiceImpl<PersonalDiscoun
   }
 
   @Override
-  public void addNewPersonalDiscount(PersonalDiscountDTO personalDiscountDTO) {
+  public void addNewPersonalDiscount(PersonalDiscountDTO personalDiscountDTO,
+      BindingResult bindingResult) {
+    validateDTO(personalDiscountDTO, bindingResult, messageSource, personalDiscountValidate);
     personalDiscount.create(new PersonalDiscount(personalDiscountDTO));
   }
 
   @Override
-  public void updatePersonalDiscountById(PersonalDiscountDTO personalDiscountDTO) {
+  public void updatePersonalDiscountById(PersonalDiscountDTO personalDiscountDTO,
+      BindingResult bindingResult) {
+    validateDTO(personalDiscountDTO, bindingResult, messageSource, personalDiscountValidate);
     personalDiscount.update(new PersonalDiscount(personalDiscountDTO));
   }
 
   @Override
-  public void changePersonalDiscountState(Map<String, String> dto) {
-    personalDiscount.changePersonalDiscountState(Long.parseLong(dto.get("id")),Boolean.parseBoolean(dto.get("active")));
+  public void changePersonalDiscountState(PersonalDiscountDTO dto) {
+    if (dto.getId() == null || dto.getActive() == null) {
+      log.error("Something wrong with DTO -  id or state is null");
+      throw new NoSuchRowException("Wrong data format");
+    }
+    personalDiscount.changePersonalDiscountState(dto.getId(), dto.getActive());
   }
+
+  @Override
+  public List<PersonalDiscountDTO> getPersonalDiscountForValidate(LocalTime startTime,
+      LocalTime endTime, Long userId, Long discountId) {
+    List<PersonalDiscount> qResult = personalDiscount
+        .getPersonalDiscountForValidate(startTime, endTime, userId, discountId);
+    return qResult.stream().map(PersonalDiscountDTO::new).collect(Collectors.toList());
+  }
+
 }

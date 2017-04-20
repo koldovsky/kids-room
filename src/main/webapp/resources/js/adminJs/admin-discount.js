@@ -28,7 +28,6 @@ $(function () {
     } else {
       addNewDiscount('PUT', true);
     }
-    $('#addDiscountDiv').modal('toggle');
   });
 
   $("#discountPersonalForm").on('submit', function (e) {
@@ -38,7 +37,6 @@ $(function () {
     } else {
       addNewPersonalDiscount('PUT', true);
     }
-    $('#addPersonalDiscountDiv').modal('toggle');
   })
 
   //Full time period setter
@@ -107,7 +105,15 @@ function addNewDiscount(method, bool) {
     data: JSON.stringify(inputData),
     type: method,
     success: function (result) {
+      $('#addDiscountDiv').modal('toggle');
       dayDiscountDataTable.ajax.reload(null, false);
+    },
+    error: function (data, textStatus, xhr) {
+      $(".danger-info").remove();
+      let errors = data.responseJSON.userInputErrors;
+      errors.forEach(function(item){
+        $('#discountForm').append("<div class='danger-info'>" + item + "</div>");
+      })
     }
   });
 }
@@ -118,6 +124,7 @@ function onEditDiscountClick(id) {
   editId = id;
   request = "restful/admin/discounts/day/" + editId;
   onButtonAdd = false;
+  $(".danger-info").remove();
   $.ajax({
     url: request,
     type: 'GET',
@@ -162,7 +169,18 @@ function addNewPersonalDiscount(method, bool) {
     data: JSON.stringify(inputData),
     type: method,
     success: function (result) {
+      $('#addPersonalDiscountDiv').modal('toggle');
       personalDiscountDataTable.ajax.reload(null, false);
+    },error: function (data, textStatus, xhr) {
+      $(".danger-info").remove();
+      if(xhr=='Bad Request'){
+        $('#discountPersonalForm').append("<div class='danger-info'>" + messages.modal.discount.n + "</div>");
+      }else{
+        let errors = data.responseJSON.userInputErrors;
+        errors.forEach(function(item){
+          $('#discountPersonalForm').append("<div class='danger-info'>" + item + "</div>");
+        })
+      }
     }
   });
 }
@@ -173,6 +191,7 @@ function onEditPersonalDiscountClick(id) {
   editId = id;
   request = "restful/admin/discounts/personal/" + editId;
   onButtonAdd = false;
+  $(".danger-info").remove();
   $("#selectUserDiv").hide();
   $("#selectUserStaticDiv").show();
   //Add data to the modal window
@@ -203,6 +222,7 @@ function onEditPersonalDiscountClick(id) {
 function onAddDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
   $("#dayDiscountTime").hide();
+  $(".danger-info").remove();
   $("#changeDayPeriod").prop('checked', true);
   onButtonAdd = true;
   fullDay = true;
