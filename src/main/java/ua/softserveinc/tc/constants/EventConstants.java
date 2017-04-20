@@ -1,6 +1,11 @@
 package ua.softserveinc.tc.constants;
 
 public final class EventConstants {
+  public static final String CHANGE_EVENT = "eventChenged";
+  public static final String CANCEL_EVENT = "eventCancelled";
+  public static final String DATE_PERIOD = "datePeriod";
+  public static final String MESSAGE = "message";
+  public static final String FIELDS = "fields";
 
   private EventConstants() {
   }
@@ -37,6 +42,15 @@ public final class EventConstants {
     }
   }
 
+  public static final class Messages {
+    public static final String CANCEL_SERIES_EVENT_MSG = "Event was cancelled";
+    public static final String CANCEL_EVENT_MSG = "The series of the event was cancelled";
+    public static final String CHANGE_EVENT_MSG = "Event has been changed";
+    public static final String CHANGE_SERIES_EVENT_MSG = "The series of the event has been changed";
+    public static final String CHANGE_FIELD_MSG = "This information was changed: ";
+    public static final String CURRENT_INFO_MSG = "Current information: ";
+  }
+
 
 
     public enum TypeOfRecurentEvent {WEEKLY, MONTHLY}
@@ -47,5 +61,7 @@ public final class EventConstants {
 
     private View() {
     }
+
+
   }
 }

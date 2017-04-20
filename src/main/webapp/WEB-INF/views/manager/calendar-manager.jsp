@@ -48,7 +48,7 @@
                                     code="booking.startDate"/></label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-event-start-date"
+                                <input type="text" class="form-control datepickers" id="recurrent-event-start-date"
                                        placeholder="startDate">
                             </div>
                             <div class="col-xs-5">
@@ -61,7 +61,7 @@
                             <label for="recurrent-event-end-date"><spring:message code="booking.endDate"/></label>
                             <br>
                             <div class="col-xs-6">
-                                <input type="date" class="form-control" id="recurrent-event-end-date"
+                                <input type="text" class="form-control datepickers" id="recurrent-event-end-date"
                                        placeholder="endDate">
                             </div>
                             <div class="col-xs-5">
@@ -457,7 +457,7 @@
                         <label align-items="center" for="start-date-cancel-picker"><spring:message
                                 code="event.startDate"/></label>
                         <div>
-                            <input id="start-date-cancel-picker" type="date" class="form-control"
+                            <input id="start-date-cancel-picker" type="text" class="form-control datepickers"
                                    placeholder="startDate">
                         </div>
                     </div>
@@ -467,7 +467,7 @@
                                 code="event.endDate"/></label>
                         <br>
                         <div>
-                            <input id="end-date-cancel-picker" type="date" class="form-control"
+                            <input id="end-date-cancel-picker" type="text" class="form-control datepickers"
                                    placeholder="endDate">
                         </div>
                     </div>

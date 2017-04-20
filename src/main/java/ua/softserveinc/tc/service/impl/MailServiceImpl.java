@@ -215,5 +215,31 @@ public class MailServiceImpl implements MailService {
         mailSender.send(message);
     }
 
+    @Override
+    public void sendNotifyChangeEvent(List<String> userEmails, String eventTitle, String datePeriod, String messageText, String fields) throws MessagingException {
+        Map<String, Object> model = new HashMap<>();
+        model.put(EventConstants.Entity.NAME, eventTitle);
+        model.put(EventConstants.DATE_PERIOD, datePeriod);
+        model.put(EventConstants.MESSAGE, messageText);
+        model.put(EventConstants.FIELDS, fields);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        userEmails.forEach(email -> {
+            try {
+                helper.addTo(email);
+            } catch (MessagingException e) {
+                log.error("Wrong manager email when send notify about deactivate room.", e);
+            }
+        });
+
+        helper.setSubject(messageText);
+        helper.setText(getTextMessage(MailConstants.CHANGE_INFO, model), true);
+        helper.setFrom(new InternetAddress(MailConstants.EMAIL_BOT_ADDRESS));
+
+        mailSender.send(message);
+    }
+
 }
 

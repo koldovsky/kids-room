@@ -6,6 +6,7 @@ import ua.softserveinc.tc.constants.RoomConstants;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = RoomConstants.TABLE_NAME_ROOMS)
@@ -177,21 +178,21 @@ public class Room {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-
-        return id != null ? id.equals(room.id) : room.id == null;
-
+        return Objects.equals(id, room.id) &&
+                Objects.equals(name, room.name) &&
+                Objects.equals(address, room.address) &&
+                Objects.equals(city, room.city) &&
+                Objects.equals(phoneNumber, room.phoneNumber) &&
+                Objects.equals(capacity, room.capacity) &&
+                Objects.equals(workingHoursStart, room.workingHoursStart) &&
+                Objects.equals(workingHoursEnd, room.workingHoursEnd);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Objects.hash(id, name, address, city, phoneNumber, capacity, workingHoursStart, workingHoursEnd);
     }
 }

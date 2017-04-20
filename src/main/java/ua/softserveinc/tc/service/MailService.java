@@ -7,6 +7,7 @@ import ua.softserveinc.tc.entity.User;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public interface MailService {
@@ -36,4 +37,6 @@ public interface MailService {
                                  DayOff dayOff) throws MessagingException;
 
     void sendNotifyDeactivateRoom(List<String> emailManagers, String roomName, String reason, List<InfoDeactivateRoomDto> list) throws MessagingException;
+
+    void sendNotifyChangeEvent(List<String> userEmails, String eventTitle, String datePeriod, String message, String fields) throws MessagingException;
 }

@@ -39,5 +39,10 @@ public class EventServiceImpl extends BaseServiceImpl<Event>
     public List<Event> findByName(String name) {
         return eventDao.findByName(name);
     }
+
+    @Override
+    public List<String> getEmailForNotifyChangeEvent(Long event_id) {
+        return eventDao.getEmailForNotifyChangeEvent(event_id);
+    }
 }
 
