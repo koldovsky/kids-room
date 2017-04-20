@@ -49,29 +49,9 @@
         <put-attribute name="body" value="/WEB-INF/views/authorization/success.jsp"/>
     </definition>
 
-    <definition name="token-not-valid" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/errors/token-not-valid.jsp"/>
-    </definition>
-
     <!-- Errors -->
-    <definition name="accessDenied" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/errors/access-denied.jsp"/>
-    </definition>
-
-    <definition name="error-bad-upload" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/errors/bad-upload.jsp"/>
-    </definition>
-
-    <definition name="notFound" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/errors/not-found.jsp"/>
-    </definition>
-
-    <definition name="internalError" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/errors/internal-error.jsp"/>
-    </definition>
-
-    <definition name="criticalRuntimeException" extends="default">
-        <put-attribute name="body" value="/WEB-INF/views/errors/common-message.jsp"/>
+    <definition name="error-page" extends="default">
+        <put-attribute name="body" value="/WEB-INF/views/errors/error-page.jsp"/>
     </definition>
 
     <!-- Admin -->
