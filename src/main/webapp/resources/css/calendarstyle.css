@@ -1,7 +1,17 @@
+@font-face {
+    font-family: RobotoDraft;
+    src: url('lib/Roboto-Regular.ttf');
+    font-style: normal;
+    font-weight: 300;
+    font-size: 1.4rem;
+}
+
 body {
-    padding: 0;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    font-size: 14px;
+    font-family: RobotoDraft, 'Arial', sans-serif;
+    line-height: 2rem;
+    letter-spacing: 0.01rem;
+    color: #212121;
+    background-color: #eee;
 }
 
 #calendar {
