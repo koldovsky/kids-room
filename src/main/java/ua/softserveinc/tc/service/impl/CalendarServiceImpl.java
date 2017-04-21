@@ -136,7 +136,8 @@ public class CalendarServiceImpl implements CalendarService {
         }
         eventDao.saveSetOfEvents(res);
 
-        sendNotifyForRecurrent(res);
+        if(recurrentEventDto.getRecurrentId() != null)
+            sendNotifyForRecurrent(res);
 
         return eventService.getListOfEventDto(res);
     }
@@ -198,6 +199,9 @@ public class CalendarServiceImpl implements CalendarService {
         }
 
         eventDao.saveSetOfEvents(res);
+
+        if(monthlyEventDto.getRecurrentId() != null)
+            sendNotifyForRecurrent(res);
 
         return new EventsCreatingResultsDto(
                 eventService.getListOfEventDto(res), daysWerentCreated);
