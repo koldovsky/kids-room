@@ -140,14 +140,8 @@ const abonnementsFunctions = function () {
     });
 
     $(document.body).on('click', '.btn-assign', function() {
-        let idAbonnement = getId(this);
-        let path = 'adm-abonnement/' + idAbonnement;
-        $.ajax({
-            url: path,
-            success: function(data) {
-                $(".abonnementId").val(data.id);
-            }
-        });
+        $(".abonnementId").val(getId(this));
+        selectAllUsers();
     });
 
     // update Abonnement active state
@@ -174,10 +168,6 @@ const abonnementsFunctions = function () {
         abonnementTable.ajax.reload(null, false);
     });
 
-
-    $(".datatable tbody").on('click', '.btn-assign', function () {
-        selectAllUsers();
-    });
     $("#selectUser").select2();
 
     let list = 0;
