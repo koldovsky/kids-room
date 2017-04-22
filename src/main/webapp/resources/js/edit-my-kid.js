@@ -5,6 +5,7 @@ $(function () {
     });
     $('#confirmation-dialog-div').dialog({
         autoOpen: false,
+        resizable: false,
         width: 350,
         modal: true
     });
