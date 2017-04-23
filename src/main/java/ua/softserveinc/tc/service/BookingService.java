@@ -138,14 +138,14 @@ public interface BookingService extends BaseService<Booking> {
      * @param room the given room
      * @return array of Dates
      */
-    List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
+    List<Date[]> getFullRoomTimePeriods(Date startDate, Date endDate, Room room);
 
     /**
      *
      * @param characteristics
      * @return
      */
-    List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
+    List<Date[]> getFullRoomTimePeriods(BookingsCharacteristics characteristics);
 
     /**
      * Checks if there is a duplicated bookings in the given list of BookingDto.
@@ -183,14 +183,9 @@ public interface BookingService extends BaseService<Booking> {
      * is true then only first founded date of period will be returned. The second will be null.
      *
      * @param characteristics the given bookings characteristics object
-     * @param numOfKids the given number of children
-     * @param onlyStartOfFirstPeriod indicates that needed only first date of founded period,
-     * the second date will be null
      * @return the list of figured out appropriate dates
      */
-    List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics,
-                                                  int numOfKids,
-                                                  boolean onlyStartOfFirstPeriod);
+    List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics);
 
     /**
      * Persists the list of bookings objects that are created from the

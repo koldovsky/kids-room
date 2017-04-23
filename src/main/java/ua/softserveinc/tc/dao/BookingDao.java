@@ -83,7 +83,7 @@ public interface BookingDao extends BaseDao<Booking> {
      * @param room the given room
      * @return array of Dates
      */
-    List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
+    List<Date[]> getFullRoomTimePeriods(Date startDate, Date endDate, Room room);
 
     /**
      * Get arrays of dates of all reserved bookings for given period of time
@@ -93,7 +93,7 @@ public interface BookingDao extends BaseDao<Booking> {
      * @param characteristics the given booking characteristics
      * @return array of Dates
      */
-    List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
+    List<Date[]> getFullRoomTimePeriods(BookingsCharacteristics characteristics);
 
     List<Booking> getRecurrentBookingsByRecurrentId(Long RecurrentId);
 

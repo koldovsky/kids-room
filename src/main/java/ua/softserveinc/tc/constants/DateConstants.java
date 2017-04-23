@@ -16,15 +16,6 @@ public final class DateConstants {
 
     public static final long ONE_MINUTE_MILLIS = 60 * 1000;
 
-    // Wed Jan 01 23:59:59 3000 EET
-    public static final long THREE_THOUSAND_YEARS_MILLIS = 32503759199000L;
-
-    public static final Date THREE_THOUSAND_YEAR =
-            new Date(THREE_THOUSAND_YEARS_MILLIS);
-
-    public static final Date MAX_DATE_FOR_CHECK =
-            new Date(THREE_THOUSAND_YEARS_MILLIS);
-
     public static final int WEEK_LENGTH = 7;
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"; // Quoted "T" to indicate UTC, no timezone offset

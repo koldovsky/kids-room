@@ -285,15 +285,15 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room) {
+    public List<Date[]> getFullRoomTimePeriods(Date startDate, Date endDate, Room room) {
 
-        return bookingDao.getDatesOfReservedBookings(startDate, endDate, room);
+        return bookingDao.getFullRoomTimePeriods(startDate, endDate, room);
     }
 
     @Override
-    public List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics) {
+    public List<Date[]> getFullRoomTimePeriods(BookingsCharacteristics characteristics) {
 
-        return bookingDao.getDatesOfReservedBookings(characteristics);
+        return bookingDao.getFullRoomTimePeriods(characteristics);
     }
 
     @Override
@@ -370,81 +370,43 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     public boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic,
                                                int numOfKids) {
 
-        return getNotAvailablePlacesTimePeriods(characteristic, numOfKids, true).isEmpty();
+        List<Date[]> allNotAvailableDates = getNotAvailablePlacesTimePeriods(characteristic);
+
+        return !characteristic.hasSetDates() || allNotAvailableDates.stream()
+                .noneMatch(dates -> characteristic.getEndDateOfBookings().after(dates[0])
+                        && characteristic.getStartDateOfBookings().before(dates[1]));
+
     }
 
     @Override
     public List<Date[]> getAllNotAvailablePlacesTimePeriods(Room room) {
-        Date today = Date.from(LocalDate.now()
-                .atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         BookingsCharacteristics characteristic =
                 new BookingsCharacteristics.Builder()
-                        .setDates(new Date[] {today, DateConstants.MAX_DATE_FOR_CHECK})
                         .setRooms(Collections.singletonList(room))
                         .build();
 
-        return getNotAvailablePlacesTimePeriods(characteristic, 1, false);
+        return getNotAvailablePlacesTimePeriods(characteristic);
     }
 
     @Override
-    public List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics,
-                                                         int numOfKids,
-                                                         boolean onlyStartOfFirstPeriod) {
+    public List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics) {
 
-        boolean onlyCheckForFreeSpaces = false;
         List<Date[]> resultList = new ArrayList<>();
-        Room room = characteristics.getRooms().get(0);
-        List<Date[]> datesOfReservedBookings =
-                getDatesOfReservedBookings(characteristics);
-        DailyBookingsMapTransformer dailyBookings =
-                new DailyBookingsMapTransformer(datesOfReservedBookings);
+        List<Date[]> datesOfReservedBookings = getFullRoomTimePeriods(characteristics);
 
-        for (List<DateTwoTuple> tuples : dailyBookings) {
-            int maxKidsInRoom = 0;
-            boolean isFull = false;
-            Date previousStartDateOfFullRoom = null;
-            Date startDateOfFullRoom = null;
-            Date endDateOfFullRoom = null;
-
-            for (DateTwoTuple dateTuple : tuples) {
-                if (dateTuple.isStart()) {
-                    maxKidsInRoom++;
+        if (!datesOfReservedBookings.isEmpty()) {
+            Date[] datesForAdding = datesOfReservedBookings.get(0);
+            for (int i = 1; i < datesOfReservedBookings.size(); i++) {
+                if (datesOfReservedBookings.get(i - 1)[1].equals(datesOfReservedBookings.get(i)[0])) {
+                    datesForAdding[0] = datesOfReservedBookings.get(i - 1)[0];
+                    datesForAdding[1] = datesOfReservedBookings.get(i)[1];
                 } else {
-                    maxKidsInRoom--;
-                }
-
-                if (maxKidsInRoom + numOfKids > room.getCapacity()) {
-                    if (onlyStartOfFirstPeriod) {
-                        startDateOfFullRoom = dateTuple.getDate();
-                        resultList.add(new Date[] {startDateOfFullRoom, null});
-                        onlyCheckForFreeSpaces = true;
-                        break;
-                    }
-                    if (!isFull) {
-                        startDateOfFullRoom = dateTuple.getDate();
-                        isFull = true;
-                    }
-                } else if (isFull) {
-                    if (!startDateOfFullRoom.equals(endDateOfFullRoom)) {
-                        previousStartDateOfFullRoom = startDateOfFullRoom;
-                        endDateOfFullRoom = dateTuple.getDate();
-                        resultList.add(new Date[]{startDateOfFullRoom, endDateOfFullRoom});
-                    } else {
-                        endDateOfFullRoom = dateTuple.getDate();
-                        resultList.remove(resultList.size() - 1);
-                        resultList.add(new Date[]{previousStartDateOfFullRoom, endDateOfFullRoom});
-                    }
-                    isFull = false;
+                    resultList.add(datesForAdding);
+                    datesForAdding = datesOfReservedBookings.get(i);
                 }
             }
-            if (onlyCheckForFreeSpaces) {
-                break;
-            }
-        }
-
-        if (datesOfReservedBookings.isEmpty() && numOfKids > room.getCapacity()) {
-            resultList.add(characteristics.getDates());
+            resultList.add(datesForAdding);
         }
 
         return resultList;
