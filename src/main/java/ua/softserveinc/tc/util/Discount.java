@@ -6,6 +6,8 @@ import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
+
 public class Discount {
     public static String PERSONAL_DISCOUNT_REASON = "Personal discount";
 
@@ -16,15 +18,6 @@ public class Discount {
 
     public Discount(int value) {
         this.value = value;
-    }
-
-    public Discount(String input) {
-        String[] array = input.split("\\+");
-
-        this.reason = array[0];
-        this.value = Integer.parseInt(array[1]);
-        this.startTime = LocalTime.parse(array[2]);
-        this.endTime = LocalTime.parse(array[3]);
     }
 
     public Discount(String reason, int value, LocalTime startTime, LocalTime endTime) {
@@ -72,12 +65,18 @@ public class Discount {
         return startTime.isBefore(endPeriodTime) && endTime.isAfter(startPeriodTime);
     }
 
+    public static LocalTime differenceBetweenTwoTimes(LocalTime time1, LocalTime time2) {
+        return LocalTime.ofSecondOfDay(SECONDS.between(time1, time2));
+    }
+
+    public static LocalTime addTwoTimes(LocalTime time1, LocalTime time2) {
+        return time1.plusSeconds(time2.toSecondOfDay());
+    }
+
     @Override
     public String toString() {
-        return new StringBuilder().append(value).append("% - ")
-                .append(reason).append(": ")
-                .append(startTime).append("-")
-                .append(endTime).toString();
+        return String.valueOf(value) + "% - "
+                + Discount.differenceBetweenTwoTimes(startTime, endTime);
     }
 
     @Override

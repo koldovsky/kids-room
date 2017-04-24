@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.softserveinc.tc.dto.DayDiscountDTO;
+import ua.softserveinc.tc.dto.PersonalDiscountDTO;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.DayDiscountService;
 import ua.softserveinc.tc.service.PersonalDiscountService;
@@ -46,7 +47,7 @@ public class DiscountController {
     }
 
     @GetMapping("/personal-discount/{userId}")
-    public List getPersonalDiscounts(@PathVariable Long userId) {
+    public List<PersonalDiscountDTO> getPersonalDiscounts(@PathVariable Long userId) {
 
         return personalDiscountService.findPersonalDiscountByUserId(userId);
     }
