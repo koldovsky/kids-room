@@ -3,6 +3,7 @@ package ua.softserveinc.tc.util;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,8 +39,10 @@ public class ExcelDocument extends AbstractXlsView {
 
         createRows(rowIndex, tableHeights, excelSheet);
         setExcelHeader(excelSheet, style, headers, rowIndex++);
+        CellStyle columnCellStyle = workbook.createCellStyle();
         for (int i = 0; i < headers.length; i++) {
-            writeColumnToExcel(excelSheet, (List<String>) dataForExcel.getTableData().get(headers[i]), i, rowIndex);
+            writeColumnToExcel(excelSheet, (List<String>) dataForExcel.getTableData().get(headers[i]),
+                    i, rowIndex, columnCellStyle);
         }
     }
 
@@ -58,11 +61,18 @@ public class ExcelDocument extends AbstractXlsView {
     }
 
     private void writeColumnToExcel(Sheet excelSheet, List<String> columnData, int columnIndex,
-                                    int startRow) {
+                                    int startRow, CellStyle cellStyle) {
         excelSheet.setColumnWidth(columnIndex, ExcelData.COLUMN_WIDTH);
+        cellStyle.setWrapText(true);
         for (int i = 0; i < columnData.size(); i++) {
             Cell cell = excelSheet.getRow(startRow + i).createCell(columnIndex);
+            excelSheet.getRow(startRow + i)
+                    .setHeightInPoints(getMaxHeightForRow(excelSheet.getRow(startRow + i).getHeightInPoints(),
+                            (StringUtils.countOccurrencesOf(columnData.get(i), "\n") + 1)
+                            * excelSheet.getDefaultRowHeightInPoints()));
+
             cell.setCellValue(columnData.get(i));
+            cell.setCellStyle(cellStyle);
         }
     }
 
@@ -82,5 +92,9 @@ public class ExcelDocument extends AbstractXlsView {
             cell.setCellStyle(styleHeader);
             cellCount++;
         }
+    }
+
+    private float getMaxHeightForRow(float previousMax, float current) {
+        return previousMax > current ? previousMax : current;
     }
 }

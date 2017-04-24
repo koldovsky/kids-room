@@ -155,7 +155,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         discounts, roomRate, outputDiscounts);
             }
 
-            booking.setDiscounts(outputDiscounts.keySet().stream()
+            booking.setDiscounts(outputDiscounts.keySet().stream().sorted()
                     .map(integer -> String.valueOf(integer) + "% - " + outputDiscounts.get(integer))
                     .collect(Collectors.joining("<br>")));
         }
@@ -188,8 +188,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
             outputDiscounts.put(maxDiscountValue,
                     Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime));
         }
-        System.out.println(startPeriodTime + " - " + endPeriodTime);
-        System.out.println(Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime));
 
         booking.setSum(booking.getSum() + calculateAndGetSum(startPeriodTime, endPeriodTime,
                 maxDiscountValue, rate));

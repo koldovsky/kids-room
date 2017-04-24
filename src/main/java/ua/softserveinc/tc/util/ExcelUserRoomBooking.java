@@ -40,7 +40,7 @@ public class ExcelUserRoomBooking implements ExcelBookingData<User> {
                 bookingDtos.stream().map(BookingDto::getDuration).collect(Collectors.toList()));
         tableData.put("Discount", bookingDtos.stream()
                 .map(BookingDto::getDiscount)
-                .map(s -> s != null ? s : "not provided").collect(Collectors.toList()));
+                .map(s -> s != null ? s : "not provided").map(s -> s.replace("<br>", "\n")).collect(Collectors.toList()));
         tableData.put("Sum",
                 bookingDtos.stream().map(BookingDto::getCurrencySum).collect(Collectors.toList()));
     }
