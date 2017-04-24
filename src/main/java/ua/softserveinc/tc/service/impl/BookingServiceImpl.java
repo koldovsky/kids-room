@@ -142,7 +142,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         if (dayDiscountDTOS.size() + personalDiscountDTOS.size() == 0) {
             calculateAndSetSum(booking);
         } else {
-            List<Discount> outputDiscounts = new ArrayList<>();
+            Map<Integer, LocalTime> outputDiscounts = new HashMap<>();
             List<Discount> discounts = dayDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList());
             discounts.addAll(personalDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList()));
 
@@ -155,7 +155,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                         discounts, roomRate, outputDiscounts);
             }
 
-            booking.setDiscounts(outputDiscounts.stream().map(Discount::toString).collect(Collectors.joining("<br>")));
+            booking.setDiscounts(outputDiscounts.keySet().stream()
+                    .map(integer -> String.valueOf(integer) + "% - " + outputDiscounts.get(integer))
+                    .collect(Collectors.joining("<br>")));
         }
     }
 
@@ -164,28 +166,33 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     private LocalTime calculateSumForNextPeriod(Booking booking, LocalTime startPeriodTime, LocalTime endBookingTime,
-                                                List<Discount> list, Rate rate, List<Discount> outputDiscounts) {
+                                                List<Discount> list, Rate rate,
+                                                Map<Integer, LocalTime> outputDiscounts) {
 
         LocalTime minStartDiscount = getMinTime(list, Discount::getStartTime, startPeriodTime, endBookingTime);
         LocalTime minEndDiscount = getMinTime(list, Discount::getEndTime, startPeriodTime, endBookingTime);
         LocalTime endPeriodTime = minStartDiscount.isBefore(minEndDiscount)
                 ? minStartDiscount : minEndDiscount;
 
-        Discount discountWithMaxValue = list.stream()
-                .filter(p -> p.containPeriod(startPeriodTime, endPeriodTime))
-                .max(Comparator.comparingInt(Discount::getValue))
-                .orElse(new Discount(0));
+        int maxDiscountValue = list.stream()
+                .filter(p -> p.containPeriod(startPeriodTime, endPeriodTime)).map(Discount::getValue)
+                .max(Integer::compareTo)
+                .orElse(0);
 
-        if (outputDiscounts.size() > 0 &&
-                outputDiscounts.get(outputDiscounts.size() - 1).equals(discountWithMaxValue)) {
-            outputDiscounts.get(outputDiscounts.size() - 1).setEndTime(discountWithMaxValue.getEndTime());
+        if (maxDiscountValue != 0 && outputDiscounts.containsKey(maxDiscountValue)) {
+            LocalTime time = outputDiscounts.get(maxDiscountValue);
+
+            outputDiscounts.replace(maxDiscountValue, Discount.addTwoTimes(time,
+                    Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime)));
         } else {
-            outputDiscounts.add(new Discount(discountWithMaxValue.getReason(), discountWithMaxValue.getValue(),
-                    startPeriodTime, endPeriodTime));
+            outputDiscounts.put(maxDiscountValue,
+                    Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime));
         }
+        System.out.println(startPeriodTime + " - " + endPeriodTime);
+        System.out.println(Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime));
 
         booking.setSum(booking.getSum() + calculateAndGetSum(startPeriodTime, endPeriodTime,
-                discountWithMaxValue.getValue(), rate));
+                maxDiscountValue, rate));
 
         return endPeriodTime;
     }
