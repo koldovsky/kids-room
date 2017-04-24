@@ -2,7 +2,8 @@
 <footer id="main-footer" class="page-footer blue center-on-small-only">
     <div class="footer-copyright text-center rgba-black-light">
                 <div class="container-fluid">
-                    2017 Copyright: SoftServe Inc 27/04/2017 ver
+                    2017 Copyright: SoftServe Inc
+                    <b>version from 27.04.2017</b>
                 </div>
     </div>
 </footer>
