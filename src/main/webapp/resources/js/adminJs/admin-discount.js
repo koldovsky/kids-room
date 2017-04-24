@@ -294,7 +294,7 @@ const DayColumns = [
     'data': 'reason',
     'fnCreatedCell': function (nTd, sData) {
       $(nTd).html(
-          "<span class='reason'>" + sData + "</span>"
+          "<div class='reason'>" + sData + "</div>"
       );
     }
   },
@@ -302,18 +302,19 @@ const DayColumns = [
     'data': 'value',
     'fnCreatedCell': function (nTd, sData) {
       $(nTd).html(
-          "<span class='value'>" + sData + "%</span>"
+          "<div class='value'>" + sData + "%</div>"
       );
     }
   },
   {
     'data': 'date',
     'render': function (data, type, full, meta) {
-      return full.startDate + " - " + full.endDate;
+      return "<span class='date'>"+ full.startDate + " - " + full.endDate+ "</span>";
     }
   },
   {
     'data': 'time',
+    'orderable': false,
     'render': function (data, type, full, meta) {
       if (full.startTime == "00:00" && full.endTime == "23:59") {
         return messages.booking.allDayDiscount;
@@ -324,6 +325,7 @@ const DayColumns = [
   },
   {
     'data': 'id',
+    'orderable': false,
     'fnCreatedCell': function (nTd, sData) {
       $(nTd).html(
           "<span>" +
@@ -331,11 +333,12 @@ const DayColumns = [
           "data-toggle='modal' data-target='#addDiscountDiv' dayDiscountId = "
           + sData +
           "><i class='glyphicon glyphicon-pencil'></i></button></span>"
-      );
+      )
     }
   },
   {
     'data': 'id',
+    'orderable': false,
     'render': function (data, type, full,row) {
       let stateBut = `<span><label class='switch'>
           <input type='checkbox' `;
@@ -370,6 +373,7 @@ const PersonalColumns = [
   },
   {
     'data': 'time',
+    'orderable': false,
     'render': function (data, type, full, meta) {
       if (full.startTime == "00:00" && full.endTime == "23:59") {
         return messages.booking.allDayDiscount;
@@ -380,6 +384,7 @@ const PersonalColumns = [
   },
   {
     'data': 'id',
+    'orderable': false,
     'fnCreatedCell': function (nTd, sData) {
       $(nTd).html(
           "<span>" +
@@ -392,6 +397,7 @@ const PersonalColumns = [
   },
   {
     'data': 'id',
+    'orderable': false,
     'render' : function(data, type, full,row){
       let stateBut = `<span><label class='switch'>
           <input type='checkbox' `;

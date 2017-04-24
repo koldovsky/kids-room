@@ -454,8 +454,8 @@ function renderDiscountsInCalendarForUser(objects, roomID, workingHoursStart, wo
             for (let i = 0; i < result.length; i++) {
                 objects[eventLength + i] = {
                     title: result[i].value + "% - " + result[i].reason,
-                    start: formatDate(result[i].startDate) + "T" + result[i].startTime,
-                    end: formatDate(result[i].endDate) + "T" + result[i].endTime,
+                    start: result[i].startDate + "T" + result[i].startTime,
+                    end: result[i].endDate + "T" + result[i].endTime,
                     editable: false,
                     borderColor: BORDER_COLOR,
                     color: DISCOUNT_COLOR_IN_USER_CALENDAR
@@ -1291,7 +1291,6 @@ function getPersonalDiscounts() {
                     rows += `<td>${discount.value}%</td>`;
                     rows += '</tr>';
                 });
-
                 $('#personal-discounts-dialog').find('tbody').append(rows);
             }
         }

@@ -9,17 +9,18 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/preloader.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel='stylesheet' href='resources/css/flow-form.css'>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-add-manager.css">
+<!--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/admin-add-manager.css"> -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css"/>
 <link href="${pageContext.request.contextPath}/resources/css/lib/select2.min.css" rel="stylesheet"/>
+<link href="${pageContext.request.contextPath}/resources/css/lib/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/select2.min.js"></script>
 
+<script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount-state.js'></script>
-<script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 
 <!-- Day discount datatable -->
 <div class="table-wrapper">
@@ -38,12 +39,13 @@
     </div>
     <div class="search-fields">
         <div><b>Search:</b></div>
-        <input type="text" class="form-control search-input" placeholder="reason"/>
+        <input type="text" class="form-control search-input search-input-first" placeholder="reason"/>
         <input type="text" class="form-control search-input" placeholder="value"/>
     </div>
-    <table class="reg-form datatable dayDiscountDataTable">
+    <table class="reg-form dt datatable dayDiscountDataTable">
         <thead>
         <tr>
+            <th style="display: none;"><strong>#</strong></th>
             <th><strong><spring:message code="administrator.dayDiscount.reason"/></strong></th>
             <th><strong><spring:message code="administrator.dayDiscount.value"/></strong></th>
             <th><strong><spring:message code="administrator.dayDiscount.startDate"/></strong></th>
@@ -78,11 +80,13 @@
     </div>
     <div class="personalDiscountDataTable-wrapper">
         <div class="column-names">
+            <span>user</span>
             <span>value</span>
         </div>
         <div class="search-fields">
             <div><b>Search:</b></div>
             <input type="text" class="form-control search-input" placeholder="value"/>
+            <input type="text" class="form-control search-input" placeholder="user"/>
         </div>
     </div>
     <table class="reg-form datatable personalDiscountDataTable">
