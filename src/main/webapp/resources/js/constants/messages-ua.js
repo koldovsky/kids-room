@@ -112,7 +112,8 @@ const messages = {
             invalidCity: 'Невірно заповнене поле Місто',
             invalidPhone: 'Невірно заповнене поле Номер телефону',
             requiredWithEmptySpace: 'Поле потрібно заповнити',
-            roomIsFull: 'Кімната заповнена'
+            roomIsFull: 'Кімната заповнена',
+            wrongDiscountValue: 'Знижка повинна бути між 1 та 100'
         },
         warnings: {
             active: 'Попередження! У кімнаті перебувають діти.',

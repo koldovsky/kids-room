@@ -121,8 +121,9 @@ const messages = {
             invalidAdress: 'Invalid field Adress',
             invalidCity: 'Invalid field City',
             invalidPhone: 'Invalid field Phone',
-            requiredWithEmptySpace: 'This field must be required',
-            roomIsFull: 'Room is full'
+            requiredWithEmptySpace: 'This field is required',
+            roomIsFull: 'Room is full',
+            wrongDiscountValue: 'Discount must be from 1 to 100'
         },
         warnings: {
             active: 'Warning! Room has active bookings',
