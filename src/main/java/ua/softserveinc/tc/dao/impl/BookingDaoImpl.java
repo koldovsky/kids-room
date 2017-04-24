@@ -144,8 +144,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
                 new BookingsCharacteristics.Builder()
                         .setDates(new Date[] {startDate, endDate})
                         .setRooms(Collections.singletonList(room))
-                        .build()
-        );
+                        .build());
     }
 
     @Override
@@ -158,7 +157,7 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
             existsBookingIds.append(characteristics.getIdsOfBookings()
                     .stream().map(String::valueOf).collect(Collectors.joining(",")));
         } else {
-            existsBookingIds.append(-1);
+            existsBookingIds.append(0);
         }
 
         long roomId = characteristics.getRooms().get(0).getId();

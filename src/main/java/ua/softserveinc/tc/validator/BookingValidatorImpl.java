@@ -170,6 +170,6 @@ public class BookingValidatorImpl implements BookingValidator {
 
         BookingsCharacteristics characteristic = bookingBuilder.build();
 
-        return bookingService.hasAvailablePlacesInTheRoom(characteristic, numOfKids);
+        return bookingService.hasAvailablePlacesInTheRoom(characteristic);
     }
 }

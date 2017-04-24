@@ -1146,16 +1146,13 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
             var date = new Date(calEvent.start.format());
             var endDate = new Date(calEvent.end.format());
 
-            var newDate = makeUTCTime(new Date(), date);
-            var newDateForEnd = makeUTCTime(new Date(), endDate);
-
-            $('#bookingUpdatingStartTimepicker').timepicker('setTime', newDate);
-            $('#bookingUpdatingEndTimepicker').timepicker('setTime', newDateForEnd);
+            $('#bookingUpdatingStartTimepicker').timepicker('setTime', date);
+            $('#bookingUpdatingEndTimepicker').timepicker('setTime', endDate);
 
             $('#recurrent-booking-start-date').val(calEvent.start.format().substring(0, 10));
             $('#recurrent-booking-end-date').val(calEvent.end.format().substring(0, 10));
-            $('#recurrent-booking-start-time').timepicker('setTime', newDate);
-            $('#recurrent-booking-end-time').timepicker('setTime', newDateForEnd);
+            $('#recurrent-booking-start-time').timepicker('setTime', date);
+            $('#recurrent-booking-end-time').timepicker('setTime', endDate);
 
             if (calEvent.type === 'booking') {
                 $('#comment-for-update-recurrency').val(calEvent.comment);
@@ -1209,14 +1206,6 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         eventLimit: true,
         events: objects
     });
-}
-
-//tested
-function makeUTCTime(time, date) {
-    time.setHours(date.getUTCHours());
-    time.setMinutes(date.getUTCMinutes());
-    time.setSeconds(date.getUTCSeconds());
-    return time;
 }
 
 //tested

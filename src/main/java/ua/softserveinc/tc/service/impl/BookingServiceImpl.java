@@ -367,8 +367,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic,
-                                               int numOfKids) {
+    public boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic) {
 
         List<Date[]> allNotAvailableDates = getNotAvailablePlacesTimePeriods(characteristic);
 

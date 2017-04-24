@@ -128,7 +128,7 @@ public interface BookingService extends BaseService<Booking> {
     List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room);
 
     /**
-     * Get arrays of dates of all reserved bookings for given period of time
+     * Get arrays of dates of all reserved periods for given period of time
      * and room. The first date of array is a start date, and other - is end
      * date. If any of the input parameter is null, then array of length of
      * 0 is returns.
@@ -142,8 +142,8 @@ public interface BookingService extends BaseService<Booking> {
 
     /**
      *
-     * @param characteristics
-     * @return
+     * @param characteristics the given bookings characteristics object
+     * @return the list of dates which represent periods when room is full
      */
     List<Date[]> getFullRoomTimePeriods(BookingsCharacteristics characteristics);
 
@@ -157,20 +157,19 @@ public interface BookingService extends BaseService<Booking> {
     boolean hasDuplicateBookings(List<BookingDto> listDto);
 
     /**
-     * Checks if there are available places in the given room for given number
-     * of kids and bookings characteristics object. The first index of given array contain
+     * Checks if there are available places in the given room for given
+     * bookings characteristics object. The first index of given array contain
      * start date and second index of given array contain end date of given period.
      *
      *
      * @param characteristic the given bookings characteristics object
-     * @param numOfKids the given number of children
      * @return the list of figured out appropriate dates
      */
-    boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic, int numOfKids);
+    boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic);
 
     /**
      * Figures out all time periods where there are no available places in the room
-     * for given room starting from current date and finishing after 1000 years
+     * for given room starting from current date
      *
      * @param room the given room
      * @return the list of figured out appropriate dates

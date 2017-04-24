@@ -73,7 +73,7 @@ public interface BookingDao extends BaseDao<Booking> {
     int cancelBookingById(long bookingId);
 
     /**
-     * Get arrays of dates of all reserved bookings for given period of time
+     * Get arrays of dates when given room is full for given period of time
      * and room. The first date of array is a start date, and other - is end
      * date. If any of the input parameter is null, then array of length of
      * 0 is returns.
@@ -86,7 +86,7 @@ public interface BookingDao extends BaseDao<Booking> {
     List<Date[]> getFullRoomTimePeriods(Date startDate, Date endDate, Room room);
 
     /**
-     * Get arrays of dates of all reserved bookings for given period of time
+     * Get arrays of dates when given room is full for given period of time
      * and room. The first date of array is a start date, and other - is end
      * date.
      *
