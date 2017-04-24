@@ -422,12 +422,9 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
             $('#endDateUpdate').val(calEvent.end.format().substring(0, 10));
             $('#descriptionUpdate').val(calEvent.description);
             $('#color-select-single-event').val(calEvent.color);
-
-            var date = new Date(calEvent.start.format());
-            var endDate = new Date(calEvent.end.format());
-
-            var newDate = makeUTCTime(new Date(), date);
-            var newDateForEnd = makeUTCTime(new Date(), endDate);
+            
+            var newDate = calEvent.start.format().substring(11, 16);
+            var newDateForEnd = calEvent.end.format().substring(11, 16);
 
             $('#startTimeUpdate').timepicker('setTime', newDate);
             $('#endTimeUpdate').timepicker('setTime', newDateForEnd);

@@ -94,7 +94,7 @@
         </button>
 
     </div>
-            <div id="room-dialog" class="dialog" hidden >
+            <div id="room-dialog " class="dialog" hidden >
                             <form class="container for-table" id="roomForm">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" autofocus/>
                                 <input type="hidden" id="active" name="active" value="true"/>

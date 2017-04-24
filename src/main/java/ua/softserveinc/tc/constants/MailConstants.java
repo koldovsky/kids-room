@@ -20,6 +20,7 @@ public final class MailConstants {
   public static final String REMINDER_VM = "reminder.vm";
   public static final String DAY_OFF_REMINDER_VM = "dayOffReminder.vm";
   public static final String DEACRIVATE_ROOM_INFO = "deactivateRoom.vm";
+  public static final String CHANGE_INFO   = "changeEvent.vm";
 
   public static final String DAY_OFF_REMINDER = "Upcoming day off";
   public static final String PAYMENT_INFO_SUBJECT = "Payment info";

@@ -12,4 +12,6 @@ public interface EventService extends BaseService<Event> {
     void deleteRecurrentEvent(Long idRecurrent);
 
     List<Event> findByName(String name);
+
+    List<String> getEmailForNotifyChangeEvent(Long event_id);
 }

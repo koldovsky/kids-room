@@ -2,6 +2,7 @@ package ua.softserveinc.tc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.EventConstants;
 import ua.softserveinc.tc.dao.EventDao;
 import ua.softserveinc.tc.dto.EventDto;
@@ -13,10 +14,16 @@ import ua.softserveinc.tc.mapper.EventMapper;
 import ua.softserveinc.tc.mapper.GenericMapper;
 import ua.softserveinc.tc.service.CalendarService;
 import ua.softserveinc.tc.service.EventService;
+import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
-
+import ua.softserveinc.tc.util.Log;
+import org.slf4j.Logger;
+import javax.mail.MessagingException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
+
 
 import static ua.softserveinc.tc.dto.MonthlyEventDto.getMonthlyEventDto;
 import static ua.softserveinc.tc.dto.RecurrentEventDto.getRecurrentEventDto;
@@ -35,6 +42,12 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private MailService mailService;
+
+    @Log
+    private static Logger log;
 
     @Autowired
     private GenericMapper<Event, EventDto> genericMapper;
@@ -69,6 +82,8 @@ public class CalendarServiceImpl implements CalendarService {
     @Override
     public final List<EventDto> createRecurrentEvents(
             final RecurrentEventDto recurrentEventDto) {
+
+
 
         Date dateForRecurrentStart =
                 DateUtil.toDateISOFormat(recurrentEventDto.getStartTime());
@@ -113,11 +128,17 @@ public class CalendarServiceImpl implements CalendarService {
                 newRecurrentEvent.setRecurrentId(newRecID);
 
                 res.add(newRecurrentEvent);
+
             }
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
             calendar.set(Calendar.DAY_OF_WEEK, daysOFWeek.get("Mon"));
+
         }
         eventDao.saveSetOfEvents(res);
+
+        if(recurrentEventDto.getRecurrentId() != null)
+            sendNotifyForRecurrent(res);
+
         return eventService.getListOfEventDto(res);
     }
 
@@ -179,6 +200,9 @@ public class CalendarServiceImpl implements CalendarService {
 
         eventDao.saveSetOfEvents(res);
 
+        if(monthlyEventDto.getRecurrentId() != null)
+            sendNotifyForRecurrent(res);
+
         return new EventsCreatingResultsDto(
                 eventService.getListOfEventDto(res), daysWerentCreated);
     }
@@ -211,6 +235,9 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public final void createOrUpdateEvent(final Event event) {
+        if(event.getId() != null && event.getRecurrentId() == null){
+            sendNotifyForSingle(eventService.findEntityById(event.getId()), event);
+        }
         eventDao.createOrUpdateEvent(event);
     }
 
@@ -221,7 +248,73 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public final void deleteEvent(final Event event) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
+        List<String> emails = eventService.getEmailForNotifyChangeEvent(event.getId());
+        String datePeriod = dateFormat.format(event.getStartTime()) + " - " + dateFormat.format(event.getEndTime());
+
+        if (emails.size() > 0) {
+            try {
+                if (event.getRecurrentId() != null)
+                    mailService.sendNotifyChangeEvent(emails, event.getName(), datePeriod, EventConstants.Messages.CANCEL_EVENT_MSG, null);
+                else
+                    mailService.sendNotifyChangeEvent(emails, event.getName(), datePeriod, EventConstants.Messages.CANCEL_SERIES_EVENT_MSG, null);
+
+            } catch (MessagingException e) {
+                log.error("Notify email about cancel event didn't send. ", e);
+            }
+        }
+
         eventDao.delete(event);
     }
 
+    void sendNotifyForSingle(Event event, Event eventNew) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
+        List<String> emails = eventService.getEmailForNotifyChangeEvent(event.getId());
+        String datePeriod = dateFormat.format(event.getStartTime()) + " - " + dateFormat.format(event.getEndTime());
+
+        StringBuilder field = new StringBuilder();
+        field.append(EventConstants.Messages.CHANGE_FIELD_MSG).append("<br>");
+        String message = null;
+        message = EventConstants.Messages.CHANGE_EVENT_MSG;
+        Map<String, String> compareMap = eventDao.compareAndGetField(event, eventNew);
+        for (String key : compareMap.keySet()) {
+            field.append(key).append(": ").append(compareMap.get(key)).append("<br>");
+        }
+
+        if (emails.size() > 0) {
+            try {
+                mailService.sendNotifyChangeEvent(emails, event.getName(), datePeriod, message, field.toString());
+            } catch (MessagingException e) {
+                log.error("Notify email about change event didn't send. ", e);
+            }
+
+        }
+    }
+
+    void sendNotifyForRecurrent(List<Event> eventList) {
+        eventList.forEach(event -> {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DateConstants.DATE_AND_TIME_FORMAT);
+            List<String> emails = eventService.getEmailForNotifyChangeEvent(event.getId());
+            String datePeriod = dateFormat.format(event.getStartTime()) + " - " + dateFormat.format(event.getEndTime());
+
+            StringBuilder field = new StringBuilder();
+            field.append(EventConstants.Messages.CURRENT_INFO_MSG).append("<br>");
+            field.append(EventConstants.Entity.NAME).append(": ").append(event.getName()).append("<br>");
+            field.append(EventConstants.Entity.START_TIME).append(": ").append(dateFormat.format(event.getStartTime())).append("<br>");
+            field.append(EventConstants.Entity.END_TIME).append(": ").append(dateFormat.format(event.getEndTime())).append("<br>");
+            field.append(EventConstants.Entity.ID_ROOM).append(": ").append(event.getRoom().getName()).append("<br>");
+            if (event.getDescription() != null)
+                field.append(EventConstants.Entity.DESCRIPTION).append(": ").append(event.getDescription()).append("<br>");
+
+            if (emails.size() > 0) {
+                try {
+                    mailService.sendNotifyChangeEvent(emails, event.getName(), datePeriod, EventConstants.Messages.CHANGE_SERIES_EVENT_MSG, field.toString());
+                } catch (MessagingException e) {
+                    log.error("Notify email about change event didn't send. ", e);
+                }
+
+            }
+        });
+
+    }
 }

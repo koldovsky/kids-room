@@ -3,6 +3,7 @@ package ua.softserveinc.tc.dao;
 import ua.softserveinc.tc.entity.Event;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EventDao extends BaseDao<Event> {
     Long getMaxRecurrentId();
@@ -16,4 +17,8 @@ public interface EventDao extends BaseDao<Event> {
     Event createOrUpdateEvent(Event event);
 
     List<Event> findByName(String name);
+
+    List<String> getEmailForNotifyChangeEvent(Long event_id);
+
+    Map<String, String> compareAndGetField(Event event, Event eventNew);
 }
