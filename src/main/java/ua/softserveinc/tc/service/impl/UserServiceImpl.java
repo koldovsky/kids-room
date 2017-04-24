@@ -67,14 +67,6 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     }
 
     @Override
-    public List<UserDto> findAllUsers() {
-        return userDao.findAll()
-                .stream()
-                .map(UserDto::new)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public void deleteUserById(Long id) {
         userDao.deleteUserById(id);
     }

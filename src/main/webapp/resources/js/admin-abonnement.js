@@ -34,7 +34,9 @@ let columns = [
     {
         'data': null,
         'render': function () {
-            return "<span class='assign'><button class='btn btn-success btn-responsive pull-center'>" +
+            return "<span class='assign'>" +
+                "<button class='btn btn-success btn-responsive pull-center btn-assign'" +
+                "data-toggle='modal' data-target='#assignAbonnement'>" +
                 "<span class='glyphicon glyphicon-user'>" +
                 "</button></span>";
         },
@@ -102,6 +104,24 @@ const abonnementsFunctions = function () {
         });
     });
 
+    $('#assignAbonnementForm').submit(function (event) {
+        let path = 'adm-assign-abonnement';
+        event.preventDefault();
+        var dataSender = {
+            userId: $('#selectUser').val(),
+            abonnementId: $(".abonnementId").val()
+        };
+        $.ajax({
+            url: path,
+            type: 'POST',
+            contentType: 'application/json',
+            datatype: 'json',
+            data: JSON.stringify(dataSender),
+            success: function () {},
+            error: function () {}
+        });
+    });
+
     // initing update Modal
     $(document.body).on('click', '.btn-edit', function () {
         let idAbonnement = getId(this);
@@ -117,6 +137,11 @@ const abonnementsFunctions = function () {
             error: function () {
             }
         });
+    });
+
+    $(document.body).on('click', '.btn-assign', function() {
+        $(".abonnementId").val(getId(this));
+        selectAllUsers();
     });
 
     // update Abonnement active state
@@ -143,4 +168,30 @@ const abonnementsFunctions = function () {
         abonnementTable.ajax.reload(null, false);
     });
 
+    $("#selectUser").select2();
+
+    let list = 0;
+    let userList;
+    let selectAllUsers = function () {
+        $.ajax({
+            url: "restful/admin/discounts/personal/users",
+            type: 'GET',
+            success: function (result) {
+                if (list != result.length) {
+                    $('#selectUser').empty();
+                    list = result.length;
+                    userList = result;
+                    $.each(userList, function (i, user) {
+                        $('#selectUser').append($('<option>', {
+                            value: user.id,
+                            text: user.firstName + ' ' + user.lastName
+                        }));
+                    })
+                    $('#selectUser').select2('val', ' ');
+                } else {
+                    $('#selectUser').select2('val', ' ');
+                }
+            }
+        });
+    }
 };

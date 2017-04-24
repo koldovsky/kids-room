@@ -92,8 +92,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     @Override
     public void assignUserToAbonnement(UserAbonnementDto userAbonnementDto) {
         SubscriptionAssignment entity = new SubscriptionAssignment();
-        User user = userService.findUserId(userAbonnementDto.getUser_id());
-        Abonnement abonnement = abonnementMapper.toEntity(findAbonnement(userAbonnementDto.getAbonnement_id()));
+        User user = userService.findUserId(userAbonnementDto.getUserId());
+        Abonnement abonnement = abonnementMapper.toEntity(findAbonnement(userAbonnementDto.getAbonnementId()));
         entity.setUser(user);
         entity.setAbonnement(abonnement);
         entity.setValid(true);
