@@ -82,145 +82,163 @@ const personalDiscountButtonFunctions = function () {
 
 // Day discount
 function addNewDiscount(method, bool) {
-  request = "restful/admin/discounts/day";
-  var inputData = {
-    reason: $("#DReason").val(),
-    value: $("#DValue").val(),
-    startDate: $("#DStartDate").val(),
-    endDate: $("#DEndDate").val(),
-    startTime: $("#DStartTime").val(),
-    endTime: $("#DEndTime").val(),
-    active: true,
-  };
-  if (bool) {
-    inputData.id = editId;
-  }
-  if (fullDay) {
-    inputData.startTime = "00:00";
-    inputData.endTime = "23:59";
-  }
-  $.ajax({
-    url: request,
-    contentType: 'application/json; charset=UTF-8',
-    data: JSON.stringify(inputData),
-    type: method,
-    success: function (result) {
-      $('#addDiscountDiv').modal('toggle');
-      dayDiscountDataTable.ajax.reload(null, false);
-    },
-    error: function (data, textStatus, xhr) {
-      $(".danger-info").remove();
-      let errors = data.responseJSON.userInputErrors;
-      errors.forEach(function(item){
-        $('#discountForm').append("<div class='danger-info'>" + item + "</div>");
-      })
+  let isValidate = $("#discountForm").valid();
+  if(isValidate){
+    request = "restful/admin/discounts/day";
+    var inputData = {
+      reason: $("#DReason").val(),
+      value: $("#DValue").val(),
+      startDate: $("#DStartDate").val(),
+      endDate: $("#DEndDate").val(),
+      startTime: $("#DStartTime").val(),
+      endTime: $("#DEndTime").val(),
+      active: true,
+    };
+    if (bool) {
+      inputData.id = editId;
     }
-  });
+    if (fullDay) {
+      inputData.startTime = "00:00";
+      inputData.endTime = "23:59";
+    }
+    $.ajax({
+      url: request,
+      contentType: 'application/json; charset=UTF-8',
+      data: JSON.stringify(inputData),
+      type: method,
+      success: function (result) {
+        $('#addDiscountDiv').modal('toggle');
+        dayDiscountDataTable.ajax.reload(null, false);
+      },
+      error: function (data, textStatus, xhr) {
+        $(".danger-info").remove();
+        let errors = data.responseJSON.userInputErrors;
+        errors.forEach(function(item){
+          $('#discountForm').append("<div class='danger-info'>" + item + "</div>");
+        })
+      }
+    });
+  }
 }
 
 //Edit day discount  button
 function onEditDiscountClick(id) {
   $("#dayDiscountModalTitle").text(messages.modal.discount.editDiscount);
   editId = id;
-  request = "restful/admin/discounts/day/" + editId;
-  onButtonAdd = false;
-  $(".danger-info").remove();
-  $.ajax({
-    url: request,
-    type: 'GET',
-    success: function (result) {
-      $("#DReason").val(result.reason);
-      $("#DValue").val(result.value);
-      //Date and time formation
-      $("#DStartDate").val(result.startDate);
-      $("#DEndDate").val(result.endDate);
-      if (result.startTime == "00:00" && result.endTime == "23:59") {
-        fullDay = true;
-        $("#dayDiscountTime").hide();
-      } else {
-        $("#dayDiscountTime").show();
-        fullDay = false;
-        $("#changeDayPeriod").prop('checked', false);
-        $("#DStartTime").val(result.startTime);
-        $("#DEndTime").val(result.endTime);
+  $("#discountForm").validate().resetForm();
+  $('#discountForm input').removeClass('error');
+  let isValidate = $("#discountForm").valid();
+  if(isValidate){
+    request = "restful/admin/discounts/day/" + editId;
+    onButtonAdd = false;
+    $(".danger-info").remove();
+    $.ajax({
+      url: request,
+      type: 'GET',
+      success: function (result) {
+        $("#DReason").val(result.reason);
+        $("#DValue").val(result.value);
+        //Date and time formation
+        $("#DStartDate").val(result.startDate);
+        $("#DEndDate").val(result.endDate);
+        if (result.startTime == "00:00" && result.endTime == "23:59") {
+          fullDay = true;
+          $("#dayDiscountTime").hide();
+        } else {
+          $("#dayDiscountTime").show();
+          fullDay = false;
+          $("#changeDayPeriod").prop('checked', false);
+          $("#DStartTime").val(result.startTime);
+          $("#DEndTime").val(result.endTime);
+        }
       }
-    }
-  });
+    });
+  }
 }
 //Add personal discounts
 function addNewPersonalDiscount(method, bool) {
-  request = "restful/admin/discounts/personal/" + user;
-  var inputData = {
-    value: $("#PValue").val(),
-    startTime: $("#PStartTime").val(),
-    endTime: $("#PEndTime").val(),
-    active: true,
-  };
-  if (bool) {
-    inputData.id = editId;
-  }
-  if (fullDay) {
-    inputData.startTime = "00:00";
-    inputData.endTime = "23:59";
-  }
-  $.ajax({
-    url: request,
-    contentType: 'application/json; charset=UTF-8',
-    data: JSON.stringify(inputData),
-    type: method,
-    success: function (result) {
-      $('#addPersonalDiscountDiv').modal('toggle');
-      personalDiscountDataTable.ajax.reload(null, false);
-    },error: function (data, textStatus, xhr) {
-      $(".danger-info").remove();
-      if(xhr=='Bad Request'){
-        $('#discountPersonalForm').append("<div class='danger-info'>" + messages.modal.discount.n + "</div>");
-      }else{
-        let errors = data.responseJSON.userInputErrors;
-        errors.forEach(function(item){
-          $('#discountPersonalForm').append("<div class='danger-info'>" + item + "</div>");
-        })
-      }
+  let isValidate = $("#discountPersonalForm").valid();
+  if(isValidate){
+    request = "restful/admin/discounts/personal/" + user;
+    var inputData = {
+      value: $("#PValue").val(),
+      startTime: $("#PStartTime").val(),
+      endTime: $("#PEndTime").val(),
+      active: true,
+    };
+    if (bool) {
+      inputData.id = editId;
     }
-  });
+    if (fullDay) {
+      inputData.startTime = "00:00";
+      inputData.endTime = "23:59";
+    }
+    $.ajax({
+      url: request,
+      contentType: 'application/json; charset=UTF-8',
+      data: JSON.stringify(inputData),
+      type: method,
+      success: function (result) {
+        $('#addPersonalDiscountDiv').modal('toggle');
+        personalDiscountDataTable.ajax.reload(null, false);
+      },error: function (data, textStatus, xhr) {
+        $(".danger-info").remove();
+        if(xhr=='Bad Request'){
+          $('#discountPersonalForm').append("<div class='danger-info'>" + messages.modal.discount.noUser + "</div>");
+        }else{
+          let errors = data.responseJSON.userInputErrors;
+          errors.forEach(function(item){
+            $('#discountPersonalForm').append("<div class='danger-info'>" + item + "</div>");
+          })
+        }
+      }
+    });
+  }
 }
 
 //Edit personal discount
 function onEditPersonalDiscountClick(id) {
   $("#personalDiscountModalTitle").text(messages.modal.discount.editDiscount);
-  editId = id;
-  request = "restful/admin/discounts/personal/" + editId;
-  onButtonAdd = false;
-  $(".danger-info").remove();
-  $("#selectUserDiv").hide();
-  $("#selectUserStaticDiv").show();
-  //Add data to the modal window
-  $.ajax({
-    url: request,
-    type: 'GET',
-    success: function (result) {
-      $("#PValue").val(result.value);
-      $("#selectUserStatic").text(
-          result.user.firstName + " " + result.user.lastName);
-      user = result.user.id;
-      //Manipulation with time
-      if (result.startTime == "00:00" && result.endTime == "23:59") {
-        $("#personalDiscountTime").hide();
-        $("#changePersonalPeriod").prop('checked', true);
-      } else {
-        fullDay = false;
-        $("#changePersonalPeriod").prop('checked', false);
-        $("#personalDiscountTime").show();
-        $("#PStartTime").val(result.startTime);
-        $("#PEndTime").val(result.endTime);
+  $("#discountPersonalForm").validate().resetForm();
+  $('#discountPersonalForm input').removeClass('error');
+  let isValidate = $("#discountPersonalForm").valid();
+  if(isValidate) {
+    editId = id;
+    request = "restful/admin/discounts/personal/" + editId;
+    onButtonAdd = false;
+    $(".danger-info").remove();
+    $("#selectUserDiv").hide();
+    $("#selectUserStaticDiv").show();
+    //Add data to the modal window
+    $.ajax({
+      url: request,
+      type: 'GET',
+      success: function (result) {
+        $("#PValue").val(result.value);
+        $("#selectUserStatic").text(
+            result.user.firstName + " " + result.user.lastName);
+        user = result.user.id;
+        //Manipulation with time
+        if (result.startTime == "00:00" && result.endTime == "23:59") {
+          $("#personalDiscountTime").hide();
+          $("#changePersonalPeriod").prop('checked', true);
+        } else {
+          fullDay = false;
+          $("#changePersonalPeriod").prop('checked', false);
+          $("#personalDiscountTime").show();
+          $("#PStartTime").val(result.startTime);
+          $("#PEndTime").val(result.endTime);
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 //Add discount functions
 function onAddDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
+  $("#discountForm").validate().resetForm();
+  $('#discountForm input').removeClass('error');
   $("#dayDiscountTime").hide();
   $(".danger-info").remove();
   $("#changeDayPeriod").prop('checked', true);
@@ -232,7 +250,8 @@ function onAddDiscountClick() {
 let list = 0;
 let userList;
 function onAddPersonalDiscount() {
-
+  $("#discountPersonalForm").validate().resetForm();
+  $('#discountPersonalForm input').removeClass('error');
   $.ajax({
     url: "restful/admin/discounts/personal/users",
     type: 'GET',
