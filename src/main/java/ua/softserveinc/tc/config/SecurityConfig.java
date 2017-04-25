@@ -524,16 +524,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage(SecurityConstants.ACCESS_DENIED)
                 .and()
-                .logout()
+                .logout().deleteCookies("JSESSIONID")
                 .logoutSuccessUrl(SecurityConstants.ENTRY_POINT);
 
         setAuthenticationPermits(http, isCustomAuthEnable);
 
-        http.rememberMe().
+/*        http.rememberMe().
                 key("rem-me-key").
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
-                tokenValiditySeconds(3600);
+                tokenValiditySeconds(3600);*/
     }
 
     /**
