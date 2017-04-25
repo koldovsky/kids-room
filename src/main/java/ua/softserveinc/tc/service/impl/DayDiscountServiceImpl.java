@@ -53,7 +53,7 @@ public class DayDiscountServiceImpl extends BaseServiceImpl<DayDiscount> impleme
    */
   @Cacheable("fullDayDiscountList")
   public List<DayDiscountDTO> findAllDailyDiscounts() {
-    List<DayDiscount> qResult = dayDiscountDao.findAll();
+    List<DayDiscount> qResult = dayDiscountDao.getAllActiveDayDiscount();
     return qResult.stream().map(DayDiscountDTO::new).collect(Collectors.toList());
   }
 
