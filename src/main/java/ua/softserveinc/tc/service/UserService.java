@@ -35,7 +35,7 @@ public interface UserService extends BaseService<User> {
 
     UserDto findUserByIdDto(Long id);
 
-    ReturnModel adminUpdateManager(User manager, BindingResult bindingResult);
+    ResponseWithErrors adminUpdateManager(User manager, BindingResult bindingResult);
 
-    ReturnModel adminAddManager(User manager, BindingResult bindingResult);
+    ResponseWithErrors adminAddManager(User manager, BindingResult bindingResult);
 }

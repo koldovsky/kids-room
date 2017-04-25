@@ -127,38 +127,38 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     }
 
     @Override
-    public ReturnModel adminUpdateManager(User manager, BindingResult bindingResult) {
-        ReturnModel returnModel = new ReturnModel(manager.getEmail());
+    public ResponseWithErrors adminUpdateManager(User manager, BindingResult bindingResult) {
+        ResponseWithErrors responseWithErrors = new ResponseWithErrors(manager.getEmail());
         userValidator.validateManager(manager, bindingResult);
         if (bindingResult.hasErrors()) {
-            returnModel.setMessage("Error with user");
-            return returnModel;
+            responseWithErrors.setMessage("Error with user");
+            return responseWithErrors;
         }
 
             if ((!findUserId(manager.getId()).getEmail().equalsIgnoreCase(manager.getEmail())) && getUserByEmail(manager.getEmail()) != null) {
-                returnModel.setMessage("This email already exist");
-                return returnModel;
+                responseWithErrors.setMessage("This email already exist");
+                return responseWithErrors;
             }
 
         User managerFromDB = checkFields(manager);
         update(managerFromDB);
-        return returnModel;
+        return responseWithErrors;
     }
 
     @Override
-    public ReturnModel adminAddManager(User manager, BindingResult bindingResult) {
-        ReturnModel returnModel = new ReturnModel();
-        returnModel.setEmail(manager.getEmail());
+    public ResponseWithErrors adminAddManager(User manager, BindingResult bindingResult) {
+        ResponseWithErrors responseWithErrors = new ResponseWithErrors();
+        responseWithErrors.setEmail(manager.getEmail());
         userValidator.validateManager(manager, bindingResult);
         if (getUserByEmail(manager.getEmail()) != null) {
             bindingResult.addError(new ObjectError("Email", "Exist"));
-            returnModel.setMessage("email exist");
+            responseWithErrors.setMessage("email exist");
         }
         if (bindingResult.hasErrors()) {
             if (bindingResult.getFieldError() != null) {
-                returnModel.setMessage(returnModel.getMessage() + " / " + bindingResult.getFieldError().getField() + "Incorrect");
+                responseWithErrors.setMessage(responseWithErrors.getMessage() + " / " + bindingResult.getFieldError().getField() + "Incorrect");
             }
-            return returnModel;
+            return responseWithErrors;
         }
         manager.setRole(Role.MANAGER);
         manager.setActive(true);
@@ -168,14 +168,14 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         } catch (MessagingException | MailSendException ex) {
             log.error("Error! There is problems with sending email!", ex);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
-            returnModel.setEmail(manager.getEmail());
-            returnModel.setMessage("email didn't sent");
-            return returnModel;
+            responseWithErrors.setEmail(manager.getEmail());
+            responseWithErrors.setMessage("email didn't sent");
+            return responseWithErrors;
         }
         create(manager);
         tokenService.createToken(token, manager);
-        returnModel.setEmail(manager.getEmail());
-        return returnModel;
+        responseWithErrors.setEmail(manager.getEmail());
+        return responseWithErrors;
     }
 
     private User checkFields(User manager) {

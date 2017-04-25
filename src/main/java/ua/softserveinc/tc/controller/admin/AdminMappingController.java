@@ -23,7 +23,6 @@ public class AdminMappingController {
     public String getAdminAbonnements() {
 //        List<AbonnementDto> abonnements = abonnementsService.findAllAbonements();
 //        model.addAttribute(AdminConstants.AdminModel.ABONNEMENTS_MODEL, abonnements);
-        //test
         return AdminConstants.ViewNames.ABONNEMENTS_VIEW;
     }
 
