@@ -35,6 +35,14 @@ public class DayDiscountDaoImp extends BaseDaoImpl<DayDiscount> implements DayDi
   private CriteriaBuilder builder;
 
   @Override
+  public List<DayDiscount> getAllActiveDayDiscount(){
+    CriteriaQuery<DayDiscount> query = builder.createQuery(DayDiscount.class);
+    Root<DayDiscount> root = query.from(DayDiscount.class);
+    query.select(root).where(builder.equal(root.get("active"), true));
+    return entityManager.createQuery(query).getResultList();
+  }
+
+  @Override
   public List<DayDiscount> getDayDiscountForCurrentDays(LocalDate startDate, LocalDate endDate,
       LocalTime startTime, LocalTime endTime, Boolean state) {
     CriteriaQuery<DayDiscount> query = builder.createQuery(DayDiscount.class);

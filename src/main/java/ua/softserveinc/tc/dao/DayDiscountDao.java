@@ -8,6 +8,8 @@ import ua.softserveinc.tc.entity.DayDiscount;
 
 public interface DayDiscountDao extends BaseDao<DayDiscount> {
 
+  List<DayDiscount> getAllActiveDayDiscount();
+
   List<DayDiscount> getDayDiscountForCurrentDays(LocalDate startDate, LocalDate endDate,
       LocalTime startTime, LocalTime endTime, Boolean state);
 

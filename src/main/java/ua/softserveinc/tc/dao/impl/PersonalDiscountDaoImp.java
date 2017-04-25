@@ -37,7 +37,8 @@ public class PersonalDiscountDaoImp extends BaseDaoImpl<PersonalDiscount> implem
     CriteriaQuery<PersonalDiscount> query = builder.createQuery(PersonalDiscount.class);
     Root<User> root = query.from(User.class);
     Join<User, PersonalDiscount> discounts = root.join("personalDiscounts");
-    query.select(discounts).where(builder.equal(root.get("id"), id));
+    query.select(discounts).where(builder.and(builder.equal(root.get("id"), id),
+        builder.equal(discounts.get("active"), true)));
     return entityManager.createQuery(query).getResultList();
   }
 
