@@ -70,7 +70,7 @@ public class Discount {
     }
 
     public static LocalTime addTwoTimes(LocalTime time1, LocalTime time2) {
-        return time1.plusSeconds(time2.toSecondOfDay());
+        return LocalTime.ofSecondOfDay(time1.toSecondOfDay() + time2.toSecondOfDay());
     }
 
     @Override
