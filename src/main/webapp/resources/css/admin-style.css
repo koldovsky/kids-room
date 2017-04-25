@@ -384,3 +384,19 @@ th.th-size {
 .change-discount {
     float: right;
 }
+#resultVind{
+    display: block;
+    width: 471px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    text-align: center;
+    color: red;
+}
+#resultVindUpdate{
+    display: block;
+    width: 471px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    text-align: center;
+    color: red;
+}

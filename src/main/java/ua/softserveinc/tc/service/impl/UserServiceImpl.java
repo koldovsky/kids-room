@@ -1,6 +1,5 @@
 package ua.softserveinc.tc.service.impl;
 
-import java.util.Objects;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
@@ -22,6 +21,7 @@ import ua.softserveinc.tc.validator.UserValidator;
 import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -126,56 +126,84 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         return new UserDto(user);
     }
 
+
     @Override
     public ResponseWithErrors adminUpdateManager(User manager, BindingResult bindingResult) {
-        ResponseWithErrors responseWithErrors = new ResponseWithErrors(manager.getEmail());
-        userValidator.validateManager(manager, bindingResult);
-        if (bindingResult.hasErrors()) {
-            responseWithErrors.setMessage("Error with user");
+        if (manager != null) {
+            return updateManager(manager, bindingResult);
+        } else {
+            ResponseWithErrors responseWithErrors = new ResponseWithErrors("");
+            responseWithErrors.setMessage("Empty user");
             return responseWithErrors;
         }
-
-            if ((!findUserId(manager.getId()).getEmail().equalsIgnoreCase(manager.getEmail())) && getUserByEmail(manager.getEmail()) != null) {
-                responseWithErrors.setMessage("This email already exist");
-                return responseWithErrors;
-            }
-
-        User managerFromDB = checkFields(manager);
-        update(managerFromDB);
-        return responseWithErrors;
     }
+
 
     @Override
     public ResponseWithErrors adminAddManager(User manager, BindingResult bindingResult) {
         ResponseWithErrors responseWithErrors = new ResponseWithErrors();
-        responseWithErrors.setEmail(manager.getEmail());
         userValidator.validateManager(manager, bindingResult);
-        if (getUserByEmail(manager.getEmail()) != null) {
-            bindingResult.addError(new ObjectError("Email", "Exist"));
-            responseWithErrors.setMessage("email exist");
-        }
-        if (bindingResult.hasErrors()) {
-            if (bindingResult.getFieldError() != null) {
-                responseWithErrors.setMessage(responseWithErrors.getMessage() + " / " + bindingResult.getFieldError().getField() + "Incorrect");
-            }
-            return responseWithErrors;
-        }
+        checkEmailIfExist(manager, bindingResult, responseWithErrors);
+        if (checkInputErrors(bindingResult, responseWithErrors)) return responseWithErrors;
         manager.setRole(Role.MANAGER);
         manager.setActive(true);
         String token = UUID.randomUUID().toString();
         try {
             mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
         } catch (MessagingException | MailSendException ex) {
-            log.error("Error! There is problems with sending email!", ex);
+            log.error(ValidationConstants.PROBLEM_SEND_EMAIL_MSG, ex);
             bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
             responseWithErrors.setEmail(manager.getEmail());
-            responseWithErrors.setMessage("email didn't sent");
+            responseWithErrors.setMessage(ValidationConstants.NOT_SEND_EMAIL_MSG);
             return responseWithErrors;
         }
         create(manager);
         tokenService.createToken(token, manager);
         responseWithErrors.setEmail(manager.getEmail());
         return responseWithErrors;
+    }
+
+    private boolean checkInputErrors(BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.getFieldError() != null) {
+                responseWithErrors.setMessage(responseWithErrors.getMessage() + " / " + bindingResult.getFieldError().getField() + " incorrect");
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void checkEmailIfExist(User manager, BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
+        if (getUserByEmail(manager.getEmail()) != null) {
+            bindingResult.addError(new ObjectError("Email", "Exist"));
+            responseWithErrors.setMessage("User with such email already exist");
+        }
+    }
+
+    private ResponseWithErrors updateManager(User manager, BindingResult bindingResult) {
+        ResponseWithErrors responseWithErrors = new ResponseWithErrors(manager.getEmail());
+        userValidator.validateManager(manager, bindingResult);
+        if (checkErrors(bindingResult, responseWithErrors)) return responseWithErrors;
+        if (checkEmail(manager, responseWithErrors)) return responseWithErrors;
+        User managerFromDB = checkFields(manager);
+        update(managerFromDB);
+        return responseWithErrors;
+    }
+
+    private boolean checkErrors(BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
+        if (bindingResult.hasErrors()) {
+            responseWithErrors.setMessage(bindingResult.getFieldError().getField() + " incorrect");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkEmail(User manager, ResponseWithErrors responseWithErrors) {
+        if ((!findUserId(manager.getId()).getEmail().equalsIgnoreCase(manager.getEmail())) && getUserByEmail(manager.getEmail()) != null) {
+            responseWithErrors.setMessage(ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
+            return true;
+        }
+        return false;
     }
 
     private User checkFields(User manager) {

@@ -1,7 +1,6 @@
 function showDialogToUpdateManager(id) {
     $('#updating-dialog').dialog('open');
     adminManagerUpdate(id);
-    $('#resultVindUpdate').show();
 }
 
 function adminManagerUpdate(userid) {
@@ -19,7 +18,6 @@ function adminManagerUpdate(userid) {
         contentType: 'charset=UTF-8',
         success: function (userDto) {
             console.log(userDto);
-
             $('#manager-id').val(userid);
             $('#new-manager-emailUpdate').val(userDto.email);
             $('#new-manager-firstNameUpdate').val(userDto.firstName);
@@ -53,15 +51,14 @@ function clickedUpdate() {
             phoneNumber: mn.phoneNumberManager
         }),
         success: function (mav) {
-            console.log('okr');
+            $('#resultVindUpdate').show();
             var bl = document.getElementById("resultVindUpdate");
             if (mav.message == null) {
-
                 bl.innerHTML = mav.email + " updated successfully";
                 location.reload();
             }
             else {
-                bl.innerHTML = mav.email + mav.message;
+                bl.innerHTML = mav.message;
             }
         },
         complete: function () {
@@ -101,12 +98,13 @@ $(function () {
     });
     $('#cancel-update').click(function () {
         $('#updating-dialog').dialog('close');
+        var validator = $("#managerUpdateForm").validate();
+        validator.resetForm();
         $('#resultVindUpdate').hide();
     });
 });
 function showDialogToAddManager() {
     $('#manager-dialog').dialog('open');
-    $('#resultVind').show();
 }
 function clearNewManagerDialog() {
     $('#go').show();
@@ -138,16 +136,17 @@ function createSingleManager(idIfEdited) {
             phoneNumber: mn.phoneNumberManager
         }),
         success: function (mav) {
-            console.log('okr');
+            $('#resultVind').show();
             console.log(mav);
             if (mav.message == null) {
                 var bl = document.getElementById("resultVind");
                 bl.innerHTML = mav.email + " created successfully";
                 location.reload();
+                $('#resultVind').hide();
             }
             else {
                 var bl = document.getElementById("resultVind");
-                bl.innerHTML = mav.email + " " + mav.message;
+                bl.innerHTML = mav.message;
             }
         },
         complete: function () {
