@@ -170,8 +170,9 @@ public class CalendarServiceImpl implements CalendarService {
         while (calendar.getTimeInMillis() <= endDate) {
             monthlyEventDto.getDaysOfMonth().stream()
                     .filter(day -> calendar.getActualMaximum(Calendar.DAY_OF_MONTH) < day)
-                    .forEach(day -> daysWerentCreated.add(day + "/" + (calendar.get(Calendar.MONTH) + 1) +
-                            "/" + calendar.get(Calendar.YEAR)));
+                    .forEach(day -> daysWerentCreated.add(String.format("%d/%d/%d",
+                            day, (calendar.get(Calendar.MONTH) + 1), calendar.get(Calendar.YEAR))));
+
             calendar.add(Calendar.MONTH, 1);
         }
 
