@@ -23,7 +23,8 @@ public class ResponseWithErrors {
         return message;
     }
 
-    public void setMessage(String message) {
+    public boolean setMessage(String message) {
         this.message = message;
+        return true;
     }
 }

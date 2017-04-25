@@ -47,6 +47,9 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    private ResponseWithErrors responseWithErrors;
+
     @Override
     public List<User> getActiveUsers(Date startDate, Date endDate, Room room) {
         return userDao.findActiveUsers(startDate, endDate, room);
@@ -100,6 +103,16 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     }
 
     @Override
+    public UserDto findUserByIdDto(Long id) {
+        User user = userDao.findUserById(id);
+        if (Objects.isNull(user)) {
+            log.error("While getting user with id " + id + " - No such row exception");
+            throw new NoSuchRowException("No user this this id");
+        }
+        return new UserDto(user);
+    }
+
+    @Override
     public List<Child> getEnabledChildren(User user) {
         return user.getChildren().stream()
                 .filter(Child::isEnabled)
@@ -117,44 +130,20 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     }
 
     @Override
-    public UserDto findUserByIdDto(Long id) {
-        User user = userDao.findUserById(id);
-        if (Objects.isNull(user)) {
-            log.error("While getting user with id " + id + " - No such row exception");
-            throw new NoSuchRowException("No user this this id");
-        }
-        return new UserDto(user);
-    }
-
-    @Override
     public ResponseWithErrors adminUpdateManager(User manager, BindingResult bindingResult) {
-        if (manager != null) {
-            return updateManager(manager, bindingResult);
-        } else {
-            ResponseWithErrors responseWithErrors = new ResponseWithErrors("");
-            responseWithErrors.setMessage("Empty user");
-            return responseWithErrors;
-        }
+        return manager != null ? updateManager(manager, bindingResult) : getResponseOfEmptyUser();
     }
 
     @Override
     public ResponseWithErrors adminAddManager(User manager, BindingResult bindingResult) {
-        ResponseWithErrors responseWithErrors = new ResponseWithErrors();
+        responseWithErrors = new ResponseWithErrors();
         userValidator.validateManager(manager, bindingResult);
         checkEmailIfExist(manager, bindingResult, responseWithErrors);
         if (checkInputErrors(bindingResult, responseWithErrors)) return responseWithErrors;
         manager.setRole(Role.MANAGER);
         manager.setActive(true);
         String token = UUID.randomUUID().toString();
-        try {
-            mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
-        } catch (MessagingException | MailSendException ex) {
-            log.error(ValidationConstants.PROBLEM_SEND_EMAIL_MSG, ex);
-            bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
-            responseWithErrors.setEmail(manager.getEmail());
-            responseWithErrors.setMessage(ValidationConstants.NOT_SEND_EMAIL_MSG);
-            return responseWithErrors;
-        }
+        if (sendEmail(manager, bindingResult, token)) return responseWithErrors;
         create(manager);
         tokenService.createToken(token, manager);
         responseWithErrors.setEmail(manager.getEmail());
@@ -171,6 +160,19 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         return false;
     }
 
+    private boolean sendEmail(User manager, BindingResult bindingResult, String token) {
+        try {
+            mailService.buildConfirmRegisterManager("Confirmation registration", manager, token);
+        } catch (MessagingException | MailSendException ex) {
+            log.error(ValidationConstants.PROBLEM_SEND_EMAIL_MSG, ex);
+            bindingResult.rejectValue(ValidationConstants.EMAIL, ValidationConstants.FAILED_SEND_EMAIL_MSG);
+            responseWithErrors.setEmail(manager.getEmail());
+            responseWithErrors.setMessage(ValidationConstants.NOT_SEND_EMAIL_MSG);
+            return true;
+        }
+        return false;
+    }
+
     private void checkEmailIfExist(User manager, BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
         if (getUserByEmail(manager.getEmail()) != null) {
             bindingResult.addError(new ObjectError("Email", "Exist"));
@@ -178,30 +180,28 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         }
     }
 
+    private ResponseWithErrors getResponseOfEmptyUser() {
+        responseWithErrors = new ResponseWithErrors("");
+        responseWithErrors.setMessage("Empty manager");
+        log.error("While getting manager with id  - No such user");
+        return responseWithErrors;
+    }
+
     private ResponseWithErrors updateManager(User manager, BindingResult bindingResult) {
-        ResponseWithErrors responseWithErrors = new ResponseWithErrors(manager.getEmail());
+        responseWithErrors = new ResponseWithErrors(manager.getEmail());
         userValidator.validateManager(manager, bindingResult);
         if (checkErrors(bindingResult, responseWithErrors)) return responseWithErrors;
         if (checkEmail(manager, responseWithErrors)) return responseWithErrors;
-        User managerFromDB = checkFields(manager);
-        update(managerFromDB);
+        update(checkFields(manager));
         return responseWithErrors;
     }
 
     private boolean checkErrors(BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
-        if (bindingResult.hasErrors()) {
-            responseWithErrors.setMessage(bindingResult.getFieldError().getField() + " incorrect");
-            return true;
-        }
-        return false;
+        return bindingResult.hasErrors() ? responseWithErrors.setMessage(bindingResult.getFieldError().getField() + " incorrect") : false;
     }
 
     private boolean checkEmail(User manager, ResponseWithErrors responseWithErrors) {
-        if ((!findUserId(manager.getId()).getEmail().equalsIgnoreCase(manager.getEmail())) && getUserByEmail(manager.getEmail()) != null) {
-            responseWithErrors.setMessage(ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
-            return true;
-        }
-        return false;
+        return (!findUserId(manager.getId()).getEmail().equalsIgnoreCase(manager.getEmail()) && getUserByEmail(manager.getEmail()) != null) ? responseWithErrors.setMessage(ValidationConstants.EMAIL_ALREADY_IN_USE_MSG) : false;
     }
 
     private User checkFields(User manager) {
