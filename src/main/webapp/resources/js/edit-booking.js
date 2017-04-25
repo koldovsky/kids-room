@@ -79,7 +79,7 @@ $(function () {
         if(idUser===null) return;
         var getKidsUrl = 'restful/manager-booking/' + idUser;
         addKids(getKidsUrl);
-        var getPersonalDiscountUrl = `restful/discount/personal-discount/${idUser}`;
+        let getPersonalDiscountUrl = `restful/discount/personal-discount/${idUser}`;
         addPersonalDiscount(getPersonalDiscountUrl);
     });
 
@@ -629,7 +629,7 @@ function addPersonalDiscount(url) {
                     let timeDiscount;
                     if (discount.startTime == '00:00' && discount.endTime == '23:59') {
                         timeDiscount = messages.booking.allDayDiscount;
-                    } else timeDiscount = `${discount.startTime}:${discount.endTime}`;
+                    } else timeDiscount = `${discount.startTime}-${discount.endTime}`;
                     rows += `<div class="personal-discount-item">${discount.value}% - ${timeDiscount}</div>`;
                 });
 
