@@ -438,11 +438,6 @@ function renderingForUser(objects, id, userId, workingHoursStart, workingHoursEn
     });
 }
 
-function formatDate(date) {
-    let day = date.split('-');
-    return day[2] + '-' + day[1] + '-' + day[0];
-}
-
 function renderDiscountsInCalendarForUser(objects, roomID, workingHoursStart, workingHoursEnd) {
     const eventLength = objects.length;
 
@@ -1080,7 +1075,7 @@ function renderCalendar(objects, id, workingHoursStart, workingHoursEnd) {
         eventBackgroundColor: NOT_SYNCHRONIZED,
         eventColor: 'transparent',
         eventBorderColor: 'transparent',
-        eventTextColor: '#fff',
+        eventTextColor: '#000',
         slotDuration: '00:15:00',
 
         dayClick: function (date) {

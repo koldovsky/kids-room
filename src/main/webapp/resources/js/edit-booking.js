@@ -79,7 +79,7 @@ $(function () {
         if(idUser===null) return;
         var getKidsUrl = 'restful/manager-booking/' + idUser;
         addKids(getKidsUrl);
-        var getPersonalDiscountUrl = `restful/discount/personal-discount/${idUser}`;
+        let getPersonalDiscountUrl = `restful/discount/personal-discount/${idUser}`;
         addPersonalDiscount(getPersonalDiscountUrl);
     });
 

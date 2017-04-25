@@ -338,8 +338,8 @@ function renderDiscountsInCalendarForManager(objects, roomID, workingHoursStart,
                 for (let i = 0; i < result.length; i++) {
                     objects[eventLength + i] = {
                         title: result[i].value + "% - " + result[i].reason,
-                        start: formatDate(result[i].startDate) + "T" + result[i].startTime,
-                        end: formatDate(result[i].endDate) + "T" + result[i].endTime,
+                        start: result[i].startDate + "T" + result[i].startTime,
+                        end: result[i].endDate + "T" + result[i].endTime,
                         editable: false,
                         borderColor: BORDER_COLOR,
                         color: DISCOUNT_COLOR
@@ -386,6 +386,7 @@ function renderCalendarForManager(objects, roomID, workingHoursStart, workingHou
         timeFormat: 'HH:mm',
         minTime: workingHoursStart,
         maxTime: workingHoursEnd,
+        eventTextColor: '#000',
 
         dayClick: function (date) {
             var clickDate = date.format();
