@@ -57,7 +57,7 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         return userDao.findAllUsersByRole(role);
     }
 
-    public List<UserDto> findUsersByRoleDto(Role role){
+    public List<UserDto> findUsersByRoleDto(Role role) {
         return userDao.findAllUsersByRole(role).stream().map(UserDto::new).collect(Collectors.toList());
     }
 
@@ -117,15 +117,14 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     }
 
     @Override
-    public UserDto findUserByIdDto(Long id){
+    public UserDto findUserByIdDto(Long id) {
         User user = userDao.findUserById(id);
-        if(Objects.isNull(user)){
+        if (Objects.isNull(user)) {
             log.error("While getting user with id " + id + " - No such row exception");
             throw new NoSuchRowException("No user this this id");
         }
         return new UserDto(user);
     }
-
 
     @Override
     public ResponseWithErrors adminUpdateManager(User manager, BindingResult bindingResult) {
@@ -137,7 +136,6 @@ public class UserServiceImpl extends BaseServiceImpl<User>
             return responseWithErrors;
         }
     }
-
 
     @Override
     public ResponseWithErrors adminAddManager(User manager, BindingResult bindingResult) {
@@ -222,5 +220,4 @@ public class UserServiceImpl extends BaseServiceImpl<User>
         }
         return managerFromDB;
     }
-
 }
