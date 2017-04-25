@@ -1,15 +1,15 @@
 package ua.softserveinc.tc.entity;
 
 
-public class ReturnModel {
+public class ResponseWithErrors {
     private String email;
 
     private String message;
 
-    public ReturnModel() {
+    public ResponseWithErrors() {
     }
 
-    public ReturnModel(String email) { this.email = email; }
+    public ResponseWithErrors(String email) { this.email = email; }
 
     public String getEmail() {
         return email;
@@ -23,7 +23,8 @@ public class ReturnModel {
         return message;
     }
 
-    public void setMessage(String message) {
+    public boolean setMessage(String message) {
         this.message = message;
+        return true;
     }
 }
