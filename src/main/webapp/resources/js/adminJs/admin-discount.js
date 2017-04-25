@@ -63,7 +63,7 @@ const dayDiscountButtonFunctions = function () {
   });
   //Change state button
   $('.datatable tbody').on('click', '.dayDiscountState', function () {
-    changeDayDiscountState($(this),"restful/admin/discounts/day/state");
+    changeDayDiscountState($(this), "restful/admin/discounts/day/state");
   });
 
 };
@@ -75,7 +75,7 @@ const personalDiscountButtonFunctions = function () {
   });
   //Change state button
   $('.datatable tbody').on('click', '.personalDiscountState', function () {
-    changeDayDiscountState($(this),"restful/admin/discounts/personal/state");
+    changeDayDiscountState($(this), "restful/admin/discounts/personal/state");
   });
 
 };
@@ -83,7 +83,7 @@ const personalDiscountButtonFunctions = function () {
 // Day discount
 function addNewDiscount(method, bool) {
   let isValidate = $("#discountForm").valid();
-  if(isValidate){
+  if (isValidate) {
     request = "restful/admin/discounts/day";
     var inputData = {
       reason: $("#DReason").val(),
@@ -113,8 +113,9 @@ function addNewDiscount(method, bool) {
       error: function (data, textStatus, xhr) {
         $(".danger-info").remove();
         let errors = data.responseJSON.userInputErrors;
-        errors.forEach(function(item){
-          $('#discountForm').append("<div class='danger-info'>" + item + "</div>");
+        errors.forEach(function (item) {
+          $('#discountForm').append(
+              "<div class='danger-info'>" + item + "</div>");
         })
       }
     });
@@ -125,10 +126,9 @@ function addNewDiscount(method, bool) {
 function onEditDiscountClick(id) {
   $("#dayDiscountModalTitle").text(messages.modal.discount.editDiscount);
   editId = id;
-  $("#discountForm").validate().resetForm();
-  $('#discountForm input').removeClass('error');
+  clearDayDiscountModal(true);
   let isValidate = $("#discountForm").valid();
-  if(isValidate){
+  if (isValidate) {
     request = "restful/admin/discounts/day/" + editId;
     onButtonAdd = false;
     $(".danger-info").remove();
@@ -158,7 +158,7 @@ function onEditDiscountClick(id) {
 //Add personal discounts
 function addNewPersonalDiscount(method, bool) {
   let isValidate = $("#discountPersonalForm").valid();
-  if(isValidate){
+  if (isValidate) {
     request = "restful/admin/discounts/personal/" + user;
     var inputData = {
       value: $("#PValue").val(),
@@ -181,14 +181,17 @@ function addNewPersonalDiscount(method, bool) {
       success: function (result) {
         $('#addPersonalDiscountDiv').modal('toggle');
         personalDiscountDataTable.ajax.reload(null, false);
-      },error: function (data, textStatus, xhr) {
+      }, error: function (data, textStatus, xhr) {
         $(".danger-info").remove();
-        if(xhr=='Bad Request'){
-          $('#discountPersonalForm').append("<div class='danger-info'>" + messages.modal.discount.noUser + "</div>");
-        }else{
+        if (xhr == 'Bad Request') {
+          $('#discountPersonalForm').append(
+              "<div class='danger-info'>" + messages.modal.discount.noUser
+              + "</div>");
+        } else {
           let errors = data.responseJSON.userInputErrors;
-          errors.forEach(function(item){
-            $('#discountPersonalForm').append("<div class='danger-info'>" + item + "</div>");
+          errors.forEach(function (item) {
+            $('#discountPersonalForm').append(
+                "<div class='danger-info'>" + item + "</div>");
           })
         }
       }
@@ -199,10 +202,9 @@ function addNewPersonalDiscount(method, bool) {
 //Edit personal discount
 function onEditPersonalDiscountClick(id) {
   $("#personalDiscountModalTitle").text(messages.modal.discount.editDiscount);
-  $("#discountPersonalForm").validate().resetForm();
-  $('#discountPersonalForm input').removeClass('error');
+  clearPersonalDiscountModal(true);
   let isValidate = $("#discountPersonalForm").valid();
-  if(isValidate) {
+  if (isValidate) {
     editId = id;
     request = "restful/admin/discounts/personal/" + editId;
     onButtonAdd = false;
@@ -237,10 +239,8 @@ function onEditPersonalDiscountClick(id) {
 //Add discount functions
 function onAddDiscountClick() {
   $("#dayDiscountModalTitle").text(messages.modal.discount.addDiscount);
-  $("#discountForm").validate().resetForm();
-  $('#discountForm input').removeClass('error');
+  clearDayDiscountModal(false);
   $("#dayDiscountTime").hide();
-  $(".danger-info").remove();
   $("#changeDayPeriod").prop('checked', true);
   onButtonAdd = true;
   fullDay = true;
@@ -250,8 +250,7 @@ function onAddDiscountClick() {
 let list = 0;
 let userList;
 function onAddPersonalDiscount() {
-  $("#discountPersonalForm").validate().resetForm();
-  $('#discountPersonalForm input').removeClass('error');
+  clearPersonalDiscountModal(false);
   $.ajax({
     url: "restful/admin/discounts/personal/users",
     type: 'GET',
@@ -283,9 +282,36 @@ function onAddPersonalDiscount() {
 
 }
 
+//Users for personal discounts
 let user;
 const selectUserFunction = function () {
   user = $("#selectUser").val();
+};
+
+//Functions to clear modal windows
+const clearDayDiscountModal = function (edit) {
+  if (!edit) {
+    $("#DReason").val('');
+    $("#DValue").val('');
+    $("#DStartDate").val('');
+    $("#DEndDate").val('');
+    $("#DStartTime").val('');
+    $("#DEndTime").val('');
+  }
+  $("#discountForm").validate().resetForm();
+  $('#discountForm input').removeClass('error');
+  $(".danger-info").remove();
+};
+
+const clearPersonalDiscountModal = function (edit) {
+  if (!edit) {
+    $('#PValue').val('');
+    $('#PStartTime').val('');
+    $('#PEndTime').val('');
+  }
+  $("#discountPersonalForm").validate().resetForm();
+  $('#discountPersonalForm input').removeClass('error');
+  $(".danger-info").remove();
 };
 
 //Day discount columns creation
@@ -309,7 +335,8 @@ const DayColumns = [
   {
     'data': 'date',
     'render': function (data, type, full, meta) {
-      return "<span class='date'>"+ full.startDate + " - " + full.endDate+ "</span>";
+      return "<span class='date'>" + full.startDate + " - " + full.endDate
+          + "</span>";
     }
   },
   {
@@ -339,7 +366,7 @@ const DayColumns = [
   {
     'data': 'id',
     'orderable': false,
-    'render': function (data, type, full,row) {
+    'render': function (data, type, full, row) {
       let stateBut = `<span><label class='switch'>
           <input type='checkbox' `;
 
@@ -398,7 +425,7 @@ const PersonalColumns = [
   {
     'data': 'id',
     'orderable': false,
-    'render' : function(data, type, full,row){
+    'render': function (data, type, full, row) {
       let stateBut = `<span><label class='switch'>
           <input type='checkbox' `;
 
@@ -406,7 +433,8 @@ const PersonalColumns = [
         stateBut += `checked `;
       }
 
-      stateBut += `class='activate personalDiscountState' discountId = ` + full.id
+      stateBut += `class='activate personalDiscountState' discountId = `
+          + full.id
           +
           ` dayDiscountState = ` + full.active +
           ` ><div class='slider round'></div></label></span>`
