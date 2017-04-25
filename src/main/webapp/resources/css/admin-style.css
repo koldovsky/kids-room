@@ -380,3 +380,7 @@ th.th-size {
 #manager-between {
     margin-top: 40px;
 }
+
+.change-discount {
+    float: right;
+}

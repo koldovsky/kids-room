@@ -21,9 +21,10 @@
 <script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount-state.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/adminJs/admin-discount-change.js'></script>
 
 <!-- Day discount datatable -->
-<div class="table-wrapper">
+<div class="table-wrapper" id="dayDiscountFull">
     <div class="hide-border">
         <th colspan="6" class="set-standard-color">
             <legend class="for-table"><strong class="title-font">
@@ -31,6 +32,9 @@
                 <spring:message code="administrator.dayDiscount"/></strong>
             </legend>
         </th>
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToPersonal">
+            <spring:message code="administrator.button.personalDiscount"/>
+        </button>
     </div>
     <div class="dayDiscountDataTable-wrapper">
     <div class="column-names">
@@ -66,10 +70,8 @@
         </button>
     </a>
 </div>
-
-<br/>
 <!-- Personal discount datatable -->
-<div class="table-wrapper">
+<div class="table-wrapper" id="personalDiscountFull" style="display:none;">
     <div class="hide-border">
         <th colspan="6" class="set-standard-color">
             <legend class="for-table"><strong class="title-font">
@@ -77,6 +79,9 @@
                 <spring:message code="administrator.personalDiscount"/></strong>
             </legend>
         </th>
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToDaily">
+            <spring:message code="administrator.button.dayDiscount"/>
+        </button>
     </div>
     <div class="personalDiscountDataTable-wrapper">
         <div class="column-names">
