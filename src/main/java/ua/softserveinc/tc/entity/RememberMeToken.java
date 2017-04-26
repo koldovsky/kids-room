@@ -22,7 +22,7 @@ public class RememberMeToken implements Serializable {
     private String token;
 
     @Column(name = "last_used")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     public RememberMeToken() {

@@ -58,7 +58,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ua.softserveinc.tc.constants.EntryConstants;
 import ua.softserveinc.tc.constants.SecurityConstants;
-import ua.softserveinc.tc.constants.TokenConstants;
 import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.service.impl.SAMLUserDetailsServiceImpl;
 
@@ -520,21 +519,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SecurityConstants.ERROR).permitAll()
                 .antMatchers(SecurityConstants.SAML).permitAll()
                 .anyRequest().authenticated()
-                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(18000)
+                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(3600)
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage(SecurityConstants.ACCESS_DENIED)
                 .and()
-                .logout()
+                .logout().deleteCookies("JSESSIONID")
                 .logoutSuccessUrl(SecurityConstants.ENTRY_POINT);
 
         setAuthenticationPermits(http, isCustomAuthEnable);
 
-        http.rememberMe().
+/*        http.rememberMe().
                 key("rem-me-key").
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
-                tokenValiditySeconds(18000);
+                tokenValiditySeconds(3600);*/
     }
 
     /**

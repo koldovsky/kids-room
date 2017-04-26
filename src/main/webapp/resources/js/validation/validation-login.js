@@ -10,7 +10,7 @@ $(document).ready(function () {
         }
     });
 
-    var email = $.cookie('email');
+    /*var email = $.cookie('email');
     var password = $.cookie('password');
     var remember = $.cookie('remember');
     console.log('Remember - me checkbox : ' + remember);
@@ -37,7 +37,7 @@ $(document).ready(function () {
             $.cookie('password', '');
             $.cookie('remember', false);
         }
-    });
+    });*/
 
 });
 jQuery.extend(jQuery.validator.messages, {
