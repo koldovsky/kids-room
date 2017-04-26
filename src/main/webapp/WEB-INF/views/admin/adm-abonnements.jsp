@@ -213,7 +213,7 @@
                     <form id="assignAbonnementForm">
                         <input type="text" name="id" class="id form-control abonnementId"/>
                         <div class="form-group sizing-between">
-                            <select id="selectUser" name="select" style="width: 100%">
+                            <select id="selectUser" name="select" style="width: 100%" multiple="multiple">
                                 <option value=" " disabled selected hidden></option>
                             </select>
                         </div>

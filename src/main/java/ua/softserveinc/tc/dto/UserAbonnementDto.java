@@ -1,18 +1,18 @@
 package ua.softserveinc.tc.dto;
 
 public class UserAbonnementDto {
-    Long userId;
+    Long[] userId;
     Long abonnementId;
 
     public UserAbonnementDto() {
 
     }
 
-    public Long getUserId() {
+    public Long[] getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Long[] userId) {
         this.userId = userId;
     }
 

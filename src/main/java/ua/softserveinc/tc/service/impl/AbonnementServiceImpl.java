@@ -91,12 +91,14 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
 
     @Override
     public void assignUserToAbonnement(UserAbonnementDto userAbonnementDto) {
-        SubscriptionAssignment entity = new SubscriptionAssignment();
-        User user = userService.findUserId(userAbonnementDto.getUserId());
         Abonnement abonnement = abonnementMapper.toEntity(findAbonnement(userAbonnementDto.getAbonnementId()));
-        entity.setUser(user);
-        entity.setAbonnement(abonnement);
-        entity.setValid(true);
-        subscriptionAssignmentDao.create(entity);
+        for (Long id : userAbonnementDto.getUserId()) {
+            SubscriptionAssignment entity = new SubscriptionAssignment();
+            User user = userService.findUserId(id);
+            entity.setUser(user);
+            entity.setAbonnement(abonnement);
+            entity.setValid(true);
+            subscriptionAssignmentDao.create(entity);
+        }
     }
 }
