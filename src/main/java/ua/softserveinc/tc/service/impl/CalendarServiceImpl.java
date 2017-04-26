@@ -142,69 +142,45 @@ public class CalendarServiceImpl implements CalendarService {
         return eventService.getListOfEventDto(res);
     }
 
-    public final EventsCreatingResultsDto createMonthlyEvents(
-            final MonthlyEventDto monthlyEventDto) {
-
-        Date dateForMonthlyStart =
-                DateUtil.toDateISOFormat(monthlyEventDto.getStartTime());
-        Date dateForMonthlyEnd =
-                DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
-
-        List<String> daysWerentCreated = new LinkedList<>();
-        List<Event> res = new LinkedList<>();
-
+    public final EventsCreatingResultsDto createMonthlyEvents(final MonthlyEventDto monthlyEventDto) {
+        Date dateForMonthlyStart = DateUtil.toDateISOFormat(monthlyEventDto.getStartTime());
+        Date dateForMonthlyEnd = DateUtil.toDateISOFormat(monthlyEventDto.getEndTime());
         Calendar calendarEndDate = Calendar.getInstance();
         calendarEndDate.setTime(dateForMonthlyEnd);
-        Calendar calendarStartDate = Calendar.getInstance();
-        calendarStartDate.setTime(dateForMonthlyStart);
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateForMonthlyStart);
-
-        Set<Integer> days = monthlyEventDto.getDaysOfTheMonth();
+        List<String> daysWerentCreated = new LinkedList<>();
+        List<Event> res = new LinkedList<>();
+        Set<Integer> days = monthlyEventDto.getDaysOfMonth();
         Long newRecID = eventDao.getMaxRecurrentId() + 1;
+        long endDate = calendarEndDate.getTimeInMillis();
 
-        while (dateForMonthlyEnd.getTime() > calendar.getTimeInMillis()) {
-            for (int day : days) {
-
-                if ((calendar.get(Calendar.YEAR) == calendarStartDate.get(Calendar.YEAR)) &&
-                        (calendar.get(Calendar.MONTH) == calendarStartDate.get(Calendar.MONTH)) &&
-                        (calendarStartDate.get(Calendar.DAY_OF_MONTH) > day)) {
-                    continue;
-                }
-                if ((calendar.get(Calendar.YEAR) == calendarEndDate.get(Calendar.YEAR)) &&
-                        (calendarEndDate.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)) &&
-                        (calendarEndDate.get(Calendar.DAY_OF_MONTH) < day)) {
-                    break;
-                }
-
-                if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH) >= day) {
-                    calendar.set(Calendar.DAY_OF_MONTH, day);
-                } else {
-                    daysWerentCreated.add(day + "/" + (calendar.get(Calendar.MONTH) + 1) +
-                            "/" + calendar.get(Calendar.YEAR));
-                    continue;
-                }
-
+        while (calendar.getTimeInMillis() <= endDate) {
+            if (days.contains(calendar.get(Calendar.DAY_OF_MONTH))) {
                 Event newRecurrentEvent = genericMapper.toEntity(monthlyEventDto);
-                newRecurrentEvent.setRecurrentType(
-                        EventConstants.TypeOfRecurentEvent.MONTHLY);
+                newRecurrentEvent.setRecurrentType(EventConstants.TypeOfRecurentEvent.MONTHLY);
                 newRecurrentEvent.setRecurrentId(newRecID);
                 newRecurrentEvent.setTime(calendar, calendarEndDate);
-
                 res.add(newRecurrentEvent);
             }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        calendar.setTime(dateForMonthlyStart);
+        while (calendar.getTimeInMillis() <= endDate) {
+            monthlyEventDto.getDaysOfMonth().stream()
+                    .filter(day -> calendar.getActualMaximum(Calendar.DAY_OF_MONTH) < day)
+                    .forEach(day -> daysWerentCreated.add(String.format("%d/%d/%d",
+                            day, (calendar.get(Calendar.MONTH) + 1), calendar.get(Calendar.YEAR))));
+
             calendar.add(Calendar.MONTH, 1);
-            calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
 
         eventDao.saveSetOfEvents(res);
-
-        if(monthlyEventDto.getRecurrentId() != null)
+        if (monthlyEventDto.getRecurrentId() != null)
             sendNotifyForRecurrent(res);
 
-        return new EventsCreatingResultsDto(
-                eventService.getListOfEventDto(res), daysWerentCreated);
+        return new EventsCreatingResultsDto(eventService.getListOfEventDto(res), daysWerentCreated);
     }
 
     @Override
