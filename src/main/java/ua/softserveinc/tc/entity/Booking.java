@@ -9,6 +9,7 @@ import ua.softserveinc.tc.dto.BookingDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -66,6 +67,9 @@ public class Booking {
 
     @Column(name = "discounts")
     private String discounts;
+
+    @Column(name = "abonnements")
+    private String abonnements;
 
     public Booking() {
     }
@@ -172,6 +176,20 @@ public class Booking {
 
     public void setDiscounts(String discounts) {
         this.discounts = discounts;
+    }
+
+    public String getAbonnements() {
+        return abonnements;
+    }
+
+    public void setAbonnements(String abonnements) {
+        this.abonnements = abonnements;
+    }
+
+    public void setAbonnements(LocalTime abonnements) {
+        if (!abonnements.equals(LocalTime.MIN)) {
+            this.abonnements = abonnements.toString();
+        }
     }
 
     @Override

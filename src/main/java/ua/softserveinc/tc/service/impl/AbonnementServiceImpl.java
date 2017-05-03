@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.softserveinc.tc.dao.AbonnementDao;
 import ua.softserveinc.tc.dao.SubscriptionAssignmentDao;
-import ua.softserveinc.tc.dto.AbonnementDto;
-import ua.softserveinc.tc.dto.UserAbonnementDto;
+import ua.softserveinc.tc.dto.*;
 import ua.softserveinc.tc.entity.SubscriptionAssignment;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
@@ -20,6 +19,7 @@ import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,5 +100,28 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
             entity.setValid(true);
             subscriptionAssignmentDao.create(entity);
         }
+    }
+
+    @Override
+    public List<SubscriptionAssignmentDto> findSubscriptionAssignmentByUserId(long userId) {
+
+        subscriptionAssignmentDao.getAssignmentByUserId(userId);
+
+        return null;
+    }
+
+    @Override
+    public List<SubscriptionsUsedHoursDto> getAssignmentWithUsedHoursByUserId(long userId) {
+
+        return subscriptionAssignmentDao.getAssignmentByUserId(userId);
+    }
+
+    @Override
+    public DataTableOutput<UserAssigmentDto> findAllPurchasedAbonnements(SortingPagination sortPaginate) {
+        long rowCount = subscriptionAssignmentDao.getRowsCount();
+        long filterCount = (PaginationCharacteristics.searchCount == 0) ? rowCount
+                : PaginationCharacteristics.searchCount;
+
+        return new DataTableOutput<UserAssigmentDto>(rowCount, subscriptionAssignmentDao.getDtos(), filterCount);
     }
 }

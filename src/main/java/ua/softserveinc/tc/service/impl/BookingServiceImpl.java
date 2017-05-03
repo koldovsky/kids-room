@@ -7,12 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.softserveinc.tc.constants.DateConstants;
 import ua.softserveinc.tc.constants.ValidationConstants;
 import ua.softserveinc.tc.constants.BookingConstants;
+import ua.softserveinc.tc.dao.AbonnementUsageDao;
 import ua.softserveinc.tc.dao.BookingDao;
 import ua.softserveinc.tc.dao.RoomDao;
 import ua.softserveinc.tc.dao.UserDao;
-import ua.softserveinc.tc.dto.BookingDto;
-import ua.softserveinc.tc.dto.DayDiscountDTO;
-import ua.softserveinc.tc.dto.PersonalDiscountDTO;
+import ua.softserveinc.tc.dto.*;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.server.exception.ResourceNotFoundException;
 import ua.softserveinc.tc.service.*;
@@ -74,6 +73,12 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     @Inject
     private PersonalDiscountService personalDiscountService;
 
+    @Inject
+    private AbonnementsService abonnementsService;
+
+    @Inject
+    private AbonnementUsageService abonnementUsageService;
+
     @Override
     public void calculateAndSetDuration(Booking booking) {
         long difference = booking.getBookingEndTime().getTime()
@@ -82,7 +87,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
-    public void calculateAndSetSum(Booking booking) {
+    public void calculateAndSetSum(Booking booking, LocalTime startTime) {
         Long sum = rateService.calculateBookingCost(booking);
         booking.setSum(sum);
         booking.setBookingState(BookingState.COMPLETED);
@@ -125,30 +130,79 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         Date date = replaceBookingTime(booking, bookingDto.getEndTime());
         booking.setBookingEndTime(date);
         calculateAndSetDuration(booking);
-        calculateSumIncludingDiscounts(booking);
+        calculateSumIncludeAbonnement(booking);
 
         return booking;
     }
 
-    private void calculateSumIncludingDiscounts(Booking booking) {
+    private void calculateSumIncludeAbonnement(Booking booking) {
+        long userId = booking.getUser().getId();
+        List<SubscriptionsUsedHoursDto> userAssignment = abonnementsService.getAssignmentWithUsedHoursByUserId(userId);
+        if (userAssignment.size() == 0) {
+            calculateSumIncludingDiscounts(booking, DateUtil.dateToLocalTime(booking.getBookingStartTime()));
+            return;
+        }
+        long bookingUnpaidTimeInMinutes = MINUTES.between(DateUtil.dateToLocalDateTime(booking.getBookingStartTime()),
+                DateUtil.dateToLocalDateTime(booking.getBookingEndTime()));
+
+        LocalDateTime fullCurrentTime = LocalDateTime.now();
+        LocalTime timeWhenAbonnementsWereUsed = LocalTime.MIN;
+        while (bookingUnpaidTimeInMinutes != 0) {
+            Optional<SubscriptionsUsedHoursDto> usedHoursDto = userAssignment.stream()
+                    .filter(SubscriptionsUsedHoursDto::isActive)
+                    .sorted(Comparator.comparingLong(SubscriptionsUsedHoursDto::getMinutesLeft)).findFirst();
+            if (!usedHoursDto.isPresent()) {
+                booking.setAbonnements(timeWhenAbonnementsWereUsed);
+                calculateSumIncludingDiscounts(booking,
+                        DateUtil.addTwoTimes(DateUtil.dateToLocalTime(booking.getBookingStartTime()),
+                                timeWhenAbonnementsWereUsed));
+                break;
+            }
+            long nextPeriod = getNextPaidMinutesByAbonnement(usedHoursDto.get(), bookingUnpaidTimeInMinutes,
+                    usedHoursDto.get().getAbonnementsMinutes());
+            timeWhenAbonnementsWereUsed = DateUtil.addTwoTimes(timeWhenAbonnementsWereUsed,
+                    LocalTime.ofSecondOfDay(nextPeriod * 60));
+
+            AbonnementUsage abonnementUsage = new AbonnementUsage(usedHoursDto.get().getSubscriptionAssignment(),
+                    fullCurrentTime, nextPeriod);
+            abonnementUsageService.create(abonnementUsage);
+
+            bookingUnpaidTimeInMinutes -= nextPeriod;
+        }
+        booking.setAbonnements(timeWhenAbonnementsWereUsed);
+    }
+
+    private long getNextPaidMinutesByAbonnement(SubscriptionsUsedHoursDto assignment, long bookingUnpaidTimeInMinutes,
+                                                long l) {
+        if (bookingUnpaidTimeInMinutes >= l) {
+            assignment.getAssignmentDto().setValid(false);
+            abonnementUsageService.updateSubscription(assignment.getSubscriptionAssignment());
+            return l;
+        }
+
+        return bookingUnpaidTimeInMinutes;
+    }
+
+    private void calculateSumIncludingDiscounts(Booking booking, LocalTime start) {
         List<DayDiscountDTO> dayDiscountDTOS = dayDiscountService
-                .getDayDiscountsForPeriod(dateToLocalDateTime(booking.getBookingStartTime()).toLocalDate(),
-                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalDate(),
-                        dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime(),
-                        dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime(), true);
+                .getDayDiscountsForPeriod(DateUtil.dateToLocalDate(booking.getBookingStartTime()),
+                        DateUtil.dateToLocalDate(booking.getBookingEndTime()),
+                        start, DateUtil.dateToLocalTime(booking.getBookingEndTime()), true);
         List<PersonalDiscountDTO> personalDiscountDTOS = personalDiscountService
                 .findPersonalDiscountByUserId(booking.getUser().getId());
+        Rate roomRate = booking.getRoom().getRates().get(0);
 
         if (dayDiscountDTOS.size() + personalDiscountDTOS.size() == 0) {
-            calculateAndSetSum(booking);
+            booking.setSum(calculateAndGetSum(start,
+                    DateUtil.dateToLocalTime(booking.getBookingEndTime()),
+                    0, roomRate));
         } else {
             Map<Integer, LocalTime> outputDiscounts = new HashMap<>();
             List<Discount> discounts = dayDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList());
             discounts.addAll(personalDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList()));
 
-            LocalTime startPeriodTime = dateToLocalDateTime(booking.getBookingStartTime()).toLocalTime();
-            LocalTime endPeriodTime = dateToLocalDateTime(booking.getBookingEndTime()).toLocalTime();
-            Rate roomRate = booking.getRoom().getRates().get(0);
+            LocalTime startPeriodTime = start;
+            LocalTime endPeriodTime = DateUtil.dateToLocalTime(booking.getBookingEndTime());
             booking.setSum(0L);
             while (startPeriodTime.isBefore(endPeriodTime)) {
                 startPeriodTime = calculateSumForNextPeriod(booking, startPeriodTime, endPeriodTime,
@@ -159,10 +213,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                     .map(integer -> String.valueOf(integer) + "% - " + outputDiscounts.get(integer))
                     .collect(Collectors.joining("<br>")));
         }
-    }
-
-    private LocalDateTime dateToLocalDateTime(Date date) {
-        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }
 
     private LocalTime calculateSumForNextPeriod(Booking booking, LocalTime startPeriodTime, LocalTime endBookingTime,
@@ -182,11 +232,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
         if (maxDiscountValue != 0 && outputDiscounts.containsKey(maxDiscountValue)) {
             LocalTime time = outputDiscounts.get(maxDiscountValue);
 
-            outputDiscounts.replace(maxDiscountValue, Discount.addTwoTimes(time,
-                    Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime)));
+            outputDiscounts.replace(maxDiscountValue, DateUtil.addTwoTimes(time,
+                    DateUtil.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime)));
         } else {
             outputDiscounts.put(maxDiscountValue,
-                    Discount.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime));
+                    DateUtil.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime));
         }
 
         booking.setSum(booking.getSum() + calculateAndGetSum(startPeriodTime, endPeriodTime,

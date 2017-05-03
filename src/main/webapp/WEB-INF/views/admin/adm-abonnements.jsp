@@ -18,10 +18,11 @@
 <script src="${pageContext.request.contextPath}/resources/js/lib/select2.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-abonnement.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/admin-abonnement-change.js'></script>
 
 
 <body>
-<div class="table-wrapper">
+<div class="table-wrapper" id="abonnement-list">
     <div class="hide-border">
         <th colspan="7" class="set-standard-color">
             <legend class="for-table"><strong class="title-font">
@@ -29,6 +30,9 @@
                 <spring:message code="administrator.abonnements"/></strong>
             </legend>
         </th>
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToUserAbonnement">
+            Assigning history
+        </button>
     </div>
 
     <div class="abonnement-datatable-wrapper">
@@ -65,6 +69,47 @@
             <spring:message code="administrator.add"/>
         </button>
     </a>
+</div>
+
+<!-- List of assingnments -->
+<div class="table-wrapper" id="users-with-assign-abonnements" hidden>
+    <div class="hide-border">
+        <th colspan="5" class="set-standard-color">
+            <legend class="for-table">
+                <strong class="title-font">
+                    <i class="glyphicon glyphicon-gift"></i>
+                    Purchased abonnements
+                </strong>
+            </legend>
+        </th>
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToAbonnements">
+            Abonnements
+        </button>
+    </div>
+
+    <div class="assigned-abonnement-datatable-wrapper">
+        <div class="column-names">
+            <span>user</span>
+            <span>abonnement</span>
+        </div>
+        <div class="search-fields">
+            <div><b>Search:</b></div>
+            <input type="text" class="form-control search-input search-input-first" placeholder="user"/>
+            <input type="text" class="form-control search-input" placeholder="abonnement"/>
+        </div>
+        <table class="reg-form dt datatable assigned-abonnement-datatable">
+            <thead>
+            <tr>
+                <th style="display: none;"><strong>#</strong></th>
+                <th><strong>Username</strong></th>
+                <th><strong><spring:message code="administrator.abonnement.name"/></strong></th>
+                <th><strong><spring:message code="administrator.abonnement.hour"/></strong></th>
+                <th><strong>Hours left</strong></th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 <!-- create Abonnement dialog -->

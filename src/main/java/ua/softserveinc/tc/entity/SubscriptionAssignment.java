@@ -8,6 +8,7 @@ import ua.softserveinc.tc.dto.SubscriptionAssignmentDto;
 import ua.softserveinc.tc.dto.UserDto;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,7 +29,10 @@ public class SubscriptionAssignment {
     private Abonnement abonnement;
 
     @Column(name = AbonnementConstants.Entity.VALID)
-    Boolean valid;
+    private Boolean valid;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "assignment")
+    private List<AbonnementUsage> abonnementUsages;
 
     public SubscriptionAssignment() {
     }
@@ -59,7 +63,7 @@ public class SubscriptionAssignment {
     }
 
     public void setUser(UserDto userDto) {
-        User user = this.getUser();
+        user = new User();
         user.setId(userDto.getId());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -76,7 +80,7 @@ public class SubscriptionAssignment {
     }
 
     public void setAbonnement(AbonnementDto dto) {
-        Abonnement abonnement = this.getAbonnement();
+        abonnement = new Abonnement();
         abonnement.setId(dto.getId());
         abonnement.setName(dto.getName());
         abonnement.setHour(dto.getHour());
