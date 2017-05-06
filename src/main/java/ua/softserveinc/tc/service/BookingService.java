@@ -8,6 +8,7 @@ import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.BookingsCharacteristics;
 import ua.softserveinc.tc.util.BookingsHolder;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public interface BookingService extends BaseService<Booking> {
 
     List<BookingDto> getAllPlannedBookingsInTheRoom(Room room);
 
-    void calculateAndSetSum(Booking booking);
+    void calculateAndSetSum(Booking booking, LocalTime start);
 
     void calculateAndSetDuration(Booking booking);
 

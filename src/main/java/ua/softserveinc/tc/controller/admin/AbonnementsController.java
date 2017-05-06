@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dto.AbonnementDto;
 import ua.softserveinc.tc.dto.UserAbonnementDto;
+import ua.softserveinc.tc.dto.UserAssigmentDto;
 import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
@@ -46,6 +47,12 @@ public class AbonnementsController {
     public DataTableOutput<AbonnementDto> paginateAbonnements(@RequestParam String parameters) {
         SortingPagination sortingPagination = paginationMapper.mapSortingPaginationFromJson(parameters);
         return abonnementsService.paginationAbonnements(sortingPagination);
+    }
+
+    @GetMapping("adm-all-abonnement-assigment")
+    public DataTableOutput<UserAssigmentDto> getAbonnementsAssigment(@RequestParam String parameters) {
+        SortingPagination sortingPagination = paginationMapper.mapSortingPaginationFromJson(parameters);
+        return abonnementsService.findAllPurchasedAbonnements(sortingPagination);
     }
 
     @GetMapping("adm-abonnement/{id}")

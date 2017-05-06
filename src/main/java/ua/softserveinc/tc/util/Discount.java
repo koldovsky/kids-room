@@ -65,18 +65,10 @@ public class Discount {
         return startTime.isBefore(endPeriodTime) && endTime.isAfter(startPeriodTime);
     }
 
-    public static LocalTime differenceBetweenTwoTimes(LocalTime time1, LocalTime time2) {
-        return LocalTime.ofSecondOfDay(SECONDS.between(time1, time2));
-    }
-
-    public static LocalTime addTwoTimes(LocalTime time1, LocalTime time2) {
-        return LocalTime.ofSecondOfDay(time1.toSecondOfDay() + time2.toSecondOfDay());
-    }
-
     @Override
     public String toString() {
         return String.valueOf(value) + "% - "
-                + Discount.differenceBetweenTwoTimes(startTime, endTime);
+                + DateUtil.differenceBetweenTwoTimes(startTime, endTime);
     }
 
     @Override

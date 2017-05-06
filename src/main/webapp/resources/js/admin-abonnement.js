@@ -1,9 +1,42 @@
 'use strict';
 let abonnementTable;
+let purchasedAbonnementsTable;
+
 $(function () {
-    abonnementTable = buildDataTable('.abonnement-datatable', 'adm-pag-abonnements', columns, abonnementsFunctions);
+    abonnementTable = buildDataTable('.abonnement-datatable', 'adm-pag-abonnements',
+        abonnementsColumns, abonnementsFunctions);
+    purchasedAbonnementsTable = buildDataTable('.assigned-abonnement-datatable', 'adm-all-abonnement-assigment',
+        purchasedAbonnements, function () {});
 });
-let columns = [
+
+let purchasedAbonnements = [
+    {
+        'data': 'user',
+        'render': function (data, type, full) {
+            return `<div class='name'>${full.user}</div>`;
+        }
+    },
+    {
+        'data': 'abonnement',
+        'render': function (data, type, full) {
+            return `<div class='name'>${full.abonnement}</div>`;
+        }
+    },
+    {
+        'data': 'hours',
+        'render': function (data, type, full) {
+            return `<div class='hour'>${full.hours}</div>`;
+        }
+    },
+    {
+        'data': 'hourLeft',
+        'render': function (data, type, full) {
+            return `<div class='hour'>${full.hoursLeft}</div>`;
+        }
+    }
+];
+
+let abonnementsColumns = [
     {
         'data': 'name',
         'render': function (data, type, full) {

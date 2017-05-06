@@ -9,12 +9,16 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 public final class DateUtil {
     private static DateFormat dateFormat = new SimpleDateFormat(
@@ -33,6 +37,26 @@ public final class DateUtil {
 
     private DateUtil() {
         // Suppresses default constructor, ensuring non-instantiability.
+    }
+
+    public static LocalDateTime dateToLocalDateTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+    }
+
+    public static LocalDate dateToLocalDate(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public static LocalTime dateToLocalTime(Date date) {
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
+    }
+
+    public static LocalTime differenceBetweenTwoTimes(LocalTime time1, LocalTime time2) {
+        return LocalTime.ofSecondOfDay(SECONDS.between(time1, time2));
+    }
+
+    public static LocalTime addTwoTimes(LocalTime time1, LocalTime time2) {
+        return LocalTime.ofSecondOfDay(time1.toSecondOfDay() + time2.toSecondOfDay());
     }
 
     public static Date toDate(String date) {

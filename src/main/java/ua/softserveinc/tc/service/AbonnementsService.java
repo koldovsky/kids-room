@@ -1,12 +1,13 @@
 package ua.softserveinc.tc.service;
 
-import ua.softserveinc.tc.dto.AbonnementDto;
-import ua.softserveinc.tc.dto.UserAbonnementDto;
+import ua.softserveinc.tc.dto.*;
+import ua.softserveinc.tc.entity.SubscriptionAssignment;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.Abonnement;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AbonnementsService extends BaseService<Abonnement> {
 
@@ -23,4 +24,10 @@ public interface AbonnementsService extends BaseService<Abonnement> {
     AbonnementDto createAbonnement(AbonnementDto abonnementDto);
 
     void assignUserToAbonnement(UserAbonnementDto userAbonnementDto);
+
+    List<SubscriptionAssignmentDto> findSubscriptionAssignmentByUserId(long userId);
+
+    List<SubscriptionsUsedHoursDto> getAssignmentWithUsedHoursByUserId(long userId);
+
+    DataTableOutput<UserAssigmentDto> findAllPurchasedAbonnements(SortingPagination sortPaginate);
 }
