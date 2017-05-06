@@ -51,6 +51,7 @@ public class AbonnementsController {
 
     @GetMapping("adm-all-abonnement-assigment")
     public DataTableOutput<UserAssigmentDto> getAbonnementsAssigment(@RequestParam String parameters) {
+        System.out.println(parameters);
         SortingPagination sortingPagination = paginationMapper.mapSortingPaginationFromJson(parameters);
         return abonnementsService.findAllPurchasedAbonnements(sortingPagination);
     }

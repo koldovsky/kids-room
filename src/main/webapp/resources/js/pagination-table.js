@@ -52,8 +52,9 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
                     datatableObject.order.forEach(function (dtOrder) {
                         let indOder = 0;
                         if (dtOrder.column != 0) {
-                            indOder = dtOrder.column - 1;
+                            indOder = dtOrder.column;
                         }
+                        console.log(dtOrder);
                         let column = $(wrapper).find(".column-names").children()[indOder];
                         dtOrder.dir = defineOrder(dtOrder.dir);
                         sendObj.sortings.push({

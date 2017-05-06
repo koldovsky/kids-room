@@ -400,3 +400,10 @@ th.th-size {
     text-align: center;
     color: red;
 }
+
+.name, .hour {
+    background-color: white;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+}

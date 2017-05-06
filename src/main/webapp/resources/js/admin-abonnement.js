@@ -6,7 +6,11 @@ $(function () {
     abonnementTable = buildDataTable('.abonnement-datatable', 'adm-pag-abonnements',
         abonnementsColumns, abonnementsFunctions);
     purchasedAbonnementsTable = buildDataTable('.assigned-abonnement-datatable', 'adm-all-abonnement-assigment',
-        purchasedAbonnements, function () {});
+        purchasedAbonnements, function () {
+            $(document.body).on('keyup', '.search-fields', function () {
+                purchasedAbonnementsTable.ajax.reload(null, false);
+            });
+        });
 });
 
 let purchasedAbonnements = [
@@ -17,6 +21,13 @@ let purchasedAbonnements = [
         }
     },
     {
+        'data': 'email',
+        'orderable': false,
+        'render': function (data, type, full) {
+            return `<div class='name'>${full.email}</div>`;
+        }
+    },
+    {
         'data': 'abonnement',
         'render': function (data, type, full) {
             return `<div class='name'>${full.abonnement}</div>`;
@@ -24,6 +35,7 @@ let purchasedAbonnements = [
     },
     {
         'data': 'hours',
+        'orderable': false,
         'render': function (data, type, full) {
             return `<div class='hour'>${full.hours}</div>`;
         }
@@ -31,7 +43,7 @@ let purchasedAbonnements = [
     {
         'data': 'hourLeft',
         'render': function (data, type, full) {
-            return `<div class='hour'>${full.hoursLeft}</div>`;
+            return `<div class='hour'>${full.leftTime}</div>`;
         }
     }
 ];
@@ -57,6 +69,7 @@ let abonnementsColumns = [
     },
     {
         'data': null,
+        'orderable': false,
         'render': function () {
             return "<span><a tabindex='-1'>" +
                 "<button class='btn btn-raised btn-info btn-edit' " +
@@ -73,7 +86,7 @@ let abonnementsColumns = [
                 "<span class='glyphicon glyphicon-user'>" +
                 "</button></span>";
         },
-        'orderable': false
+        'orderable': false,
     },
     {
         'data': null,
@@ -85,7 +98,7 @@ let abonnementsColumns = [
                 "<div class='slider round'></div>" +
                 "</label></span>";
         },
-        'orderable': false
+        'orderable': false,
     }
 ];
 
@@ -150,7 +163,9 @@ const abonnementsFunctions = function () {
             contentType: 'application/json',
             datatype: 'json',
             data: JSON.stringify(dataSender),
-            success: function () {},
+            success: function () {
+                purchasedAbonnementsTable.ajax.reload(null, false);
+            },
             error: function () {}
         });
     });

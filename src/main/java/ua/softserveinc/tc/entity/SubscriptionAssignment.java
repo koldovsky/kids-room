@@ -96,6 +96,10 @@ public class SubscriptionAssignment {
         this.valid = valid;
     }
 
+    public List<AbonnementUsage> getAbonnementUsages() {
+        return abonnementUsages;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
