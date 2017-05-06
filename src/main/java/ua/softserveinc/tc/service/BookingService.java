@@ -128,7 +128,7 @@ public interface BookingService extends BaseService<Booking> {
     List<Booking> getNotCompletedAndCancelledBookings(Date startDate, Date endDate, Room room);
 
     /**
-     * Get arrays of dates of all reserved bookings for given period of time
+     * Get arrays of dates of all reserved periods for given period of time
      * and room. The first date of array is a start date, and other - is end
      * date. If any of the input parameter is null, then array of length of
      * 0 is returns.
@@ -138,14 +138,14 @@ public interface BookingService extends BaseService<Booking> {
      * @param room the given room
      * @return array of Dates
      */
-    List<Date[]> getDatesOfReservedBookings(Date startDate, Date endDate, Room room);
+    List<Date[]> getFullRoomTimePeriods(Date startDate, Date endDate, Room room);
 
     /**
      *
-     * @param characteristics
-     * @return
+     * @param characteristics the given bookings characteristics object
+     * @return the list of dates which represent periods when room is full
      */
-    List<Date[]> getDatesOfReservedBookings(BookingsCharacteristics characteristics);
+    List<Date[]> getFullRoomTimePeriods(BookingsCharacteristics characteristics);
 
     /**
      * Checks if there is a duplicated bookings in the given list of BookingDto.
@@ -157,20 +157,19 @@ public interface BookingService extends BaseService<Booking> {
     boolean hasDuplicateBookings(List<BookingDto> listDto);
 
     /**
-     * Checks if there are available places in the given room for given number
-     * of kids and bookings characteristics object. The first index of given array contain
+     * Checks if there are available places in the given room for given
+     * bookings characteristics object. The first index of given array contain
      * start date and second index of given array contain end date of given period.
      *
      *
      * @param characteristic the given bookings characteristics object
-     * @param numOfKids the given number of children
      * @return the list of figured out appropriate dates
      */
-    boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic, int numOfKids);
+    boolean hasAvailablePlacesInTheRoom(BookingsCharacteristics characteristic);
 
     /**
      * Figures out all time periods where there are no available places in the room
-     * for given room starting from current date and finishing after 1000 years
+     * for given room starting from current date
      *
      * @param room the given room
      * @return the list of figured out appropriate dates
@@ -183,14 +182,9 @@ public interface BookingService extends BaseService<Booking> {
      * is true then only first founded date of period will be returned. The second will be null.
      *
      * @param characteristics the given bookings characteristics object
-     * @param numOfKids the given number of children
-     * @param onlyStartOfFirstPeriod indicates that needed only first date of founded period,
-     * the second date will be null
      * @return the list of figured out appropriate dates
      */
-    List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics,
-                                                  int numOfKids,
-                                                  boolean onlyStartOfFirstPeriod);
+    List<Date[]> getNotAvailablePlacesTimePeriods(BookingsCharacteristics characteristics);
 
     /**
      * Persists the list of bookings objects that are created from the
