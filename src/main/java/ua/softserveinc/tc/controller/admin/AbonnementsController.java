@@ -27,16 +27,16 @@ import java.util.List;
 public class AbonnementsController {
 
     @Autowired
-    Environment environment;
+    private Environment environment;
 
     @Autowired
-    AbonnementsService abonnementsService;
+    private AbonnementsService abonnementsService;
 
     @Autowired
-    AbonnementsValidator abonnementsValidator;
+    private AbonnementsValidator abonnementsValidator;
 
     @Autowired
-    PaginationMapper paginationMapper;
+    private PaginationMapper paginationMapper;
 
     @GetMapping("adm-all-abonnements")
     public List<AbonnementDto> selectAbonnements() {
@@ -91,5 +91,15 @@ public class AbonnementsController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(abonnementsService.createAbonnement(abonnementDto), HttpStatus.OK);
+    }
+
+    @GetMapping("abonnement-max-price")
+    public long getMaxPrice() {
+        return abonnementsService.getMaxAbonnementsPrice();
+    }
+
+    @GetMapping("abonnement-min-price")
+    public long getMinPrice() {
+        return abonnementsService.getMinAbonnementsPrice();
     }
 }

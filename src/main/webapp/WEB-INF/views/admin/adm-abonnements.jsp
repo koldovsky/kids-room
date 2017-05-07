@@ -44,7 +44,8 @@
         <div class="search-fields">
             <div><b>Search:</b></div>
             <input type="text" class="form-control search-input search-input-first" placeholder="name"/>
-            <input type="text" class="form-control search-input" placeholder="price"/>
+            <input id="abonnement-price" type="text" class="form-control search-input" placeholder="price"/>
+            <div id="range-slider" class="search-input"></div>
             <input type="text" class="form-control search-input" placeholder="hour"/>
         </div>
         <table class="reg-form dt datatable abonnement-datatable">

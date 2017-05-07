@@ -16,6 +16,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
@@ -120,9 +121,20 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                 int value = Integer.parseInt(item.getValue());
                 restrictions.add(builder.equal(root.get(item.getColumn()), value));
             } catch (NumberFormatException ne) {
-                restrictions.add(builder.like(
-                        root.get(item.getColumn()), "%" + item.getValue() + "%")
-                );
+                if (item.getValue().contains(" - ")) {
+                    StringTokenizer s = new StringTokenizer(item.getValue());
+                    restrictions.add(builder.greaterThanOrEqualTo(
+                            root.get(item.getColumn()), Integer.parseInt(s.nextToken()))
+                    );
+                    s.nextToken();
+                    restrictions.add(builder.lessThanOrEqualTo(
+                            root.get(item.getColumn()), Integer.parseInt(s.nextToken()))
+                    );
+                } else {
+                    restrictions.add(builder.like(
+                            root.get(item.getColumn()), "%" + item.getValue() + "%")
+                    );
+                }
             }
         });
 

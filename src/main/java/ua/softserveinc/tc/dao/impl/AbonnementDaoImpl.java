@@ -12,6 +12,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class AbonnementDaoImpl extends BaseDaoImpl<Abonnement> implements AbonnementDao {
@@ -28,5 +29,27 @@ public class AbonnementDaoImpl extends BaseDaoImpl<Abonnement> implements Abonne
         criteria.set(AbonnementConstants.Hibernate.ABONNEMENT_IS_ACTIVE, active);
         criteria.where(builder.equal(root.get(AbonnementConstants.Hibernate.ABONNEMENT_ID), id));
         entityManager.createQuery(criteria).executeUpdate();
+    }
+
+    @Override
+    public Optional<Long> getMaxPrice() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        Root<Abonnement> root = criteria.from(Abonnement.class);
+
+        criteria.select(builder.max(root.get("price").as(Long.class)));
+
+        return Optional.of(entityManager.createQuery(criteria).getSingleResult());
+    }
+
+    @Override
+    public Optional<Long> getMinPrice() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
+        Root<Abonnement> root = criteria.from(Abonnement.class);
+
+        criteria.select(builder.min(root.get("price").as(Long.class)));
+
+        return Optional.of(entityManager.createQuery(criteria).getSingleResult());
     }
 }

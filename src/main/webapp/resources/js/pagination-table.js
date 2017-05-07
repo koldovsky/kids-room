@@ -54,7 +54,6 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
                         if (dtOrder.column != 0) {
                             indOder = dtOrder.column;
                         }
-                        console.log(dtOrder);
                         let column = $(wrapper).find(".column-names").children()[indOder];
                         dtOrder.dir = defineOrder(dtOrder.dir);
                         sendObj.sortings.push({

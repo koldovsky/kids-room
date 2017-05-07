@@ -1,8 +1,12 @@
 'use strict';
 let abonnementTable;
 let purchasedAbonnementsTable;
+let maxValue;
+let minValue;
 
 $(function () {
+    getMaxPrice();
+
     abonnementTable = buildDataTable('.abonnement-datatable', 'adm-pag-abonnements',
         abonnementsColumns, abonnementsFunctions);
     purchasedAbonnementsTable = buildDataTable('.assigned-abonnement-datatable', 'adm-all-abonnement-assigment',
@@ -101,6 +105,42 @@ let abonnementsColumns = [
         'orderable': false,
     }
 ];
+
+function getMaxPrice () {
+    $.ajax({
+        type: 'GET',
+        url: 'abonnement-max-price',
+        success: function (max) {
+            maxValue = max;
+            getMinPrice();
+        }
+    })
+}
+
+function getMinPrice () {
+    $.ajax({
+        type: 'GET',
+        url: 'abonnement-min-price',
+        success: function (min) {
+            minValue = min;
+
+            $('#range-slider').slider({
+                range: true,
+                min: minValue,
+                max: maxValue,
+                values: [minValue, maxValue],
+                slide: function(event, ui) {
+                    $("#abonnement-price").val(`${ui.values[0]} - ${ui.values[1]}`);
+                },
+                stop: function (event, ui) {
+                    abonnementTable.ajax.reload(null, false);
+                }
+            });
+
+            $("#abonnement-price").val(`${$("#range-slider").slider("values", 0)} - ${$("#range-slider").slider("values", 1)}`);
+        }
+    })
+}
 
 const abonnementsFunctions = function () {
 
