@@ -18,7 +18,7 @@ $(document).ready(function () {
     if ($(window).width() < 1000) {
         $('#mobile').attr('class', '');
     }
-
+    getMyAbonnements(localStorage['userId']);
     getPersonalDiscounts();
 });
 
@@ -135,6 +135,20 @@ $(function () {
         autoOpen: false,
         modal: true,
         width: 400,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
+    $('#abonnement-info').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 900,
         show: {
             effect: 'drop',
             duration: 500
@@ -319,6 +333,10 @@ $(function () {
 
     $('#personal-discount').click(function () {
         $('#personal-discounts-dialog').dialog('open');
+    })
+
+    $('#my-abonnements').click(function () {
+        $('#abonnement-info').dialog('open');
     })
 });
 
@@ -1287,6 +1305,32 @@ function getPersonalDiscounts() {
                     rows += '</tr>';
                 });
                 $('#personal-discounts-dialog').find('tbody').append(rows);
+            }
+        }
+    });
+}
+
+function getMyAbonnements(userId) {
+    let url = `restful/abonnement/` + userId;
+    let rows = '';
+
+    console.log(userId);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(result) {
+            let abonnements = result;
+            if (abonnements.length > 0) {
+                $.each(abonnements, function (i, abonnement) {
+                    rows += '<tr>';
+                    rows += `<td>${abonnement.name}</td>`;
+                    rows += `<td>${abonnement.price}</td>`;
+                    rows += `<td>${abonnement.hour}</td>`;
+                    rows += `<td>${abonnement.remainingTime}</td>`;
+                    // rows += `<td>${abonnement.assingDate}</td>`;
+                    rows += '</tr>';
+                });
+                $('#abonnement-info').find('tbody').append(rows);
             }
         }
     });

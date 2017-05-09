@@ -1,23 +1,18 @@
 package ua.softserveinc.tc.controller.admin;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.softserveinc.tc.constants.AbonnementConstants;
 import ua.softserveinc.tc.dto.AbonnementDto;
-import ua.softserveinc.tc.dto.UserAbonnementDto;
+import ua.softserveinc.tc.dto.UserAbonnementAssignmentDto;
 import ua.softserveinc.tc.dto.UserAssigmentDto;
-import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.pagination.DataTableOutput;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.mapper.PaginationMapper;
 import ua.softserveinc.tc.service.AbonnementsService;
-import ua.softserveinc.tc.service.UserService;
-import ua.softserveinc.tc.util.JsonUtil;
 import ua.softserveinc.tc.validator.AbonnementsValidator;
 
 import java.util.List;
@@ -74,7 +69,7 @@ public class AbonnementsController {
     }
 
     @PostMapping("adm-assign-abonnement")
-    public ResponseEntity<?> assignUser(@RequestBody UserAbonnementDto userAbonnementDto) {
+    public ResponseEntity<?> assignUser(@RequestBody UserAbonnementAssignmentDto userAbonnementDto) {
         abonnementsService.assignUserToAbonnement(userAbonnementDto);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }

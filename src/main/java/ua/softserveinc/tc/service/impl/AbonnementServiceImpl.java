@@ -18,8 +18,8 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,7 +90,7 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     }
 
     @Override
-    public void assignUserToAbonnement(UserAbonnementDto userAbonnementDto) {
+    public void assignUserToAbonnement(UserAbonnementAssignmentDto userAbonnementDto) {
         Abonnement abonnement = abonnementMapper.toEntity(findAbonnement(userAbonnementDto.getAbonnementId()));
         for (Long id : userAbonnementDto.getUserId()) {
             SubscriptionAssignment entity = new SubscriptionAssignment();
@@ -136,5 +136,13 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     @Override
     public long getMinAbonnementsPrice() {
         return abonnementDao.getMinPrice().orElse(0L);
+    }
+
+    @Override
+    public List<UserAbonnementInfoDto> getAbonnementInfoByUserId(long userId) {
+        List<UserAbonnementInfoDto> result = new ArrayList<>();
+        subscriptionAssignmentDao.getAssignmentByUserId(userId).forEach(subscriptionsUsedHoursDto ->
+            result.add(new UserAbonnementInfoDto(subscriptionsUsedHoursDto)));
+        return result;
     }
 }
