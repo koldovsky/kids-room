@@ -109,6 +109,22 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     @Override
+    public List<RoomReportValuesDto> generateRoomReport(List<Booking> bookings) {
+        List<RoomReportValuesDto> report = new ArrayList<>();
+
+        bookings.forEach(booking -> {
+            RoomReportValuesDto dto = new RoomReportValuesDto(booking);
+            if (report.contains(dto)) {
+                report.get(report.indexOf(dto)).addReports(dto);
+            } else {
+                report.add(dto);
+            }
+        });
+
+        return report;
+    }
+
+    @Override
     public Map<Room, Long> generateStatistics(List<Booking> bookings) {
         return bookings.stream()
                 .collect(Collectors.groupingBy(Booking::getRoom,
@@ -137,7 +153,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
     private void calculateSumIncludeAbonnement(Booking booking) {
         long userId = booking.getUser().getId();
-        List<SubscriptionsUsedHoursDto> userAssignment = abonnementsService.getAssignmentWithUsedHoursByUserId(userId);
+        List<SubscriptionsUsedHoursDto> userAssignment = abonnementsService
+                .getAssignmentWithUsedHoursByUserId(userId);
         if (userAssignment.size() == 0) {
             calculateSumIncludingDiscounts(booking, DateUtil.dateToLocalTime(booking.getBookingStartTime()));
             return;
@@ -159,7 +176,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 break;
             }
             long nextPeriod = getNextPaidMinutesByAbonnement(usedHoursDto.get(), bookingUnpaidTimeInMinutes,
-                    usedHoursDto.get().getAbonnementsMinutes());
+                    usedHoursDto.get().getMinutesLeft());
             timeWhenAbonnementsWereUsed = DateUtil.addTwoTimes(timeWhenAbonnementsWereUsed,
                     LocalTime.ofSecondOfDay(nextPeriod * 60));
 

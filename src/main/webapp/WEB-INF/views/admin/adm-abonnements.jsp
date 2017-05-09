@@ -51,7 +51,6 @@
         <table class="reg-form dt datatable abonnement-datatable">
             <thead>
             <tr>
-                <th style="display: none;"><strong>#</strong></th>
                 <th><strong><spring:message code="administrator.abonnement.name"/></strong></th>
                 <th><strong><spring:message code="administrator.abonnement.price"/></strong></th>
                 <th><strong><spring:message code="administrator.abonnement.hour"/></strong></th>
@@ -104,11 +103,11 @@
         <table class="reg-form dt datatable assigned-abonnement-datatable">
             <thead>
             <tr>
-                <th><strong>Username</strong></th>
+                <th><strong><spring:message code="administrator.personalDiscount.username"/></strong></th>
                 <th><strong><spring:message code="user.email"/></strong></th>
                 <th><strong><spring:message code="administrator.abonnement.name"/></strong></th>
                 <th><strong><spring:message code="administrator.abonnement.hour"/></strong></th>
-                <th><strong>Hours left</strong></th>
+                <th><strong><spring:message code="administrator.abonnement.hoursLeft"/></strong></th>
             </tr>
             </thead>
             <tbody></tbody>

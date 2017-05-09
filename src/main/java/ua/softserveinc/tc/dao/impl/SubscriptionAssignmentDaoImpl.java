@@ -34,8 +34,10 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
         Root<SubscriptionAssignment> root = query.from(SubscriptionAssignment.class);
         Join<SubscriptionAssignment, User> userJoin = root.join("user");
         Join<SubscriptionAssignment, AbonnementUsage> usageJoin = root.join("abonnementUsages", JoinType.LEFT);
+        Expression<Integer> usedMinutes = usageJoin.get("usedMinutes").as(Integer.class);
 
-        query.multiselect(root, criteria.sumAsLong(usageJoin.get("usedMinutes")))
+        query.multiselect(root, criteria.<Long>selectCase().when(criteria.sumAsLong(usedMinutes).isNull(), 0L)
+                .otherwise(usedMinutes.as(Long.class)))
                 .where(criteria.equal(userJoin.get("id"), userId), criteria.equal(root.get("valid"), true));
         query.groupBy(root);
 
@@ -172,7 +174,8 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
 
     @Override
     public List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder criteria,
-                                               Root<SubscriptionAssignment> root) {
+                                               Root<SubscriptionAssignment> root,
+                                               CriteriaQuery<SubscriptionAssignment> query) {
         List<Predicate> restrictions = new ArrayList<>();
         Join<SubscriptionAssignment, User> userJoin = root.join("user");
         Join<SubscriptionAssignment, Abonnement> abonnementJoin = root.join("abonnement");
@@ -183,14 +186,26 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
         Expression<String> abonnement = abonnementJoin.get("name");
         userName.alias("user");
         abonnement.alias("abonnement");
-        List<Expression<?>> expressions = Stream.of(userName, abonnement).collect(Collectors.toList());
+        root.get("valid").alias("valid");
+        List<Expression<?>> expressions = Stream.of(userName, abonnement, root.get("valid"))
+                .collect(Collectors.toList());
 
         for (SortingPagination.Search search : searches) {
             restrictions.addAll(expressions.stream()
                     .filter(expression -> expression.getAlias().equals(search.getColumn()))
-                    .map(expression -> criteria.like(expression.as(String.class), "%" + search.getValue() + "%"))
+                    .map(expression -> {
+                        try {
+                            return criteria.greaterThan(expression.as(Long.class),
+                                    Long.parseLong(search.getValue()));
+                        } catch (NumberFormatException ne) {
+                            return criteria.like(expression.as(String.class), "%" + search.getValue() + "%");
+                        }
+                    })
                     .collect(Collectors.toList()));
         }
+        /*query.select(root).where(criteria.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        List<SubscriptionAssignment> searchResultList = entityManager.createQuery(query).getResultList();
+        PaginationCharacteristics.searchCount = searchResultList.size();*/
 
         return restrictions;
     }

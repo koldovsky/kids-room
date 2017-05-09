@@ -69,6 +69,7 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
                     let datatableChildren = datatableSearches.children();
                     for (var i = 1; i < datatableChildren.length; i++) {
                         let searchVal = $(datatableChildren[i]).val();
+                        console.log(searchVal);
                         if (searchVal.length) {
                             sendObj.searches.push({
                                 value: searchVal,

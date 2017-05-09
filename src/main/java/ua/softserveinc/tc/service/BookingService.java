@@ -1,6 +1,7 @@
 package ua.softserveinc.tc.service;
 
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.RoomReportValuesDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -26,6 +27,8 @@ public interface BookingService extends BaseService<Booking> {
     Long getSumTotal(List<Booking> bookings);
 
     Map<User, Long> generateAReport(List<Booking> bookings);
+
+    List<RoomReportValuesDto> generateRoomReport(List<Booking> bookings);
 
     Map<Room, Long> generateStatistics(List<Booking> bookings);
 

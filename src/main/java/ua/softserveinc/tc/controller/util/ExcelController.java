@@ -1,12 +1,15 @@
 package ua.softserveinc.tc.controller.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.dto.BookingDto;
+import ua.softserveinc.tc.dto.RoomReportValuesDto;
 import ua.softserveinc.tc.entity.Booking;
 import ua.softserveinc.tc.entity.BookingState;
 import ua.softserveinc.tc.entity.Room;
@@ -32,20 +35,24 @@ public class ExcelController {
     private BookingService bookingService;
 
     @Autowired
-    private ExcelBookingData excel;
+    //@Qualifier("excelUser")
+    private ExcelData<BookingDto> excelUser;
+
+    @Autowired
+    //@Qualifier("excelRoom")
+    private ExcelData<RoomReportValuesDto> excelRoom;
 
     @Autowired
     private RoomService roomService;
 
-    @GetMapping(value = "excel")
-    public ModelAndView excel(@RequestParam(value = ReportConstants.START_DATE) String startDate,
+    @GetMapping(value = "excel/user")
+    public ModelAndView getUserExcelReport(@RequestParam(value = ReportConstants.START_DATE) String startDate,
                               @RequestParam(value = ReportConstants.END_DATE) String endDate,
                               @RequestParam(value = ReportConstants.ROOM_ID, required = false) Long roomId,
                               @RequestParam(value = ReportConstants.EMAIL, required = false) String email,
                               Principal principal) {
 
         User currentUser;
-        ModelAndView modelAndView = new ModelAndView();
         List<Booking> bookings;
         if (roomId == null) {
             currentUser = userService.getUserByEmail(principal.getName());
@@ -53,15 +60,18 @@ public class ExcelController {
                     new Date[] {DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
                     currentUser, BookingState.COMPLETED);
 
-            excel.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[3] +
+            excelUser.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
+            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[3] +
                     currentUser.getFullName());
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[0] +
                     CurrencyConverter.getInstance()
                             .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
-        } else if (email != null) {
-            currentUser = userService.getUserByEmail(email);
+        } else {
             Room room = roomService.findByIdTransactional(roomId);
+            if (!room.getManagers().contains(userService.getUserByEmail(principal.getName()))) {
+                throw new AccessDeniedException("You don't have access to this page");
+            }
+            currentUser = userService.getUserByEmail(email);
             bookings = bookingService.getBookings(
                     new BookingsCharacteristics.Builder()
                             .setDates(new Date[]{DateUtil.toBeginOfDayDate(startDate),
@@ -71,30 +81,45 @@ public class ExcelController {
                             .setBookingsStates(Collections.singletonList(BookingState.COMPLETED))
                             .build());
 
-            excel.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[3] +
+            excelUser.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
+            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[3] +
                     currentUser.getFullName());
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
-                    CurrencyConverter.getInstance()
-                            .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
-        } else {
-            Room room = roomService.findByIdTransactional(roomId);
-            bookings = bookingService.getBookings(
-                    new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
-                    room, BookingState.COMPLETED);
-
-            excel.setTableData(CurrencyConverter.getInstance()
-                    .convertCurrency(bookingService.generateAReport(bookings)));
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2] +
-                    room.getName());
-            excel.addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[0] +
                     CurrencyConverter.getInstance()
                             .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
         }
 
+        return getModelAndView(excelUser, startDate + "-" + endDate);
+    }
+
+    @GetMapping(value = "excel/room")
+    public ModelAndView getRoomReport(@RequestParam(value = ReportConstants.START_DATE) String startDate,
+                              @RequestParam(value = ReportConstants.END_DATE) String endDate,
+                              @RequestParam(value = ReportConstants.ROOM_ID) Long roomId,
+                              Principal principal) {
+
+        Room room = roomService.findByIdTransactional(roomId);
+        User manager = userService.getUserByEmail(principal.getName());
+        if (!room.getManagers().contains(manager)) {
+            throw new AccessDeniedException("You don't have access to this page");
+        }
+        List<Booking> bookings = bookingService.getBookings(
+                new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
+                room, BookingState.COMPLETED);
+
+        excelRoom.setTableData(bookingService.generateRoomReport(bookings));
+        excelRoom.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[2] +
+                room.getName());
+
+        return getModelAndView(excelRoom, startDate + "-" + endDate);
+    }
+
+    private ModelAndView getModelAndView(ExcelData excelData, String fileName) {
+        ModelAndView modelAndView = new ModelAndView();
+
         modelAndView.setView(new ExcelDocument());
-        modelAndView.addObject("data", excel);
-        modelAndView.addObject("fileName", startDate + "-" + endDate);
+        modelAndView.addObject("data", excelData);
+        modelAndView.addObject("fileName", fileName);
 
         return modelAndView;
     }

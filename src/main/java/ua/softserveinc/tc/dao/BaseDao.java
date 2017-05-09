@@ -24,7 +24,7 @@ public interface BaseDao<T> {
                                    Root<T> root, CriteriaQuery<T> query);
 
     List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder builder,
-                                        Root<T> root);
+                                        Root<T> root, CriteriaQuery<T> query);
 
     long getRowsCount();
 }

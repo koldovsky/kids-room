@@ -18,7 +18,5 @@ public interface ExcelData<T> {
 
     int getSize();
 
-    default boolean hasAdditionalFields() {
-        return false;
-    }
+    boolean hasAdditionalFields();
 }

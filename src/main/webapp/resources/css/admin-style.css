@@ -407,3 +407,7 @@ th.th-size {
     line-height: 42px;
     text-align: center;
 }
+
+#active-search {
+    text-align: right;
+}

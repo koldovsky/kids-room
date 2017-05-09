@@ -7,8 +7,8 @@ import ua.softserveinc.tc.entity.User;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
-public class ExcelUserRoomBooking implements ExcelBookingData<User> {
+@Component("excelUser")
+public class ExcelUserBooking implements ExcelData<BookingDto> {
 
     public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM: ", " UAH", "ROOM: ", "PARENT: " };
 
@@ -29,7 +29,7 @@ public class ExcelUserRoomBooking implements ExcelBookingData<User> {
             tableData.put("Place",
                     bookingDtos.stream().map(BookingDto::getRoomName).collect(Collectors.toList()));
         } else if (uniqueRoomNameCount != 0) {
-            addAdditionalFields(ExcelUserRoomBooking.ADDITIONAL_EXCEL_FIELDS[2] +
+            addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[2] +
                     bookingDtos.get(0).getRoomName());
         }
         tableData.put("Start time",
@@ -43,18 +43,6 @@ public class ExcelUserRoomBooking implements ExcelBookingData<User> {
                 .map(s -> s != null ? s : "not provided").map(s -> s.replace("<br>", "\n")).collect(Collectors.toList()));
         tableData.put("Sum",
                 bookingDtos.stream().map(BookingDto::getCurrencySum).collect(Collectors.toList()));
-    }
-
-    @Override
-    public void setTableData(Map<User, String> listOfParents) {
-        tableData = new LinkedHashMap<>();
-        additionalFields = new ArrayList<>();
-
-        tableData.put("Parent", listOfParents.keySet().stream()
-                .map(User::getFullName).collect(Collectors.toList()));
-        tableData.put("Email", listOfParents.keySet().stream()
-                .map(User::getEmail).collect(Collectors.toList()));
-        tableData.put("Sum", listOfParents.values().stream().map(String::valueOf).collect(Collectors.toList()));
     }
 
     @Override

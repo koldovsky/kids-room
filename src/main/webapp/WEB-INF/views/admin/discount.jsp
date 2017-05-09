@@ -49,7 +49,6 @@
     <table class="reg-form dt datatable dayDiscountDataTable">
         <thead>
         <tr>
-            <th style="display: none;"><strong>#</strong></th>
             <th><strong><spring:message code="administrator.dayDiscount.reason"/></strong></th>
             <th><strong><spring:message code="administrator.dayDiscount.value"/></strong></th>
             <th><strong><spring:message code="administrator.dayDiscount.startDate"/></strong></th>

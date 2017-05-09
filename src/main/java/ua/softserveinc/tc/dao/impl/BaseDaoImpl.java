@@ -87,8 +87,10 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         Root<T> root = criteria.from(getEntityClass());
 
         if (!searchList.isEmpty()) {
-            criteria.where(getListForSearching(searchList, builder, root).toArray(new Predicate[]{}));
+            criteria.where(getListForSearching(searchList, builder, root, criteria)
+                    .toArray(new Predicate[]{}));
         }
+        //int res = entityManager.createQuery(criteria).getResultList().size();
 
         List<Order> orders = getListForOrdering(sortingList, builder, root, criteria);
 
@@ -98,7 +100,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                 .setFirstResult(pagination.getStart())
                 .setMaxResults(pagination.getItemsPerPage())
                 .getResultList();
-        PaginationCharacteristics.searchCount = resultList.size();
+
         return resultList;
     }
 
@@ -113,7 +115,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder builder,
-                                               Root<T> root) {
+                                               Root<T> root, CriteriaQuery<T> query) {
         List<Predicate> restrictions = new ArrayList<>();
 
         searches.forEach(item -> {

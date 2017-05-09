@@ -118,14 +118,14 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
 
     @Override
     public DataTableOutput<UserAssigmentDto> findAllPurchasedAbonnements(SortingPagination sortPaginate) {
-        //long rowCount = subscriptionAssignmentDao.getRowsCount();
+        long rowCount = subscriptionAssignmentDao.getRowsCount();
         List<SubscriptionAssignment> assignments = subscriptionAssignmentDao.findAll(sortPaginate);
-        //long filterCount = PaginationCharacteristics.searchCount;
+        long filterCount = PaginationCharacteristics.searchCount == 0 ? rowCount
+                : PaginationCharacteristics.searchCount;
         List<UserAssigmentDto> assigmentDtos = assignments.stream().map(UserAssigmentDto::new)
                 .collect(Collectors.toList());
 
-        return new DataTableOutput<>(subscriptionAssignmentDao.getRowsCount(),
-                assigmentDtos, PaginationCharacteristics.searchCount);
+        return new DataTableOutput<>(rowCount, assigmentDtos, filterCount);
     }
 
     @Override

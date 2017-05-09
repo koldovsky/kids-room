@@ -11,10 +11,31 @@ $(function () {
         abonnementsColumns, abonnementsFunctions);
     purchasedAbonnementsTable = buildDataTable('.assigned-abonnement-datatable', 'adm-all-abonnement-assigment',
         purchasedAbonnements, function () {
-            $(document.body).on('keyup', '.search-fields', function () {
+            $(document.body).on('keyup', '.assigned-abonnement-datatable-wrapper .search-fields', function () {
+                purchasedAbonnementsTable.ajax.reload(null, false);
+            });
+
+            $(document.body).on('click', '#active-search-checkbox', function () {
+
+                if ($('#active-search-checkbox').is(':checked')) {
+                    $('#active-search-checkbox').attr('value', 0);
+                } else {
+                    console.log("!");
+                    $('#active-search-checkbox').attr('value', -1);
+                }
+                console.log($('#active-search-checkbox').value);
                 purchasedAbonnementsTable.ajax.reload(null, false);
             });
         });
+
+    $('#DataTables_Table_1_wrapper').find('.row').eq(0).find('.col-md-6').eq(1)
+        .html(`
+            <div id="active-search" class="search-fields">
+                <input type="checkbox" id="active-search-checkbox" name="active" placeholder="valid">
+                <label>Only active</label>
+            </div>`
+        )
+    $('#active-search-checkbox').attr('value', -1);
 });
 
 let purchasedAbonnements = [
@@ -252,7 +273,7 @@ const abonnementsFunctions = function () {
     });
 
     // bind filter
-    $(document.body).on('keyup', '.search-fields', function () {
+    $(document.body).on('keyup', '.abonnement-datatable-wrapper .search-fields', function () {
         abonnementTable.ajax.reload(null, false);
     });
 

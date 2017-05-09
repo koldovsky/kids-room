@@ -14,6 +14,7 @@ import ua.softserveinc.tc.constants.ManagerConstants;
 import ua.softserveinc.tc.constants.ManagerConstants.ManagerViewNames;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.constants.UserConstants;
+import ua.softserveinc.tc.dto.RoomReportValuesDto;
 import ua.softserveinc.tc.entity.*;
 import ua.softserveinc.tc.service.BookingService;
 import ua.softserveinc.tc.service.RoomService;
@@ -23,10 +24,8 @@ import ua.softserveinc.tc.util.CurrencyConverter;
 import ua.softserveinc.tc.util.DateUtil;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static ua.softserveinc.tc.util.DateUtil.*;
 
@@ -83,14 +82,11 @@ public class ManagerMappingController {
         new Date[]{DateUtil.toBeginOfDayDate(startDate), DateUtil.toEndOfDayDate(endDate)},
         room, BookingState.COMPLETED);
 
-
-    Map<User, Long> report = bookingService.generateAReport(bookings);
-
     ModelAndView modelAndView = new ModelAndView(ManagerViewNames.MANAGER_REPORT_ALL_VIEW);
     ModelMap modelMap = modelAndView.getModelMap();
 
     modelMap.addAttribute(ReportConstants.ROOM, room);
-    modelMap.addAttribute(ReportConstants.REPORT, CurrencyConverter.getInstance().convertCurrency(report));
+    modelMap.addAttribute(ReportConstants.REPORT, bookingService.generateRoomReport(bookings));
     modelMap.addAttribute(ReportConstants.SUM_TOTAL, CurrencyConverter.getInstance().convertSingle(bookingService.getSumTotal(bookings)));
     modelMap.addAttribute(ReportConstants.END_DATE, endDate);
     modelMap.addAttribute(ReportConstants.START_DATE, startDate);

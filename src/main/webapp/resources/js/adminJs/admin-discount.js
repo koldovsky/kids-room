@@ -262,7 +262,7 @@ function onAddPersonalDiscount() {
         $.each(userList, function (i, user) {
           $('#selectUser').append($('<option>', {
             value: user.id,
-            text: user.firstName + ' ' + user.lastName
+            text: `${user.firstName} ${user.lastName} ${user.email}`
           }));
         })
         $('#selectUser').select2('val', ' ');
@@ -334,6 +334,7 @@ const DayColumns = [
   },
   {
     'data': 'date',
+    'orderable': false,
     'render': function (data, type, full, meta) {
       return "<span class='date'>" + full.startDate + " - " + full.endDate
           + "</span>";
