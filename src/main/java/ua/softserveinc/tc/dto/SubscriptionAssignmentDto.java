@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import ua.softserveinc.tc.entity.SubscriptionAssignment;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -12,6 +13,7 @@ public class SubscriptionAssignmentDto implements Serializable {
     private Long id;
     private UserDto user;
     private AbonnementDto abonnement;
+    private LocalDateTime assignTime;
     private Boolean valid;
 
     public SubscriptionAssignmentDto() {
@@ -21,6 +23,7 @@ public class SubscriptionAssignmentDto implements Serializable {
         this.id = assignment.getId();
         this.user = new UserDto(assignment.getUser());
         this.abonnement = new AbonnementDto(assignment.getAbonnement());
+        this.assignTime = assignment.getAssignTime();
         this.valid = assignment.isValid();
     }
 
@@ -48,6 +51,14 @@ public class SubscriptionAssignmentDto implements Serializable {
         this.abonnement = abonnement;
     }
 
+    public LocalDateTime getAssignTime() {
+        return assignTime;
+    }
+
+    public void setAssignTime(LocalDateTime assignTime) {
+        this.assignTime = assignTime;
+    }
+
     public Boolean getValid() {
         return valid;
     }
@@ -68,11 +79,12 @@ public class SubscriptionAssignmentDto implements Serializable {
         return Objects.equals(id, that.id) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(abonnement, that.abonnement) &&
+                Objects.equals(assignTime, that.assignTime) &&
                 Objects.equals(valid, that.valid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, abonnement, valid);
+        return Objects.hash(id, user, abonnement, assignTime, valid);
     }
 }

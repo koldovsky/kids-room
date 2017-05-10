@@ -366,16 +366,16 @@
         <div class="vertical-center-row">
             <div align="center">
                 <div id="abonnement-info" class="dialog" hidden
-                     title="Abonnement info">
+                     title="<spring:message code="administrator.abonnementsInfo"/>">
                     <div align="center">
                         <table id="abonnement-table">
                             <thead>
                             <tr>
-                                <td>Abonnement</td>
-                                <td>Price</td>
-                                <td>Hours</td>
-                                <td>Remaining time</td>
-                                <td>Date</td>
+                                <td><spring:message code="administrator.abonnement"/></td>
+                                <td><spring:message code="administrator.abonnement.price"/></td>
+                                <td><spring:message code="administrator.abonnement.hours"/></td>
+                                <td><spring:message code="administrator.abonnement.remainingTime"/></td>
+                                <td><spring:message code="administrator.abonnement.assignTime"/></td>
                             </tr>
                             </thead>
                             <tbody>
@@ -459,7 +459,7 @@
         </button>
         <button type="button" class="btn btn-success btn-responsive pull-right"
                 id="my-abonnements">
-            My Abonnements
+            <spring:message code="administrator.myAbonnements"/>
         </button>
 
 

@@ -1324,9 +1324,9 @@ function getMyAbonnements(userId) {
                 $.each(abonnements, function (i, abonnement) {
                     rows += '<tr>';
                     rows += `<td>${abonnement.name}</td>`;
-                    rows += `<td>${abonnement.price}</td>`;
-                    rows += `<td>${abonnement.hour}</td>`;
-                    rows += `<td>${abonnement.remainingTime}</td>`;
+                    rows += `<td>${abonnement.price} ${messages.report.currencySymbol}</td>`;
+                    rows += `<td>${abonnement.hour}${messages.report.hourSymbol}.</td>`;
+                    rows += `<td>${abonnement.remainingTime}${messages.report.hourSymbol}.</td>`;
                     // rows += `<td>${abonnement.assingDate}</td>`;
                     rows += '</tr>';
                 });
