@@ -32,10 +32,13 @@ LV-225.Java:
 * **[Vitalii Lotockii](https://github.com/Tat0)**
 * **[Daria Nakhod](https://github.com/seltsamD)**
 
+TECHNICAL LEADERSHIP
+* **[Andriy Yurenya] LV-211.Java**
+* **[Nazar Sviderskyi] LV-225.Java**
+
 PROJECT MANAGERS
 ------------
 * **[Vyacheslav Koldovskyy](https://github.com/koldovsky)**
-* **[Andriy Yurenya]**
 
 ------------
 
