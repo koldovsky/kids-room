@@ -24,6 +24,14 @@ LV-211.Java:
 * **[Hutor Valeriia](https://github.com/ValeryGutor)**
 * **[Volodymyr Mesherjak](https://github.com/merkan3k)**
 
+LV-225.Java:
+
+* **[Olga Ierokhova](https://github.com/mlleolga)**
+* **[Ivan Malynovskyi](https://github.com/Giljerme)**
+* **[Bohdan Savshak](https://github.com/Savshak)**
+* **[Vitalii Lotockii](https://github.com/Tat0)**
+* **[Daria Nakhod](https://github.com/seltsamD)**
+
 PROJECT MANAGERS
 ------------
 * **[Vyacheslav Koldovskyy](https://github.com/koldovsky)**
