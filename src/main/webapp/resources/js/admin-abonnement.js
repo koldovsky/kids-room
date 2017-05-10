@@ -1,12 +1,41 @@
 'use strict';
 let abonnementTable;
 let purchasedAbonnementsTable;
+let maxValue;
+let minValue;
 
 $(function () {
+    getMaxPrice();
+
     abonnementTable = buildDataTable('.abonnement-datatable', 'adm-pag-abonnements',
         abonnementsColumns, abonnementsFunctions);
     purchasedAbonnementsTable = buildDataTable('.assigned-abonnement-datatable', 'adm-all-abonnement-assigment',
-        purchasedAbonnements, function () {});
+        purchasedAbonnements, function () {
+            $(document.body).on('keyup', '.assigned-abonnement-datatable-wrapper .search-fields', function () {
+                purchasedAbonnementsTable.ajax.reload(null, false);
+            });
+
+            $(document.body).on('click', '#active-search-checkbox', function () {
+
+                if ($('#active-search-checkbox').is(':checked')) {
+                    $('#active-search-checkbox').attr('value', 0);
+                } else {
+                    console.log("!");
+                    $('#active-search-checkbox').attr('value', -1);
+                }
+                console.log($('#active-search-checkbox').value);
+                purchasedAbonnementsTable.ajax.reload(null, false);
+            });
+        });
+
+    $('#DataTables_Table_1_wrapper').find('.row').eq(0).find('.col-md-6').eq(1)
+        .html(`
+            <div id="active-search" class="search-fields">
+                <input type="checkbox" id="active-search-checkbox" name="active" placeholder="valid">
+                <label>Only active</label>
+            </div>`
+        )
+    $('#active-search-checkbox').attr('value', -1);
 });
 
 let purchasedAbonnements = [
@@ -17,6 +46,13 @@ let purchasedAbonnements = [
         }
     },
     {
+        'data': 'email',
+        'orderable': false,
+        'render': function (data, type, full) {
+            return `<div class='name'>${full.email}</div>`;
+        }
+    },
+    {
         'data': 'abonnement',
         'render': function (data, type, full) {
             return `<div class='name'>${full.abonnement}</div>`;
@@ -24,6 +60,7 @@ let purchasedAbonnements = [
     },
     {
         'data': 'hours',
+        'orderable': false,
         'render': function (data, type, full) {
             return `<div class='hour'>${full.hours}</div>`;
         }
@@ -31,7 +68,7 @@ let purchasedAbonnements = [
     {
         'data': 'hourLeft',
         'render': function (data, type, full) {
-            return `<div class='hour'>${full.hoursLeft}</div>`;
+            return `<div class='hour'>${full.leftTime}</div>`;
         }
     }
 ];
@@ -57,6 +94,7 @@ let abonnementsColumns = [
     },
     {
         'data': null,
+        'orderable': false,
         'render': function () {
             return "<span><a tabindex='-1'>" +
                 "<button class='btn btn-raised btn-info btn-edit' " +
@@ -73,7 +111,7 @@ let abonnementsColumns = [
                 "<span class='glyphicon glyphicon-user'>" +
                 "</button></span>";
         },
-        'orderable': false
+        'orderable': false,
     },
     {
         'data': null,
@@ -85,9 +123,45 @@ let abonnementsColumns = [
                 "<div class='slider round'></div>" +
                 "</label></span>";
         },
-        'orderable': false
+        'orderable': false,
     }
 ];
+
+function getMaxPrice () {
+    $.ajax({
+        type: 'GET',
+        url: 'abonnement-max-price',
+        success: function (max) {
+            maxValue = max;
+            getMinPrice();
+        }
+    })
+}
+
+function getMinPrice () {
+    $.ajax({
+        type: 'GET',
+        url: 'abonnement-min-price',
+        success: function (min) {
+            minValue = min;
+
+            $('#range-slider').slider({
+                range: true,
+                min: minValue,
+                max: maxValue,
+                values: [minValue, maxValue],
+                slide: function(event, ui) {
+                    $("#abonnement-price").val(`${ui.values[0]} - ${ui.values[1]}`);
+                },
+                stop: function (event, ui) {
+                    abonnementTable.ajax.reload(null, false);
+                }
+            });
+
+            $("#abonnement-price").val(`${$("#range-slider").slider("values", 0)} - ${$("#range-slider").slider("values", 1)}`);
+        }
+    })
+}
 
 const abonnementsFunctions = function () {
 
@@ -150,7 +224,9 @@ const abonnementsFunctions = function () {
             contentType: 'application/json',
             datatype: 'json',
             data: JSON.stringify(dataSender),
-            success: function () {},
+            success: function () {
+                purchasedAbonnementsTable.ajax.reload(null, false);
+            },
             error: function () {}
         });
     });
@@ -197,7 +273,7 @@ const abonnementsFunctions = function () {
     });
 
     // bind filter
-    $(document.body).on('keyup', '.search-fields', function () {
+    $(document.body).on('keyup', '.abonnement-datatable-wrapper .search-fields', function () {
         abonnementTable.ajax.reload(null, false);
     });
 

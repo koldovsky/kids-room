@@ -1,33 +1,52 @@
 package ua.softserveinc.tc.dto;
 
+import ua.softserveinc.tc.entity.AbonnementUsage;
 import ua.softserveinc.tc.entity.SubscriptionAssignment;
+import ua.softserveinc.tc.util.DateUtil;
 
+import java.time.LocalTime;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ivan on 02.05.2017.
  */
 public class UserAssigmentDto {
     private String user;
+    private String email;
     private String abonnement;
     private int hours;
-    private long hoursLeft;
+    private long minutesLeft;
+    private String leftTime;
 
     public UserAssigmentDto() {
     }
 
-    public UserAssigmentDto(String firstName, String lastName, String abonnement, int hours, Long hoursUsed) {
-        this.user = firstName + " " + lastName;
+    public UserAssigmentDto(String userName, String email, String abonnement, int hours, Long minutesLeft) {
+        this.user = userName;
+        this.email = email;
         this.abonnement = abonnement;
         this.hours = hours;
-        this.hoursLeft = (hoursUsed == null) ? this.hours : this.hours * 60 - hoursUsed;
+        this.minutesLeft = minutesLeft;
+        this.leftTime = transformMinutesToLocalTimeString();
     }
 
     public UserAssigmentDto(Map.Entry<SubscriptionAssignment, Long> assignment) {
         this.user = assignment.getKey().getUser().getFullName();
         this.abonnement = assignment.getKey().getAbonnement().getName();
         this.hours = assignment.getKey().getAbonnement().getHour();
-        this.hoursLeft = this.hours * 60 - assignment.getValue().intValue();
+        this.minutesLeft = this.hours * 60 - assignment.getValue().intValue();
+    }
+
+    public UserAssigmentDto(SubscriptionAssignment assignment) {
+        this.user = assignment.getUser().getFullName();
+        this.email = assignment.getUser().getEmail();
+        this.abonnement = assignment.getAbonnement().getName();
+        this.hours = assignment.getAbonnement().getHour();
+        this.minutesLeft = assignment.getAbonnementUsages().isEmpty() ? this.hours * 60
+                : this.hours * 60 - assignment.getAbonnementUsages().stream()
+                    .mapToLong(AbonnementUsage::getUsedMinutes).sum();
+        this.leftTime = transformMinutesToLocalTimeString();
     }
 
     public String getUser() {
@@ -54,21 +73,42 @@ public class UserAssigmentDto {
         this.hours = hours;
     }
 
-    public long getHoursLeft() {
-        return hoursLeft;
+    public long getMinutesLeft() {
+        return minutesLeft;
     }
 
-    public void setHoursLeft(long hoursLeft) {
-        this.hoursLeft = hoursLeft;
+    public void setMinutesLeft(long minutesLeft) {
+        this.minutesLeft = minutesLeft;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String transformMinutesToLocalTimeString() {
+        return LocalTime.ofSecondOfDay(60 * minutesLeft).toString();
+    }
+
+    public String getLeftTime() {
+        return leftTime;
+    }
+
+    public void setLeftTime(String leftTime) {
+        this.leftTime = leftTime;
     }
 
     @Override
     public String toString() {
         return "UserAssigmentDto{" +
                 "user='" + user + '\'' +
+                ", email='" + email + '\'' +
                 ", abonnement='" + abonnement + '\'' +
                 ", hours=" + hours +
-                ", hoursLeft=" + hoursLeft +
+                ", hoursLeft=" + minutesLeft +
                 '}';
     }
 }

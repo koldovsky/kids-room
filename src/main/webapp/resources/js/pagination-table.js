@@ -52,7 +52,7 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
                     datatableObject.order.forEach(function (dtOrder) {
                         let indOder = 0;
                         if (dtOrder.column != 0) {
-                            indOder = dtOrder.column - 1;
+                            indOder = dtOrder.column;
                         }
                         let column = $(wrapper).find(".column-names").children()[indOder];
                         dtOrder.dir = defineOrder(dtOrder.dir);
@@ -69,6 +69,7 @@ function buildDataTable(selector, uri, columnsArrObj, addFunctions) {
                     let datatableChildren = datatableSearches.children();
                     for (var i = 1; i < datatableChildren.length; i++) {
                         let searchVal = $(datatableChildren[i]).val();
+                        console.log(searchVal);
                         if (searchVal.length) {
                             sendObj.searches.push({
                                 value: searchVal,

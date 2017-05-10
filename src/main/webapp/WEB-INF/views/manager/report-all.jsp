@@ -33,16 +33,20 @@
                 <tr>
                     <th><spring:message code="report.parent" /></th>
                     <th><spring:message code="report.email" /></th>
+                    <th><spring:message code="report.abonnementUsed" /></th>
+                    <th><spring:message code="report.overalTime" /></th>
                     <th><spring:message code="report.sum" /></th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach var="user" items="${report.keySet()}">
+                <c:forEach var="userReport" items="${report}">
                 <tr>
-                    <td>${user}</td>
-                    <td>${user.getEmail()}</td>
-                    <td>${report.get(user)} <spring:message code="report.currencySymbol" /></td>
+                    <td>${userReport.getUser().getFullName()}</td>
+                    <td>${userReport.getUser().getEmail()}</td>
+                    <td>${userReport.getStringAbonnementHours()}</td>
+                    <td>${userReport.getStringSpendHours()}</td>
+                    <td>${userReport.getStringSum()} <spring:message code="report.currencySymbol" /></td>
                 </tr>
                 </c:forEach>
             </tbody>

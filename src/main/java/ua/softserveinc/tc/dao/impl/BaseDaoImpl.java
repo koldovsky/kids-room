@@ -16,6 +16,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
@@ -85,17 +86,13 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         CriteriaQuery<T> criteria = builder.createQuery(getEntityClass());
         Root<T> root = criteria.from(getEntityClass());
 
-        List<Predicate> restrictions = new ArrayList<>();
-
         if (!searchList.isEmpty()) {
-            addSearchToRestrictions(searchList, builder, root, restrictions);
-            PaginationCharacteristics.searchCount = getSearchedItemsCount(builder, criteria, root, restrictions);
+            criteria.where(getListForSearching(searchList, builder, root, criteria)
+                    .toArray(new Predicate[]{}));
         }
+        //int res = entityManager.createQuery(criteria).getResultList().size();
 
-        List<Order> orders = sortingList.stream().map(item -> {
-            return item.getDirection() == 1 ? builder.asc(root.get(item.getColumn())) :
-                    builder.desc(root.get(item.getColumn()));
-        }).collect(Collectors.toList());
+        List<Order> orders = getListForOrdering(sortingList, builder, root, criteria);
 
         criteria.select(root).orderBy(orders);
 
@@ -103,28 +100,47 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
                 .setFirstResult(pagination.getStart())
                 .setMaxResults(pagination.getItemsPerPage())
                 .getResultList();
+
         return resultList;
     }
 
-    private long getSearchedItemsCount(CriteriaBuilder builder, CriteriaQuery<T> criteria,
-                                       Root<T> root, List<Predicate> restrictions) {
-        criteria.select(root).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
-        List<T> searchResultList = entityManager.createQuery(criteria).getResultList();
-        return searchResultList.size();
+    @Override
+    public List<Order> getListForOrdering(List<SortingPagination.Sorting> sortingList, CriteriaBuilder builder,
+                                          Root<T> root, CriteriaQuery<T> query) {
+
+        return sortingList.stream().map(item -> item.getDirection() == 1 ?
+                builder.asc(root.get(item.getColumn()))
+                : builder.desc(root.get(item.getColumn()))).collect(Collectors.toList());
     }
 
-    private void addSearchToRestrictions(List<Search> searches, CriteriaBuilder builder,
-                                         Root<T> root, List<Predicate> restrictions) {
+    @Override
+    public List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder builder,
+                                               Root<T> root, CriteriaQuery<T> query) {
+        List<Predicate> restrictions = new ArrayList<>();
+
         searches.forEach(item -> {
             try {
                 int value = Integer.parseInt(item.getValue());
                 restrictions.add(builder.equal(root.get(item.getColumn()), value));
             } catch (NumberFormatException ne) {
-                restrictions.add(builder.like(
-                        root.get(item.getColumn()), "%" + item.getValue() + "%")
-                );
+                if (item.getValue().contains(" - ")) {
+                    StringTokenizer s = new StringTokenizer(item.getValue());
+                    restrictions.add(builder.greaterThanOrEqualTo(
+                            root.get(item.getColumn()), Integer.parseInt(s.nextToken()))
+                    );
+                    s.nextToken();
+                    restrictions.add(builder.lessThanOrEqualTo(
+                            root.get(item.getColumn()), Integer.parseInt(s.nextToken()))
+                    );
+                } else {
+                    restrictions.add(builder.like(
+                            root.get(item.getColumn()), "%" + item.getValue() + "%")
+                    );
+                }
             }
         });
+
+        return restrictions;
     }
 
     @Override

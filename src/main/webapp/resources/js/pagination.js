@@ -5,9 +5,12 @@ $(function () {
 
 function addListenerForExcelButton() {
     $('#export').click(function () {
-        var urlParts = window.location.href.split('?');
-
-        window.location.href ="excel?" + urlParts[1];
+        let urlParts = window.location.href.split('?');
+        let excelType = '/user';
+        if (urlParts[0].includes('all')) {
+            excelType = '/room';
+        }
+        window.location.href = `excel${excelType}?${urlParts[1]}`;
     });
 }
 

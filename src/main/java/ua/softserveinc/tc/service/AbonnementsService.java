@@ -30,4 +30,8 @@ public interface AbonnementsService extends BaseService<Abonnement> {
     List<SubscriptionsUsedHoursDto> getAssignmentWithUsedHoursByUserId(long userId);
 
     DataTableOutput<UserAssigmentDto> findAllPurchasedAbonnements(SortingPagination sortPaginate);
+
+    long getMaxAbonnementsPrice();
+
+    long getMinAbonnementsPrice();
 }

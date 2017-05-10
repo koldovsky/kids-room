@@ -29,16 +29,16 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     private Logger log;
 
     @Autowired
-    AbonnementDao abonnementDao;
+    private AbonnementDao abonnementDao;
 
     @Autowired
-    SubscriptionAssignmentDao subscriptionAssignmentDao;
+    private SubscriptionAssignmentDao subscriptionAssignmentDao;
 
     @Autowired
-    AbonnementMapper abonnementMapper;
+    private AbonnementMapper abonnementMapper;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -119,9 +119,22 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
     @Override
     public DataTableOutput<UserAssigmentDto> findAllPurchasedAbonnements(SortingPagination sortPaginate) {
         long rowCount = subscriptionAssignmentDao.getRowsCount();
-        long filterCount = (PaginationCharacteristics.searchCount == 0) ? rowCount
+        List<SubscriptionAssignment> assignments = subscriptionAssignmentDao.findAll(sortPaginate);
+        long filterCount = PaginationCharacteristics.searchCount == 0 ? rowCount
                 : PaginationCharacteristics.searchCount;
+        List<UserAssigmentDto> assigmentDtos = assignments.stream().map(UserAssigmentDto::new)
+                .collect(Collectors.toList());
 
-        return new DataTableOutput<UserAssigmentDto>(rowCount, subscriptionAssignmentDao.getDtos(), filterCount);
+        return new DataTableOutput<>(rowCount, assigmentDtos, filterCount);
+    }
+
+    @Override
+    public long getMaxAbonnementsPrice() {
+        return abonnementDao.getMaxPrice().orElse(1000L);
+    }
+
+    @Override
+    public long getMinAbonnementsPrice() {
+        return abonnementDao.getMinPrice().orElse(0L);
     }
 }
