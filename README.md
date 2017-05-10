@@ -33,6 +33,7 @@ LV-225.Java:
 * **[Daria Nakhod](https://github.com/seltsamD)**
 
 TECHNICAL LEADERSHIP
+------------
 * **[Andriy Yurenya] LV-211.Java**
 * **[Nazar Sviderskyi] LV-225.Java**
 
