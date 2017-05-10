@@ -29,8 +29,6 @@ public class AbonnementUsage {
     public AbonnementUsage() {
     }
 
-
-
     public AbonnementUsage(SubscriptionAssignment assignment, LocalDateTime timestamp, long usedMinutes) {
         this.assignment = assignment;
         this.timestamp = timestamp;

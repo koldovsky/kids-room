@@ -18,6 +18,7 @@ import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,6 +98,7 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
             User user = userService.findUserId(id);
             entity.setUser(user);
             entity.setAbonnement(abonnement);
+            entity.setAssignTime(LocalDateTime.now());
             entity.setValid(true);
             subscriptionAssignmentDao.create(entity);
         }

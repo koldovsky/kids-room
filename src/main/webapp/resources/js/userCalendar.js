@@ -1327,7 +1327,7 @@ function getMyAbonnements(userId) {
                     rows += `<td>${abonnement.price} ${messages.report.currencySymbol}</td>`;
                     rows += `<td>${abonnement.hour}${messages.report.hourSymbol}.</td>`;
                     rows += `<td>${abonnement.remainingTime}${messages.report.hourSymbol}.</td>`;
-                    // rows += `<td>${abonnement.assingDate}</td>`;
+                    rows += `<td>${abonnement.assingTime}</td>`;
                     rows += '</tr>';
                 });
                 $('#abonnement-info').find('tbody').append(rows);
