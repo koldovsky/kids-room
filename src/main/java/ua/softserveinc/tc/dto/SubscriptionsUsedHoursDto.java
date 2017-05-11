@@ -2,9 +2,6 @@ package ua.softserveinc.tc.dto;
 
 import ua.softserveinc.tc.entity.SubscriptionAssignment;
 
-/**
- * Created by Ivan on 02.05.2017.
- */
 public class SubscriptionsUsedHoursDto {
     private SubscriptionAssignmentDto assignmentDto;
     private long minutesLeft;

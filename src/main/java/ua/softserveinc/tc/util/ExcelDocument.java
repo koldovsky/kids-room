@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
+import ua.softserveinc.tc.constants.ExcelConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +19,9 @@ public class ExcelDocument extends AbstractXlsView {
                                       HttpServletRequest request,
                                       HttpServletResponse response) throws Exception {
         int rowIndex = 0;
-        String fileName = (String) model.get("fileName");
+        String fileName = (String) model.get(ExcelConstants.Other.FILE_NAME);
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName + ".xls");
-        Sheet excelSheet = workbook.createSheet("Report");
+        Sheet excelSheet = workbook.createSheet(ExcelConstants.Other.SHEET_NAME);
 
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
@@ -28,7 +29,7 @@ public class ExcelDocument extends AbstractXlsView {
         style.setFont(font);
         style.setAlignment(CellStyle.ALIGN_CENTER);
 
-        ExcelData dataForExcel = (ExcelData) model.get("data");
+        ExcelData dataForExcel = (ExcelData) model.get(ExcelConstants.Other.EXCEL_DATA);
         String[] headers = dataForExcel.getHeaders();
         int tableHeights = dataForExcel.getSize();
 

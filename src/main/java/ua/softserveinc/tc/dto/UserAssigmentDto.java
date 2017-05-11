@@ -8,9 +8,6 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by Ivan on 02.05.2017.
- */
 public class UserAssigmentDto {
     private String user;
     private String email;

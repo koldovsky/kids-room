@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.softserveinc.tc.constants.ExcelConstants;
 import ua.softserveinc.tc.constants.ReportConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.RoomReportValuesDto;
@@ -35,11 +36,9 @@ public class ExcelController {
     private BookingService bookingService;
 
     @Autowired
-    //@Qualifier("excelUser")
     private ExcelData<BookingDto> excelUser;
 
     @Autowired
-    //@Qualifier("excelRoom")
     private ExcelData<RoomReportValuesDto> excelRoom;
 
     @Autowired
@@ -61,9 +60,9 @@ public class ExcelController {
                     currentUser, BookingState.COMPLETED);
 
             excelUser.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
-            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[3] +
+            excelUser.addAdditionalFields(ExcelConstants.Fields.PARENT +
                     currentUser.getFullName());
-            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+            excelUser.addAdditionalFields(ExcelConstants.Fields.TOTAL_SUM +
                     CurrencyConverter.getInstance()
                             .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
         } else {
@@ -82,9 +81,9 @@ public class ExcelController {
                             .build());
 
             excelUser.setTableData(CurrencyConverter.getInstance().convertBookingSum(bookings));
-            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[3] +
+            excelUser.addAdditionalFields(ExcelConstants.Fields.PARENT +
                     currentUser.getFullName());
-            excelUser.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[0] +
+            excelUser.addAdditionalFields(ExcelConstants.Fields.TOTAL_SUM +
                     CurrencyConverter.getInstance()
                             .convertSingle(bookings.stream().mapToLong(Booking::getSum).sum()));
         }
@@ -108,7 +107,7 @@ public class ExcelController {
                 room, BookingState.COMPLETED);
 
         excelRoom.setTableData(bookingService.generateRoomReport(bookings));
-        excelRoom.addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[2] +
+        excelRoom.addAdditionalFields(ExcelConstants.Fields.ROOM +
                 room.getName());
 
         return getModelAndView(excelRoom, startDate + "-" + endDate);
@@ -118,8 +117,8 @@ public class ExcelController {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setView(new ExcelDocument());
-        modelAndView.addObject("data", excelData);
-        modelAndView.addObject("fileName", fileName);
+        modelAndView.addObject(ExcelConstants.Other.EXCEL_DATA, excelData);
+        modelAndView.addObject(ExcelConstants.Other.FILE_NAME, fileName);
 
         return modelAndView;
     }

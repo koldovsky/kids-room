@@ -87,13 +87,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         Root<T> root = criteria.from(getEntityClass());
 
         if (!searchList.isEmpty()) {
-            criteria.where(getListForSearching(searchList, builder, root, criteria)
-                    .toArray(new Predicate[]{}));
+            List<Predicate> restrictions = getListForSearching(searchList, builder, root, criteria);
+            PaginationCharacteristics.searchCount = getSearchedItemsCount(builder, criteria,
+                    root, restrictions);
         }
-        //int res = entityManager.createQuery(criteria).getResultList().size();
 
         List<Order> orders = getListForOrdering(sortingList, builder, root, criteria);
-
         criteria.select(root).orderBy(orders);
 
         resultList = entityManager.createQuery(criteria)
@@ -104,18 +103,16 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         return resultList;
     }
 
-    @Override
-    public List<Order> getListForOrdering(List<SortingPagination.Sorting> sortingList, CriteriaBuilder builder,
-                                          Root<T> root, CriteriaQuery<T> query) {
+    private List<Order> getListForOrdering(List<SortingPagination.Sorting> sortingList, CriteriaBuilder builder,
+                                           Root<T> root, CriteriaQuery<T> query) {
 
         return sortingList.stream().map(item -> item.getDirection() == 1 ?
                 builder.asc(root.get(item.getColumn()))
                 : builder.desc(root.get(item.getColumn()))).collect(Collectors.toList());
     }
 
-    @Override
-    public List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder builder,
-                                               Root<T> root, CriteriaQuery<T> query) {
+    private List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder builder,
+                                                Root<T> root, CriteriaQuery<T> query) {
         List<Predicate> restrictions = new ArrayList<>();
 
         searches.forEach(item -> {
@@ -149,5 +146,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         query.select(builder.count(query.from(getEntityClass())));
         return entityManager.createQuery(query).getSingleResult();
+    }
+
+    private long getSearchedItemsCount(CriteriaBuilder builder, CriteriaQuery<T> criteria,
+                                       Root<T> root, List<Predicate> restrictions) {
+        criteria.select(root).where(builder.and(restrictions.toArray(new Predicate[restrictions.size()])));
+        return entityManager.createQuery(criteria).getResultList().size();
     }
 }

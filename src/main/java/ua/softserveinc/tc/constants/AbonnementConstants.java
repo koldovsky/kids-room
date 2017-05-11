@@ -31,4 +31,12 @@ public final class AbonnementConstants {
         public static final String ABONNEMENT_USERS = "abonementUsers";
     }
 
+    public static final class Alias {
+        public static final String USED_MINUTES = "usedMinutes";
+        public static final String ABONNEMENT_USAGES = "abonnementUsages";
+        public static final String FIRST_NAME = "firstName";
+        public static final String LAST_NAME = "lastName";
+        public static final String USER_SORT_COLUMN = "user1";
+        public static final String EMAIL_SORT_COLUMN = "user2";
+    }
 }
