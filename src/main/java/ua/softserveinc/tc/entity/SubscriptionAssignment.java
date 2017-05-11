@@ -6,8 +6,10 @@ import ua.softserveinc.tc.constants.UserConstants;
 import ua.softserveinc.tc.dto.AbonnementDto;
 import ua.softserveinc.tc.dto.SubscriptionAssignmentDto;
 import ua.softserveinc.tc.dto.UserDto;
+import ua.softserveinc.tc.entity.converter.LocalDateTimeAttributeConverter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +30,10 @@ public class SubscriptionAssignment {
     @JoinColumn(name = AbonnementConstants.Entity.ID_ABONEMENT)
     private Abonnement abonnement;
 
+    @Column
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private LocalDateTime assignTime;
+
     @Column(name = AbonnementConstants.Entity.VALID)
     private Boolean valid;
 
@@ -43,6 +49,7 @@ public class SubscriptionAssignment {
         }
         this.setUser(dto.getUser());
         this.setAbonnement(dto.getAbonnement());
+        this.setAssignTime(dto.getAssignTime());
         this.valid = dto.getValid();
     }
 
@@ -88,6 +95,14 @@ public class SubscriptionAssignment {
         abonnement.setActive(dto.isActive());
     }
 
+    public LocalDateTime getAssignTime() {
+        return assignTime;
+    }
+
+    public void setAssignTime(LocalDateTime assignTime) {
+        this.assignTime = assignTime;
+    }
+
     public boolean isValid() {
         return valid;
     }
@@ -112,11 +127,12 @@ public class SubscriptionAssignment {
         return Objects.equals(id, that.id) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(abonnement, that.abonnement) &&
+                Objects.equals(assignTime, that.assignTime) &&
                 Objects.equals(valid, that.valid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, abonnement, valid);
+        return Objects.hash(id, user, abonnement, assignTime, valid);
     }
 }

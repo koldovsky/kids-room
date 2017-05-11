@@ -98,3 +98,13 @@ html, body, .container {
     height: 30px;
     width: 170px;
 }
+
+#abonnement-table thead {
+    font-weight: bold;
+}
+
+#abonnement-table td {
+    text-align: center;
+    height: 30px;
+    width: 170px;
+}
