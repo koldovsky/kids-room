@@ -1314,7 +1314,6 @@ function getMyAbonnements(userId) {
     let url = `restful/abonnement/` + userId;
     let rows = '';
 
-    console.log(userId);
     $.ajax({
         url: url,
         type: 'GET',
