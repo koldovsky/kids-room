@@ -152,9 +152,8 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     private void calculateSumIncludeAbonnement(Booking booking) {
-        long userId = booking.getUser().getId();
         List<SubscriptionsUsedHoursDto> userAssignment = abonnementsService
-                .getAssignmentWithUsedHoursByUserId(userId);
+                .getAssignmentWithUsedHoursByUserId(booking.getUser().getId());
         if (userAssignment.size() == 0) {
             calculateSumIncludingDiscounts(booking, DateUtil.dateToLocalTime(booking.getBookingStartTime()));
             return;
@@ -190,11 +189,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     private long getNextPaidMinutesByAbonnement(SubscriptionsUsedHoursDto assignment, long bookingUnpaidTimeInMinutes,
-                                                long l) {
-        if (bookingUnpaidTimeInMinutes >= l) {
+                                                long leftMinutesInAbonnement) {
+        if (bookingUnpaidTimeInMinutes >= leftMinutesInAbonnement) {
             assignment.getAssignmentDto().setValid(false);
             abonnementUsageService.updateSubscription(assignment.getSubscriptionAssignment());
-            return l;
+            return leftMinutesInAbonnement;
         }
 
         return bookingUnpaidTimeInMinutes;
@@ -238,8 +237,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         LocalTime minStartDiscount = getMinTime(list, Discount::getStartTime, startPeriodTime, endBookingTime);
         LocalTime minEndDiscount = getMinTime(list, Discount::getEndTime, startPeriodTime, endBookingTime);
-        LocalTime endPeriodTime = minStartDiscount.isBefore(minEndDiscount)
-                ? minStartDiscount : minEndDiscount;
+        LocalTime endPeriodTime = minStartDiscount.isBefore(minEndDiscount) ? minStartDiscount : minEndDiscount;
 
         int maxDiscountValue = list.stream()
                 .filter(p -> p.containPeriod(startPeriodTime, endPeriodTime)).map(Discount::getValue)
@@ -248,7 +246,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         if (maxDiscountValue != 0 && outputDiscounts.containsKey(maxDiscountValue)) {
             LocalTime time = outputDiscounts.get(maxDiscountValue);
-
             outputDiscounts.replace(maxDiscountValue, DateUtil.addTwoTimes(time,
                     DateUtil.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime)));
         } else {

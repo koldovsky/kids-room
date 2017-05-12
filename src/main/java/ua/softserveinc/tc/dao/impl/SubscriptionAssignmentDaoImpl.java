@@ -73,8 +73,7 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
                 .sumAsLong(usageJoin.get(AbonnementConstants.Alias.USED_MINUTES)).as(Long.class);
         Expression<Long> minutesLeft = criteria.diff(
                 criteria.prod(60, abonnementJoin.get(AbonnementConstants.Hibernate.ABONNEMENT_HOUR)),
-                criteria.<Long>selectCase()
-                        .when(hoursUsed.isNull(), criteria.literal(0L))
+                criteria.<Long>selectCase().when(hoursUsed.isNull(), criteria.literal(0L))
                         .otherwise(hoursUsed)).as(Long.class);
         userName.alias(AbonnementConstants.Alias.USER_SORT_COLUMN);
         email.alias(AbonnementConstants.Alias.EMAIL_SORT_COLUMN);
@@ -90,7 +89,6 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
             PaginationCharacteristics.searchCount = getSearchedItemsCount(criteria, query, root, restrictions);
         }
         query.orderBy(getOrderList(sortingList, criteria, expressions));
-
         return entityManager.createQuery(query)
                 .setFirstResult(pagination.getStart())
                 .setMaxResults(pagination.getItemsPerPage())
