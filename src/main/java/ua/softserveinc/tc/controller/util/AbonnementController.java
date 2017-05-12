@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ua.softserveinc.tc.dto.AbonnementDto;
 import ua.softserveinc.tc.dto.UserAbonnementInfoDto;
 import ua.softserveinc.tc.service.AbonnementsService;
 
@@ -20,5 +21,10 @@ public class AbonnementController {
     @GetMapping("/{userId}")
     public List<UserAbonnementInfoDto> getMyDto(@PathVariable Long userId) {
         return abonnementsService.getAbonnementInfoByUserId(userId);
+    }
+
+    @GetMapping
+    public List<AbonnementDto> getAbonnementsToBuy() {
+        return abonnementsService.findAllAbonements();
     }
 }

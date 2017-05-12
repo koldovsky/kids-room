@@ -19,8 +19,9 @@ $(document).ready(function () {
         $('#mobile').attr('class', '');
     }
 
-    getMyAbonnements(localStorage['userId']);
     getPersonalDiscounts();
+    getMyAbonnements(localStorage['userId']);
+    getAbonnementsToBuy()
 });
 
 $(function () {
@@ -150,6 +151,20 @@ $(function () {
         autoOpen: false,
         modal: true,
         width: 900,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
+    $('#abonnement-buy-dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 500,
         show: {
             effect: 'drop',
             duration: 500
@@ -339,6 +354,14 @@ $(function () {
     $('#my-abonnements').click(function () {
         $('#abonnement-info').dialog('open');
     });
+
+    $('#buy-abonnements').click(function() {
+        $('#abonnement-buy-dialog').dialog('open');
+    });
+
+    $('#cancel-abonnement').click(function() {
+        $('#abonnement-buy-dialog').dialog('close');
+    })
 });
 
 function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
@@ -1320,6 +1343,29 @@ function getMyAbonnements(userId) {
                     rows += '</tr>';
                 });
                 $('#abonnement-info').find('tbody').append(rows);
+            }
+        }
+    });
+}
+
+function getAbonnementsToBuy() {
+    let url = `restful/abonnement`
+    let rows = '';
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(result) {
+            let abonnemnts = result;
+            if (abonnemnts.length > 0) {
+                $.each(abonnemnts, function(i, abonnement) {
+                    rows += '<tr>';
+                    rows += `<td>${abonnement.name}</td>`;
+                    rows += `<td>${abonnement.price}</td>`;
+                    rows += `<td>${abonnement.hour}</td>`;
+                    rows += `<td><input type="checkbox"></input></td>`;
+                });
+                $('#buy-abonnement-table').find('tbody').append(rows);
             }
         }
     });
