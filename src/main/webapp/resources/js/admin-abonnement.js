@@ -23,7 +23,6 @@ $(function () {
                     console.log("!");
                     $('#active-search-checkbox').attr('value', -1);
                 }
-                console.log($('#active-search-checkbox').value);
                 purchasedAbonnementsTable.ajax.reload(null, false);
             });
         });
@@ -34,9 +33,26 @@ $(function () {
                 <input type="checkbox" id="active-search-checkbox" name="active" placeholder="valid">
                 <label>Only active</label>
             </div>`
-        )
+        );
     $('#active-search-checkbox').attr('value', -1);
 });
+
+function validatePrice() {
+    const priceRegex = /^(([1-9]{1}\d{0,3}|0) {0,1}- {0,1}([1-9]{1}\d{0,3}|0))$/g;
+    if (priceRegex.test($("#abonnement-price").val())) {
+        console.log("+");
+        let priceRange = $("#abonnement-price").val();
+        let price = priceRange.split(' ');
+        if (price.length != 3) {
+            price = priceRange.replace(' ', '').split('-');
+            $("#abonnement-price").val(`${price[0]} - ${price[1]}`);
+        }
+
+        return true;
+    } else {
+        return false;
+    }
+}
 
 let purchasedAbonnements = [
     {
@@ -274,7 +290,9 @@ const abonnementsFunctions = function () {
 
     // bind filter
     $(document.body).on('keyup', '.abonnement-datatable-wrapper .search-fields', function () {
-        abonnementTable.ajax.reload(null, false);
+        if (validatePrice()) {
+            abonnementTable.ajax.reload(null, false);
+        }
     });
 
     $("#selectUser").select2();

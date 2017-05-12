@@ -20,11 +20,5 @@ public interface BaseDao<T> {
 
     T update(T entity);
 
-    List<Order> getListForOrdering(List<SortingPagination.Sorting> sortingList, CriteriaBuilder builder,
-                                   Root<T> root, CriteriaQuery<T> query);
-
-    List<Predicate> getListForSearching(List<SortingPagination.Search> searches, CriteriaBuilder builder,
-                                        Root<T> root, CriteriaQuery<T> query);
-
     long getRowsCount();
 }

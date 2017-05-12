@@ -1,6 +1,7 @@
-package ua.softserveinc.tc.controller.util;
+package ua.softserveinc.tc.util;
 
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.constants.ExcelConstants;
 import ua.softserveinc.tc.dto.RoomReportValuesDto;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.util.ExcelData;
@@ -11,10 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by Ivan on 09.05.2017.
- */
-@Component("excelRoom")
+@Component
 public class ExcelRoomBooking implements ExcelData<RoomReportValuesDto> {
     private Map<String, List<String>> tableData;
     private List<String> additionalFields;
@@ -24,15 +22,17 @@ public class ExcelRoomBooking implements ExcelData<RoomReportValuesDto> {
         tableData = new LinkedHashMap<>();
         additionalFields = new ArrayList<>();
 
-        tableData.put("Parent", list.stream().map(RoomReportValuesDto::getUser)
+        tableData.put(ExcelConstants.Headers.PARENT, list.stream().map(RoomReportValuesDto::getUser)
                 .map(User::getFullName).collect(Collectors.toList()));
-        tableData.put("Email", list.stream().map(RoomReportValuesDto::getUser)
+        tableData.put(ExcelConstants.Headers.EMAIL, list.stream().map(RoomReportValuesDto::getUser)
                 .map(User::getEmail).collect(Collectors.toList()));
-        tableData.put("Abonnement time", list.stream().map(RoomReportValuesDto::getStringAbonnementHours)
+        tableData.put(ExcelConstants.Headers.ABONNEMENT, list.stream()
+                .map(RoomReportValuesDto::getStringAbonnementHours)
                 .collect(Collectors.toList()));
-        tableData.put("Overal booking time", list.stream().map(RoomReportValuesDto::getStringAbonnementHours)
+        tableData.put(ExcelConstants.Headers.BOOKING_TIME, list.stream()
+                .map(RoomReportValuesDto::getStringAbonnementHours)
                 .collect(Collectors.toList()));
-        tableData.put("Sum", list.stream().map(RoomReportValuesDto::getStringSum)
+        tableData.put(ExcelConstants.Headers.SUM, list.stream().map(RoomReportValuesDto::getStringSum)
                 .collect(Collectors.toList()));
     }
 

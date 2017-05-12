@@ -11,10 +11,4 @@ import java.util.Map;
 public interface SubscriptionAssignmentDao extends BaseDao<SubscriptionAssignment> {
 
     List<SubscriptionsUsedHoursDto> getAssignmentByUserId(long userId);
-
-    Map<SubscriptionAssignment, Long> getAssignmentWithUsedHoursByUserId(long userId);
-
-    //List<UserAssigmentDto> getDtos();
-
-    List<UserAssigmentDto> getDtos(SortingPagination sortPaginate);
 }

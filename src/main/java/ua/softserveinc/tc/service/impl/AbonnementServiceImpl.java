@@ -49,10 +49,9 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
                 .stream()
                 .map(abonnement -> modelMapper.map(abonnement, AbonnementDto.class))
                 .collect(Collectors.toList());
-        long rowCount = abonnementDao.getRowsCount(),
-                start = sortPaginate.getPagination().getStart(),
-                itemsPerPage = sortPaginate.getPagination().getItemsPerPage();
-        long filterCount = (PaginationCharacteristics.searchCount == 0) ? rowCount : PaginationCharacteristics.searchCount;
+        long rowCount = abonnementDao.getRowsCount();
+        long filterCount = (PaginationCharacteristics.searchCount == 0) ? rowCount
+                : PaginationCharacteristics.searchCount;
         return new DataTableOutput<>(rowCount, abonnementList, filterCount);
     }
 

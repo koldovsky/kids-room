@@ -1,13 +1,14 @@
 package ua.softserveinc.tc.util;
 
 import org.springframework.stereotype.Component;
+import ua.softserveinc.tc.constants.ExcelConstants;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.entity.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component("excelUser")
+@Component
 public class ExcelUserBooking implements ExcelData<BookingDto> {
 
     public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM: ", " UAH", "ROOM: ", "PARENT: " };
@@ -20,28 +21,29 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
         tableData = new LinkedHashMap<>();
         additionalFields = new ArrayList<>();
 
-        tableData.put("Date",
+        tableData.put(ExcelConstants.Headers.BOOKING_DATE,
                 bookingDtos.stream().map(BookingDto::getDate).collect(Collectors.toList()));
-        tableData.put("Kid",
+        tableData.put(ExcelConstants.Headers.KID,
                 bookingDtos.stream().map(BookingDto::getKidName).collect(Collectors.toList()));
         long uniqueRoomNameCount = bookingDtos.stream().map(BookingDto::getRoomName).distinct().count();
         if (uniqueRoomNameCount > 1 ) {
-            tableData.put("Place",
+            tableData.put(ExcelConstants.Headers.PLACE,
                     bookingDtos.stream().map(BookingDto::getRoomName).collect(Collectors.toList()));
         } else if (uniqueRoomNameCount != 0) {
-            addAdditionalFields(ExcelUserBooking.ADDITIONAL_EXCEL_FIELDS[2] +
-                    bookingDtos.get(0).getRoomName());
+            addAdditionalFields(ExcelConstants.Fields.ROOM + bookingDtos.get(0).getRoomName());
         }
-        tableData.put("Start time",
+        tableData.put(ExcelConstants.Headers.BOOKING_START_TIME,
                 bookingDtos.stream().map(BookingDto::getStartTime).collect(Collectors.toList()));
-        tableData.put("End time",
+        tableData.put(ExcelConstants.Headers.BOOKING_END_TIME,
                 bookingDtos.stream().map(BookingDto::getEndTime).collect(Collectors.toList()));
-        tableData.put("Duration",
+        tableData.put(ExcelConstants.Headers.BOOKING_DURATION,
                 bookingDtos.stream().map(BookingDto::getDuration).collect(Collectors.toList()));
-        tableData.put("Discount", bookingDtos.stream()
+        tableData.put(ExcelConstants.Headers.DISCOUNT, bookingDtos.stream()
                 .map(BookingDto::getDiscount)
-                .map(s -> s != null ? s : "not provided").map(s -> s.replace("<br>", "\n")).collect(Collectors.toList()));
-        tableData.put("Sum",
+                .map(s -> s != null ? s : ExcelConstants.Other.NOT_PROVIDED)
+                .map(s -> s.replace("<br>", "\n"))
+                .collect(Collectors.toList()));
+        tableData.put(ExcelConstants.Headers.SUM,
                 bookingDtos.stream().map(BookingDto::getCurrencySum).collect(Collectors.toList()));
     }
 
