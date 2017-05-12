@@ -143,6 +143,7 @@ const messages = {
     },
     report: {
         currencySymbol: 'ГРН',
+        hourSymbol: 'год',
         absentDiscount: 'не передбачено'
     },
     preloader: {

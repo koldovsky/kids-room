@@ -144,6 +144,7 @@ const messages = {
     },
     report: {
         currencySymbol: 'UAH',
+        hourSymbol: 'h',
         absentDiscount: 'not provided'
     },
     preloader: {

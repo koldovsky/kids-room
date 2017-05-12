@@ -58,7 +58,8 @@
                             </label>
                             <br>
                             <div class="col-xs-6  ">
-                                <input type="text" class="text-center form-control datepickers" id="bookingUpdatingStartDate"
+                                <input type="text" class="text-center form-control datepickers"
+                                       id="bookingUpdatingStartDate"
                                        placeholder="startDate"
                                        readonly>
                             </div>
@@ -77,7 +78,8 @@
                             </label>
                             <br>
                             <div class="col-xs-6  ">
-                                <input type="text" class="text-center form-control datepickers" id="bookingUpdatingEndDate"
+                                <input type="text" class="text-center form-control datepickers"
+                                       id="bookingUpdatingEndDate"
                                        placeholder="endDate"
                                        readonly>
                             </div>
@@ -153,7 +155,8 @@
                             </label>
                             <br>
                             <div class="col-xs-6 choose-booking">
-                                <input type="text" class="text-center form-control datepickers" id="recurrent-booking-end-date"
+                                <input type="text" class="text-center form-control datepickers"
+                                       id="recurrent-booking-end-date"
                                        placeholder="endDate" disabled="true">
                             </div>
                             <div class="col-xs-6">
@@ -342,17 +345,43 @@
                 <div id="personal-discounts-dialog" class="dialog" hidden
                      title="<spring:message code="administrator.personalDiscount"/>">
                     <div align="center">
-                    <table id="discount-table">
-                        <thead>
-                        <tr>
-                            <td><spring:message code="administrator.dayDiscount.startDate"/></td>
-                            <td><spring:message code="administrator.personalDiscount.value"/></td>
-                        </tr>
-                        </thead>
-                        <tbody>
+                        <table id="discount-table">
+                            <thead>
+                            <tr>
+                                <td><spring:message code="administrator.dayDiscount.startDate"/></td>
+                                <td><spring:message code="administrator.personalDiscount.value"/></td>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="abonnement-info" class="dialog" hidden
+                     title="<spring:message code="administrator.abonnementsInfo"/>">
+                    <div align="center">
+                        <table id="abonnement-table">
+                            <thead>
+                            <tr>
+                                <td><spring:message code="administrator.abonnement"/></td>
+                                <td><spring:message code="administrator.abonnement.price"/></td>
+                                <td><spring:message code="administrator.abonnement.hours"/></td>
+                                <td><spring:message code="administrator.abonnement.remainingTime"/></td>
+                                <td><spring:message code="administrator.abonnement.assignTime"/></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -381,10 +410,12 @@
                             </label>
                         </div>
 
-                        <button type="button" class="btn btn-success btn-edit-event-booking" id="confirm-choose-booking">
+                        <button type="button" class="btn btn-success btn-edit-event-booking"
+                                id="confirm-choose-booking">
                             <spring:message code="ok"/>
                         </button>
-                        <button type="button" class="btn btn-danger  btn-edit-event-booking pull-right" id="close-choose">
+                        <button type="button" class="btn btn-danger  btn-edit-event-booking pull-right"
+                                id="close-choose">
                             <spring:message code="cancel"/>
                         </button>
 
@@ -425,6 +456,10 @@
         <button type="button" class="btn btn-success btn-responsive pull-right"
                 id="personal-discount">
             <spring:message code="administrator.personalDiscount"/>
+        </button>
+        <button type="button" class="btn btn-success btn-responsive pull-right"
+                id="my-abonnements">
+            <spring:message code="administrator.myAbonnements"/>
         </button>
 
         <div id="colorDescryptionModal" class="modal fade bs-modal-lg-colourInfo" tabindex="-1" role="dialog"
@@ -484,7 +519,8 @@
                                     <canvas id="blob" width="600" height="400" hidden></canvas>
                                     <br>
                                     </body>
-                                    <button id="closeColorDesc" class="btn btn-success center-block " data-dismiss="modal">
+                                    <button id="closeColorDesc" class="btn btn-success center-block "
+                                            data-dismiss="modal">
                                         <spring:message code="close"/></button>
                                 </div>
                                 <span id="softServeInc">SoftServe Inc</span>
@@ -504,7 +540,8 @@
                             <br>
                             <h4 id="showRoomManagers"><spring:message code="manager"/> : </h4>
                             <H4 id="roomPhone"></H4>
-                            <button type="button" id="closeContact" class="btn btn-success center-block " data-dismiss="modal">
+                            <button type="button" id="closeContact" class="btn btn-success center-block "
+                                    data-dismiss="modal">
                                 <spring:message code="close"/></button>
                             <span>SoftServe Inc</span>
                         </div>
@@ -545,7 +582,8 @@
 </div>
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.dataTables.min.js"
+        type="text/javascript"></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/jquery-ui.min.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/userCalendar.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/lib/moment.min.js'></script>

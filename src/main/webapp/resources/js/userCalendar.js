@@ -19,6 +19,7 @@ $(document).ready(function () {
         $('#mobile').attr('class', '');
     }
 
+    getMyAbonnements(localStorage['userId']);
     getPersonalDiscounts();
 });
 
@@ -135,6 +136,20 @@ $(function () {
         autoOpen: false,
         modal: true,
         width: 400,
+        show: {
+            effect: 'drop',
+            duration: 500
+        },
+        hide: {
+            effect: 'clip',
+            duration: 500
+        }
+    });
+
+    $('#abonnement-info').dialog({
+        autoOpen: false,
+        modal: true,
+        width: 900,
         show: {
             effect: 'drop',
             duration: 500
@@ -319,7 +334,11 @@ $(function () {
 
     $('#personal-discount').click(function () {
         $('#personal-discounts-dialog').dialog('open');
-    })
+    });
+
+    $('#my-abonnements').click(function () {
+        $('#abonnement-info').dialog('open');
+    });
 });
 
 function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
@@ -1280,3 +1299,29 @@ function getPersonalDiscounts() {
         }
     });
 }
+
+function getMyAbonnements(userId) {
+    let url = `restful/abonnement/` + userId;
+    let rows = '';
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(result) {
+            let abonnements = result;
+            if (abonnements.length > 0) {
+                $.each(abonnements, function (i, abonnement) {
+                    rows += '<tr>';
+                    rows += `<td>${abonnement.name}</td>`;
+                    rows += `<td>${abonnement.price} ${messages.report.currencySymbol}</td>`;
+                    rows += `<td>${abonnement.hour}${messages.report.hourSymbol}.</td>`;
+                    rows += `<td>${abonnement.remainingTime}${messages.report.hourSymbol}.</td>`;
+                    rows += `<td>${abonnement.assingTime}</td>`;
+                    rows += '</tr>';
+                });
+                $('#abonnement-info').find('tbody').append(rows);
+            }
+        }
+    });
+}
+
