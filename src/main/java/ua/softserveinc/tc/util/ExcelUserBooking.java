@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 @Component
 public class ExcelUserBooking implements ExcelData<BookingDto> {
 
-    public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM: ", " UAH", "ROOM: ", "PARENT: " };
-
     private Map<String, List<String>> tableData;
     private List<String> additionalFields;
 
