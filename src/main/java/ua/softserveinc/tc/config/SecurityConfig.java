@@ -365,6 +365,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         SecurityContextLogoutHandler logoutHandler =
                 new SecurityContextLogoutHandler();
         logoutHandler.setInvalidateHttpSession(true);
+
         logoutHandler.setClearAuthentication(true);
         return logoutHandler;
     }
@@ -519,21 +520,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SecurityConstants.ERROR).permitAll()
                 .antMatchers(SecurityConstants.SAML).permitAll()
                 .anyRequest().authenticated()
-                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository()).tokenValiditySeconds(3600)
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage(SecurityConstants.ACCESS_DENIED)
                 .and()
-                .logout().deleteCookies("JSESSIONID")
+                .logout()
                 .logoutSuccessUrl(SecurityConstants.ENTRY_POINT);
 
-        setAuthenticationPermits(http, isCustomAuthEnable);
-
-/*        http.rememberMe().
+        http.rememberMe().
                 key("rem-me-key").
                 rememberMeParameter("remember-me").
                 rememberMeCookieName("my-remember-me").
-                tokenValiditySeconds(3600);*/
+                tokenRepository(persistentTokenRepository()).
+                tokenValiditySeconds(3600);
+
+        setAuthenticationPermits(http, isCustomAuthEnable);
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+        tokenRepositoryImpl.setDataSource(dataSource);
+        return tokenRepositoryImpl;
     }
 
     /**
@@ -561,13 +569,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder getBCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        tokenRepositoryImpl.setDataSource(dataSource);
-        return tokenRepositoryImpl;
     }
 
     /**

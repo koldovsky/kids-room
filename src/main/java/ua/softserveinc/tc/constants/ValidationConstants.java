@@ -112,6 +112,7 @@ public final class ValidationConstants {
     public static final String DAY_DISCOUNT_START_TIME = "startTime";
     public static final String DAY_DISCOUNT_END_TIME = "endTime";
     public static final String PER_DISCOUNT_USER = "user";
+    public static final String INCORRECT_USER = "incorrect";
 
     public static final String EMPTY_DAY_DISCOUNT_REASON = "administrator.discount.error.emptyReason";
     public static final String EMPTY_DAY_DISCOUNT_VALUE = "administrator.discount.error.emptyValue";
@@ -183,18 +184,21 @@ public final class ValidationConstants {
     public static final String PHONE_NUMBER_ERROR_MSG = "registration.phone";
     public static final String NOT_CONFIRMED_MSG = "registration.confirm";
     public static final String EMAIL_ERROR_MSG = "registration.email";
-    public static final String EMAIL_ALREADY_IN_USE_MSG = "registration.emailExist";
+    public static final String EMAIL_ALREADY_IN_USE_MSG = "User with such email have already exist";
     public static final String USER_NOT_EXIST = "user.notExist";
     public static final String ROOM_NOT_EXIST = "room.notExist";
     public static final String CHILD_NOT_EXIST = "child.notExist";
     public static final String PROPERTIES_WRITE_FAILED = "properties.update.failed";
     public static final String PROBLEM_SEND_EMAIL_MSG = "email.problem";
-    public static final String FAILED_SEND_EMAIL_MSG = "email.failed";
-    public static final String NOT_SEND_EMAIL_MSG = "email.send";
+    public static final String PROBLEM_EMPTY_USER = "user.problem";
+    public static final String FAILED_SEND_EMAIL_MSG = "Error with sending email. Please try again to register";
+    public static final String NOT_SEND_EMAIL_MSG = "=Error! Email didn't sent";
     public static final String FILE_TOO_BIG = "kid.image.tooBig";
     public static final String FILE_WRONG_EXTENSION = "kid.image.ext";
     public static final String ADD_ROOM_DIALOG_RATE_ERROR = "email.failed";
     public static final String NO_DAYS_FOR_RECURRENT_EVENT = "recurrent.daysNotSellected";
+    public static final String EXIST = "report.exist";
+    public static final String MANAGER_EMPTY = "Empty manager";
 
     public static final String ABONNEMENT_EMPTY_FIELD = "This field can't be empty";
     public static final String ABONNEMENT_INVALID_NAME_MSG = "administrator.abonnement.error.name";
