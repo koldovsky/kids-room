@@ -38,10 +38,12 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
                 bookingDtos.stream().map(BookingDto::getEndTime).collect(Collectors.toList()));
         tableData.put(ExcelConstants.Headers.BOOKING_DURATION,
                 bookingDtos.stream().map(BookingDto::getDuration).collect(Collectors.toList()));
+        tableData.put(ExcelConstants.Headers.ABONNEMENT,
+                bookingDtos.stream().map(BookingDto::getAbonnement).collect(Collectors.toList()));
         tableData.put(ExcelConstants.Headers.DISCOUNT, bookingDtos.stream()
                 .map(BookingDto::getDiscount)
                 .map(s -> s != null ? s : ExcelConstants.Other.NOT_PROVIDED)
-                .map(s -> s.replace("<br>", "\n"))
+                .map(s -> s.replace("_", "\n"))
                 .collect(Collectors.toList()));
         tableData.put(ExcelConstants.Headers.SUM,
                 bookingDtos.stream().map(BookingDto::getCurrencySum).collect(Collectors.toList()));
