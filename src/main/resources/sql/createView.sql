@@ -10,5 +10,5 @@ as select
      roomId as periodRoomId,
      timeB as begin,
      (select min(timeB) from timeline as t1 where t1.timeB > begin and t1.roomId = periodRoomId) as end
-   from kids.timeline
+   from timeline
    GROUP BY begin;

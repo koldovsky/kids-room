@@ -46,7 +46,7 @@ public class ExceptionHandlingControllerAdvice {
     }
 
 
-    @ResponseStatus
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(TokenInvalidException.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex, Locale locale) {
         log.error("Request: " + req.getRequestURL() + " raised " + ex);

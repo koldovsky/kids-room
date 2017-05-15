@@ -30,7 +30,7 @@
                 <spring:message code="administrator.abonnements"/></strong>
             </legend>
         </th>
-        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToUserAbonnement">
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount change-abonnement" id="changeToUserAbonnement">
             Assigning history
         </button>
     </div>
@@ -82,7 +82,7 @@
                 </strong>
             </legend>
         </th>
-        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToAbonnements">
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount change-abonnement" id="changeToAbonnements">
             Abonnements
         </button>
     </div>

@@ -15,6 +15,7 @@ import java.util.Map;
 public class ExcelDocument extends AbstractXlsView {
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void buildExcelDocument(Map<String, Object> model, Workbook workbook,
                                       HttpServletRequest request,
                                       HttpServletResponse response) throws Exception {
@@ -34,7 +35,7 @@ public class ExcelDocument extends AbstractXlsView {
         int tableHeights = dataForExcel.getSize();
 
         if (dataForExcel.hasAdditionalFields()) {
-            rowIndex = writeAdditionalFields(excelSheet, style, (List<String>) dataForExcel.getAdditionalFields(),
+            rowIndex = writeAdditionalFields(excelSheet, style, dataForExcel.getAdditionalFields(),
                     rowIndex, headers.length);
         }
 

@@ -85,7 +85,7 @@ public class RoomReportValuesDto {
                 .append(":")
                 .append(duration.toMinutes() % 60 < 10
                         ? "0" + duration.toMinutes() % 60 : duration.toMinutes() % 60)
-                .append(":00").toString();
+                .toString();
     }
 
     @Override

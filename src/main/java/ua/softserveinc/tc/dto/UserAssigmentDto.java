@@ -19,22 +19,6 @@ public class UserAssigmentDto {
     public UserAssigmentDto() {
     }
 
-    public UserAssigmentDto(String userName, String email, String abonnement, int hours, Long minutesLeft) {
-        this.user = userName;
-        this.email = email;
-        this.abonnement = abonnement;
-        this.hours = hours;
-        this.minutesLeft = minutesLeft;
-        this.leftTime = transformMinutesToLocalTimeString();
-    }
-
-    public UserAssigmentDto(Map.Entry<SubscriptionAssignment, Long> assignment) {
-        this.user = assignment.getKey().getUser().getFullName();
-        this.abonnement = assignment.getKey().getAbonnement().getName();
-        this.hours = assignment.getKey().getAbonnement().getHour();
-        this.minutesLeft = this.hours * 60 - assignment.getValue().intValue();
-    }
-
     public UserAssigmentDto(SubscriptionAssignment assignment) {
         this.user = assignment.getUser().getFullName();
         this.email = assignment.getUser().getEmail();
@@ -87,7 +71,11 @@ public class UserAssigmentDto {
     }
 
     private String transformMinutesToLocalTimeString() {
-        return LocalTime.ofSecondOfDay(60 * minutesLeft).toString();
+        long minutes = minutesLeft % 60;
+        return new StringBuilder(String.valueOf(minutesLeft / 60))
+                .append(":")
+                .append(minutes > 9 ? minutes : "0" + minutes)
+                .toString();
     }
 
     public String getLeftTime() {

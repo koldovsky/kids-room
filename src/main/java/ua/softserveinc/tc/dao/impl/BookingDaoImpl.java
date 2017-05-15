@@ -175,7 +175,6 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         result.forEach(o -> {
             Date date1 = (Date) o[0];
             Date date2 = (Date) o[1];
-
             list.add(new Date[]{date1, date2});
         });
 

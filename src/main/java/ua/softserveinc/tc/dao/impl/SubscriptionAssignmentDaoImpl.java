@@ -37,9 +37,10 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
         Join<SubscriptionAssignment, User> userJoin = root.join(AbonnementConstants.Entity.USER);
         Join<SubscriptionAssignment, AbonnementUsage> usageJoin = root.join(
                 AbonnementConstants.Alias.ABONNEMENT_USAGES, JoinType.LEFT);
-        Expression<Integer> usedMinutes = usageJoin.get(AbonnementConstants.Alias.USED_MINUTES).as(Integer.class);
+        Expression<Long> usedMinutes = criteria
+                .sumAsLong(usageJoin.get(AbonnementConstants.Alias.USED_MINUTES)).as(Long.class);
 
-        query.multiselect(root, criteria.<Long>selectCase().when(criteria.sumAsLong(usedMinutes).isNull(), 0L)
+        query.multiselect(root, criteria.<Long>selectCase().when(usedMinutes.isNull(), 0L)
                 .otherwise(usedMinutes.as(Long.class)))
                 .where(criteria.equal(userJoin.get(AbonnementConstants.Hibernate.ABONNEMENT_ID), userId),
                         criteria.equal(root.get(AbonnementConstants.Entity.VALID), true));

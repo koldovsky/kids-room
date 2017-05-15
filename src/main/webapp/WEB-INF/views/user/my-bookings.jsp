@@ -44,8 +44,9 @@
                 <th><spring:message code="report.startTime" /></th>
                 <th><spring:message code="report.endTime" /></th>
                 <th><spring:message code="report.duration" /></th>
-                <th><spring:message code="report.sum" /></th>
+                <th><spring:message code="report.abonnementUsed" /></th>
                 <th><spring:message code="report.discount" /></th>
+                <th><spring:message code="report.sum" /></th>
             </tr>
          </thead>
 

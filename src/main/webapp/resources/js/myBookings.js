@@ -52,8 +52,9 @@ function updateTable() {
                         + '<td>' + booking.startTime + '</td>'
                         + '<td>' + booking.endTime + '</td>'
                         + '<td>' + booking.duration + '</td>'
-                        + '<td>' + booking.currencySum + '</td>'
-                        + '<td>' + (booking.discount ? booking.discount : messages.report.absentDiscount) + '</td> + </tr>';
+                        + '<td>' + (booking.abonnement ? booking.abonnement : messages.report.absentDiscount) + '</td>'
+                        + '<td>' + (booking.discount ? booking.discount.replace('_', '<br>') : messages.report.absentDiscount) + '</td>'
+                        + '<td>' + booking.currencySum + '</td> + </tr>';
                     sumTotal += parseFloat(booking.currencySum);
                 });
 

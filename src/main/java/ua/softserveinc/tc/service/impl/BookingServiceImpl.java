@@ -227,7 +227,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             booking.setDiscounts(outputDiscounts.keySet().stream().sorted()
                     .map(integer -> String.valueOf(integer) + "% - " + outputDiscounts.get(integer))
-                    .collect(Collectors.joining("<br>")));
+                    .collect(Collectors.joining("_")));
         }
     }
 
