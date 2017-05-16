@@ -131,7 +131,7 @@ public class UserServiceImpl extends BaseServiceImpl<User>
 
     @Override
     public ResponseWithErrors adminUpdateManager(User manager, BindingResult bindingResult) {
-        return manager != null ? updateManager(manager, bindingResult) : getResponseOfEmptyUser();
+        return Objects.isNull(manager) ? getResponseOfEmptyUser() : updateManager(manager, bindingResult);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class UserServiceImpl extends BaseServiceImpl<User>
     private boolean checkInputErrors(BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
         if (bindingResult.hasErrors()) {
             if (bindingResult.getFieldError() != null) {
-                responseWithErrors.setMessage(responseWithErrors.getMessage() + " / " + bindingResult.getFieldError().getField() + " incorrect");
+                responseWithErrors.setMessage(responseWithErrors.getMessage() + " / " + bindingResult.getFieldError().getField() + " " + ValidationConstants.INCORRECT_USER);
             }
             return true;
         }
@@ -175,15 +175,15 @@ public class UserServiceImpl extends BaseServiceImpl<User>
 
     private void checkEmailIfExist(User manager, BindingResult bindingResult, ResponseWithErrors responseWithErrors) {
         if (getUserByEmail(manager.getEmail()) != null) {
-            bindingResult.addError(new ObjectError("Email", "Exist"));
-            responseWithErrors.setMessage("User with such email already exist");
+            bindingResult.addError(new ObjectError(ValidationConstants.EMAIL, ValidationConstants.EXIST));
+            responseWithErrors.setMessage(ValidationConstants.EMAIL_ALREADY_IN_USE_MSG);
+            log.error("User with email " + manager.getEmail() + " have already exist");
         }
     }
 
     private ResponseWithErrors getResponseOfEmptyUser() {
         responseWithErrors = new ResponseWithErrors("");
-        responseWithErrors.setMessage("Empty manager");
-        log.error("While getting manager with id  - No such user");
+        responseWithErrors.setMessage(ValidationConstants.MANAGER_EMPTY);
         return responseWithErrors;
     }
 
