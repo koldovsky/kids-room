@@ -76,6 +76,6 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
 
     @Override
     public boolean hasAdditionalFields() {
-        return true;
+        return !additionalFields.isEmpty();
     }
 }

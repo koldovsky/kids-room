@@ -9,9 +9,6 @@ import java.util.Objects;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class Discount {
-    public static String PERSONAL_DISCOUNT_REASON = "Personal discount";
-
-    private String reason;
     private int value;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -20,22 +17,19 @@ public class Discount {
         this.value = value;
     }
 
-    public Discount(String reason, int value, LocalTime startTime, LocalTime endTime) {
-        this.reason = reason;
+    public Discount(int value, LocalTime startTime, LocalTime endTime) {
         this.value = value;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     public Discount(DayDiscountDTO dto) {
-        this.reason = dto.getReason();
         this.value = dto.getValue();
         this.startTime = dto.getStartTime();
         this.endTime = dto.getEndTime();
     }
 
     public Discount(PersonalDiscountDTO dto) {
-        this.reason = Discount.PERSONAL_DISCOUNT_REASON;
         this.value = dto.getValue();
         this.startTime = dto.getStartTime();
         this.endTime = dto.getEndTime();
@@ -51,10 +45,6 @@ public class Discount {
 
     public int getValue() {
         return value;
-    }
-
-    public String getReason() {
-        return reason;
     }
 
     public void setEndTime(LocalTime endTime) {
@@ -76,12 +66,11 @@ public class Discount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Discount discount = (Discount) o;
-        return value == discount.value &&
-                Objects.equals(reason, discount.reason);
+        return value == discount.value;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reason, value);
+        return Objects.hash(value);
     }
 }
