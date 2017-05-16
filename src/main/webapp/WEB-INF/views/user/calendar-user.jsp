@@ -384,7 +384,7 @@
                         </table>
                         <button type="button" class="btn btn-success btn-responsive"
                                 id="buy-abonnements">
-                            Buy Abonnement
+                            <spring:message code="administrator.abonnement.buy"
                         </button>
                     </div>
                 </div>
