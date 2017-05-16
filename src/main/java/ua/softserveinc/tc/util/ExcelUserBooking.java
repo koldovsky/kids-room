@@ -24,11 +24,11 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
         tableData.put(ExcelConstants.Headers.KID,
                 bookingDtos.stream().map(BookingDto::getKidName).collect(Collectors.toList()));
         long uniqueRoomNameCount = bookingDtos.stream().map(BookingDto::getRoomName).distinct().count();
-        if (uniqueRoomNameCount > 1 ) {
+        if (uniqueRoomNameCount == 1) {
+            addAdditionalFields(ExcelConstants.Fields.ROOM + bookingDtos.get(0).getRoomName());
+        } else {
             tableData.put(ExcelConstants.Headers.PLACE,
                     bookingDtos.stream().map(BookingDto::getRoomName).collect(Collectors.toList()));
-        } else if (uniqueRoomNameCount != 0) {
-            addAdditionalFields(ExcelConstants.Fields.ROOM + bookingDtos.get(0).getRoomName());
         }
         tableData.put(ExcelConstants.Headers.BOOKING_START_TIME,
                 bookingDtos.stream().map(BookingDto::getStartTime).collect(Collectors.toList()));

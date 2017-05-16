@@ -40,7 +40,7 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler({NoHandlerFoundException.class, ResourceNotFoundException.class})
     public ModelAndView handleError404(HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_NOT_FOUND_CODE, HttpStatus.NOT_FOUND.toString(), locale);
     }
@@ -49,7 +49,7 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(TokenInvalidException.class)
     public ModelAndView handleError(HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_TOKEN_NOT_FOUND_CODE,
                 ErrorConstants.DEFAULT_ERROR_FILE_NAME, locale);
@@ -61,7 +61,7 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleError403(AccessDeniedException e, HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_ACCESS_DENIED, ErrorConstants.DEFAULT_ERROR_FILE_NAME, locale);
     }
@@ -69,7 +69,7 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ModelAndView handleError500(HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_INTERNAL_ERROR, ErrorConstants.DEFAULT_ERROR_FILE_NAME, locale);
     }
@@ -81,7 +81,7 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BadUploadException.class)
     public ModelAndView badUpload(HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_BAD_UPLOAD, ErrorConstants.DEFAULT_ERROR_FILE_NAME, locale);
     }
@@ -89,7 +89,7 @@ public class ExceptionHandlingControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(JpaSystemException.class)
     public ModelAndView jpaExceptionHandler(HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_COMMON, ErrorConstants.DEFAULT_ERROR_FILE_NAME, locale);
     }
@@ -98,7 +98,7 @@ public class ExceptionHandlingControllerAdvice {
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class,
             MethodArgumentNotValidException.class})
     public ModelAndView duplicateBooking(HttpServletRequest req, Exception ex, Locale locale) {
-        log.error("Request: " + req.getRequestURL() + " raised " + ex);
+        log.error("Request: {} raised {}", req.getRequestURL(), ex.toString());
 
         return buildModelAndView(ErrorConstants.MESSAGE_BAD_REQUEST, ErrorConstants.DEFAULT_ERROR_FILE_NAME, locale);
     }

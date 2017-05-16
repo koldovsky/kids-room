@@ -11,9 +11,11 @@ $(function () {
         abonnementsColumns, abonnementsFunctions);
     purchasedAbonnementsTable = buildDataTable('.assigned-abonnement-datatable', 'adm-all-abonnement-assigment',
         purchasedAbonnements, function () {
-            $(document.body).on('keyup', '.assigned-abonnement-datatable-wrapper .search-fields', function () {
+            $(document.body).on('keyup', '.assigned-abonnement-datatable-wrapper .search-fields',
+                $.debounce(400, function () {
+
                 purchasedAbonnementsTable.ajax.reload(null, false);
-            });
+            }));
 
             $(document.body).on('click', '#active-search-checkbox', function () {
 
@@ -287,11 +289,12 @@ const abonnementsFunctions = function () {
     });
 
     // bind filter
-    $(document.body).on('keyup', '.abonnement-datatable-wrapper .search-fields', function () {
+    $(document.body).on('keyup', '.abonnement-datatable-wrapper .search-fields',
+        $.debounce(400, function () {
         if (validatePrice()) {
             abonnementTable.ajax.reload(null, false);
         }
-    });
+    }));
 
     $("#selectUser").select2();
 
