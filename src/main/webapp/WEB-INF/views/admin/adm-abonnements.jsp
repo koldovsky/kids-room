@@ -16,6 +16,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/select2.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/jquery.ba-throttle-debounce.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/pagination-table.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-abonnement.js'></script>
 <script src='${pageContext.request.contextPath}/resources/js/admin-abonnement-change.js'></script>
@@ -30,7 +31,7 @@
                 <spring:message code="administrator.abonnements"/></strong>
             </legend>
         </th>
-        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToUserAbonnement">
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount change-abonnement" id="changeToUserAbonnement">
             Assigning history
         </button>
     </div>
@@ -82,7 +83,7 @@
                 </strong>
             </legend>
         </th>
-        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount" id="changeToAbonnements">
+        <button type="button" class="btn btn-raised btn-primary btn-add-room change-discount change-abonnement" id="changeToAbonnements">
             Abonnements
         </button>
     </div>

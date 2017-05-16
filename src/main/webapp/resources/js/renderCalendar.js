@@ -3,7 +3,7 @@ var creatingEvent;
 var allEvents;
 const NOT_ACTIVE_EVENT = '#33cc33';
 const BORDER_COLOR = '#000000';
-const DISCOUNT_COLOR = '#F00000';
+const DISCOUNT_COLOR = '#FFFF00';
 const DAYS_IN_MONTH = 31;
 const DAYS_IN_WEEK = 7;
 

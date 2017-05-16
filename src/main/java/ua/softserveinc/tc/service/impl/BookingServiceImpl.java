@@ -152,10 +152,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     private void calculateSumIncludeAbonnement(Booking booking) {
-        long userId = booking.getUser().getId();
         List<SubscriptionsUsedHoursDto> userAssignment = abonnementsService
-                .getAssignmentWithUsedHoursByUserId(userId);
-        if (userAssignment.size() == 0) {
+                .getAssignmentWithUsedHoursByUserId(booking.getUser().getId());
+        if (userAssignment.isEmpty()) {
             calculateSumIncludingDiscounts(booking, DateUtil.dateToLocalTime(booking.getBookingStartTime()));
             return;
         }
@@ -190,11 +189,11 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
     }
 
     private long getNextPaidMinutesByAbonnement(SubscriptionsUsedHoursDto assignment, long bookingUnpaidTimeInMinutes,
-                                                long l) {
-        if (bookingUnpaidTimeInMinutes >= l) {
+                                                long leftMinutesInAbonnement) {
+        if (bookingUnpaidTimeInMinutes >= leftMinutesInAbonnement) {
             assignment.getAssignmentDto().setValid(false);
             abonnementUsageService.updateSubscription(assignment.getSubscriptionAssignment());
-            return l;
+            return leftMinutesInAbonnement;
         }
 
         return bookingUnpaidTimeInMinutes;
@@ -209,10 +208,9 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
                 .findPersonalDiscountByUserId(booking.getUser().getId());
         Rate roomRate = booking.getRoom().getRates().get(0);
 
-        if (dayDiscountDTOS.size() + personalDiscountDTOS.size() == 0) {
+        if (dayDiscountDTOS.isEmpty() && personalDiscountDTOS.isEmpty()) {
             booking.setSum(calculateAndGetSum(start,
-                    DateUtil.dateToLocalTime(booking.getBookingEndTime()),
-                    0, roomRate));
+                    DateUtil.dateToLocalTime(booking.getBookingEndTime()), 0, roomRate));
         } else {
             Map<Integer, LocalTime> outputDiscounts = new HashMap<>();
             List<Discount> discounts = dayDiscountDTOS.stream().map(Discount::new).collect(Collectors.toList());
@@ -228,7 +226,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
             booking.setDiscounts(outputDiscounts.keySet().stream().sorted()
                     .map(integer -> String.valueOf(integer) + "% - " + outputDiscounts.get(integer))
-                    .collect(Collectors.joining("<br>")));
+                    .collect(Collectors.joining("_")));
         }
     }
 
@@ -238,8 +236,7 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         LocalTime minStartDiscount = getMinTime(list, Discount::getStartTime, startPeriodTime, endBookingTime);
         LocalTime minEndDiscount = getMinTime(list, Discount::getEndTime, startPeriodTime, endBookingTime);
-        LocalTime endPeriodTime = minStartDiscount.isBefore(minEndDiscount)
-                ? minStartDiscount : minEndDiscount;
+        LocalTime endPeriodTime = minStartDiscount.isBefore(minEndDiscount) ? minStartDiscount : minEndDiscount;
 
         int maxDiscountValue = list.stream()
                 .filter(p -> p.containPeriod(startPeriodTime, endPeriodTime)).map(Discount::getValue)
@@ -248,7 +245,6 @@ public class BookingServiceImpl extends BaseServiceImpl<Booking> implements Book
 
         if (maxDiscountValue != 0 && outputDiscounts.containsKey(maxDiscountValue)) {
             LocalTime time = outputDiscounts.get(maxDiscountValue);
-
             outputDiscounts.replace(maxDiscountValue, DateUtil.addTwoTimes(time,
                     DateUtil.differenceBetweenTwoTimes(startPeriodTime, endPeriodTime)));
         } else {

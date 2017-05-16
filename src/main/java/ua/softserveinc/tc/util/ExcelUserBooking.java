@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 @Component
 public class ExcelUserBooking implements ExcelData<BookingDto> {
 
-    public static String[] ADDITIONAL_EXCEL_FIELDS = { "TOTAL SUM: ", " UAH", "ROOM: ", "PARENT: " };
-
     private Map<String, List<String>> tableData;
     private List<String> additionalFields;
 
@@ -26,11 +24,11 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
         tableData.put(ExcelConstants.Headers.KID,
                 bookingDtos.stream().map(BookingDto::getKidName).collect(Collectors.toList()));
         long uniqueRoomNameCount = bookingDtos.stream().map(BookingDto::getRoomName).distinct().count();
-        if (uniqueRoomNameCount > 1 ) {
+        if (uniqueRoomNameCount == 1) {
+            addAdditionalFields(ExcelConstants.Fields.ROOM + bookingDtos.get(0).getRoomName());
+        } else {
             tableData.put(ExcelConstants.Headers.PLACE,
                     bookingDtos.stream().map(BookingDto::getRoomName).collect(Collectors.toList()));
-        } else if (uniqueRoomNameCount != 0) {
-            addAdditionalFields(ExcelConstants.Fields.ROOM + bookingDtos.get(0).getRoomName());
         }
         tableData.put(ExcelConstants.Headers.BOOKING_START_TIME,
                 bookingDtos.stream().map(BookingDto::getStartTime).collect(Collectors.toList()));
@@ -38,10 +36,14 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
                 bookingDtos.stream().map(BookingDto::getEndTime).collect(Collectors.toList()));
         tableData.put(ExcelConstants.Headers.BOOKING_DURATION,
                 bookingDtos.stream().map(BookingDto::getDuration).collect(Collectors.toList()));
+        tableData.put(ExcelConstants.Headers.ABONNEMENT,
+                bookingDtos.stream().map(BookingDto::getAbonnement)
+                        .map(s -> s != null ? s : ExcelConstants.Other.NOT_PROVIDED)
+                        .collect(Collectors.toList()));
         tableData.put(ExcelConstants.Headers.DISCOUNT, bookingDtos.stream()
                 .map(BookingDto::getDiscount)
                 .map(s -> s != null ? s : ExcelConstants.Other.NOT_PROVIDED)
-                .map(s -> s.replace("<br>", "\n"))
+                .map(s -> s.replace("_", "\n"))
                 .collect(Collectors.toList()));
         tableData.put(ExcelConstants.Headers.SUM,
                 bookingDtos.stream().map(BookingDto::getCurrencySum).collect(Collectors.toList()));
@@ -74,6 +76,6 @@ public class ExcelUserBooking implements ExcelData<BookingDto> {
 
     @Override
     public boolean hasAdditionalFields() {
-        return true;
+        return !additionalFields.isEmpty();
     }
 }

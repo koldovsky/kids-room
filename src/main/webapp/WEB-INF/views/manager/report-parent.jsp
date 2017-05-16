@@ -38,8 +38,9 @@
                 <th><spring:message code="report.startTime" /></th>
                 <th><spring:message code="report.endTime" /></th>
                 <th><spring:message code="report.duration" /></th>
-                <th><spring:message code="report.sum" /></th>
-                <th style="width: 150px"><spring:message code="report.discount" /></th>
+                <th><spring:message code="report.abonnementUsed" /></th>
+                <th><spring:message code="report.discount" /></th>
+                <th><spring:message code="report.sum"/></th>
             </tr>
             </thead>
             <tbody>
@@ -51,23 +52,33 @@
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.dateStartTime}" /></td>
                     <td><fmt:formatDate pattern="HH:mm" value="${booking.dateEndTime}" /></td>
                     <td>${booking.formatDuration()}</td>
-                    <td>${booking.getCurrencySum()} <spring:message code="report.currencySymbol" /></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${empty booking.abonnement}">
+                                <spring:message code="manager.absentDiscout" />
+                            </c:when>
+                            <c:otherwise>
+                                ${booking.abonnement}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td>
                         <c:choose>
                             <c:when test="${empty booking.discount}">
                                 <spring:message code="manager.absentDiscout" />
                             </c:when>
                             <c:otherwise>
-                                ${booking.discount}
+                                ${booking.discount.replaceAll("_", "<br>")}
                             </c:otherwise>
                         </c:choose>
                     </td>
+                    <td>${booking.getCurrencySum()} <spring:message code="report.currencySymbol" /></td>
                 </tr>
             </c:forEach>
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="7" class="captionBottom">
+                <td colspan="8" class="captionBottom">
                     <h2>
                         <spring:message code="report.sumTotal" />
                        ${sumTotal}

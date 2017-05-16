@@ -37,9 +37,10 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
         Join<SubscriptionAssignment, User> userJoin = root.join(AbonnementConstants.Entity.USER);
         Join<SubscriptionAssignment, AbonnementUsage> usageJoin = root.join(
                 AbonnementConstants.Alias.ABONNEMENT_USAGES, JoinType.LEFT);
-        Expression<Integer> usedMinutes = usageJoin.get(AbonnementConstants.Alias.USED_MINUTES).as(Integer.class);
+        Expression<Long> usedMinutes = criteria
+                .sumAsLong(usageJoin.get(AbonnementConstants.Alias.USED_MINUTES)).as(Long.class);
 
-        query.multiselect(root, criteria.<Long>selectCase().when(criteria.sumAsLong(usedMinutes).isNull(), 0L)
+        query.multiselect(root, criteria.<Long>selectCase().when(usedMinutes.isNull(), 0L)
                 .otherwise(usedMinutes.as(Long.class)))
                 .where(criteria.equal(userJoin.get(AbonnementConstants.Hibernate.ABONNEMENT_ID), userId),
                         criteria.equal(root.get(AbonnementConstants.Entity.VALID), true));
@@ -73,8 +74,7 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
                 .sumAsLong(usageJoin.get(AbonnementConstants.Alias.USED_MINUTES)).as(Long.class);
         Expression<Long> minutesLeft = criteria.diff(
                 criteria.prod(60, abonnementJoin.get(AbonnementConstants.Hibernate.ABONNEMENT_HOUR)),
-                criteria.<Long>selectCase()
-                        .when(hoursUsed.isNull(), criteria.literal(0L))
+                criteria.<Long>selectCase().when(hoursUsed.isNull(), criteria.literal(0L))
                         .otherwise(hoursUsed)).as(Long.class);
         userName.alias(AbonnementConstants.Alias.USER_SORT_COLUMN);
         email.alias(AbonnementConstants.Alias.EMAIL_SORT_COLUMN);
@@ -90,7 +90,6 @@ public class SubscriptionAssignmentDaoImpl extends BaseDaoImpl<SubscriptionAssig
             PaginationCharacteristics.searchCount = getSearchedItemsCount(criteria, query, root, restrictions);
         }
         query.orderBy(getOrderList(sortingList, criteria, expressions));
-
         return entityManager.createQuery(query)
                 .setFirstResult(pagination.getStart())
                 .setMaxResults(pagination.getItemsPerPage())

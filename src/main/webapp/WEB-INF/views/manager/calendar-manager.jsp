@@ -100,8 +100,8 @@
                         <div class="form-group">
                             <label for="color-select"><spring:message code="event.chooseColor"/></label>
                             <select id="color-select">
-                                <option value="#ffcd5c" style="background:yellow">
-                                    <spring:message code="color.yellow"/>
+                                <option value="#ff0000" style="background:red">
+                                    <spring:message code="color.red"/>
                                 </option>
                                 <option value="#9b3aa1" style="background:purple">
                                     <spring:message code="color.purple"/>
@@ -124,8 +124,6 @@
                                 <option value="#84fff7" style="background:aqua">
                                     <spring:message code="color.aqua"/>
                                 </option>
-                                <option value="#d3af37" style="background:gold">
-                                    <spring:message code="color.gold"/><br></option>
                             </select>
                         </div>
                         <div class="form-group">

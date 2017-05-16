@@ -6,6 +6,7 @@ import ua.softserveinc.tc.entity.converter.LocalDateTimeAttributeConverter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "abbonement_usages")
@@ -67,5 +68,21 @@ public class AbonnementUsage {
 
     public void setUsedMinutes(long usedMinutes) {
         this.usedMinutes = usedMinutes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbonnementUsage that = (AbonnementUsage) o;
+        return usedMinutes == that.usedMinutes &&
+                Objects.equals(idUsage, that.idUsage) &&
+                Objects.equals(assignment, that.assignment) &&
+                Objects.equals(timestamp, that.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUsage, assignment, timestamp, usedMinutes);
     }
 }

@@ -703,7 +703,7 @@ function sendBookingToServerForUpdate(bookingForUpdate) {
             }
         },
         error : function (xhr) {
-            callErrorDialog(xhr['responseText']);
+            callErrorDialog('We regret to inform you that there are no available places left in the room on the time you\'ve chosen');
         }
     });
 }

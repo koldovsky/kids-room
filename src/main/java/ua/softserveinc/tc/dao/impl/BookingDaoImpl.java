@@ -35,6 +35,11 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final String SQL_QUERY = "select t.begin, t.end from time_periods as t where t.periodRoomId = :roomId having " +
+            "(select count(id_book) from bookings where bookings.id_room = :roomId and booking_end_time > now() " +
+            "and booking_start_time < t.end and booking_end_time > t.begin " +
+            "and id_book not in (:existIds)) >= :roomSize";
+
     @Override
     public List<Booking> getDuplicateBookings(BookingsCharacteristics characteristics) {
         List<Booking> resultList = Collections.singletonList(new Booking());
@@ -163,19 +168,16 @@ public class BookingDaoImpl extends BaseDaoImpl<Booking> implements BookingDao {
         long roomId = characteristics.getRooms().get(0).getId();
         int roomSize = characteristics.getRooms().get(0).getCapacity();
 
-        String sqlQuery = "select t.begin, t.end from time_periods as t where t.periodRoomId = %s having " +
-                "(select count(id_book) from bookings where bookings.id_room = %s and booking_end_time > now() " +
-                "and booking_start_time < t.end and booking_end_time > t.begin " +
-                "and id_book not in (%s)) >= %s";
-        Query query = entityManager.createNativeQuery(String.format(sqlQuery, String.valueOf(roomId),
-                String.valueOf(roomId), existsBookingIds.toString(), String.valueOf(roomSize)));
+        Query query = entityManager.createNativeQuery(SQL_QUERY);
+        query.setParameter("roomId", String.valueOf(roomId));
+        query.setParameter("existIds", existsBookingIds.toString());
+        query.setParameter("roomSize", String.valueOf(roomSize));
 
         List<Date[]> list = new ArrayList<>();
         List<Object[]> result = query.getResultList();
         result.forEach(o -> {
             Date date1 = (Date) o[0];
             Date date2 = (Date) o[1];
-
             list.add(new Date[]{date1, date2});
         });
 

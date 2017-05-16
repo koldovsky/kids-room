@@ -618,6 +618,7 @@
         </div>
     </div>
 </div>
+<div id="error-dialog" type="hidden"></div>
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.validate.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/additional-methods.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.dataTables.min.js"

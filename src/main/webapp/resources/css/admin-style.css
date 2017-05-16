@@ -384,6 +384,9 @@ th.th-size {
 .change-discount {
     float: right;
 }
+.change-abonnement {
+    width: 200px;
+}
 #resultVind{
     display: block;
     width: 471px;

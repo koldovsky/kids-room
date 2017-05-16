@@ -63,6 +63,6 @@ public class ExcelRoomBooking implements ExcelData<RoomReportValuesDto> {
 
     @Override
     public boolean hasAdditionalFields() {
-        return true;
+        return !additionalFields.isEmpty();
     }
 }
