@@ -1,7 +1,9 @@
 package ua.softserveinc.tc.service;
 
+import ua.softserveinc.tc.dto.AbonnementDto;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.User;
 
@@ -39,4 +41,9 @@ public interface MailService {
     void sendNotifyDeactivateRoom(List<String> emailManagers, String roomName, String reason, List<InfoDeactivateRoomDto> list) throws MessagingException;
 
     void sendNotifyChangeEvent(List<String> userEmails, String eventTitle, String datePeriod, String message, String fields) throws MessagingException;
+
+    void sendRequestToAssignAbonnement(UserDto user, List<AbonnementDto> list, String adminEmail)
+            throws MessagingException;
+
+    void sendAssignAbonnementNotificationToUser(AbonnementDto abonnementDto, String userEmail) throws MessagingException;
 }

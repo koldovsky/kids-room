@@ -14,12 +14,15 @@ import ua.softserveinc.tc.entity.Abonnement;
 import ua.softserveinc.tc.entity.pagination.SortingPagination;
 import ua.softserveinc.tc.mapper.AbonnementMapper;
 import ua.softserveinc.tc.service.AbonnementsService;
+import ua.softserveinc.tc.service.MailService;
 import ua.softserveinc.tc.service.UserService;
 import ua.softserveinc.tc.util.PaginationCharacteristics;
 import ua.softserveinc.tc.util.Log;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +46,9 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public DataTableOutput<AbonnementDto> paginationAbonnements(SortingPagination sortPaginate) {
@@ -91,7 +97,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
 
     @Override
     public void assignUserToAbonnement(UsersAbonnementAssignmentDto usersAbonnementAssignmentDto) {
-        Abonnement abonnement = abonnementMapper.toEntity(findAbonnement(usersAbonnementAssignmentDto.getAbonnementId()));
+        AbonnementDto abonnementDto = findAbonnement(usersAbonnementAssignmentDto.getAbonnementId());
+        Abonnement abonnement = abonnementMapper.toEntity(abonnementDto);
         for (Long id : usersAbonnementAssignmentDto.getUserId()) {
             SubscriptionAssignment entity = new SubscriptionAssignment();
             User user = userService.findUserId(id);
@@ -100,6 +107,11 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
             entity.setAssignTime(LocalDateTime.now());
             entity.setValid(true);
             subscriptionAssignmentDao.create(entity);
+            try {
+                mailService.sendAssignAbonnementNotificationToUser(abonnementDto, user.getEmail());
+            } catch (MessagingException e) {
+                log.error("email problem", e);
+            }
         }
     }
 
@@ -145,5 +157,18 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
         subscriptionAssignmentDao.getAssignmentByUserId(userId).forEach(subscriptionsUsedHoursDto ->
                 result.add(new UserAbonnementInfoDto(subscriptionsUsedHoursDto)));
         return result;
+    }
+
+    @Override
+    public void sendNotificationToAssignAbonnement(UserAbonnementsDto dto) {
+        List<Long> abonnementIds = new ArrayList<Long>(Arrays.asList(dto.getAbonnementIds()));
+        List<AbonnementDto> abonnementDtos = new ArrayList<>();
+        UserDto userDto = userService.findUserByIdDto(dto.getUserId());
+        abonnementIds.forEach(id -> abonnementDtos.add(findAbonnement(id)));
+        try {
+            mailService.sendRequestToAssignAbonnement(userDto, abonnementDtos, "admin@softserveinc.com");
+        } catch (MessagingException e) {
+            log.error("email problem", e);
+        }
     }
 }

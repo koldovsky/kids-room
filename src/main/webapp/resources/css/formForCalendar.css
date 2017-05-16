@@ -108,3 +108,13 @@ html, body, .container {
     height: 30px;
     width: 170px;
 }
+
+#buy-abonnement-table thead {
+    font-weight: bold;
+}
+
+#buy-abonnement-table td {
+    text-align: center;
+    height: 30px;
+    width: 170px;
+}

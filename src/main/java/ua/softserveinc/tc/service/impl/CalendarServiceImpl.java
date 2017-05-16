@@ -19,6 +19,7 @@ import ua.softserveinc.tc.service.RoomService;
 import ua.softserveinc.tc.util.DateUtil;
 import ua.softserveinc.tc.util.Log;
 import org.slf4j.Logger;
+
 import javax.mail.MessagingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -84,7 +85,6 @@ public class CalendarServiceImpl implements CalendarService {
             final RecurrentEventDto recurrentEventDto) {
 
 
-
         Date dateForRecurrentStart =
                 DateUtil.toDateISOFormat(recurrentEventDto.getStartTime());
         Date dateForRecurrentEnd =
@@ -136,7 +136,7 @@ public class CalendarServiceImpl implements CalendarService {
         }
         eventDao.saveSetOfEvents(res);
 
-        if(recurrentEventDto.getRecurrentId() != null)
+        if (recurrentEventDto.getRecurrentId() != null)
             sendNotifyForRecurrent(res);
 
         return eventService.getListOfEventDto(res);
@@ -168,7 +168,7 @@ public class CalendarServiceImpl implements CalendarService {
 
         calendar.setTime(dateForMonthlyStart);
         while (calendar.getTimeInMillis() <= endDate) {
-            monthlyEventDto.getDaysOfMonth().stream()
+            days.stream()
                     .filter(day -> calendar.getActualMaximum(Calendar.DAY_OF_MONTH) < day)
                     .forEach(day -> daysWerentCreated.add(String.format("%d/%d/%d",
                             day, (calendar.get(Calendar.MONTH) + 1), calendar.get(Calendar.YEAR))));
@@ -211,7 +211,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     @Override
     public final void createOrUpdateEvent(final Event event) {
-        if(event.getId() != null && event.getRecurrentId() == null){
+        if (event.getId() != null && event.getRecurrentId() == null) {
             sendNotifyForSingle(eventService.findEntityById(event.getId()), event);
         }
         eventDao.createOrUpdateEvent(event);

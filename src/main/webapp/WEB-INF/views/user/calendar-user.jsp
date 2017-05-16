@@ -382,6 +382,44 @@
 
                             </tbody>
                         </table>
+                        <button type="button" class="btn btn-success btn-responsive"
+                                id="buy-abonnements">
+                            <spring:message code="administrator.abonnement.buy"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="vertical-center-row">
+            <div align="center">
+                <div id="abonnement-buy-dialog" class="dialog" hidden
+                     title="Buy Abonnements Modal">
+                    <div align="center">
+                            <table id="buy-abonnement-table">
+                                <thead>
+                                <tr>
+                                    <td><spring:message code="administrator.abonnement"/></td>
+                                    <td><spring:message code="administrator.abonnement.price"/></td>
+                                    <td><spring:message code="administrator.abonnement.hours"/></td>
+                                    <td><spring:message code="administrator.abonnement.order"/></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-success btn-responsive pull-left"
+                                    id="order-abonnement">
+                                <spring:message code="administrator.abonnement.buy"/>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-responsive pull-right"
+                                    id="cancel-abonnement">
+                                <spring:message code="administrator.canc"/>
+                            </button>
                     </div>
                 </div>
             </div>
