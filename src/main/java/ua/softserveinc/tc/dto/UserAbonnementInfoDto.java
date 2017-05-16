@@ -64,10 +64,6 @@ public class UserAbonnementInfoDto {
     public void setAssingTime(LocalDateTime dateTime) {
         this.assingTime = new StringBuilder()
                 .append( dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE))
-                .append(" ")
-                .append(dateTime.getHour())
-                .append(":")
-                .append(dateTime.getMinute()).toString();
-        ;
+                .toString();
     }
 }

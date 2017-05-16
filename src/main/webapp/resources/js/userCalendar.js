@@ -21,7 +21,7 @@ $(document).ready(function () {
 
     getPersonalDiscounts();
     getMyAbonnements(localStorage['userId']);
-    getAbonnementsToBuy()
+    getAbonnementsToBuy();
 });
 
 $(function () {
@@ -361,7 +361,12 @@ $(function () {
 
     $('#cancel-abonnement').click(function() {
         $('#abonnement-buy-dialog').dialog('close');
-    })
+    });
+
+    $('#order-abonnement').click(function() {
+        orderAbonnements();
+        $('#abonnement-buy-dialog').dialog('close');
+    });
 });
 
 function selectRoomForUser(roomParam, userId, phoneNumber, managers) {
@@ -1349,7 +1354,7 @@ function getMyAbonnements(userId) {
 }
 
 function getAbonnementsToBuy() {
-    let url = `restful/abonnement`
+    let url = `restful/abonnement`;
     let rows = '';
 
     $.ajax({
@@ -1363,11 +1368,46 @@ function getAbonnementsToBuy() {
                     rows += `<td>${abonnement.name}</td>`;
                     rows += `<td>${abonnement.price}</td>`;
                     rows += `<td>${abonnement.hour}</td>`;
-                    rows += `<td><input type="checkbox"></input></td>`;
+                    rows += `<td><input type='checkbox' onchange='handleChange(this, ${abonnement.id});'></td>`;
+                    rows += '</tr>';
                 });
                 $('#buy-abonnement-table').find('tbody').append(rows);
             }
         }
     });
 }
+
+var abonnementIds = [];
+function handleChange(checkbox, abonnementId) {
+    if(checkbox.checked == true){
+        abonnementIds.push(abonnementId);
+    } else {
+        delete abonnementIds[abonnementsIds.indexOf(abonnementId)];
+    }
+}
+
+function orderAbonnements() {
+    let url = `restful/abonnement/send-email`;
+    let cleanAbonnementsIds = [];
+    abonnementIds.forEach(function(e) {
+        if (e == undefined) {
+
+        } else {
+            cleanAbonnementsIds.push(e);
+        }
+    });
+    var dataSender = {
+        userId: localStorage['userId'],
+        abonnementIds: cleanAbonnementsIds
+    };
+    $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json',
+        datatype: 'json',
+        data: JSON.stringify(dataSender),
+        success: function () {},
+        error: function () {}
+    });
+};
 

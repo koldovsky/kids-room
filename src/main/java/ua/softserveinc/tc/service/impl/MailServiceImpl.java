@@ -10,8 +10,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import ua.softserveinc.tc.constants.*;
+import ua.softserveinc.tc.dto.AbonnementDto;
 import ua.softserveinc.tc.dto.BookingDto;
 import ua.softserveinc.tc.dto.InfoDeactivateRoomDto;
+import ua.softserveinc.tc.dto.UserDto;
 import ua.softserveinc.tc.entity.DayOff;
 import ua.softserveinc.tc.entity.User;
 import ua.softserveinc.tc.service.MailService;
@@ -191,7 +193,9 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendNotifyDeactivateRoom(List<String> emailManagers, String roomName, String reason,  List<InfoDeactivateRoomDto> list) throws MessagingException {
+    public void sendNotifyDeactivateRoom(
+            List<String> emailManagers, String roomName, String reason,
+            List<InfoDeactivateRoomDto> list) throws MessagingException {
         Map<String, Object> model = new HashMap<>();
         model.put(RoomConstants.UNAVAILABLE_ROOM, list);
         model.put(RoomConstants.NAME_ROOM, roomName);
@@ -241,5 +245,49 @@ public class MailServiceImpl implements MailService {
         mailSender.send(message);
     }
 
+    @Override
+    public void sendRequestToAssignAbonnement(UserDto user, List<AbonnementDto> list, String adminEmail)
+            throws MessagingException {
+        Map<String, Object> model = new HashMap<>();
+        model.put("abonnements", list);
+        model.put("user", user);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.addTo(adminEmail);
+        } catch (MessagingException e) {
+            log.error("Wrong admin email when send notify about ordering abonnements.", e);
+        }
+
+        helper.setSubject(user.getFirstName() + " " + user.getLastName() + " order new abonnement");
+        helper.setText(getTextMessage(MailConstants.ORDER_ABONNEMENTS, model), true);
+        helper.setFrom(new InternetAddress(MailConstants.EMAIL_BOT_ADDRESS));
+
+        mailSender.send(message);
+    }
+
+    @Override
+    public void sendAssignAbonnementNotificationToUser(AbonnementDto abonnementDto, String userEmail) throws MessagingException {
+        Map<String, Object> model = new HashMap<>();
+        model.put("abonnement", abonnementDto);
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.addTo(userEmail);
+        } catch (MessagingException e) {
+            log.error("Wrong user email when send notify about assigned abonnement.", e);
+        }
+
+        helper.setSubject("You have got new abonnement");
+        helper.setText(getTextMessage(MailConstants.NOTIFY_USER, model), true);
+        helper.setFrom(new InternetAddress(MailConstants.EMAIL_BOT_ADDRESS));
+
+        mailSender.send(message);
+
+    }
 }
 

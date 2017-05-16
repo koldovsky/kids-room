@@ -34,4 +34,6 @@ public interface AbonnementsService extends BaseService<Abonnement> {
     long getMinAbonnementsPrice();
 
     List<UserAbonnementInfoDto> getAbonnementInfoByUserId(long userId);
+
+    void sendNotificationToAssignAbonnement(UserAbonnementsDto dto);
 }
