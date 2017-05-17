@@ -1,8 +1,8 @@
 package ua.softserveinc.tc.dto;
 
 public class UsersAbonnementAssignmentDto {
-    long[] userId;
-    long abonnementId;
+    private long[] userId;
+    private long abonnementId;
 
     public UsersAbonnementAssignmentDto() {
 
