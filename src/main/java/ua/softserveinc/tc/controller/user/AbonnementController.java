@@ -26,7 +26,7 @@ public class AbonnementController {
 
 
     @GetMapping("/{userId}")
-    public List<UserAbonnementInfoDto> getMyDto(@PathVariable Long userId) {
+    public List<UserAbonnementInfoDto> getAbonnementInfoForUser(@PathVariable Long userId) {
         return abonnementsService.getAbonnementInfoByUserId(userId);
     }
 

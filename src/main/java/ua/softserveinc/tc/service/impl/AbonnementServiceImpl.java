@@ -110,7 +110,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
             try {
                 mailService.sendAssignAbonnementNotificationToUser(abonnementDto, user.getEmail());
             } catch (MessagingException e) {
-                log.error("email problem", e);
+                log.error("There was an issue when sending email to" + user.getEmail() + " with info that have" +
+                        "abonnement with id " + abonnementDto.getId() , e);
             }
         }
     }
@@ -168,7 +169,8 @@ public class AbonnementServiceImpl extends BaseServiceImpl<Abonnement> implement
         try {
             mailService.sendRequestToAssignAbonnement(userDto, abonnementDtos, "admin@softserveinc.com");
         } catch (MessagingException e) {
-            log.error("email problem", e);
+            log.error("There was an issue when sending email to admin@softserveinc.com from " +
+                    userDto.getEmail(), e);
         }
     }
 }
